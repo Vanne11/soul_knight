@@ -1,0 +1,106 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/heart.png" id="2_heart"]
+[ext_resource type="Texture2D" path="res://assets/sprites/shield.png" id="3_shield"]
+
+[node name="HUD" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_script")
+heart_texture = ExtResource("2_heart")
+shield_texture = ExtResource("3_shield")
+
+[node name="Stats" type="VBoxContainer" parent="."]
+offset_left = 6.0
+offset_top = 5.0
+offset_right = 140.0
+offset_bottom = 70.0
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Hearts" type="HBoxContainer" parent="Stats"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_constants/separation = 1
+
+[node name="Shields" type="HBoxContainer" parent="Stats"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_constants/separation = 1
+
+[node name="EnergyBG" type="ColorRect" parent="Stats"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 5)
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.13, 0.75)
+
+[node name="EnergyFill" type="ColorRect" parent="Stats/EnergyBG"]
+unique_name_in_owner = true
+offset_right = 64.0
+offset_bottom = 5.0
+mouse_filter = 2
+color = Color(0.43, 0.86, 0.92, 1)
+
+[node name="WeaponLabel" type="Label" parent="Stats"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.93, 1)
+theme_override_font_sizes/font_size = 8
+text = "Pistola"
+
+[node name="Toast" type="Label" parent="."]
+unique_name_in_owner = true
+anchor_right = 1.0
+offset_top = 30.0
+offset_bottom = 48.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.7, 1)
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeathPanel" type="Control" parent="."]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Dim" type="ColorRect" parent="DeathPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.05, 0.03, 0.07, 0.62)
+
+[node name="Center" type="CenterContainer" parent="DeathPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Box" type="VBoxContainer" parent="DeathPanel/Center"]
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="DeathPanel/Center/Box"]
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.87, 0.28, 0.33, 1)
+theme_override_font_sizes/font_size = 24
+text = "HAS CAIDO"
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="DeathPanel/Center/Box"]
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.93, 1)
+theme_override_font_sizes/font_size = 10
+text = "Pulsa R para reintentar"
+horizontal_alignment = 1

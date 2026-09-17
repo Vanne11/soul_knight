@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/pistol.png" id="2_gun"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/bullet.tscn" id="3_bullet"]
+[ext_resource type="Texture2D" path="res://assets/sprites/bullet.png" id="4_bullet_tex"]
+
+[resource]
+script = ExtResource("1_script")
+display_name = "Pistola"
+texture = ExtResource("2_gun")
+damage = 2
+fire_rate = 4.5
+bullet_count = 1
+spread_deg = 3.0
+pierce = 0
+bullet_scene = ExtResource("3_bullet")
+bullet_texture = ExtResource("4_bullet_tex")
+bullet_speed = 235.0
+bullet_life = 1.4
+knockback = 90.0
+energy_cost = 3.0
+recoil = 30.0
+shake = 1.2

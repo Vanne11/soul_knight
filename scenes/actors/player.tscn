@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/actors/player.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player.png" id="2_tex"]
+[ext_resource type="Shader" path="res://assets/shaders/flash.gdshader" id="3_flash"]
+[ext_resource type="Script" path="res://scripts/components/health.gd" id="4_health"]
+[ext_resource type="PackedScene" path="res://scenes/actors/weapon.tscn" id="5_weapon"]
+[ext_resource type="Resource" path="res://resources/weapons/pistol.tres" id="6_pistol"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_flash"]
+resource_local_to_scene = true
+shader = ExtResource("3_flash")
+shader_parameter/flash = 0.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 4.0
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_flash")
+texture = ExtResource("2_tex")
+offset = Vector2(0, -8)
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_body")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("4_health")
+max_hp = 5
+max_armor = 4
+armor_regen_delay = 4.0
+armor_regen_rate = 1.2
+invuln_time = 0.45
+
+[node name="WeaponPivot" type="Node2D" parent="."]
+position = Vector2(0, -6)
+
+[node name="Weapon" parent="WeaponPivot" instance=ExtResource("5_weapon")]
+data = ExtResource("6_pistol")

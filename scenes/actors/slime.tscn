@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/actors/slime.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/slime.png" id="2_tex"]
+[ext_resource type="Shader" path="res://assets/shaders/flash.gdshader" id="3_flash"]
+[ext_resource type="Script" path="res://scripts/components/health.gd" id="4_health"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_flash"]
+resource_local_to_scene = true
+shader = ExtResource("3_flash")
+shader_parameter/flash = 0.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 5.0
+
+[node name="Slime" type="CharacterBody2D"]
+motion_mode = 1
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("1_script")
+speed = 40.0
+contact_damage = 1
+hop_speed = 110.0
+hop_interval = 1.0
+hop_duration = 0.3
+
+[node name="Sprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_flash")
+texture = ExtResource("2_tex")
+offset = Vector2(0, -8)
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_body")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("4_health")
+max_hp = 4
+max_armor = 0
+invuln_time = 0.08
+
+[node name="ContactDamage" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="ContactDamage"]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_body")
