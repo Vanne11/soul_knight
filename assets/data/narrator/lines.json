@@ -1,0 +1,169 @@
+{
+  "_info": "Frases del narrador. Clave = evento. {hero}, {floor}, {deaths}, {runs}, {item}, {name}, {n} se sustituyen. 'intro_slides' se muestra en orden. Edita libremente.",
+
+  "intro_slides": [
+    "Hace mucho, en un mundo donde nadie se tapaba nada, existían dos reinos: PENELANDIA y VULVANIA.",
+    "Llevaban siglos en una Guerra Fría Hormonal. Nadie recuerda por qué empezó. Probablemente por quién deja la tapa del váter levantada.",
+    "Cada reino es alérgico a las hormonas del otro. Testosterona en Vulvania: estornudos. Estrógeno en Penelandia: estornudos y ganas de hablar de sentimientos. Horrible.",
+    "Entonces llegó ELLA. Su Pudorosidad, LA HOJA DE PARRA. Una hoja verde, gigante, con gafitas y collar de perlas.",
+    "Y lo tapó todo. Pinturas, estatuas, libros de biología. Cubrió el mundo de vergüenza, y la vergüenza lo volvió GRIS.",
+    "Ahora los habitantes de ambos reinos vagan censurados, rencorosos y bastante irritables. Te van a atacar. No es personal. Bueno, un poco sí.",
+    "Tu misión: cruzar la Selva Púbica, los dos reinos y la tierra de nadie, y arrancar a esa hoja de su palacio.",
+    "Para lograrlo necesitarás la hormona del reino contrario. Te dará alergia. Te hará estornudar. Lo siento: a veces lo que necesitas es justo lo que te sienta fatal.",
+    "Yo soy el narrador. Comentaré tus fracasos. Pocas veces, lo prometo. No mucho. Bueno, ya veremos."
+  ],
+
+  "select_pitocles": ["Pitocles. Casco griego, escudo redondo y la autoestima de un capitán de barco en una bañera. Buena elección. Supongo."],
+  "select_vulvalquiria": ["Vulvalquiria. Trenzas, alas en el casco y cero paciencia. La Hoja de Parra ya está sudando clorofila."],
+  "select_ornitorrinco": ["El Ornitorrinco. Ni la naturaleza sabe qué es. Él tampoco. Pero es inmune a las alergias, y eso ya es más de lo que tienes tú."],
+
+  "first_run": [
+    "Primera vez aquí. Qué ilusión. Te doy un consejo gratis: el dash te hace invencible mientras dura. Úsalo. Nadie lo usa."
+  ],
+  "run_start": [
+    "Run número {runs}. {hero} vuelve a la carga. Literalmente.",
+    "Otra vez aquí. Llevas {deaths} muertes. La Hoja de Parra ya te tiene un apodo cariñoso.",
+    "Nueva run. Mismo héroe. Mismas manos desnudas. La esperanza es gratis, las armas no.",
+    "Run {runs}. Hay gente que aprende de sus errores. Y hay héroes con nombre de chiste."
+  ],
+
+  "floor_1": ["Piso 1: LA SELVA PÚBICA. Una jungla densa, rizada y sin podar desde la censura. Cuidado con las ladillas: son pequeñas, pero tienen sindicato."],
+  "floor_2": ["Piso 2: PENELANDIA. Todo es alargado, todo es orgulloso y todo huele a desodorante de 3 euros. Aquí manda el Testículo Primordial."],
+  "floor_3": ["Piso 3: VULVANIA. Elegante, cíclica y con muy poca paciencia para turistas. La reina Ovaria II no recibe visitas sin cita previa."],
+  "floor_4": ["Piso 4: EL PERINEO. La tierra de nadie entre los dos reinos. Literalmente. Anatómicamente. Aquí no vive nadie, solo un aduanero con un sello."],
+  "floor_5": ["Piso 5: EL PALACIO DE LA CENSURA. Todo está pixelado. Todo tiene una barra negra encima. Huele a moralina y a pegamento de hoja."],
+
+  "room_combat": [
+    "Las puertas se cierran. Hay bichos. Ya sabes cómo va esto.",
+    "Sala gris, gente censurada y de mal humor. Libéralos a golpes, que es como se libera a la gente en los videojuegos."
+  ],
+  "room_boss": ["La sala del jefe. Respira hondo. No sirve de nada, pero respira."],
+  "room_shop": [
+    "Una tienda. El tendero es una caja registradora con opiniones. Ponte encima de algo y pulsa E. Si tienes dinero, cosa que dudo.",
+    "Tienda. Los precios son abusivos. Como todo en este reino desde la censura."
+  ],
+  "room_secret": ["Una sala secreta. La has encontrado tú solito. Estoy... casi orgulloso."],
+  "room_intoxication": ["Huele a bar de carretera. Aquí se viene a beber y a tomar malas decisiones. Bienvenido a casa."],
+  "room_empty": ["Una sala vacía. Disfruta del silencio. Ah, no, que estoy yo."],
+  "room_cleared": [
+    "Sala liberada. ¿Ves? El color vuelve. Igual que tu dignidad. Bueno, el color sí.",
+    "Despejado. La vergüenza se va, los colores vuelven y tú sigues igual de torpe.",
+    "Limpio. Si sigues así, la Hoja de Parra va a tener que buscar trabajo."
+  ],
+
+  "player_hit": [
+    "Ese golpe avisó. Brilló, tembló, casi te manda una carta certificada.",
+    "El dash existe. ESPACIO. La barra grande.",
+    "Te han dado. Ya van varias. Empiezo a pensar que es tu estrategia."
+  ],
+  "low_health": [
+    "Te queda poca vida. Momento ideal para tomar decisiones todavía peores.",
+    "Vida crítica. La pantalla de 'MORISTE, CABRÓN' ya está calentando."
+  ],
+  "shield_broken": ["Escudo roto. Se regenera si aguantas tres segundos sin que te toquen. Tres. Para ti, una eternidad."],
+  "no_stamina": ["Sin estamina. Tu cardio es tan bueno como tu sentido de la orientación."],
+  "dash_spam": ["Dash, dash, dash. ¿Estás jugando o tienes un tic?"],
+  "miss": [
+    "Al aire. El aire no tiene vida, pero gracias por intentarlo.",
+    "Tres golpes al vacío. El vacío te manda saludos."
+  ],
+  "kill_first": ["Primera víctima. Era un ciudadano censurado con mala leche. Ahora es un ciudadano censurado sin leche."],
+  "kill": ["Uno menos.", "Lo has liberado. Del mundo de los vivos, pero liberado."],
+  "kill_streak": ["Cinco seguidos sin que te toquen. ¿Quién eres y qué has hecho con el torpe de antes?"],
+  "idle": [
+    "¿Hola? Si no vas a jugar, al menos apaga la pantalla.",
+    "Llevas un rato quieto. Los enemigos no esperan. Yo sí, pero cobro por horas."
+  ],
+
+  "pickup_weapon": [
+    "{item}. Por fin algo mejor que tus puños. El listón estaba en el suelo, pero lo has superado.",
+    "Ahora tienes {item}. Apunta con el ratón. O hacia donde camines. O reza."
+  ],
+  "pickup_alcohol": [
+    "Alcohol. La solución a todos los problemas que el alcohol causó.",
+    "{item}. Apuntado en tu historial clínico. Con letra grande."
+  ],
+  "pickup_heal": ["Curación. Te la doy porque si mueres rápido me aburro."],
+  "pickup_relic": ["{item}. Una reliquia. Seguro que tiene un efecto secundario. Mejor no leas la letra pequeña."],
+  "pickup_key": ["Una llave. Abre algo. Como tus heridas emocionales."],
+  "pickup_generic": ["{item}. Recogido. No sé para qué, pero bueno."],
+
+  "hormone_found": ["Ahí está: la hormona que pide la Puerta Hormonal del jefe. Si es la del reino contrario, te va a sentar fatal. Cógela igual. Así es la vida."],
+  "door_no_weapon": [
+    "¿A un jefe? ¿A PUÑETAZOS? Qué patético. Hasta la Hoja de Parra siente vergüenza ajena, y eso que es su trabajo. Busca un arma: cofres, tienda, lo que sea.",
+    "La puerta te mira las manos vacías y se ríe. Yo también. Vuelve cuando tengas algo más peligroso que tus nudillos.",
+    "Sin arma. Otra vez. Hay ladillas mejor equipadas que tú. Hay un cofre por ahí esperándote, campeón.",
+    "¿Pensabas derrotar a un jefe con tus manitas? Qué tierno. Qué inútil. Qué tú."
+  ],
+  "door_hormonal": [
+    "PUERTA HORMONAL. Te huele, arruga la nariz y no se abre. Necesitas la hormona de este reino. Está en alguna sala del piso. O en la tienda, a precio de oro.",
+    "La puerta dice que no. Le faltan hormonas. A ti también, pero ese es otro tema."
+  ],
+  "allergy": [
+    "¡Reacción alérgica! Hormona del reino contrario. Te vas a hinchar, vas a estornudar y vas a salir volando sin querer. Pero la puerta se abrirá. Merece la pena. Creo.",
+    "Alergia. Estornudos durante un rato. Lo necesitabas, aunque te siente como una patada. Como el gimnasio. Como la terapia."
+  ],
+  "sneeze": ["Salud.", "Jesús.", "¿Otra vez? Tápate la boca, guarro."],
+  "platypus_immune": ["El ornitorrinco se lo traga sin pestañear. Ni alergia ni nada. La ventaja de no ser de ningún sitio."],
+  "chest": ["Un cofre. Dentro hay algo. Si es mejor que lo que llevas, cosa fácil, quédatelo."],
+  "shop_buy": ["Comprado. El capitalismo sobrevive incluso a la censura."],
+  "shop_poor": ["No te llega. Mata más cosas. Así funciona la economía aquí."],
+  "intox_1": ["Achispado. +10% de daño, -5% de puntería. Por fin un número que te representa."],
+  "intox_2": ["Borracho. Pegas más fuerte y disparas más torcido. Como tu tío en las bodas."],
+  "intox_3": ["BLACKOUT. +50% de daño. No recordarás nada. Yo sí. Para siempre."],
+  "intox_sober": ["Sobrio otra vez. Qué horror. Ahora lo ves todo con claridad, incluido lo malo que eres."],
+  "lore_unlocked": ["Lore desbloqueado: '{name}'. Nadie lo lee. Demuéstrame que me equivoco."],
+
+  "death": [
+    "MORISTE, CABRÓN. Muerte número {deaths}. Las estoy coleccionando.",
+    "Has muerto. La Hoja de Parra ha tapado tu cadáver con una hojita. Qué detalle.",
+    "Muerte {deaths}. Tu lápida pondrá: 'No usó el dash'."
+  ],
+  "death_same_floor": ["Otra vez en el piso {floor}. Llevas {n} muertes aquí. Ya podrías empadronarte."],
+  "floor_complete": [
+    "Piso liberado. El color vuelve a esta zona. Siguiente. Peor. Siempre peor.",
+    "Lo pasaste. No sé cómo. Revisaré los logs."
+  ],
+  "victory": ["La Hoja de Parra ha caído. El mundo recupera sus colores y la gente vuelve a ir como le da la gana. ¿Y ahora qué? Exacto. Nada. Sal a la calle. O dale a 'Nueva run'. Sé que lo harás."],
+
+  "interrupt": [
+    "...espera, me corrijo: lo estás haciendo todavía peor de lo que dije.",
+    "Nota mental: no encariñarse. Morirá pronto."
+  ],
+  "repeat_prefix": ["Te lo repito porque sé que no lees: "],
+
+  "boss1_intro": ["DOÑA CERA CALIENTE: ¡Pero qué es esta selva, cariño! Siéntate, que esto no duele nada. MENTIRA. Duele muchísimo."],
+  "boss1_phase2": ["DOÑA CERA CALIENTE: ¡Tirón a contrapelo! ¡Es por tu bien!"],
+  "boss1_phase3": ["DOÑA CERA CALIENTE: ¡Brasileña completa! ¡Y luego ingles brillantes!"],
+  "boss1_death": ["DOÑA CERA CALIENTE: Me... me he quemado yo... con mi propia cera..."],
+  "boss1_after": ["La selva vuelve a crecer libre. Como debe ser. Cada uno con su jardín como quiera."],
+  "boss1_taunt": ["DOÑA CERA CALIENTE: ¡Quieto, que te dejo calvo de un tirón!"],
+
+  "boss2_intro": ["TESTÍCULO PRIMORDIAL: Así que tú eres lo que salió de este reino. Qué... decepción."],
+  "boss2_phase2": ["TESTÍCULO PRIMORDIAL: ¡Te di la vida! ¡Te di TODO! ¿Y así me lo pagas?"],
+  "boss2_phase3": ["TESTÍCULO PRIMORDIAL: ¡Si caigo yo, cae la próxima generación! ...que tampoco iba a ser mejor que tú."],
+  "boss2_death": ["TESTÍCULO PRIMORDIAL: Fui yo quien te creó... y fui yo quien te abandonó..."],
+  "boss2_after": ["Has derrotado al patriarca de Penelandia. Freud estaría tomando apuntes."],
+  "boss2_taunt": ["TESTÍCULO PRIMORDIAL: Esquiva, inútil. ¿No te enseñé nada?"],
+
+  "boss3_intro": ["SU MAJESTAD OVARIA II: Una visita sin cita previa. Qué ordinariez. Una vez al mes recibo. Y hoy no es el día."],
+  "boss3_phase2": ["SU MAJESTAD OVARIA II: ¡Calambres reales! ¡Arrodíllate ante el ciclo!"],
+  "boss3_phase3": ["SU MAJESTAD OVARIA II: ¡Te advierto que estoy en mis días! ¡Todos ellos!"],
+  "boss3_death": ["SU MAJESTAD OVARIA II: Dile a la Hoja... que su corona... era de plástico..."],
+  "boss3_after": ["Vulvania vuelve a tener color. Y a la reina le has quitado una semana de dolor de cabeza. De nada."],
+  "boss3_taunt": ["SU MAJESTAD OVARIA II: Qué poco elegante. ¿Ni una reverencia?"],
+
+  "boss4_intro": ["EL ADUANERO HORMONAL: Documentación. Pasaporte hormonal. Certificado de alergias. ¿No? Pues a la cola. Y la cola eres tú."],
+  "boss4_phase2": ["EL ADUANERO HORMONAL: ¡Formulario 27-B! ¡Por triplicado! ¡Con sello!"],
+  "boss4_phase3": ["EL ADUANERO HORMONAL: ¡CIERRE DE FRONTERA! ¡Nadie pasa! ¡Ni penes, ni vulvas, ni ornitorrincos!"],
+  "boss4_death": ["EL ADUANERO HORMONAL: Está bien... sello de paso... aprobado... con reparos..."],
+  "boss4_after": ["La frontera ya no existe. Penes y vulvas podrán cruzar sin papeles. El caos. La libertad. Lo mismo, en realidad."],
+  "boss4_taunt": ["EL ADUANERO HORMONAL: ¡Denegado! ¡Siguiente!"],
+
+  "boss5_intro": ["SU PUDOROSIDAD, LA HOJA DE PARRA: ¡Tápate, sinvergüenza! ¡En mi palacio se viene vestido! ¡Y callado!"],
+  "boss5_phase2": ["SU PUDOROSIDAD, LA HOJA DE PARRA: ¡Censura! ¡Más censura! ¡Píxeles por todas partes!"],
+  "boss5_phase3": ["SU PUDOROSIDAD, LA HOJA DE PARRA: ¡Si yo caigo, todo quedará al descubierto! ¡TODO! ¡Hasta lo de tu tía!"],
+  "boss5_death": ["SU PUDOROSIDAD, LA HOJA DE PARRA: Qué... vergüenza..."],
+  "boss5_after": ["Se acabó la censura. El mundo vuelve a tener color. Y la Hoja de Parra, por fin, se ha quedado en pelotas. Simbólicamente."],
+  "boss5_taunt": ["SU PUDOROSIDAD, LA HOJA DE PARRA: ¡Qué indecencia de esquivas!"]
+}

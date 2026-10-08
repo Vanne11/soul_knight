@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/ui/floating_text.gd" id="1"]
+[ext_resource type="FontFile" path="res://assets/fonts/NotoSansMono-Regular.ttf" id="2"]
+
+[node name="FloatingText" type="Label"]
+script = ExtResource("1")
+anchors_preset = 0

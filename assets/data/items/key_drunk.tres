@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "key_drunk"
+display_name = "Llave Oxidada (¿?)"
+description = "Solo funciona si estás borracho. La cerradura tiene forma de copa. Requiere tier 2+ intoxicación."
+rarity = 3
+tags = ["llave", "especial"]
+effects = [{
+"type": 5,
+"lore_entry_id": "drunk_secret"
+}]
+base_value = 500
+custom_data = {"requires_intoxication_tier": 2}

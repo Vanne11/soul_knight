@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "hormonas_contrabando"
+title = "Hormonas de Contrabando"
+text = "Desde la Guerra Fría Hormonal, cruzar hormonas de un reino a otro es ilegal en los dos. Por eso existe el mercado negro: viales de testosterona y estrógeno que se venden en la tienda a precio de oro o aparecen tirados en alguna sala, como quien no quiere la cosa. Abren las Puertas Hormonales. Dan alergia si son del reino contrario. Y llevan una etiqueta escrita a mano que dice 'no apto para ornitorrincos', que nadie respeta, y menos el ornitorrinco."
+category = 2
+unlock_condition = {"type": 1, "target_id": "hormone_testosterona"}
+flavor_text = "Consigue tu primera hormona de contrabando."

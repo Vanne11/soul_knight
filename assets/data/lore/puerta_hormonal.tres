@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "puerta_hormonal"
+title = "La Puerta Hormonal"
+text = "Las salas de los jefes de Penelandia, Vulvania y el Perineo están protegidas por Puertas Hormonales. La puerta te huele, arruga la nariz y solo se abre si llevas en el cuerpo la hormona de ese reino. En el Perineo te pide las dos. La hormona aparece al limpiar una sala concreta del piso, y la tienda también la vende a precio de oro. Si es la tuya, ningún problema. Si es la contraria, tendrás alergia. Ninguna puerta te deja pasar, eso sí, si intentas entrar a un jefe a puñetazos. Hasta las puertas tienen un límite de vergüenza ajena."
+category = 5
+unlock_condition = {"type": 10, "target_id": "hormone_door"}
+flavor_text = "Intenta cruzar una Puerta Hormonal sin la hormona."

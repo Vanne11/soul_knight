@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "intoxication_mechanic"
+title = "La Barra de Toxicidad"
+text = "La barra de toxicidad sube con dos cosas: el alcohol y las hormonas del reino contrario. Achispado: más daño, peor puntería. Borracho: todavía más daño, los disparos salen torcidos. Blackout: daño brutal, puntería de tío en una boda y la sensación de que todo tiene sentido. No lo tiene. La toxicidad baja sola con el tiempo, y el café ayuda, aunque te deje temblando. Sobrio ves el mundo gris y censurado tal y como es. Borracho también, pero te importa menos. Ninguna de las dos opciones es buena. Bienvenido a la vida adulta."
+category = 5
+unlock_condition = {"type": 3, "intoxication_tier": 3}
+flavor_text = "Alcanza el Blackout por primera vez."

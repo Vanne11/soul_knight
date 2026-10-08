@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "fists"
+display_name = "Puños Desnudos"
+description = "Tus manos. Sin arma. Sin plan. Sin dignidad. Pegan poco, pero pegan."
+tags = ["arma", "melee"]
+rarity = 0
+equip_slot = 1
+base_value = 0
+custom_data = {"base_damage": 7, "fire_rate": 0.32, "is_melee": true}

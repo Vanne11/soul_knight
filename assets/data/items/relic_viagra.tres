@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "relic_viagra"
+display_name = "Viagra Vudú"
+description = "Dureza eterna. +50% daño, +30% tamaño proyectil, -20% velocidad movimiento. 'Cuatro horas después sigues disparando.'"
+rarity = 3
+tags = ["reliquia", "pasivo", "ofensa", "masculino"]
+equip_slot = 2
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.5}, {"type": 0, "stat": "projectile_speed", "magnitude": 0.8}, {"type": 0, "stat": "speed", "magnitude": 0.8}]
+base_value = 350

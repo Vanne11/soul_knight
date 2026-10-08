@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "final_censura"
+title = "Final: Al Descubierto"
+text = "La Hoja de Parra ha caído. Al tocar el suelo se arruga, suspira 'qué vergüenza' y se queda quieta, como una hoja cualquiera. En el mismo instante el color vuelve a todo el mundo: la Selva Púbica crece como le da la gana, Penelandia y Vulvania se miran por primera vez sin estornudar y el Perineo se llena de gente cruzando sin papeles. Nadie sabe muy bien qué hacer con tanta libertad, así que todos hacen lo mismo de siempre, pero a todo color. Y tú, ¿ahora qué? Exacto. Nada. Sal a la calle. O dale a 'Nueva run'. El narrador sabe que lo harás. Siempre lo haces."
+category = 6
+unlock_condition = {"type": 10, "target_id": "victory"}
+flavor_text = "Derrota a la Hoja de Parra."

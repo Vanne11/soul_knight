@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boss_1"
+title = "Doña Cera Caliente"
+text = "Esteticista de profesión, verdugo por vocación. Cuando llegó la censura, Doña Cera vio la oportunidad de su vida: dejar el mundo entero liso como un azulejo. Montó su salón en el corazón de la Selva Púbica y desde entonces arranca todo lo que crece. Te dirá que no duele. Miente. Lanza abanicos de cera hirviendo, embiste con su espátula y, cuando se pone seria, promete ingles brillantes para todos. Al final se quema con su propia cera, que es la forma más poética de perder. La selva vuelve a crecer libre después. Cada uno con su jardín como quiera."
+category = 3
+unlock_condition = {"type": 9, "target_id": "DOÑA CERA CALIENTE"}
+flavor_text = "Derrota a la jefa de la Selva Púbica."

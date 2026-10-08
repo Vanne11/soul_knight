@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "viagra_lore"
+title = "Cuatro Horas Después Sigues Disparando"
+text = "La Viagra Vudú no es medicina. Es un pacto. La tomas y tu arma crece. Los proyectiles se hinchan. El daño se dispara. Te sientes dios. Un dios de la penetración balística. Pero el precio viene después. Cuatro horas. Cuatro horas de erección ininterrumpida. Tu velocidad cae. Tu precisión tambalea. El dolor es constante, sordo, en la base de todo. Intentas soltar el arma. No puedes. Tus dedos están soldados al gatillo. El juego no tiene botón de 'soltar'. Solo 'disparar'. Y disparas. Y disparas. Hasta que la run termina. Y sigues disparando en el menú principal."
+category = 2
+unlock_condition = {"type": 1, "target_id": "relic_viagra", "count": 1}
+flavor_text = "Equipa la Viagra Vudú."

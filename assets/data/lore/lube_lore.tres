@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "lube_lore"
+title = "Suavidad a Nivel Subatómico"
+text = "El Lubricante Cuántico no lubrica. Elimina la fricción. Conceptualmente. Físicamente. Metafóricamente. Dasheas sin costo. Te mueves más rápido. Nada te frena. Ni el suelo. Ni los enemigos. Ni las paredes. Ni tus propios errores. Te deslizas por la vida sin rozar nada. Suena perfecto. Hasta que te das cuenta de que sin fricción no puedes parar. No puedes girar. No puedes aferrarte a nada. Solo deslizas. Hacia adelante. Siempre adelante. Hacia el siguiente boss. Hacia la siguiente muerte. Hacia el final que no existe."
+category = 2
+unlock_condition = {"type": 1, "target_id": "relic_lube", "count": 1}
+flavor_text = "Equipa el Lubricante Cuántico."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "alergia_hormonal"
+title = "Alergia Hormonal: Lo Que Necesitas Te Sienta Fatal"
+text = "Cada reino es alérgico a la hormona del otro. Si eres de Penelandia y tomas estrógeno, o si eres de Vulvania y tomas testosterona, te hinchas, sube tu toxicidad y estornudas sin control durante un rato. Cada estornudo te empuja en una dirección al azar, normalmente hacia el peor sitio posible. Lo cruel es que necesitas esa hormona: sin ella, la Puerta Hormonal del jefe de ese reino no se abre. Es la lección más incómoda del juego: a veces lo que necesitas es justo lo que te sienta fatal. Como el gimnasio. Como la terapia. Como tu cuñado en Navidad. El Ornitorrinco, por cierto, no tiene este problema. No pertenece a ningún reino y no le afecta nada. Envidia sana."
+category = 5
+unlock_condition = {"type": 10, "target_id": "allergy"}
+flavor_text = "Sufre tu primera alergia hormonal."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boss_5"
+title = "Su Pudorosidad, la Hoja de Parra"
+text = "La villana de esta historia. Una hoja de higuera gigante, verde, con gafitas de lectura, collar de perlas y una opinión sobre absolutamente todo. Lleva siglos tapando cosas: primero las estatuas, luego los cuadros, luego a la gente, y al final el mundo entero. No odia a nadie. Simplemente cree que todo está mejor tapado, calladito y en gris. Te llamará sinvergüenza, te lanzará píxeles de censura y, cuando esté a punto de caer, te advertirá de que si ella cae todo quedará al descubierto. Hasta lo de tu tía. Tiene razón. Ese es precisamente el plan."
+category = 3
+unlock_condition = {"type": 9, "target_id": "SU PUDOROSIDAD, LA HOJA DE PARRA"}
+flavor_text = "Derrota a la Hoja de Parra."

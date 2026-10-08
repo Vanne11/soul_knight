@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "shotgun_pelvic"
+display_name = "Escopeta Pélvica"
+description = "Dispara perdigones en forma de... ya sabes. Daño base 25, spread amplio. Corto alcance, alto daño. 'Para cuando necesitas abrir piernas... y cráneos.'"
+rarity = 2
+tags = ["arma"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 250
+custom_data = {"base_damage": 25, "fire_rate": 1.2, "projectile_speed": 400, "spread": 0.3, "pellets": 6}

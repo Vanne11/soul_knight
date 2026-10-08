@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "vodka_lore"
+title = "Vodka: Agua que Miente"
+text = "Incoloro. Inodoro. Traicionero. +25 intoxicación. -15% precisión. +20% daño. 'Es agua, dice el ruso. Es mentira, dice tu hígado.' Lo bebes y no sientes nada. Solo el calor después. En el estómago. En la garganta. En las decisiones que tomas después. El vodka no tiene sabor. Tiene consecuencias. Te hace honesto. Demasiado honesto. Dices lo que piensas. Haces lo que quieres. Fallas los dashs. Aciertas los tiros. Te ríes de tus propios chistes. Nadie más se ríe. El vodka no te emborracha. Te desnuda el alma. Y el alma es fea. Pero +20% daño. Vale la pena. Siempre."
+category = 2
+unlock_condition = {"type": 4, "target_id": "vodka", "count": 10}
+flavor_text = "Bebe 10 vodkas."

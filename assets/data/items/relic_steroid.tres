@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "relic_steroid"
+display_name = "Esteroides Anabólicos"
+description = "Hinchado, rojo, furioso. +75% vida, +50% daño melee, -30% velocidad, -20% precisión. 'ROID RAGE ACTIVADO.'"
+rarity = 3
+tags = ["reliquia", "pasivo", "ofensa", "tanque", "masculino"]
+equip_slot = 2
+effects = [{"type": 0, "stat": "max_health", "magnitude": 1.75}, {"type": 0, "stat": "damage", "magnitude": 1.5}, {"type": 0, "stat": "speed", "magnitude": 0.7}, {"type": 0, "stat": "accuracy", "magnitude": 0.8}]
+base_value = 400

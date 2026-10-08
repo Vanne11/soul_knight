@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_esperma"
+title = "Espermatozoide"
+text = "Nunca viene solo. Llega en grupos de tres, nada en círculos a tu alrededor meneando la cola y, cuando le toca, se para, brilla y sale disparado en línea recta. Tiene una única meta en la vida y no sabe muy bien cuál es, así que eres tú. Millones de sus primos compiten cada día por llegar los primeros a algún sitio. Estos han decidido que ese sitio es tu cara."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Espermatozoide", "count": 20}
+flavor_text = "Mata 20 espermatozoides."

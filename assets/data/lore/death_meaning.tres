@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "death_meaning"
+title = "El Significado de la Muerte (Spoiler: Ninguno)"
+text = "Morir aquí no tiene consecuencias reales. Pierdes la run, pierdes las armas, pierdes las monedas y vuelves a elegir héroe. La Hoja de Parra tapa tu cadáver con una hojita, muy educadamente, y el mundo sigue gris un rato más. El narrador apunta la muerte en su libreta y se ríe un poco. No mucho. Bueno, bastante. Lo importante es que vuelvas. Cada intento te enseña algo: que los avisos avisan, que el dash te hace invencible y que entrar a un jefe a puñetazos es una idea pésima. Diez muertes después, ya sabes todo eso. Ahora solo falta que lo hagas."
+category = 5
+unlock_condition = {"type": 10, "target_id": "death", "count": 10}
+flavor_text = "Muere 10 veces en total."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "rifle_lore"
+title = "Cada Disparo un Potencial Hijo... o una Baja Confirmada"
+text = "El Fusil Fecundador no perdona. 18 de daño. 800 de velocidad. 0.15s entre disparos. 0.02 de spread. Es un láser. Un haz de muerte quirúrgica. Lo apuntas y muere. A cualquier distancia. En cualquier ángulo. No hay spread. No hay perdón. No hay 'casi'. Solo 'muerto'. Pero el precio es la cadencia. 0.15s. Seis disparos por segundo. Seis decisiones por segundo. Seis vidas por segundo. Te convierte en una máquina. Eficiente. Fría. Vacía. Los enemigos no son enemigos. Son objetivos. Números. Estadísticas. Y tú... tú eres el contador. Contando bajas. Contando runs. Contando el tiempo que no recuperas."
+category = 2
+unlock_condition = {"type": 1, "target_id": "rifle_reproductive", "count": 1}
+flavor_text = "Equipa el Fusil Fecundador."

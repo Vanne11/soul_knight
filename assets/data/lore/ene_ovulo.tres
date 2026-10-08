@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_ovulo"
+title = "Óvulo Rodante"
+text = "Lleva una corona diminuta porque en Vulvania todo el mundo es un poco realeza. Es redondo, es orgulloso y espera una vez al mes a que algo interesante ocurra. Como nunca ocurre, se pasa el resto del tiempo rodando hacia los intrusos. Avisa antes de embestir y se queda mareado después. No le hables de citas. Es un tema sensible."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Óvulo Rodante", "count": 10}
+flavor_text = "Mata 10 óvulos rodantes."

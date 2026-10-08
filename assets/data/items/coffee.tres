@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "coffee"
+display_name = "Café de Emergencia"
+description = "Te despista de la resaca. -40 intoxicación, +20 estamina. Sabe a tierra quemada y arrepentimiento matutino."
+rarity = 1
+tags = ["consumible", "desintoxicante", "estamina"]
+effects = [{"type": 1, "intoxication_amount": -40.0}, {"type": 0, "stat": "stamina", "magnitude": 20.0}]
+max_stack = 5
+consumable = true
+base_value = 25

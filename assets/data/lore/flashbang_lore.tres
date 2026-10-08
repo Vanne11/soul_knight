@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "flashbang_lore"
+title = "¡Luz! ¡Mi Única Debilidad... la Luz!"
+text = "El Flashbang Sensorial no mata. Ciega. 4 segundos de oscuridad absoluta. 80% menos precisión. Los enemigos disparan a ciegas. Caen en trampas. Se golpean entre sí. Es la única granada 'pacifista'. Pero el pacifismo en este juego es solo otra forma de matar. Los usas para pasar. Para huir. Para reorganizarte. Para ganar tiempo. El tiempo es lo único que no tienes. 4 segundos. Cuenta. Uno. Dos. Tres. Cuatro. La luz vuelve. Ellos ven. Tú sigues vivo. Por ahora. El flashbang no salva vidas. Las alquila. Por 4 segundos. A cambio de 40 monedas. Buen trato. Mal negocio."
+category = 2
+unlock_condition = {"type": 4, "target_id": "grenade_flashbang", "count": 5}
+flavor_text = "Usa 5 flashbangs."

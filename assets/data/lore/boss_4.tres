@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boss_4"
+title = "El Aduanero Hormonal"
+text = "El único habitante permanente del Perineo. Lleva gorra de plato, una carpeta llena de formularios y un sello gigante que estampa sobre cualquier cosa que se mueva. Su vida es la frontera: quién pasa, quién no, con qué papeles y por qué ventanilla. Pide pasaporte hormonal, certificado de alergias y el formulario 27-B por triplicado. En su última fase cierra la frontera a penes, vulvas y ornitorrincos por igual. Cuando por fin cae, aprueba tu paso con reparos. Y por primera vez en la historia, los dos reinos pueden cruzar sin papeles. El caos. La libertad. Lo mismo, en realidad."
+category = 3
+unlock_condition = {"type": 9, "target_id": "EL ADUANERO HORMONAL"}
+flavor_text = "Derrota al guardián del Perineo."

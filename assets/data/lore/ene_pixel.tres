@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_pixel"
+title = "Píxel de Censura"
+text = "Un cuadradito de mosaico borroso con ojos. Su misión es colocarse delante de cualquier cosa interesante para que nadie la vea. Viene en grupo, porque un solo píxel no tapa nada, y cuando se lanza lo hace en línea recta tras un brillo de aviso. Si los derrotas a todos, por fin se ve lo que había detrás. Normalmente era una pared."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Píxel de Censura", "count": 20}
+flavor_text = "Mata 20 píxeles."

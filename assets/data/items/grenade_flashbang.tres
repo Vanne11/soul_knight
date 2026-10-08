@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "grenade_flashbang"
+display_name = "Flashbang Sensorial"
+description = "Ciega enemigos 4s, reduce precisión 80%. No hace daño. '¡Luz! ¡Mi única debilidad... la luz!'"
+rarity = 1
+tags = ["consumible", "granada", "utilidad", "cc"]
+effects = [{"type": 7, "custom_data": {"type": "throw_flashbang", "duration": 4.0, "accuracy_reduction": 0.8, "radius": 150}}]
+max_stack = 4
+consumable = true
+base_value = 40

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "loc_selva"
+title = "La Selva Púbica"
+text = "Una jungla densa, húmeda y rizada en la que nadie ha pasado la cuchilla desde que empezó la censura. Antes era un lugar tranquilo, con su ecosistema y sus cosas. Ahora está llena de ladillas sindicadas, pelos encarnados con rencor y granitos que escupen a quien se acerca. Doña Cera Caliente ha montado su salón de belleza en el corazón de la selva y está decidida a dejarlo todo como un azulejo. La selva, por su parte, opina que cada uno tiene derecho a llevar su jardín como quiera. Tú estás en medio. Como siempre."
+category = 4
+unlock_condition = {"type": 2, "floor": 1}
+flavor_text = "Entra en la Selva Púbica."

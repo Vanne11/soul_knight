@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "key_crystal"
+display_name = "Llave de Cristal Líquido"
+description = "Abre la cámara del boss secreto. Solo aparece si completaste el piso sin tomar daño. 'Perfección frágil.'"
+rarity = 4
+tags = ["llave", "especial", "secreto", "boss"]
+effects = [{"type": 5, "lore_entry_id": "crystal_key_lore"}]
+base_value = 800
+custom_data = {"requires_no_damage": true}

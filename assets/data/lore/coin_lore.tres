@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "coin_lore"
+title = "La Moneda Pudorosa"
+text = "La moneda oficial del mundo censurado. Lleva grabada una hoja de parra en ambas caras, porque la Hoja de Parra no soportaba la idea de que nadie le viera la cruz a nada. La sueltan los enemigos al morir y sirve para comprar en la tienda, donde los precios son abusivos. Hasta el dinero tiene vergüenza en este mundo. Pero se gasta igual de rápido."
+category = 2
+unlock_condition = {"type": 1, "target_id": "coin", "count": 100}
+flavor_text = "Recoge 100 monedas en total."

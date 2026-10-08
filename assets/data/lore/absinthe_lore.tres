@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "absinthe_lore"
+title = "La Hada Verde Te Susurra Verdades"
+text = "Prohibida en 12 países y 3 dimensiones. +50 intoxicación. -30% precisión. +40% daño. Visión borrosa. La bebes y el mundo se vuelve... interesante. Los colores sangran. Las paredes respiran. Los enemigos tienen aura. Ves sus puntos débiles. Ves sus miedos. Ves TU miedo. La hada verde se sienta en tu hombro. Susurra. 'Mátalos a todos'. 'Tú eres el elegido'. 'El juego te ama'. Miente. La absinta no revela verdades. Inventa mentiras bonitas. Y tú las crees. Porque quieres creer. Porque la realidad es fea. Y la hada verde es hermosa. Hasta que se acaba. Y el crash es el infierno."
+category = 2
+unlock_condition = {"type": 4, "target_id": "absinthe", "count": 3}
+flavor_text = "Bebe 3 absintas."

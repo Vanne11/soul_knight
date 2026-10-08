@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "key_bloody"
+display_name = "Llave Empapada en Sangre"
+description = "Abre puertas de habitaciones de desafío. Requiere haber matado 20+ enemigos en esta run. 'La llave está en la cerradura... y la cerradura está en ti.'"
+rarity = 3
+tags = ["llave", "especial", "desafío"]
+effects = [{"type": 5, "lore_entry_id": "bloody_key_lore"}]
+base_value = 300
+custom_data = {"requires_kills": 20}

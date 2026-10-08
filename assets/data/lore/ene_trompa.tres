@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_trompa"
+title = "Trompa Escupidora"
+text = "Una trompa de Falopio con flecos que usa como manos, como cañón y como argumento en las discusiones. Se mantiene lejos, carga y escupe en abanico. Es la encargada de controlar quién entra y quién sale de Vulvania, y se toma su trabajo muy en serio. Si no tienes cita previa, te escupe. Si tienes cita previa, también, pero con más educación."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Trompa Escupidora", "count": 10}
+flavor_text = "Mata 10 trompas."

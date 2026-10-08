@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_vesicula"
+title = "Vesícula Resentida"
+text = "Una glándula con forma de pera llena de bilis y de cosas que no ha dicho. Se mantiene a distancia porque no le gusta el contacto. Cuando se enfada, la bilis le sube, brilla de color verde y te escupe tres chorros en abanico. Mientras se carga se queda quieta y vulnerable, como cualquiera que está a punto de soltar todo lo que lleva dentro."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Vesícula Resentida", "count": 10}
+flavor_text = "Mata 10 vesículas."

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "relic_lube"
+display_name = "Lubricante Cuántico"
+description = "Todo resbala. Dash sin costo stamina, +50% velocidad dash, inmunidad a ralentización. 'Suavidad a nivel subatómico.'"
+rarity = 3
+tags = ["reliquia", "pasivo", "movimiento"]
+equip_slot = 2
+effects = [{"type": 0, "stat": "dash_stamina_cost", "magnitude": 0.0}, {"type": 0, "stat": "dash_speed", "magnitude": 1.5}, {"type": 4, "status_effect": null, "custom_data": {"immunity": ["slow", "root"]}}]
+base_value = 350

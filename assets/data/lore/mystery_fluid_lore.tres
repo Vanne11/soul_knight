@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "mystery_fluid_lore"
+title = "Solo Hay Una Forma de Saberlo"
+text = "El Fluido Misterioso (?). ¿Qué es? ¿Orina? ¿Semen? ¿Leche materna? ¿Agua del grifo? ¿Veneno? ¿Cura? ¿Droga? ¿Agua bendita? ¿Sudor de boss? ¿Lágrimas de desarrollador? Lo bebes. La ruleta rusa en botella. A veces curas 50. A veces pierdes 30. A veces te emborrachas. A veces revelas el mapa. A veces spawnea un boss en tu cara. 'Solo hay una forma de saberlo', dice la descripción. Mientes. Sabes qué es. Lo sabes en el fondo. Pero lo bebes igual. Porque la incertidumbre es lo único que te queda. Porque saberlo todo es aburrido. Porque a veces... a veces sale cura completa. Y te sientes dios. Por 3 segundos. Luego bebes otro. Y otro. Y otro. La ludopatía no es solo casinos. Es cada botella con (?) en la etiqueta."
+category = 2
+unlock_condition = {"type": 4, "target_id": "mystery_fluid", "count": 20}
+flavor_text = "Bebe 20 Fluidos Misteriosos."

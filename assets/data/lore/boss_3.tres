@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boss_3"
+title = "Su Majestad Ovaria II"
+text = "Reina de Vulvania por la gracia del ciclo. Viste capa morada, corona de oro y una expresión de no tener tiempo para ti. Recibe audiencias una vez al mes y hoy no es el día. Sus brazos son dos trompas con flecos que disparan en espiral, convoca calambres reales y, en su última fase, advierte que está en sus días. En todos ellos. Cuando cae, confiesa que la corona de la Hoja de Parra era de plástico. Vulvania recupera el color y la reina, por primera vez en siglos, se toma una tarde libre."
+category = 3
+unlock_condition = {"type": 9, "target_id": "SU MAJESTAD OVARIA II"}
+flavor_text = "Derrota a la reina de Vulvania."

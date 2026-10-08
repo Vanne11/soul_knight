@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "char_pitocles"
+title = "Pitocles, Hoplita de Penelandia"
+text = "Pitocles se alistó en el ejército de Penelandia por el casco. Le dijeron que el penacho rojo daba autoridad, y él lleva desde entonces esperando a que haga efecto. Es valiente, leal y tiene la capacidad de reflexión de un ariete. Su escudo redondo le permite aguantar más que nadie, lo cual es útil porque su estrategia favorita es meterse en medio. Es alérgico al estrógeno: en Vulvania estornuda, se hincha y siente una necesidad urgente e incomprensible de hablar de sus sentimientos. Lo lleva fatal. Aun así cruzará el reino vecino, porque la Puerta Hormonal no se abre sola y porque, en el fondo, sospecha que hablar de sentimientos no puede ser peor que la censura."
+category = 1
+unlock_condition = {"type": 10, "target_id": "play_pitocles"}
+flavor_text = "Juega una run con Pitocles."

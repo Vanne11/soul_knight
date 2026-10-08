@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "rum_lore"
+title = "Yo Ho Ho y Una Botella de Arrepentimiento"
+text = "Dulce. Espeso. Pirata. +35 intoxicación. -20% precisión. +25% daño. +5% lifesteal. Robas vida con cada golpe. Como un pirata. Como un vampiro. Como tu ex. El ron no quema. Acaricia. Te arrulla. Te susurra que todo está bien. Que el próximo piso será fácil. Que el boss caerá en dos tiros. Miente. El ron es la mentira más dulce. Te abraza mientras te apuñala. El lifesteal es solo la sangre que chupas de tus propios errores. 'Yo ho ho', cantas. 'Y una botella de...' Te callas. La botella está vacía. Tú también."
+category = 2
+unlock_condition = {"type": 4, "target_id": "rum", "count": 8}
+flavor_text = "Bebe 8 rones."

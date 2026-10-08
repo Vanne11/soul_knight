@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "rifle_reproductive"
+display_name = "Fusil Fecundador"
+description = "Precisión quirúrgica. Daño base 18, alta cadencia. 'Cada disparo es un potencial hijo... o una baja confirmada.'"
+rarity = 3
+tags = ["arma"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 400
+custom_data = {"base_damage": 18, "fire_rate": 0.15, "projectile_speed": 800, "spread": 0.02}

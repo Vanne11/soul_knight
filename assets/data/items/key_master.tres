@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "key_master"
+display_name = "Llave Maestra Dorada"
+description = "Abre cualquier cerradura. Incluyendo las de tu corazón. Requiere intoxicación tier 3 (Blackout). Único uso."
+rarity = 4
+tags = ["llave", "especial", "único"]
+effects = [{"type": 5, "lore_entry_id": "master_key_secret"}, {"type": 0, "stat": "damage", "magnitude": 1.0}]
+max_stack = 1
+consumable = true
+base_value = 1000
+custom_data = {"requires_intoxication_tier": 3, "single_use": true}

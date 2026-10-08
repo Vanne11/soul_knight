@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boss_phases"
+title = "Las Fases del Jefe: La Negociación"
+text = "Todos los jefes de la Gran Censura siguen el mismo guion, aunque ninguno lo admita.\n\nFase 1: te mide. Abanicos de disparos y embestidas avisadas. Es la primera cita.\n\nFase 2, al 66%: se pone serio. Espirales, refuerzos y menos pausas entre ataques. Es la convivencia: salen los defectos.\n\nFase 3, al 33%: anillos de proyectiles con un único hueco. Es la ruptura. Busca el hueco o muere en el intento.\n\nTruco que nadie te cuenta: cuando un jefe embiste y choca contra la pared se queda atontado y recibe el doble de daño. Esquiva hacia un lado, no hacia atrás. Y deja de recibir golpes telegrafiados. Avisan. Siempre avisan."
+category = 3
+unlock_condition = {"type": 9, "count": 3}
+flavor_text = "Derrota 3 jefes."

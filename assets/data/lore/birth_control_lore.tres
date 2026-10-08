@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "birth_control_lore"
+title = "Seguro, Pero Aburrido"
+text = "El Anticonceptivo Maldito hace lo que promete. Nada te pasa. Los fluidos rebotan. Los efectos de estado resbalan. El fuego no quema. El veneno no envenena. La lujuria... la lujuria ni se acerca. Te vuelves intocable. Estéril. Seguro. Y terriblemente aburrido. Los enemigos dejan menos loot porque ni se molestan en intentarlo. 'Para qué', piensan. 'Total, no va a pasar nada.' Ganas runs sin riesgo. Sin emoción. Sin cicatrices. Al final miras tu inventario: lleno de items comunes. Ninguna reliquia legendaria. Ninguna cicatriz que contar. La seguridad es la muerte de la historia."
+category = 2
+unlock_condition = {"type": 1, "target_id": "relic_birth_control", "count": 1}
+flavor_text = "Equipa el Anticonceptivo Maldito."

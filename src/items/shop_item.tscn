@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://src/items/shop_item.gd" id="1"]
+[ext_resource type="FontFile" path="res://assets/fonts/NotoSansMono-Regular.ttf" id="2"]
+
+[sub_resource type="RectangleShape2D" id="3"]
+size = Vector2(40, 40)
+
+[node name="ShopItem" type="Area2D"]
+z_index = 1
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("3")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -80.0
+offset_top = -64.0
+offset_right = 80.0
+offset_bottom = -24.0
+theme_override_fonts/font = ExtResource("2")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.06, 1)
+theme_override_constants/outline_size = 4
+horizontal_alignment = 1

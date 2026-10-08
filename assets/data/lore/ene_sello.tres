@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_sello"
+title = "Sello Censor"
+text = "Un sello de goma con piernas que estampa 'CENSURADO' en todo lo que vuela. Se carga, brilla y dispara sus estampas en abanico. Ha sellado cuadros, libros, recetas de cocina y, una vez, por error, a su propio reflejo. Desde entonces no se mira en los espejos. Cree firmemente en el orden, en la tinta roja y en el formulario adecuado."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Sello Censor", "count": 10}
+flavor_text = "Mata 10 sellos."

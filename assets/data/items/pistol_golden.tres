@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "pistol_golden"
+display_name = "Pistola Dorada (Compensación)"
+description = "Brilla más que tu futuro. Daño base 15, precisión perfecta. 'Tamaño del cañón inversamente proporcional a otra cosa.'"
+rarity = 3
+tags = ["arma"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}, {"type": 0, "stat": "accuracy", "magnitude": 1.5}]
+base_value = 500
+custom_data = {"base_damage": 15, "fire_rate": 0.35, "projectile_speed": 600, "spread": 0.01}

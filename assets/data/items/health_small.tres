@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "health_small"
+display_name = "Píldora Azul Pequeña"
+description = "Restaura 25 de vida. Sabe a menta y arrepentimiento."
+rarity = 0
+tags = ["consumible", "curación"]
+effects = [{
+"type": 2,
+"magnitude": 25.0
+}]
+max_stack = 5
+consumable = true
+base_value = 15

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "prostate_lore"
+title = "La Iluminación Prohibida"
+text = "Lo encontraste. Lo equipaste. El universo se abrió ante ti. Cada crítico es una revelación. Cada explosión en cadena, un mantra. La próstata no es una glándula. Es un tercer ojo. Un chakra anal. Cuando criticas, el cosmos eyacula estrellas. Iluminación. Éxtasis. Y luego... el período refractario. El enfriamiento. El vacío post-orgasmo cósmico. Vale la pena. Siempre vale la pena. Hasta que te das cuenta de que la iluminación anal no te paga el alquiler."
+category = 2
+unlock_condition = {"type": 1, "target_id": "relic_prostate", "count": 1}
+flavor_text = "Equipa la Próstata Iluminada."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "loc_vulvania"
+title = "Vulvania"
+text = "Vulvania es elegante, ordenada y funciona con un calendario que nadie de fuera entiende. Sus jardines florecen por ciclos, sus palacios tienen pétalos en las cornisas y sus habitantes tienen muy poca paciencia con los turistas que preguntan cosas evidentes. Desde la censura, los óvulos ruedan por los pasillos sin rumbo, los calambres saltan de rincón en rincón y las trompas escupen a cualquiera que no haya pedido cita. Su Majestad Ovaria II gobierna desde un trono de terciopelo y no recibe a nadie sin estrógeno en el cuerpo. Si eres de Penelandia, prepárate para estornudar y para hablar de tus sentimientos. Las dos cosas a la vez."
+category = 4
+unlock_condition = {"type": 2, "floor": 3}
+flavor_text = "Llega a Vulvania."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "player_identity"
+title = "El Narrador: Currículum de un Pesado"
+text = "Antes de comentar tus fracasos, el narrador trabajaba en el Ministerio de la Censura. Su trabajo consistía en describir en voz alta todo lo que la Hoja de Parra tapaba, para que constara en acta. Lo despidieron por describir demasiado bien. Desde entonces se dedica a lo único que sabe hacer: hablar de lo que ve. Y lo que ve eres tú, muriendo de formas cada vez más creativas. Ha prometido hablar poco. Lo cumple a regañadientes. No le caes mal. Bueno, un poco. Pero si dejaras de recibir golpes telegrafiados con tres segundos de antelación, a lo mejor se le pasaba."
+category = 1
+unlock_condition = {"type": 10, "target_id": "death", "count": 3}
+flavor_text = "Muere 3 veces."

@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/ui/bar.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/bar_bg.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/bar_fill.png" id="3"]
+
+[node name="Bar" type="PanelContainer"]
+script = ExtResource("1")
+custom_minimum_size = Vector2(200, 28)
+
+[node name="Background" type="TextureRect" parent="."]
+texture = ExtResource("2")
+stretch_mode = 1
+
+[node name="Fill" type="TextureRect" parent="./Background"]
+texture = ExtResource("3")
+stretch_mode = 1
+anchors_preset = 0
+size_flags_horizontal = 1
+
+[node name="Label" type="Label" parent="./Background"]
+text = "BAR"
+horizontal_alignment = 1
+vertical_alignment = 1
+anchors_preset = 15
+font_size = 14
+font_color = Color(1, 1, 1, 1)

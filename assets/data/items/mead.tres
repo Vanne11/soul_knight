@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "mead"
+display_name = "Hidromiel de Valhalla"
+description = "Bebida de dioses caídos. +40 intoxicación, -10% precisión, +30% daño, +15% velocidad. 'Odín bebió esto. Odín también se cayó de su caballo.'"
+rarity = 2
+tags = ["consumible", "intoxicante", "buff"]
+effects = [{"type": 1, "intoxication_amount": 40.0}, {"type": 0, "stat": "accuracy", "magnitude": 0.9}, {"type": 0, "stat": "damage", "magnitude": 1.3}, {"type": 0, "stat": "speed", "magnitude": 1.15}]
+max_stack = 3
+consumable = true
+base_value = 60

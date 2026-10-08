@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_pelo"
+title = "Pelo Encarnado"
+text = "Un pelo que quiso crecer hacia fuera y la vida lo empujó hacia dentro. Desde entonces está rizado, irritado y lleno de resentimiento. Persigue a todo el que pasa, se encoge, tiembla y embiste. Después de embestir se queda agotado, como cualquiera que vive con tanta tensión acumulada. Ese es el momento de pegarle. No es mala persona. Es un pelo con un mal día que dura años."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Pelo Encarnado", "count": 10}
+flavor_text = "Mata 10 pelos encarnados."

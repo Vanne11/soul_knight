@@ -1,0 +1,91 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_attack_00.png" id="1_c2hpp"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_attack_01.png" id="2_n70of"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_attack_02.png" id="3_eio7t"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_death_00.png" id="4_45707"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_death_01.png" id="5_p5f3d"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_death_02.png" id="6_6e3x2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_death_03.png" id="7_2ogyq"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_hurt_00.png" id="8_fwlhm"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_hurt_01.png" id="9_ciwty"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_idle_00.png" id="10_wjwsc"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_walk_00.png" id="11_ltuu8"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_walk_01.png" id="12_3y3n3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_walk_02.png" id="13_8bmtj"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/ranged_walk_03.png" id="14_f2hxe"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 0.08,
+"texture": ExtResource("1_c2hpp")
+}, {
+"duration": 0.08,
+"texture": ExtResource("2_n70of")
+}, {
+"duration": 0.08,
+"texture": ExtResource("3_eio7t")
+}],
+"loop": 0,
+"name": &"attack",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("4_45707")
+}, {
+"duration": 0.2,
+"texture": ExtResource("5_p5f3d")
+}, {
+"duration": 0.2,
+"texture": ExtResource("6_6e3x2")
+}, {
+"duration": 0.2,
+"texture": ExtResource("7_2ogyq")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 1.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.05,
+"texture": ExtResource("8_fwlhm")
+}, {
+"duration": 0.05,
+"texture": ExtResource("9_ciwty")
+}],
+"loop": 0,
+"name": &"hurt",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("10_wjwsc")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 0.1,
+"texture": ExtResource("11_ltuu8")
+}, {
+"duration": 0.1,
+"texture": ExtResource("12_3y3n3")
+}, {
+"duration": 0.1,
+"texture": ExtResource("13_8bmtj")
+}, {
+"duration": 0.1,
+"texture": ExtResource("14_f2hxe")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 1.0
+}]

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "syringe_adrenaline"
+display_name = "Jeringa de Adrenalina"
+description = "Directa al corazón. Cura 50 vida, +100% estamina 5s, +20 intoxicación (el dolor embriaga). 'CLEAR!'"
+rarity = 2
+tags = ["consumible", "curación", "buff", "intoxicante"]
+effects = [{"type": 2, "magnitude": 50.0}, {"type": 1, "intoxication_amount": 20.0}, {"type": 0, "stat": "stamina", "magnitude": 100.0}]
+max_stack = 3
+consumable = true
+base_value = 75

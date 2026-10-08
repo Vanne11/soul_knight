@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_barra"
+title = "Barra Negra"
+text = "El guardia básico del Palacio de la Censura. Una barra negra con patitas y cara de estar harta de su trabajo. Se pasa el día tapando cosas que no le parecen escandalosas, por orden de una jefa que nunca da explicaciones. Embiste después de avisar, como todos. En el fondo sueña con dejar de tapar y ponerse a subrayar. Algo más alegre."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Barra Negra", "count": 10}
+flavor_text = "Mata 10 barras negras."

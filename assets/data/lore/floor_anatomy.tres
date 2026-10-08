@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "floor_anatomy"
+title = "Mapa de la Gran Censura"
+text = "Piso 1, la Selva Púbica: frontera salvaje, rizada y sin podar, donde manda una esteticista con una olla de cera hirviendo.\n\nPiso 2, Penelandia: el reino del orgullo, la autoestima inflada y el desodorante barato. Gobierna el Testículo Primordial.\n\nPiso 3, Vulvania: elegante, cíclica y muy poco tolerante con las visitas sin cita. Reina Su Majestad Ovaria II.\n\nPiso 4, el Perineo: la tierra de nadie entre los dos reinos. Literalmente. Allí solo vive un aduanero obsesionado con los sellos.\n\nPiso 5, el Palacio de la Censura: píxeles, barras negras y la Hoja de Parra en su trono de mimbre.\n\nCada piso empieza gris. Cada sala que liberas recupera su color. Si llegas al final, el mundo entero lo hará. Si no, al menos habrás pintado algo."
+category = 4
+unlock_condition = {"type": 2, "floor": 2}
+flavor_text = "Supera el primer piso."

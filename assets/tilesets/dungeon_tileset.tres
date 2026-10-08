@@ -1,0 +1,43 @@
+[gd_resource type="TileSet" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/floor_00.png" id="1_emclq"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/floor_01.png" id="2_naqsy"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/floor_02.png" id="3_qk0nc"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/floor_03.png" id="4_rul5b"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/wall.png" id="5_asa3f"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k26u5"]
+texture = ExtResource("1_emclq")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fv3sb"]
+texture = ExtResource("2_naqsy")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c31kh"]
+texture = ExtResource("3_qk0nc")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1jq0p"]
+texture = ExtResource("4_rul5b")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yfum7"]
+texture = ExtResource("5_asa3f")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[resource]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_k26u5")
+sources/1 = SubResource("TileSetAtlasSource_fv3sb")
+sources/2 = SubResource("TileSetAtlasSource_c31kh")
+sources/3 = SubResource("TileSetAtlasSource_1jq0p")
+sources/4 = SubResource("TileSetAtlasSource_yfum7")

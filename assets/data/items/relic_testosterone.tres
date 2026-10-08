@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "relic_testosterone"
+display_name = "Testosterona Pura"
+description = "Masculinidad tóxica embotellada. +100% vida, +50% estamina, regeneración vida 2/s. Efecto secundario: crece vello en la lengua."
+rarity = 4
+tags = ["reliquia", "pasivo", "stats", "masculino"]
+equip_slot = 2
+effects = [{"type": 0, "stat": "max_health", "magnitude": 2.0}, {"type": 0, "stat": "max_stamina", "magnitude": 1.5}, {"type": 0, "stat": "lifesteal", "magnitude": 0.02}]
+base_value = 500

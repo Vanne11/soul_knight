@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "bloody_key_lore"
+title = "La Llave que Sangra"
+text = "La llave late en tu mano. Tibia. Húmeda. Cada enemigo que mataste dejó un poco de sí mismo en ella. Veinte almas para abrir una puerta. ¿Vale la pena? La habitación del desafío contiene poder. O muerte. O ambas. La llave susurra: 'Sigue matando. Necesito más.' La usas. La puerta se abre. Dentro hay un espejo. Tu reflejo te mira con decepción. 'Otra run más', susurra. 'Otra vez muriendo en el piso 3.' La vergüenza es el único boss que no puedes matar a tiros. La llave se deshace en sangre. La puerta se cierra."
+category = 2
+unlock_condition = {"type": 1, "target_id": "key_bloody", "count": 1}
+flavor_text = "Obtén la Llave Empapada en Sangre."

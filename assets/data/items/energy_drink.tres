@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "energy_drink"
+display_name = "Monster Energy (Marcablanca)"
+description = "Alas de cartón. +40 estamina, +15% velocidad 10s, +10 intoxicación (azúcar es droga). 'Te da alas... y taquicardia.'"
+rarity = 0
+tags = ["consumible", "estamina", "buff"]
+effects = [{"type": 1, "intoxication_amount": 10.0}, {"type": 0, "stat": "stamina", "magnitude": 40.0}, {"type": 0, "stat": "speed", "magnitude": 1.15}]
+max_stack = 5
+consumable = true
+base_value = 20

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_testiculo"
+title = "Testículo Errante"
+text = "No te ataca: te juzga. Camina por Penelandia con un único ojo entornado, mirando a todo el mundo con una decepción profunda y antigua. Antes de embestir parpadea y tiembla, como quien se arma de valor para decirte algo incómodo. Después de embestir se queda agotado y gris. Ese es tu momento. No le hagas caso cuando te mire así. Mira así a todo el mundo, incluso a su propia familia."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Testículo Errante", "count": 10}
+flavor_text = "Mata 10 testículos errantes."

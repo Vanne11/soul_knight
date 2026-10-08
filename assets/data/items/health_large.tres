@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "health_large"
+display_name = "Píldora Azul Grande"
+description = "Restaura 75 de vida. Para cuando la pequeña no basta y la grande duele."
+rarity = 1
+tags = ["consumible", "curación"]
+effects = [{
+"type": 2,
+"magnitude": 75.0
+}]
+max_stack = 3
+consumable = true
+base_value = 50

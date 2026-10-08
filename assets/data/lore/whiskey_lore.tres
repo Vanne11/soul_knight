@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "whiskey_lore"
+title = "El Whiskey que No Es Whiskey"
+text = "Esa botella barata que encuentras en cada esquina. No es alcohol. Es esencia destilada de malas decisiones. Cada sorbo es un 'sí' a algo que deberías haber dicho 'no'. El ardor en la garganta no es el alcohol. Es tu dignidad evaporándose. Pero oye, +15% daño. Vale la pena, ¿verdad? Siempre vale la pena. Hasta que no lo vale."
+category = 2
+unlock_condition = {"type": 4, "target_id": "whiskey", "count": 10}
+flavor_text = "Bebe 10 whiskeys en una run."

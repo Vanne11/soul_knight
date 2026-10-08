@@ -1,0 +1,17 @@
+# Godot
+.godot/
+*.translation
+export_presets.cfg
+/build/
+/export/
+
+# Herramientas y scripts de desarrollo
+*.py
+__pycache__/
+tests/
+tools/
+.mise.toml
+
+# Sistema
+.DS_Store
+Thumbs.db

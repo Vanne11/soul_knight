@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boss_2"
+title = "El Testículo Primordial"
+text = "El patriarca de Penelandia. Un testículo del tamaño de un coche, con un ojo en el centro que te mira con una decepción de siglos. No ataca con rabia, ataca con expectativas incumplidas. Dispara en abanico, embiste hasta chocar contra la pared (y ahí se queda atontado, recibiendo el doble de daño) y, cuando las cosas se ponen feas, invoca a sus espermatozoides. Al morir susurra: 'Fui yo quien te creó... y fui yo quien te abandonó.' Freud tendría para tres libros. Tú solo tienes un cofre."
+category = 3
+unlock_condition = {"type": 9, "target_id": "TESTÍCULO PRIMORDIAL"}
+flavor_text = "Derrota al patriarca de Penelandia."

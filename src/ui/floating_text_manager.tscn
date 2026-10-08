@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/ui/floating_text_manager.gd" id="1"]
+
+[node name="FloatingTextManager" type="Node"]
+script = ExtResource("1")

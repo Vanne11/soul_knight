@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "relic_condom"
+display_name = "Preservativo de Titanio"
+description = "Protección total. Escudos +50%, inmunidad a efectos de estado sexuales. 'Mejor prevenir que curar... o abortar.'"
+rarity = 3
+tags = ["reliquia", "pasivo", "defensa"]
+equip_slot = 2
+effects = [{"type": 0, "stat": "max_shields", "magnitude": 1.5}, {"type": 4, "status_effect": null, "custom_data": {"immunity": ["burn", "poison", "lust"]}}]
+base_value = 300

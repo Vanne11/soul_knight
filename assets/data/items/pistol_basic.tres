@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "pistol_basic"
+display_name = "Pistola de Plástico"
+description = "Dispara balas de foam. Daño base 8. 'Es un juguete', dice la caja. Duele igual."
+rarity = 1
+tags = ["arma"]
+equip_slot = 1
+effects = [{
+"type": 0,
+"stat": "damage",
+"magnitude": 1.0
+}]
+base_value = 100
+custom_data = {"base_damage": 8, "fire_rate": 0.4, "projectile_speed": 500, "spread": 0.05}

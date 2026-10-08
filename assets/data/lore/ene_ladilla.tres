@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_ladilla"
+title = "Ladilla"
+text = "Pequeña, rápida y organizada. Las ladillas de la Selva Púbica tienen sindicato, convenio colectivo y derecho a huelga, pero nunca lo ejercen porque morder es su vocación. Atacan en grupo, te rodean y se lanzan en línea recta después de un brillo de aviso. Si te apartas de la línea, fallan. Si no te apartas, te pican. Ellas no lo hacen por maldad: es su trabajo, y están muy orgullosas de él."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Ladilla", "count": 15}
+flavor_text = "Mata 15 ladillas."

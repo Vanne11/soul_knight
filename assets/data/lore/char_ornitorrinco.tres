@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "char_ornitorrinco"
+title = "El Ornitorrinco, No Especifica"
+text = "Pico de pato. Cola de castor. Pone huevos. Es mamífero. Tiene espolones venenosos. Cuando los primeros naturalistas vieron uno, pensaron que era una broma hecha con trozos de otros animales. La naturaleza tuvo un mal día y el Ornitorrinco lo tuvo peor: le tocó salvar el mundo. No pertenece a Penelandia ni a Vulvania, así que ningún reino lo considera de casa y ninguna hormona le hace nada. Se bebe la testosterona y el estrógeno como quien se bebe un zumo. La Hoja de Parra intentó censurarlo y no supo qué tapar. Desde entonces el Ornitorrinco es oficialmente un problema administrativo. Y le encanta."
+category = 1
+unlock_condition = {"type": 10, "target_id": "play_ornitorrinco"}
+flavor_text = "Juega una run con el Ornitorrinco."

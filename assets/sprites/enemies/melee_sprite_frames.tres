@@ -1,0 +1,91 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_attack_00.png" id="1_burje"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_attack_01.png" id="2_vquvg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_attack_02.png" id="3_uq370"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_death_00.png" id="4_kocsk"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_death_01.png" id="5_bspcy"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_death_02.png" id="6_72x43"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_death_03.png" id="7_gcb50"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_hurt_00.png" id="8_21xph"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_hurt_01.png" id="9_ys2po"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_idle_00.png" id="10_qyqr6"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_walk_00.png" id="11_ndb3e"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_walk_01.png" id="12_0imtc"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_walk_02.png" id="13_qdsak"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/melee_walk_03.png" id="14_i27qj"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 0.08,
+"texture": ExtResource("1_burje")
+}, {
+"duration": 0.08,
+"texture": ExtResource("2_vquvg")
+}, {
+"duration": 0.08,
+"texture": ExtResource("3_uq370")
+}],
+"loop": 0,
+"name": &"attack",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("4_kocsk")
+}, {
+"duration": 0.2,
+"texture": ExtResource("5_bspcy")
+}, {
+"duration": 0.2,
+"texture": ExtResource("6_72x43")
+}, {
+"duration": 0.2,
+"texture": ExtResource("7_gcb50")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 1.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.05,
+"texture": ExtResource("8_21xph")
+}, {
+"duration": 0.05,
+"texture": ExtResource("9_ys2po")
+}],
+"loop": 0,
+"name": &"hurt",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("10_qyqr6")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 0.1,
+"texture": ExtResource("11_ndb3e")
+}, {
+"duration": 0.1,
+"texture": ExtResource("12_0imtc")
+}, {
+"duration": 0.1,
+"texture": ExtResource("13_qdsak")
+}, {
+"duration": 0.1,
+"texture": ExtResource("14_i27qj")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 1.0
+}]

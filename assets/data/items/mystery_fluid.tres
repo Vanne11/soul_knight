@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "mystery_fluid"
+display_name = "Fluido Misterioso (?)"
+description = "¿Qué es? ¿Orina? ¿Semen? ¿Leche materna? ¿Agua del grifo? Efecto aleatorio: cura, daña, emborracha, revela mapa, spawn enemigo. 'Solo hay una forma de saberlo.'"
+rarity = 2
+tags = ["consumible", "caos", "apuesta"]
+effects = [{"type": 7, "custom_data": {"type": "random"}}, {"type": 1, "intoxication_amount": 5.0}]
+max_stack = 3
+consumable = true
+base_value = 50

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "loc_penelandia"
+title = "Penelandia"
+text = "Penelandia es un reino construido sobre una única idea: el tamaño importa. Todo es alargado, todo es vertical y todo está ligeramente inflado. Los edificios compiten por ser el más alto, los ciudadanos compiten por todo lo demás y nadie pregunta nunca por direcciones. Huele a desodorante de oferta y a autoestima sin respaldo. Desde la censura, los testículos errantes vagan por las calles juzgando a todo el mundo, las vesículas escupen resentimiento y los espermatozoides corren en grupo hacia ninguna parte, como siempre. Para entrar en la sala del Testículo Primordial necesitas testosterona en el cuerpo. Si eres de Vulvania, te va a sentar fatal."
+category = 4
+unlock_condition = {"type": 2, "floor": 2}
+flavor_text = "Llega a Penelandia."

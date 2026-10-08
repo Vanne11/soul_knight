@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "coffee_lore"
+title = "El Café: La Mentira Matutina"
+text = "El Café de Emergencia no despierta. Solo pospone el sueño. -40 intoxicación. +20 estamina. Sabe a tierra quemada y arrepentimiento matutino. Lo bebes temblando. Las manos sudan. El estómago ruge. Por un momento eres funcional. Productivo. Un miembro de la sociedad. Luego pasa. La cafeína se va. La realidad vuelve. Más cruda. Más brillante. Más dolorosa. El café no arregla la resaca. Solo te deja verla con más claridad. Y duele más. Pero oye, +20 estamina. Vale la pena. Siempre vale la pena. Hasta que no."
+category = 2
+unlock_condition = {"type": 4, "target_id": "coffee", "count": 10}
+flavor_text = "Bebe 10 cafés de emergencia."

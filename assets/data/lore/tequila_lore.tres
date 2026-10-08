@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "tequila_lore"
+title = "Un Caballito No Hace Daño (Mientes)"
+text = "Quema la garganta. +30 intoxicación. -20% precisión. +25% daño. +10% velocidad. 'Un caballito no hace daño', te dices. Te tomas el segundo. El tercero. El cuarto. La sal. El limón. El ritual. El tequila no se bebe. Se ceremonializa. Cada trago es un 'sí' a la autodestrucción controlada. La velocidad sube. La precisión baja. Corres más. Fallas más. Golpeas más fuerte. Es el equilibrio perfecto entre 'puedo con esto' y 'me voy a matar'. El gusano en el fondo te mira. No te juzga. Solo espera. El tequila es honesto. Te dice: 'Te vas a arrepentir. Hazlo anyway.'"
+category = 2
+unlock_condition = {"type": 4, "target_id": "tequila", "count": 8}
+flavor_text = "Bebe 8 tequilas."

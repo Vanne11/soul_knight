@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "stimulant_lore"
+title = "Rendimiento a Crédito: Pagas Después"
+text = "El Estimulante de Combate te hace dios por 15 segundos. +40% velocidad. +30% cadencia. +25% daño. Vuelas. Destruyes. Ríes. Eres invencible. Luego viene el crash. 10 segundos al 50% de todo. Velocidad, daño, cadencia. Te arrastras. Fallas tiros que un bebé acertarías. Los enemigos te rodean. Te golpean. Duele el doble porque recuerdas cómo eras hace 15 segundos. Un dios. Ahora eres basura. La deuda siempre se paga. Con intereses. El estimulante no te da poder. Te lo presta. Y el usurero siempre cobra."
+category = 2
+unlock_condition = {"type": 4, "target_id": "stimulant_combat", "count": 5}
+flavor_text = "Usa 5 estimulantes de combate."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "liver_lore"
+title = "Tu Hígado Ha Visto Cosas. Cosas Terribles."
+text = "El Hígado de Acero no es un órgano. Es un veterano de guerra. Ha procesado litros de whiskey, absenta, vodka, hidromiel, tequila, ron, orina de boss, fluidos misteriosos, y ese café de emergencia que sabe a ceniza. Y sigue ahí. Filtrando. Regenerando. Reduciendo la intoxicación un 30% por pura terquedad. No lo hace por ti. Lo hace porque es su trabajo. Y odia su trabajo. Pero lo hace. Como tú. Cada run. Cada trago. Cada error. El hígado no juzga. Solo procesa. Y de vez en cuando, te manda una factura: cirrosis, esteatosis, fallo hepático. La pagas con la siguiente run."
+category = 2
+unlock_condition = {"type": 1, "target_id": "relic_liver", "count": 1}
+flavor_text = "Equipa el Hígado de Acero."

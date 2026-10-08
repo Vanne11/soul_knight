@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_granito"
+title = "Granito Rencoroso"
+text = "Lleva toda la vida esperando el momento perfecto para estallar, y ese momento eres tú. Se hincha, brilla y escupe tres proyectiles de algo que es mejor no analizar. Mientras se carga se queda quieto, así que si eres rápido puedes reventarlo antes. Si no, a esquivar. Su sueño era aparecer el día de la foto de graduación de alguien. La censura se lo quitó. Por eso está así."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Granito Rencoroso", "count": 10}
+flavor_text = "Mata 10 granitos."

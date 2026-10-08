@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "smg_vibrator"
+display_name = "Subfusil Vibratorio"
+description = "Alta cadencia, vibra en la mano. Daño base 8, ROF 0.08s. 'No es un juguete sexual. Bueno, técnicamente sí.'"
+rarity = 2
+tags = ["arma"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 300
+custom_data = {"base_damage": 8, "fire_rate": 0.08, "projectile_speed": 450, "spread": 0.12}

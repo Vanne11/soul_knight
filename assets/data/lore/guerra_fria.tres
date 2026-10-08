@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "guerra_fria"
+title = "La Guerra Fría Hormonal"
+text = "Penelandia y Vulvania llevan siglos sin hablarse. Los historiadores no se ponen de acuerdo sobre el origen del conflicto: unos dicen que fue una disputa fronteriza en el Perineo, otros que alguien dejó la tapa del váter levantada en una cumbre diplomática. Lo único seguro es que cada reino desarrolló una alergia a las hormonas del otro, y eso convirtió cualquier visita en un festival de estornudos. Durante generaciones ambos reinos se dedicaron a lo único que se les daba bien: desconfiar. Hasta que llegó la Hoja de Parra y los censuró a los dos por igual. Nada une tanto como un enemigo común. Bueno, nada los une todavía. Pero vas tú a intentarlo, que ya es algo."
+category = 0
+unlock_condition = {"type": 2, "floor": 2}
+flavor_text = "Llega a Penelandia."

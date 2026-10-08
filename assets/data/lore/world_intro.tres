@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "world_intro"
+title = "La Gran Censura"
+text = "Hubo un tiempo en que el mundo iba como le daba la gana. Nadie se tapaba nada, las estatuas lucían sin complejos y los libros de biología tenían dibujos de verdad. Entonces llegó Su Pudorosidad, la Hoja de Parra, con sus gafitas y su collar de perlas, y lo cubrió todo. Primero las estatuas. Luego los cuadros. Luego a la gente. La vergüenza se fue extendiendo como una mancha de humedad hasta que el mundo se quedó gris, callado y con muy mala leche. Los habitantes censurados ya no recuerdan cómo eran. Solo saben que están enfadados, y que tú eres un blanco cómodo. Cada sala que liberas recupera su color. Cada jefe que cae devuelve un trocito de mundo. No es una revolución. Es una limpieza de primavera con violencia."
+category = 0
+unlock_condition = {"type": 2, "floor": 1}
+flavor_text = "Empieza tu primera run."

@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://src/scenes/main.gd" id="1"]
+[ext_resource type="PackedScene" path="res://src/player/player.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://src/ui/hud.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://src/ui/floating_text_manager.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://src/enemies/enemy.tscn" id="5"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Player" parent="." instance=ExtResource("2")]
+z_index = 1
+
+[node name="HUD" parent="." instance=ExtResource("3")]
+
+[node name="FloatingTextManager" parent="." instance=ExtResource("4")]
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Floor" type="TileMap" parent="."]
+layers = [0]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Pickups" type="Node2D" parent="."]

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "medkit"
+display_name = "Botiquín Completo"
+description = "Cura 100 vida, limpia efectos negativos, restaura escudos. 'Para cuando las vendas sucias no bastan.'"
+rarity = 2
+tags = ["consumible", "curación", "utilidad"]
+effects = [{"type": 2, "magnitude": 100.0}, {"type": 3, "magnitude": 1.0}, {"type": 4, "status_effect": null, "custom_data": {"cleanse": true}}]
+max_stack = 2
+consumable = true
+base_value = 120

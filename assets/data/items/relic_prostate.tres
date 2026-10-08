@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "relic_prostate"
+display_name = "Próstata Iluminada"
+description = "El punto G masculino. Críticos causan explosión en cadena (radio 100, 50% daño). 'Iluminación anal alcanzada.'"
+rarity = 4
+tags = ["reliquia", "pasivo", "ofensa", "especial", "masculino"]
+equip_slot = 2
+effects = [{"type": 0, "stat": "crit_damage", "magnitude": 1.5}, {"type": 7, "custom_data": {"type": "crit_explosion", "radius": 100, "damage_pct": 0.5}}]
+base_value = 600

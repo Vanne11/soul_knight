@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "trap_bear"
+display_name = "Trampa de Oso (Tamaño Humano)"
+description = "Colócala. Enemigo pisa -> inmovilizado 3s, 60 daño, sangrado 10/s 5s. 'Click. Aaaaah. Click.'"
+rarity = 1
+tags = ["consumible", "trampa", "cc", "daño"]
+effects = [{"type": 7, "custom_data": {"type": "place_trap", "damage": 60, "immobilize": 3.0, "bleed_dps": 10, "bleed_duration": 5, "trigger_radius": 40}}]
+max_stack = 3
+consumable = true
+base_value = 45

@@ -1,0 +1,86 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_idle_00.png" id="1_idle0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_walk_00.png" id="2_walk0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_walk_01.png" id="3_walk1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_walk_02.png" id="4_walk2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_walk_03.png" id="5_walk3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_attack_00.png" id="6_attack0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_attack_01.png" id="7_attack1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_attack_02.png" id="8_attack2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_hurt_00.png" id="9_hurt0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_hurt_01.png" id="10_hurt1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_death_00.png" id="11_death0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_death_01.png" id="12_death1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_death_02.png" id="13_death2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/barra_negra_death_03.png" id="14_death3"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_idle0")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_walk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_walk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_walk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_walk3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_attack0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_attack1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_attack2")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_hurt0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_hurt1")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_death0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_death1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_death2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_death3")
+}],
+"loop": false,
+"name": &"death",
+"speed": 6.0
+}]

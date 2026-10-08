@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/ui/item_slot.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/item_slot_bg.png" id="2"]
+
+[node name="ItemSlot" type="PanelContainer"]
+script = ExtResource("1")
+custom_minimum_size = Vector2(50, 50)
+
+[node name="Background" type="TextureRect" parent="."]
+texture = ExtResource("2")
+stretch_mode = 1
+
+[node name="Icon" type="TextureRect" parent="./Background"]
+texture = ExtResource("2")
+stretch_mode = 2
+anchors_preset = 15
+offset_left = 4
+offset_top = 4
+offset_right = 4
+offset_bottom = 4
+
+[node name="Count" type="Label" parent="./Background"]
+text = ""
+horizontal_alignment = 2
+vertical_alignment = 2
+anchors_preset = 15
+font_size = 12
+font_color = Color(1, 1, 1, 1)
+offset_right = 4
+offset_bottom = 4
+
+[node name="KeyLabel" type="Label" parent="./Background"]
+text = "1"
+horizontal_alignment = 0
+vertical_alignment = 0
+anchors_preset = 15
+font_size = 10
+font_color = Color(0.7, 0.7, 0.7, 1)
+offset_left = 2
+offset_top = 2

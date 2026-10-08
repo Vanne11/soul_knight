@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "launcher_condom"
+display_name = "Lanzapreservativos Múltiple"
+description = "Dispara 3 preservativos explosivos. Daño base 12 c/u, área de efecto. 'Protección a distancia. Seguridad primero.'"
+rarity = 3
+tags = ["arma", "explosivo", "área"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 450
+custom_data = {"base_damage": 12, "fire_rate": 1.5, "projectile_speed": 300, "spread": 0.15, "projectiles": 3, "explosion_radius": 80}

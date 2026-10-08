@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "condom_lore"
+title = "El Preservativo que Cambió la Historia"
+text = "Lo encontraste en un cofre. Brillaba. Lo equipaste. De repente, nada te hacía daño. Los fluidos enemigos resbalaban. El fuego no quemaba. El veneno no envenenaba. La lujuria... la lujuria rebotaba. Te sentiste invencible. Por fin, protección real en un mundo de fluidos letales. Corriste 3 pisos sin un rasguño. Te creíste inmortal. Luego, en el piso 4, un boss te golpeó tan fuerte que el preservativo se rompió. El daño se duplicó. El juego no te avisó. Ningún juego avisa. Los preservativos se rompen. Y cuando se rompen, duele el doble."
+category = 2
+unlock_condition = {"type": 1, "target_id": "relic_condom", "count": 1}
+flavor_text = "Equipa el Preservativo de Titanio."

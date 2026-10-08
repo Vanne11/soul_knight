@@ -1,0 +1,139 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/idle_00.png" id="1_idle0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/idle_01.png" id="2_idle1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/idle_02.png" id="3_idle2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/idle_03.png" id="4_idle3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/walk_00.png" id="5_walk0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/walk_01.png" id="6_walk1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/walk_02.png" id="7_walk2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/walk_03.png" id="8_walk3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/walk_04.png" id="9_walk4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/walk_05.png" id="10_walk5"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/attack_00.png" id="11_attack0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/attack_01.png" id="12_attack1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/attack_02.png" id="13_attack2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/attack_03.png" id="14_attack3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/dash_00.png" id="15_dash0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/dash_01.png" id="16_dash1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/dash_02.png" id="17_dash2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/hurt_00.png" id="18_hurt0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/hurt_01.png" id="19_hurt1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/hurt_02.png" id="20_hurt2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/death_00.png" id="21_death0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/death_01.png" id="22_death1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/death_02.png" id="23_death2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/death_03.png" id="24_death3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/death_04.png" id="25_death4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/ornitorrinco/death_05.png" id="26_death5"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_idle0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_idle1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_idle2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_idle3")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_walk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_walk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_walk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_walk3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_walk4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_walk5")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_attack0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_attack1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_attack2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_attack3")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_dash0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_dash1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_dash2")
+}],
+"loop": false,
+"name": &"dash",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_hurt0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_hurt1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_hurt2")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_death0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_death1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_death2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_death3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_death4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_death5")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}]

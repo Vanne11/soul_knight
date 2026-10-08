@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "syringe_lore"
+title = "CLEAR: Directa al Corazón"
+text = "La Jeringa de Adrenalina no es medicina. Es trampa. 50 vida instantánea. 100 estamina. 20 intoxicación (el dolor embriaga). Te la clavas en el pecho. A través de la ropa. A través de la piel. A través del esternón. Directa al corazón. CLEAR. El mundo se acelera. El dolor desaparece. Eres rápido. Fuerte. Vivo. Por 5 segundos. Luego el corazón late demasiado rápido. Las manos tiemblan. La intoxicación sube. El dolor vuelve. Multiplicado. La adrenalina no cura. Solo aplaza. Y el interés es usurero. Pero en medio de una boss fight... 5 segundos de dios valen una eternidad de infierno después."
+category = 2
+unlock_condition = {"type": 4, "target_id": "syringe_adrenaline", "count": 3}
+flavor_text = "Usa 3 jeringas de adrenalina."
