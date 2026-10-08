@@ -11,12 +11,17 @@ signal stat_modified(stat: String, value: float)
 
 enum IntoxicationTier { SOBER = 0, TIPSY = 1, DRUNK = 2, BLACKOUT = 3 }
 
-var max_health: float = 100.0
-var current_health: float = 100.0
-var max_shields: float = 50.0
-var current_shields: float = 50.0
-var max_stamina: float = 100.0
-var current_stamina: float = 100.0
+## Valores de partida. La vida es baja a proposito: se sube con mejoras de la tienda.
+const BASE_HEALTH := 50.0
+const BASE_SHIELDS := 50.0
+const BASE_STAMINA := 100.0
+
+var max_health: float = BASE_HEALTH
+var current_health: float = BASE_HEALTH
+var max_shields: float = BASE_SHIELDS
+var current_shields: float = BASE_SHIELDS
+var max_stamina: float = BASE_STAMINA
+var current_stamina: float = BASE_STAMINA
 var stamina_regen_rate: float = 25.0
 var shield_regen_delay: float = 3.0
 var shield_regen_rate: float = 15.0
@@ -49,6 +54,10 @@ func _process(delta: float) -> void:
 	_handle_intoxication_decay(delta)
 
 func reset_for_new_run() -> void:
+	# Sin esto las mejoras (y el +25 de escudo de Pitocles) se acumulaban entre partidas.
+	max_health = BASE_HEALTH
+	max_shields = BASE_SHIELDS
+	max_stamina = BASE_STAMINA
 	current_health = max_health
 	current_shields = max_shields
 	current_stamina = max_stamina
@@ -170,6 +179,19 @@ func apply_stat_mod(stat: String, value: float) -> void:
 			var old_max = max_stamina
 			max_stamina *= value
 			current_stamina = current_stamina * (max_stamina / old_max)
+			stamina_changed.emit(current_stamina, max_stamina)
+		# Mejoras de la tienda: suman (no multiplican) y rellenan lo ganado.
+		"max_health_flat":
+			max_health += value
+			current_health += value
+			health_changed.emit(current_health, max_health)
+		"max_shields_flat":
+			max_shields += value
+			current_shields += value
+			shields_changed.emit(current_shields, max_shields)
+		"max_stamina_flat":
+			max_stamina += value
+			current_stamina += value
 			stamina_changed.emit(current_stamina, max_stamina)
 		_:
 			push_error("Unknown stat: %s" % stat)

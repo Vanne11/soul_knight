@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/energy_drink.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "upgrade_stamina"
+display_name = "Pastilla de Aguante"
+description = "+25 de estamina máxima. Para dashear más. Solo para eso."
+sprite = ExtResource("2")
+rarity = 2
+tags = ["mejora"]
+effects = [{
+"type": 0,
+"stat": "max_stamina_flat",
+"magnitude": 25.0
+}]
+consumable = true
+base_value = 200
+custom_data = {"price": 15}

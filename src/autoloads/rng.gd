@@ -32,7 +32,10 @@ static func randi_range(min: int, max: int) -> int:
 		var tmp := min
 		min = max
 		max = tmp
-	return min + RNG.randi() % (max - min + 1)
+	# Nada de randi() % n: en un LCG de modulo 2^31 los bits bajos se repiten
+	# con periodo corto (el ultimo alterna 0/1) y con n par habia indices que
+	# no salian nunca: el cofre "de arma" podia no encontrar ningun arma.
+	return mini(max, min + int(RNG.randf() * (max - min + 1)))
 
 static func get_seed() -> int:
 	return _seed

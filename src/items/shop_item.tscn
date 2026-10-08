@@ -19,12 +19,14 @@ scale = Vector2(1.5, 1.5)
 shape = SubResource("3")
 
 [node name="Label" type="Label" parent="."]
-offset_left = -80.0
-offset_top = -64.0
-offset_right = 80.0
+offset_left = -95.0
+offset_top = -150.0
+offset_right = 95.0
 offset_bottom = -24.0
 theme_override_fonts/font = ExtResource("2")
 theme_override_font_sizes/font_size = 10
 theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.06, 1)
 theme_override_constants/outline_size = 4
 horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3

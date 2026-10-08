@@ -12,6 +12,8 @@ enum State { CLOSED = 0, OPEN = 1, LOCKED = 2, SEALED = 3 }
 
 var state: State = State.CLOSED
 var room: Room = null
+## grid_pos de la sala a la que lleva esta puerta (lo pone el generador).
+var target_pos: Vector2i = Vector2i.ZERO
 
 signal state_changed(direction: String, state: int)
 signal player_interacted()

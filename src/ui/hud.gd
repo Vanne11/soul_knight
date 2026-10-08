@@ -40,6 +40,7 @@ func _ready() -> void:
 	_events.coins_changed.connect(func(_c): _update_floor_label())
 	_events.hormones_changed.connect(_update_floor_label)
 	_build_boss_bar()
+	add_child(Minimap.new())
 	_update_floor_label()
 	
 	# Initial update
@@ -99,6 +100,8 @@ func _on_intoxication_changed(level: float, tier: int) -> void:
 		intox_bar.set_color(Color(0.8, 0.2, 0.8))
 
 func _on_item_picked_up(item: Variant, qty: int) -> void:
+	if "mejora" in item.tags:
+		return  # las mejoras de la tienda son permanentes, no ocupan casilla
 	# Try to add to existing slot or find empty
 	for slot in item_slots:
 		if slot.item_id == item.id:

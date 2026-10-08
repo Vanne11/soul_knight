@@ -130,7 +130,7 @@ func _handle_movement(delta: float) -> void:
 	_update_animation(input_dir)
 
 func _handle_dash(delta: float) -> void:
-	if Input.is_action_just_pressed("dash") and not is_dashing and _dash_cooldown_timer <= 0.0:
+	if Input.is_action_just_pressed("dash") and not Narrator.ate_input() and not is_dashing and _dash_cooldown_timer <= 0.0:
 		if get_node("/root/PlayerStats").use_stamina(dash_stamina_cost):
 			_start_dash()
 			Narrator.notify("dash")
@@ -154,7 +154,7 @@ func _start_dash() -> void:
 	get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "DASH!", Color.CYAN)
 
 func _handle_attack(delta: float) -> void:
-	if Input.is_action_pressed("attack") and _attack_timer <= 0.0 and current_weapon:
+	if Input.is_action_pressed("attack") and not Narrator.ate_input() and _attack_timer <= 0.0 and current_weapon:
 		_attack()
 		_attack_timer = float(current_weapon.custom_data.get("fire_rate", attack_cooldown)) / (get_node("/root/PlayerStats").fire_rate_modifier * get_node("/root/PlayerStats").get_intoxication_effects().get("speed", 1.0))
 
@@ -362,7 +362,7 @@ func add_item_to_inventory(item_id: String) -> void:
 	var item = get_node("/root/ItemDatabase").get_item(item_id)
 	var rm = get_node("/root/RunManager")
 	if item and "moneda" in item.tags:
-		var n := RNG.randi_range(1, 3)
+		var n := RNG.randi_range(1, 2)  # economia: ver COIN_DROP_CHANCE en main.gd
 		rm.add_coins(n)
 		get_node("/root/LoreDatabase")._on_item_picked_up(item, n)  # cuenta para "La Moneda Pudorosa"
 		return

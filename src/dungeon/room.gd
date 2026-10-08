@@ -14,7 +14,7 @@ const ITEM_PICKUP_SCENE := preload("res://src/items/item_pickup.tscn")
 @export var difficulty: int = 1
 @export var required_intoxication_tier: int = 0
 
-var doors: Dictionary = {}  # "up/down/left/right" -> Door
+var doors: Dictionary = {}  # nombre del nodo -> Door (puede haber varias por pared)
 var spawn_points: Array[Vector2] = []
 var enemies_spawned: Array[Node] = []
 var cleared: bool = false
@@ -32,12 +32,11 @@ func _ready() -> void:
 	_setup_spawn_points()
 
 func _setup_doors() -> void:
-	# The generator already recorded doors keyed by direction name; rebuild the
-	# dict from the actual children so each door appears exactly once.
+	# Rebuild the dict from the actual children so each door appears exactly once.
 	doors.clear()
 	for child in doors_node.get_children():
 		if child is Door:
-			doors[child.get_direction_name()] = child
+			doors[child.name] = child
 			child.room = self
 			if not child.state_changed.is_connected(_on_door_state_changed):
 				child.state_changed.connect(_on_door_state_changed)
@@ -239,6 +238,13 @@ func _spawn_intoxication_rewards(pos: Vector2) -> void:
 		pickup2.item_id = "health_small"
 		pickup2.position = pos + Vector2(30, 0)
 		_add_pickup_deferred(pickup2)
+
+## La puerta de esta sala que lleva a la sala en from_pos (o null).
+func door_to(from_pos: Vector2i) -> Door:
+	for door in doors.values():
+		if door.target_pos == from_pos:
+			return door
+	return null
 
 func get_center_position() -> Vector2:
 	# Derive the centre from the painted floor so it matches the room the

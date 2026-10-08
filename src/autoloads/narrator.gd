@@ -10,6 +10,8 @@ extends CanvasLayer
 const LINES_PATH := "res://assets/data/narrator/lines.json"
 const MEMORY_PATH := "user://narrator.json"
 const CHARS_PER_SEC := 45.0
+## Cada frase se queda hasta que el jugador la pasa (clic izquierdo o espacio).
+## Si aun se esta escribiendo, la primera pulsacion la completa.
 ## Habla poco: momentos clave siempre; el resto, como mucho una vez cada 45 s.
 const CHATTER_COOLDOWN := 45.0
 const IDLE_SECONDS := 30.0
@@ -19,7 +21,9 @@ var _bags: Dictionary = {}
 var _memory := {"runs": 0, "deaths": 0, "deaths_by_floor": {}}
 var _queue: Array[String] = []
 var _cooldown := 0.0
-var _hide_timer := 0.0
+var _showing := false
+## cuando una pulsacion paso la frase: el jugador no debe dashear/atacar con ella
+var _ate_input_ms := -1000
 var _interrupt_in := 0.0
 var _last_line := ""
 var _idle := 0.0
@@ -33,6 +37,7 @@ var _seen: Dictionary = {}  # eventos ya comentados esta run
 
 var _panel: PanelContainer
 var _label: RichTextLabel
+var _hint: Label
 var _tween: Tween
 
 
@@ -79,13 +84,22 @@ func _build_ui() -> void:
 	_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_label.add_theme_font_size_override("normal_font_size", 18)
 	_label.add_theme_color_override("default_color", Color("f2ead6"))
-	_panel.add_child(_label)
+	var vb := VBoxContainer.new()
+	vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	vb.add_child(_label)
+	_hint = Label.new()
+	_hint.text = "▶ clic / espacio"
+	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_hint.add_theme_font_size_override("font_size", 12)
+	_hint.add_theme_color_override("font_color", Color("b08d4a"))
+	vb.add_child(_hint)
+	_panel.add_child(vb)
 	_panel.visible = false
 	add_child(_panel)
 
 
 func say(event: String, args: Dictionary = {}, important := false) -> void:
-	if not important and (_cooldown > 0.0 or _hide_timer > 0.0):
+	if not important and (_cooldown > 0.0 or _showing):
 		return
 	var line := _pick(event)
 	if line == "":
@@ -137,7 +151,23 @@ func has_lines(event: String) -> bool:
 
 
 func is_talking() -> bool:
-	return _hide_timer > 0.0 or not _queue.is_empty()
+	return _showing or not _queue.is_empty()
+
+
+## true si la pulsacion de este frame se uso para pasar dialogo.
+func ate_input() -> bool:
+	return Time.get_ticks_msec() - _ate_input_ms < 150
+
+
+func _advance() -> void:
+	if _label.visible_ratio < 1.0:
+		if _tween:
+			_tween.kill()
+		_label.visible_ratio = 1.0
+		return
+	_showing = false
+	_panel.visible = false
+	_interrupt_in = 0.0
 
 
 func _pick(event: String) -> String:
@@ -168,10 +198,10 @@ func _show(line: String) -> void:
 		_tween.kill()
 	_tween = create_tween()
 	_tween.tween_property(_label, "visible_ratio", 1.0, type_time)
-	_hide_timer = type_time + 1.8 + line.length() * 0.025
+	_showing = true
 	_last_line = line
 	if speaker == "NARRADOR" and randf() < 0.04:
-		_interrupt_in = _hide_timer - 0.6
+		_interrupt_in = type_time + 0.8
 
 
 func _process(delta: float) -> void:
@@ -180,11 +210,8 @@ func _process(delta: float) -> void:
 		_interrupt_in -= delta
 		if _interrupt_in <= 0.0:
 			say("interrupt", {}, true)
-	if _hide_timer > 0.0:
-		_hide_timer -= delta
-		if _hide_timer <= 0.0:
-			_panel.visible = false
-	elif not _queue.is_empty():
+	_hint.visible = _label.visible_ratio >= 1.0
+	if not _showing and not _queue.is_empty():
 		_show(_queue.pop_front())
 	# Inactividad: solo cuenta durante el juego, no en menus.
 	if get_tree().paused or get_tree().get_first_node_in_group("player") == null:
@@ -200,6 +227,12 @@ func _input(event: InputEvent) -> void:
 	if event.is_pressed() and not event.is_echo():
 		if _idle > 0.0:
 			_idle = 0.0
+		var click: bool = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT
+		var space: bool = event is InputEventKey and event.physical_keycode == KEY_SPACE
+		if _showing and (click or space):
+			# Sin set_input_as_handled: en menus el mismo clic debe pulsar el boton.
+			_advance()
+			_ate_input_ms = Time.get_ticks_msec()
 
 
 # ---------------------------------------------------------------- eventos
@@ -245,6 +278,7 @@ func _on_player_died() -> void:
 	_memory.deaths_by_floor[key] = int(_memory.deaths_by_floor.get(key, 0)) + 1
 	_save_memory()
 	_queue.clear()
+	_showing = false  # la frase de muerte no espera a que pases la anterior
 	var n: int = _memory.deaths_by_floor[key]
 	if n >= 3 and randf() < 0.5:
 		say("death_same_floor", {"floor": floor_n, "n": n}, true)

@@ -29,7 +29,7 @@ func generate_floor(floor: int, seed_override: int = 0) -> Node2D:
 	
 	_clear_state()
 	
-	var bsp_root = BSPNode.new(Rect2(0, 0, 50, 35))
+	var bsp_root = BSPNode.new(Rect2(0, 0, 56, 40))  # ~8 salas por piso
 	_split_bsp(bsp_root, 4)
 	
 	var leaf_nodes = []
@@ -37,6 +37,7 @@ func generate_floor(floor: int, seed_override: int = 0) -> Node2D:
 	
 	_create_rooms(leaf_nodes, dungeon_root)
 	_connect_rooms()
+	_layout_doors()
 	_assign_room_types()
 	_place_special_rooms()
 	
@@ -56,18 +57,28 @@ func _split_bsp(node: BSPNode, depth: int) -> void:
 		split_horizontal = false
 	elif node.rect.size.y > node.rect.size.x * 1.5:
 		split_horizontal = true
+	# Solo se corta si caben dos salas minimas con su margen; si no, el rango del
+	# corte salia invertido y nacian salas de 3 tiles de ancho.
+	var can_h: bool = node.rect.size.y >= (min_room_size.y + room_padding * 2) * 2
+	var can_v: bool = node.rect.size.x >= (min_room_size.x + room_padding * 2) * 2
+	if split_horizontal and not can_h:
+		split_horizontal = false
+	elif not split_horizontal and not can_v:
+		split_horizontal = true
+	if (split_horizontal and not can_h) or (not split_horizontal and not can_v):
+		return
 	
 	if split_horizontal:
 		var split_y = RNG.randi_range(
-			int(node.rect.position.y + min_room_size.y + room_padding),
-			int(node.rect.position.y + node.rect.size.y - min_room_size.y - room_padding)
+			int(node.rect.position.y + min_room_size.y + room_padding * 2),
+			int(node.rect.position.y + node.rect.size.y - min_room_size.y - room_padding * 2)
 		)
 		node.left = BSPNode.new(Rect2(node.rect.position.x, node.rect.position.y, node.rect.size.x, split_y - node.rect.position.y))
 		node.right = BSPNode.new(Rect2(node.rect.position.x, split_y, node.rect.size.x, node.rect.position.y + node.rect.size.y - split_y))
 	else:
 		var split_x = RNG.randi_range(
-			int(node.rect.position.x + min_room_size.x + room_padding),
-			int(node.rect.position.x + node.rect.size.x - min_room_size.x - room_padding)
+			int(node.rect.position.x + min_room_size.x + room_padding * 2),
+			int(node.rect.position.x + node.rect.size.x - min_room_size.x - room_padding * 2)
 		)
 		node.left = BSPNode.new(Rect2(node.rect.position.x, node.rect.position.y, split_x - node.rect.position.x, node.rect.size.y))
 		node.right = BSPNode.new(Rect2(split_x, node.rect.position.y, node.rect.position.x + node.rect.size.x - split_x, node.rect.size.y))
@@ -87,7 +98,8 @@ func _collect_leaves(node: BSPNode, leaves: Array) -> void:
 func _create_rooms(leaves: Array, parent: Node2D) -> void:
 	for leaf in leaves:
 		var room_rect = _get_room_rect_in_leaf(leaf)
-		var grid_pos = Vector2i(room_rect.position / 8)  # Rough grid pos
+		# Posicion en tiles: unica por sala (antes /8, y dos salas podian pisarse la clave).
+		var grid_pos = Vector2i(room_rect.position)
 		
 		var room_instance = room_scene.instantiate()
 		room_instance.grid_pos = grid_pos
@@ -200,8 +212,8 @@ func _compare_edges(a: Dictionary, b: Dictionary) -> bool:
 	return a.dist < b.dist
 
 func _can_connect_direct(a: Vector2i, b: Vector2i) -> bool:
-	# Only connect if roughly aligned horizontally or vertically
-	return abs(a.x - b.x) < 3 or abs(a.y - b.y) < 3
+	# Only connect if roughly aligned horizontally or vertically (en tiles)
+	return abs(a.x - b.x) < 24 or abs(a.y - b.y) < 24
 
 func _create_corridor(a: Vector2i, b: Vector2i) -> void:
 	var room_a = rooms[a]
@@ -209,13 +221,18 @@ func _create_corridor(a: Vector2i, b: Vector2i) -> void:
 	if not room_a or not room_b:
 		return
 	
-	var dir = _get_direction(a, b)
+	var dir = _pick_direction(room_a, room_b, a, b)
 	var door_a = _create_door(room_a, dir)
 	var door_b = _create_door(room_b, _opposite_direction(dir))
 	
 	if door_a and door_b:
 		door_a.room = room_a
 		door_b.room = room_b
+		# Cada puerta sabe a que sala lleva. Antes se adivinaba por direccion y,
+		# con dos vecinos hacia el mismo lado, todas las puertas acababan en el
+		# mismo sitio: el bucle infinito entre salas.
+		door_a.target_pos = b
+		door_b.target_pos = a
 
 func _get_direction(from: Vector2i, to: Vector2i) -> int:
 	var dx = to.x - from.x
@@ -225,6 +242,42 @@ func _get_direction(from: Vector2i, to: Vector2i) -> int:
 		return 2 if dx < 0 else 3  # LEFT or RIGHT
 	else:
 		return 0 if dy < 0 else 1  # UP or DOWN
+
+## Lado principal; si alguna de las dos salas ya tiene puerta ahi, el otro eje.
+## Si tambien esta ocupado, se comparte pared (_layout_doors las reparte).
+func _pick_direction(room_a: Room, room_b: Room, a: Vector2i, b: Vector2i) -> int:
+	var main_dir := _get_direction(a, b)
+	var d := Vector2(b - a)
+	var alt_dir: int
+	if abs(d.x) > abs(d.y):
+		alt_dir = 0 if d.y < 0 else 1
+	else:
+		alt_dir = 2 if d.x < 0 else 3
+	for dir in [main_dir, alt_dir]:
+		if not _has_door(room_a, dir) and not _has_door(room_b, _opposite_direction(dir)):
+			return dir
+	return main_dir
+
+func _has_door(room: Room, dir: int) -> bool:
+	for door in room.doors.values():
+		if door.direction == dir:
+			return true
+	return false
+
+## Reparte a lo largo de la pared las puertas que comparten lado.
+func _layout_doors() -> void:
+	for pos in rooms:
+		var room: Room = rooms[pos]
+		var size: Vector2i = room_sizes.get(pos, Vector2i(8, 6))
+		for dir in 4:
+			var same: Array = room.doors.values().filter(func(dd): return dd.direction == dir)
+			for i in same.size():
+				var t := float(i + 1) / float(same.size() + 1)
+				match dir:
+					0: same[i].position = Vector2(size.x * 64 * t, 0)
+					1: same[i].position = Vector2(size.x * 64 * t, size.y * 64)
+					2: same[i].position = Vector2(0, size.y * 64 * t)
+					3: same[i].position = Vector2(size.x * 64, size.y * 64 * t)
 
 func _opposite_direction(dir: int) -> int:
 	return [1, 0, 3, 2][dir]
@@ -237,9 +290,9 @@ func _create_door(room: Room, dir: int) -> Door:
 	var door_instance = door_scene.instantiate()
 	door_instance.direction = dir
 	
-	var dir_name = ["up", "down", "left", "right"][dir]
+	door_instance.name = "Door%d" % doors_node.get_child_count()
 	doors_node.add_child(door_instance)
-	room.doors[dir_name] = door_instance
+	room.doors[door_instance.name] = door_instance
 	door_instance.room = room
 	# room.gd::_setup_doors() connects state_changed once the room enters the
 	# tree, so do not connect it here as well.
@@ -295,11 +348,13 @@ func _assign_room_types() -> void:
 	for i in range(min(secret_count, candidates.size())):
 		candidates[i].room_type = Room.RoomType.SECRET
 	
-	# Shop (0-1)
-	if RNG.randf() < 0.5:
-		candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT)
-		if candidates.size() > 0:
-			candidates[0].room_type = Room.RoomType.SHOP
+	# Tienda: una por piso, siempre (sin ella las monedas no sirven de nada).
+	candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT)
+	if candidates.is_empty():
+		candidates = room_list.filter(func(r): return r.room_type in [Room.RoomType.SECRET, Room.RoomType.INTOXICATION])
+	if candidates.size() > 0:
+		candidates[0].room_type = Room.RoomType.SHOP
+		candidates[0].required_intoxication_tier = 0
 	
 	# Trap/Puzzle (remaining combat rooms have chance)
 	for room in room_list:

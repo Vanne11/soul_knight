@@ -45,6 +45,8 @@ var character: String = "pitocles"
 var coins: int = 0
 ## hormonas en el cuerpo esta run: abren las Puertas Hormonales
 var hormones: Dictionary = {}
+## id de mejora -> veces comprada esta run (cada compra la encarece)
+var upgrades_bought: Dictionary = {}
 
 func floor_data() -> Dictionary:
 	return FLOORS[clampi(current_floor - 1, 0, FLOORS.size() - 1)]
@@ -107,6 +109,7 @@ func start_new_run(seed: int = 0) -> void:
 	last_run_victory = false
 	coins = 0
 	hormones = {}
+	upgrades_bought = {}
 	if character_data().hormone != "":
 		hormones[character_data().hormone] = true
 	run_start_time = Time.get_ticks_msec() / 1000.0

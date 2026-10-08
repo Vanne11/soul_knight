@@ -10,6 +10,8 @@ var dungeon_root: Node2D = null
 var current_room: Room = null
 var rooms_cleared_this_floor: int = 0
 var floor_completed: bool = false
+## grid_pos -> true de las salas pisadas este piso (las pinta el minimapa).
+var visited_rooms: Dictionary = {}
 var _transition_lock: float = 0.0
 
 func _process(delta: float) -> void:
@@ -44,6 +46,7 @@ func _setup_camera() -> void:
 func _generate_dungeon() -> void:
 	var seed = _run_manager.current_seed + _run_manager.current_floor * 7919  # cada piso su propio trazado
 	dungeon_root = dungeon_generator.generate_floor(_run_manager.current_floor, seed)
+	visited_rooms.clear()
 	add_child(dungeon_root)
 	
 	# Start player in start room
@@ -68,34 +71,15 @@ func _find_start_room() -> Room:
 func _connect_room_doors(room: Room) -> void:
 	# Opening a door used to emit player_interacted with no listener, so the
 	# player could never leave the starting room.
-	for dir_name in room.doors.keys():
-		var door: Door = room.doors[dir_name]
-		var callback := _on_door_entered_room.bind(room, dir_name)
+	for door: Door in room.doors.values():
+		var callback := _on_door_entered_room.bind(room, door)
 		if not door.player_interacted.is_connected(callback):
 			door.player_interacted.connect(callback)
 
-func _find_room_in_direction(from_room: Room, dir_name: String) -> Room:
-	var target_pos: Vector2i = from_room.grid_pos
-	match dir_name:
-		"up": target_pos.y -= 1
-		"down": target_pos.y += 1
-		"left": target_pos.x -= 1
-		"right": target_pos.x += 1
-	var neighbors: Array = dungeon_generator.room_graph.get(from_room.grid_pos, [])
-	for pos in neighbors:
-		if pos == target_pos and dungeon_generator.rooms.has(pos):
-			return dungeon_generator.rooms[pos]
-	# Grid positions are only approximate, so fall back to any connected
-	# neighbour when the exact neighbour is not on the grid.
-	for pos in neighbors:
-		if dungeon_generator.rooms.has(pos):
-			return dungeon_generator.rooms[pos]
-	return null
-
-func _on_door_entered_room(room: Room, dir_name: String) -> void:
+func _on_door_entered_room(room: Room, door: Door) -> void:
 	if room != current_room or floor_completed or _transition_lock > 0.0:
 		return
-	var next_room := _find_room_in_direction(room, dir_name)
+	var next_room: Room = dungeon_generator.rooms.get(door.target_pos)
 	if next_room == null:
 		return
 	if next_room.room_type == Room.RoomType.BOSS and not _has_real_weapon():
@@ -113,18 +97,9 @@ func _on_door_entered_room(room: Room, dir_name: String) -> void:
 		Narrator.say("door_hormonal", {}, true)
 		get_node("/root/LoreDatabase").custom_event("hormone_door")
 		return
-	var entry_dir := _opposite_direction_name(dir_name)
-	_enter_room(next_room, entry_dir)
+	_enter_room(next_room, next_room.door_to(room.grid_pos))
 
-func _opposite_direction_name(dir_name: String) -> String:
-	match dir_name:
-		"up": return "down"
-		"down": return "up"
-		"left": return "right"
-		"right": return "left"
-	return "down"
-
-func _enter_room(room: Room, entry_dir: String = "down") -> void:
+func _enter_room(room: Room, entry_door: Door = null) -> void:
 	if current_room:
 		current_room.on_player_exit()
 		# Disable previous room
@@ -135,6 +110,7 @@ func _enter_room(room: Room, entry_dir: String = "down") -> void:
 			child.set_physics_process(false)
 	
 	current_room = room
+	visited_rooms[room.grid_pos] = true
 	room.cleared_callback = _on_room_cleared.bind(room)
 	room.on_player_enter()
 	_connect_room_doors(room)
@@ -148,7 +124,7 @@ func _enter_room(room: Room, entry_dir: String = "down") -> void:
 	
 	# Position player just inside the door they walked through, or at the room
 	# centre when the room is entered for the first time.
-	_place_player_in_room(room, entry_dir)
+	_place_player_in_room(room, entry_door)
 	
 	# Update camera limits to room bounds
 	_update_camera_limits(room)
@@ -175,13 +151,11 @@ func _narrate_room(room: Room) -> void:
 		Room.RoomType.START: pass
 		_: Narrator.say_first("room_combat")
 
-func _place_player_in_room(room: Room, entry_dir: String) -> void:
-	var center := room.get_center_position()
-	var spawn := center
-	if room.doors.has(entry_dir):
-		var door: Door = room.doors[entry_dir]
+func _place_player_in_room(room: Room, door: Door) -> void:
+	var spawn := room.get_center_position()
+	if door:
 		var offset := Vector2(0, 96)
-		match entry_dir:
+		match door.get_direction_name():
 			"up": offset = Vector2(0, 96)
 			"down": offset = Vector2(0, -96)
 			"left": offset = Vector2(96, 0)
@@ -217,6 +191,13 @@ const ENEMY_SCENES: Array[PackedScene] = [
 	preload("res://src/enemies/enemy_tank.tscn"),
 	preload("res://src/enemies/enemy_boss.tscn"),
 ]
+## Economia (medida con tests/economy_sim.gd): ~8 salas por piso, ~3.8 de combate.
+## Cada moneda recogida vale 1-2. Sale a unas 28 monedas en el piso 1 y 43 en el 5:
+## una mejora o un arma por piso, no todo. Los precios estan en shop_item.gd.
+const COIN_DROP_CHANCE := 0.4
+const COINS_PER_ROOM_CLEAR := 2
+const BOSS_COINS_BASE := 4
+const UPGRADE_IDS := ["upgrade_health", "upgrade_shield", "upgrade_stamina", "upgrade_damage"]
 const CHEST_SCENE := preload("res://src/items/chest.tscn")
 const SHOP_ITEM_SCENE := preload("res://src/items/shop_item.tscn")
 const ITEM_PICKUP_SCENE := preload("res://src/items/item_pickup.tscn")
@@ -247,7 +228,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 		var info := {
 			"health": (30.0 + floor_n * 10.0) * RNG.randf_range(0.85, 1.15),
 			"damage": (8.0 + floor_n * 3.0) * RNG.randf_range(0.85, 1.15),
-			"drops": [{"item_id": "coin", "chance": 0.6}, {"item_id": "health_small", "chance": 0.15},
+			"drops": [{"item_id": "coin", "chance": COIN_DROP_CHANCE}, {"item_id": "health_small", "chance": 0.15},
 				{"item_id": _random_loot_id(), "chance": 0.06}],
 		}
 		# El Perineo es tierra de nadie: mezcla bichos de los dos reinos.
@@ -304,7 +285,7 @@ func _random_item_id(filter: Callable) -> String:
 	var db = get_node("/root/ItemDatabase")
 	for _i in range(40):
 		var item = db.get_random_item()
-		if item and filter.call(item) and not ("especial" in item.tags or "único" in item.tags or "moneda" in item.tags or "hormona" in item.tags):
+		if item and filter.call(item) and not ("especial" in item.tags or "único" in item.tags or "moneda" in item.tags or "hormona" in item.tags or "mejora" in item.tags):
 			return item.id
 	return "health_small"
 
@@ -328,10 +309,17 @@ func _build_shop(room: Room) -> void:
 	var stock := [_random_weapon_id(), _random_loot_id(), _random_loot_id()]
 	if _missing_hormones().size() > 0:
 		stock[2] = "hormone_" + _missing_hormones()[0]  # la tienda tambien vende la hormona que te falta
+	# Mejoras permanentes: siempre la de vida y otra al azar.
+	var others := UPGRADE_IDS.slice(1)
+	stock.append("upgrade_health")
+	stock.append(others[RNG.randi_range(0, others.size() - 1)])
 	for i in range(stock.size()):
 		var s := SHOP_ITEM_SCENE.instantiate()
 		s.item_id = stock[i]
-		s.position = room.get_center_position() + Vector2((i - 1) * 110, 0)
+		# armas y botin arriba, mejoras abajo
+		var row := 0 if i < 3 else 1
+		var col: float = (i - 1) if row == 0 else (i - 3.5)
+		s.position = room.get_center_position() + Vector2(col * 120, -40 + row * 110)
 		room.pickups_node.add_child.call_deferred(s)
 
 func _has_real_weapon() -> bool:
@@ -378,10 +366,13 @@ func _on_room_cleared(room: Room) -> void:
 			Narrator.say("hormone_found", {}, true)
 	if room.room_type == Room.RoomType.BOSS:
 		_spawn_chest(room, "weapon")
-		_spawn_pickup(room, "coin", room.get_center_position() + Vector2(-50, 40))
-		_spawn_pickup(room, "coin", room.get_center_position() + Vector2(50, 40))
+		var n := BOSS_COINS_BASE + _run_manager.current_floor
+		for i in n:
+			_spawn_pickup(room, "coin", room.get_center_position() + Vector2((i - (n - 1) / 2.0) * 30, 40))
 	else:
 		Narrator.say("room_cleared")
+		for i in COINS_PER_ROOM_CLEAR:
+			_spawn_pickup(room, "coin", room.get_center_position() + Vector2(-20 + i * 40, 60))
 		if RNG.randf() < 0.3:
 			_spawn_chest(room, "")
 
