@@ -13,6 +13,12 @@ var _story: Label
 var _hint: Label
 var _select: Control
 var _tween: Tween
+## Letras por segundo al escribir la historia.
+const CHARS_PER_SEC := 22.0
+## Tras completarse una frase, pausa antes de aceptar "seguir": sin ella una
+## doble pulsacion completaba una frase y se saltaba la siguiente sin leerla.
+const READ_LOCK_MS := 600
+var _done_at_ms := 0
 
 
 func _ready() -> void:
@@ -60,7 +66,8 @@ func _next_slide() -> void:
 	if _tween:
 		_tween.kill()
 	_tween = create_tween().set_parallel()
-	_tween.tween_property(_story, "visible_ratio", 1.0, _story.text.length() / 50.0)
+	_tween.tween_property(_story, "visible_ratio", 1.0, _story.text.length() / CHARS_PER_SEC)
+	_tween.chain().tween_callback(func(): _done_at_ms = Time.get_ticks_msec())
 	_tween.tween_property(_bg, "color", Color("3a3a42") if censored else Color("2a1440"), 0.8)
 
 
@@ -72,9 +79,10 @@ func _input(event: InputEvent) -> void:
 		_show_select()
 	elif _story.visible_ratio < 1.0:
 		_story.visible_ratio = 1.0  # primero termina de escribir, luego avanza
+		_done_at_ms = Time.get_ticks_msec()
 		if _tween:
 			_tween.kill()
-	else:
+	elif Time.get_ticks_msec() - _done_at_ms >= READ_LOCK_MS:
 		_next_slide()
 
 

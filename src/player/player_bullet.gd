@@ -6,6 +6,9 @@ class_name PlayerBullet
 var damage: float = 8.0
 var speed: float = 500.0
 var lifetime: float = 1.6
+## Bendiciones: enemigos que aun atraviesa y fuerza del empujon.
+var pierce: int = 0
+var knockback: float = 120.0
 var _t: float = 0.0
 
 func _ready() -> void:
@@ -21,8 +24,11 @@ func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		return
 	if body.is_in_group("enemy") and body.has_method("take_damage"):
-		body.take_damage(damage, get_tree().get_first_node_in_group("player"), Vector2.RIGHT.rotated(rotation) * 120.0)
+		body.take_damage(damage, get_tree().get_first_node_in_group("player"), Vector2.RIGHT.rotated(rotation) * knockback)
 		var ps := get_node("/root/PlayerStats")
 		if ps.lifesteal > 0.0:
 			ps.heal(damage * ps.lifesteal)
+		if pierce > 0:
+			pierce -= 1
+			return
 	queue_free()

@@ -50,7 +50,7 @@ var _prompt_label: RichTextLabel
 var prompt_owner: Object = null
 var _choice: PanelContainer
 var _choice_label: RichTextLabel
-var _choice_row: HBoxContainer
+var _choice_row: VBoxContainer
 
 
 func _ready() -> void:
@@ -74,9 +74,9 @@ func _ready() -> void:
 	_prompt_label.add_theme_font_size_override("normal_font_size", 15)
 	_choice = _make_box(360)
 	_choice_label = _choice.get_child(0).get_child(0)
-	_choice_row = HBoxContainer.new()
-	_choice_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	_choice_row.add_theme_constant_override("separation", 10)
+	# en columna: las bendiciones traen descripcion y no caben en fila
+	_choice_row = VBoxContainer.new()
+	_choice_row.add_theme_constant_override("separation", 6)
 	_choice.get_child(0).add_child(_choice_row)
 	_panel = _make_box(460)
 	_label = _panel.get_child(0).get_child(0)
@@ -176,7 +176,8 @@ func choose(title: String, options: Array) -> void:
 	for i in options.size():
 		var b := Button.new()
 		b.text = "%d. %s" % [i + 1, options[i]]
-		b.add_theme_font_size_override("font_size", 16)
+		b.add_theme_font_size_override("font_size", 15)
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.pressed.connect(_pick_choice.bind(i))
 		_choice_row.add_child(b)
 	_choice.visible = true
@@ -330,8 +331,11 @@ func _on_run_started(_seed: int) -> void:
 	_save_memory()
 	_seen.clear()
 	ignored_count = 0
+	var freed: int = get_node("/root/RunManager").liberated.size()
 	if _memory.runs == 1:
 		say("first_run")  # despues basta con la presentacion del piso
+	elif freed > 0 and freed < 5:
+		say("run_start_progress", {"n": freed, "left": 5 - freed})
 
 
 func _on_player_died() -> void:
@@ -343,7 +347,10 @@ func _on_player_died() -> void:
 	_queue.clear()
 	_showing = false  # la frase de muerte no espera a que pases la anterior
 	var n: int = _memory.deaths_by_floor[key]
-	if n >= 3 and randf() < 0.5:
+	var main := get_tree().get_first_node_in_group("main")
+	if main and main.current_room and main.current_room.room_type == Room.RoomType.BOSS:
+		say("death_boss", {"boss": get_node("/root/RunManager").floor_data().boss_name})
+	elif n >= 3 and randf() < 0.5:
 		say("death_same_floor", {"floor": floor_n, "n": n})
 	else:
 		say("death")

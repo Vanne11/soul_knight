@@ -142,6 +142,18 @@
   "intox_sober": ["Sobrio otra vez. Qué horror. Ahora lo ves todo con claridad, incluido lo malo que eres."],
   "lore_unlocked": ["Lore desbloqueado: '{name}'. Nadie lo lee. Demuéstrame que me equivoco."],
 
+  "blessing_first": ["Una bendición de reino. Elige bien: se acumulan, se combinan y definen cómo vas a pegar el resto de la partida. Si mezclas los dos reinos, a lo mejor pasa algo bonito."],
+  "blessing_foreign": ["Bendición del reino contrario. Pega el doble, sí. Y te da alergia, también. Nadie dijo que la integración fuera gratis."],
+  "liberated_floor": ["Esta región ya la liberaste en otra vida. Se acuerda de ti. Más que yo de tus aciertos, desde luego."],
+  "run_start_progress": [
+    "Llevas {n} regiones liberadas para siempre. Quedan {left}. La Hoja de Parra ya no duerme tranquila.",
+    "{n} regiones a color. {left} todavía en gris. Lo tuyo no es talento: es cabezonería. Funciona."
+  ],
+  "death_boss": [
+    "{boss} te ha mandado a casa. La próxima vez que entres ya sabes cómo ataca. Eso, o vuelves a morir igual.",
+    "Muerto contra {boss}. Has llegado hasta el jefe, que no es poco. Bueno, sí es poco. Pero menos poco que antes."
+  ],
+
   "death": [
     "MORISTE, CABRÓN. Muerte número {deaths}. Las estoy coleccionando.",
     "Has muerto. La Hoja de Parra ha tapado tu cadáver con una hojita. Qué detalle.",

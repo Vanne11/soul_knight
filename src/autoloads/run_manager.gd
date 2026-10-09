@@ -41,12 +41,77 @@ const CHARACTERS := {
 		"bio": "Pico de pato, cola de castor, pone huevos y es mamífero. La naturaleza tuvo un mal día. Él tuvo uno peor: le tocó salvar el mundo."},
 }
 
+## Bendiciones de reino: se elige 1 de 3 al limpiar una sala que la ofrece.
+## Las del reino contrario pegan doble (+2 niveles) pero dan alergia.
+## stat: [stat, valor por nivel] se aplica al cogerla; el resto lo consulta el
+## codigo de combate con blessing("id") (player.gd, player_bullet.gd, main.gd).
+const BLESSINGS := {
+	"calibre": {"name": "Calibre Grueso", "kingdom": "pene", "desc": "+20% de daño", "stat": ["damage", 1.2]},
+	"descarga": {"name": "Descarga Múltiple", "kingdom": "pene", "desc": "+1 proyectil por disparo (cada uno pega un 70%)"},
+	"embestida": {"name": "Embestida", "kingdom": "pene", "desc": "Tus balas empujan y aturden mucho más"},
+	"penetracion": {"name": "Penetración", "kingdom": "pene", "desc": "Las balas atraviesan a un enemigo más"},
+	"orgullo": {"name": "Orgullo Herido", "kingdom": "pene", "desc": "Al recibir un golpe sueltas 8 balas en círculo"},
+	"testosterona": {"name": "Testosterona Pura", "kingdom": "pene", "desc": "+8 de vida máxima y +5 de escudo", "stat": ["max_health_flat", 8.0]},
+	"ciclo": {"name": "Ciclo Acelerado", "kingdom": "vulva", "desc": "+20% de cadencia de disparo", "stat": ["fire_rate", 1.2]},
+	"escurridiza": {"name": "Escurridiza", "kingdom": "vulva", "desc": "El dash recarga un 30% antes y cuesta menos"},
+	"filo": {"name": "Dash Cortante", "kingdom": "vulva", "desc": "El dash daña a todo lo que atraviesas"},
+	"intuicion": {"name": "Intuición", "kingdom": "vulva", "desc": "+12% de probabilidad de crítico", "stat": ["crit_chance", 0.12]},
+	"regla": {"name": "Regeneración Cíclica", "kingdom": "vulva", "desc": "Curas 1 de vida al matar"},
+	"caderas": {"name": "Caderas Ligeras", "kingdom": "vulva", "desc": "+12% de velocidad", "stat": ["speed", 1.12]},
+	# Solo aparece con 2+ niveles de cada reino: premio a mezclar.
+	"equilibrio": {"name": "Equilibrio Hormonal", "kingdom": "mixto", "desc": "Al hacer dash disparas un anillo de balas"},
+}
+
 var character: String = "pitocles"
 var coins: int = 0
 ## hormonas en el cuerpo esta run: abren las Puertas Hormonales
 var hormones: Dictionary = {}
 ## id de mejora -> veces comprada esta run (cada compra la encarece)
 var upgrades_bought: Dictionary = {}
+## id de bendicion -> nivel esta run
+var blessings: Dictionary = {}
+
+func blessing(id: String) -> int:
+	return int(blessings.get(id, 0))
+
+## Niveles sumados de un reino (para desbloquear Equilibrio Hormonal).
+func kingdom_levels(kingdom: String) -> int:
+	var n := 0
+	for id in blessings:
+		if BLESSINGS[id].kingdom == kingdom:
+			n += blessings[id]
+	return n
+
+## Reino "de casa" del heroe (el ornitorrinco no tiene: nunca hay contrario).
+func is_foreign(kingdom: String) -> bool:
+	var home: String = character_data().kingdom
+	return home in ["pene", "vulva"] and kingdom in ["pene", "vulva"] and kingdom != home
+
+## 3 bendiciones a elegir; la mayoria del reino pedido. Equilibrio sustituye a la
+## ultima si ya la mereces.
+func roll_blessings(kingdom: String) -> Array:
+	var other := "vulva" if kingdom == "pene" else "pene"
+	var main_pool := BLESSINGS.keys().filter(func(id): return BLESSINGS[id].kingdom == kingdom)
+	var other_pool := BLESSINGS.keys().filter(func(id): return BLESSINGS[id].kingdom == other)
+	RNG.shuffle(main_pool)
+	RNG.shuffle(other_pool)
+	var out: Array = main_pool.slice(0, 2) + other_pool.slice(0, 1)
+	if blessing("equilibrio") == 0 and kingdom_levels("pene") >= 2 and kingdom_levels("vulva") >= 2:
+		out[2] = "equilibrio"
+	return out
+
+## Regiones cuyo jefe has derrotado alguna vez (indice de piso). Para siempre.
+var liberated: Array = []
+
+func is_liberated(floor_n: int) -> bool:
+	return floor_n in liberated
+
+func liberate(floor_n: int) -> bool:
+	if floor_n in liberated:
+		return false
+	liberated.append(floor_n)
+	save_meta_progression()
+	return true
 
 func floor_data() -> Dictionary:
 	return FLOORS[clampi(current_floor - 1, 0, FLOORS.size() - 1)]
@@ -101,6 +166,7 @@ func _ready() -> void:
 	meta_currency = int(data.get("meta_currency", 0))
 	meta_upgrades = data.get("meta_upgrades", {})
 	best_floor = int(data.get("best_floor", 0))
+	liberated = data.get("liberated", []).map(func(f): return int(f))
 	total_runs = int(data.get("total_runs", 0))
 	unlocked_perks = []
 	for perk in data.get("unlocked_perks", []):
@@ -143,6 +209,7 @@ func start_new_run(seed: int = 0) -> void:
 	coins = 5 * meta_level("monedas")
 	hormones = {}
 	upgrades_bought = {}
+	blessings = {}
 	if character_data().hormone != "":
 		hormones[character_data().hormone] = true
 	run_start_time = Time.get_ticks_msec() / 1000.0
@@ -218,6 +285,7 @@ func save_meta_progression() -> void:
 		"unlocked_perks": unlocked_perks,
 		"total_runs": total_runs,
 		"best_floor": best_floor,
+		"liberated": liberated,
 	}
 	var file = FileAccess.open("user://meta_save.json", FileAccess.WRITE)
 	if file:

@@ -19,6 +19,10 @@ var spawn_points: Array[Vector2] = []
 var enemies_spawned: Array[Node] = []
 var cleared: bool = false
 var cleared_callback: Variant = null
+## Lo que da al limpiarla (main.gd lo reparte y lo anuncia en las puertas):
+## "bendicion" (de reward_kingdom), "monedas", "vida", "hormona" o "".
+var reward: String = ""
+var reward_kingdom: String = ""
 
 @onready var floor_tilemap: TileMap = $Floor
 @onready var walls_tilemap: TileMap = $Walls
@@ -174,12 +178,7 @@ func _add_pickup_deferred(pickup: Node) -> void:
 func _spawn_rewards() -> void:
 	var reward_pos = get_center_position()
 	
-	# Always spawn some health
-	var pickup = ITEM_PICKUP_SCENE.instantiate()
-	pickup.item_id = "health_small"
-	pickup.position = reward_pos + Vector2(-40, 0)
-	_add_pickup_deferred(pickup)
-	
+	# Sin vida gratis al limpiar: la recompensa de cada sala la anuncia su puerta (main.gd).
 	# Chance for whiskey (intoxication item)
 	if RNG.randf() < 0.4:
 		var pickup2 = ITEM_PICKUP_SCENE.instantiate()

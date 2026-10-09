@@ -32,8 +32,10 @@ func _create_ui() -> void:
 	subtitle.add_theme_color_override("font_color", Color(0.8, 0.6, 0.7, 1))
 	vbox.add_child(subtitle)
 	
+	vbox.add_child(_world_strip())
+	
 	var spacer = Control.new()
-	spacer.custom_minimum_size = Vector2(0, 40)
+	spacer.custom_minimum_size = Vector2(0, 24)
 	vbox.add_child(spacer)
 	
 	var start_btn = Button.new()
@@ -84,6 +86,43 @@ func _create_ui() -> void:
 	self.settings_btn = settings_btn
 	self.quit_btn = quit_btn
 	self.meta_info = meta_info
+
+## El mundo: cada region liberada alguna vez sale en su color; las demas, grises.
+## Es lo que se gana a la larga, a la vista nada mas abrir el juego.
+func _world_strip() -> Control:
+	var rm = _game_controller.get_run_manager()
+	var col := VBoxContainer.new()
+	col.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	col.add_child(row)
+	for i in RunManager.FLOORS.size():
+		var f: Dictionary = RunManager.FLOORS[i]
+		var free: bool = rm.is_liberated(i + 1)
+		var cell := PanelContainer.new()
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = f.tint.darkened(0.45) if free else Color(0.22, 0.22, 0.25)
+		sb.border_color = f.tint if free else Color(0.4, 0.4, 0.44)
+		sb.set_border_width_all(2)
+		sb.set_content_margin_all(8)
+		cell.add_theme_stylebox_override("panel", sb)
+		var l := Label.new()
+		l.text = f.name.replace("EL PALACIO DE LA ", "PALACIO\n").replace("LA SELVA ", "SELVA\n").replace("EL ", "")
+		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		l.custom_minimum_size = Vector2(120, 0)
+		l.add_theme_font_size_override("font_size", 13)
+		l.add_theme_color_override("font_color", f.tint.lightened(0.3) if free else Color(0.55, 0.55, 0.6))
+		cell.add_child(l)
+		row.add_child(cell)
+	var caption := Label.new()
+	var n: int = rm.liberated.size()
+	caption.text = "El mundo sigue gris. Libera una región derrotando a su jefe: se queda a color para siempre." if n == 0 \
+		else "%d de %d regiones liberadas para siempre. Cada una te regala una bendición al llegar." % [n, RunManager.FLOORS.size()]
+	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	caption.add_theme_font_size_override("font_size", 13)
+	caption.add_theme_color_override("font_color", Color(0.75, 0.65, 0.7))
+	col.add_child(caption)
+	return col
 
 var start_btn: Button
 var continue_btn: Button

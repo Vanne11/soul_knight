@@ -43,7 +43,9 @@ func _ready() -> void:
 	_events.floor_completed.connect(func(_f): _update_floor_label())
 	_events.coins_changed.connect(func(_c): _update_floor_label())
 	_events.hormones_changed.connect(_update_floor_label)
+	_events.blessings_changed.connect(_update_blessings)
 	_build_boss_bar()
+	_build_blessings()
 	add_child(Minimap.new())
 	_update_floor_label()
 	
@@ -133,6 +135,31 @@ func _update_floor_label() -> void:
 	var horm: Array = _runs.hormones.keys().filter(func(h): return _runs.hormones[h])
 	floor_label.text = "P%d %s · $%d · %s" % [n, _runs.floor_data().name, _runs.coins,
 		"/".join(horm) if not horm.is_empty() else "sin hormonas"]
+
+## Tu build: bendiciones con su nivel, en el color de su reino. Arriba a la izquierda.
+var _blessings: RichTextLabel
+
+func _build_blessings() -> void:
+	_blessings = RichTextLabel.new()
+	_blessings.bbcode_enabled = true
+	_blessings.fit_content = true
+	_blessings.scroll_active = false
+	_blessings.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_blessings.position = Vector2(10, BAND + 6)
+	_blessings.size = Vector2(260, 0)
+	_blessings.add_theme_font_size_override("normal_font_size", 12)
+	_blessings.add_theme_color_override("font_outline_color", Color("0d0b0f"))
+	_blessings.add_theme_constant_override("outline_size", 4)
+	add_child(_blessings)
+	_update_blessings()
+
+func _update_blessings() -> void:
+	var colors := {"pene": "6ec6ff", "vulva": "ff7ac0", "mixto": "ffc93c"}
+	var lines := []
+	for id in _runs.blessings:
+		var b: Dictionary = RunManager.BLESSINGS[id]
+		lines.append("[color=#%s]%s %d[/color]" % [colors[b.kingdom], b.name, _runs.blessings[id]])
+	_blessings.text = "\n".join(lines)
 
 var _boss_bar: ProgressBar
 var _boss_label: Label

@@ -355,14 +355,14 @@ func _assign_room_types() -> void:
 		if candidates.size() > 0:
 			candidates[0].room_type = Room.RoomType.PUZZLE
 	
-	# Respiro: la mitad de las salas de combate que quedan pasan a ser tranquilas
-	# (tesoro, descanso, lore), repartidas por igual. Puzzle solo el de arriba:
-	# uno sin sala secreta que abrir seria una promesa vacia.
+	# Respiro: UNA sala tranquila (tesoro, descanso o lore) si quedan combates de
+	# sobra. Mas que eso era pasear: las recompensas ya estan en los combates.
+	# Puzzle solo el de arriba: uno sin sala secreta que abrir seria una promesa vacia.
 	candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT)
 	RNG.shuffle(candidates)
 	var calm := [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]
 	RNG.shuffle(calm)  # con 1-2 salas tranquilas por piso, que no salga siempre la misma
-	var n_calm := int(ceil(candidates.size() / 2.0))
+	var n_calm := 1 if candidates.size() >= 3 else 0
 	for i in n_calm:
 		candidates[i].room_type = calm[i % calm.size()]
 	# Del combate que queda: un antro (enemigos que sueltan alcohol) y alguna trampa.

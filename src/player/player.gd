@@ -80,6 +80,7 @@ func _physics_process(delta: float) -> void:
 func _handle_timers(delta: float) -> void:
 	if _dash_timer > 0.0:
 		_dash_timer -= delta
+		_dash_cut()
 		if _dash_timer <= 0.0:
 			is_dashing = false
 			velocity = velocity.lerp(Vector2.ZERO, 10.0 * delta)
@@ -130,7 +131,8 @@ func _handle_dash(delta: float) -> void:
 func _start_dash() -> void:
 	is_dashing = true
 	_dash_timer = dash_duration
-	_dash_cooldown_timer = dash_cooldown
+	_dash_cooldown_timer = dash_cooldown * pow(0.7, _rm().blessing("escurridiza"))
+	_dash_hits.clear()
 	
 	var dir = _last_move_direction
 	if dir == Vector2.ZERO:
@@ -140,6 +142,8 @@ func _start_dash() -> void:
 	Sound.play("dash")
 	velocity = dir * dash_speed * get_node("/root/PlayerStats").speed_modifier
 	get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "DASH!", Color.CYAN)
+	if _rm().blessing("equilibrio") > 0 and current_weapon:
+		_ring(10, get_weapon_damage() * _player_stats.damage_modifier)
 	
 
 func _handle_attack(delta: float) -> void:
@@ -207,6 +211,11 @@ func _shoot() -> void:
 	var count: int = int(cd.get("pellets", cd.get("projectiles", 1)))
 	# borracho = mas dispersion, no fallos aleatorios
 	var spread: float = float(cd.get("spread", 0.05)) / accuracy
+	var extra: int = _rm().blessing("descarga")
+	if extra > 0:
+		count += extra
+		dmg *= 0.7
+		spread = maxf(spread, 0.12)  # en abanico, no todas por el mismo sitio
 	_attack_anim = 0.15
 	for i in range(count):
 		var b := PLAYER_BULLET.instantiate()
@@ -219,8 +228,38 @@ func _shoot() -> void:
 			b.damage *= _player_stats.crit_damage_modifier
 		b.speed = float(cd.get("projectile_speed", 500)) * _player_stats.projectile_speed_modifier
 		b.rotation = ang
+		_bless_bullet(b)
 		get_parent().add_child(b)
 		b.global_position = weapon_pivot.global_position + Vector2.RIGHT.rotated(ang) * 14.0
+
+func _rm() -> Node:
+	return get_node("/root/RunManager")
+
+func _bless_bullet(b: Node) -> void:
+	b.pierce = _rm().blessing("penetracion")
+	b.knockback *= 1.0 + 1.5 * _rm().blessing("embestida")
+
+## Anillo de balas alrededor del jugador (Orgullo Herido, Equilibrio Hormonal).
+func _ring(n: int, dmg: float) -> void:
+	for i in n:
+		var b := PLAYER_BULLET.instantiate()
+		b.damage = dmg
+		b.speed = 420.0
+		b.rotation = TAU * i / n
+		_bless_bullet(b)
+		get_parent().add_child.call_deferred(b)
+		b.set_deferred("global_position", global_position)
+
+## Dash Cortante: cada enemigo que atraviesas en un dash recibe un tajo (una vez).
+var _dash_hits: Array = []
+func _dash_cut() -> void:
+	var lvl: int = _rm().blessing("filo")
+	if lvl == 0 or not current_weapon:
+		return
+	for e in get_tree().get_nodes_in_group("enemy"):
+		if e not in _dash_hits and is_instance_valid(e) and e.global_position.distance_to(global_position) < 40.0:
+			_dash_hits.append(e)
+			e.take_damage(get_weapon_damage() * _player_stats.damage_modifier * 1.5 * lvl, self, _dash_direction * 200.0)
 
 func _sneeze() -> void:
 	_sneeze_in = RNG.randf_range(3.0, 6.0)
@@ -297,6 +336,9 @@ func receive_hit(dmg: float) -> bool:
 	_iframes = HIT_IFRAMES
 	_player_stats.take_damage(dmg)
 	Sound.play("hurt")
+	var pride: int = _rm().blessing("orgullo")
+	if pride > 0 and current_weapon and _player_stats.current_health > 0.0:
+		_ring(8, get_weapon_damage() * _player_stats.damage_modifier * pride)
 	return true
 
 ## El arma que sueltas al coger otra se queda en el suelo: puedes volver a por ella.

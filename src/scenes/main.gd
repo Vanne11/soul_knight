@@ -53,10 +53,17 @@ func _generate_dungeon() -> void:
 	# Start player in start room
 	var start_room = _find_start_room()
 	Narrator.say("floor_%d" % _run_manager.current_floor)  # antes que la pista del arma
+	_weapon_room = null
 	if start_room and not _has_real_weapon():
 		_hide_weapon_chest(start_room)
 	_pick_hormone_room()
+	_assign_rewards()
 	_show_floor_card()
+	if _run_manager.is_liberated(_run_manager.current_floor):
+		# Region liberada en otra partida: te recibe con un regalo.
+		get_tree().create_timer(2.6).timeout.connect(func():
+			Narrator.say("liberated_floor")
+			_offer_blessing(_floor_kingdom(), "[b]%s te recuerda.[/b] Ya la liberaste una vez. Elige una bendición de regalo:" % _run_manager.floor_data().name))
 	if start_room:
 		_enter_room(start_room)
 	else:
@@ -136,6 +143,7 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	_update_camera_limits(room)
 	
 	_paint_room(room, room.cleared or room.room_type in CALM_ROOMS)
+	_label_doors(room)
 	if room.room_type in [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]:
 		_build_calm_room(room)
 	if room.room_type == Room.RoomType.SHOP:
@@ -246,7 +254,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 		var info := {
 			"health": (30.0 + floor_n * 10.0) * RNG.randf_range(0.85, 1.15),
 			"damage": (8.0 + floor_n * 3.0) * RNG.randf_range(0.85, 1.15),
-			"drops": [{"item_id": "coin", "chance": COIN_DROP_CHANCE}, {"item_id": "health_small", "chance": 0.15},
+			"drops": [{"item_id": "coin", "chance": COIN_DROP_CHANCE}, {"item_id": "health_small", "chance": 0.08},
 				{"item_id": _random_loot_id(), "chance": 0.06}],
 		}
 		# El Perineo es tierra de nadie: mezcla bichos de los dos reinos.
@@ -397,6 +405,7 @@ func _hide_weapon_chest(start_room: Room) -> void:
 				queue.append(n)
 	if far == null:
 		far = start_room
+	_weapon_room = far
 	_spawn_chest(far, "weapon", Vector2(0, 70))  # abajo: no choca con el cofre de una sala de tesoro
 	Narrator.say("weapon_hunt")
 
@@ -433,6 +442,9 @@ func _on_room_cleared(room: Room) -> void:
 		return
 	rooms_cleared_this_floor += 1
 	get_node("/root/RunManager").clear_room()
+	if room.reward == "hormona" and _missing_hormones().is_empty():
+		room.reward = "bendicion"  # ya la compraste en la tienda: algo a cambio
+		room.reward_kingdom = _floor_kingdom()
 	_paint_room(room, true, true)
 	if room == _hormone_room:
 		# Garantia: en cada piso hay al menos un arma antes del jefe.
@@ -442,6 +454,8 @@ func _on_room_cleared(room: Room) -> void:
 			_spawn_pickup(room, "hormone_" + h, room.get_center_position() + Vector2(RNG.randf_range(-60, 60), 40))
 		if not _missing_hormones().is_empty():
 			Narrator.say("hormone_found")
+	if room.reward != "hormona" and room.room_type != Room.RoomType.BOSS:
+		_give_reward(room)
 	if room.room_type == Room.RoomType.BOSS:
 		_spawn_chest(room, "weapon")
 		var n := BOSS_COINS_BASE + _run_manager.current_floor
@@ -451,8 +465,6 @@ func _on_room_cleared(room: Room) -> void:
 		Sound.play("room_clear")
 		for i in COINS_PER_ROOM_CLEAR:
 			_spawn_pickup(room, "coin", room.get_center_position() + Vector2(-20 + i * 40, 60))
-		if RNG.randf() < 0.3:
-			_spawn_chest(room, "")
 
 func _complete_floor() -> void:
 	if floor_completed:
@@ -463,12 +475,15 @@ func _complete_floor() -> void:
 	var boss_room := current_room
 	var floor_n: int = _run_manager.current_floor
 	if floor_n >= RunManager.FLOORS.size():
+		_run_manager.liberate(floor_n)
 		Narrator.say("victory")
 		get_node("/root/LoreDatabase").custom_event("victory")
 		_run_manager.end_run(true)
 		get_tree().create_timer(4.0).timeout.connect(func(): get_tree().change_scene_to_file("res://src/scenes/game_over.tscn"))
 		return
 	get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position, "¡PISO %d COMPLETADO!" % floor_n, Color.GOLD)
+	if _run_manager.liberate(floor_n):
+		Narrator.toast("REGIÓN LIBERADA PARA SIEMPRE", "%s ya no vuelve al gris. En próximas partidas te dará una bendición al llegar." % _run_manager.floor_data().name, "ffd75a")
 	# Recompensa: una mejora a elegir. Luego, sin prisa: recoges el botin y bajas por la escotilla.
 	await get_tree().create_timer(1.5).timeout
 	Narrator.choose("[b]Jefe derrotado.[/b] Elige una mejora para el resto de la partida:", BOSS_REWARDS.map(func(r): return r[0]))
@@ -485,6 +500,111 @@ const BOSS_REWARDS := [
 	["+15 estamina máxima", "max_stamina_flat", 15.0],
 	["+10 escudo máximo", "max_shields_flat", 10.0],
 ]
+
+# ---------------------------------------------------------------- recompensas por sala
+## Cada sala de pelea anuncia en su puerta lo que da al limpiarla: el camino
+## por el piso es una decision, no un pasillo.
+const FIGHT_ROOMS := [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION, Room.RoomType.TRAP, Room.RoomType.MINIBOSS]
+const KINGDOM_COLORS := {"pene": Color("6ec6ff"), "vulva": Color("ff7ac0"), "mixto": Color("ffc93c")}
+const KINGDOM_NAMES := {"pene": "PENELANDIA", "vulva": "VULVANIA"}
+## Sala del cofre del arma inicial (su puerta dice ARMA mientras vayas desarmado).
+var _weapon_room: Room = null
+
+## Reino de las bendiciones de este piso: el suyo casi siempre, si tiene.
+func _floor_kingdom() -> String:
+	var k: String = _run_manager.floor_data().kingdom
+	if k in ["pene", "vulva"] and RNG.randf() < 0.7:
+		return k
+	return "pene" if RNG.randf() < 0.5 else "vulva"
+
+func _assign_rewards() -> void:
+	var fights: Array = dungeon_generator.rooms.values().filter(func(r): return r.room_type in FIGHT_ROOMS)
+	RNG.shuffle(fights)
+	var blessed := 0
+	for room in fights:
+		if room == _hormone_room and not _missing_hormones().is_empty():
+			room.reward = "hormona"
+			continue
+		# Dos bendiciones por piso, ni una mas: si todo da mejoras, nada pesa.
+		# El resto: monedas, nada (solo pelea) o algo de vida.
+		var r := RNG.randf()
+		room.reward = "bendicion" if blessed < 2 else ("monedas" if r < 0.5 else ("" if r < 0.8 else "vida"))
+		if room.reward == "bendicion":
+			blessed += 1
+			room.reward_kingdom = _floor_kingdom()
+
+## Carteles de las puertas de la sala actual: que hay al otro lado.
+func _label_doors(room: Room) -> void:
+	for door: Door in room.doors.values():
+		var target: Room = dungeon_generator.rooms.get(door.target_pos)
+		var hint := ["", Color("f2ead6")]
+		if target and not target.cleared:
+			hint = _room_hint(target)
+		door.set_hint(hint[0], hint[1])
+
+func _room_hint(room: Room) -> Array:
+	if room == _weapon_room and not _has_real_weapon():
+		return ["ARMA", Color("ffa64a")]
+	match room.room_type:
+		Room.RoomType.BOSS: return ["JEFE", Color("ff5050")]
+		Room.RoomType.SHOP: return ["TIENDA", Color("ffd75a")]
+		Room.RoomType.REST: return ["DESCANSO", Color("6aa8ff")] if not room.has_meta("calm_built") else ["", Color.WHITE]
+		Room.RoomType.TREASURE: return ["TESORO", Color("ffd75a")] if not room.has_meta("calm_built") else ["", Color.WHITE]
+		Room.RoomType.LORE: return ["INSCRIPCIÓN", Color("c08cff")] if not room.has_meta("calm_built") else ["", Color.WHITE]
+		Room.RoomType.PUZZLE: return ["ACERTIJO", Color("c08cff")]
+	var head := "MINIJEFE · " if room.room_type == Room.RoomType.MINIBOSS else ""
+	match room.reward:
+		"bendicion":
+			var k := room.reward_kingdom
+			var warn := "\n(te da alergia)" if _run_manager.is_foreign(k) else ""
+			return [head + "BENDICIÓN\n" + KINGDOM_NAMES[k] + warn, KINGDOM_COLORS[k]]
+		"monedas": return [head + "MONEDAS", Color("ffd75a")]
+		"vida": return [head + "VIDA", Color("ff6b6b")]
+		"hormona": return [head + "HORMONA", Color("c08cff")]
+	return [head + "SOLO PELEA", Color(0.6, 0.6, 0.65)]
+
+func _give_reward(room: Room) -> void:
+	var center := room.get_center_position()
+	match room.reward:
+		"monedas":
+			var n := 4 + _run_manager.current_floor
+			for i in n:
+				_spawn_pickup(room, "coin", center + Vector2((i - (n - 1) / 2.0) * 28, -30))
+		"vida":
+			_spawn_pickup(room, "health_large", center + Vector2(0, -30))
+		"bendicion":
+			await get_tree().create_timer(0.7).timeout
+			_offer_blessing(room.reward_kingdom, "[b]Bendición de %s.[/b] Elige una:" % KINGDOM_NAMES[room.reward_kingdom].capitalize())
+
+func _offer_blessing(kingdom: String, title: String) -> void:
+	var ids: Array = _run_manager.roll_blessings(kingdom)
+	var options := ids.map(func(id):
+		var b: Dictionary = RunManager.BLESSINGS[id]
+		var lvl: int = _run_manager.blessing(id)
+		var tag := ("  [nivel %d]" % (lvl + 1)) if lvl > 0 else ""
+		if _run_manager.is_foreign(b.kingdom):
+			tag += "  [AJENA: doble efecto + ALERGIA]"
+		return "%s (%s): %s%s" % [b.name, KINGDOM_NAMES.get(b.kingdom, "MIXTA").capitalize(), b.desc, tag])
+	Narrator.say_first("blessing_first")
+	Narrator.choose(title, options)
+	_take_blessing(ids[await Narrator.chosen])
+
+func _take_blessing(id: String) -> void:
+	var b: Dictionary = RunManager.BLESSINGS[id]
+	var foreign: bool = _run_manager.is_foreign(b.kingdom)
+	var levels := 2 if foreign else 1
+	_run_manager.blessings[id] = _run_manager.blessing(id) + levels
+	var ps = _game_controller.get_player_stats()
+	for i in levels:
+		if b.has("stat"):
+			ps.apply_stat_mod(b.stat[0], b.stat[1])
+		if id == "testosterona":
+			ps.apply_stat_mod("max_shields_flat", 5.0)
+	if foreign:
+		player.start_allergy(20.0)
+		Narrator.say_first("blessing_foreign")
+	Sound.play("puzzle_solve")
+	_global_events.blessings_changed.emit()
 
 # ---------------------------------------------------------------- salas tranquilas
 func _build_calm_room(room: Room) -> void:
@@ -590,6 +710,9 @@ func _on_enemy_killed(enemy: Node, killer: Node) -> void:
 	if enemy.is_in_group("boss"):
 		_complete_floor()
 	if killer == player:
+		var regen: int = _run_manager.blessing("regla")
+		if regen > 0:
+			_game_controller.get_player_stats().heal(regen)
 		get_node("/root/RunManager").total_enemies_killed += 1
 		get_node("/root/RunManager").total_damage_dealt += enemy.max_health  # Approximate
 		_check_room_clear_for_enemy(enemy)

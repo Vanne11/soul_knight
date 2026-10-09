@@ -39,6 +39,7 @@ signal show_floating_text(position: Vector2, text: String, color: Color)
 signal boss_health_changed(boss_name: String, current: float, max: float)
 signal coins_changed(coins: int)
 signal hormones_changed()
+signal blessings_changed()
 signal log_message(message: String, log_type: int)
 
 # Lore signals

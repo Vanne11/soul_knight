@@ -94,6 +94,25 @@ func try_open(player: Node) -> bool:
 	
 	return false
 
+## Cartel sobre la puerta con lo que hay detras ("" lo quita). Va hacia dentro
+## de la sala para que no lo corte la camara.
+var _hint: Label
+func set_hint(text: String, color := Color("f2ead6")) -> void:
+	if _hint == null:
+		_hint = Label.new()
+		_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_hint.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		_hint.size = Vector2(160, 40)
+		_hint.add_theme_font_size_override("font_size", 11)
+		_hint.add_theme_color_override("font_outline_color", Color("0d0b0f"))
+		_hint.add_theme_constant_override("outline_size", 5)
+		_hint.z_index = 5
+		_hint.position = _dir_vectors[direction] * -52.0 - _hint.size / 2
+		add_child(_hint)
+	_hint.text = text
+	_hint.add_theme_color_override("font_color", color)
+	_hint.visible = text != ""
+
 func _get_requirement_text() -> String:
 	if required_key != "":
 		return "Llave: %s" % required_key
