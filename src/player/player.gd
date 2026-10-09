@@ -136,6 +136,7 @@ func _start_dash() -> void:
 		dir = Vector2.DOWN
 	
 	_dash_direction = dir
+	Sound.play("dash")
 	velocity = dir * dash_speed * get_node("/root/PlayerStats").speed_modifier
 	get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "DASH!", Color.CYAN)
 	
@@ -146,6 +147,7 @@ func _handle_attack(delta: float) -> void:
 		_attack_timer = 1.0
 		_global_events.show_floating_text.emit(global_position + Vector2(0, -30), "¡CRAC! (tu mano)", Color("ff7ac0"))
 		Narrator.say_first("no_weapon_attack")
+		Sound.play("crack")
 	elif Input.is_action_pressed("attack") and not Narrator.ate_input() and _attack_timer <= 0.0:
 		_shoot()
 		_attack_timer = float(current_weapon.custom_data.get("fire_rate", attack_cooldown)) / (get_node("/root/PlayerStats").fire_rate_modifier * get_node("/root/PlayerStats").get_intoxication_effects().get("speed", 1.0))
@@ -183,6 +185,7 @@ func _home_bonus() -> float:
 
 func _shoot() -> void:
 	_update_aim()
+	Sound.play("shoot")
 	var cd: Dictionary = current_weapon.custom_data
 	var effects = _player_stats.get_intoxication_effects()
 	var accuracy: float = maxf(0.2, _player_stats.accuracy_modifier * _get_effect_multiplier(effects, "accuracy"))
@@ -286,6 +289,7 @@ func receive_hit(dmg: float) -> bool:
 		return false
 	_iframes = HIT_IFRAMES
 	_player_stats.take_damage(dmg)
+	Sound.play("hurt")
 	return true
 
 func equip_weapon(item: Item) -> void:

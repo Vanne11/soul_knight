@@ -12,6 +12,7 @@ var _timer: float = 0.0
 
 func _ready() -> void:
 	add_to_group("enemy_attack")
+	Sound.play("enemy_shoot")
 	body_entered.connect(_on_body_entered)
 
 func _physics_process(delta: float) -> void:

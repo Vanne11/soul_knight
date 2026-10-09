@@ -26,6 +26,7 @@ RunManager="res://src/autoloads/run_manager.gd"
 GameController="res://src/autoloads/game_controller.gd"
 Narrator="*res://src/autoloads/narrator.gd"
 DebugMenu="*res://src/autoloads/debug_menu.gd"
+Sound="*res://src/autoloads/sound.gd"
 
 [display]
 

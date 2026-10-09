@@ -75,6 +75,7 @@ func _process(_delta: float) -> void:
 	if rm.coins < price:
 		get_node("/root/GlobalEvents").show_floating_text.emit(global_position + Vector2(0, -30), "Pobre. Faltan %d." % (price - rm.coins), Color("ff7ac0"))
 		Narrator.say("shop_poor")
+		Sound.play("poor")
 		return
 	rm.add_coins(-price)
 	if "mejora" in _item.tags:
@@ -84,3 +85,4 @@ func _process(_delta: float) -> void:
 	sprite.visible = false
 	_player.add_item_to_inventory(item_id)
 	Narrator.say("shop_buy")
+	Sound.play("buy")

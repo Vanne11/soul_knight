@@ -27,3 +27,4 @@ func _on_body_entered(body: Node) -> void:
 	p.position = position + Vector2(0, 40)
 	get_parent().add_child.call_deferred(p)
 	Narrator.say_first("chest")
+	Sound.play("chest")

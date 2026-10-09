@@ -115,6 +115,9 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	
 	current_room = room
 	visited_rooms[room.grid_pos] = true
+	if entry_door:
+		Sound.play("door")
+	Sound.music("boss" if room.room_type == Room.RoomType.BOSS and not room.cleared else "explore")
 	room.cleared_callback = _on_room_cleared.bind(room)
 	room.on_player_enter()
 	_connect_room_doors(room)
@@ -418,6 +421,7 @@ func _on_room_cleared(room: Room) -> void:
 			_spawn_pickup(room, "coin", room.get_center_position() + Vector2((i - (n - 1) / 2.0) * 30, 40))
 	else:
 		Narrator.say("room_cleared")
+		Sound.play("room_clear")
 		for i in COINS_PER_ROOM_CLEAR:
 			_spawn_pickup(room, "coin", room.get_center_position() + Vector2(-20 + i * 40, 60))
 		if RNG.randf() < 0.3:
@@ -427,6 +431,8 @@ func _complete_floor() -> void:
 	if floor_completed:
 		return
 	floor_completed = true
+	Sound.music("")
+	Sound.play("floor_complete")
 	var floor_n: int = _run_manager.current_floor
 	if floor_n >= RunManager.FLOORS.size():
 		Narrator.say("victory", {}, true)

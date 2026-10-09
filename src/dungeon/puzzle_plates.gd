@@ -50,6 +50,7 @@ func play() -> void:
 	_step = 0
 	await get_tree().create_timer(1.0).timeout
 	for i in _seq:
+		Sound.play("tone_%d" % i, 0.0)
 		var tw := _plates[i].create_tween()
 		tw.tween_property(_plates[i], "modulate", Color.WHITE, 0.05)
 		tw.tween_interval(0.4)
@@ -65,6 +66,7 @@ func solve() -> void:
 	_done = true
 	for p in _plates:
 		p.modulate = Color.WHITE
+	Sound.play("puzzle_solve")
 	solved.emit()
 
 
@@ -75,9 +77,11 @@ func _on_step(body: Node, i: int) -> void:
 		for p in _plates:
 			p.create_tween().tween_property(p, "modulate", DIM, 0.5).from(Color(1, 0.2, 0.2))
 		Narrator.say("puzzle_fail")
+		Sound.play("puzzle_fail")
 		play()
 		return
 	_step += 1
+	Sound.play("tone_%d" % i, 0.0)
 	if _step == _seq.size():
 		solve()
 		return
