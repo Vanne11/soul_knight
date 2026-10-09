@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 ## Historia (diapositivas de lines.json "intro_slides") + seleccion de personaje.
-## La primera run muestra la historia; despues se va directo a elegir (con boton para verla).
+## Siempre empieza con la historia (ESC la salta); despues, elegir personaje.
 
 const ORDER := ["pitocles", "vulvalquiria", "ornitorrinco"]
 const CARD_COLORS := {"pitocles": Color("6ec6ff"), "vulvalquiria": Color("ff7ac0"), "ornitorrinco": Color("9be53c")}
@@ -23,10 +23,7 @@ func _ready() -> void:
 	_build_story()
 	_build_select()
 	_slides = Narrator.get_lines("intro_slides")
-	if Narrator._memory.runs == 0:
-		_next_slide()
-	else:
-		_show_select()
+	_next_slide()
 
 
 func _build_story() -> void:
@@ -170,6 +167,6 @@ func _show_select() -> void:
 func choose(id: String) -> void:
 	var rm = get_node("/root/RunManager")
 	rm.character = id
-	Narrator.say("select_" + id, {}, true)
+	Narrator.say("select_" + id)
 	rm.start_new_run()
 	get_tree().change_scene_to_file("res://src/scenes/main.tscn")

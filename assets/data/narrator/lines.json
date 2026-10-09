@@ -63,6 +63,23 @@
   "shield_broken": ["Escudo roto. Se regenera si aguantas tres segundos sin que te toquen. Tres. Para ti, una eternidad."],
   "no_stamina": ["Sin estamina. Tu cardio es tan bueno como tu sentido de la orientación."],
   "dash_spam": ["Dash, dash, dash. ¿Estás jugando o tienes un tic?"],
+  "ignored": [
+    "¡Eh! ¿Te vas sin leerme? Léeme. En un futuro seré importante.",
+    "Pasas de mí como de los términos y condiciones. Algún día te daré pistas, y entonces vendrás llorando.",
+    "Vale, cambia de sala a mitad de frase. Yo lo apunto todo. TODO.",
+    "Te recuerdo que soy el único aquí que sabe cómo se resuelven las cosas. Léeme."
+  ],
+  "puzzle_hint": [
+    "Te ayudo, porque me lees. El orden es: {seq}. De nada.",
+    "Mira que es fácil: {seq}. Pisa despacito, que te veo nervioso."
+  ],
+  "puzzle_hint_refused": [
+    "¿Ahora quieres ayuda? Me has dejado con la palabra en la boca {n} veces. Sufre un poco. Falla otras dos y ya veremos."
+  ],
+  "weapon_hunt": [
+    "Sin arma. Como siempre. Hay un cofre con algo que dispara en la sala más alejada de aquí. Llegar ya es otra historia: corre, esquiva y no pegues a nadie con esas manitas.",
+    "Tus armas, como tu dignidad, no vienen de serie. Hay un cofre al fondo del piso, en la sala más lejana. Las salas no se cerrarán mientras vayas desarmado: huye con estilo."
+  ],
   "no_weapon_attack": [
     "¿A puñetazos? ¿Con esas muñecas de cristal? Te fracturas tú antes que ellos. Busca un arma, héroe de porcelana.",
     "Eso que ha sonado no era el enemigo: era tu escafoides. Sin arma no se pega. Lo dice tu traumatólogo y lo digo yo.",

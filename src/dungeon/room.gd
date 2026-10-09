@@ -3,7 +3,7 @@ class_name Room
 
 ## Procedural room with doors, spawn points, and room type logic
 
-enum RoomType { COMBAT = 0, SHOP = 1, LORE = 2, TRAP = 3, PUZZLE = 4, SECRET = 5, BOSS = 6, INTOXICATION = 7, MINIBOSS = 8, START = 9 }
+enum RoomType { COMBAT = 0, SHOP = 1, LORE = 2, TRAP = 3, PUZZLE = 4, SECRET = 5, BOSS = 6, INTOXICATION = 7, MINIBOSS = 8, START = 9, TREASURE = 10, REST = 11 }
 
 enum DoorState { CLOSED = 0, OPEN = 1, LOCKED = 2, SEALED = 3 }
 
@@ -80,7 +80,8 @@ func _add_enemy_deferred(enemy: Node2D, pos: Vector2) -> void:
 	enemy.set_deferred("global_position", pos)
 
 
-func spawn_enemies(enemy_scenes: Array[PackedScene], enemy_data: Array[Dictionary]) -> void:
+## seal=false deja las puertas abiertas (main lo usa si vas desarmado: puedes huir).
+func spawn_enemies(enemy_scenes: Array[PackedScene], enemy_data: Array[Dictionary], seal := true) -> void:
 	if spawn_points.is_empty() or enemy_scenes.is_empty() or enemy_data.is_empty():
 		return
 	
@@ -116,7 +117,7 @@ func spawn_enemies(enemy_scenes: Array[PackedScene], enemy_data: Array[Dictionar
 			enemies_spawned.append(enemy)
 			_add_enemy_deferred(enemy, spawn_points[i] + Vector2(g * 28, (g % 2) * 24))
 	
-	if enemies_spawned.size() > 0:
+	if enemies_spawned.size() > 0 and seal:
 		seal_doors()
 
 ## Walks up the tree to the owning Room, so spawned nodes end up inside the

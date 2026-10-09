@@ -13,11 +13,9 @@ var _timer: float = 0.0
 func setup(text: String, color: Color = Color.WHITE, is_crit: bool = false) -> void:
 	self.text = text
 	add_theme_color_override("font_color", color)
-	add_theme_font_size_override("font_size", 28 if is_crit else 20)
-	
-	if is_crit:
-		add_theme_color_override("font_outline_color", Color(1, 0.8, 0))
-		add_theme_constant_override("outline_size", 2)
+	add_theme_font_size_override("font_size", 14 if is_crit else 10)
+	add_theme_color_override("font_outline_color", Color(1, 0.8, 0) if is_crit else Color(0.05, 0.04, 0.06))
+	add_theme_constant_override("outline_size", 3)
 	
 	_timer = 0.0
 	

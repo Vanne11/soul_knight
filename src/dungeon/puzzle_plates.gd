@@ -6,6 +6,7 @@ extends Node2D
 signal solved
 
 const COLORS := [Color("e0525a"), Color("5aa0e0"), Color("e0c95a"), Color("6ad07a")]
+const NAMES := ["roja", "azul", "amarilla", "verde"]
 const DIM := Color(0.3, 0.3, 0.3)
 const SPACING := 140.0
 
@@ -14,6 +15,7 @@ var _seq: Array[int] = []
 var _step := 0
 var _busy := false
 var _done := false
+var _fails := 0
 var _plates: Array[ColorRect] = []
 
 
@@ -76,8 +78,10 @@ func _on_step(body: Node, i: int) -> void:
 	if i != _seq[_step]:
 		for p in _plates:
 			p.create_tween().tween_property(p, "modulate", DIM, 0.5).from(Color(1, 0.2, 0.2))
-		Narrator.say("puzzle_fail")
 		Sound.play("puzzle_fail")
+		_fails += 1
+		if _fails % 2 == 0:  # cada dos fallos, el narrador echa una mano (si le caes bien)
+			Narrator.hint_puzzle(_seq.map(func(s): return NAMES[s]))
 		play()
 		return
 	_step += 1

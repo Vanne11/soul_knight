@@ -9,11 +9,13 @@ custom_minimum_size = Vector2(50, 50)
 
 [node name="Background" type="TextureRect" parent="."]
 texture = ExtResource("2")
+expand_mode = 1
 stretch_mode = 1
 
 [node name="Icon" type="TextureRect" parent="./Background"]
 texture = ExtResource("2")
-stretch_mode = 2
+expand_mode = 1
+stretch_mode = 5
 anchors_preset = 15
 offset_left = 4
 offset_top = 4

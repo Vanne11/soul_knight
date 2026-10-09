@@ -48,7 +48,6 @@ func _ready() -> void:
 	hitbox.add_to_group("enemy_attack")
 	hitbox.monitorable = false
 	hitbox.monitoring = true
-	_ge.player_damaged.connect(_on_player_damaged)
 	_timer = 2.2
 	_say("intro")
 	_emit_health()
@@ -306,23 +305,7 @@ func _emit_health() -> void:
 func _say(suffix: String) -> void:
 	var key := "boss%d_%s" % [_floor, suffix]
 	if Narrator.has_lines(key):
-		Narrator.say(key, {}, true)
-
-
-func _say_chatter(suffix: String) -> void:
-	var key := "boss%d_%s" % [_floor, suffix]
-	if Narrator.has_lines(key):
 		Narrator.say(key)
-
-
-func _on_player_damaged(_amount: float, _source: Node) -> void:
-	if state != State.DEAD and RNG.randf() < 0.3:
-		_say_chatter("taunt")
-
-
-func _exit_tree() -> void:
-	if _ge.player_damaged.is_connected(_on_player_damaged):
-		_ge.player_damaged.disconnect(_on_player_damaged)
 
 
 # ---------------------------------------------------------------- utilidades

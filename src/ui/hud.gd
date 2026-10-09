@@ -1,26 +1,30 @@
 extends CanvasLayer
 class_name HUD
 
-## Main HUD managing all UI bars and item slots
+## HUD: una franja fija arriba, fuera del area de juego (main.gd baja la camara
+## BAND pixeles para que la sala empiece debajo).
 
-@onready var health_bar: UIBar = $Root/VBoxContainer/TopBars/HealthBar
-@onready var shield_bar: UIBar = $Root/VBoxContainer/TopBars/ShieldBar
-@onready var stamina_bar: UIBar = $Root/VBoxContainer/TopBars/StaminaBar
-@onready var intox_bar: UIBar = $Root/VBoxContainer/TopBars/IntoxicationBar
-@onready var item_slots: Array[ItemSlot] = [
-	$Root/VBoxContainer/BottomArea/ItemSlots/Slot1,
-	$Root/VBoxContainer/BottomArea/ItemSlots/Slot2,
-	$Root/VBoxContainer/BottomArea/ItemSlots/Slot3,
-	$Root/VBoxContainer/BottomArea/ItemSlots/Slot4
-]
-@onready var floor_label: Label = $Root/VBoxContainer/BottomArea/FloorInfo
-@onready var intox_label: Label = $Root/VBoxContainer/BottomArea/IntoxicationLabel
+const BAND := 44
+
+@onready var health_bar: UIBar = $Band/Row/HealthBar
+@onready var shield_bar: UIBar = $Band/Row/ShieldBar
+@onready var stamina_bar: UIBar = $Band/Row/StaminaBar
+@onready var intox_bar: UIBar = $Band/Row/IntoxicationBar
+@onready var item_slots: Array[ItemSlot] = [$Band/Row/Slot1, $Band/Row/Slot2, $Band/Row/Slot3, $Band/Row/Slot4]
+@onready var floor_label: Label = $Band/Row/FloorInfo
+@onready var intox_label: Label = $Band/Row/IntoxicationLabel
 
 var _stats: PlayerStats
 var _events: GlobalEvents
 var _runs: RunManager
 
 func _ready() -> void:
+	var bg := StyleBoxFlat.new()
+	bg.bg_color = Color("0d0b0f")
+	bg.border_color = Color("b08d4a")
+	bg.border_width_bottom = 2
+	bg.set_content_margin_all(5)
+	$Band.add_theme_stylebox_override("panel", bg)
 	_setup_bars()
 	_setup_slots()
 	
@@ -48,17 +52,17 @@ func _ready() -> void:
 	_refresh_slots()
 
 func _setup_bars() -> void:
-	health_bar.label_text = "VIDA"
-	health_bar.bar_color = Color(0.9, 0.2, 0.2)
+	health_bar.label_text = "♥"
+	health_bar.set_color(Color(0.9, 0.2, 0.2))
 	
 	shield_bar.label_text = "ESCUDO"
-	shield_bar.bar_color = Color(0.2, 0.6, 1.0)
+	shield_bar.set_color(Color(0.2, 0.6, 1.0))
 	
 	stamina_bar.label_text = "ESTAMINA"
-	stamina_bar.bar_color = Color(0.9, 0.8, 0.2)
+	stamina_bar.set_color(Color(0.9, 0.8, 0.2))
 	
-	intox_bar.label_text = "TOXICIDAD"
-	intox_bar.bar_color = Color(0.8, 0.2, 0.8)
+	intox_bar.label_text = "TOX"
+	intox_bar.set_color(Color(0.8, 0.2, 0.8))
 
 func _setup_slots() -> void:
 	var keys = ["1", "2", "3", "4"]
@@ -70,6 +74,7 @@ func _on_health_changed(current: float, max: float) -> void:
 
 func _on_shields_changed(current: float, max: float) -> void:
 	shield_bar.update_bar(current, max)
+	shield_bar.visible = max > 0.0  # se empieza sin escudo: no ocupa sitio hasta ganarlo
 
 func _on_stamina_changed(current: float, max: float) -> void:
 	stamina_bar.update_bar(current, max)
@@ -126,8 +131,8 @@ func _on_run_started(_seed: int) -> void:
 func _update_floor_label() -> void:
 	var n: int = _runs.current_floor
 	var horm: Array = _runs.hormones.keys().filter(func(h): return _runs.hormones[h])
-	floor_label.text = "PISO %d: %s  |  MONEDAS %d  |  HORMONAS: %s" % [n, _runs.floor_data().name, _runs.coins,
-		", ".join(horm) if not horm.is_empty() else "ninguna"]
+	floor_label.text = "P%d %s · $%d · %s" % [n, _runs.floor_data().name, _runs.coins,
+		"/".join(horm) if not horm.is_empty() else "sin hormonas"]
 
 var _boss_bar: ProgressBar
 var _boss_label: Label
@@ -137,7 +142,7 @@ func _build_boss_bar() -> void:
 	box.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	box.offset_left = -300
 	box.offset_right = 300
-	box.offset_top = 112  # debajo de la fila del piso, no encima
+	box.offset_top = BAND + 6
 	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_boss_label = Label.new()
 	_boss_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

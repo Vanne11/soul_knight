@@ -1,20 +1,23 @@
 extends Control
 class_name Minimap
 
-## Minimapa del piso (esquina superior derecha). Salas pisadas en color,
-## vecinas sin pisar como "?", la actual parpadea. M lo agranda.
+## Minimapa del piso (esquina superior derecha, bajo la franja del HUD). Salas
+## pisadas en color, vecinas sin pisar como "?", la actual parpadea. M lo agranda.
+## Si el jugador pasa por debajo se vuelve casi transparente para no tapar.
 
-const SMALL := Vector2(230, 160)
+const SMALL := Vector2(210, 140)
 const BIG := Vector2(720, 420)  # deja libre el cuadro del narrador
 const ROOM_NAMES := {
-	Room.RoomType.COMBAT: "Combate", Room.RoomType.SHOP: "Tienda", Room.RoomType.LORE: "Sala vacía",
+	Room.RoomType.COMBAT: "Combate", Room.RoomType.SHOP: "Tienda", Room.RoomType.LORE: "Inscripción",
+	Room.RoomType.TREASURE: "Tesoro", Room.RoomType.REST: "Descanso",
 	Room.RoomType.TRAP: "Trampa", Room.RoomType.PUZZLE: "Acertijo", Room.RoomType.SECRET: "Secreta",
 	Room.RoomType.BOSS: "Jefe", Room.RoomType.INTOXICATION: "Antro", Room.RoomType.MINIBOSS: "Minijefe",
 	Room.RoomType.START: "Inicio",
 }
 ## Letra dentro de la sala en el mapa (las que no salen aqui no llevan marca).
 const ICONS := {Room.RoomType.SHOP: "$", Room.RoomType.BOSS: "J", Room.RoomType.START: "I",
-	Room.RoomType.MINIBOSS: "M", Room.RoomType.SECRET: "?"}
+	Room.RoomType.MINIBOSS: "M", Room.RoomType.SECRET: "?", Room.RoomType.TREASURE: "T",
+	Room.RoomType.REST: "+", Room.RoomType.LORE: "i", Room.RoomType.PUZZLE: "P"}
 
 var _big := false
 var _font: Font
@@ -24,7 +27,7 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_font = ThemeDB.fallback_font
 	_label = Label.new()
-	_label.add_theme_font_size_override("font_size", 14)
+	_label.add_theme_font_size_override("font_size", 12)
 	_label.add_theme_color_override("font_outline_color", Color("0d0b0f"))
 	_label.add_theme_constant_override("outline_size", 4)
 	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -40,7 +43,7 @@ func _resize() -> void:
 	else:
 		set_anchors_preset(Control.PRESET_TOP_RIGHT)
 		offset_left = -s.x - 10; offset_right = -10
-		offset_top = 10; offset_bottom = 10 + s.y
+		offset_top = HUD.BAND + 6; offset_bottom = HUD.BAND + 6 + s.y
 	_label.position = Vector2(0, s.y + 2)
 	_label.size = Vector2(s.x, 20)
 
@@ -49,8 +52,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		_big = not _big
 		_resize()
 
-func _process(_d: float) -> void:
+func _process(delta: float) -> void:
 	queue_redraw()
+	var target := 1.0
+	var p := get_tree().get_first_node_in_group("player") as Node2D
+	if p and not _big and get_global_rect().grow(40).has_point(p.get_global_transform_with_canvas().origin):
+		target = 0.25
+	modulate.a = move_toward(modulate.a, target, delta * 4.0)
 
 func _draw() -> void:
 	var main := get_tree().get_first_node_in_group("main")
@@ -78,7 +86,7 @@ func _draw() -> void:
 	var k: float = minf(box.x / bounds.size.x, box.y / bounds.size.y)
 	var origin := Vector2(6, 6) + (box - Vector2(bounds.size) * k) / 2 - Vector2(bounds.position) * k
 
-	draw_rect(Rect2(Vector2.ZERO, size), Color(0.05, 0.04, 0.06, 0.75))
+	draw_rect(Rect2(Vector2.ZERO, size), Color(0.05, 0.04, 0.06, 0.85))
 	draw_rect(Rect2(Vector2.ZERO, size), Color("b08d4a"), false, 2.0)
 
 	var rect_of := func(pos: Vector2i) -> Rect2:
@@ -98,9 +106,9 @@ func _draw() -> void:
 		if room == current:
 			fill = Color("f2ead6") if blink else Color("ffc93c")
 		elif visited.has(pos):
-			fill = Color(0.45, 0.6, 0.45) if room.cleared else Color(0.55, 0.4, 0.4)
+			fill = Color(0.45, 0.75, 0.45) if room.cleared or room.enemies_spawned.is_empty() else Color(0.8, 0.4, 0.4)
 		else:
-			fill = Color(0.25, 0.25, 0.28)
+			fill = Color(0.42, 0.42, 0.48)
 		draw_rect(r, fill)
 		draw_rect(r, Color("0d0b0f"), false, 1.0)
 		# Tienda y jefe se ven en cuanto conoces la sala; el resto, al pisarla.

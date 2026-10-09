@@ -14,6 +14,9 @@ var _max: float = 100.0
 
 func _ready() -> void:
 	label.text = label_text
+	label.add_theme_font_size_override("font_size", 10)
+	label.add_theme_color_override("font_outline_color", Color("0d0b0f"))
+	label.add_theme_constant_override("outline_size", 3)
 	fill.modulate = bar_color
 	update_bar(_current, _max)
 
@@ -22,7 +25,7 @@ func update_bar(current: float, max: float) -> void:
 	_max = max
 	var pct = 0.0 if max <= 0 else clamp(current / max, 0.0, 1.0)
 	fill.size = Vector2(get_rect().size.x * pct, get_rect().size.y)
-	label.text = "%s: %.0f/%.0f" % [label_text, current, max]
+	label.text = "%s %.0f/%.0f" % [label_text, current, max]
 
 func set_color(color: Color) -> void:
 	bar_color = color

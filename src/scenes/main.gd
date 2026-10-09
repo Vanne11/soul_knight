@@ -52,11 +52,10 @@ func _generate_dungeon() -> void:
 	
 	# Start player in start room
 	var start_room = _find_start_room()
+	Narrator.say("floor_%d" % _run_manager.current_floor)  # antes que la pista del arma
 	if start_room and not _has_real_weapon():
-		# Sin cuerpo a cuerpo: la primera arma espera en el suelo de la sala inicial.
-		_spawn_pickup(start_room, "pistol_basic", start_room.get_center_position() + Vector2(0, -80))
+		_hide_weapon_chest(start_room)
 	_pick_hormone_room()
-	Narrator.say("floor_%d" % _run_manager.current_floor, {}, true)
 	_show_floor_card()
 	if start_room:
 		_enter_room(start_room)
@@ -91,14 +90,14 @@ func _on_door_entered_room(room: Room, door: Door) -> void:
 		_transition_lock = 1.5
 		get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position + Vector2(0, -40),
 			"SIN ARMA NO PASAS", Color("ff7ac0"))
-		Narrator.say("door_no_weapon", {}, true)
+		Narrator.say_first("door_no_weapon")
 		return
 	if next_room.room_type == Room.RoomType.BOSS and not _missing_hormones().is_empty():
 		# Puerta Hormonal: solo pasa quien lleve la hormona del reino. Aunque le dé alergia.
 		_transition_lock = 1.5
 		get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position + Vector2(0, -40),
 			"PUERTA HORMONAL: falta %s" % ", ".join(_missing_hormones()), Color("ff7ac0"))
-		Narrator.say("door_hormonal", {}, true)
+		Narrator.say_first("door_hormonal")
 		get_node("/root/LoreDatabase").custom_event("hormone_door")
 		return
 	_enter_room(next_room, next_room.door_to(room.grid_pos))
@@ -136,7 +135,9 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	# Update camera limits to room bounds
 	_update_camera_limits(room)
 	
-	_paint_room(room, room.cleared or room.room_type in [Room.RoomType.START, Room.RoomType.SHOP, Room.RoomType.SECRET, Room.RoomType.LORE])
+	_paint_room(room, room.cleared or room.room_type in CALM_ROOMS)
+	if room.room_type in [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]:
+		_build_calm_room(room)
 	if room.room_type == Room.RoomType.SHOP:
 		_build_shop(room)
 	if room.room_type == Room.RoomType.PUZZLE and not room.cleared:
@@ -152,14 +153,8 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 
 func _narrate_room(room: Room) -> void:
 	match room.room_type:
-		Room.RoomType.BOSS: Narrator.say("room_boss", {}, true)
 		Room.RoomType.SHOP: Narrator.say_first("room_shop")
-		Room.RoomType.SECRET: Narrator.say("room_secret")
-		Room.RoomType.INTOXICATION: Narrator.say("room_intoxication")
-		Room.RoomType.LORE: Narrator.say("room_empty")
 		Room.RoomType.PUZZLE: Narrator.say_first("puzzle_start")
-		Room.RoomType.START: pass
-		_: Narrator.say_first("room_combat")
 
 func _place_player_in_room(room: Room, door: Door) -> void:
 	var spawn := room.get_center_position()
@@ -181,10 +176,13 @@ func _place_player_in_room(room: Room, door: Door) -> void:
 func _update_camera_limits(room: Room) -> void:
 	var room_rect = room.floor_tilemap.get_used_rect()
 	var world_pos = room.global_position
-	camera.limit_left = world_pos.x
-	camera.limit_top = world_pos.y
-	camera.limit_right = world_pos.x + room_rect.size.x * 64
-	camera.limit_bottom = world_pos.y + room_rect.size.y * 64
+	# Las puertas estan centradas en el borde: sin margen la camara las cortaba por
+	# la mitad. Arriba, ademas, la franja del HUD (en pixeles de mundo).
+	var margin := 40.0
+	camera.limit_left = world_pos.x - margin
+	camera.limit_top = world_pos.y - margin - HUD.BAND / camera.zoom.y
+	camera.limit_right = world_pos.x + room_rect.size.x * 64 + margin
+	camera.limit_bottom = world_pos.y + room_rect.size.y * 64 + margin
 
 func _get_room_index(room: Room) -> int:
 	var keys = dungeon_generator.rooms.keys()
@@ -212,6 +210,10 @@ const CHEST_SCENE := preload("res://src/items/chest.tscn")
 const SHOP_ITEM_SCENE := preload("res://src/items/shop_item.tscn")
 const ITEM_PICKUP_SCENE := preload("res://src/items/item_pickup.tscn")
 const PUZZLE_PLATES := preload("res://src/dungeon/puzzle_plates.gd")
+const INTERACTABLE := preload("res://src/items/interactable.gd")
+## Salas sin enemigos: entrar ya las "libera" (salen en color).
+const CALM_ROOMS := [Room.RoomType.START, Room.RoomType.SHOP, Room.RoomType.SECRET, Room.RoomType.LORE,
+	Room.RoomType.TREASURE, Room.RoomType.REST]
 
 ## Sala cuya recompensa es la hormona que exige la Puerta Hormonal del jefe.
 var _hormone_room: Room = null
@@ -222,7 +224,12 @@ func _frames_path(variant: String) -> String:
 func _spawn_room_enemies(room: Room) -> void:
 	if room.cleared or room.room_type not in [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION, Room.RoomType.TRAP, Room.RoomType.MINIBOSS, Room.RoomType.BOSS]:
 		return
-	room.spawn_enemies(ENEMY_SCENES, _generate_enemy_data_for_room(room))
+	if not room.enemies_spawned.is_empty():
+		# Ya huiste de aqui desarmado: los enemigos siguen dentro. Con arma, ya no hay huida.
+		if _has_real_weapon():
+			room.seal_doors()
+		return
+	room.spawn_enemies(ENEMY_SCENES, _generate_enemy_data_for_room(room), _has_real_weapon())
 
 func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 	var floor_n: int = _run_manager.current_floor
@@ -307,10 +314,10 @@ func _spawn_pickup(room: Room, item_id: String, local_pos: Vector2) -> void:
 	p.position = local_pos
 	room._add_pickup_deferred(p)
 
-func _spawn_chest(room: Room, contents: String) -> void:
+func _spawn_chest(room: Room, contents: String, offset := Vector2(0, -40)) -> void:
 	var c := CHEST_SCENE.instantiate()
 	c.contents = contents
-	c.position = room.get_center_position() + Vector2(0, -40)
+	c.position = room.get_center_position() + offset
 	room.pickups_node.add_child.call_deferred(c)
 
 func _build_shop(room: Room) -> void:
@@ -368,9 +375,30 @@ func _build_puzzle(room: Room) -> void:
 	room.props_node.add_child.call_deferred(pz)  # se entra desde un callback de fisica
 
 func _on_puzzle_solved(room: Room) -> void:
-	Narrator.say("puzzle_solved", {}, true)
+	Narrator.say("puzzle_solved")
 	unlock_secret_rooms()
 	room.room_cleared()  # pinta la sala y da la recompensa normal
+
+## Sin arma de inicio: hay que ir a buscarla. Cofre en la sala mas lejana (en
+## puertas a cruzar) que no sea jefe ni secreta; por el camino, a esquivar.
+func _hide_weapon_chest(start_room: Room) -> void:
+	var graph: Dictionary = dungeon_generator.room_graph
+	var dist := {start_room.grid_pos: 0}
+	var queue := [start_room.grid_pos]
+	var far: Room = null
+	while not queue.is_empty():
+		var pos = queue.pop_front()
+		var r: Room = dungeon_generator.rooms[pos]
+		if r.room_type not in [Room.RoomType.START, Room.RoomType.BOSS, Room.RoomType.SECRET, Room.RoomType.SHOP]:
+			far = r  # BFS: el ultimo valido es el mas lejano
+		for n in graph[pos]:
+			if not dist.has(n) and dungeon_generator.rooms[n].room_type != Room.RoomType.BOSS:
+				dist[n] = dist[pos] + 1
+				queue.append(n)
+	if far == null:
+		far = start_room
+	_spawn_chest(far, "weapon", Vector2(0, 70))  # abajo: no choca con el cofre de una sala de tesoro
+	Narrator.say("weapon_hunt")
 
 func _has_real_weapon() -> bool:
 	return player.current_weapon != null
@@ -413,14 +441,13 @@ func _on_room_cleared(room: Room) -> void:
 		for h in _missing_hormones():
 			_spawn_pickup(room, "hormone_" + h, room.get_center_position() + Vector2(RNG.randf_range(-60, 60), 40))
 		if not _missing_hormones().is_empty():
-			Narrator.say("hormone_found", {}, true)
+			Narrator.say("hormone_found")
 	if room.room_type == Room.RoomType.BOSS:
 		_spawn_chest(room, "weapon")
 		var n := BOSS_COINS_BASE + _run_manager.current_floor
 		for i in n:
 			_spawn_pickup(room, "coin", room.get_center_position() + Vector2((i - (n - 1) / 2.0) * 30, 40))
 	else:
-		Narrator.say("room_cleared")
 		Sound.play("room_clear")
 		for i in COINS_PER_ROOM_CLEAR:
 			_spawn_pickup(room, "coin", room.get_center_position() + Vector2(-20 + i * 40, 60))
@@ -433,16 +460,101 @@ func _complete_floor() -> void:
 	floor_completed = true
 	Sound.music("")
 	Sound.play("floor_complete")
+	var boss_room := current_room
 	var floor_n: int = _run_manager.current_floor
 	if floor_n >= RunManager.FLOORS.size():
-		Narrator.say("victory", {}, true)
+		Narrator.say("victory")
 		get_node("/root/LoreDatabase").custom_event("victory")
 		_run_manager.end_run(true)
 		get_tree().create_timer(4.0).timeout.connect(func(): get_tree().change_scene_to_file("res://src/scenes/game_over.tscn"))
 		return
-	Narrator.say("floor_complete", {}, true)
 	get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position, "¡PISO %d COMPLETADO!" % floor_n, Color.GOLD)
-	get_tree().create_timer(4.0).timeout.connect(_advance_to_next_floor)
+	# Recompensa: una mejora a elegir. Luego, sin prisa: recoges el botin y bajas por la escotilla.
+	await get_tree().create_timer(1.5).timeout
+	Narrator.choose("[b]Jefe derrotado.[/b] Elige una mejora para el resto de la partida:", BOSS_REWARDS.map(func(r): return r[0]))
+	var pick: Array = BOSS_REWARDS[await Narrator.chosen]
+	_game_controller.get_player_stats().apply_stat_mod(pick[1], pick[2])
+	Sound.play("puzzle_solve")
+	_add_prop(boss_room, boss_room.get_center_position() + Vector2(0, 150), _hatch_visual(),
+		"[b]Escotilla al piso %d[/b]\n[font_size=13]Recoge lo que quieras antes: no se vuelve.[/font_size]\n[color=#b08d4a][E] Bajar[/color]" % (floor_n + 1),
+		func(_p, it): it.finish(); _advance_to_next_floor())
+
+## [texto, stat, cantidad] (apply_stat_mod, valores fijos que se suman).
+const BOSS_REWARDS := [
+	["+10 vida máxima", "max_health_flat", 10.0],
+	["+15 estamina máxima", "max_stamina_flat", 15.0],
+	["+10 escudo máximo", "max_shields_flat", 10.0],
+]
+
+# ---------------------------------------------------------------- salas tranquilas
+func _build_calm_room(room: Room) -> void:
+	if room.has_meta("calm_built"):
+		return
+	room.set_meta("calm_built", true)
+	var center := room.get_center_position()
+	match room.room_type:
+		Room.RoomType.TREASURE:
+			_spawn_chest(room, "")
+			for i in 3:
+				_spawn_pickup(room, "coin", center + Vector2(-40 + i * 40, 30))
+		Room.RoomType.REST:
+			var water := _disc(20, Color("4aa3df"))
+			var fountain := Node2D.new()
+			fountain.add_child(_disc(28, Color("cfc4ae")))
+			fountain.add_child(water)
+			_add_prop(room, center, fountain,
+				"[color=#6aa8ff][b]Fuente de Lubricante Bendito[/b][/color]\n[font_size=13]Cura toda la vida y la estamina. Un trago por fuente.[/font_size]\n[color=#b08d4a][E] Beber[/color]",
+				func(_p, it):
+					var ps = _game_controller.get_player_stats()
+					ps.heal(ps.max_health)
+					ps.current_stamina = ps.max_stamina
+					ps.stamina_changed.emit(ps.current_stamina, ps.max_stamina)
+					water.color = Color(0.35, 0.35, 0.38)
+					Sound.play("room_clear")
+					Narrator.toast("Fuente", "Vida y estamina al máximo.")
+					it.finish())
+		Room.RoomType.LORE:
+			var stone := Polygon2D.new()
+			stone.polygon = PackedVector2Array([Vector2(-18, 26), Vector2(-18, -18), Vector2(-10, -28), Vector2(10, -28), Vector2(18, -18), Vector2(18, 26)])
+			stone.color = Color("8a8494")
+			_add_prop(room, center, stone,
+				"[color=#c08cff][b]Inscripción antigua[/b][/color]\n[font_size=13]Alguien grabó algo aquí antes de la censura.[/font_size]\n[color=#b08d4a][E] Leer[/color]",
+				func(_p, it):
+					_read_inscription()
+					stone.color = Color("5a5662")
+					it.finish())
+
+## Lee una entrada de historia (mundo, personajes, lugares, enemigos), mejor una nueva.
+func _read_inscription() -> void:
+	var lore = get_node("/root/LoreDatabase")
+	var pool: Array = lore.get_all_entries().filter(func(e): return e.category in [0, 1, 3, 4, 5])
+	var fresh := pool.filter(func(e): return not e.unlocked)
+	var entry = (fresh if not fresh.is_empty() else pool)[RNG.randi_range(0, (fresh if not fresh.is_empty() else pool).size() - 1)]
+	lore.unlock_entry(entry.id)
+	Narrator.say_raw("INSCRIPCIÓN: [b]%s.[/b] %s" % [entry.title, entry.text])
+
+func _add_prop(room: Room, pos: Vector2, visual: Node2D, text: String, on_use: Callable) -> void:
+	var it := INTERACTABLE.new()
+	it.position = pos
+	it.prompt_text = text
+	it.add_child(visual)
+	it.used.connect(on_use.bind(it))
+	room.props_node.add_child.call_deferred(it)
+
+func _disc(radius: float, color: Color) -> Polygon2D:
+	var p := Polygon2D.new()
+	var pts := PackedVector2Array()
+	for i in 24:
+		pts.append(Vector2.RIGHT.rotated(TAU * i / 24) * radius)
+	p.polygon = pts
+	p.color = color
+	return p
+
+func _hatch_visual() -> Node2D:
+	var n := Node2D.new()
+	n.add_child(_disc(30, Color("b08d4a")))
+	n.add_child(_disc(24, Color("0d0b0f")))
+	return n
 
 func _advance_to_next_floor() -> void:
 	# Antes llamaba a RunManager.next_floor(), que no existe: el juego reventaba aqui.

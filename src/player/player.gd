@@ -7,7 +7,7 @@ class_name Player
 @export var dash_speed: float = 600.0
 @export var dash_duration: float = 0.2
 @export var dash_cooldown: float = 1.0
-@export var dash_stamina_cost: float = 25.0
+@export var dash_stamina_cost: float = 15.0
 @export var attack_cooldown: float = 0.3
 @export var interaction_range: float = 40.0
 
@@ -29,7 +29,7 @@ var _allergy: float = 0.0
 var _sneeze_in: float = 0.0
 var _sneeze_push: float = 0.0
 var _aim: Vector2 = Vector2.RIGHT
-var _mouse_aim_time: float = -10.0
+var _using_pad := false
 const PLAYER_BULLET := preload("res://src/player/player_bullet.tscn")
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -46,6 +46,8 @@ func _ready() -> void:
 	_player_stats.shields_changed.connect(_on_shields_changed)
 	_player_stats.stamina_changed.connect(_on_stamina_changed)
 	_player_stats.intoxication_changed.connect(_on_intoxication_changed)
+	# Sin esta conexion la run nunca terminaba al morir: ni huesos ni estadisticas.
+	_global_events.player_died.connect(_on_player_died)
 	
 	_player_stats.reset_for_new_run()
 	_apply_character()
@@ -60,7 +62,7 @@ func _apply_character() -> void:
 		animated_sprite.sprite_frames = load(frames)
 	match rm.character:
 		"pitocles":
-			_player_stats.max_shields += 25.0
+			_player_stats.max_shields += 10.0
 			_player_stats.current_shields = _player_stats.max_shields
 			_player_stats.emit_all_signals()
 		"vulvalquiria":
@@ -70,6 +72,7 @@ func _physics_process(delta: float) -> void:
 	_handle_timers(delta)
 	_handle_movement(delta)
 	_handle_dash(delta)
+	_update_aim()
 	_handle_attack(delta)
 	_handle_interaction()
 	move_and_slide()
@@ -121,10 +124,8 @@ func _handle_dash(delta: float) -> void:
 	if Input.is_action_just_pressed("dash") and not Narrator.ate_input() and not is_dashing and _dash_cooldown_timer <= 0.0:
 		if get_node("/root/PlayerStats").use_stamina(dash_stamina_cost):
 			_start_dash()
-			Narrator.notify("dash")
 		else:
 			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "Sin estamina!", Color.YELLOW)
-			Narrator.notify("no_stamina")
 
 func _start_dash() -> void:
 	is_dashing = true
@@ -161,40 +162,52 @@ func get_weapon_damage() -> float:
 		return float(current_weapon.custom_data["base_damage"])
 	return 10.0
 
+## Multiplicador de un stat que da el arma equipada (efectos STAT_MOD del .tres).
+func _weapon_mod(stat: String) -> float:
+	var m := 1.0
+	for effect in current_weapon.effects:
+		if effect.type == 0 and effect.stat == stat:
+			m *= effect.magnitude
+	return m
+
 func _get_effect_multiplier(effects: Dictionary, key: String) -> float:
 	if effects.has(key):
 		return float(effects[key])
 	return 1.0
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		_mouse_aim_time = Time.get_ticks_msec() / 1000.0
+	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		_using_pad = true
+	elif event is InputEventMouseMotion or event is InputEventMouseButton:
+		_using_pad = false
 
-## Raton si se ha movido hace poco; si no, hacia donde caminas (teclado/mando).
+## Siempre al raton; con mando, hacia donde caminas.
 func _update_aim() -> void:
-	if Time.get_ticks_msec() / 1000.0 - _mouse_aim_time < 2.0:
-		var to_mouse := get_global_mouse_position() - global_position
+	if not _using_pad:
+		var to_mouse := get_global_mouse_position() - weapon_pivot.global_position
 		if to_mouse.length() > 4.0:
 			_aim = to_mouse.normalized()
 	elif _last_move_direction != Vector2.ZERO:
 		_aim = _last_move_direction
+	# el arma apunta siempre a donde vas a disparar
+	weapon_pivot.rotation = _aim.angle()
+	weapon_sprite.flip_v = _aim.x < 0
+	animated_sprite.flip_h = _aim.x < 0
 
 func _home_bonus() -> float:
 	var rm = get_node("/root/RunManager")
 	return 1.15 if rm.floor_data().kingdom == rm.character_data().kingdom else 1.0
 
 func _shoot() -> void:
-	_update_aim()
 	Sound.play("shoot")
 	var cd: Dictionary = current_weapon.custom_data
 	var effects = _player_stats.get_intoxication_effects()
-	var accuracy: float = maxf(0.2, _player_stats.accuracy_modifier * _get_effect_multiplier(effects, "accuracy"))
-	var dmg: float = get_weapon_damage() * _player_stats.damage_modifier * _get_effect_multiplier(effects, "damage") * _home_bonus()
+	var accuracy: float = maxf(0.2, _player_stats.accuracy_modifier * _get_effect_multiplier(effects, "accuracy") * _weapon_mod("accuracy"))
+	var dmg: float = get_weapon_damage() * _player_stats.damage_modifier * _get_effect_multiplier(effects, "damage") * _weapon_mod("damage") * _home_bonus()
 	var count: int = int(cd.get("pellets", cd.get("projectiles", 1)))
 	# borracho = mas dispersion, no fallos aleatorios
 	var spread: float = float(cd.get("spread", 0.05)) / accuracy
 	_attack_anim = 0.15
-	weapon_pivot.rotation = _aim.angle()
 	for i in range(count):
 		var b := PLAYER_BULLET.instantiate()
 		var ang := _aim.angle() + RNG.randf_range(-spread, spread)
@@ -215,8 +228,6 @@ func _sneeze() -> void:
 	velocity = dir * 420.0
 	_sneeze_push = 0.15
 	_global_events.show_floating_text.emit(global_position + Vector2(0, -30), "¡ACHÍS!", Color("ff7ac0"))
-	if RNG.randf() < 0.25:
-		Narrator.say("sneeze")
 
 func start_allergy(seconds: float) -> void:
 	_allergy = maxf(_allergy, seconds)
@@ -250,10 +261,6 @@ func _update_animation(dir: Vector2) -> void:
 	if animated_sprite.sprite_frames.has_animation(anim):
 		animated_sprite.play(anim)
 	
-	if dir.x != 0:
-		animated_sprite.flip_h = dir.x < 0
-		weapon_sprite.flip_h = dir.x < 0
-		weapon_sprite.position.x = -16 if dir.x < 0 else 16
 
 func _on_health_changed(current: float, max: float) -> void:
 	pass
@@ -292,6 +299,12 @@ func receive_hit(dmg: float) -> bool:
 	Sound.play("hurt")
 	return true
 
+## El arma que sueltas al coger otra se queda en el suelo: puedes volver a por ella.
+func _drop_weapon(id: String) -> void:
+	var main := get_tree().get_first_node_in_group("main")
+	if main and main.current_room:
+		main._spawn_pickup(main.current_room, id, global_position - main.current_room.global_position + Vector2(0, 28))
+
 func equip_weapon(item: Item) -> void:
 	current_weapon = item
 	weapon_sprite.texture = item.sprite
@@ -321,20 +334,23 @@ func add_item_to_inventory(item_id: String) -> void:
 		if opposite:
 			start_allergy(25.0)
 			_player_stats.add_intoxication(30.0)
-			Narrator.say("allergy", {}, true)
+			Narrator.say_first("allergy")
 			get_node("/root/LoreDatabase").custom_event("allergy")
 		elif (hormone != "" or "masculino" in item.tags or "femenino" in item.tags) and rm.character == "ornitorrinco":
-			Narrator.say("platypus_immune")
+			Narrator.say_first("platypus_immune")
 		if not collected_items.has(item_id):
 			collected_items.append(item_id)
 		# Picking up a weapon equips it, otherwise combat stays impossible.
 		if item.equip_slot == Item.EquipSlot.WEAPON:
+			if current_weapon and current_weapon != item:
+				_drop_weapon(current_weapon.id)
 			equip_weapon(item)
 		get_node("/root/RunManager").record_item_collected(item_id)
 		get_node("/root/GlobalEvents").item_picked_up.emit(item, 1)
-		get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "+%s" % item.display_name, Color.GREEN)
 		
-		for effect in item.effects:
+		# Los efectos de un arma solo valen mientras la llevas (ver _weapon_mod):
+		# aplicarlos al recogerla los acumulaba cada vez que la soltabas y cogias.
+		for effect in ([] if item.equip_slot == Item.EquipSlot.WEAPON else item.effects):
 			if effect.type == 1:  # INTOXICATION
 				get_node("/root/PlayerStats").add_intoxication(effect.intoxication_amount)
 			elif effect.type == 2:  # HEAL
@@ -356,3 +372,5 @@ func _notification(what: int) -> void:
 			_player_stats.shields_changed.disconnect(_on_shields_changed)
 			_player_stats.stamina_changed.disconnect(_on_stamina_changed)
 			_player_stats.intoxication_changed.disconnect(_on_intoxication_changed)
+		if is_instance_valid(_global_events) and _global_events.player_died.is_connected(_on_player_died):
+			_global_events.player_died.disconnect(_on_player_died)

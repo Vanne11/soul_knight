@@ -10,10 +10,12 @@ custom_minimum_size = Vector2(200, 28)
 
 [node name="Background" type="TextureRect" parent="."]
 texture = ExtResource("2")
+expand_mode = 1
 stretch_mode = 1
 
 [node name="Fill" type="TextureRect" parent="./Background"]
 texture = ExtResource("3")
+expand_mode = 1
 stretch_mode = 1
 anchors_preset = 0
 size_flags_horizontal = 1

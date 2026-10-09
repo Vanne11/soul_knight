@@ -26,7 +26,9 @@ func _ready() -> void:
 	title.text = insults[RNG.randi_range(0, insults.size() - 1)]
 	if _game_controller.get_run_manager().last_run_victory:
 		title.text = "LO HICISTE. ¿Y AHORA QUÉ?"
-	stats.text = "Piso: %d\nEnemigos: %d\nTiempo: %ds" % [floor, kills, time_sec]
+	var rm = _game_controller.get_run_manager()
+	stats.text = "Piso: %d\nEnemigos: %d\nTiempo: %ds\n\n+%d HUESOS  (total %d: gástalos en Mejoras del menú)" % [
+		floor, kills, time_sec, rm.last_huesos, rm.meta_currency]
 	
 	retry_btn.pressed.connect(_on_retry)
 	menu_btn.pressed.connect(_on_menu)

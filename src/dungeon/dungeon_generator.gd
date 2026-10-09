@@ -333,18 +333,10 @@ func _assign_room_types() -> void:
 	if miniboss_room and miniboss_room != start_room and miniboss_room != boss_room:
 		miniboss_room.room_type = Room.RoomType.MINIBOSS
 	
-	# Intoxication-required room (1-2 per floor)
-	var intox_count = RNG.randi_range(1, 2)
-	var candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT)
-	RNG.shuffle(candidates)
-	for i in range(min(intox_count, candidates.size())):
-		candidates[i].room_type = Room.RoomType.INTOXICATION
-		candidates[i].required_intoxication_tier = RNG.randi_range(1, 2)
-	
 	# Secret rooms (1-2). Solo salas sin salida: van cerradas hasta resolver el
 	# puzzle, y una sala de paso cerrada podria dejar al jefe inalcanzable.
 	var secret_count = RNG.randi_range(1, 2)
-	candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT and room_graph[r.grid_pos].size() == 1)
+	var candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT and room_graph[r.grid_pos].size() == 1)
 	RNG.shuffle(candidates)
 	for i in range(min(secret_count, candidates.size())):
 		candidates[i].room_type = Room.RoomType.SECRET
@@ -363,15 +355,24 @@ func _assign_room_types() -> void:
 		if candidates.size() > 0:
 			candidates[0].room_type = Room.RoomType.PUZZLE
 	
-	# Trap/Lore (remaining combat rooms have chance). Puzzle solo el de arriba:
+	# Respiro: la mitad de las salas de combate que quedan pasan a ser tranquilas
+	# (tesoro, descanso, lore), repartidas por igual. Puzzle solo el de arriba:
 	# uno sin sala secreta que abrir seria una promesa vacia.
-	for room in room_list:
-		if room.room_type == Room.RoomType.COMBAT:
-			var r = RNG.randf()
-			if r < 0.15:
-				room.room_type = Room.RoomType.TRAP
-			elif r >= 0.25 and r < 0.3:
-				room.room_type = Room.RoomType.LORE
+	candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT)
+	RNG.shuffle(candidates)
+	var calm := [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]
+	RNG.shuffle(calm)  # con 1-2 salas tranquilas por piso, que no salga siempre la misma
+	var n_calm := int(ceil(candidates.size() / 2.0))
+	for i in n_calm:
+		candidates[i].room_type = calm[i % calm.size()]
+	# Del combate que queda: un antro (enemigos que sueltan alcohol) y alguna trampa.
+	var fights := candidates.slice(n_calm)
+	for i in fights.size():
+		if i == 0:
+			fights[i].room_type = Room.RoomType.INTOXICATION
+			fights[i].required_intoxication_tier = RNG.randi_range(1, 2)
+		elif RNG.randf() < 0.15:
+			fights[i].room_type = Room.RoomType.TRAP
 
 func _find_furthest_room(from_pos: Vector2i, min_size := Vector2i.ZERO) -> Room:
 	var max_dist = -1

@@ -12,9 +12,10 @@ signal stat_modified(stat: String, value: float)
 enum IntoxicationTier { SOBER = 0, TIPSY = 1, DRUNK = 2, BLACKOUT = 3 }
 
 ## Valores de partida. La vida es baja a proposito: se sube con mejoras de la tienda.
-const BASE_HEALTH := 50.0
-const BASE_SHIELDS := 50.0
-const BASE_STAMINA := 100.0
+## Se empieza flojo: lo demas se gana (mejora tras cada jefe, tienda, huesos).
+const BASE_HEALTH := 25.0
+const BASE_SHIELDS := 0.0
+const BASE_STAMINA := 30.0
 
 var max_health: float = BASE_HEALTH
 var current_health: float = BASE_HEALTH
@@ -55,9 +56,10 @@ func _process(delta: float) -> void:
 
 func reset_for_new_run() -> void:
 	# Sin esto las mejoras (y el +25 de escudo de Pitocles) se acumulaban entre partidas.
-	max_health = BASE_HEALTH
-	max_shields = BASE_SHIELDS
-	max_stamina = BASE_STAMINA
+	var rm := get_node("/root/RunManager")
+	max_health = BASE_HEALTH + 5.0 * rm.meta_level("vida")
+	max_shields = BASE_SHIELDS + 5.0 * rm.meta_level("escudo")
+	max_stamina = BASE_STAMINA + 10.0 * rm.meta_level("estamina")
 	current_health = max_health
 	current_shields = max_shields
 	current_stamina = max_stamina

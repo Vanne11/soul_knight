@@ -72,6 +72,9 @@ func _open() -> void:
 			ps.heal(ps.max_health)
 			ps.restore_shields_full(),
 		"+50 monedas": func(): rm.add_coins(50),
+		"+100 huesos": func():
+			rm.meta_currency += 100
+			rm.save_meta_progression(),
 		"Todas las hormonas": func():
 			rm.hormones["testosterona"] = true
 			rm.hormones["estrogeno"] = true
