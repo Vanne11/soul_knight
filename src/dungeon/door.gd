@@ -79,6 +79,8 @@ func try_open(player: Node) -> bool:
 			return true
 		else:
 			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "CERRADO. Requiere: %s" % _get_requirement_text(), Color.RED)
+			if required_key == "" and required_intoxication_tier == 0:
+				Narrator.say_first("door_secret")
 			return false
 	
 	if state == State.SEALED:
@@ -97,7 +99,7 @@ func _get_requirement_text() -> String:
 	if required_intoxication_tier > 0:
 		var names = ["Sober", "Tipsy", "Drunk", "Blackout"]
 		return "Intoxicación: %s" % names[required_intoxication_tier]
-	return "Desconocido"
+	return "resolver el puzzle del piso"
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):

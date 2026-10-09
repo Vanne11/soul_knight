@@ -63,10 +63,21 @@
   "shield_broken": ["Escudo roto. Se regenera si aguantas tres segundos sin que te toquen. Tres. Para ti, una eternidad."],
   "no_stamina": ["Sin estamina. Tu cardio es tan bueno como tu sentido de la orientación."],
   "dash_spam": ["Dash, dash, dash. ¿Estás jugando o tienes un tic?"],
-  "miss": [
-    "Al aire. El aire no tiene vida, pero gracias por intentarlo.",
-    "Tres golpes al vacío. El vacío te manda saludos."
+  "no_weapon_attack": [
+    "¿A puñetazos? ¿Con esas muñecas de cristal? Te fracturas tú antes que ellos. Busca un arma, héroe de porcelana.",
+    "Eso que ha sonado no era el enemigo: era tu escafoides. Sin arma no se pega. Lo dice tu traumatólogo y lo digo yo.",
+    "Manos limpias, huesos rotos. Hay una pistola en el suelo. Es negra, brilla y no se rompe. Al contrario que tú."
   ],
+  "puzzle_start": [
+    "Baldosas que brillan. Pisa en el mismo orden en que se encienden. Es memoria, no física cuántica. Para ti, lo mismo.",
+    "Un acertijo. Las baldosas se encienden en orden; repítelo con los pies. Si lo resuelves, se abre algo secreto. Si no, me río."
+  ],
+  "puzzle_fail": [
+    "Mal. Otra vez. Te lo repito despacito, como a un niño. O a un jefe de piso.",
+    "Esa no era. Ni de lejos. Tienes la memoria de un pez borracho."
+  ],
+  "puzzle_solved": ["Correcto. Has oído un clic lejano: una sala secreta acaba de abrirse. No te emociones, seguro que hay algo feo dentro."],
+  "door_secret": ["Cerrada a cal y canto. En algún lugar del piso hay baldosas que brillan. Resuélvelo y esto se abre."],
   "kill_first": ["Primera víctima. Era un ciudadano censurado con mala leche. Ahora es un ciudadano censurado sin leche."],
   "kill": ["Uno menos.", "Lo has liberado. Del mundo de los vivos, pero liberado."],
   "kill_streak": ["Cinco seguidos sin que te toquen. ¿Quién eres y qué has hecho con el torpe de antes?"],

@@ -34,10 +34,8 @@ const PLAYER_BULLET := preload("res://src/player/player_bullet.tscn")
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hurtbox: Area2D = $Hurtbox
-@onready var hitbox: Area2D = $Hitbox
 @onready var weapon_pivot: Node2D = $WeaponPivot
 @onready var weapon_sprite: Sprite2D = $WeaponPivot/WeaponSprite
-@onready var dash_effect: CPUParticles2D = $DashEffect
 
 @onready var _player_stats: PlayerStats = get_node("/root/PlayerStats")
 @onready var _global_events: GlobalEvents = get_node("/root/GlobalEvents")
@@ -51,13 +49,9 @@ func _ready() -> void:
 	
 	_player_stats.reset_for_new_run()
 	_apply_character()
-	_equip_starting_weapon()
 	
 	if hurtbox:
 		hurtbox.area_entered.connect(_on_hurtbox_entered)
-	if hitbox:
-		# Enemies look for this group to know what can hurt them.
-		hitbox.add_to_group("player_attack")
 
 func _apply_character() -> void:
 	var rm = get_node("/root/RunManager")
@@ -71,12 +65,6 @@ func _apply_character() -> void:
 			_player_stats.emit_all_signals()
 		"vulvalquiria":
 			dash_stamina_cost *= 0.5
-
-## Se empieza a puñetazos: las armas se ganan (cofres, jefes, tienda).
-func _equip_starting_weapon() -> void:
-	var item = get_node("/root/ItemDatabase").get_item("fists")
-	if item:
-		equip_weapon(item)
 
 func _physics_process(delta: float) -> void:
 	_handle_timers(delta)
@@ -149,13 +137,17 @@ func _start_dash() -> void:
 	
 	_dash_direction = dir
 	velocity = dir * dash_speed * get_node("/root/PlayerStats").speed_modifier
-	
-	dash_effect.emitting = true
 	get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "DASH!", Color.CYAN)
+	
 
 func _handle_attack(delta: float) -> void:
-	if Input.is_action_pressed("attack") and not Narrator.ate_input() and _attack_timer <= 0.0 and current_weapon:
-		_attack()
+	if Input.is_action_pressed("attack") and not Narrator.ate_input() and _attack_timer <= 0.0 and not current_weapon:
+		# Sin cuerpo a cuerpo: a manos limpias te rompes tu antes que ellos.
+		_attack_timer = 1.0
+		_global_events.show_floating_text.emit(global_position + Vector2(0, -30), "¡CRAC! (tu mano)", Color("ff7ac0"))
+		Narrator.say_first("no_weapon_attack")
+	elif Input.is_action_pressed("attack") and not Narrator.ate_input() and _attack_timer <= 0.0:
+		_shoot()
 		_attack_timer = float(current_weapon.custom_data.get("fire_rate", attack_cooldown)) / (get_node("/root/PlayerStats").fire_rate_modifier * get_node("/root/PlayerStats").get_intoxication_effects().get("speed", 1.0))
 
 func get_weapon_damage() -> float:
@@ -189,61 +181,8 @@ func _home_bonus() -> float:
 	var rm = get_node("/root/RunManager")
 	return 1.15 if rm.floor_data().kingdom == rm.character_data().kingdom else 1.0
 
-func _attack() -> void:
-	if not current_weapon:
-		return
-	_update_aim()
-	if not current_weapon.custom_data.get("is_melee", false):
-		_shoot()
-		return
-	_attack_anim = 0.25
-	var side := -1.0 if animated_sprite.flip_h else 1.0
-	weapon_pivot.rotation = -1.3 * side
-	weapon_pivot.create_tween().tween_property(weapon_pivot, "rotation", 1.3 * side, 0.12)
-	
-	# The previous version did `hitbox.monitoring = false` after an await, which
-	# resumed on a later frame and made get_overlapping_bodies() error out, so
-	# every single attack failed. Query the overlap synchronously instead.
-	var effects = _player_stats.get_intoxication_effects()
-	var accuracy = _player_stats.accuracy_modifier * _get_effect_multiplier(effects, "accuracy")
-	var damage_mult = _player_stats.damage_modifier * _get_effect_multiplier(effects, "damage")
-	
-	if RNG.randf() > accuracy:
-		get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "FALLÓ!", Color.GRAY)
-		Narrator.notify("miss")
-		return
-	
-	var is_crit = RNG.randf() < _player_stats.crit_chance_modifier
-	var damage = get_weapon_damage() * damage_mult * _home_bonus()
-	if is_crit:
-		damage *= _player_stats.crit_damage_modifier
-	
-	var targets: Array[Node2D] = []
-	if hitbox:
-		for body in hitbox.get_overlapping_bodies():
-			if body.is_in_group("enemy"):
-				targets.append(body)
-	
-	if targets.is_empty():
-		get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "FALLO", Color.GRAY)
-		Narrator.notify("miss")
-		return
-	Narrator.notify("hit_enemy")
-	
-	var total := 0.0
-	for body in targets:
-		var kb := (body.global_position - global_position).normalized() * 150.0
-		body.take_damage(damage, self, kb)
-		total += damage
-		if _player_stats.lifesteal > 0.0:
-			_player_stats.heal(damage * _player_stats.lifesteal)
-	
-	if is_crit:
-		get_node("/root/GlobalEvents").show_damage_number.emit(global_position + Vector2(0, -20), total, true)
-	else:
-		get_node("/root/GlobalEvents").show_damage_number.emit(global_position + Vector2(0, -20), total, false)
-
 func _shoot() -> void:
+	_update_aim()
 	var cd: Dictionary = current_weapon.custom_data
 	var effects = _player_stats.get_intoxication_effects()
 	var accuracy: float = maxf(0.2, _player_stats.accuracy_modifier * _get_effect_multiplier(effects, "accuracy"))
@@ -260,6 +199,8 @@ func _shoot() -> void:
 			ang += (i - (count - 1) / 2.0) * spread
 		# escopeta: base_damage repartido entre perdigones (x2 si aciertan todos a quemarropa)
 		b.damage = dmg * 2.0 / count if cd.has("pellets") else dmg
+		if RNG.randf() < _player_stats.crit_chance_modifier:
+			b.damage *= _player_stats.crit_damage_modifier
 		b.speed = float(cd.get("projectile_speed", 500)) * _player_stats.projectile_speed_modifier
 		b.rotation = ang
 		get_parent().add_child(b)
@@ -309,7 +250,7 @@ func _update_animation(dir: Vector2) -> void:
 	if dir.x != 0:
 		animated_sprite.flip_h = dir.x < 0
 		weapon_sprite.flip_h = dir.x < 0
-		weapon_sprite.position.x = -10 if dir.x < 0 else 10
+		weapon_sprite.position.x = -16 if dir.x < 0 else 16
 
 func _on_health_changed(current: float, max: float) -> void:
 	pass

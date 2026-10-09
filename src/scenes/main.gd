@@ -48,9 +48,13 @@ func _generate_dungeon() -> void:
 	dungeon_root = dungeon_generator.generate_floor(_run_manager.current_floor, seed)
 	visited_rooms.clear()
 	add_child(dungeon_root)
+	_lock_secret_rooms()
 	
 	# Start player in start room
 	var start_room = _find_start_room()
+	if start_room and not _has_real_weapon():
+		# Sin cuerpo a cuerpo: la primera arma espera en el suelo de la sala inicial.
+		_spawn_pickup(start_room, "pistol_basic", start_room.get_center_position() + Vector2(0, -80))
 	_pick_hormone_room()
 	Narrator.say("floor_%d" % _run_manager.current_floor, {}, true)
 	_show_floor_card()
@@ -132,6 +136,8 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	_paint_room(room, room.cleared or room.room_type in [Room.RoomType.START, Room.RoomType.SHOP, Room.RoomType.SECRET, Room.RoomType.LORE])
 	if room.room_type == Room.RoomType.SHOP:
 		_build_shop(room)
+	if room.room_type == Room.RoomType.PUZZLE and not room.cleared:
+		_build_puzzle(room)
 	if not room.cleared:
 		_narrate_room(room)
 	
@@ -148,6 +154,7 @@ func _narrate_room(room: Room) -> void:
 		Room.RoomType.SECRET: Narrator.say("room_secret")
 		Room.RoomType.INTOXICATION: Narrator.say("room_intoxication")
 		Room.RoomType.LORE: Narrator.say("room_empty")
+		Room.RoomType.PUZZLE: Narrator.say_first("puzzle_start")
 		Room.RoomType.START: pass
 		_: Narrator.say_first("room_combat")
 
@@ -201,6 +208,7 @@ const UPGRADE_IDS := ["upgrade_health", "upgrade_shield", "upgrade_stamina", "up
 const CHEST_SCENE := preload("res://src/items/chest.tscn")
 const SHOP_ITEM_SCENE := preload("res://src/items/shop_item.tscn")
 const ITEM_PICKUP_SCENE := preload("res://src/items/item_pickup.tscn")
+const PUZZLE_PLATES := preload("res://src/dungeon/puzzle_plates.gd")
 
 ## Sala cuya recompensa es la hormona que exige la Puerta Hormonal del jefe.
 var _hormone_room: Room = null
@@ -209,7 +217,7 @@ func _frames_path(variant: String) -> String:
 	return "res://assets/sprites/enemies/%s_sprite_frames.tres" % variant
 
 func _spawn_room_enemies(room: Room) -> void:
-	if room.cleared or room.room_type not in [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION, Room.RoomType.TRAP, Room.RoomType.PUZZLE, Room.RoomType.MINIBOSS, Room.RoomType.BOSS]:
+	if room.cleared or room.room_type not in [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION, Room.RoomType.TRAP, Room.RoomType.MINIBOSS, Room.RoomType.BOSS]:
 		return
 	room.spawn_enemies(ENEMY_SCENES, _generate_enemy_data_for_room(room))
 
@@ -279,7 +287,7 @@ func _random_loot_id() -> String:
 	return _random_item_id(func(it): return it.equip_slot != Item.EquipSlot.WEAPON)
 
 func _random_weapon_id() -> String:
-	return _random_item_id(func(it): return it.equip_slot == Item.EquipSlot.WEAPON and it.id != "fists")
+	return _random_item_id(func(it): return it.equip_slot == Item.EquipSlot.WEAPON)
 
 func _random_item_id(filter: Callable) -> String:
 	var db = get_node("/root/ItemDatabase")
@@ -322,8 +330,47 @@ func _build_shop(room: Room) -> void:
 		s.position = room.get_center_position() + Vector2(col * 120, -40 + row * 110)
 		room.pickups_node.add_child.call_deferred(s)
 
+# ---------------------------------------------------------------- puzzle / salas secretas
+## Las puertas hacia salas secretas nacen cerradas si el piso tiene puzzle que las abra.
+func _lock_secret_rooms() -> void:
+	var rooms: Array = dungeon_generator.rooms.values()
+	if not rooms.any(func(r): return r.room_type == Room.RoomType.PUZZLE):
+		return
+	for door in _doors_to_secret_rooms():
+		door.set_state(Door.State.LOCKED)
+
+func unlock_secret_rooms() -> void:
+	for door in _doors_to_secret_rooms():
+		if door.state == Door.State.LOCKED:
+			door.set_state(Door.State.CLOSED)
+
+func _doors_to_secret_rooms() -> Array:
+	var out := []
+	for room in dungeon_generator.rooms.values():
+		for door in room.doors.values():
+			var target: Room = dungeon_generator.rooms.get(door.target_pos)
+			if target and target.room_type == Room.RoomType.SECRET:
+				out.append(door)
+	return out
+
+func _build_puzzle(room: Room) -> void:
+	if room.has_meta("puzzle"):
+		room.get_meta("puzzle").play()  # al volver a entrar, repite la secuencia
+		return
+	var pz := PUZZLE_PLATES.new()
+	pz.length = 3 + _run_manager.current_floor / 2
+	pz.position = room.get_center_position()
+	pz.solved.connect(_on_puzzle_solved.bind(room))
+	room.set_meta("puzzle", pz)
+	room.props_node.add_child.call_deferred(pz)  # se entra desde un callback de fisica
+
+func _on_puzzle_solved(room: Room) -> void:
+	Narrator.say("puzzle_solved", {}, true)
+	unlock_secret_rooms()
+	room.room_cleared()  # pinta la sala y da la recompensa normal
+
 func _has_real_weapon() -> bool:
-	return player.current_weapon != null and player.current_weapon.id != "fists"
+	return player.current_weapon != null
 
 func _missing_hormones() -> Array:
 	return _run_manager.floor_data().needs.filter(func(h): return not _run_manager.hormones.get(h, false))

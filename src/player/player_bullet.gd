@@ -22,5 +22,7 @@ func _on_body_entered(body: Node) -> void:
 		return
 	if body.is_in_group("enemy") and body.has_method("take_damage"):
 		body.take_damage(damage, get_tree().get_first_node_in_group("player"), Vector2.RIGHT.rotated(rotation) * 120.0)
-		Narrator.notify("hit_enemy")
+		var ps := get_node("/root/PlayerStats")
+		if ps.lifesteal > 0.0:
+			ps.heal(damage * ps.lifesteal)
 	queue_free()

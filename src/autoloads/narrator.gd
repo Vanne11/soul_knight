@@ -5,7 +5,7 @@ extends CanvasLayer
 ## Uso desde cualquier script:
 ##   Narrator.say("evento")               charla normal (se descarta si ya esta hablando)
 ##   Narrator.say("evento", {...}, true)  frase importante (se encola, nunca se pierde)
-##   Narrator.notify("miss"|"hit_enemy"|"dash"|"no_stamina")  contadores de conducta
+##   Narrator.notify("dash"|"no_stamina")  contadores de conducta
 
 const LINES_PATH := "res://assets/data/narrator/lines.json"
 const MEMORY_PATH := "user://narrator.json"
@@ -27,7 +27,6 @@ var _ate_input_ms := -1000
 var _interrupt_in := 0.0
 var _last_line := ""
 var _idle := 0.0
-var _miss_streak := 0
 var _dash_times: Array[float] = []
 var _kills_clean := 0
 var _low_health_said := false
@@ -99,6 +98,8 @@ func _build_ui() -> void:
 
 
 func say(event: String, args: Dictionary = {}, important := false) -> void:
+	if _in_combat():
+		return  # en pelea el panel tapa la vision: callado, ni se encola
 	if not important and (_cooldown > 0.0 or _showing):
 		return
 	var line := _pick(event)
@@ -128,13 +129,6 @@ func get_lines(event: String) -> Array:
 
 func notify(kind: String) -> void:
 	match kind:
-		"miss":
-			_miss_streak += 1
-			if _miss_streak >= 3:
-				_miss_streak = 0
-				say("miss")
-		"hit_enemy":
-			_miss_streak = 0
 		"dash":
 			var now := Time.get_ticks_msec() / 1000.0
 			_dash_times.append(now)
@@ -148,6 +142,14 @@ func notify(kind: String) -> void:
 
 func has_lines(event: String) -> bool:
 	return _lines.has(event)
+
+
+## Sala con enemigos vivos y jugador vivo (la frase de muerte si debe salir).
+func _in_combat() -> bool:
+	var main := get_tree().get_first_node_in_group("main")
+	return main != null and main.current_room != null \
+		and not main.current_room.enemies_spawned.is_empty() \
+		and get_node("/root/PlayerStats").current_health > 0.0
 
 
 func is_talking() -> bool:
@@ -211,6 +213,12 @@ func _process(delta: float) -> void:
 		if _interrupt_in <= 0.0:
 			say("interrupt", {}, true)
 	_hint.visible = _label.visible_ratio >= 1.0
+	if _in_combat():
+		# lo dicho justo antes de que aparezcan los enemigos tambien se calla
+		_queue.clear()
+		_showing = false
+		_panel.visible = false
+		_interrupt_in = 0.0
 	if not _showing and not _queue.is_empty():
 		_show(_queue.pop_front())
 	# Inactividad: solo cuenta durante el juego, no en menus.

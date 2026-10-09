@@ -341,9 +341,10 @@ func _assign_room_types() -> void:
 		candidates[i].room_type = Room.RoomType.INTOXICATION
 		candidates[i].required_intoxication_tier = RNG.randi_range(1, 2)
 	
-	# Secret rooms (1-2)
+	# Secret rooms (1-2). Solo salas sin salida: van cerradas hasta resolver el
+	# puzzle, y una sala de paso cerrada podria dejar al jefe inalcanzable.
 	var secret_count = RNG.randi_range(1, 2)
-	candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT)
+	candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT and room_graph[r.grid_pos].size() == 1)
 	RNG.shuffle(candidates)
 	for i in range(min(secret_count, candidates.size())):
 		candidates[i].room_type = Room.RoomType.SECRET
@@ -356,15 +357,20 @@ func _assign_room_types() -> void:
 		candidates[0].room_type = Room.RoomType.SHOP
 		candidates[0].required_intoxication_tier = 0
 	
-	# Trap/Puzzle (remaining combat rooms have chance)
+	# Con sala secreta hace falta un puzzle que la abra (main.gd la cierra si lo hay).
+	if room_list.any(func(r): return r.room_type == Room.RoomType.SECRET):
+		candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT)
+		if candidates.size() > 0:
+			candidates[0].room_type = Room.RoomType.PUZZLE
+	
+	# Trap/Lore (remaining combat rooms have chance). Puzzle solo el de arriba:
+	# uno sin sala secreta que abrir seria una promesa vacia.
 	for room in room_list:
 		if room.room_type == Room.RoomType.COMBAT:
 			var r = RNG.randf()
 			if r < 0.15:
 				room.room_type = Room.RoomType.TRAP
-			elif r < 0.25:
-				room.room_type = Room.RoomType.PUZZLE
-			elif r < 0.3:
+			elif r >= 0.25 and r < 0.3:
 				room.room_type = Room.RoomType.LORE
 
 func _find_furthest_room(from_pos: Vector2i, min_size := Vector2i.ZERO) -> Room:

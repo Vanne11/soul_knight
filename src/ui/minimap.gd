@@ -8,7 +8,7 @@ const SMALL := Vector2(230, 160)
 const BIG := Vector2(720, 420)  # deja libre el cuadro del narrador
 const ROOM_NAMES := {
 	Room.RoomType.COMBAT: "Combate", Room.RoomType.SHOP: "Tienda", Room.RoomType.LORE: "Sala vacía",
-	Room.RoomType.TRAP: "Trampa", Room.RoomType.PUZZLE: "Combate", Room.RoomType.SECRET: "Secreta",
+	Room.RoomType.TRAP: "Trampa", Room.RoomType.PUZZLE: "Acertijo", Room.RoomType.SECRET: "Secreta",
 	Room.RoomType.BOSS: "Jefe", Room.RoomType.INTOXICATION: "Antro", Room.RoomType.MINIBOSS: "Minijefe",
 	Room.RoomType.START: "Inicio",
 }

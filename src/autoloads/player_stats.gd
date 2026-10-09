@@ -92,6 +92,8 @@ func _handle_intoxication_decay(delta: float) -> void:
 		_update_intoxication_tier()
 
 func take_damage(amount: float) -> float:
+	if DebugMenu.god_mode:
+		return 0.0
 	var actual_damage = amount
 	
 	if current_shields > 0.0:
