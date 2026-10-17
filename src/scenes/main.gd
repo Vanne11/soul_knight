@@ -423,7 +423,9 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 					info.drops.append({"item_id": "whiskey", "chance": 0.5})
 				# Elite: mas vida y dano, algo mas grande y con aura roja. Mas comunes en la 2a etapa.
 				# (No toca a las espinillas: reventar de un tiro es su gracia.)
-				if types[t] != "espinilla" and RNG.randf() < float(fd.get("elite_chance", 0.0)):
+				# Las escoltas del guardian (sala final de la 1a etapa) siempre son elite.
+				var escort: bool = room.room_type == Room.RoomType.BOSS and not has_boss
+				if types[t] != "espinilla" and (escort or RNG.randf() < float(fd.get("elite_chance", 0.0))):
 					info.health *= ELITE_HEALTH_MULT
 					info.damage *= ELITE_DAMAGE_MULT
 					info.scale = ELITE_SCALE
