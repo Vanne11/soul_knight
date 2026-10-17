@@ -16,5 +16,7 @@
 	"weights": [0.4, 0.3, 0.3],
 	"boss": "reina_ovaria",
 	"boss_name": "SU MAJESTAD OVARIA II",
+	"boss_alt": "diu_cosmico",
+	"boss_alt_name": "EL DIU CÓSMICO",
 	"needs": ["estrogeno"]
 }

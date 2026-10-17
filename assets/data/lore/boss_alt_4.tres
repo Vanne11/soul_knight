@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boss_alt_4"
+title = "Próstata Burócrata"
+text = "Del tamaño de una nuez y con ventanilla propia. Reparte fichas, cierra cubículos por almuerzo, llena la sala de gente que hace cola y te lanza papeles en espiral. Siempre falta un papel. Siempre. Dato real: la próstata es una glándula del tamaño de una nuez que rodea la uretra y produce parte del líquido seminal; con los años suele agrandarse y los chequeos a partir de los 45-50 años detectan a tiempo lo que da problemas. No es vergüenza: es mantenimiento. Su único mensaje de verdad es ese, aunque tarde tres semanas en decirlo."
+category = 3
+unlock_condition = {"type": 9, "target_id": "LA PRÓSTATA BUROCRÁTICA"}
+flavor_text = "Derrota a la Próstata Burócrata."

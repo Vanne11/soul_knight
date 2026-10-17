@@ -14,5 +14,7 @@
 	"weights": [0.45, 0.2, 0.35],
 	"boss": "testiculo_primordial",
 	"boss_name": "TESTÍCULO PRIMORDIAL",
+	"boss_alt": "don_viagra",
+	"boss_alt_name": "DON VIAGRA",
 	"needs": ["testosterona"]
 }

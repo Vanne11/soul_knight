@@ -375,10 +375,11 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				var region_n: int = RunManager.region_index(_run_manager.current_floor) + 1  # el jefe escala por reino, como antes
 				info.enemy_type = "boss"
 				info.health = EnemyBoss.health_for_floor(region_n)
-				info.script = EnemyBoss.script_path(fd.boss)
+				var bv := BossPicker.pick(fd, _run_manager.current_seed, _run_manager.current_floor)  # original o alternativo (6c)
+				info.script = EnemyBoss.script_path(bv.variant)
 				info.damage = 12.0 + region_n * 4.0
-				info.name = fd.boss_name
-				info.frames = _frames_path(fd.boss)
+				info.name = bv.name
+				info.frames = _frames_path(bv.variant)
 				info.drops = [{"item_id": "health_large", "chance": 1.0}]
 			Room.RoomType.BOSS when i == 0:
 				# Sala final de la 1a etapa: guardian (minijefe reforzado) que abre la salida.

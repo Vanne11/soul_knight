@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boss_alt_2"
+title = "Don Viagra"
+text = "Pastilla azul con sombrero de copa, monóculo y una confianza injustificable. Llegó a Penelandia con el discurso de que todo se arregla con una dosis y desde entonces embiste en cadena, hace llover pastillas y salta con onda de choque. Dato real: el sildenafilo se investigó como medicamento para la angina de pecho; el efecto secundario, que resultó ser mejor que el principal, lo hizo famoso. Necesita estímulo y receta médica, no sustituye ni el deseo ni la conversación, y si algo dura más de cuatro horas, urgencias. Sí, es verdad. Sí, es el chiste."
+category = 3
+unlock_condition = {"type": 9, "target_id": "DON VIAGRA"}
+flavor_text = "Derrota a Don Viagra."

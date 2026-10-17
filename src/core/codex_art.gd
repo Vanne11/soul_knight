@@ -54,6 +54,8 @@ static func _enemy_variants() -> Dictionary:
 			m[x.name] = x.variant
 		if f.boss_name != "":
 			m[f.boss_name] = f.boss
+		if str(f.get("boss_alt_name", "")) != "":
+			m[f.boss_alt_name] = f.boss_alt
 	return m
 
 ## Miniatura size x size sin suavizar (escala entera si cabe, vecino mas cercano);

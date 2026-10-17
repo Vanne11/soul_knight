@@ -431,7 +431,7 @@ func _on_player_died() -> void:
 	var main := get_tree().get_first_node_in_group("main")
 	if main and main.current_room and main.current_room.room_type == Room.RoomType.BOSS \
 			and RunManager.floor_has_boss(get_node("/root/RunManager").current_floor):
-		say("death_boss", {"boss": Loc.enemy_name(get_node("/root/RunManager").floor_data().boss_name)})
+		say("death_boss", {"boss": Loc.enemy_name(BossPicker.pick(get_node("/root/RunManager").floor_data(), get_node("/root/RunManager").current_seed, get_node("/root/RunManager").current_floor).name)})
 	elif n >= 3 and randf() < 0.5:
 		say("death_same_floor", {"floor": floor_n, "n": n})
 	else:

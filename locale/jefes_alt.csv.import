@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://3wf3entjc47e"
+
+[deps]
+
+files=["res://locale/jefes_alt.es.translation", "res://locale/jefes_alt.en.translation"]
+
+source_file="res://locale/jefes_alt.csv"
+dest_files=["res://locale/jefes_alt.es.translation", "res://locale/jefes_alt.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
