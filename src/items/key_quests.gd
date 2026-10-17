@@ -199,7 +199,7 @@ func _free_spot(room: Room, prefer: Vector2) -> Vector2:
 	shape.radius = 22.0
 	var q := PhysicsShapeQueryParameters2D.new()
 	q.shape = shape
-	q.collision_mask = 1
+	q.collision_mask = 65  # muros + huecos
 	var size := Vector2(room.floor_tilemap.get_used_rect().size) * 64.0
 	# lo que ya ocupa el centro (fuente, inscripcion, cofre del arma, monedas del tesoro) y lo puesto
 	var taken: Array[Vector2] = [room.get_center_position(), room.get_center_position() + Vector2(0, -40)]

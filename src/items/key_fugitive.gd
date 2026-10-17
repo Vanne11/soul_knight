@@ -72,7 +72,7 @@ func _best_dir(from_player: Vector2) -> Vector2:
 	var best_score := -INF
 	for i in STEPS:
 		var dir := Vector2.RIGHT.rotated(TAU * i / STEPS)
-		var q := PhysicsRayQueryParameters2D.create(enemy.global_position, enemy.global_position + dir * LOOK, 1)
+		var q := PhysicsRayQueryParameters2D.create(enemy.global_position, enemy.global_position + dir * LOOK, 65)
 		q.exclude = [enemy.get_rid()]
 		var hit := space.intersect_ray(q)
 		var free_len := LOOK if hit.is_empty() else enemy.global_position.distance_to(hit.position)

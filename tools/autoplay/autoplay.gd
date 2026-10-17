@@ -668,7 +668,7 @@ func _build_grid(room: Room) -> void:
 	shape.radius = BODY_R
 	var q := PhysicsShapeQueryParameters2D.new()
 	q.shape = shape
-	q.collision_mask = 1
+	q.collision_mask = 65  # muros + huecos
 	q.exclude = [player.get_rid()]
 	var w := int(rect.size.x * 64 / CELL)
 	var h := int(rect.size.y * 64 / CELL)

@@ -184,7 +184,7 @@ func _steer(want: Vector2, toward: bool, from_player := Vector2.ZERO) -> Vector2
 	var best_score := -INF
 	for i in STEPS:
 		var dir := Vector2.RIGHT.rotated(TAU * i / STEPS)
-		var q := PhysicsRayQueryParameters2D.create(thief.global_position, thief.global_position + dir * LOOK, 1)
+		var q := PhysicsRayQueryParameters2D.create(thief.global_position, thief.global_position + dir * LOOK, 65)
 		q.exclude = [thief.get_rid()]
 		var hit := space.intersect_ray(q)
 		var free_len := LOOK if hit.is_empty() else thief.global_position.distance_to(hit.position)

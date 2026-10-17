@@ -395,7 +395,7 @@ static func _build(room: Room, w: int, h: int, cells: PackedByteArray, floor_n: 
 	# huecos: cuerpo fisico por tramos horizontales (capa 1, como los muros)
 	var body := StaticBody2D.new()
 	body.name = "ShapeBlockers"
-	body.collision_layer = 1
+	body.collision_layer = 64  # capa 7 "huecos": bloquea cuerpos, no proyectiles
 	body.collision_mask = 0
 	var any_hole := false
 	for y in h:

@@ -527,7 +527,7 @@ func _spawn_props(room: Room, d: Dictionary, seed_: int) -> void:
 func _make_prop(d: Dictionary, kind: String, pos: Vector2, rng: RandomNumberGenerator) -> RigidBody2D:
 	var body := RigidBody2D.new()
 	body.collision_layer = PROP_LAYER
-	body.collision_mask = 1 | PROP_LAYER
+	body.collision_mask = 1 | 64 | PROP_LAYER  # 64 = huecos
 	body.gravity_scale = 0.0
 	body.linear_damp = 3.0
 	body.angular_damp = 3.0
