@@ -295,6 +295,8 @@ func _show(line: String) -> void:
 	_voice_from = _plain.length() - _plain_len(line)
 	_voiced = 0
 	_voice_pitch = VOICE_PITCH if speaker == "NARRADOR" else 0.65 + float(absi(speaker.hash()) % 71) / 100.0
+	if speaker != "NARRADOR" and absf(_voice_pitch - VOICE_PITCH) < 0.08:
+		_voice_pitch += 0.25  # que ningun personaje suene igual que el narrador
 	_panel.visible = true
 	if _tween:
 		_tween.kill()
