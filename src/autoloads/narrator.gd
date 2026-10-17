@@ -15,6 +15,10 @@ signal chosen(index: int)
 const LINES_PATH := "res://assets/data/narrator/lines.json"
 const MEMORY_PATH := "user://narrator.json"
 const CHARS_PER_SEC := 45.0
+## Voz del narrador (el "bla-bla"): mas grave que la intro (1.0) y -4 dB, porque
+## suena durante toda la frase y tapaba los efectos de la partida.
+const VOICE_PITCH := 0.8
+const VOICE_DB := -4.0
 const TOAST_SECONDS := 4.0
 const TOAST_SECONDS_SHORT := 1.8
 const RARITY_COLORS := ["f2ead6", "7ad67a", "6aa8ff", "c08cff", "ffa64a", "9a9a9a"]
@@ -40,6 +44,11 @@ var _panel: PanelContainer
 var _label: RichTextLabel
 var _hint: Label
 var _tween: Tween
+## Voz: texto visible sin bbcode, letras ya procesadas, donde acaba el nombre y tono del hablante
+var _plain := ""
+var _voiced := 0
+var _voice_from := 0
+var _voice_pitch := VOICE_PITCH
 var _toast: PanelContainer
 var _toast_label: RichTextLabel
 var _toast_queue: Array = []  # [texto bbcode, segundos]
@@ -247,6 +256,7 @@ func _advance() -> void:
 		if _tween:
 			_tween.kill()
 		_label.visible_ratio = 1.0
+		_voiced = _plain.length()  # completado de golpe: la voz calla
 		return
 	_showing = false
 	_panel.visible = false
@@ -279,6 +289,12 @@ func _show(line: String) -> void:
 	_complaining = false
 	_label.text = "[color=#%s][b]%s:[/b][/color] %s" % [color, tr("NARRATOR_NAME") if speaker == "NARRADOR" else speaker, line]
 	_label.visible_ratio = 0.0
+	# Voz: el nombre del hablante no suena, solo el texto. Su pitch sale de un hash
+	# estable del nombre (0.65-1.35); sin hablante, el tono grave del narrador.
+	_plain = _label.get_parsed_text()
+	_voice_from = _plain.length() - _plain_len(line)
+	_voiced = 0
+	_voice_pitch = VOICE_PITCH if speaker == "NARRADOR" else 0.65 + float(absi(speaker.hash()) % 71) / 100.0
 	_panel.visible = true
 	if _tween:
 		_tween.kill()
@@ -287,7 +303,36 @@ func _show(line: String) -> void:
 	_showing = true
 
 
+## Largo del texto visible de una frase (sin bbcode).
+func _plain_len(line: String) -> int:
+	var l := RichTextLabel.new()
+	l.bbcode_enabled = true
+	l.text = line
+	var n := l.get_parsed_text().length()
+	l.free()
+	return n
+
+
+## Una silaba cada 2 letras nuevas (no en espacios ni puntuacion), como en la intro.
+## Con el menu de pausa abierto no suena, pero el avance se descuenta para que
+## no suene de golpe al volver. Si pausa el propio narrador (elecciones) si suena.
+func _voice_tick() -> void:
+	var total := _plain.length()
+	var now := int(roundf(_label.visible_ratio * total))
+	if now <= _voiced:
+		return
+	var mute := not _panel.visible or get_tree().get_first_node_in_group("pause_menu") != null
+	for i in range(_voiced, now):
+		if mute or i < _voice_from or i % 2 != 0:
+			continue
+		var ch := _plain[i]
+		if ch.strip_edges() != "" and not ch in ".,;:!?¡¿…-—()\"'":
+			Sound.voice(ch, _voice_pitch, VOICE_DB)
+	_voiced = now
+
+
 func _process(delta: float) -> void:
+	_voice_tick()
 	_hint.visible = _label.visible_ratio >= 1.0
 	var room := _current_room()
 	if _showing and room != null and _line_room != null and room != _line_room:
