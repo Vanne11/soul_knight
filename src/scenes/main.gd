@@ -43,6 +43,7 @@ func _ready() -> void:
 	dungeon_generator.name = "DungeonGenerator"
 	add_child(dungeon_generator)
 	
+	add_child(WorldFx.new())  # polvo, casquillos, chispas, huellas, ambiente (src/fx/world_fx.gd)
 	add_child(ScreenFx.new())  # vineta, polvo/rayos y mareo (src/fx/screen_fx.gd)
 	_lighting = RoomLighting.new()
 	_lighting.name = "RoomLighting"
