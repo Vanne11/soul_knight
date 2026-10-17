@@ -100,6 +100,11 @@ pause={
 ]
 }
 
+[internationalization]
+
+locale/fallback="es"
+locale/translations=PackedStringArray("res://locale/items.en.translation", "res://locale/items.es.translation", "res://locale/lore.en.translation", "res://locale/lore.es.translation", "res://locale/narrator.en.translation", "res://locale/narrator.es.translation", "res://locale/world.en.translation", "res://locale/world.es.translation")
+
 [physics]
 
 physics/2d/default_gravity=0

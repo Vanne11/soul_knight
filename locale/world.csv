@@ -1,0 +1,78 @@
+keys,es,en
+FLOOR_1_NAME,LA SELVA PÚBICA,THE PUBIC JUNGLE
+FLOOR_1_SHORT,LA SELVA PÚBICA,THE PUBIC JUNGLE
+ENEMY_PELO_ENCARNADO_NAME,Pelo Encarnado,Ingrown Hair
+ENEMY_GRANITO_NAME,Granito Rencoroso,Spiteful Zit
+ENEMY_LADILLA_NAME,Ladilla,Crab Louse
+BOSS_CERA_NAME,DOÑA CERA CALIENTE,MADAME HOT WAX
+FLOOR_2_NAME,PENELANDIA,PENELAND
+FLOOR_2_SHORT,PENELANDIA,PENELAND
+ENEMY_TESTICULO_NAME,Testículo Errante,Wandering Testicle
+ENEMY_VESICULA_NAME,Vesícula Resentida,Resentful Vesicle
+ENEMY_ESPERMATOZOIDE_NAME,Espermatozoide,Sperm Cell
+BOSS_TESTICULO_PRIMORDIAL_NAME,TESTÍCULO PRIMORDIAL,PRIMORDIAL TESTICLE
+FLOOR_3_NAME,VULVANIA,VULVANIA
+FLOOR_3_SHORT,VULVANIA,VULVANIA
+ENEMY_OVULO_NAME,Óvulo Rodante,Rolling Ovum
+ENEMY_TROMPA_NAME,Trompa Escupidora,Spitting Fallopian
+ENEMY_CALAMBRE_NAME,Calambre,Cramp
+ENEMY_ESPECULO_NAME,Espéculo Mordedor,Biting Speculum
+BOSS_REINA_OVARIA_NAME,SU MAJESTAD OVARIA II,HER MAJESTY OVARIA II
+FLOOR_4_NAME,EL PERINEO,THE PERINEUM
+FLOOR_4_SHORT,EL PERINEO,THE PERINEUM
+BOSS_ADUANERO_NAME,EL ADUANERO HORMONAL,THE HORMONE CUSTOMS OFFICER
+FLOOR_5_NAME,EL PALACIO DE LA CENSURA,THE PALACE OF CENSORSHIP
+FLOOR_5_SHORT,PALACIO CENSURA,CENSORSHIP PALACE
+ENEMY_BARRA_NEGRA_NAME,Barra Negra,Black Bar
+ENEMY_SELLO_NAME,Sello Censor,Censor Stamp
+ENEMY_PIXEL_CENSURA_NAME,Píxel de Censura,Censorship Pixel
+BOSS_HOJA_DE_PARRA_NAME,"SU PUDOROSIDAD, LA HOJA DE PARRA","HER MODESTY, THE FIG LEAF"
+CHAR_ORNITORRINCO_NAME,ORNITORRINCO,PLATYPUS
+CHAR_ORNITORRINCO_TITLE,No especifica,Unspecified
+CHAR_ORNITORRINCO_PERK,Inmune a las alergias. Pero ningún reino lo considera de casa.,Immune to allergies. But no kingdom considers him one of its own.
+CHAR_ORNITORRINCO_BIO,"Pico de pato, cola de castor, pone huevos y es mamífero. La naturaleza tuvo un mal día. Él tuvo uno peor: le tocó salvar el mundo.","Duck bill, beaver tail, lays eggs and is a mammal. Nature was having a bad day. He had a worse one: he got stuck saving the world."
+CHAR_PITOCLES_NAME,PITOCLES,PITOCLES
+CHAR_PITOCLES_TITLE,Héroe de Penelandia,Hero of Peneland
+CHAR_PITOCLES_PERK,"Empieza con 10 de escudo. Aguanta lo que le echen. Emocionalmente, no.","Starts with 10 shield. Takes whatever you throw at him. Emotionally, not so much."
+CHAR_PITOCLES_BIO,Hoplita veterano de la Guerra Fría Hormonal. Lleva casco griego porque leyó que daba autoridad. No la da.,Veteran hoplite of the Cold Hormonal War. Wears a Greek helmet because he read it gave authority. It doesn't.
+CHAR_VULVALQUIRIA_NAME,VULVALQUIRIA,VULVALKYRIE
+CHAR_VULVALQUIRIA_TITLE,Heroína de Vulvania,Heroine of Vulvania
+CHAR_VULVALQUIRIA_PERK,El dash cuesta la mitad. Esquiva problemas mejor que tú.,Dash costs half. Dodges problems better than you do.
+CHAR_VULVALQUIRIA_BIO,Guerrera del norte de Vulvania. Ha visto cosas. Ha censurado cero. Viene a por la Hoja de Parra con trenzas y sin paciencia.,Warrior from the north of Vulvania. Has seen things. Has censored zero. Comes for the Fig Leaf with braids and no patience.
+BLESSING_CADERAS_NAME,Caderas Ligeras,Light Hips
+BLESSING_CADERAS_DESC,+12% de velocidad,+12% speed
+BLESSING_CALIBRE_NAME,Calibre Grueso,Thick Caliber
+BLESSING_CALIBRE_DESC,+20% de daño,+20% damage
+BLESSING_CICLO_NAME,Ciclo Acelerado,Accelerated Cycle
+BLESSING_CICLO_DESC,+20% de cadencia de disparo,+20% fire rate
+BLESSING_DESCARGA_NAME,Descarga Múltiple,Multiple Discharge
+BLESSING_DESCARGA_DESC,+1 proyectil por disparo (cada uno pega un 70%),+1 projectile per shot (each hits for 70%)
+BLESSING_EMBESTIDA_NAME,Embestida,Thrust
+BLESSING_EMBESTIDA_DESC,Tus balas empujan y aturden mucho más,Your bullets push and stun much more
+BLESSING_EQUILIBRIO_NAME,Equilibrio Hormonal,Hormonal Balance
+BLESSING_EQUILIBRIO_DESC,Al hacer dash disparas un anillo de balas,Dashing fires a ring of bullets
+BLESSING_ESCURRIDIZA_NAME,Escurridiza,Slippery
+BLESSING_ESCURRIDIZA_DESC,El dash recarga un 30% antes y cuesta menos,Dash recharges 30% sooner and costs less
+BLESSING_FILO_NAME,Dash Cortante,Cutting Dash
+BLESSING_FILO_DESC,El dash daña a todo lo que atraviesas,Dash damages everything you pass through
+BLESSING_INTUICION_NAME,Intuición,Intuition
+BLESSING_INTUICION_DESC,+12% de probabilidad de crítico,+12% crit chance
+BLESSING_ORGULLO_NAME,Orgullo Herido,Wounded Pride
+BLESSING_ORGULLO_DESC,Al recibir un golpe sueltas 8 balas en círculo,"When hit, you release 8 bullets in a circle"
+BLESSING_PENETRACION_NAME,Penetración,Penetration
+BLESSING_PENETRACION_DESC,Las balas atraviesan a un enemigo más,Bullets pierce one more enemy
+BLESSING_REGLA_NAME,Regeneración Cíclica,Cyclical Regeneration
+BLESSING_REGLA_DESC,Curas 1 de vida al matar,Heal 1 health on kill
+BLESSING_TESTOSTERONA_NAME,Testosterona Pura,Pure Testosterone
+BLESSING_TESTOSTERONA_DESC,+8 de vida máxima y +5 de escudo,+8 max health and +5 shield
+META_ESCUDO_NAME,Látex de Serie,Factory-Fitted Latex
+META_ESCUDO_DESC,+5 de escudo al empezar,+5 shield at start
+META_ESTAMINA_NAME,Pulmones de Exfumador,Ex-Smoker's Lungs
+META_ESTAMINA_DESC,+10 de estamina al empezar,+10 stamina at start
+META_MONEDAS_NAME,Hucha Escondida,Hidden Piggy Bank
+META_MONEDAS_DESC,+5 monedas al empezar,+5 coins at start
+META_VIDA_NAME,Corazón Curtido,Seasoned Heart
+META_VIDA_DESC,+5 de vida al empezar,+5 health at start
+KINGDOM_PENE_NAME,PENELANDIA,PENELAND
+KINGDOM_VULVA_NAME,VULVANIA,VULVANIA
+ENEMY_GIANT_FMT,%s Gigante,Giant %s

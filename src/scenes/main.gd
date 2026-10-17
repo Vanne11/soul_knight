@@ -63,7 +63,7 @@ func _generate_dungeon() -> void:
 		# Region liberada en otra partida: te recibe con un regalo.
 		get_tree().create_timer(2.6).timeout.connect(func():
 			Narrator.say("liberated_floor")
-			_offer_blessing(_floor_kingdom(), "[b]%s te recuerda.[/b] Ya la liberaste una vez. Elige una bendición de regalo:" % _run_manager.floor_data().name))
+			_offer_blessing(_floor_kingdom(), "[b]%s te recuerda.[/b] Ya la liberaste una vez. Elige una bendición de regalo:" % Loc.floor_name(_run_manager.floor_data())))
 	if start_room:
 		_enter_room(start_room)
 	else:
@@ -491,7 +491,7 @@ func _complete_floor() -> void:
 		return
 	get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position, "¡PISO %d COMPLETADO!" % floor_n, Color.GOLD)
 	if _run_manager.liberate(floor_n):
-		Narrator.toast("REGIÓN LIBERADA PARA SIEMPRE", "%s ya no vuelve al gris. En próximas partidas te dará una bendición al llegar." % _run_manager.floor_data().name, "ffd75a")
+		Narrator.toast("REGIÓN LIBERADA PARA SIEMPRE", "%s ya no vuelve al gris. En próximas partidas te dará una bendición al llegar." % Loc.floor_name(_run_manager.floor_data()), "ffd75a")
 	# Recompensa: una mejora a elegir. Luego, sin prisa: recoges el botin y bajas por la escotilla.
 	await get_tree().create_timer(1.5).timeout
 	Narrator.choose("[b]Jefe derrotado.[/b] Elige una mejora para el resto de la partida:", BOSS_REWARDS.map(func(r): return r[0]))
@@ -565,7 +565,7 @@ func _room_hint(room: Room) -> Array:
 		"bendicion":
 			var k := room.reward_kingdom
 			var warn := "\n(te da alergia)" if _run_manager.is_foreign(k) else ""
-			return [head + "BENDICIÓN\n" + KINGDOM_NAMES[k] + warn, KINGDOM_COLORS[k]]
+			return [head + "BENDICIÓN\n" + Loc.kingdom_name(k) + warn, KINGDOM_COLORS[k]]
 		"monedas": return [head + "MONEDAS", Color("ffd75a")]
 		"vida": return [head + "VIDA", Color("ff6b6b")]
 		"hormona": return [head + "HORMONA", Color("c08cff")]
@@ -582,7 +582,7 @@ func _give_reward(room: Room) -> void:
 			_spawn_pickup(room, "health_large", center + Vector2(0, -30))
 		"bendicion":
 			await get_tree().create_timer(0.7).timeout
-			_offer_blessing(room.reward_kingdom, "[b]Bendición de %s.[/b] Elige una:" % KINGDOM_NAMES[room.reward_kingdom].capitalize())
+			_offer_blessing(room.reward_kingdom, "[b]Bendición de %s.[/b] Elige una:" % Loc.kingdom_name(room.reward_kingdom).capitalize())
 
 func _offer_blessing(kingdom: String, title: String) -> void:
 	var ids: Array = _run_manager.roll_blessings(kingdom)
@@ -592,7 +592,7 @@ func _offer_blessing(kingdom: String, title: String) -> void:
 		var tag := ("  [nivel %d]" % (lvl + 1)) if lvl > 0 else ""
 		if _run_manager.is_foreign(b.kingdom):
 			tag += "  [AJENA: doble efecto + ALERGIA]"
-		return "%s (%s): %s%s" % [b.name, KINGDOM_NAMES.get(b.kingdom, "MIXTA").capitalize(), b.desc, tag])
+		return "%s (%s): %s%s" % [Loc.blessing(id, "name"), (Loc.kingdom_name(b.kingdom) if b.kingdom in KINGDOM_NAMES else "MIXTA").capitalize(), Loc.blessing(id, "desc"), tag])
 	Narrator.say_first("blessing_first")
 	Narrator.choose(title, options)
 	_take_blessing(ids[await Narrator.chosen])
@@ -659,7 +659,7 @@ func _read_inscription() -> void:
 	var fresh := pool.filter(func(e): return not e.unlocked)
 	var entry = (fresh if not fresh.is_empty() else pool)[RNG.randi_range(0, (fresh if not fresh.is_empty() else pool).size() - 1)]
 	lore.unlock_entry(entry.id)
-	Narrator.say_raw("INSCRIPCIÓN: [b]%s.[/b] %s" % [entry.title, entry.text])
+	Narrator.say_raw("INSCRIPCIÓN: [b]%s.[/b] %s" % [Loc.lore_title(entry), Loc.lore_text(entry)])
 
 func _add_prop(room: Room, pos: Vector2, visual: Node2D, text: String, on_use: Callable) -> void:
 	var it := INTERACTABLE.new()
@@ -699,7 +699,7 @@ func _show_floor_card() -> void:
 	layer.layer = 40
 	var label := Label.new()
 	var floor_n: int = _run_manager.current_floor
-	label.text = "PISO %d\n%s" % [floor_n, _run_manager.floor_data().name]
+	label.text = "PISO %d\n%s" % [floor_n, Loc.floor_name(_run_manager.floor_data())]
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.set_anchors_preset(Control.PRESET_FULL_RECT)

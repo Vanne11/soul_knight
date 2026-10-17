@@ -144,7 +144,7 @@ func _on_run_started(_seed: int) -> void:
 func _update_floor_label() -> void:
 	var n: int = _runs.current_floor
 	var fd: Dictionary = _runs.floor_data()
-	floor_label.text = "PISO %d · %s" % [n, fd.name]
+	floor_label.text = "PISO %d · %s" % [n, Loc.floor_name(fd)]
 	floor_label.add_theme_color_override("font_color", fd.get("tint", HudStyle.CREAM))
 	_coin_label.text = str(_runs.coins)
 	# hormonas conseguidas: su frasco, a tamano real del arte del objeto
@@ -202,7 +202,7 @@ func _update_blessings() -> void:
 	var lines := []
 	for id in _runs.blessings:
 		var b: Dictionary = RunManager.BLESSINGS[id]
-		lines.append("[color=#%s]%s %d[/color]" % [colors[b.kingdom], b.name, _runs.blessings[id]])
+		lines.append("[color=#%s]%s %d[/color]" % [colors[b.kingdom], Loc.blessing(id, "name"), _runs.blessings[id]])
 	_blessings.text = "\n".join(lines)
 
 var _boss_bar: UIBar
@@ -227,7 +227,7 @@ func _build_boss_bar() -> void:
 	add_child(box)
 
 func _on_boss_health_changed(boss_name: String, current: float, max_hp: float) -> void:
-	_boss_label.text = boss_name
+	_boss_label.text = Loc.enemy_name(boss_name)
 	_boss_bar.update_bar(current, max_hp)
 	_boss_bar.get_parent().visible = current > 0.0
 

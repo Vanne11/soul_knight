@@ -50,7 +50,7 @@ func _prompt_text() -> String:
 	if rm.coins < price:
 		action = "Cuesta %d monedas. Tienes %d." % [price, rm.coins]
 	return "[color=#ffd75a][b]%s[/b][/color]\n[font_size=13]%s[/font_size]\n[color=#b08d4a]%s[/color]" % [
-		_item.display_name, _item.description, action]
+		Loc.item_name(_item), Loc.item_desc(_item), action]
 
 
 func _use(player: Node) -> void:

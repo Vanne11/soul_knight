@@ -283,7 +283,7 @@ func _card(id: String, parent: Control) -> Button:
 	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	v.add_child(portrait)
-	for pair in [[data.name, 30, CARD_COLORS[id]], [data.title, 16, Color("b48cff")], [data.bio, 14, Color("fff1d6")], [data.perk, 15, Color("ffc93c")]]:
+	for pair in [[Loc.char_field(id, "name"), 30, CARD_COLORS[id]], [Loc.char_field(id, "title"), 16, Color("b48cff")], [Loc.char_field(id, "bio"), 14, Color("fff1d6")], [Loc.char_field(id, "perk"), 15, Color("ffc93c")]]:
 		var l := Label.new()
 		l.text = pair[0]
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

@@ -20,6 +20,7 @@ const TOAST_SECONDS_SHORT := 1.8
 const RARITY_COLORS := ["f2ead6", "7ad67a", "6aa8ff", "c08cff", "ffa64a", "9a9a9a"]
 
 var _lines: Dictionary = {}
+## evento -> indices de frase pendientes de la bolsa (se traduce al elegir, no al barajar)
 var _bags: Dictionary = {}
 var _memory := {"runs": 0, "deaths": 0, "deaths_by_floor": {}}
 var _queue: Array[String] = []
@@ -125,7 +126,8 @@ func say(event: String, args: Dictionary = {}) -> void:
 	if line == "":
 		return
 	args.merge({"deaths": _memory.deaths, "runs": _memory.runs}, false)
-	args.merge({"hero": get_node("/root/RunManager").character_data().name}, false)
+	var rm := get_node("/root/RunManager")
+	args.merge({"hero": Loc.char_field(rm.character, "name")}, false)
 	_queue.append(line.format(args))
 	if _queue.size() > 3:
 		_queue.pop_front()
@@ -190,7 +192,7 @@ func _pick_choice(i: int) -> void:
 
 
 func get_lines(event: String) -> Array:
-	return _lines.get(event, [])
+	return Loc.narr_lines(event, _lines.get(event, []))
 
 
 func has_lines(event: String) -> bool:
@@ -256,10 +258,12 @@ func _pick(event: String) -> String:
 		return ""
 	var bag: Array = _bags.get(event, [])
 	if bag.is_empty():
-		bag = _lines[event].duplicate()
+		for i in _lines[event].size():
+			bag.append(i)
 		bag.shuffle()
 		_bags[event] = bag
-	return bag.pop_back()
+	var idx: int = bag.pop_back()
+	return Loc.narr_line(event, idx, _lines[event][idx])
 
 
 func _show(line: String) -> void:
@@ -345,7 +349,7 @@ func _on_player_died() -> void:
 	var n: int = _memory.deaths_by_floor[key]
 	var main := get_tree().get_first_node_in_group("main")
 	if main and main.current_room and main.current_room.room_type == Room.RoomType.BOSS:
-		say("death_boss", {"boss": get_node("/root/RunManager").floor_data().boss_name})
+		say("death_boss", {"boss": Loc.enemy_name(get_node("/root/RunManager").floor_data().boss_name)})
 	elif n >= 3 and randf() < 0.5:
 		say("death_same_floor", {"floor": floor_n, "n": n})
 	else:
@@ -356,7 +360,7 @@ func _on_player_died() -> void:
 func _on_item_picked_up(item: Variant, _qty: int) -> void:
 	if "moneda" in item.tags:
 		return  # el contador del HUD ya lo dice
-	toast("+" + item.display_name, "", RARITY_COLORS[clampi(item.rarity, 0, RARITY_COLORS.size() - 1)])
+	toast("+" + Loc.item_name(item), "", RARITY_COLORS[clampi(item.rarity, 0, RARITY_COLORS.size() - 1)])
 
 
 ## Cada nivel de borrachera se explica una vez por run, al alcanzarlo.
@@ -368,7 +372,7 @@ func _on_intox(_level: float, tier: int) -> void:
 func _on_lore_unlocked(entry_id: String) -> void:
 	var entry = get_node("/root/LoreDatabase").get_entry(entry_id)
 	if entry:
-		toast("Lore desbloqueado: " + entry.title)  # una linea: el objeto es lo importante
+		toast("Lore desbloqueado: " + Loc.lore_title(entry))  # una linea: el objeto es lo importante
 
 
 # ---------------------------------------------------------------- memoria

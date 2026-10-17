@@ -126,7 +126,7 @@ func _world_strip() -> Control:
 		dot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		dot.color = f.tint if free else Color(0.4, 0.4, 0.44)
 		row.add_child(dot)
-		row.add_child(HudStyle.pixel_label("%d %s" % [i + 1, f.name.replace("EL PALACIO DE LA ", "PALACIO ")], 16,
+		row.add_child(HudStyle.pixel_label("%d %s" % [i + 1, Loc.floor_name(i + 1, true)], 16,
 			f.tint.lightened(0.2) if free else Color(0.55, 0.55, 0.6)))
 		col.add_child(row)
 	var n: int = rm.liberated.size()
@@ -210,10 +210,10 @@ func _fill_upgrades(info: Label, rows: VBoxContainer) -> void:
 		var b := Button.new()
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		if lvl >= u.max:
-			b.text = "%s — %s   [%d/%d] MÁXIMO" % [u.name, u.desc, lvl, u.max]
+			b.text = "%s — %s   [%d/%d] MÁXIMO" % [Loc.meta(id, "name"), Loc.meta(id, "desc"), lvl, u.max]
 			b.disabled = true
 		else:
-			b.text = "%s — %s   [%d/%d]   %d huesos" % [u.name, u.desc, lvl, u.max, rm.meta_cost(id)]
+			b.text = "%s — %s   [%d/%d]   %d huesos" % [Loc.meta(id, "name"), Loc.meta(id, "desc"), lvl, u.max, rm.meta_cost(id)]
 			b.disabled = rm.meta_currency < rm.meta_cost(id)
 		b.pressed.connect(func():
 			rm.buy_meta(id)
@@ -252,10 +252,10 @@ func _open_codex() -> void:
 	text.text = "Elige una entrada. Las que faltan se descubren jugando: inscripciones, objetos, enemigos y jefes."
 	detail.add_child(text)
 	var entries: Array = lore.get_all_entries()
-	entries.sort_custom(func(a, b): return a.unlocked and not b.unlocked if a.unlocked != b.unlocked else a.title < b.title)
+	entries.sort_custom(func(a, b): return a.unlocked and not b.unlocked if a.unlocked != b.unlocked else Loc.lore_title(a) < Loc.lore_title(b))
 	for e in entries:
 		var img: Texture2D = _codex_image(e)
-		list.add_item(e.title if e.unlocked else "???", _thumb(img, not e.unlocked) if img else null)
+		list.add_item(Loc.lore_title(e) if e.unlocked else "???", _thumb(img, not e.unlocked) if img else null)
 		list.set_item_disabled(list.item_count - 1, not e.unlocked)
 	list.item_selected.connect(func(i):
 		var e = entries[i]
@@ -266,7 +266,7 @@ func _open_codex() -> void:
 			var k := maxi(1, mini(int(560.0 / img.get_width()), int(250.0 / img.get_height())))
 			pic.texture = img
 			pic.custom_minimum_size = Vector2(img.get_width(), img.get_height()) * k
-		text.text = "[b]%s[/b]\n\n%s\n\n[i]%s[/i]" % [e.title, e.text, e.flavor_text])
+		text.text = "[b]%s[/b]\n\n%s\n\n[i]%s[/i]" % [Loc.lore_title(e), Loc.lore_text(e), Loc.lore_flavor(e)])
 
 
 ## Imagen de una entrada del codice, deducida de lo que la desbloquea.
