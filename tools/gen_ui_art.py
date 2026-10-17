@@ -306,6 +306,68 @@ EXTRA_ICONS = {
 }
 
 
+def _outline(im, o=O):
+    """Contorno de 1 px de arte alrededor de todo lo opaco (8 vecinos)."""
+    src = im.copy()
+    px, sp = im.load(), src.load()
+    for y in range(im.height):
+        for x in range(im.width):
+            if sp[x, y][3]:
+                continue
+            for dy in (-1, 0, 1):
+                for dx in (-1, 0, 1):
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < im.width and 0 <= ny < im.height and sp[nx, ny][3] and sp[nx, ny] != o:
+                        px[x, y] = o
+
+
+def _save_cursor(im, name):
+    """Cursores a 2x (por defecto) y 3x (_3x) para ventanas grandes: el stretch no los escala."""
+    OUT.mkdir(parents=True, exist_ok=True)
+    for sc, suf in ((2, ""), (3, "_3x")):
+        im.resize((im.width * sc, im.height * sc), Image.NEAREST).save(OUT / f"{name}{suf}.png")
+
+
+def cursors():
+    # Mira: 15x15 de arte, centro exacto en (7,7). 4 tramos con hueco + punto central.
+    CREAM = (255, 241, 214, 255)
+    im = new(15, 15)
+    px = im.load()
+    for d in (4, 5, 6):
+        px[7 - d, 7] = px[7 + d, 7] = px[7, 7 - d] = px[7, 7 + d] = CREAM
+    px[7, 7] = CREAM
+    _outline(im)
+    _save_cursor(im, "cursor_aim")
+    # Puntero dorado del HUD: punta en (1,1) (el contorno ocupa la fila/columna 0).
+    rows = [
+        "L",
+        "LB",
+        "LBB",
+        "LBBB",
+        "LBBBB",
+        "LBBBBB",
+        "LBBBBBB",
+        "LBBBBBBB",
+        "LBBBBBBBS",
+        "LBBBBBSSS",
+        "LBBLBBS",
+        "LBL.LBBS",
+        "LL...LBBS",
+        ".....LBBS",
+        "......LBS",
+        "......SS",
+    ]
+    cols = {"L": G0, "B": G1, "S": G3}
+    im = new(13, 19)
+    px = im.load()
+    for y, r in enumerate(rows):
+        for x, c in enumerate(r):
+            if c in cols:
+                px[1 + x, 1 + y] = cols[c]
+    _outline(im)
+    _save_cursor(im, "cursor_pointer")
+
+
 if __name__ == "__main__":
     ICONS.update(EXTRA_ICONS)
     buttons()
@@ -317,4 +379,5 @@ if __name__ == "__main__":
     slot()
     key_badge()
     portrait_frame()
+    cursors()
     print("ok ->", OUT)
