@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "dildo_taser"
+display_name = "Dildo Eléctrico"
+description = "Dispara chispas cuyo arco salta a otros 2 enemigos cercanos (50% del daño). Poco daño contra uno solo, mejor contra grupos. 'Descarga de 12.000 voltios. Garantía de 3 meses.'"
+rarity = 1
+tags = ["arma", "eléctrico"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 280
+custom_data = {"base_damage": 8, "fire_rate": 0.36, "projectile_speed": 650, "spread": 0.04, "chain": 2, "chain_radius": 120, "chain_mult": 0.5, "range": 380, "bullet_color": "7fe3ff"}

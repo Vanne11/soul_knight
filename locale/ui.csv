@@ -140,3 +140,5 @@ DEBUG_GO,Ir,Go
 DEBUG_FLOOR_HEAD,— Piso —,— Floor —
 DEBUG_FLOOR,Piso %d,Floor %d
 DEBUG_CHAR_HEAD,— Personaje (reinicia el piso) —,— Character (restarts the floor) —
+FX_RELOAD,Recargando...,Reloading...
+FX_OVERHEAT,¡SOBRECALENTADA!,OVERHEATED!
