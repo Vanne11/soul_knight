@@ -95,6 +95,8 @@ def collect_lore() -> dict:
         d = parse_tres_strings(p)
         if "id" not in d:
             continue
+        if d["id"].startswith("boss_alt_"):
+            continue  # jefes alternativos (6c): sus textos viven en locale/jefes_alt.csv
         k = d["id"].upper()
         rows[f"LORE_{k}_TITLE"] = d.get("title", "")
         rows[f"LORE_{k}_TEXT"] = d.get("text", "")

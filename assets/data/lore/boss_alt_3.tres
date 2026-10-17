@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boss_alt_3"
+title = "DIU Cósmico"
+text = "Una T de cobre que flota en Vulvania desde hace años sin pedir nada. Si lo mueves, se ofende: cruza barras de cobre en sentidos opuestos, tensa hilos de nylon, lanza meteoros y, cuando se enfada de verdad, hace supernova. Dato real: el DIU de cobre previene el embarazo más del 99% de las veces, dura entre cinco y diez años según el modelo y es reversible: se retira y la fertilidad vuelve. No protege de las infecciones de transmisión sexual; para eso sigue estando el condón. Como casi todo en esta historia: una herramienta, no una moral."
+category = 3
+unlock_condition = {"type": 9, "target_id": "EL DIU CÓSMICO"}
+flavor_text = "Derrota al DIU Cósmico."

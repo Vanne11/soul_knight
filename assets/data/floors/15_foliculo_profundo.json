@@ -15,5 +15,7 @@
 	"weights": [0.4, 0.25, 0.35],
 	"boss": "boss_cera",
 	"boss_name": "DOÑA CERA CALIENTE",
+	"boss_alt": "afeitadora",
+	"boss_alt_name": "LA AFEITADORA ELÉCTRICA",
 	"needs": []
 }

@@ -167,10 +167,11 @@ func _spawn_enemy(t: String) -> void:
 	elif t == "boss":
 		if str(fd.boss) == "":
 			return  # piso de 1a etapa: no hay jefe del reino
-		info.name = fd.boss_name
-		info.frames = main._frames_path(fd.boss)
+		var bv := BossPicker.pick(fd, rm.current_seed, rm.current_floor)
+		info.name = bv.name
+		info.frames = main._frames_path(bv.variant)
 		info.health = EnemyBoss.health_for_floor(RunManager.region_index(rm.current_floor) + 1)
-		info.script = EnemyBoss.script_path(fd.boss)
+		info.script = EnemyBoss.script_path(bv.variant)
 	var data: Array[Dictionary] = [info]
 	room.cleared = false  # para que al matarlo la sala se vuelva a abrir
 	room.spawn_points = [main.player.global_position + Vector2(160, 0)]

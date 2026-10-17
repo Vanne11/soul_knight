@@ -1,0 +1,51 @@
+keys,es,en
+BOSS_AFEITADORA_NAME,LA AFEITADORA ELÉCTRICA,THE ELECTRIC SHAVER
+BOSS_DON_VIAGRA_NAME,DON VIAGRA,DON VIAGRA
+BOSS_DIU_COSMICO_NAME,EL DIU CÓSMICO,THE COSMIC IUD
+BOSS_PROSTATA_NAME,LA PRÓSTATA BUROCRÁTICA,THE BUREAUCRATIC PROSTATE
+BOSS_ALGORITMO_NAME,EL ALGORITMO MODERADOR,THE MODERATOR ALGORITHM
+BOSS_CH_ENCHUFES_T,¡DESENCHÚFALA!,UNPLUG HER!
+BOSS_CH_ENCHUFES_D,"Toca los tres enchufes, de uno en uno, antes de que se recargue.","Touch the three plugs, one at a time, before she recharges."
+BOSS_CH_PASTILLAS_T,¡ROMPE LAS PASTILLAS!,BREAK THE PILLS!
+BOSS_CH_PASTILLAS_D,Dispara a las cinco pastillas antes de que haga efecto.,Shoot all five pills before it kicks in.
+BOSS_CH_AGUA_T,¡TOMAR CON AGUA!,TAKE WITH WATER!
+BOSS_CH_AGUA_D,Quédate dentro del vaso mientras se mueve por la sala.,Stay inside the glass as it moves around the room.
+BOSS_CH_CONSTELACION_T,¡LA CONSTELACIÓN!,THE CONSTELLATION!
+BOSS_CH_CONSTELACION_D,Toca las estrellas en orden; se encienden de una en una.,Touch the stars in order; they light up one by one.
+BOSS_CH_ECLIPSE_T,¡ECLIPSE!,ECLIPSE!
+BOSS_CH_ECLIPSE_D,"Dispara desde el lado del hueco del escudo, que gira.","Shoot from the side of the shield's gap, which keeps rotating."
+BOSS_CH_COMETA_T,¡ATRAPA EL COMETA!,CATCH THE COMET!
+BOSS_CH_COMETA_D,Alcánzalo antes de que se apague (vale con un dash).,Reach it before it burns out (a dash works).
+BOSS_CH_TURNOS_T,¡TOMA TU TURNO!,TAKE YOUR TURN!
+BOSS_CH_TURNOS_D,"Toca las fichas en orden numérico: 1, 2, 3, 4.","Touch the tickets in numerical order: 1, 2, 3, 4."
+BOSS_CH_CAFE_T,¡LA HORA DEL CAFÉ!,COFFEE BREAK!
+BOSS_CH_CAFE_D,Alcanza la taza antes de que se enfríe.,Reach the cup before it goes cold.
+BOSS_CH_TRITURAR_T,¡A LA TRITURADORA!,TO THE SHREDDER!
+BOSS_CH_TRITURAR_D,Rompe los seis papeles a tiros antes de que los archive.,Shoot the six papers before she files them.
+BOSS_CH_VENTANILLA_T,¡VENTANILLA ABIERTA!,WINDOW OPEN!
+BOSS_CH_VENTANILLA_D,Quédate dentro de la ventanilla hasta que te atiendan.,Stay inside the service window until you get served.
+BOSS_CH_MODO_OSCURO_T,¡MODO OSCURO!,DARK MODE!
+BOSS_CH_MODO_OSCURO_D,Se apaga la pantalla: encuéntralo por su brillo y golpéalo.,The screen goes dark: find him by his glow and hit him.
+BOSS_CH_FALSO_POSITIVO_T,¡FALSO POSITIVO!,FALSE POSITIVE!
+BOSS_CH_FALSO_POSITIVO_D,Hay tres copias. Dispara a la real.,There are three copies. Shoot the real one.
+BOSS_CH_CAPTCHA_T,¡CAPTCHA!,CAPTCHA!
+BOSS_CH_CAPTCHA_D,Pisa solo los semáforos. Los demás cuadros restan.,Step only on the traffic lights. The other tiles subtract.
+BOSS_CH_COOKIES_T,¡ACEPTAR COOKIES!,ACCEPT COOKIES!
+BOSS_CH_COOKIES_D,Rompe las seis cookies de seguimiento. Sin aceptar nada.,Break the six tracking cookies. Accept nothing.
+BOSS_CH_REVISION_T,¡REVISIÓN HUMANA!,HUMAN REVIEW!
+BOSS_CH_REVISION_D,"Dispara desde el lado del hueco del filtro, que gira.","Shoot from the side of the filter's gap, which keeps rotating."
+LORE_BOSS_ALT_1_TITLE,Afeitadora Eléctrica,The Electric Shaver
+LORE_BOSS_ALT_1_TEXT,"Nació para dejar cada cara lisa en tres pasadas y se tomó el trabajo demasiado en serio. Desde que llegó la censura patrulla la Selva Púbica con su cabezal oscilante, su cable al enchufe y cero tolerancia a lo que crece. Rapa en franjas, persigue con sus cuchillas y te escupe pelusa a presión. Dato real: afeitarse no hace que el vello crezca más fuerte, más oscuro ni más rápido. Es una ilusión óptica: la punta recién cortada es roma y se nota más. Ni la cera ni la cuchilla cambian el folículo: cada uno lleva su jardín como quiera.","Born to leave every face smooth in three passes, and she took the job far too seriously. Ever since the censorship arrived she has patrolled the Pubic Jungle with her oscillating head, her cord plugged into the wall and zero tolerance for anything that grows. She shaves in stripes, chases you with her blades and spits pressurized lint at you. Real fact: shaving does not make hair grow back thicker, darker or faster. It's an optical illusion: the freshly cut tip is blunt and shows more. Neither wax nor razor changes the follicle: everyone keeps their garden however they like."
+LORE_BOSS_ALT_1_FLAVOR,Derrota a la Afeitadora Eléctrica.,Defeat the Electric Shaver.
+LORE_BOSS_ALT_2_TITLE,Don Viagra,Don Viagra
+LORE_BOSS_ALT_2_TEXT,"Pastilla azul con sombrero de copa, monóculo y una confianza injustificable. Llegó a Penelandia con el discurso de que todo se arregla con una dosis y desde entonces embiste en cadena, hace llover pastillas y salta con onda de choque. Dato real: el sildenafilo se investigó como medicamento para la angina de pecho; el efecto secundario, que resultó ser mejor que el principal, lo hizo famoso. Necesita estímulo y receta médica, no sustituye ni el deseo ni la conversación, y si algo dura más de cuatro horas, urgencias. Sí, es verdad. Sí, es el chiste.","A blue pill in a top hat and monocle with unjustifiable confidence. He arrived in Penelandia preaching that everything is fixed with one dose, and has been charging in chains, raining pills and jumping with a shockwave ever since. Real fact: sildenafil was researched as a drug for angina; its side effect, which turned out better than the main one, made it famous. It needs stimulation and a prescription, it replaces neither desire nor conversation, and if anything lasts more than four hours, go to the ER. Yes, it's true. Yes, that's the joke."
+LORE_BOSS_ALT_2_FLAVOR,Derrota a Don Viagra.,Defeat Don Viagra.
+LORE_BOSS_ALT_3_TITLE,DIU Cósmico,The Cosmic IUD
+LORE_BOSS_ALT_3_TEXT,"Una T de cobre que flota en Vulvania desde hace años sin pedir nada. Si lo mueves, se ofende: cruza barras de cobre en sentidos opuestos, tensa hilos de nylon, lanza meteoros y, cuando se enfada de verdad, hace supernova. Dato real: el DIU de cobre previene el embarazo más del 99% de las veces, dura entre cinco y diez años según el modelo y es reversible: se retira y la fertilidad vuelve. No protege de las infecciones de transmisión sexual; para eso sigue estando el condón. Como casi todo en esta historia: una herramienta, no una moral.","A copper T floating in Vulvania for years without asking for anything. Move it and it takes offense: it crosses copper bars in opposite directions, tightens nylon threads, hurls meteors and, when it truly gets angry, goes supernova. Real fact: the copper IUD prevents pregnancy more than 99% of the time, lasts five to ten years depending on the model and is reversible: it's removed and fertility returns. It doesn't protect against sexually transmitted infections; the condom is still there for that. Like almost everything in this story: a tool, not a morality."
+LORE_BOSS_ALT_3_FLAVOR,Derrota al DIU Cósmico.,Defeat the Cosmic IUD.
+LORE_BOSS_ALT_4_TITLE,Próstata Burócrata,The Bureaucratic Prostate
+LORE_BOSS_ALT_4_TEXT,"Del tamaño de una nuez y con ventanilla propia. Reparte fichas, cierra cubículos por almuerzo, llena la sala de gente que hace cola y te lanza papeles en espiral. Siempre falta un papel. Siempre. Dato real: la próstata es una glándula del tamaño de una nuez que rodea la uretra y produce parte del líquido seminal; con los años suele agrandarse y los chequeos a partir de los 45-50 años detectan a tiempo lo que da problemas. No es vergüenza: es mantenimiento. Su único mensaje de verdad es ese, aunque tarde tres semanas en decirlo.","Walnut-sized and with a window of her own. She hands out tickets, shuts cubicles for lunch, fills the room with people queuing and throws papers at you in a spiral. There's always a paper missing. Always. Real fact: the prostate is a walnut-sized gland that surrounds the urethra and produces part of the seminal fluid; it tends to enlarge with age, and check-ups from age 45-50 catch in time whatever causes trouble. It's not shame: it's maintenance. That is her only real message, even if it takes her three weeks to say it."
+LORE_BOSS_ALT_4_FLAVOR,Derrota a la Próstata Burócrata.,Defeat the Bureaucratic Prostate.
+LORE_BOSS_ALT_5_TITLE,Algoritmo Moderador,The Moderator Algorithm
+LORE_BOSS_ALT_5_TEXT,"Un ojo sin parpadeo que revisa todo y entiende poco. Señala, reporta, pixela, bloquea y manda notificaciones en círculo. Su criterio es una lista de palabras prohibidas y un error de lectura. Dato real: los filtros automáticos de las plataformas confunden a menudo la educación sexual, la lactancia o el cáncer de mama con contenido adulto, y retiran justo lo que más falta hace. Por eso sigue haciendo falta criterio humano y una vía de apelación que no sea gritarle a un formulario. Su apelación, por cierto, está aceptada. Por fin.","A never-blinking eye that checks everything and understands little. It flags, reports, pixelates, blocks and sends notifications in circles. Its judgment is a list of banned words and a reading error. Real fact: platforms' automatic filters often confuse sex education, breastfeeding or breast cancer awareness with adult content, and remove exactly what is needed most. That's why human judgment is still needed, and an appeal route that isn't shouting at a form. Its appeal, by the way, has been accepted. At last."
+LORE_BOSS_ALT_5_FLAVOR,Derrota al Algoritmo Moderador.,Defeat the Moderator Algorithm.

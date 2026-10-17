@@ -22,7 +22,8 @@ static func on_enter_room(host: Node, room: Room) -> void:
 	if _seen.has(key):
 		return
 	var fl: Dictionary = rm.floor_data()
-	var path := "res://assets/sprites/ui/bosses/%s.png" % fl.get("boss", "")
+	var bv := BossPicker.pick(fl, rm.current_seed, rm.current_floor)  # original o alternativo (6c)
+	var path := "res://assets/sprites/ui/bosses/%s.png" % bv.variant
 	if not ResourceLoader.exists(path):
 		return
 	_seen[key] = true
@@ -30,7 +31,7 @@ static func on_enter_room(host: Node, room: Room) -> void:
 	layer.layer = 90
 	layer.process_mode = Node.PROCESS_MODE_ALWAYS
 	host.add_child(layer)
-	layer._build(load(path), Loc.enemy_name(fl.boss_name))
+	layer._build(load(path), Loc.enemy_name(bv.name))
 
 
 func _build(tex: Texture2D, boss_name: String) -> void:
