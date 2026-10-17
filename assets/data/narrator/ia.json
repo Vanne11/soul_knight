@@ -1,0 +1,45 @@
+{
+  "_info": "Comentarios del narrador sobre la IA de los enemigos (src/enemies/ai/). Se dicen al limpiar la sala, no en pleno combate.",
+
+  "ia_dormido": [
+    "Rematar a alguien mientras duerme: crítico, cruel y muy eficiente. {hero} no pierde el sueño por ello. El bicho, sí.",
+    "Golpe por sorpresa a un dormido. La caballerosidad murió hace rato; la tapa del váter, también."
+  ],
+  "ia_rendido": [
+    "Un enemigo se rindió y soltó su botín. Los hay con más dignidad en la fila del banco.",
+    "Bandera blanca, botín en el suelo. Es la forma más cívica de perder una pelea."
+  ],
+  "ia_rabia": [
+    "Cuando cae un compañero, los demás se ponen rojos. De ira. Casi siempre es de ira."
+  ],
+  "ia_resentida": [
+    "Una vesícula te estuvo esperando y, al ignorarla, se puso más rencorosa. Ignorar a la gente tiene consecuencias. Hasta en el sistema urinario."
+  ],
+  "ia_cobarde": [
+    "Los cobardes huyen, se curan y vuelven. Como los ex."
+  ],
+  "ia_pasivo": [
+    "Había bichos que solo pastaban en paz. {hero} les pegó. Lo de siempre."
+  ],
+  "ia_asustado": [
+    "Un testículo despistado salió corriendo al verte. Es el único enemigo con instinto de supervivencia."
+  ],
+  "ia_alarma": [
+    "Algunos bichos solo sirven para dar la voz de alarma. La voz es horrible, además."
+  ],
+  "ia_amigo": [
+    "Los espermatozoides dejaron en paz a {hero}: es de los suyos. Qué bonito el compañerismo."
+  ],
+  "ia_confuso": [
+    "La fauna no sabe qué es {hero}. Ni la fauna, ni tú. Es un misterio compartido."
+  ],
+  "ia_descarga": [
+    "El dildo eléctrico se quedó sin batería en pleno apogeo. Una tragedia con muchos precedentes."
+  ],
+  "ia_inspeccion": [
+    "El Inspector de Fluidos te pidió papeles. Te selló un 'sin papeles'. Burocracia: el único monstruo que nunca muere."
+  ],
+  "ia_multiplica": [
+    "El píxel de censura se multiplicó. Los problemas, como los píxeles, se reproducen si los ignoras."
+  ]
+}

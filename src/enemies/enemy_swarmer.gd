@@ -5,6 +5,8 @@ const ITEM_PICKUP_SCENE := preload("res://src/items/item_pickup.tscn")
 
 ## Fast swarmer enemy - low health, high speed, swarms in groups
 
+## Personalidad de IA (ver ai/enemy_personalities.gd). Vacio = la de su variante de sprite.
+@export var personality: String = ""
 @export var enemy_name: String = "Enjambre"
 @export var max_health: float = 15.0
 @export var move_speed: float = 300.0
@@ -32,6 +34,9 @@ var _dart_dir: Vector2 = Vector2.ZERO
 var _hit_done := false
 var _wiggle: float = 0.0
 var _swarm_offset: Vector2 = Vector2.ZERO
+
+## Componente de IA con personalidad (src/enemies/ai/). null = sin IA.
+var ai: EnemyAI = null
 
 enum State { IDLE, SWARM, AIM, DART, RECOVER, STUNNED, DEAD }
 
@@ -67,6 +72,7 @@ func _ready() -> void:
 	ActorFx.setup_actor(self, animated_sprite)
 	current_health = max_health
 	add_to_group("enemy")
+	ai = EnemyAI.attach(self)
 	add_to_group("swarmer")
 	
 	if hurtbox:
@@ -80,6 +86,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if state == State.DEAD:
+		return
+	if ai != null and ai.control(delta):
+		move_and_slide()
 		return
 	if not target or not is_instance_valid(target):
 		_find_target()
@@ -160,6 +169,8 @@ func _find_target() -> void:
 func take_damage(amount: float, source: Node = null, kb: Vector2 = Vector2.ZERO) -> float:
 	if state == State.DEAD:
 		return 0.0
+	if ai != null:
+		amount = ai.on_damage(amount, source)
 	
 	current_health -= amount
 	
@@ -186,6 +197,8 @@ func _reset_color() -> void:
 		animated_sprite.modulate = Color.WHITE
 
 func die(killer: Node = null) -> void:
+	if ai != null:
+		ai.on_death()
 	state = State.DEAD
 	set_collision_layer_value(1, false)
 	set_collision_mask_value(1, false)
@@ -234,3 +247,17 @@ func _on_hurtbox_entered(area: Area2D) -> void:
 		var dmg = float(area.damage) if "damage" in area else 10.0
 		var kb = (global_position - area.global_position).normalized() * (float(area.knockback) if "knockback" in area else 200.0)
 		take_damage(dmg, area.get_parent(), kb)
+
+
+## Contrato con los heroes (se llaman con has_method). Delegan en la IA (ai/enemy_ai.gd).
+func scare(seconds: float, from: Vector2) -> void:
+	if ai != null:
+		ai.scare(seconds, from)
+
+func stun(seconds: float) -> void:
+	if ai != null:
+		ai.stun(seconds)
+
+func reveal(seconds: float) -> void:
+	if "_reveal_t" in self:
+		set("_reveal_t", maxf(float(get("_reveal_t")), seconds))
