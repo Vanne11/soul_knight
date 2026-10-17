@@ -403,6 +403,11 @@ func _things(room: Room) -> Array:
 			continue
 		var path: String = c.get_script().resource_path
 		if path.ends_with("item_pickup.gd"):
+			# Con arma ya en la mano no recoge otra: el juego suelta la vieja al cambiarla
+			# y el bot se quedaba intercambiandolas sin fin.
+			var it = c.get("_item")
+			if it != null and it.equip_slot == Item.EquipSlot.WEAPON and player.current_weapon != null:
+				continue
 			out.append(c)
 		elif path.ends_with("chest.gd") and not c.get("_opened"):
 			out.append(c)
