@@ -165,6 +165,7 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	
 	_lighting.enter_room(room)
 	RoomDecals.build(room, _run_manager.floor_data().kingdom, _run_manager.current_seed, _run_manager.current_floor)  # calcomanias de suelo (una vez por sala)
+	RoomDecor.build(room, _run_manager.floor_data().kingdom, _run_manager.current_seed, _run_manager.current_floor)  # decoracion junto a los muros (una vez por sala)
 	_paint_room(room, room.cleared or room.room_type in CALM_ROOMS)
 	_label_doors(room)
 	if room.room_type in [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]:
