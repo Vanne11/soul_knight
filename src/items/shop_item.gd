@@ -51,8 +51,9 @@ func _prompt_text() -> String:
 	var action := tr("SHOP_BUY") % price
 	if rm.coins < price:
 		action = tr("SHOP_POOR") % [price, rm.coins]
-	return "[color=#ffd75a][b]%s[/b][/color]\n[font_size=13]%s[/font_size]\n[color=#b08d4a]%s[/color]" % [
-		Loc.item_name(_item), Loc.item_desc(_item), action]
+	var aff := Loc.affinity_line(_item)
+	return "[color=#ffd75a][b]%s[/b][/color]\n[font_size=13]%s[/font_size]%s\n[color=#b08d4a]%s[/color]" % [
+		Loc.item_name(_item), Loc.item_desc(_item), "\n[font_size=12]%s[/font_size]" % aff if aff != "" else "", action]
 
 
 func _use(player: Node) -> void:

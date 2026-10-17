@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_espinilla"
+title = "Espinilla Reventona"
+text = "Brota en la Selva Púbica sin avisar y se queda ahí, muy quietecita, haciéndose la inocente. Pero se hincha, se pone colorada, tiembla, y cuando ya no aguanta más, pop: un anillo de gotitas de algo cremoso que prefieres no identificar. No te persigue. No hace falta: tiene paciencia y es la reina de la presión. Si le disparas a tiempo se desinfla sin escándalo; si no, sale charco. La censura la dejó pasar porque 'es un asunto dermatológico'. Los asuntos dermatológicos nunca son tan inocentes como parecen."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Espinilla Reventona", "count": 10}
+flavor_text = "Revienta 10 espinillas (o deja que ellas lo hagan)."

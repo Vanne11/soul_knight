@@ -31,6 +31,8 @@ var _last_shot_ms := -100000
 var _allergy: float = 0.0
 var _sneeze_in: float = 0.0
 var _sneeze_push: float = 0.0
+## Toallita Humeda: segundos restantes de inmunidad a la alergia.
+var _allergy_immune: float = 0.0
 var _aim: Vector2 = Vector2.RIGHT
 var _using_pad := false
 const DASH_LIFT := 9.0
@@ -63,6 +65,7 @@ func _ready() -> void:
 	_player_stats.shields_changed.connect(_on_shields_changed)
 	_player_stats.stamina_changed.connect(_on_stamina_changed)
 	_player_stats.intoxication_changed.connect(_on_intoxication_changed)
+	_player_stats.revived.connect(_on_revived)
 	# Sin esta conexion la run nunca terminaba al morir: ni huesos ni estadisticas.
 	_global_events.player_died.connect(_on_player_died)
 	
@@ -159,6 +162,7 @@ func _handle_timers(delta: float) -> void:
 	if _attack_anim > 0.0:
 		_attack_anim -= delta
 	_sneeze_push = maxf(0.0, _sneeze_push - delta)
+	_allergy_immune = maxf(0.0, _allergy_immune - delta)
 	if _allergy > 0.0:
 		_allergy -= delta
 		_sneeze_in -= delta
@@ -370,9 +374,77 @@ func _sneeze() -> void:
 	_global_events.show_floating_text.emit(global_position + Vector2(0, -30), tr("FX_SNEEZE"), Color("ff7ac0"))
 
 func start_allergy(seconds: float) -> void:
+	if _allergy_immune > 0.0:
+		return
 	_allergy = maxf(_allergy, seconds)
 	_sneeze_in = 1.5
 	animated_sprite.self_modulate = Color(1.0, 0.75, 0.8)
+
+func stop_allergy() -> void:
+	_allergy = 0.0
+	animated_sprite.self_modulate = Color.WHITE
+
+## Afinidad del objeto con el heroe: >1 si es del mismo reino (Pitocles=pene, Vulvalquiria=vulva).
+## El resto (otro reino, neutral u ornitorrinco) funciona normal: no castiga.
+func affinity_boost(item: Item) -> float:
+	var aff: String = item.custom_data.get("affinity", "neutral")
+	return AFFINITY_BOOST if aff != "neutral" and aff == _rm().character_data().kingdom else 1.0
+const AFFINITY_BOOST := 1.5
+
+## Multiplicador escalado por afinidad: 1.3 -> 1.45, 0.7 -> 0.55 (el cambio crece, no el valor).
+static func _boost_mult(m: float, boost: float) -> float:
+	return m if boost == 1.0 else maxf(0.2, 1.0 + (m - 1.0) * boost)
+
+## Aplica un efecto de objeto ya escalado por la afinidad (boost). Cubre los efectos
+## viejos (0 STAT_MOD, 1 INTOXICATION, 2 HEAL, 5 UNLOCK_LORE) y los nuevos (>= 10).
+func apply_item_effect(e: Dictionary, boost := 1.0) -> void:
+	var st := _player_stats
+	match int(e.type):
+		0:  # STAT_MOD: "stamina" es una cantidad; el resto, multiplicadores
+			if e.stat == "stamina":
+				st.apply_stat_mod("stamina", float(e.magnitude) * boost)
+			else:
+				st.apply_stat_mod(e.stat, _boost_mult(float(e.magnitude), boost))
+		1:  # INTOXICATION: solo se potencia lo que limpia
+			var a := float(e.intoxication_amount)
+			st.add_intoxication(a * boost if a < 0.0 else a)
+		2:
+			st.heal(float(e.magnitude) * boost)
+		5:
+			get_node("/root/LoreDatabase").unlock_entry(e.lore_entry_id)
+		10:
+			var d: Dictionary = e.duplicate()
+			d.rate = float(e.rate) * boost
+			st.apply_item_effect(d)
+		11:
+			var d: Dictionary = e.duplicate()
+			d.magnitude = _boost_mult(float(e.magnitude), boost)
+			st.apply_item_effect(d)
+		12:
+			var d: Dictionary = e.duplicate()
+			d.magnitude = _boost_mult(float(e.magnitude), boost)
+			st.apply_item_effect(d)
+		13:
+			var d: Dictionary = e.duplicate()
+			d.hits = int(round(float(e.hits) * boost))
+			st.apply_item_effect(d)
+		14:
+			var d: Dictionary = e.duplicate()
+			d.fraction = minf(1.0, float(e.get("fraction", 0.4)) * boost)
+			st.apply_item_effect(d)
+		15:  # CLEANSE {intox (negativo), allergy}
+			if float(e.get("intox", 0.0)) != 0.0:
+				st.add_intoxication(float(e.intox) * boost)
+			if e.get("allergy", false):
+				stop_allergy()
+		16:  # ALLERGY_IMMUNE {duration}
+			_allergy_immune = float(e.duration) * boost
+			stop_allergy()
+
+func _on_revived() -> void:
+	_iframes = 2.0
+	HitFx.shake(0.5)
+	_global_events.show_floating_text.emit(global_position + Vector2(0, -34), tr("FX_REVIVED"), Color("ffe08a"))
 
 func _handle_interaction() -> void:
 	if Input.is_action_just_pressed("interact"):
@@ -495,15 +567,11 @@ func add_item_to_inventory(item_id: String) -> void:
 		
 		# Los efectos de un arma solo valen mientras la llevas (ver _weapon_mod):
 		# aplicarlos al recogerla los acumulaba cada vez que la soltabas y cogias.
+		var boost := affinity_boost(item)
+		if boost > 1.0:
+			_global_events.show_floating_text.emit(global_position + Vector2(0, -46), tr("FX_AFFINITY_FIT"), Color("ffd75a"))
 		for effect in ([] if item.equip_slot == Item.EquipSlot.WEAPON else item.effects):
-			if effect.type == 1:  # INTOXICATION
-				get_node("/root/PlayerStats").add_intoxication(effect.intoxication_amount)
-			elif effect.type == 2:  # HEAL
-				get_node("/root/PlayerStats").heal(effect.magnitude)
-			elif effect.type == 0:  # STAT_MOD
-				get_node("/root/PlayerStats").apply_stat_mod(effect.stat, effect.magnitude)
-			elif effect.type == 5:  # UNLOCK_LORE
-				get_node("/root/LoreDatabase").unlock_entry(effect.lore_entry_id)
+			apply_item_effect(effect, boost)
 
 func _on_player_died() -> void:
 	get_node("/root/RunManager").end_run(false)
@@ -517,5 +585,6 @@ func _notification(what: int) -> void:
 			_player_stats.shields_changed.disconnect(_on_shields_changed)
 			_player_stats.stamina_changed.disconnect(_on_stamina_changed)
 			_player_stats.intoxication_changed.disconnect(_on_intoxication_changed)
+			_player_stats.revived.disconnect(_on_revived)
 		if is_instance_valid(_global_events) and _global_events.player_died.is_connected(_on_player_died):
 			_global_events.player_died.disconnect(_on_player_died)

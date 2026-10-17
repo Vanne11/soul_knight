@@ -107,6 +107,7 @@ func spawn_enemies(enemy_scenes: Array[PackedScene], enemy_data: Array[Dictionar
 			4: scene = enemy_scenes[4] if enemy_scenes.size() > 4 else enemy_scenes[0]  # boss
 			5: scene = enemy_scenes[5] if enemy_scenes.size() > 5 else enemy_scenes[1]  # taser (a distancia)
 			6: scene = enemy_scenes[6] if enemy_scenes.size() > 6 else enemy_scenes[1]  # inspector (sellos que rebotan)
+			7: scene = enemy_scenes[7] if enemy_scenes.size() > 7 else enemy_scenes[0]  # espinilla (reventon en anillo)
 			_: scene = enemy_scenes[0]
 		
 		for g in range(int(data.get("group", 1))):

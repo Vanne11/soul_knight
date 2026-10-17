@@ -140,3 +140,19 @@ DEBUG_GO,Ir,Go
 DEBUG_FLOOR_HEAD,— Piso —,— Floor —
 DEBUG_FLOOR,Piso %d,Floor %d
 DEBUG_CHAR_HEAD,— Personaje (reinicia el piso) —,— Character (restarts the floor) —
+FX_GUARD,¡ABSORBIDO!,BLOCKED!
+FX_REVIVED,¡NO TOCABA MORIR!,NOT YOUR TIME!
+FX_AFFINITY_FIT,¡TE SIENTA BIEN! +50%,PERFECT FIT! +50%
+AFFINITY_PENE,Afinidad: Penelandia,Affinity: Penelandia
+AFFINITY_VULVA,Afinidad: Vulvania,Affinity: Vulvania
+AFFINITY_NEUTRAL,Afinidad: neutral (todos los héroes),Affinity: neutral (every hero)
+AFFINITY_FIT,(¡te sienta bien! +50%),(it suits you! +50%)
+STATUS_REGEN,Regeneración,Regeneration
+STATUS_DEFENSE,Menos daño,Less damage
+STATUS_MOD_SPEED,Velocidad,Speed
+STATUS_MOD_DAMAGE,Daño,Damage
+STATUS_MOD_FIRE_RATE,Cadencia,Fire rate
+STATUS_MOD_STAMINA_REGEN,Estamina rápida,Fast stamina
+STATUS_GUARD,Golpe absorbido,Hit absorbed
+STATUS_REVIVE,Revives una vez,Revive once
+FX_POP_SAFE,¡Pop!,Pop!

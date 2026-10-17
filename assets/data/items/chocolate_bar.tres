@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "chocolate_bar"
+display_name = "Barra de Chocolate"
+description = "Antojo hormonal resuelto. +15 vida, -20 intoxicación y se te pasa la alergia. Nadie sabe de dónde salió y nadie pregunta."
+rarity = 0
+tags = ["consumible", "curación", "desintoxicante", "dulce"]
+effects = [{"type": 2, "magnitude": 15.0}, {"type": 15, "intox": -20.0, "allergy": true}]
+max_stack = 5
+consumable = true
+base_value = 24
+custom_data = {"affinity": "neutral"}

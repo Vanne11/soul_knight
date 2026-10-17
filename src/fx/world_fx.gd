@@ -162,6 +162,7 @@ var _splat_tex: Array[Texture2D] = []
 
 func _ready() -> void:
 	name = "WorldFx"
+	add_to_group("world_fx")
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	_foot_tex = load(ART + "footprint.png")
 	for i in 3:
@@ -410,6 +411,15 @@ func _wet_color(kind: String) -> Color:
 			return LIQUID.get(kind, Color.GRAY).darkened(0.45)
 	var c: Color = LIQUID.get(kind, Color.GRAY)
 	return Color.from_hsv(c.h, minf(1.0, c.s * 1.4), c.v * 0.8)
+
+
+## Charco que no daña (Espinilla Reventona al reventar): mancha de crema en el suelo y huellas
+## al pisarlo. Se borra al cambiar de sala igual que los demas charcos detectados.
+func add_puddle(pos: Vector2, radius: float) -> void:
+	if _ground == null or not is_instance_valid(_ground):
+		return
+	_add_decal(_splat_tex[randi() % 3], pos, Color(1.0, 0.8, 0.84, 0.95), 14.0, 30.0, randf() < 0.5, radius / 11.0)
+	_puddles.append({"pos": pos, "kind": "baba", "half": Vector2(radius, radius * 0.7), "col": _wet_color("baba")})
 
 
 # ------------------------------------------------------------------ eventos de combate

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "jockstrap"
+display_name = "Suspensorio Deportivo"
+description = "Absorbe por completo el próximo golpe que recibas y te da +20 de estamina. Protege lo que más importa. Ya sabes cuál es."
+rarity = 1
+tags = ["consumible", "defensa", "utilidad"]
+effects = [{"type": 13, "hits": 1}, {"type": 0, "stat": "stamina", "magnitude": 20.0}]
+max_stack = 5
+consumable = true
+base_value = 72
+custom_data = {"affinity": "pene"}

@@ -263,6 +263,7 @@ const ENEMY_SCENES: Array[PackedScene] = [
 	preload("res://src/enemies/enemy_boss.tscn"),
 	preload("res://src/enemies/enemy_taser.tscn"),  # 5: a distancia, chispas (Dildo Electrico)
 	preload("res://src/enemies/enemy_inspector.tscn"),  # 6: a distancia, sellos que rebotan (Inspector de Fluidos)
+	preload("res://src/enemies/enemy_espinilla.tscn"),  # 7: casi estatica, se infla y revienta en anillo (Espinilla Reventona)
 ]
 ## Economia (medida con tests/economy_sim.gd): ~8 salas por piso, ~3.8 de combate.
 ## Cada moneda recogida vale 1-2. Sale a unas 28 monedas en el piso 1 y 43 en el 5:
@@ -304,6 +305,10 @@ const SWARM_DAMAGE_MULT := 0.5
 ## el minijefe (x3.5 vida) y el jefe; el tanque base (500 vida, 40 dano) no escala con el piso.
 const TANK_HEALTH_MULT := 5.0
 const TANK_DAMAGE_MULT := 1.5
+## Espinilla Reventona: control de zona, no combate directo. Vida baja (se mata de 2-3 tiros
+## antes de que reviente) y casi nunca suelta moneda.
+const ESPINILLA_HEALTH_MULT := 0.5
+const ESPINILLA_COIN_CHANCE := 0.15
 
 func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 	var floor_n: int = _run_manager.current_floor
@@ -362,6 +367,9 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				if types[t] == 3:
 					info.health *= TANK_HEALTH_MULT
 					info.damage *= TANK_DAMAGE_MULT
+				if types[t] == 7:
+					info.health *= ESPINILLA_HEALTH_MULT
+					info.drops = [{"item_id": "coin", "chance": ESPINILLA_COIN_CHANCE}]
 				if types[t] == 2:
 					# Los enjambres nunca vienen solos, pero cada bicho pega poco: rapidos y
 					# debiles. Antes pegaban como un enemigo pesado y, de a tres desde el

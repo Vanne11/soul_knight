@@ -16,6 +16,9 @@ const BAND := 72
 @onready var _purse: HBoxContainer = $Band/Row/Info/Purse
 var _coin_label: Label
 var _horm_box: HBoxContainer
+## Estados temporales de objetos (regeneracion, buffs, guardia...): lista bajo la franja.
+var _status_label: Label
+var _status_cache := ""
 var _last_hp := -1.0
 
 var _stats: PlayerStats
@@ -44,6 +47,10 @@ func _ready() -> void:
 	_purse.add_child(_horm_box)
 	_setup_bars()
 	_setup_slots()
+	_status_label = HudStyle.pixel_label("", 14, Color("9be8ff"))
+	_status_label.position = Vector2(10, BAND + 6)
+	_status_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_status_label)
 	
 	_stats = get_node("/root/PlayerStats")
 	_events = get_node("/root/GlobalEvents")
@@ -70,6 +77,22 @@ func _ready() -> void:
 	# Initial update
 	_stats.emit_all_signals()
 	_refresh_slots()
+
+func _process(_delta: float) -> void:
+	if _stats == null or _status_label == null:
+		return
+	var lines: Array[String] = []
+	for st in _stats.active_statuses():
+		var t: String = tr(st.key)
+		if int(st.get("count", 1)) > 1:
+			t += " x%d" % int(st.count)
+		if st.left >= 0.0:
+			t += " %ds" % ceili(st.left)
+		lines.append(t)
+	var txt := "\n".join(lines)
+	if txt != _status_cache:
+		_status_cache = txt
+		_status_label.text = txt
 
 func _setup_bars() -> void:
 	health_bar.set_icon("heart")

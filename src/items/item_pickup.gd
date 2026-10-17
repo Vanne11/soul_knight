@@ -34,6 +34,11 @@ func _glow_color() -> Color:
 		return Color("ffd75a")
 	if _item.custom_data.get("hormone", "") != "" or "hormona" in _item.tags:
 		return Color("c08cff")
+	var aff: String = _item.custom_data.get("affinity", "")
+	if aff == "pene":
+		return Color("6ec6ff")
+	if aff == "vulva":
+		return Color("ff7ac0")
 	if _item.consumable:
 		return Color("ff7aa0")
 	return Color(RARITY_COLORS[clampi(_item.rarity, 0, RARITY_COLORS.size() - 1)])
@@ -53,8 +58,13 @@ func _prompt_text() -> String:
 		action = tr("PICKUP_SWAP") % Loc.item_name(_player.current_weapon)
 	elif _item.equip_slot == Item.EquipSlot.WEAPON:
 		action = tr("PICKUP_WIELD")
-	return "[color=#%s][b]%s[/b][/color]\n[font_size=13]%s[/font_size]\n[color=#b08d4a]%s[/color]" % [
-		color, Loc.item_name(_item), Loc.item_desc(_item), action]
+	return "[color=#%s][b]%s[/b][/color]\n[font_size=13]%s[/font_size]%s\n[color=#b08d4a]%s[/color]" % [
+		color, Loc.item_name(_item), Loc.item_desc(_item), _affinity_suffix(), action]
+
+
+func _affinity_suffix() -> String:
+	var l := Loc.affinity_line(_item)
+	return "\n[font_size=12]%s[/font_size]" % l if l != "" else ""
 
 
 func _use(player: Node) -> void:

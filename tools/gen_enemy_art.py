@@ -523,11 +523,132 @@ def frames_pelusa():
     return {"idle": [idle], "walk": walk, "attack": attack, "hurt": hurt, "death": death}
 
 
+# ------------------------------------------------------------- espinilla reventona
+SK_HI = (255, 204, 190, 255)
+SK_MD = (244, 160, 156, 255)
+SK_DK = (200, 104, 122, 255)
+RD_HI = (255, 130, 116, 255)
+RD_MD = (234, 70, 82, 255)
+RD_DK = (164, 36, 62, 255)
+CREAM = (255, 246, 214, 255)
+CREAM_DK = (236, 214, 150, 255)
+DROP_C = (255, 226, 214, 255)
+
+
+def _mix(a, b, k):
+    return tuple(int(a[i] + (b[i] - a[i]) * k) for i in range(3)) + (255,)
+
+
+def espinilla(grow=0.0, red=0.0, eyes="sleepy", mouth="smile", sprout=1.0, flat=0.0, drops=0, sweat=False):
+    """Espinilla Reventona 40x44: monticulo rosado con punta cremosa y carita, pegado al
+    suelo. grow (0..1) la infla, red (0..1) la enrojece, sprout (0..1) cuanto ha brotado
+    del suelo, flat (0..1) la aplasta (muerte). drops: gotitas de crema al reventar."""
+    w, h = 40, 44
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    cx, base = 20, 38
+    hi, md, dk = _mix(SK_HI, RD_HI, red), _mix(SK_MD, RD_MD, red), _mix(SK_DK, RD_DK, red)
+    rx = (9 + 6 * grow) * (1.0 + 0.5 * flat)
+    ry = (12 + 7 * grow) * sprout * (1.0 - 0.75 * flat)
+    # sombra de contacto / cráter
+    d.ellipse([cx - rx - 3, base - 3, cx + rx + 3, base + 3], fill=(120, 70, 80, 255) if flat < 0.5 else (200, 150, 150, 255))
+    if ry >= 2:
+        top = base - 2 * ry
+        d.ellipse([cx - rx, top, cx + rx, base + 2], fill=md)
+        d.ellipse([cx - rx, base - ry, cx + rx, base + 2], fill=md)
+        d.pieslice([cx - rx, base - ry * 1.2, cx + rx, base + 3], 0, 180, fill=dk)  # panza oscura
+        if ry > 9:
+            d.ellipse([cx - rx + 1, top + 2, cx + rx - 1, base - 2], fill=md)
+            d.ellipse([cx - rx + 3, top + 3, cx - 2, top + ry * 0.9], fill=hi)     # brillo
+        # punta cremosa
+        hr = 4 + 3 * grow
+        hx, hy = cx + 1, top + 2 + hr * 0.3
+        if flat < 0.5:
+            d.ellipse([hx - hr, hy - hr * 0.8, hx + hr, hy + hr * 0.9], fill=CREAM)
+            d.ellipse([hx - hr * 0.5, hy - hr * 0.6, hx - 1, hy - 1], fill=(255, 255, 255, 255))
+            d.arc([hx - hr, hy - hr * 0.8, hx + hr, hy + hr * 0.9], 20, 160, fill=CREAM_DK)
+        # cara
+        ey = base - ry * 1.05
+        for ex in (cx - 4, cx + 4):
+            if eyes == "x":
+                d.line([(ex - 1, ey - 2), (ex + 1, ey)], fill=PUPIL)
+                d.line([(ex - 1, ey), (ex + 1, ey - 2)], fill=PUPIL)
+            elif eyes == "sleepy":
+                d.line([(ex - 2, ey - 1), (ex + 1, ey - 1)], fill=PUPIL)
+                d.point([(ex - 2, ey - 2), (ex + 1, ey - 2)], fill=PUPIL)
+            elif eyes == "wide":
+                d.rectangle([ex - 2, ey - 4, ex + 1, ey], fill=EYE_W)
+                d.rectangle([ex - 1, ey - 3, ex, ey - 1], fill=PUPIL)
+            elif eyes == "angry":
+                d.rectangle([ex - 2, ey - 3, ex + 1, ey], fill=EYE_W)
+                d.rectangle([ex - 1, ey - 2, ex, ey - 1], fill=PUPIL)
+        if eyes in ("angry", "wide") and red > 0.2:
+            d.line([(cx - 7, ey - 5), (cx - 2, ey - 3)], fill=PUPIL)
+            d.line([(cx + 2, ey - 3), (cx + 7, ey - 5)], fill=PUPIL)
+        d.point([(cx - 7, ey + 2), (cx + 6, ey + 2)], fill=BLUSH)
+        my = ey + 4
+        if mouth == "smile":
+            d.line([(cx - 2, my), (cx + 1, my)], fill=PUPIL)
+            d.point([(cx - 3, my - 1), (cx + 2, my - 1)], fill=PUPIL)
+        elif mouth == "oh":
+            d.rectangle([cx - 2, my - 1, cx + 1, my + 2], fill=MOUTH)
+        elif mouth == "wavy":
+            for i, xx in enumerate(range(cx - 4, cx + 4, 2)):
+                d.line([(xx, my + (i % 2)), (xx + 1, my + (i % 2))], fill=PUPIL)
+        elif mouth == "dead":
+            d.line([(cx - 2, my), (cx + 1, my)], fill=PUPIL)
+        if sweat:
+            d.polygon([(cx + rx - 2, ey - 6), (cx + rx, ey - 2), (cx + rx - 4, ey - 2)], fill=(150, 214, 255, 255))
+    # gotitas al reventar
+    import math as _m
+    for i in range(drops):
+        a = -_m.pi * (0.15 + 0.7 * i / max(1, drops - 1))
+        r = 12 + 5 * (i % 2)
+        gx, gy = cx + _m.cos(a) * (r + 3 * drops / 3), base - 8 + _m.sin(a) * r
+        d.ellipse([gx - 2, gy - 2, gx + 1, gy + 2], fill=DROP_C)
+        d.point([(gx - 1, gy - 1)], fill=(255, 255, 255, 255))
+    return outline(im)
+
+
+def frames_espinilla():
+    idle = [espinilla(0.0, 0.0, "sleepy", "smile"), espinilla(0.05, 0.05, "sleepy", "smile")]
+    sprout = [espinilla(0.0, 0.0, "sleepy", "smile", sprout=0.15), espinilla(0.0, 0.0, "sleepy", "smile", sprout=0.5),
+              espinilla(0.0, 0.0, "sleepy", "smile", sprout=0.85), espinilla(0.0, 0.0, "sleepy", "smile", sprout=1.0)]
+    attack = [espinilla(0.25, 0.3, "wide", "oh"), espinilla(0.5, 0.6, "angry", "wavy", sweat=True),
+              espinilla(0.8, 0.85, "angry", "wavy", sweat=True), espinilla(1.0, 1.0, "angry", "wavy", sweat=True)]
+    burst = [espinilla(1.0, 0.7, "x", "oh", drops=5), espinilla(0.2, 0.3, "x", "oh", flat=0.4, drops=7),
+             espinilla(0.0, 0.0, "x", "dead", flat=0.9)]
+    hurt = [tint(espinilla(0.0, 0.0, "wide", "oh"), (255, 60, 70), 0.55), tint(espinilla(0.0, 0.0, "wide", "oh"), (255, 255, 255), 0.4)]
+    death = [espinilla(0.0, 0.0, "x", "dead"), espinilla(0.0, 0.0, "x", "dead", flat=0.5),
+             espinilla(0.0, 0.0, "x", "dead", flat=0.9), espinilla(0.0, 0.0, "x", "dead", flat=1.0)]
+    for i, a in enumerate((255, 220, 150, 80)):
+        px = death[i].load()
+        for y in range(death[i].size[1]):
+            for x in range(death[i].size[0]):
+                r, g, b, al = px[x, y]
+                px[x, y] = (r, g, b, int(al * a / 255))
+    return {"idle": idle, "sprout": sprout, "attack": attack, "burst": burst, "hurt": hurt, "death": death}
+
+
+def proyectil_gota():
+    """Gotita de crema (16x16) del reventon de la Espinilla: crema/rosado, sin gore."""
+    im = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse([4, 4, 11, 12], fill=(255, 232, 218, 255))
+    d.polygon([(7, 2), (9, 2), (11, 6), (4, 6)], fill=(255, 232, 218, 255))
+    d.ellipse([5, 8, 11, 12], fill=(255, 190, 200, 255))
+    d.rectangle([5, 5, 6, 7], fill=(255, 255, 255, 255))
+    im = outline(im)
+    im.save(ROOT / "assets/sprites/projectiles/gota.png")
+    print("ok gota")
+
+
 VARIANTS = {"especulo": frames_especulo, "dildo_electrico": frames_dildo_electrico,
-            "hemorroide": frames_hemorroide, "inspector_fluidos": frames_inspector, "pelusa_perineal": frames_pelusa}
+            "hemorroide": frames_hemorroide, "inspector_fluidos": frames_inspector, "pelusa_perineal": frames_pelusa,
+            "espinilla": frames_espinilla}
 ANIM = {  # nombre: (loop, fps)
     "idle": (True, 4.0), "walk": (True, 8.0), "attack": (False, 10.0),
-    "bite": (False, 18.0), "hurt": (False, 10.0), "death": (False, 6.0),
+    "bite": (False, 18.0), "sprout": (False, 8.0), "burst": (False, 14.0), "hurt": (False, 10.0), "death": (False, 6.0),
 }
 
 
@@ -563,6 +684,9 @@ def proyectil_sello():
 if __name__ == "__main__":
     if sys.argv[1:] == ["sello"]:
         proyectil_sello()
+        sys.exit(0)
+    if sys.argv[1:] == ["gota"]:
+        proyectil_gota()
         sys.exit(0)
     for v in sys.argv[1:] or VARIANTS:
         anims = VARIANTS[v]()

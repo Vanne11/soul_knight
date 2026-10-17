@@ -12,6 +12,7 @@ class_name RunManager
 const FLOORS := [
 	{"name": "LA SELVA PÚBICA", "kingdom": "neutral", "tint": Color("7fe0a0"),
 		"roster": ["pelo_encarnado", "granito", "ladilla"], "names": ["Pelo Encarnado", "Granito Rencoroso", "Ladilla"],
+		"extra": [{"variant": "espinilla", "name": "Espinilla Reventona", "type": 7, "weight": 0.25}],
 		"weights": [0.40, 0.25, 0.35], "boss": "boss_cera", "boss_name": "DOÑA CERA CALIENTE", "needs": []},
 	{"name": "PENELANDIA", "kingdom": "pene", "tint": Color("6ec6ff"),
 		"roster": ["testiculo", "vesicula", "espermatozoide"], "names": ["Testículo Errante", "Vesícula Resentida", "Espermatozoide"],
@@ -27,7 +28,8 @@ const FLOORS := [
 		"extra": [{"variant": "especulo", "name": "Espéculo Mordedor", "type": 0, "weight": 0.20},
 			{"variant": "hemorroide", "name": "Hemorroide Fronteriza", "type": 3, "weight": 0.15},
 			{"variant": "inspector_fluidos", "name": "Inspector de Fluidos", "type": 6, "weight": 0.25},
-			{"variant": "pelusa_perineal", "name": "Pelusa Perineal", "type": 2, "weight": 0.25}],
+			{"variant": "pelusa_perineal", "name": "Pelusa Perineal", "type": 2, "weight": 0.25},
+			{"variant": "espinilla", "name": "Espinilla Reventona", "type": 7, "weight": 0.10}],
 		"weights": [0.25, 0.20, 0.20], "boss": "aduanero", "boss_name": "EL ADUANERO HORMONAL", "needs": ["testosterona", "estrogeno"]},
 	{"name": "EL PALACIO DE LA CENSURA", "kingdom": "censura", "tint": Color("b48cff"),
 		"roster": ["barra_negra", "sello", "pixel_censura"], "names": ["Barra Negra", "Sello Censor", "Píxel de Censura"],

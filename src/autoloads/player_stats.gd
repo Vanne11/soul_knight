@@ -8,6 +8,9 @@ signal shields_changed(current: float, max: float)
 signal stamina_changed(current: float, max: float)
 signal intoxication_changed(level: float, tier: int)
 signal stat_modified(stat: String, value: float)
+## Murio con la Pastilla del Dia Despues activa: el jugador pone invulnerabilidad y aviso.
+signal revived()
+signal status_changed()
 
 enum IntoxicationTier { SOBER = 0, TIPSY = 1, DRUNK = 2, BLACKOUT = 3 }
 
@@ -42,6 +45,18 @@ var lifesteal: float = 0.0
 var projectile_speed_modifier: float = 1.0
 var fire_rate_modifier: float = 1.0
 
+## Estados temporales de objetos (ver apply_item_effect): regeneracion, reduccion de dano,
+## mejoras de stat con duracion, golpes absorbidos y revivir.
+var _regen_left: float = 0.0
+var _regen_rate: float = 0.0
+var _dr_left: float = 0.0
+var _dr_mult: float = 1.0
+var _temp_mods: Dictionary = {}  # stat -> {"left": s, "mult": m}
+var guard_hits: int = 0
+var revive_charges: int = 0
+var revive_fraction: float = 0.4
+const MAX_GUARD := 3
+
 var _last_damage_time: float = 0.0
 var _ge = null
 
@@ -53,6 +68,7 @@ func _process(delta: float) -> void:
 	_handle_stamina_regen(delta)
 	_handle_shield_regen(delta)
 	_handle_intoxication_decay(delta)
+	_handle_timed_effects(delta)
 
 func reset_for_new_run() -> void:
 	# Sin esto las mejoras (y el +25 de escudo de Pitocles) se acumulaban entre partidas.
@@ -75,6 +91,13 @@ func reset_for_new_run() -> void:
 	fire_rate_modifier = 1.0
 	_shield_regen_timer = 0.0
 	_last_damage_time = 0.0
+	stamina_regen_rate = 25.0
+	_regen_left = 0.0
+	_dr_left = 0.0
+	_dr_mult = 1.0
+	_temp_mods.clear()
+	guard_hits = 0
+	revive_charges = 0
 	emit_all_signals()
 
 func _handle_stamina_regen(delta: float) -> void:
@@ -93,10 +116,78 @@ func _handle_intoxication_decay(delta: float) -> void:
 		intoxication_level = max(0.0, intoxication_level - intoxication_decay_rate * delta)
 		_update_intoxication_tier()
 
+## Efectos nuevos de objetos (tipos >= 10 de Item.effects). `boost` > 1 cuando el objeto es
+## de la afinidad del heroe (ver Player.apply_item_effect, que escala antes de llamar aqui).
+## 10 REGEN {rate, duration} | 11 TEMP_MOD {stat, magnitude, duration} |
+## 12 REDUCE_DAMAGE {magnitude (multiplicador), duration} | 13 GUARD {hits} | 14 REVIVE {fraction}
+func apply_item_effect(e: Dictionary) -> void:
+	match int(e.type):
+		10:
+			_regen_rate = float(e.rate)
+			_regen_left = float(e.duration)
+		11:
+			var stat: String = e.stat
+			var m := float(e.magnitude)
+			if _temp_mods.has(stat):
+				_temp_mods[stat].left = float(e.duration)  # repetir solo renueva el tiempo
+			else:
+				_temp_mods[stat] = {"left": float(e.duration), "mult": m}
+				apply_stat_mod(stat, m)
+		12:
+			_dr_mult = float(e.magnitude)
+			_dr_left = float(e.duration)
+		13:
+			guard_hits = mini(MAX_GUARD, guard_hits + int(e.hits))
+		14:
+			revive_charges = 1  # solo una a la vez
+			revive_fraction = float(e.get("fraction", 0.4))
+	status_changed.emit()
+
+func _handle_timed_effects(delta: float) -> void:
+	if _regen_left > 0.0:
+		_regen_left -= delta
+		if current_health > 0.0 and current_health < max_health:
+			current_health = minf(max_health, current_health + _regen_rate * delta)
+			health_changed.emit(current_health, max_health)
+		if _regen_left <= 0.0:
+			status_changed.emit()
+	if _dr_left > 0.0:
+		_dr_left -= delta
+		if _dr_left <= 0.0:
+			_dr_mult = 1.0
+			status_changed.emit()
+	for stat in _temp_mods.keys():
+		var t: Dictionary = _temp_mods[stat]
+		t.left -= delta
+		if t.left <= 0.0:
+			apply_stat_mod(stat, 1.0 / t.mult)
+			_temp_mods.erase(stat)
+			status_changed.emit()
+
+## Lista para el HUD: [{"key": clave de traduccion, "left": segundos o -1, "count": n}]
+func active_statuses() -> Array:
+	var out: Array = []
+	if _regen_left > 0.0:
+		out.append({"key": "STATUS_REGEN", "left": _regen_left})
+	if _dr_left > 0.0:
+		out.append({"key": "STATUS_DEFENSE", "left": _dr_left})
+	for stat in _temp_mods:
+		out.append({"key": "STATUS_MOD_" + String(stat).to_upper(), "left": _temp_mods[stat].left})
+	if guard_hits > 0:
+		out.append({"key": "STATUS_GUARD", "left": -1.0, "count": guard_hits})
+	if revive_charges > 0:
+		out.append({"key": "STATUS_REVIVE", "left": -1.0})
+	return out
+
 func take_damage(amount: float) -> float:
 	if DebugMenu.god_mode:
 		return 0.0
-	var actual_damage = amount
+	if guard_hits > 0 and amount > 0.0:
+		guard_hits -= 1
+		status_changed.emit()
+		_ge.show_floating_text.emit(_player_pos(), tr("FX_GUARD"), Color("9be8ff"))
+		return 0.0
+	var actual_damage = amount * (_dr_mult if _dr_left > 0.0 else 1.0)
 	
 	if current_shields > 0.0:
 		var shield_damage = min(current_shields, actual_damage)
@@ -112,9 +203,20 @@ func take_damage(amount: float) -> float:
 	_last_damage_time = Time.get_ticks_msec() / 1000.0
 	
 	if current_health <= 0.0:
-		_ge.player_died.emit()
+		if revive_charges > 0:
+			revive_charges = 0
+			current_health = maxf(1.0, max_health * revive_fraction)
+			health_changed.emit(current_health, max_health)
+			status_changed.emit()
+			revived.emit()
+		else:
+			_ge.player_died.emit()
 	
 	return actual_damage
+
+func _player_pos() -> Vector2:
+	var p := get_tree().get_first_node_in_group("player") as Node2D
+	return p.global_position + Vector2(0, -30) if p else Vector2.ZERO
 
 func heal(amount: float) -> void:
 	current_health = min(max_health, current_health + amount)
@@ -133,7 +235,7 @@ func use_stamina(amount: float) -> bool:
 	return false
 
 func add_intoxication(amount: float) -> void:
-	intoxication_level = min(max_intoxication, intoxication_level + amount)
+	intoxication_level = clampf(intoxication_level + amount, 0.0, max_intoxication)
 	_update_intoxication_tier()
 	intoxication_changed.emit(intoxication_level, intoxication_tier)
 	_ge.player_intoxication_changed.emit(intoxication_level, intoxication_tier)
@@ -169,6 +271,10 @@ func apply_stat_mod(stat: String, value: float) -> void:
 		"lifesteal": lifesteal += value
 		"projectile_speed": projectile_speed_modifier *= value
 		"fire_rate": fire_rate_modifier *= value
+		"stamina_regen": stamina_regen_rate *= value
+		"stamina": # restaura estamina (cafe, bebida energetica...), no es un multiplicador
+			current_stamina = minf(max_stamina, current_stamina + value)
+			stamina_changed.emit(current_stamina, max_stamina)
 		"max_health": 
 			var old_max = max_health
 			max_health *= value
