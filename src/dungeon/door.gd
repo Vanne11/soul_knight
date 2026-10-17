@@ -32,8 +32,17 @@ const _STATE_NAMES = {
 	State.SEALED: "sealed",
 }
 
+## Para cruzar hay que EMPUJAR la puerta (caminar contra ella) un momento; con dash se cruza al tiro.
+const PUSH_TIME := 0.3
+var _pusher: Node2D = null
+var _push_t := 0.0
+var _sprite_base := Vector2.ZERO
+
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
+	body_exited.connect(_on_body_exited)
+	_sprite_base = sprite.position
+	set_physics_process(false)
 	set_state(State.CLOSED)
 	KeyQuests.ensure(get_tree())  # una mision de llave por piso (src/items/key_quests.gd)
 
@@ -182,5 +191,37 @@ func _get_requirement_text() -> String:
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
-		if try_open(body):
+		_pusher = body
+		_push_t = 0.0
+		set_physics_process(true)
+
+
+func _on_body_exited(body: Node) -> void:
+	if body == _pusher:
+		_pusher = null
+		_push_t = 0.0
+		sprite.position = _sprite_base
+		set_physics_process(false)
+
+
+func _physics_process(delta: float) -> void:
+	if _pusher == null or not is_instance_valid(_pusher):
+		_on_body_exited(_pusher)
+		return
+	var out: Vector2 = _dir_vectors[direction]
+	var dir := Vector2(Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
+		Input.get_action_strength("move_down") - Input.get_action_strength("move_up"))
+	var dashing: bool = "is_dashing" in _pusher and _pusher.is_dashing
+	if dashing or dir.normalized().dot(out) > 0.4:
+		_push_t += delta
+	else:
+		_push_t = maxf(minf(_push_t, 0.0), _push_t - delta * 2.0)
+	# la puerta cede un poco hacia fuera mientras la empujas
+	sprite.position = _sprite_base + out * 3.0 * clampf(_push_t / PUSH_TIME, 0.0, 1.0)
+	if dashing or _push_t >= PUSH_TIME:
+		_push_t = 0.0
+		sprite.position = _sprite_base
+		if try_open(_pusher):
 			player_interacted.emit()
+		else:
+			_push_t = -1.0  # cerrada: el aviso no se repite en cada empujon
