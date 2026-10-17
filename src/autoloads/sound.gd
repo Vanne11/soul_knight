@@ -30,10 +30,12 @@ func _ready() -> void:
 	for i in VOICES:
 		var p := AudioStreamPlayer.new()
 		p.volume_db = SFX_DB
+		p.bus = "SFX"
 		add_child(p)
 		_players.append(p)
 	_music = AudioStreamPlayer.new()
 	_music.volume_db = MUSIC_DB
+	_music.bus = "Music"
 	add_child(_music)
 
 	var ge := get_node("/root/GlobalEvents")
@@ -85,7 +87,7 @@ func music(track: String) -> void:
 	_music.play()
 
 
-## F2 silencia todo (aun no hay menu de opciones).
+## F2 silencia todo (los volumenes finos estan en Ajustes).
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F2:
 		AudioServer.set_bus_mute(0, not AudioServer.is_bus_mute(0))

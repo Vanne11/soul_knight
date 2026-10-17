@@ -19,7 +19,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if OS.is_debug_build() and event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F1:
 		if _panel:
 			_close()
-		elif _main():
+		elif _main() and not get_tree().paused:  # con el menu de pausa abierto no: al cerrar despausaria
 			_open()
 
 

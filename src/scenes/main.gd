@@ -18,6 +18,19 @@ func _process(delta: float) -> void:
 	if _transition_lock > 0.0:
 		_transition_lock -= delta
 
+## true tras morir (la victoria final ya pone run_active en false): no se pausa.
+var _ending := false
+
+## Esc: menu de pausa. No se abre si otro sistema ya pausa (narrador con
+## opciones, panel de depuracion F1) ni durante la muerte/victoria.
+func _unhandled_input(event: InputEvent) -> void:
+	if not event.is_action_pressed("pause") or event.is_echo():
+		return
+	if get_tree().paused or _ending or not _run_manager.run_active:
+		return
+	get_viewport().set_input_as_handled()
+	PauseMenu.open(self)
+
 var dungeon_generator: DungeonGenerator
 @onready var _game_controller: GameController = get_node("/root/GameController")
 @onready var _global_events: GlobalEvents = get_node("/root/GlobalEvents")
@@ -747,6 +760,7 @@ func _on_show_floating_text(position: Vector2, text: String, color: Color) -> vo
 	floating_text_mgr.spawn(position, text, color)
 
 func _on_player_died() -> void:
+	_ending = true
 	# player_died is emitted from PlayerStats.take_damage(), which runs inside the
 	# player's Hurtbox area_entered callback. Freeing the scene from there removes
 	# CollisionObject nodes mid physics callback, which Godot rejects.

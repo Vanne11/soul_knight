@@ -37,8 +37,7 @@ func _create_ui() -> void:
 	start_btn = _menu_button(vbox, "NUEVA PARTIDA", _on_start)
 	continue_btn = _menu_button(vbox, "MEJORAS", _open_upgrades)
 	lore_btn = _menu_button(vbox, "CÓDICE", _open_codex)
-	settings_btn = _menu_button(vbox, "AJUSTES (WIP)", func(): pass)
-	settings_btn.disabled = true  # settings_menu.tscn aun no existe
+	settings_btn = _menu_button(vbox, tr("SETTINGS_TITLE"), _open_settings)
 	quit_btn = _menu_button(vbox, "SALIR", _on_quit)
 	start_btn.grab_focus.call_deferred()
 
@@ -189,6 +188,28 @@ func _window(title_text: String) -> VBoxContainer:
 	box.add_child(back)
 	back.grab_focus.call_deferred()
 	return box
+
+## Ajustes (el mismo panel que en la pausa). Al cambiar de idioma el menu se
+## reconstruye entero para que los textos se actualicen.
+func _open_settings() -> void:
+	var dim := ColorRect.new()
+	dim.color = Color(0.04, 0.02, 0.06, 0.85)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_root.add_child(dim)
+	var center := CenterContainer.new()
+	center.set_anchors_preset(Control.PRESET_FULL_RECT)
+	dim.add_child(center)
+	var sp := SettingsPanel.new()
+	center.add_child(sp)
+	var locale_at_open: String = Settings.locale
+	sp.closed.connect(func():
+		dim.queue_free()
+		if Settings.locale != locale_at_open:
+			get_tree().reload_current_scene()
+		else:
+			settings_btn.grab_focus())
+	sp.focus_first.call_deferred()
+
 
 ## Mejoras permanentes: se pagan con los huesos que deja cada partida.
 func _open_upgrades() -> void:
