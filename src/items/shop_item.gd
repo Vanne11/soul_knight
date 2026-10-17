@@ -27,6 +27,7 @@ func _ready() -> void:
 	ActorFx.setup_object(self, sprite, false)
 	label.text = "%d $" % price
 	label.add_theme_font_size_override("font_size", 12)
+	label.material = LightKit.unshaded_material()  # el precio se lee aunque la sala este en penumbra
 
 ## Precio en monedas. Estatico para poder comprobarlo sin instanciar la tienda.
 static func price_for(item: Item, rm: Node) -> int:

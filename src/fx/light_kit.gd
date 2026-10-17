@@ -24,6 +24,7 @@ static var dark := false
 static var intox_wobble := 0.0
 
 static var _light_tex: GradientTexture2D
+static var _unshaded: CanvasItemMaterial
 static var _contact_tex: GradientTexture2D
 static var _cast_tex: GradientTexture2D
 
@@ -56,6 +57,14 @@ static func make_light(color: Color, energy: float, scale_: float, shadows := tr
 	l.enabled = dark
 	l.add_to_group(GROUP_DARK)
 	return l
+
+
+## Material para lo que debe leerse siempre (carteles, precios): ignora luces y penumbra.
+static func unshaded_material() -> CanvasItemMaterial:
+	if _unshaded == null:
+		_unshaded = CanvasItemMaterial.new()
+		_unshaded.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	return _unshaded
 
 
 ## Sombra de contacto: elipse oscura bajo los pies (vale en salas claras y oscuras).

@@ -107,6 +107,7 @@ func set_hint(text: String, color := Color("f2ead6")) -> void:
 		_hint.add_theme_color_override("font_outline_color", Color("0d0b0f"))
 		_hint.add_theme_constant_override("outline_size", 5)
 		_hint.z_index = 5
+		_hint.material = LightKit.unshaded_material()  # legible tambien en sala en penumbra
 		_hint.position = _dir_vectors[direction] * -52.0 - _hint.size / 2
 		add_child(_hint)
 	_hint.text = text

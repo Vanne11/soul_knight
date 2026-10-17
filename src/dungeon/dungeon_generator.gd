@@ -145,7 +145,8 @@ func _setup_room_tilemap(room: Room, size: Vector2) -> void:
 		for y in range(h):
 			floor_map.set_cell(0, Vector2i(x, y), RNG.randi_range(0, 3), Vector2i(0, 0))
 	
-	for x in range(w):
+	# Incluye las esquinas (-1 y w): sin ellas se veia el fondo por los cuatro rincones.
+	for x in range(-1, w + 1):
 		walls_map.set_cell(0, Vector2i(x, -1), WALL_SOURCE, Vector2i(0, 0))
 		walls_map.set_cell(0, Vector2i(x, h), WALL_SOURCE, Vector2i(0, 0))
 	for y in range(h):
