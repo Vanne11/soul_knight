@@ -184,7 +184,8 @@ func take_damage(amount: float, source: Node = null, kb: Vector2 = Vector2.ZERO)
 		call_deferred("_exit_stun")
 	
 	if animated_sprite and state != State.CHARGING:
-		animated_sprite.modulate = Color.RED
+		animated_sprite.modulate = Color(1.5, 0.65, 0.65)
+		HitFx.flash(animated_sprite)
 		call_deferred("_reset_color")
 	
 	get_node("/root/GlobalEvents").enemy_damaged.emit(self, amount, source)

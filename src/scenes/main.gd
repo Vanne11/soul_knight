@@ -43,6 +43,9 @@ func _ready() -> void:
 	dungeon_generator.name = "DungeonGenerator"
 	add_child(dungeon_generator)
 	
+	var hit_fx := HitFx.new()  # sacudida, pausa al impactar y destello (src/fx/hit_fx.gd)
+	hit_fx.camera = camera
+	add_child(hit_fx)
 	add_child(ScreenFx.new())  # vineta, polvo/rayos y mareo (src/fx/screen_fx.gd)
 	_lighting = RoomLighting.new()
 	_lighting.name = "RoomLighting"

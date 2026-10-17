@@ -9,6 +9,9 @@ var lifetime: float = 1.6
 ## Bendiciones: enemigos que aun atraviesa y fuerza del empujon.
 var pierce: int = 0
 var knockback: float = 120.0
+## Solo presentacion: critico o golpe fuerte dispara la pausa breve al impactar.
+var crit := false
+const STRONG_HIT := 20.0
 var _t: float = 0.0
 
 func _ready() -> void:
@@ -27,6 +30,8 @@ func _on_body_entered(body: Node) -> void:
 		return
 	if body.is_in_group("enemy") and body.has_method("take_damage"):
 		body.take_damage(damage, get_tree().get_first_node_in_group("player"), Vector2.RIGHT.rotated(rotation) * knockback)
+		if crit or damage >= STRONG_HIT:
+			HitFx.hitstop()
 		var ps := get_node("/root/PlayerStats")
 		if ps.lifesteal > 0.0:
 			ps.heal(damage * ps.lifesteal)

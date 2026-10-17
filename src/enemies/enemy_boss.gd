@@ -249,10 +249,12 @@ func take_damage(amount: float, source: Node = null, _kb: Vector2 = Vector2.ZERO
 	current_health -= amount
 	_emit_health()
 	if state not in [State.TELEGRAPH, State.TIRED]:
-		animated_sprite.modulate = Color(2, 0.5, 0.5)
+		animated_sprite.modulate = Color(1.5, 0.65, 0.65)
+		HitFx.flash(animated_sprite)
 		get_tree().create_timer(0.07).timeout.connect(func():
 			if is_instance_valid(self) and state not in [State.TELEGRAPH, State.TIRED, State.TRANSITION]:
 				animated_sprite.modulate = Color.WHITE)
+	HitFx.shake(0.18)  # golpe al jefe: sacudida corta
 	_ge.enemy_damaged.emit(self, amount, source)
 	_ge.show_damage_number.emit(global_position + Vector2(0, -150), amount, state == State.TIRED)
 	if current_health <= 0.0:
@@ -268,6 +270,7 @@ func _enter_phase(n: int) -> void:
 	current_phase = n
 	state = State.TRANSITION
 	_timer = 1.8
+	HitFx.shake(0.55)
 	animated_sprite.modulate = Color(1.8, 0.5, 0.5)
 	_say("phase%d" % n)
 	_clear_bullets()
@@ -281,6 +284,8 @@ func die(killer: Node = null) -> void:
 	for m in get_tree().get_nodes_in_group("boss_minion"):
 		if is_instance_valid(m) and m.has_method("die"):
 			m.die(null)
+	HitFx.shake(0.9)
+	HitFx.hitstop()
 	_say("death")
 	_say("after")
 	animated_sprite.modulate = Color.WHITE

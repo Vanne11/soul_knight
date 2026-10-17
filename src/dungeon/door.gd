@@ -40,8 +40,11 @@ func get_direction_name() -> String:
 	return _dir_names[direction]
 
 func set_state(new_state: State) -> void:
+	var old := state
 	state = new_state
 	_update_visuals()
+	if old != new_state and (new_state == State.OPEN or new_state == State.SEALED):
+		_animate_change(new_state == State.SEALED)
 	state_changed.emit(get_direction_name(), int(state))
 
 func _update_visuals() -> void:
@@ -93,6 +96,48 @@ func try_open(player: Node) -> bool:
 		return true
 	
 	return false
+
+## Solo presentacion (roadmap 58): la puerta se estira/golpea al abrirse o sellarse, con
+## un destello y polvo. Solo si la sala es la actual (al generar el piso no se anima).
+var _anim_tween: Tween
+func _animate_change(sealing: bool) -> void:
+	var main := get_tree().get_first_node_in_group("main") if is_inside_tree() else null
+	if main == null or main.current_room == null or main.current_room != room:
+		return
+	var out: Vector2 = _dir_vectors[direction]
+	# a lo largo del eje de la puerta: sellar la aplasta contra el marco, abrir la estira y la relaja
+	var along := Vector2(1.0, 0.0) if out.y != 0.0 else Vector2(0.0, 1.0)
+	var start := Vector2.ONE + along * (0.14 if sealing else -0.12)
+	if _anim_tween and _anim_tween.is_valid():
+		_anim_tween.kill()
+	sprite.scale = start
+	sprite.modulate = Color(1.9, 1.9, 1.9) if not sealing else Color(1.5, 1.2, 1.2)
+	_anim_tween = create_tween().set_parallel(true)
+	_anim_tween.tween_property(sprite, "scale", Vector2.ONE, 0.32).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_anim_tween.tween_property(sprite, "modulate", Color.WHITE, 0.3)
+	_spawn_dust(out, sealing)
+
+func _spawn_dust(out: Vector2, sealing: bool) -> void:
+	var p := CPUParticles2D.new()
+	p.one_shot = true
+	p.emitting = true
+	p.amount = 14 if sealing else 9
+	p.lifetime = 0.5
+	p.explosiveness = 0.9
+	p.direction = -out  # hacia dentro de la sala
+	p.spread = 70.0
+	p.initial_velocity_min = 25.0
+	p.initial_velocity_max = 60.0
+	p.damping_min = 40.0
+	p.damping_max = 70.0
+	p.scale_amount_min = 1.5
+	p.scale_amount_max = 3.0
+	p.color = Color(0.78, 0.72, 0.66, 0.55)
+	p.position = out * 30.0
+	p.z_index = 4
+	p.material = LightKit.unshaded_material()
+	add_child(p)
+	get_tree().create_timer(1.0).timeout.connect(p.queue_free)
 
 ## Cartel sobre la puerta con lo que hay detras ("" lo quita). Va hacia dentro
 ## de la sala para que no lo corte la camara.

@@ -18,6 +18,8 @@ var fullscreen := false
 var locale := "es"
 ## Efectos de pantalla (mareo, ondulacion, pulso): 0 completo, 1 reducido, 2 desactivado.
 var screen_fx := 0
+## Sacudida de camara y pausa breve al impactar.
+var screen_shake := true
 
 
 func _init() -> void:
@@ -49,6 +51,7 @@ func load_settings() -> void:
 	sfx_volume = clampi(int(cfg.get_value("audio", "sfx", 100)), 0, 100)
 	fullscreen = bool(cfg.get_value("video", "fullscreen", false))
 	screen_fx = clampi(int(cfg.get_value("video", "screen_fx", 0)), 0, 2)
+	screen_shake = bool(cfg.get_value("video", "screen_shake", true))
 	var l := str(cfg.get_value("game", "locale", "es"))
 	locale = l if LOCALES.any(func(x): return x[0] == l) else "es"
 
@@ -59,6 +62,7 @@ func save_settings() -> void:
 	cfg.set_value("audio", "sfx", sfx_volume)
 	cfg.set_value("video", "fullscreen", fullscreen)
 	cfg.set_value("video", "screen_fx", screen_fx)
+	cfg.set_value("video", "screen_shake", screen_shake)
 	cfg.set_value("game", "locale", locale)
 	cfg.save(PATH)
 
@@ -90,6 +94,11 @@ func set_fullscreen(on: bool) -> void:
 
 func set_screen_fx(mode: int) -> void:
 	screen_fx = clampi(mode, 0, 2)  # ScreenFx lo lee cada frame
+	save_settings()
+
+
+func set_screen_shake(on: bool) -> void:
+	screen_shake = on
 	save_settings()
 
 
