@@ -32,6 +32,8 @@ func _ready() -> void:
 
 	v.add_child(HSeparator.new())
 	v.add_child(_stats_box())
+	v.add_child(HSeparator.new())
+	v.add_child(_synergies_box())
 
 	_back = Button.new()
 	_back.text = tr("BTREE_BACK")
@@ -197,5 +199,33 @@ func _stats_box() -> Control:
 		cell.add_child(HudStyle.pixel_label(tr(it[0]), 16, Color(0.8, 0.72, 0.78)))
 		cell.add_child(HudStyle.pixel_label(it[1], 16, HudStyle.CREAM, true))
 		g.add_child(cell)
+	v.add_child(g)
+	return v
+
+
+## Sinergias activas ahora (src/items/synergies.gd): sus nombres; efecto y condicion en el tooltip.
+func _synergies_box() -> Control:
+	var v := VBoxContainer.new()
+	v.add_theme_constant_override("separation", 4)
+	var ids: Array = Synergies.active_ids()
+	var t := HudStyle.pixel_label(tr("SYN_TITLE") % [ids.size(), Synergies.TABLE.size()], 16, HudStyle.GOLD, true)
+	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	v.add_child(t)
+	if ids.is_empty():
+		var none := HudStyle.pixel_label(tr("SYN_NONE"), 16, Color(0.6, 0.57, 0.65))
+		none.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		v.add_child(none)
+		return v
+	# solo nombres (el panel ya va justo de alto); efecto y condicion en el tooltip
+	var g := GridContainer.new()
+	g.columns = 3
+	g.add_theme_constant_override("h_separation", 28)
+	g.add_theme_constant_override("v_separation", 2)
+	g.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	for id in ids:
+		var l := HudStyle.pixel_label(Synergies.text(id, "name"), 16, Synergies.COLOR, true)
+		l.mouse_filter = Control.MOUSE_FILTER_STOP
+		l.tooltip_text = "%s\n%s" % [Synergies.text(id, "desc"), Synergies.text(id, "cond")]
+		g.add_child(l)
 	v.add_child(g)
 	return v

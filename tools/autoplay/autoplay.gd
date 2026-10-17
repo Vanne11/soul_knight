@@ -340,9 +340,13 @@ func _fight(enemies: Array, delta: float) -> void:
 		_strafe_t = randf_range(0.8, 1.6)
 	var dir := to_t.normalized()
 	var move := dir.orthogonal() * _strafe * 0.8
-	if dist < KEEP_NEAR:
+	# cuerpo a cuerpo (Chancleta): se pega al enemigo en vez de mantener la distancia de tirador
+	var melee_reach := float(player.current_weapon.custom_data.get("reach", 0.0))
+	var near := KEEP_NEAR if melee_reach <= 0.0 else melee_reach * 0.3
+	var far := KEEP_FAR if melee_reach <= 0.0 else melee_reach * 0.75
+	if dist < near:
 		move -= dir
-	elif dist > KEEP_FAR or not _line_clear(pp, t.global_position):
+	elif dist > far or not _line_clear(pp, t.global_position):
 		_steer_to(t.global_position)
 		return
 	_press_move(_avoid_walls(move.normalized()))

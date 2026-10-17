@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "laser_depilador"
+display_name = "Depiladora Láser"
+description = "Rayo continuo: mantén el gatillo y atraviesa a todo el que esté en la línea. Se calienta: si abusas se sobrecalienta y se bloquea. 'Cero vello, cero piedad. Resultados permanentes (los suyos).'"
+rarity = 3
+tags = ["arma", "rayo"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 460
+custom_data = {"affinity": "vulva", "special": "beam", "base_damage": 3.0, "fire_rate": 0.08, "range": 300, "beam_width": 12, "heat_per_shot": 2.0, "bullet_color": "ff5a4a"}

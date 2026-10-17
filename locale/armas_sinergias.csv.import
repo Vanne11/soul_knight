@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cqc6iy6gdhun6"
+
+[deps]
+
+files=["res://locale/armas_sinergias.es.translation", "res://locale/armas_sinergias.en.translation"]
+
+source_file="res://locale/armas_sinergias.csv"
+dest_files=["res://locale/armas_sinergias.es.translation", "res://locale/armas_sinergias.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
