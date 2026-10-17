@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "chocolate_bar_lore"
+title = "Antojo Hormonal"
+text = "Barra de Chocolate. +15 vida, menos toxicidad y se te pasa la alergia. El cuerpo lo pide, la hormona lo exige y el Reino lo tolera. Nadie sabe quién fabrica estas barras ni por qué siempre aparecen justo cuando las necesitas. Los economistas lo llaman 'oferta y demanda'. Los endocrinólogos, 'martes'. Tú solo sabes que, tras el primer bocado, el mundo censurado se ve un poquito menos gris. Dura lo que dura el chocolate. Que es poco. Siempre es poco."
+category = 2
+unlock_condition = {"type": 4, "target_id": "chocolate_bar", "count": 8}
+flavor_text = "Come 8 barras de chocolate."

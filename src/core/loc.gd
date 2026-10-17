@@ -26,6 +26,21 @@ static func item_desc(item) -> String:
 	return tr_or("ITEM_%s_DESC" % String(item.id).to_upper(), item.description)
 
 
+## Linea de afinidad del cuadro de objeto (BBCode): "Afinidad: Pene" y, si el heroe es de
+## ese reino, "(¡te sienta bien!)". "" si el objeto no tiene afinidad. Los datos: custom_data.affinity.
+const AFFINITY_COLORS := {"pene": "6ec6ff", "vulva": "ff7ac0", "neutral": "c9c2b0"}
+
+static func affinity_line(item) -> String:
+	var aff: String = item.custom_data.get("affinity", "")
+	if not AFFINITY_COLORS.has(aff):
+		return ""
+	var line := "[color=#%s]%s[/color]" % [AFFINITY_COLORS[aff], tr_or("AFFINITY_" + aff.to_upper(), aff)]
+	var rm: Node = (Engine.get_main_loop() as SceneTree).root.get_node("RunManager")
+	if aff != "neutral" and rm.character_data().kingdom == aff:
+		line += " [color=#ffd75a]%s[/color]" % tr_or("AFFINITY_FIT", "(¡te sienta bien!)")
+	return line
+
+
 # ------------------------------------------------------------------ lore
 static func lore_title(e) -> String:
 	return tr_or("LORE_%s_TITLE" % String(e.id).to_upper(), e.title)

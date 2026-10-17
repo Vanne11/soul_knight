@@ -1,0 +1,111 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_idle_00.png" id="1_idle0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_idle_01.png" id="2_idle1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_sprout_00.png" id="3_sprout0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_sprout_01.png" id="4_sprout1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_sprout_02.png" id="5_sprout2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_sprout_03.png" id="6_sprout3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_attack_00.png" id="7_attack0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_attack_01.png" id="8_attack1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_attack_02.png" id="9_attack2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_attack_03.png" id="10_attack3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_burst_00.png" id="11_burst0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_burst_01.png" id="12_burst1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_burst_02.png" id="13_burst2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_hurt_00.png" id="14_hurt0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_hurt_01.png" id="15_hurt1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_death_00.png" id="16_death0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_death_01.png" id="17_death1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_death_02.png" id="18_death2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/espinilla_death_03.png" id="19_death3"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_idle0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_idle1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_sprout0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_sprout1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_sprout2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_sprout3")
+}],
+"loop": false,
+"name": &"sprout",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_attack0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_attack1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_attack2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_attack3")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_burst0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_burst1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_burst2")
+}],
+"loop": false,
+"name": &"burst",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_hurt0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_hurt1")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_death0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_death1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_death2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_death3")
+}],
+"loop": false,
+"name": &"death",
+"speed": 6.0
+}]

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "chamomile_tea"
+display_name = "Té de Manzanilla"
+description = "Calma los nervios: +30 estamina y la estamina se recarga el doble de rápido durante 20 s. -10 intoxicación. Aprobado por la abuela."
+rarity = 1
+tags = ["consumible", "estamina", "buff"]
+effects = [{"type": 0, "stat": "stamina", "magnitude": 30.0}, {"type": 11, "stat": "stamina_regen", "magnitude": 2.0, "duration": 20.0}, {"type": 1, "intoxication_amount": -10.0}]
+max_stack = 5
+consumable = true
+base_value = 56
+custom_data = {"affinity": "neutral"}

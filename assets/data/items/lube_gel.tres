@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "lube_gel"
+display_name = "Gel Lubricante de Farmacia"
+description = "+30% de velocidad durante 15 s. Todo resbala, incluido tu futuro. No confundir con el Lubricante Cuántico: este viene en sobre y huele a aloe."
+rarity = 0
+tags = ["consumible", "movimiento", "buff"]
+effects = [{"type": 11, "stat": "speed", "magnitude": 1.3, "duration": 15.0}]
+max_stack = 5
+consumable = true
+base_value = 40
+custom_data = {"affinity": "neutral"}

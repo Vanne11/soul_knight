@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "morning_after_pill"
+display_name = "Pastilla del Día Después"
+description = "La próxima vez que mueras, no. Revives con el 40% de vida y 2 s de invulnerabilidad. Solo una a la vez. Efectos secundarios: lecciones de vida."
+rarity = 2
+tags = ["consumible", "defensa", "utilidad", "rara"]
+effects = [{"type": 14, "fraction": 0.4}]
+max_stack = 5
+consumable = true
+base_value = 120
+custom_data = {"affinity": "vulva"}

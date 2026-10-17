@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "viagra_feria"
+display_name = "Viagra Genérica de Feria"
+description = "+30% de daño durante 20 s, pero te sube +8 de intoxicación. Comprada a un señor con gabardina. Los ensayos clínicos fueron él mismo."
+rarity = 1
+tags = ["consumible", "ofensa", "buff", "intoxicante"]
+effects = [{"type": 11, "stat": "damage", "magnitude": 1.3, "duration": 20.0}, {"type": 1, "intoxication_amount": 8.0}]
+max_stack = 5
+consumable = true
+base_value = 64
+custom_data = {"affinity": "pene"}

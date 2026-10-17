@@ -81,6 +81,9 @@ func _apply_single_effect(effect: Variant, target: Node) -> void:
 		5: # UNLOCK_LORE - emit signal instead of direct call
 			if effect.lore_entry_id != "":
 				get_node("/root/GlobalEvents").lore_unlock_requested.emit(effect.lore_entry_id)
+		10, 11, 12, 13, 14, 15, 16: # efectos de consumibles (regeneracion, buffs, guardia...)
+			if target.has_method("apply_item_effect"):
+				target.apply_item_effect(effect)
 		_:
 			push_error("Unhandled effect type: %d" % effect.type)
 

@@ -3,6 +3,10 @@ ITEM_ABSINTHE_NAME,Absenta Ilegal,Illegal Absinthe
 ITEM_ABSINTHE_DESC,"La hada verde te susurra verdades. +50 intoxicación, -30% precisión, +40% daño, visión borrosa. Prohibida en 12 países y 3 dimensiones.","The green fairy whispers truths to you. +50 intoxication, -30% accuracy, +40% damage, blurry vision. Banned in 12 countries and 3 dimensions."
 ITEM_BANDAGES_NAME,Vendas Sucias,Dirty Bandages
 ITEM_BANDAGES_DESC,Curan 30 vida. Probablemente usadas. 'Mejor no preguntar por qué huelen así.',Heal 30 health. Probably used. 'Better not ask why they smell like that.'
+ITEM_CHAMOMILE_TEA_NAME,Té de Manzanilla,Chamomile Tea
+ITEM_CHAMOMILE_TEA_DESC,Calma los nervios: +30 estamina y la estamina se recarga el doble de rápido durante 20 s. -10 intoxicación. Aprobado por la abuela.,Calms the nerves: +30 stamina and stamina recharges twice as fast for 20 s. -10 intoxication. Grandma approved.
+ITEM_CHOCOLATE_BAR_NAME,Barra de Chocolate,Chocolate Bar
+ITEM_CHOCOLATE_BAR_DESC,"Antojo hormonal resuelto. +15 vida, -20 intoxicación y se te pasa la alergia. Nadie sabe de dónde salió y nadie pregunta.","Hormonal craving solved. +15 health, -20 intoxication and your allergy goes away. Nobody knows where it came from and nobody asks."
 ITEM_COFFEE_NAME,Café de Emergencia,Emergency Coffee
 ITEM_COFFEE_DESC,"Te despista de la resaca. -40 intoxicación, +20 estamina. Sabe a tierra quemada y arrepentimiento matutino.","Distracts you from the hangover. -40 intoxication, +20 stamina. Tastes like burnt dirt and morning regret."
 ITEM_COIN_NAME,Moneda Pudorosa,Bashful Coin
@@ -21,6 +25,12 @@ ITEM_HORMONE_ESTROGENO_NAME,Estrógeno de Estraperlo,Bootleg Estrogen
 ITEM_HORMONE_ESTROGENO_DESC,"Hormona oficial de Vulvania. Abre sus Puertas Hormonales. A los penes les da alergia: estornudos, hinchazón y una repentina necesidad de hablar de sus sentimientos.","Official hormone of Vulvania. Opens its Hormonal Doors. Penises are allergic: sneezing, swelling and a sudden urge to talk about their feelings."
 ITEM_HORMONE_TESTOSTERONA_NAME,Testosterona de Contrabando,Smuggled Testosterone
 ITEM_HORMONE_TESTOSTERONA_DESC,"Hormona oficial de Penelandia. Abre sus Puertas Hormonales. A las vulvas les da alergia: estornudos, hinchazón y ganas de discutir de fútbol.","Official hormone of Peneland. Opens its Hormonal Doors. Vulvas are allergic: sneezing, swelling and an urge to argue about football."
+ITEM_HOT_WATER_BOTTLE_NAME,Bolsa de Agua Caliente,Hot Water Bottle
+ITEM_HOT_WATER_BOTTLE_DESC,"Regeneras 2.5 de vida por segundo durante 12 s. Calorcito de hogar, cólicos incluidos. 'Mejor que cualquier pareja que has tenido.'","Regenerate 2.5 health per second for 12 s. Homey warmth, cramps included. 'Better than any partner you've ever had.'"
+ITEM_IBUPROFEN_NAME,Ibuprofeno de 600,Ibuprofen 600
+ITEM_IBUPROFEN_DESC,"Recibes un 30% menos de daño durante 25 s. Cura el dolor, la fiebre y las ganas de ir al médico. Tomar con comida (opcional, nadie lo hace).","Take 30% less damage for 25 s. Cures pain, fever and the urge to see a doctor. Take with food (optional, nobody does)."
+ITEM_JOCKSTRAP_NAME,Suspensorio Deportivo,Athletic Jockstrap
+ITEM_JOCKSTRAP_DESC,Absorbe por completo el próximo golpe que recibas y te da +20 de estamina. Protege lo que más importa. Ya sabes cuál es.,Completely absorbs the next hit you take and gives +20 stamina. Protects what matters most. You know which one.
 ITEM_KEY_BLOODY_NAME,Llave Empapada en Sangre,Blood-Soaked Key
 ITEM_KEY_BLOODY_DESC,Abre puertas de habitaciones de desafío. Requiere haber matado 20+ enemigos en esta run. 'La llave está en la cerradura... y la cerradura está en ti.',Opens challenge room doors. Requires 20+ enemies killed this run. 'The key is in the lock... and the lock is in you.'
 ITEM_KEY_CRYSTAL_NAME,Llave de Cristal Líquido,Liquid Crystal Key
@@ -31,16 +41,26 @@ ITEM_KEY_MASTER_NAME,Llave Maestra Dorada,Golden Master Key
 ITEM_KEY_MASTER_DESC,Abre cualquier cerradura. Incluyendo las de tu corazón. Requiere intoxicación tier 3 (Blackout). Único uso.,Opens any lock. Including the ones around your heart. Requires intoxication tier 3 (Blackout). Single use.
 ITEM_LAUNCHER_CONDOM_NAME,Lanzapreservativos Múltiple,Multi-Condom Launcher
 ITEM_LAUNCHER_CONDOM_DESC,"Lanza 3 preservativos lentos que explotan en área al chocar o al acabarse la mecha (parpadean antes). Daño en área, poca cadencia. 'Protección a distancia. Seguridad primero.'","Fires 3 slow condoms that explode in an area on impact or when the fuse runs out (they blink first). Area damage, low fire rate. 'Protection from a distance. Safety first.'"
+ITEM_LAUNCHER_CONDOM_DESC,"Dispara 3 preservativos explosivos. Daño base 12 c/u, área de efecto. 'Protección a distancia. Seguridad primero.'","Fires 3 explosive condoms. Base damage 12 each, area of effect. 'Protection from a distance. Safety first.'"
+ITEM_LUBE_GEL_NAME,Gel Lubricante de Farmacia,Drugstore Lube Gel
+ITEM_LUBE_GEL_DESC,"+30% de velocidad durante 15 s. Todo resbala, incluido tu futuro. No confundir con el Lubricante Cuántico: este viene en sobre y huele a aloe.","+30% speed for 15 s. Everything slides, including your future. Not to be confused with the Quantum Lubricant: this one comes in a sachet and smells like aloe."
 ITEM_MEAD_NAME,Hidromiel de Valhalla,Valhalla Mead
 ITEM_MEAD_DESC,"Bebida de dioses caídos. +40 intoxicación, -10% precisión, +30% daño, +15% velocidad. 'Odín bebió esto. Odín también se cayó de su caballo.'","Drink of fallen gods. +40 intoxication, -10% accuracy, +30% damage, +15% speed. 'Odin drank this. Odin also fell off his horse.'"
 ITEM_MEDKIT_NAME,Botiquín Completo,Full Medkit
 ITEM_MEDKIT_DESC,"Cura 100 vida, limpia efectos negativos, restaura escudos. 'Para cuando las vendas sucias no bastan.'","Heals 100 health, clears negative effects, restores shields. 'For when the dirty bandages aren't enough.'"
+ITEM_MENSTRUAL_CUP_NAME,Copa Menstrual Reforzada,Reinforced Menstrual Cup
+ITEM_MENSTRUAL_CUP_DESC,"Absorbe por completo el próximo golpe que recibas y te quita -20 de intoxicación. Reutilizable, ecológica y más resistente que tu armadura.","Completely absorbs the next hit you take and removes 20 intoxication. Reusable, eco-friendly and tougher than your armor."
+ITEM_MORNING_AFTER_PILL_NAME,Pastilla del Día Después,Morning-After Pill
+ITEM_MORNING_AFTER_PILL_DESC,"La próxima vez que mueras, no. Revives con el 40% de vida y 2 s de invulnerabilidad. Solo una a la vez. Efectos secundarios: lecciones de vida.","Next time you die, you don't. Revive with 40% health and 2 s of invulnerability. Only one at a time. Side effects: life lessons."
 ITEM_MYSTERY_FLUID_NAME,Fluido Misterioso (?),Mystery Fluid (?)
 ITEM_MYSTERY_FLUID_DESC,"¿Qué es? ¿Orina? ¿Semen? ¿Leche materna? ¿Agua del grifo? Efecto aleatorio: cura, daña, emborracha, revela mapa, spawn enemigo. 'Solo hay una forma de saberlo.'","What is it? Pee? Semen? Breast milk? Tap water? Random effect: heals, hurts, gets you drunk, reveals the map, spawns an enemy. 'There's only one way to find out.'"
 ITEM_PISTOL_BASIC_NAME,Pistola de Plástico,Plastic Pistol
 ITEM_PISTOL_BASIC_DESC,"Fiable y precisa, sin trucos ni costes. 'Es un juguete', dice la caja. Duele igual.","Reliable and accurate, no tricks and no downsides. 'It's a toy,' says the box. It hurts just the same."
 ITEM_PISTOL_GOLDEN_NAME,Pistola Dorada (Compensación),Golden Pistol (Compensation)
 ITEM_PISTOL_GOLDEN_DESC,Precisa y con crítico alto (+20%); las balas atraviesan a un enemigo. Cadencia media. 'Tamaño del cañón inversamente proporcional a otra cosa.',Accurate with a high crit chance (+20%); bullets pierce one enemy. Medium fire rate. 'Barrel size inversely proportional to something else.'
+ITEM_PISTOL_GOLDEN_DESC,"Brilla más que tu futuro. Daño base 15, precisión perfecta. 'Tamaño del cañón inversamente proporcional a otra cosa.'","Shines brighter than your future. Base damage 15, perfect accuracy. 'Barrel size inversely proportional to something else.'"
+ITEM_PROTEIN_SHAKE_NAME,Batido de Proteínas Sospechoso,Suspicious Protein Shake
+ITEM_PROTEIN_SHAKE_DESC,"+25% de cadencia de disparo durante 15 s y +10 de vida. Sabe a tiza con vainilla. El tarro dice 'testosterona natural'. La etiqueta, no tanto.","+25% fire rate for 15 s and +10 health. Tastes like chalk with vanilla. The tub says 'natural testosterone'. The label, not so much."
 ITEM_RELIC_BIRTH_CONTROL_NAME,Anticonceptivo Maldito,Cursed Contraceptive
 ITEM_RELIC_BIRTH_CONTROL_DESC,"Evita consecuencias. -50% intoxicación ganada, enemigos dejan 25% menos loot. 'Seguro, pero aburrido.'","Avoids consequences. -50% intoxication gained, enemies drop 25% less loot. 'Safe, but boring.'"
 ITEM_RELIC_CONDOM_NAME,Preservativo de Titanio,Titanium Condom
@@ -85,8 +105,12 @@ ITEM_UPGRADE_SHIELD_NAME,Látex Reforzado,Reinforced Latex
 ITEM_UPGRADE_SHIELD_DESC,+15 de escudo máximo. Protección extra. Siempre.,+15 max shield. Extra protection. Always.
 ITEM_UPGRADE_STAMINA_NAME,Pastilla de Aguante,Endurance Pill
 ITEM_UPGRADE_STAMINA_DESC,+25 de estamina máxima. Para dashear más. Solo para eso.,+25 max stamina. To dash more. Only for that.
+ITEM_VIAGRA_FERIA_NAME,Viagra Genérica de Feria,Fairground Generic Viagra
+ITEM_VIAGRA_FERIA_DESC,"+30% de daño durante 20 s, pero te sube +8 de intoxicación. Comprada a un señor con gabardina. Los ensayos clínicos fueron él mismo.","+30% damage for 20 s, but adds +8 intoxication. Bought from a guy in a trench coat. The clinical trials were him."
 ITEM_VODKA_NAME,Vodka de Patata,Potato Vodka
 ITEM_VODKA_DESC,"Incoloro, inodoro, traicionero. +25 intoxicación, -15% precisión, +20% daño. 'Es agua, dice el ruso. Es mentira, dice tu hígado.'","Colorless, odorless, treacherous. +25 intoxication, -15% accuracy, +20% damage. 'It's water,' says the Russian. 'It's a lie,' says your liver."
+ITEM_WET_WIPE_NAME,Toallita Húmeda,Wet Wipe
+ITEM_WET_WIPE_DESC,"Quita -50 de intoxicación, te limpia la alergia y te deja 45 s inmune a las alergias. 'Elimina el 99% de las hormonas ajenas. El 1% restante tiene abogado.'","Removes 50 intoxication, clears your allergy and makes you immune to allergies for 45 s. 'Removes 99% of foreign hormones. The remaining 1% has a lawyer.'"
 ITEM_WHISKEY_NAME,Whiskey Barato,Cheap Whiskey
 ITEM_WHISKEY_DESC,"Te emborracha un poco. +15 intoxicación, -10% precisión, +15% daño. 'Para el dolor', te dices.","Gets you a little drunk. +15 intoxication, -10% accuracy, +15% damage. 'For the pain,' you tell yourself."
 ITEM_DILDO_TASER_NAME,Dildo Eléctrico,Electric Dildo
