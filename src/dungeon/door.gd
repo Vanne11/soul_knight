@@ -35,6 +35,7 @@ const _STATE_NAMES = {
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	set_state(State.CLOSED)
+	KeyQuests.ensure(get_tree())  # una mision de llave por piso (src/items/key_quests.gd)
 
 func get_direction_name() -> String:
 	return _dir_names[direction]
@@ -80,6 +81,11 @@ func try_open(player: Node) -> bool:
 		if required_key != "" and player.has_method("has_item") and player.has_item(required_key):
 			set_state(State.OPEN)
 			return true
+		elif player.has_method("has_item") and player.has_item("key_master"):
+			# la llave maestra abre cualquier candado: el de llave, el de la secreta, el de la copa
+			set_state(State.OPEN)
+			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("DOOR_MASTER_OPENS"), Color("ffd75a"))
+			return true
 		elif required_intoxication_tier > 0 and get_node("/root/PlayerStats").intoxication_tier >= required_intoxication_tier:
 			set_state(State.OPEN)
 			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("DOOR_INTOX_OPENS"), Color.MAGENTA)
@@ -88,7 +94,7 @@ func try_open(player: Node) -> bool:
 			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("DOOR_LOCKED") % _get_requirement_text(), Color.RED)
 			Sound.play("locked")
 			if required_key == "" and required_intoxication_tier == 0:
-				Narrator.say_first("door_secret")
+				Narrator.say_first("pz_door_locked")  # sin instrucciones: solo un comentario del narrador
 			return false
 	
 	if state == State.SEALED:
@@ -168,7 +174,8 @@ func set_hint(text: String, color := Color("f2ead6")) -> void:
 
 func _get_requirement_text() -> String:
 	if required_key != "":
-		return tr("DOOR_REQ_KEY") % required_key
+		var item = get_node("/root/ItemDatabase").get_item(required_key)
+		return tr("DOOR_REQ_KEY") % (Loc.item_name(item) if item else required_key)
 	if required_intoxication_tier > 0:
 		return tr("DOOR_REQ_INTOX") % tr("INTOX_TIER_%d" % required_intoxication_tier).capitalize()
 	return tr("DOOR_REQ_PUZZLE")

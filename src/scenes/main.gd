@@ -272,7 +272,7 @@ const UPGRADE_IDS := ["upgrade_health", "upgrade_shield", "upgrade_stamina", "up
 const CHEST_SCENE := preload("res://src/items/chest.tscn")
 const SHOP_ITEM_SCENE := preload("res://src/items/shop_item.tscn")
 const ITEM_PICKUP_SCENE := preload("res://src/items/item_pickup.tscn")
-const PUZZLE_PLATES := preload("res://src/dungeon/puzzle_plates.gd")
+const PUZZLE_PLATES := preload("res://src/puzzles/puzzle_factory.gd")
 const INTERACTABLE := preload("res://src/items/interactable.gd")
 ## Salas sin enemigos: entrar ya las "libera" (salen en color).
 const CALM_ROOMS := [Room.RoomType.START, Room.RoomType.SHOP, Room.RoomType.SECRET, Room.RoomType.LORE,
@@ -515,11 +515,13 @@ func _doors_to_secret_rooms() -> Array:
 
 func _build_puzzle(room: Room) -> void:
 	if room.has_meta("puzzle"):
-		room.get_meta("puzzle").play()  # al volver a entrar, repite la secuencia
+		room.get_meta("puzzle").replay()  # al volver a entrar (la memoria repite la secuencia)
 		return
-	var pz := PUZZLE_PLATES.new()
-	pz.length = 3 + RunManager.depth_i(_run_manager.current_floor) / 2
-	pz.position = room.get_center_position()
+	# Los acertijos no se explican: se silencia la frase generica con instrucciones y el
+	# narrador solo comenta de pasada (puzzles.json); las pistas llegan tras fallar.
+	Narrator._seen["puzzle_start"] = true
+	Narrator.say_first("pz_start")
+	var pz: Puzzle = PUZZLE_PLATES.create(room, _run_manager.current_seed * 31 + _run_manager.current_floor)
 	pz.solved.connect(_on_puzzle_solved.bind(room))
 	room.set_meta("puzzle", pz)
 	room.props_node.add_child.call_deferred(pz)  # se entra desde un callback de fisica

@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://b7otqqsfkcsp5"
+
+[deps]
+
+files=["res://locale/puzzles.es.translation", "res://locale/puzzles.en.translation"]
+
+source_file="res://locale/puzzles.csv"
+dest_files=["res://locale/puzzles.es.translation", "res://locale/puzzles.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
