@@ -65,9 +65,18 @@ static func key_color(k: String) -> Color:
 ## Lo llama Door._ready: crea la mision una vez por piso (main se recarga con cada piso).
 static func ensure(tree: SceneTree) -> void:
 	var m := tree.get_first_node_in_group("main") if tree else null
-	if m == null or m.has_meta("key_quests") or not ("dungeon_generator" in m):
+	if m == null or not ("dungeon_generator" in m):
 		return
-	m.set_meta("key_quests", true)
+	# Una mision por piso: main no se recarga al bajar, asi que se rehace cuando cambia la mazmorra.
+	var floor_root: Variant = m.get("dungeon_root")
+	var key: int = floor_root.get_instance_id() if floor_root is Object and is_instance_valid(floor_root) else 0
+	if m.has_meta("key_quests") and int(m.get_meta("key_quests")) == key:
+		return
+	m.set_meta("key_quests", key)
+	var old := m.get_node_or_null("KeyQuests")
+	if old:
+		old.name = "KeyQuestsOld"
+		old.queue_free()
 	var kq := KeyQuests.new()
 	kq.name = "KeyQuests"
 	kq.main = m
