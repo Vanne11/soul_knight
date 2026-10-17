@@ -231,6 +231,11 @@ func _on_boss_health_changed(boss_name: String, current: float, max_hp: float) -
 	_boss_bar.get_parent().visible = current > 0.0
 
 func _notification(what: int) -> void:
+	# cambio de idioma en plena partida (Ajustes desde la pausa): rehacer los textos
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready() and is_instance_valid(_runs):
+		_update_floor_label()
+		intox_label.text = tr("INTOX_TIER_%d" % _stats.intoxication_tier)
+		return
 	if what == NOTIFICATION_PREDELETE:
 		# Absolute get_node() is invalid once the node has left the tree,
 		# so use the cached autoload references and guard each connection.
