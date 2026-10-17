@@ -218,7 +218,7 @@ func die(killer: Node = null) -> void:
 
 func _drop_loot() -> void:
 	for drop in drop_table:
-		if RNG.randf() < drop.chance:
+		if RNG.randf() < drop.chance * get_node("/root/PlayerStats").loot_chance_modifier:
 			var pickup = ITEM_PICKUP_SCENE.instantiate()
 			pickup.item_id = drop.item_id
 			# El contenedor es la sala (Node2D desplazado): en su espacio local, no en el global

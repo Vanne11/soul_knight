@@ -261,7 +261,10 @@ func _handle_movement(delta: float) -> void:
 		speed_mult *= ability.speed_mult()
 	var st := _status()  # estados de enemigos (status_effects.gd): enrollado, jaula, correa...
 	if st != null:
-		speed_mult *= st.speed_mult()
+		var slow: float = st.speed_mult()
+		if slow < 1.0 and get_node("/root/PlayerStats").has_item_immunity("slow"):
+			slow = 1.0  # Lubricante: inmune a ralentizacion
+		speed_mult *= slow
 	velocity = input_dir * move_speed * speed_mult
 	if st != null:
 		velocity += st.pull_velocity()
@@ -278,7 +281,7 @@ func _handle_dash(delta: float) -> void:
 	if st != null and st.blocks_dash():
 		return
 	if Input.is_action_just_pressed("dash") and not Narrator.ate_input() and not is_dashing and _dash_cooldown_timer <= 0.0 and _dash_left > 0:
-		if get_node("/root/PlayerStats").use_stamina(dash_stamina_cost):
+		if get_node("/root/PlayerStats").use_stamina(dash_stamina_cost * get_node("/root/PlayerStats").dash_cost_modifier):
 			_start_dash()
 		else:
 			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("FX_NO_STAMINA"), Color.YELLOW)
@@ -303,7 +306,7 @@ func _start_dash() -> void:
 	# El dash atraviesa enemigos: un cerco de bichos ya no te deja sin salida.
 	set_collision_mask_value(ENEMY_LAYER, false)
 	Sound.play("dash")
-	velocity = dir * dash_speed * get_node("/root/PlayerStats").speed_modifier
+	velocity = dir * dash_speed * get_node("/root/PlayerStats").speed_modifier * get_node("/root/PlayerStats").dash_speed_modifier
 	get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("FX_DASH"), Color.CYAN)
 	if _rm().blessing("equilibrio") > 0 and current_weapon:
 		_ring(10, get_weapon_damage() * _player_stats.damage_modifier)

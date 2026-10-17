@@ -46,6 +46,11 @@ var crit_damage_modifier: float = 1.5
 var lifesteal: float = 0.0
 var projectile_speed_modifier: float = 1.0
 var fire_rate_modifier: float = 1.0
+## Reliquias (Lubricante, Anticonceptivo, Higado): dash y botin, intoxicacion ganada.
+var dash_speed_modifier: float = 1.0
+var dash_cost_modifier: float = 1.0
+var intox_gain_modifier: float = 1.0
+var loot_chance_modifier: float = 1.0
 
 ## Estados temporales de objetos (ver apply_item_effect): regeneracion, reduccion de dano,
 ## mejoras de stat con duracion, golpes absorbidos y revivir.
@@ -96,6 +101,11 @@ func reset_for_new_run() -> void:
 	lifesteal = 0.0
 	projectile_speed_modifier = 1.0
 	fire_rate_modifier = 1.0
+	dash_speed_modifier = 1.0
+	dash_cost_modifier = 1.0
+	intox_gain_modifier = 1.0
+	loot_chance_modifier = 1.0
+	shield_regen_rate = 15.0
 	_shield_regen_timer = 0.0
 	_last_damage_time = 0.0
 	clear_contagion()
@@ -265,6 +275,8 @@ func use_stamina(amount: float) -> bool:
 	return false
 
 func add_intoxication(amount: float) -> void:
+	if amount > 0.0:
+		amount *= intox_gain_modifier
 	intoxication_level = clampf(intoxication_level + amount, 0.0, max_intoxication)
 	_update_intoxication_tier()
 	intoxication_changed.emit(intoxication_level, intoxication_tier)
@@ -302,6 +314,11 @@ func apply_stat_mod(stat: String, value: float) -> void:
 		"projectile_speed": projectile_speed_modifier *= value
 		"fire_rate": fire_rate_modifier *= value
 		"stamina_regen": stamina_regen_rate *= value
+		"dash_speed": dash_speed_modifier *= value
+		"dash_stamina_cost": dash_cost_modifier *= value
+		"intoxication_resistance": intox_gain_modifier *= value  # 0.7 = 30% menos intoxicacion ganada
+		"loot_chance": loot_chance_modifier *= value
+		"shield_regen_rate": shield_regen_rate += value  # suma puntos/s a la regeneracion de escudo
 		"stamina": # restaura estamina (cafe, bebida energetica...), no es un multiplicador
 			current_stamina = minf(max_stamina, current_stamina + value)
 			stamina_changed.emit(current_stamina, max_stamina)
@@ -374,6 +391,10 @@ var contagion_blocked_count: int = 0  # veces que el preservativo te salvo (para
 
 ## True si llevas algo con efecto de inmunidad "its". Las armas solo valen en la mano.
 func is_protected() -> bool:
+	return has_item_immunity(CONTAGION_IMMUNITY_ID)
+
+## True si llevas algo con inmunidad `id` ("its", "slow", "root"...). Las armas solo valen en la mano.
+func has_item_immunity(immunity: String) -> bool:
 	var player := get_tree().get_first_node_in_group("player")
 	if player == null or not ("collected_items" in player):
 		return false
@@ -385,7 +406,7 @@ func is_protected() -> bool:
 		if item.equip_slot == Item.EquipSlot.WEAPON and not ("current_weapon" in player and player.current_weapon == item):
 			continue
 		for fx in item.effects:
-			if fx is Dictionary and int(fx.get("type", -1)) == 4 and CONTAGION_IMMUNITY_ID in fx.get("custom_data", {}).get("immunity", []):
+			if fx is Dictionary and int(fx.get("type", -1)) == 4 and immunity in fx.get("custom_data", {}).get("immunity", []):
 				return true
 	return false
 
