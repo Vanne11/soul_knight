@@ -138,6 +138,10 @@ func _start_lunge() -> void:
 	animated_sprite.offset.x = 0.0
 	animated_sprite.modulate = Color(1.4, 0.5, 0.5)
 	_hit_done = false
+	# los que muerden (Especulo) cierran la boca al embestir
+	if animated_sprite.sprite_frames.has_animation("bite"):
+		animated_sprite.play("bite")
+		get_node("/root/Sound").play("bite")
 
 ## Golpe activo: mira a quien solapa el hitbox AHORA. No se usa area_entered
 ## porque al apagar monitorable Godot no borra el solape y el siguiente ataque

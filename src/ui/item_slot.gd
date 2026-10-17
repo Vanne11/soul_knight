@@ -1,4 +1,4 @@
-extends PanelContainer
+extends Control
 class_name ItemSlot
 
 ## UI slot for consumable items
@@ -14,6 +14,8 @@ var slot_index: int = 0
 func setup(index: int, key_text: String) -> void:
 	slot_index = index
 	key_label.text = key_text
+	HudStyle.style_label(key_label, 16, HudStyle.GOLD, true)
+	HudStyle.style_label(count_label, 16, HudStyle.CREAM)
 	clear()
 
 func set_item(item_id_new: String, qty: int) -> void:

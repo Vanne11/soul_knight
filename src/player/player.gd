@@ -24,6 +24,9 @@ var _last_move_direction: Vector2 = Vector2.DOWN
 const HIT_IFRAMES := 0.8
 var _iframes: float = 0.0
 var _attack_anim: float = 0.0
+## Tras disparar, el cuerpo sigue mirando al objetivo este rato aunque camines.
+const FACE_AIM_MS := 600
+var _last_shot_ms := -100000
 ## Alergia a la hormona del reino contrario: estornudos que te desplazan sin querer.
 var _allergy: float = 0.0
 var _sneeze_in: float = 0.0
@@ -196,18 +199,36 @@ func _update_aim() -> void:
 	# el arma apunta siempre a donde vas a disparar
 	weapon_pivot.rotation = _aim.angle()
 	weapon_sprite.flip_v = _aim.x < 0
-	animated_sprite.flip_h = _aim.x < 0
+	# el cuerpo mira hacia donde caminas; solo se gira al raton mientras disparas
+	# (si no, con el raton quieto a un lado caminaba de espaldas)
+	var face_x := _aim.x
+	if absf(velocity.x) > 10.0 and not Input.is_action_pressed("attack") \
+			and Time.get_ticks_msec() - _last_shot_ms > FACE_AIM_MS:
+		face_x = velocity.x
+	animated_sprite.flip_h = face_x < 0
 
 func _home_bonus() -> float:
 	var rm = get_node("/root/RunManager")
 	return 1.15 if rm.floor_data().kingdom == rm.character_data().kingdom else 1.0
 
 func _shoot() -> void:
+	_last_shot_ms = Time.get_ticks_msec()
 	Sound.play("shoot")
 	var cd: Dictionary = current_weapon.custom_data
 	var effects = _player_stats.get_intoxication_effects()
 	var accuracy: float = maxf(0.2, _player_stats.accuracy_modifier * _get_effect_multiplier(effects, "accuracy") * _weapon_mod("accuracy"))
 	var dmg: float = get_weapon_damage() * _player_stats.damage_modifier * _get_effect_multiplier(effects, "damage") * _weapon_mod("damage") * _home_bonus()
+	# Satisfyer: en vez de balas lanza un vortice que succiona (base_damage = dano por tic)
+	if cd.has("vortex"):
+		_attack_anim = 0.15
+		var v := SuctionVortex.new()
+		v.damage = dmg * (_player_stats.crit_damage_modifier if RNG.randf() < _player_stats.crit_chance_modifier else 1.0)
+		v.radius = float(cd.get("vortex_radius", v.radius))
+		v.duration = float(cd.get("vortex_duration", v.duration))
+		v.rotation = _aim.angle()
+		get_parent().add_child(v)
+		v.global_position = weapon_pivot.global_position + _aim * 14.0
+		return
 	var count: int = int(cd.get("pellets", cd.get("projectiles", 1)))
 	# borracho = mas dispersion, no fallos aleatorios
 	var spread: float = float(cd.get("spread", 0.05)) / accuracy

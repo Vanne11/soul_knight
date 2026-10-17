@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "satisfyer"
+display_name = "Satisfyer de Asedio"
+description = "Lanza un pulso que se planta y succiona a todos los enemigos cercanos hacia el centro, dañándolos sin parar. Daño 5 por tic, ROF 0.9s. 'Tecnología de ondas de presión. Los enemigos no se resisten. Nadie se resiste.'"
+rarity = 3
+tags = ["arma"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 400
+custom_data = {"base_damage": 5, "fire_rate": 0.9, "vortex": true, "vortex_radius": 120.0, "vortex_duration": 1.5}

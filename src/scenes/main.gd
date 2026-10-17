@@ -263,6 +263,15 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 		if fd.has("alt_roster") and RNG.randf() < 0.5:
 			roster = fd.alt_roster
 			names = fd.alt_names
+		# indices de ENEMY_SCENES por puesto del roster: 0 melee, 1 ranged, 2 swarmer
+		var types: Array = [0, 1, 2]
+		var weights: Array = fd.weights
+		# bichos extra del piso (aparte del trio fijo): {variant, name, type, weight}
+		for x in fd.get("extra", []):
+			roster = roster + [x.variant]
+			names = names + [x.name]
+			types = types + [x.type]
+			weights = weights + [x.weight]
 		match room.room_type:
 			Room.RoomType.BOSS:
 				info.enemy_type = 4
@@ -280,12 +289,11 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				info.scale = 1.6
 				info.drops.append({"item_id": "health_large", "chance": 0.8})
 			_:
-				var t := _weighted_index(fd.weights)
-				# indices de ENEMY_SCENES: 0 melee, 1 ranged, 2 swarmer
-				info.enemy_type = t
+				var t := _weighted_index(weights)
+				info.enemy_type = types[t]
 				info.name = names[t]
 				info.frames = _frames_path(roster[t])
-				if t == 2:
+				if types[t] == 2:
 					info.group = 3  # los enjambres nunca vienen solos
 				if room.room_type == Room.RoomType.INTOXICATION:
 					info.drops.append({"item_id": "whiskey", "chance": 0.5})

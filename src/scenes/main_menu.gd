@@ -7,120 +7,136 @@ func _ready() -> void:
 	_update_meta_info()
 
 func _create_ui() -> void:
-	var bg = ColorRect.new()
-	bg.color = Color("2a1440")
-	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
-	add_child(bg)
-	
-	var vbox = VBoxContainer.new()
-	vbox.set_anchors_preset(Control.PRESET_FULL_RECT)
-	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-	vbox.add_theme_constant_override("separation", 15)
-	bg.add_child(vbox)
-	
-	var title = Label.new()
-	title.text = "ROGUE REPRODUCTIVE"
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 64)
-	title.add_theme_color_override("font_color", Color("ff4f9a"))
-	vbox.add_child(title)
-	
-	var subtitle = Label.new()
-	subtitle.text = "La Gran Censura: un roguelike sobre órganos, hormonas y malas decisiones"
-	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	subtitle.add_theme_font_size_override("font_size", 20)
-	subtitle.add_theme_color_override("font_color", Color(0.8, 0.6, 0.7, 1))
-	vbox.add_child(subtitle)
-	
-	vbox.add_child(_world_strip())
-	
-	var spacer = Control.new()
-	spacer.custom_minimum_size = Vector2(0, 24)
-	vbox.add_child(spacer)
-	
-	var start_btn = Button.new()
-	start_btn.text = "NUEVA RUN"
-	start_btn.custom_minimum_size = Vector2(300, 60)
-	start_btn.pressed.connect(_on_start)
-	vbox.add_child(start_btn)
-	
-	var continue_btn = Button.new()
-	continue_btn.text = "MEJORAS (HUESOS)"
-	continue_btn.custom_minimum_size = Vector2(300, 60)
-	continue_btn.pressed.connect(_open_upgrades)
-	vbox.add_child(continue_btn)
-	
-	var lore_btn = Button.new()
-	lore_btn.text = "CÓDICE (LORE)"
-	lore_btn.custom_minimum_size = Vector2(300, 60)
-	lore_btn.pressed.connect(_open_codex)
-	vbox.add_child(lore_btn)
-	
-	var settings_btn = Button.new()
-	settings_btn.text = "AJUSTES (WIP)"
-	settings_btn.custom_minimum_size = Vector2(300, 60)
+	var root := Control.new()
+	root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.theme = HudStyle.menu_theme()
+	root.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	add_child(root)
+	_root = root
+
+	# ilustracion de portada (320x180 a 4x, ver tools/gen_intro_art.py menu)
+	var art := TextureRect.new()
+	art.texture = load("res://assets/sprites/ui/screens/menu.png")
+	art.set_anchors_preset(Control.PRESET_FULL_RECT)
+	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(art)
+
+	_build_logo(root)
+
+	# botones: panel a la izquierda (los heroes de la ilustracion quedan al centro)
+	var panel := PanelContainer.new()
+	panel.position = Vector2(36, 190)
+	panel.custom_minimum_size = Vector2(300, 0)
+	root.add_child(panel)
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 10)
+	panel.add_child(vbox)
+
+	start_btn = _menu_button(vbox, "NUEVA PARTIDA", _on_start)
+	continue_btn = _menu_button(vbox, "MEJORAS", _open_upgrades)
+	lore_btn = _menu_button(vbox, "CÓDICE", _open_codex)
+	settings_btn = _menu_button(vbox, "AJUSTES (WIP)", func(): pass)
 	settings_btn.disabled = true  # settings_menu.tscn aun no existe
-	vbox.add_child(settings_btn)
-	
-	var quit_btn = Button.new()
-	quit_btn.text = "SALIR"
-	quit_btn.custom_minimum_size = Vector2(300, 60)
-	quit_btn.pressed.connect(_on_quit)
-	vbox.add_child(quit_btn)
-	
-	var meta_info = Label.new()
-	meta_info.text = "Moneda: 0 | Perks: 0 | Lore: 0%"
-	meta_info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	meta_info.add_theme_font_size_override("font_size", 16)
-	meta_info.add_theme_color_override("font_color", Color(0.6, 0.5, 0.6, 1))
-	vbox.add_child(meta_info)
-	
-	for b in [start_btn, continue_btn, lore_btn, settings_btn, quit_btn]:
-		b.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	quit_btn = _menu_button(vbox, "SALIR", _on_quit)
 	start_btn.grab_focus.call_deferred()
-	
-	# Store references
-	self.start_btn = start_btn
-	self.continue_btn = continue_btn
-	self.lore_btn = lore_btn
-	self.settings_btn = settings_btn
-	self.quit_btn = quit_btn
-	self.meta_info = meta_info
+
+	# derecha: el mundo (regiones liberadas) + tu progreso
+	var side := PanelContainer.new()
+	side.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	side.offset_left = -326
+	side.offset_right = -36
+	side.offset_top = 190
+	root.add_child(side)
+	var sv := VBoxContainer.new()
+	sv.add_theme_constant_override("separation", 8)
+	side.add_child(sv)
+	sv.add_child(HudStyle.pixel_label("EL MUNDO", 16, HudStyle.GOLD, true))
+	sv.add_child(_world_strip())
+	var meta_box := VBoxContainer.new()
+	meta_box.add_theme_constant_override("separation", 4)
+	sv.add_child(meta_box)
+	_meta_box = meta_box
+
+
+func _menu_button(parent: Control, text: String, cb: Callable) -> Button:
+	var b := Button.new()
+	b.text = text
+	b.custom_minimum_size = Vector2(0, 46)
+	b.pressed.connect(cb)
+	HudStyle.juice_button(b)
+	parent.add_child(b)
+	return b
+
+
+## Logo: Silkscreen gordo con dos sombras duras (morado + oro) y un vaivén suave.
+func _build_logo(root: Control) -> void:
+	var holder := Control.new()
+	holder.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	holder.offset_top = 22
+	holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(holder)
+	var layers := [[Vector2(8, 8), Color("1a0b26")], [Vector2(4, 4), Color("b08d4a")], [Vector2.ZERO, Color("ff4f9a")]]
+	for l in layers:
+		var t := HudStyle.pixel_label("ROGUE REPRODUCTIVE", 64, l[1], true)
+		t.add_theme_constant_override("shadow_offset_x", 0)
+		t.add_theme_constant_override("shadow_offset_y", 0)
+		t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		t.position = Vector2(-640, 0) + l[0]
+		t.size = Vector2(1280, 80)
+		holder.add_child(t)
+	# subtitulo en una cinta oscura: sobre las nubes no se leia
+	var ribbon := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.1, 0.05, 0.15, 0.82)
+	sb.set_content_margin_all(6)
+	sb.content_margin_left = 14
+	sb.content_margin_right = 14
+	ribbon.add_theme_stylebox_override("panel", sb)
+	ribbon.add_child(HudStyle.pixel_label("LA GRAN CENSURA · ÓRGANOS, HORMONAS Y MALAS DECISIONES", 16, HudStyle.CREAM))
+	holder.add_child(ribbon)
+	ribbon.size = ribbon.get_combined_minimum_size()
+	ribbon.position = Vector2(-roundf(ribbon.size.x / 2.0), 90)
+	_logo = holder
+	_logo_y = holder.position.y
+
+
+## Vaiven del logo en pixeles enteros (un tween lo dejaria en medio pixel: borroso).
+var _t := 0.0
+var _logo_y := 0.0
+func _process(delta: float) -> void:
+	_t += delta
+	if _logo:
+		_logo.position.y = _logo_y + roundf(sin(_t * 2.4) * 3.0)
 
 ## El mundo: cada region liberada alguna vez sale en su color; las demas, grises.
 ## Es lo que se gana a la larga, a la vista nada mas abrir el juego.
 func _world_strip() -> Control:
 	var rm = _game_controller.get_run_manager()
 	var col := VBoxContainer.new()
-	col.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 6)
-	col.add_child(row)
+	col.add_theme_constant_override("separation", 4)
 	for i in RunManager.FLOORS.size():
 		var f: Dictionary = RunManager.FLOORS[i]
 		var free: bool = rm.is_liberated(i + 1)
-		var cell := PanelContainer.new()
-		var sb := StyleBoxFlat.new()
-		sb.bg_color = f.tint.darkened(0.45) if free else Color(0.22, 0.22, 0.25)
-		sb.border_color = f.tint if free else Color(0.4, 0.4, 0.44)
-		sb.set_border_width_all(2)
-		sb.set_content_margin_all(8)
-		cell.add_theme_stylebox_override("panel", sb)
-		var l := Label.new()
-		l.text = f.name.replace("EL PALACIO DE LA ", "PALACIO\n").replace("LA SELVA ", "SELVA\n").replace("EL ", "")
-		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		l.custom_minimum_size = Vector2(120, 0)
-		l.add_theme_font_size_override("font_size", 13)
-		l.add_theme_color_override("font_color", f.tint.lightened(0.3) if free else Color(0.55, 0.55, 0.6))
-		cell.add_child(l)
-		row.add_child(cell)
-	var caption := Label.new()
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 8)
+		var dot := ColorRect.new()
+		dot.custom_minimum_size = Vector2(12, 12)
+		dot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		dot.color = f.tint if free else Color(0.4, 0.4, 0.44)
+		row.add_child(dot)
+		row.add_child(HudStyle.pixel_label("%d %s" % [i + 1, f.name.replace("EL PALACIO DE LA ", "PALACIO ")], 16,
+			f.tint.lightened(0.2) if free else Color(0.55, 0.55, 0.6)))
+		col.add_child(row)
 	var n: int = rm.liberated.size()
-	caption.text = "El mundo sigue gris. Libera una región derrotando a su jefe: se queda a color para siempre." if n == 0 \
-		else "%d de %d regiones liberadas para siempre. Cada una te regala una bendición al llegar." % [n, RunManager.FLOORS.size()]
-	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var caption := Label.new()
+	caption.text = "El mundo sigue gris. Libera una región venciendo a su jefe: queda a color para siempre." if n == 0 \
+		else "%d de %d regiones liberadas. Cada una te regala una bendición al llegar." % [n, RunManager.FLOORS.size()]
+	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	caption.custom_minimum_size.x = 250
 	caption.add_theme_font_size_override("font_size", 13)
-	caption.add_theme_color_override("font_color", Color(0.75, 0.65, 0.7))
+	caption.add_theme_color_override("font_color", Color(0.8, 0.72, 0.78))
 	col.add_child(caption)
 	return col
 
@@ -129,12 +145,21 @@ var continue_btn: Button
 var lore_btn: Button
 var settings_btn: Button
 var quit_btn: Button
-var meta_info: Label
+var _meta_box: VBoxContainer
+var _root: Control
+var _logo: Control
 
 func _update_meta_info() -> void:
 	var rm = _game_controller.get_run_manager()
 	var lore_pct = _game_controller.get_lore_database().get_completion_percentage()
-	meta_info.text = "Huesos: %d  |  Mejor piso: %d  |  Códice: %.0f%%" % [rm.meta_currency, rm.best_floor, lore_pct]
+	for c in _meta_box.get_children():
+		c.queue_free()
+	for pair in [["bone", "%d HUESOS" % rm.meta_currency], ["stairs", "MEJOR PISO %d" % rm.best_floor], ["skull", "CÓDICE %.0f%%" % lore_pct]]:
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 8)
+		row.add_child(HudStyle.icon(pair[0]))
+		row.add_child(HudStyle.pixel_label(pair[1], 16))
+		_meta_box.add_child(row)
 
 # ---------------------------------------------------------------- ventanas
 ## Ventana encima del menu con titulo, contenido y "Volver".
@@ -143,21 +168,12 @@ func _window(title_text: String) -> VBoxContainer:
 	panel.set_anchors_preset(Control.PRESET_FULL_RECT)
 	panel.offset_left = 120; panel.offset_right = -120
 	panel.offset_top = 60; panel.offset_bottom = -60
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.05, 0.04, 0.06, 0.97)
-	sb.border_color = Color("b08d4a")
-	sb.set_border_width_all(2)
-	sb.set_content_margin_all(20)
-	panel.add_theme_stylebox_override("panel", sb)
-	add_child(panel)
+	panel.add_theme_stylebox_override("panel", HudStyle.panel_box(22))
+	_root.add_child(panel)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 12)
 	panel.add_child(box)
-	var t := Label.new()
-	t.text = title_text
-	t.add_theme_font_size_override("font_size", 28)
-	t.add_theme_color_override("font_color", Color("ff4f9a"))
-	box.add_child(t)
+	box.add_child(HudStyle.pixel_label(title_text, 24, Color("ff4f9a"), true))
 	var back := Button.new()
 	back.text = "VOLVER"
 	back.pressed.connect(func():

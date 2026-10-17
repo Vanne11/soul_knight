@@ -100,12 +100,8 @@ func _make_box(half_width: int) -> PanelContainer:
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.custom_minimum_size.x = half_width * 2
 	panel.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	var box := StyleBoxFlat.new()
-	box.bg_color = Color(0.05, 0.04, 0.06, 0.88)
-	box.border_color = Color("b08d4a")
-	box.set_border_width_all(2)
-	box.set_content_margin_all(12)
-	panel.add_theme_stylebox_override("panel", box)
+	panel.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	panel.add_theme_stylebox_override("panel", HudStyle.panel_box(16))
 	var label := RichTextLabel.new()
 	label.bbcode_enabled = true
 	label.fit_content = true

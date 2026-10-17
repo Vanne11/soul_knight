@@ -6,6 +6,7 @@ class_name RunManager
 ## Historia "La Gran Censura": cruzas los dos reinos hasta el palacio de la
 ## Hoja de Parra. Ganar = matar al jefe del ultimo piso.
 ## roster: [melee, ranged, swarmer] -> variante de sprite (assets/sprites/enemies/<v>_sprite_frames.tres)
+## extra: bichos opcionales del piso aparte del trio (type = indice de ENEMY_SCENES en main.gd).
 ## needs: hormonas que exige la Puerta Hormonal de la sala del jefe.
 ## tint: color de la sala cuando la liberas (antes de eso esta gris: censurada).
 const FLOORS := [
@@ -17,10 +18,12 @@ const FLOORS := [
 		"weights": [0.45, 0.20, 0.35], "boss": "testiculo_primordial", "boss_name": "TESTÍCULO PRIMORDIAL", "needs": ["testosterona"]},
 	{"name": "VULVANIA", "kingdom": "vulva", "tint": Color("ff7ac0"),
 		"roster": ["ovulo", "trompa", "calambre"], "names": ["Óvulo Rodante", "Trompa Escupidora", "Calambre"],
+		"extra": [{"variant": "especulo", "name": "Espéculo Mordedor", "type": 0, "weight": 0.25}],
 		"weights": [0.40, 0.30, 0.30], "boss": "reina_ovaria", "boss_name": "SU MAJESTAD OVARIA II", "needs": ["estrogeno"]},
 	{"name": "EL PERINEO", "kingdom": "mixto", "tint": Color("ffc93c"),
 		"roster": ["testiculo", "trompa", "calambre"], "names": ["Testículo Errante", "Trompa Escupidora", "Calambre"],
 		"alt_roster": ["ovulo", "vesicula", "espermatozoide"], "alt_names": ["Óvulo Rodante", "Vesícula Resentida", "Espermatozoide"],
+		"extra": [{"variant": "especulo", "name": "Espéculo Mordedor", "type": 0, "weight": 0.25}],
 		"weights": [0.35, 0.35, 0.30], "boss": "aduanero", "boss_name": "EL ADUANERO HORMONAL", "needs": ["testosterona", "estrogeno"]},
 	{"name": "EL PALACIO DE LA CENSURA", "kingdom": "censura", "tint": Color("b48cff"),
 		"roster": ["barra_negra", "sello", "pixel_censura"], "names": ["Barra Negra", "Sello Censor", "Píxel de Censura"],
@@ -160,6 +163,8 @@ var best_floor := 0
 var total_runs := 0
 ## Huesos ganados en la ultima partida (los ensena game_over).
 var last_huesos := 0
+## Duracion de la ultima partida: get_run_data() da 0 cuando ya termino (game over).
+var last_run_time := 0.0
 
 func _ready() -> void:
 	var data = load_meta_progression()
@@ -224,6 +229,7 @@ func end_run(victory: bool = false) -> void:
 	run_active = false
 	last_run_victory = victory
 	var run_time = Time.get_ticks_msec() / 1000.0 - run_start_time
+	last_run_time = run_time
 	var stats = {
 		"seed": current_seed,
 		"victory": victory,
@@ -275,7 +281,7 @@ func get_run_data() -> Dictionary:
 		"enemies_killed": total_enemies_killed,
 		"damage_dealt": total_damage_dealt,
 		"damage_taken": total_damage_taken,
-		"time": Time.get_ticks_msec() / 1000.0 - run_start_time if run_active else 0
+		"time": Time.get_ticks_msec() / 1000.0 - run_start_time if run_active else last_run_time
 	}
 
 func save_meta_progression() -> void:

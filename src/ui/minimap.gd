@@ -23,13 +23,13 @@ var _big := false
 var _font: Font
 var _label: Label
 
+var _frame := HudStyle.panel_box(0)
+
 func _ready() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_font = ThemeDB.fallback_font
-	_label = Label.new()
-	_label.add_theme_font_size_override("font_size", 12)
-	_label.add_theme_color_override("font_outline_color", Color("0d0b0f"))
-	_label.add_theme_constant_override("outline_size", 4)
+	_label = HudStyle.pixel_label("", 16)
 	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(_label)
 	_resize()
@@ -44,8 +44,9 @@ func _resize() -> void:
 		set_anchors_preset(Control.PRESET_TOP_RIGHT)
 		offset_left = -s.x - 10; offset_right = -10
 		offset_top = HUD.BAND + 6; offset_bottom = HUD.BAND + 6 + s.y
-	_label.position = Vector2(0, s.y + 2)
-	_label.size = Vector2(s.x, 20)
+	# mas ancho que el mapa y alineado a la derecha: el texto crece hacia la izquierda
+	_label.position = Vector2(-200, s.y + 4)
+	_label.size = Vector2(s.x + 200, 20)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_M:
@@ -86,8 +87,7 @@ func _draw() -> void:
 	var k: float = minf(box.x / bounds.size.x, box.y / bounds.size.y)
 	var origin := Vector2(6, 6) + (box - Vector2(bounds.size) * k) / 2 - Vector2(bounds.position) * k
 
-	draw_rect(Rect2(Vector2.ZERO, size), Color(0.05, 0.04, 0.06, 0.85))
-	draw_rect(Rect2(Vector2.ZERO, size), Color("b08d4a"), false, 2.0)
+	draw_style_box(_frame, Rect2(Vector2.ZERO, size))
 
 	var rect_of := func(pos: Vector2i) -> Rect2:
 		return Rect2(origin + Vector2(pos) * k, Vector2(gen.room_sizes.get(pos, Vector2i(8, 6))) * k)
@@ -123,4 +123,4 @@ func _draw() -> void:
 			draw_string(_font, Vector2(r.position.x, r.get_center().y + fs * 0.35), icon, HORIZONTAL_ALIGNMENT_CENTER, r.size.x, fs, col)
 
 	if current:
-		_label.text = "Sala: %s   [M] mapa" % ROOM_NAMES.get(current.room_type, "?")
+		_label.text = "%s · [M] mapa" % ROOM_NAMES.get(current.room_type, "?")

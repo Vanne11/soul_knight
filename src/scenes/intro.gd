@@ -9,12 +9,26 @@ const CARD_COLORS := {"pitocles": Color("6ec6ff"), "vulvalquiria": Color("ff7ac0
 var _slides: Array = []
 var _slide := -1
 var _bg: ColorRect
-var _story: Label
+## Ilustracion de la diapositiva (assets/sprites/intro/slide_NN.png, 320x180 a 4x)
+## y la anterior debajo para el fundido.
+var _art: TextureRect
+var _art_prev: TextureRect
+var _shade: TextureRect
+var _story: RichTextLabel
 var _hint: Label
+var _more: Label
+var _more_tween: Tween
+var _more_base_y := 0.0
 var _select: Control
 var _tween: Tween
-## Letras por segundo al escribir la historia.
-const CHARS_PER_SEC := 22.0
+## Letras por segundo al escribir la historia (mas pausas en la puntuacion).
+const CHARS_PER_SEC := 55.0
+const PAUSES := {".": 0.32, "!": 0.32, "?": 0.32, ":": 0.22, ",": 0.12}
+## Palabras en MAYUSCULAS de la historia: se pintan del color de su reino.
+const WORD_COLORS := {"PENELANDIA": "6ec6ff", "VULVANIA": "ff7ac0", "LA HOJA DE PARRA": "7fe0a0", "GRIS": "9a9aa6"}
+var _plain := ""      ## texto sin bbcode: lo que se va "diciendo"
+var _shown := 0.0     ## letras visibles (fraccionario)
+var _wait := 0.0      ## pausa por puntuacion
 ## Tras completarse una frase, pausa antes de aceptar "seguir": sin ella una
 ## doble pulsacion completaba una frase y se saltaba la siguiente sin leerla.
 const READ_LOCK_MS := 600
@@ -26,23 +40,85 @@ func _ready() -> void:
 	_bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_bg.color = Color("2a1440")
 	add_child(_bg)
+	_art_prev = _make_art()
+	_art = _make_art()
+	# degradado oscuro abajo: el texto se lee sobre cualquier ilustracion
+	var g := Gradient.new()
+	g.set_color(0, Color(0.05, 0.03, 0.08, 0.0))
+	g.set_color(1, Color(0.05, 0.03, 0.08, 0.92))
+	g.add_point(0.45, Color(0.05, 0.03, 0.08, 0.0))
+	var gt := GradientTexture2D.new()
+	gt.gradient = g
+	gt.fill_from = Vector2(0, 0)
+	gt.fill_to = Vector2(0, 1)
+	gt.width = 4
+	gt.height = 128
+	_shade = TextureRect.new()
+	_shade.texture = gt
+	_shade.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_shade.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_shade.stretch_mode = TextureRect.STRETCH_SCALE
+	_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_shade)
 	_build_story()
 	_build_select()
 	_slides = Narrator.get_lines("intro_slides")
 	_next_slide()
 
 
+func _make_art() -> TextureRect:
+	var t := TextureRect.new()
+	t.set_anchors_preset(Control.PRESET_FULL_RECT)
+	t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	t.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	t.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(t)
+	return t
+
+
+func _set_art(i: int) -> void:
+	var path := "res://assets/sprites/intro/slide_%02d.png" % i
+	_art_prev.texture = _art.texture
+	_art.texture = load(path) if ResourceLoader.exists(path) else null
+	_art.modulate.a = 0.0
+	create_tween().tween_property(_art, "modulate:a", 1.0, 0.45)
+
+
 func _build_story() -> void:
-	_story = Label.new()
-	_story.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_story.offset_left = 160
-	_story.offset_right = -160
-	_story.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_story = RichTextLabel.new()
+	_story.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	_story.offset_left = 140
+	_story.offset_right = -140
+	_story.offset_top = -270
+	_story.offset_bottom = -100
+	_story.bbcode_enabled = true
+	_story.scroll_active = false
 	_story.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_story.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_story.add_theme_font_size_override("font_size", 30)
-	_story.add_theme_color_override("font_color", Color("fff1d6"))
+	_story.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_story.add_theme_font_size_override("normal_font_size", 30)
+	_story.add_theme_color_override("default_color", Color("fff1d6"))
+	_story.add_theme_color_override("font_outline_color", Color("1a0b26"))
+	_story.add_theme_constant_override("outline_size", 8)
+	# efectos propios que mueven las letras de a pixel entero: [wave]/[shake]
+	# las dejan en medio pixel y se ven borrosas
+	_story.install_effect(Bob.new())
+	_story.install_effect(Jitter.new())
 	add_child(_story)
+	# flechita que late cuando la frase ya termino
+	_more = Label.new()
+	_more.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	_more.offset_top = -100
+	_more.offset_left = -20
+	_more.offset_right = 20
+	_more.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_more.text = "▼"
+	_more.add_theme_font_size_override("font_size", 28)
+	_more.add_theme_color_override("font_color", Color("ff4f9a"))
+	_more.visible = false
+	add_child(_more)
+	_more_base_y = _more.position.y
 	_hint = Label.new()
 	_hint.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
 	_hint.offset_top = -60
@@ -59,16 +135,76 @@ func _next_slide() -> void:
 	if _slide >= _slides.size():
 		_show_select()
 		return
-	_story.text = _slides[_slide]
-	_story.visible_ratio = 0.0
+	_set_art(_slide)
+	_story.text = "[center]%s[/center]" % _decorate(_slides[_slide])
+	_plain = _story.get_parsed_text()
+	_story.visible_characters = 0
+	_shown = 0.0
+	_wait = 0.15
+	_more.visible = false
+	_story.modulate.a = 0.0
 	# El fondo pasa de gris (censura) a color segun avanza la historia... y vuelve a gris cuando llega la Hoja.
 	var censored := _slide >= 4
 	if _tween:
 		_tween.kill()
 	_tween = create_tween().set_parallel()
-	_tween.tween_property(_story, "visible_ratio", 1.0, _story.text.length() / CHARS_PER_SEC)
-	_tween.chain().tween_callback(func(): _done_at_ms = Time.get_ticks_msec())
+	_tween.tween_property(_story, "modulate:a", 1.0, 0.2)
 	_tween.tween_property(_bg, "color", Color("3a3a42") if censored else Color("2a1440"), 0.8)
+
+
+## Mayusculas -> color del reino + onda; GRIS tiembla de verguenza.
+func _decorate(line: String) -> String:
+	var re := RegEx.create_from_string("[A-ZÁÉÍÓÚÑ]{2,}(?: [A-ZÁÉÍÓÚÑ]{2,})*")
+	var out := ""
+	var last := 0
+	for m in re.search_all(line):
+		var w := m.get_string()
+		var col: String = WORD_COLORS.get(w, "ff4f9a")
+		var fx := "jitter" if w == "GRIS" else "bob"
+		out += line.substr(last, m.get_start() - last) + "[color=#%s][%s]%s[/%s][/color]" % [col, fx, w, fx.get_slice(" ", 0)]
+		last = m.get_end()
+	return out + line.substr(last)
+
+
+func _process(delta: float) -> void:
+	if not _story.visible or _typing_done():
+		return
+	if _wait > 0.0:
+		_wait -= delta
+		return
+	var before := int(_shown)
+	_shown = minf(_shown + CHARS_PER_SEC * delta, _plain.length())
+	var now := int(_shown)
+	for i in range(before, now):
+		var ch := _plain[i]
+		# una silaba cada dos letras: cada letra suena a ametralladora
+		if i % 2 == 0 and ch.strip_edges() != "" and ch not in PAUSES:
+			Sound.voice(ch)
+		if PAUSES.has(ch) and i < _plain.length() - 1:
+			_wait = PAUSES[ch]
+			now = i + 1
+			_shown = now
+			break
+	_story.visible_characters = now
+	if _typing_done():
+		_finish_typing()
+
+
+func _typing_done() -> bool:
+	return _story.visible_characters < 0 or _story.visible_characters >= _plain.length()
+
+
+func _finish_typing() -> void:
+	_story.visible_characters = -1
+	_done_at_ms = Time.get_ticks_msec()
+	_more.visible = true
+	if _more_tween:
+		_more_tween.kill()
+	var y := _more_base_y
+	_more.position.y = y
+	_more_tween = create_tween().set_loops()
+	_more_tween.tween_property(_more, "position:y", y + 6.0, 0.35).set_trans(Tween.TRANS_SINE)
+	_more_tween.tween_property(_more, "position:y", y, 0.35).set_trans(Tween.TRANS_SINE)
 
 
 func _input(event: InputEvent) -> void:
@@ -77,11 +213,8 @@ func _input(event: InputEvent) -> void:
 	get_viewport().set_input_as_handled()
 	if event.is_action("pause"):
 		_show_select()
-	elif _story.visible_ratio < 1.0:
-		_story.visible_ratio = 1.0  # primero termina de escribir, luego avanza
-		_done_at_ms = Time.get_ticks_msec()
-		if _tween:
-			_tween.kill()
+	elif not _typing_done():
+		_finish_typing()  # primero termina de escribir, luego avanza
 	elif Time.get_ticks_msec() - _done_at_ms >= READ_LOCK_MS:
 		_next_slide()
 
@@ -92,14 +225,13 @@ func _build_select() -> void:
 	_select.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_select.alignment = BoxContainer.ALIGNMENT_CENTER
 	_select.add_theme_constant_override("separation", 18)
+	_select.theme = HudStyle.menu_theme()
+	_select.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(_select)
-	var title := Label.new()
-	title.text = "ELIGE A TU HÉROE"
+	var title := HudStyle.pixel_label("ELIGE A TU HÉROE", 48, Color("ff4f9a"), true)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 46)
-	title.add_theme_color_override("font_color", Color("ff4f9a"))
-	title.add_theme_color_override("font_outline_color", Color("1a0b26"))
-	title.add_theme_constant_override("outline_size", 10)
+	title.add_theme_constant_override("shadow_offset_x", 4)
+	title.add_theme_constant_override("shadow_offset_y", 4)
 	_select.add_child(title)
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -113,7 +245,14 @@ func _build_select() -> void:
 	var story_btn := Button.new()
 	story_btn.text = "Ver la historia otra vez"
 	story_btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	story_btn.pressed.connect(func(): _slide = -1; _select.visible = false; _story.visible = true; _hint.visible = true; _next_slide())
+	story_btn.pressed.connect(func():
+		_slide = -1
+		_select.visible = false
+		_story.visible = true
+		_hint.visible = true
+		for n in [_art, _art_prev, _shade]:
+			n.visible = true
+		_next_slide())
 	_select.add_child(story_btn)
 	_select.visible = false
 	_select.set_meta("first", first_btn)
@@ -158,6 +297,7 @@ func _card(id: String, parent: Control) -> Button:
 	btn.size_flags_vertical = Control.SIZE_SHRINK_END | Control.SIZE_EXPAND
 	btn.pressed.connect(choose.bind(id))
 	btn.name = "Choose_" + id
+	HudStyle.juice_button(btn)
 	v.add_child(btn)
 	return btn
 
@@ -167,6 +307,9 @@ func _show_select() -> void:
 		_tween.kill()
 	_story.visible = false
 	_hint.visible = false
+	_more.visible = false
+	for n in [_art, _art_prev, _shade]:
+		n.visible = false
 	_select.visible = true
 	create_tween().tween_property(_bg, "color", Color("2a1440"), 0.5)
 	(_select.get_meta("first") as Button).grab_focus()
@@ -178,3 +321,20 @@ func choose(id: String) -> void:
 	Narrator.say("select_" + id)
 	rm.start_new_run()
 	get_tree().change_scene_to_file("res://src/scenes/main.tscn")
+
+
+## [bob]: ola suave, letra a letra, en pixeles enteros.
+class Bob extends RichTextEffect:
+	var bbcode := "bob"
+	func _process_custom_fx(c: CharFXTransform) -> bool:
+		c.offset = Vector2(0.0, roundf(sin(c.elapsed_time * 5.0 + c.relative_index * 0.55) * 3.0))
+		return true
+
+
+## [jitter]: tiembla (de verguenza) a saltos de 1 px, 12 veces por segundo.
+class Jitter extends RichTextEffect:
+	var bbcode := "jitter"
+	func _process_custom_fx(c: CharFXTransform) -> bool:
+		var h := absi(hash(int(c.elapsed_time * 12.0) * 31 + c.relative_index))
+		c.offset = Vector2(float(h % 3 - 1), float((h / 3) % 3 - 1))
+		return true

@@ -59,6 +59,18 @@ func play(sfx_name: String, pitch_jitter := 0.06) -> void:
 	p.play()
 
 
+## "Voz" de texto que se escribe: una silaba por letra, el tono sale de la
+## propia letra (misma frase = misma melodia) + pitch base del que habla.
+func voice(ch: String, base_pitch := 1.0) -> void:
+	if not _sfx.has("voice") or ch.is_empty():
+		return
+	var p := _players[_next]
+	_next = (_next + 1) % VOICES
+	p.stream = _sfx["voice"]
+	p.pitch_scale = base_pitch * (0.85 + float(ch.to_lower().unicode_at(0) % 7) * 0.05) + randf_range(-0.03, 0.03)
+	p.play()
+
+
 func music(track: String) -> void:
 	if track == _music_name:
 		return
