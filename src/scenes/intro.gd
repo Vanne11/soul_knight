@@ -321,7 +321,7 @@ func choose(id: String) -> void:
 	rm.character = id
 	Narrator.say("select_" + id)
 	rm.start_new_run()
-	get_tree().change_scene_to_file("res://src/scenes/main.tscn")
+	Transition.change_scene("res://src/scenes/main.tscn")
 
 
 ## [bob]: ola suave, letra a letra, en pixeles enteros.

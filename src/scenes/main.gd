@@ -500,7 +500,7 @@ func _complete_floor() -> void:
 		Narrator.say("victory")
 		get_node("/root/LoreDatabase").custom_event("victory")
 		_run_manager.end_run(true)
-		get_tree().create_timer(4.0).timeout.connect(func(): get_tree().change_scene_to_file("res://src/scenes/game_over.tscn"))
+		get_tree().create_timer(4.0).timeout.connect(func(): Transition.change_scene("res://src/scenes/game_over.tscn"))
 		return
 	get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position, tr("FX_FLOOR_DONE") % floor_n, Color.GOLD)
 	if _run_manager.liberate(floor_n):
@@ -768,7 +768,7 @@ func _on_player_died() -> void:
 	# player_died is emitted from PlayerStats.take_damage(), which runs inside the
 	# player's Hurtbox area_entered callback. Freeing the scene from there removes
 	# CollisionObject nodes mid physics callback, which Godot rejects.
-	get_tree().call_deferred("change_scene_to_file", "res://src/scenes/game_over.tscn")
+	Transition.change_scene("res://src/scenes/game_over.tscn")
 
 func _exit_tree() -> void:
 	get_node("/root/GlobalEvents").enemy_killed.disconnect(_on_enemy_killed)

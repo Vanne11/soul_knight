@@ -205,7 +205,7 @@ func _open_settings() -> void:
 	sp.closed.connect(func():
 		dim.queue_free()
 		if Settings.locale != locale_at_open:
-			get_tree().reload_current_scene()
+			Transition.reload()
 		else:
 			settings_btn.grab_focus())
 	sp.focus_first.call_deferred()
@@ -368,7 +368,7 @@ func _thumb(tex: Texture2D, silhouette: bool) -> Texture2D:
 
 func _on_start() -> void:
 	# historia + eleccion de personaje; la run empieza alli
-	get_tree().change_scene_to_file("res://src/scenes/intro.tscn")
+	Transition.change_scene("res://src/scenes/intro.tscn")
 
 func _on_continue() -> void:
 	pass

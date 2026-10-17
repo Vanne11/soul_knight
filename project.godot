@@ -29,6 +29,7 @@ DebugMenu="*res://src/autoloads/debug_menu.gd"
 Settings="*res://src/autoloads/settings.gd"
 Sound="*res://src/autoloads/sound.gd"
 Cursor="*res://src/autoloads/cursor.gd"
+Transition="*res://src/autoloads/transition.gd"
 
 [display]
 

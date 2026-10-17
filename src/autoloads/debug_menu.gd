@@ -147,7 +147,7 @@ func _open() -> void:
 		chars[RunManager.CHARACTERS[c].name] = func():
 			_close()
 			rm.character = c
-			get_tree().change_scene_to_file("res://src/scenes/main.tscn")
+			Transition.change_scene("res://src/scenes/main.tscn")
 	_row(box, chars)
 
 
