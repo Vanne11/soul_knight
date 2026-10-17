@@ -13,6 +13,7 @@ var _panel: PanelContainer
 func _ready() -> void:
 	layer = 60
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	god_mode = "--god" in OS.get_cmdline_user_args()  # godot --path . -- --god (pruebas jugando)
 
 
 func _unhandled_input(event: InputEvent) -> void:
