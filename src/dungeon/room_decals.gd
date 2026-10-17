@@ -359,6 +359,9 @@ func _puddle(kind: String, at: Variant = null, size_: String = "") -> void:
 	var sz: String = size_ if size_ != "" else ["s", "m", "m", "l"][_rng.randi_range(0, 3)]
 	if kind == "dudoso" and _rng.randf() < 0.5:
 		sz = "l"  # el interrogante solo se lee en el grande
+	var murky := kind in ["tinta", "mud", "aceite"]
+	if murky and sz == "l":
+		sz = "m"  # un charco oscuro grande se lee como un hoyo (y los hoyos son jugabilidad)
 	var base := _tex("puddle_%s_%s" % [kind, sz])
 	var r := maxf(base.get_width(), base.get_height()) * 0.5
 	var pos = at if at != null else _pick(r + 6.0, r + 50.0)
@@ -367,6 +370,8 @@ func _puddle(kind: String, at: Variant = null, size_: String = "") -> void:
 	var flip := _rng.randf() < 0.5
 	var s := _put("puddle_%s_%s" % [kind, sz], pos, r + 6.0, false)
 	s.flip_h = flip
+	if murky:
+		s.modulate.a = 0.45  # que se vea el suelo a traves: mancha, no agujero
 	# dos cuadros de brillo que se alternan despacio (aditivos, se apagan con la sala oscura)
 	var shines: Array[Sprite2D] = []
 	for v in ["a", "b"]:

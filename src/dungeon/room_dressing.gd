@@ -183,7 +183,7 @@ static func _doors(room: Room, rooms: Dictionary, root: Live, under: Node2D, k: 
 		var other: Room = rooms.get(door.target_pos)
 		if room.is_dark and other != null and not other.is_dark:
 			var inward := -out
-			var l := LightKit.make_light(WARM, 0.55, 1.5, false)
+			var l := LightKit.make_light(WARM, 0.32, 1.4, false)
 			l.position = door.position + inward * 22.0
 			root.add_child(l)
 			root.track(l, "color", WARM)
@@ -291,11 +291,11 @@ static func _variants(room: Room, root: Live, under: Node2D, face: Node2D, k: St
 static func _window_light(root: Live, at: Vector2, fl: Dictionary) -> void:
 	var tint: Color = fl.tint
 	var col := tint.lerp(Color.WHITE, 0.25)
-	var l := LightKit.make_light(col, 0.8, 1.9, false)
+	var l := LightKit.make_light(col, 0.45, 1.7, false)
 	l.position = at
 	root.add_child(l)
 	root.track(l, "color", col)
-	var beam := _beam(Vector2(10, 0), Vector2(62, 170), 0.3)
+	var beam := _beam(Vector2(10, 0), Vector2(62, 170), 0.18)
 	beam.position = at + Vector2(0, -2)
 	root.add_child(beam)
 	root.track(beam, "modulate", col)
