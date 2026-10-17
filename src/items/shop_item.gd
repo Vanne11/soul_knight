@@ -44,7 +44,7 @@ static func price_for(item: Item, rm: Node) -> int:
 		base = maxf(15, item.base_value / 10.0)
 	if "mejora" in item.tags:
 		base *= 1.0 + UPGRADE_MARKUP * rm.upgrades_bought.get(item.id, 0)
-	return int(round(base * (1.0 + FLOOR_MARKUP * (RunManager.depth(rm.current_floor) - 1.0))))
+	return maxi(1, int(round(base * (1.0 + FLOOR_MARKUP * (RunManager.depth(rm.current_floor) - 1.0)) * FloorEvents.price_mult())))  # rebajas (src/run/floor_events.gd)
 
 func _prompt_text() -> String:
 	var rm = get_node("/root/RunManager")

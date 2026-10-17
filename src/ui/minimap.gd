@@ -94,6 +94,11 @@ func _draw() -> void:
 	var origin := Vector2(6, 6) + (box - Vector2(bounds.size) * k) / 2 - Vector2(bounds.position) * k
 
 	draw_style_box(_frame, Rect2(Vector2.ZERO, size))
+	if FloorEvents.hide_map():  # evento "Censura total": sin mapa
+		_label.text = ""
+		draw_rect(Rect2(Vector2(6, 6), size - Vector2(12, 12)), Color(0.05, 0.05, 0.07, 0.9))
+		draw_string(_font, Vector2(0, size.y / 2 + 6), tr("MAP_CENSORED"), HORIZONTAL_ALIGNMENT_CENTER, size.x, 18, Color("d8d8e6"))
+		return
 
 	var rect_of := func(pos: Vector2i) -> Rect2:
 		return Rect2(origin + Vector2(pos) * k, Vector2(gen.room_sizes.get(pos, Vector2i(8, 6))) * k)
@@ -121,6 +126,8 @@ func _draw() -> void:
 		var icon: String = ICONS.get(room.room_type, "")
 		if not visited.has(pos) and not revealed and room.room_type not in [Room.RoomType.SHOP, Room.RoomType.BOSS]:
 			icon = "?"
+		if room.has_meta("elite_room"):
+			icon = "E"  # la sala elite se conoce desde la puerta (su cartel lo dice)
 		if room.room_type == Room.RoomType.BOSS:
 			icon = tr("MAP_ICON_BOSS")
 		elif room.room_type == Room.RoomType.START:
@@ -128,12 +135,14 @@ func _draw() -> void:
 		if icon != "":
 			var fs := int(clampf(r.size.y * 0.6, 9, 28))
 			var col := Color("ff5050") if room.room_type == Room.RoomType.BOSS else (Color("ffd700") if room.room_type == Room.RoomType.SHOP else Color("0d0b0f"))
+			if room.has_meta("elite_room"):
+				col = Color("ff3a1a")
 			if room == current:
 				col = Color("0d0b0f")  # sobre el amarillo de "estas aqui" no se veia
 			draw_string(_font, Vector2(r.position.x, r.get_center().y + fs * 0.35), icon, HORIZONTAL_ALIGNMENT_CENTER, r.size.x, fs, col)
 
 	if current:
-		var rname: String = tr(ROOM_NAMES.get(current.room_type, "?"))
+		var rname: String = tr("MAP_ROOM_ELITE") if current.has_meta("elite_room") else tr(ROOM_NAMES.get(current.room_type, "?"))
 		var rm := get_node_or_null("/root/RunManager")
 		if rm:
 			if current.room_type == Room.RoomType.BOSS and not RunManager.floor_has_boss(rm.current_floor):

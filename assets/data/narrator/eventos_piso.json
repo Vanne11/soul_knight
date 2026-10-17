@@ -1,0 +1,39 @@
+{
+  "_info": "Eventos de piso y contrarreloj (etapa 6b), los dice src/run/floor_events.gd. Evento = event_<id> (anuncio al empezar el piso), trial_*, elite_clear.",
+  "event_inspeccion": [
+    "Inspección general. Alguien con corbata ha dicho que todo estaba en orden. Mentía.",
+    "Hoy cada sala tiene un élite. Es una auditoría, y las auditorías siempre muerden."
+  ],
+  "event_calor": [
+    "Ola de calor. Todo va más rápido, incluido tu mal humor.",
+    "Hace calor. Los bichos corren más y tú también. Es una carrera de sudores."
+  ],
+  "event_censura": [
+    "Censura total. Sin mapa. Te guías por instinto, que es lo que hacías de todas formas.",
+    "El mapa ha sido retirado por indecente. Pregunta a alguien o equivócate con estilo."
+  ],
+  "event_espuma": [
+    "Fiesta de espuma. Nadie recuerda quién la organizó, pero el suelo agradece la limpieza.",
+    "Suelo resbaladizo en todo el piso. Frena con anticipación y dignidad."
+  ],
+  "event_luz": [
+    "Corte de luz. Alguien tropezó con el cable de la mazmorra.",
+    "Todo en penumbra. Los bichos ven en la oscuridad. Tú, con suerte, tu linterna."
+  ],
+  "event_rebajas": [
+    "Día de rebajas. La tienda está a mitad de precio y los bichos a mitad de paciencia: hay uno más por sala.",
+    "Rebajas. Todo a mitad de precio. Los bichos, claro, también vienen por la oferta."
+  ],
+  "trial_offer": [
+    "Hay un reloj de pared en la entrada. Si lo tocas, aceptas un contrarreloj. Si no, nadie te juzga. Mucho."
+  ],
+  "trial_win": [
+    "A tiempo. La puntualidad es una virtud, y también una cartera llena."
+  ],
+  "trial_late": [
+    "Se acabó el tiempo. Llega la Censura: no es personal, es administrativa."
+  ],
+  "elite_clear": [
+    "Una sala élite menos. Tu valentía, o tu imprudencia, tiene premio."
+  ]
+}

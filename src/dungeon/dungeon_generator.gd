@@ -18,6 +18,13 @@ var room_sizes: Dictionary = {}  # Vector2i -> Vector2i (tile dimensions)
 var room_graph: Dictionary = {}  # Vector2i -> Array[Vector2i]
 var current_floor: int = 1
 var seed: int = 0
+## Camino mas corto inicio -> jefe (grid_pos) y salas opcionales de riesgo/premio (sala elite).
+var main_path: Array = []
+var elite_rooms: Array = []
+
+## Salas por piso: de 7 + (piso-1)/3 a 9 + (piso-1)/3 (tope 12); la semilla elige dentro del rango.
+const MIN_ROOMS := 7
+const MAX_ROOMS := 12
 
 func generate_floor(floor: int, seed_override: int = 0) -> Node2D:
 	current_floor = floor
@@ -29,14 +36,10 @@ func generate_floor(floor: int, seed_override: int = 0) -> Node2D:
 	
 	_clear_state()
 	
-	var bsp_root = BSPNode.new(Rect2(0, 0, 56, 40))  # ~8 salas por piso
-	_split_bsp(bsp_root, 4)
-	
-	var leaf_nodes = []
-	_collect_leaves(bsp_root, leaf_nodes)
-	
-	_create_rooms(leaf_nodes, dungeon_root)
-	_connect_rooms()
+	# Trazado (7-12 salas segun piso y semilla): hojas del BSP elegidas + grafo con ramas y ciclos.
+	var plan := _plan_layout()
+	_create_rooms(plan.rects, dungeon_root)
+	_connect_rooms(plan.edges)
 	_layout_doors()
 	_assign_room_types()
 	_place_special_rooms()
@@ -45,6 +48,8 @@ func generate_floor(floor: int, seed_override: int = 0) -> Node2D:
 	return dungeon_root
 
 func _clear_state() -> void:
+	main_path = []
+	elite_rooms = []
 	rooms.clear()
 	room_graph.clear()
 	room_sizes.clear()
@@ -96,9 +101,8 @@ func _collect_leaves(node: BSPNode, leaves: Array) -> void:
 		if node.right:
 			_collect_leaves(node.right, leaves)
 
-func _create_rooms(leaves: Array, parent: Node2D) -> void:
-	for leaf in leaves:
-		var room_rect = _get_room_rect_in_leaf(leaf)
+func _create_rooms(rects: Array, parent: Node2D) -> void:
+	for room_rect: Rect2 in rects:
 		# Posicion en tiles: unica por sala (antes /8, y dos salas podian pisarse la clave).
 		var grid_pos = Vector2i(room_rect.position)
 		
@@ -184,25 +188,151 @@ func _paint_floor_tiles() -> void:
 			if tm:
 				Censor.apply(rooms[pos], tm)
 
-func _connect_rooms() -> void:
-	var room_positions = rooms.keys()
-	var mst_edges = _minimum_spanning_tree(room_positions)
-	
-	for edge in mst_edges:
-		_create_corridor(edge.a, edge.b)
-		room_graph[edge.a].append(edge.b)
-		room_graph[edge.b].append(edge.a)
-	
-	# Add some extra connections for loops
-	var extra_connections = RNG.randi_range(1, 3)
-	for i in range(extra_connections):
-		var a = room_positions[RNG.randi_range(0, room_positions.size() - 1)]
-		var b = room_positions[RNG.randi_range(0, room_positions.size() - 1)]
-		if a != b and b not in room_graph[a]:
-			if _can_connect_direct(a, b):
-				_create_corridor(a, b)
-				room_graph[a].append(b)
-				room_graph[b].append(a)
+func _connect_rooms(edges: Array) -> void:
+	for e in edges:
+		_create_corridor(e[0], e[1])
+		room_graph[e[0]].append(e[1])
+		room_graph[e[1]].append(e[0])
+
+# ------------------------------------------------------------------ trazado
+func target_room_count(floor_n: int) -> int:
+	var lo := mini(MIN_ROOMS + (floor_n - 1) / 3, MAX_ROOMS)
+	var hi := mini(9 + (floor_n - 1) / 3, MAX_ROOMS)
+	return RNG.randi_range(lo, hi)
+
+## Elige rects de sala y aristas. Devuelve {rects, edges}. Repite hasta que el grafo tenga
+## ramas muertas de sobra (secretas + sala elite), jefe a >= 3 puertas y algun ciclo.
+func _plan_layout() -> Dictionary:
+	var target := target_room_count(current_floor)
+	var best := {}
+	var best_score := -1
+	var fallback := []
+	for attempt in 14:
+		# 8 hojas (60x44, prof. 3) para 7-8 salas; 16 (64x48, prof. 4) para 9-12
+		var big := target > 8
+		var bsp_root = BSPNode.new(Rect2(0, 0, 64, 48) if big else Rect2(0, 0, 60, 44))
+		_split_bsp(bsp_root, 4 if big else 3)
+		var leaves := []
+		_collect_leaves(bsp_root, leaves)
+		if leaves.size() < target and attempt < 13:
+			fallback = leaves if leaves.size() > fallback.size() else fallback
+			continue
+		if attempt == 13 and leaves.size() < target and fallback.size() > leaves.size():
+			leaves = fallback
+		# se descartan hojas al azar (la primera es el inicio y se queda)
+		var keep: Array = leaves.slice(1)
+		RNG.shuffle(keep)
+		keep = keep.slice(0, maxi(target - 1, 0))
+		var chosen := [leaves[0]] + keep
+		var rects := []
+		for leaf in chosen:
+			rects.append(_get_room_rect_in_leaf(leaf))
+		var pos: Array = rects.map(func(r): return Vector2i(r.position))
+		var edges := _plan_edges(pos)
+		var score := _layout_score(pos, edges)
+		if score > best_score:
+			best_score = score
+			best = {"rects": rects, "edges": edges}
+		if score >= 100:
+			break
+	return best
+
+## Arbol de expansion minimo (ramas) + 1-3 aristas extra entre vecinas cercanas (ciclos).
+func _plan_edges(pos: Array) -> Array:
+	var edges := []
+	var deg := {}
+	for p in pos:
+		deg[p] = 0
+	for e in _minimum_spanning_tree(pos):
+		edges.append([e.a, e.b])
+		deg[e.a] += 1
+		deg[e.b] += 1
+	var extra := 1 + (1 if pos.size() >= 9 else 0) + (1 if RNG.randf() < 0.4 else 0)
+	# pares sin arista, de cortos a largos; solo entre salas que ya tienen 2+ puertas (no mata ramas)
+	var pairs := []
+	for i in pos.size():
+		for j in range(i + 1, pos.size()):
+			var a: Vector2i = pos[i]
+			var b: Vector2i = pos[j]
+			if deg[a] < 2 or deg[b] < 2 or deg[a] >= 4 or deg[b] >= 4:
+				continue
+			if edges.any(func(e): return (e[0] == a and e[1] == b) or (e[0] == b and e[1] == a)):
+				continue
+			pairs.append({"a": a, "b": b, "dist": a.distance_to(b)})
+	pairs.sort_custom(Callable(self, "_compare_edges"))
+	var pool := pairs.slice(0, 6)
+	RNG.shuffle(pool)
+	for pr in pool:
+		if extra <= 0:
+			break
+		if deg[pr.a] >= 4 or deg[pr.b] >= 4:
+			continue
+		edges.append([pr.a, pr.b])
+		deg[pr.a] += 1
+		deg[pr.b] += 1
+		extra -= 1
+	return edges
+
+## 100+ = trazado bueno. Penaliza lo que rompe garantias (pocas ramas muertas, jefe cerca).
+func _layout_score(pos: Array, edges: Array) -> int:
+	var adj := {}
+	for p in pos:
+		adj[p] = []
+	for e in edges:
+		adj[e[0]].append(e[1])
+		adj[e[1]].append(e[0])
+	var start: Vector2i = pos[0]
+	var dist := _bfs(adj, start)
+	if dist.size() < pos.size():
+		return 0
+	var far := 0
+	for p in pos:
+		far = maxi(far, int(dist[p]))
+	var dead := 0
+	for p in pos:
+		if p != start and adj[p].size() == 1 and int(dist[p]) < far:
+			dead += 1  # (la mas lejana sera el jefe)
+	var cycles: int = edges.size() - (pos.size() - 1)
+	var score := 10
+	if far >= 3:
+		score += 30
+	if dead >= 2:
+		score += 40
+	if dead >= 3 or pos.size() < 9:
+		score += 10
+	if cycles >= 1:
+		score += 20
+	return score
+
+func _bfs(adj: Dictionary, start: Vector2i) -> Dictionary:
+	var dist := {start: 0}
+	var q := [start]
+	while not q.is_empty():
+		var c: Vector2i = q.pop_front()
+		for n in adj[c]:
+			if not dist.has(n):
+				dist[n] = dist[c] + 1
+				q.append(n)
+	return dist
+
+## Camino mas corto entre dos salas segun room_graph (incluye ambos extremos).
+func path_between(a: Vector2i, b: Vector2i) -> Array:
+	var prev := {a: a}
+	var q := [a]
+	while not q.is_empty():
+		var c: Vector2i = q.pop_front()
+		if c == b:
+			break
+		for n in room_graph[c]:
+			if not prev.has(n):
+				prev[n] = c
+				q.append(n)
+	if not prev.has(b):
+		return []
+	var out := [b]
+	while out[0] != a:
+		out.push_front(prev[out[0]])
+	return out
 
 func _minimum_spanning_tree(nodes: Array) -> Array:
 	var edges = []
@@ -351,30 +481,47 @@ func _assign_room_types() -> void:
 	start_room.room_type = Room.RoomType.START
 	start_room.cleared = true
 	
-	# Boss room: la mas lejana entre las grandes (en una sala de 8x6 el jefe no
-	# deja sitio para esquivar nada).
-	var boss_room = _find_furthest_room(start_room.grid_pos, Vector2i(11, 8))
+	# Boss room: la mas lejana en puertas (desempata la distancia en el plano) entre las
+	# grandes (en una sala de 8x6 el jefe no deja sitio para esquivar nada).
+	var gdist := _graph_dist(start_room.grid_pos)
+	var far := 0
+	for v in gdist.values():
+		far = maxi(far, int(v))
+	# grande y a (casi) la maxima distancia en puertas; si no hay, la mas lejana de cualquier tamano
+	var boss_room = _find_furthest_room(start_room.grid_pos, Vector2i(11, 8), gdist, maxi(far - 1, 2))
 	if boss_room == null:
-		boss_room = _find_furthest_room(start_room.grid_pos)
+		boss_room = _find_furthest_room(start_room.grid_pos, Vector2i.ZERO, gdist)
 	if boss_room:
 		boss_room.room_type = Room.RoomType.BOSS
 		boss_room.required_intoxication_tier = 0
+		main_path = path_between(start_room.grid_pos, boss_room.grid_pos)
 	
-	# Miniboss room (midway)
-	var miniboss_room = _find_midway_room(start_room.grid_pos, boss_room.grid_pos if boss_room else Vector2i.ZERO)
+	# Miniboss room: a medio camino, sobre el camino al jefe (no en una rama).
+	var miniboss_room: Room = null
+	if main_path.size() >= 3:
+		miniboss_room = rooms[main_path[main_path.size() / 2]]
+	else:
+		miniboss_room = _find_midway_room(start_room.grid_pos, boss_room.grid_pos if boss_room else Vector2i.ZERO)
 	if miniboss_room and miniboss_room != start_room and miniboss_room != boss_room:
 		miniboss_room.room_type = Room.RoomType.MINIBOSS
 	
 	# Secret rooms (1-2). Solo salas sin salida: van cerradas hasta resolver el
 	# puzzle, y una sala de paso cerrada podria dejar al jefe inalcanzable.
-	var secret_count = RNG.randi_range(1, 2)
+	# 7-8 salas: a veces ninguna (cada secreta cuesta ademas la sala del puzzle); 9: una; 10+: 1-2.
+	var secret_count := 1 if room_list.size() < 10 else RNG.randi_range(1, 2)
+	if room_list.size() <= 8 and RNG.randf() < 0.4:
+		secret_count = 0
 	var candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT and room_graph[r.grid_pos].size() == 1)
 	RNG.shuffle(candidates)
 	for i in range(min(secret_count, candidates.size())):
 		candidates[i].room_type = Room.RoomType.SECRET
 	
+	# Sala elite (riesgo/premio, fuera del camino al jefe): todos los enemigos elite y botin
+	# grande. Prefiere una rama muerta; si no queda, una sala fuera del camino principal.
+	_assign_elite_rooms(room_list)
+	
 	# Tienda: una por piso, siempre (sin ella las monedas no sirven de nada).
-	candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT)
+	candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT and not r.has_meta("elite_room"))
 	if candidates.is_empty():
 		candidates = room_list.filter(func(r): return r.room_type in [Room.RoomType.SECRET, Room.RoomType.INTOXICATION])
 	if candidates.size() > 0:
@@ -383,14 +530,14 @@ func _assign_room_types() -> void:
 	
 	# Con sala secreta hace falta un puzzle que la abra (main.gd la cierra si lo hay).
 	if room_list.any(func(r): return r.room_type == Room.RoomType.SECRET):
-		candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT)
+		candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT and not r.has_meta("elite_room"))
 		if candidates.size() > 0:
 			candidates[0].room_type = Room.RoomType.PUZZLE
 	
 	# Respiro: UNA sala tranquila (tesoro, descanso o lore) si quedan combates de
 	# sobra. Mas que eso era pasear: las recompensas ya estan en los combates.
 	# Puzzle solo el de arriba: uno sin sala secreta que abrir seria una promesa vacia.
-	candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT)
+	candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT and not r.has_meta("elite_room"))
 	RNG.shuffle(candidates)
 	var calm := [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]
 	RNG.shuffle(calm)  # con 1-2 salas tranquilas por piso, que no salga siempre la misma
@@ -406,18 +553,38 @@ func _assign_room_types() -> void:
 		elif RNG.randf() < 0.15:
 			fights[i].room_type = Room.RoomType.TRAP
 
-func _find_furthest_room(from_pos: Vector2i, min_size := Vector2i.ZERO) -> Room:
-	var max_dist = -1
+func _find_furthest_room(from_pos: Vector2i, min_size := Vector2i.ZERO, gdist := {}, min_gd := 0) -> Room:
+	var max_dist = -1.0
 	var furthest = null
 	for pos in rooms:
 		var size: Vector2i = room_sizes.get(pos, Vector2i.ZERO)
-		if pos == from_pos or size.x < min_size.x or size.y < min_size.y:
+		if pos == from_pos or size.x < min_size.x or size.y < min_size.y or int(gdist.get(pos, 0)) < min_gd:
 			continue
-		var dist = pos.distance_to(from_pos)
+		var dist: float = pos.distance_to(from_pos) + float(gdist.get(pos, 0)) * 1000.0
 		if dist > max_dist:
 			max_dist = dist
 			furthest = rooms[pos]
 	return furthest
+
+## Distancia en puertas desde una sala.
+func _graph_dist(from_pos: Vector2i) -> Dictionary:
+	return _bfs(room_graph, from_pos)
+
+func _assign_elite_rooms(room_list: Array) -> void:
+	var n := room_list.size()
+	if n < 9 or RNG.randf() > 0.6 + 0.04 * current_floor:
+		return
+	var wanted := 2 if (n >= 11 and RNG.randf() < 0.4) else 1
+	for k in wanted:
+		var cands: Array = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT and room_graph[r.grid_pos].size() == 1 and not r.has_meta("elite_room"))
+		if cands.is_empty():
+			cands = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT and r.grid_pos not in main_path and not r.has_meta("elite_room"))
+		if cands.is_empty():
+			return
+		var pick: Room = cands[RNG.randi_range(0, cands.size() - 1)]
+		pick.set_meta("elite_room", true)
+		pick.set_meta("no_waves", true)  # sin oleadas: son sus enemigos elite de siempre
+		elite_rooms.append(pick.grid_pos)
 
 func _find_midway_room(from_pos: Vector2i, to_pos: Vector2i) -> Room:
 	var mid = (from_pos + to_pos) / 2

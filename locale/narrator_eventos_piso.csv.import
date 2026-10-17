@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://qocb18qxmkr6"
+
+[deps]
+
+files=["res://locale/narrator_eventos_piso.es.translation", "res://locale/narrator_eventos_piso.en.translation"]
+
+source_file="res://locale/narrator_eventos_piso.csv"
+dest_files=["res://locale/narrator_eventos_piso.es.translation", "res://locale/narrator_eventos_piso.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
