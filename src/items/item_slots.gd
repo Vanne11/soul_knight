@@ -5,7 +5,7 @@ class_name ItemSlots
 ## guarda en ellas. Es un hijo del jugador (ItemSlots.of(player) lo crea si falta).
 ##
 ## - Objetos de ranura (custom_data.slot = true, ver ItemDatabase): al recogerlos NO se aplican,
-##   se guardan (se apilan hasta max_stack) y se usan con 1-4. Con las 4 ranuras ocupadas por otros
+##   se guardan (cada objeto en UNA ranura, apilado) y se usan con 1-4. Con las 4 ranuras ocupadas por otros
 ##   objetos se usan al instante, como antes de que existieran las ranuras.
 ## - Maldiciones (custom_data.curse = true): ocupan una ranura hasta que la quitas con una llave.
 ## - Pasivos (reliquias, armas): no ocupan ranura.
@@ -161,10 +161,14 @@ func _on_picked(item: Variant, _qty: int) -> void:
 	_recount_sets()
 
 
+## Cada objeto ocupa UNA sola ranura (Nico): se apila ahi sin repartirse en otras (tope STACK_MAX).
+const STACK_MAX := 99
+
 func _store(item: Item) -> bool:
-	var cap := maxi(1, item.max_stack)
-	for i in COUNT:  # primero se apila en una ranura del mismo objeto que aun tenga hueco
-		if not slots[i].is_empty() and slots[i].id == item.id and not slots[i].has("applied") and slots[i].qty < cap:
+	for i in COUNT:  # si ya hay una ranura de este objeto, se apila en ella
+		if not slots[i].is_empty() and slots[i].id == item.id and not slots[i].has("applied"):
+			if slots[i].qty >= STACK_MAX:
+				return false
 			slots[i].qty += 1
 			_changed()
 			return true
