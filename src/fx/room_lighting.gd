@@ -342,7 +342,7 @@ func _build_torches(room: Room, d: Dictionary, rng: RandomNumberGenerator) -> vo
 		var py := (y + 0.5) * TILE
 		cands.append({"p": Vector2(6, py), "n": Vector2(1, 0)})
 		cands.append({"p": Vector2(size.x - 6, py), "n": Vector2(-1, 0)})
-	cands = cands.filter(func(c): return not _near_door(c.p, doors, 100.0))
+	cands = cands.filter(func(c): return not _near_door(c.p, doors, 100.0) and room.is_walkable(c.p + c.n * 20.0))  # y en suelo (forma de sala)
 	# Barajado con el RNG local (no el autoload).
 	for i in range(cands.size() - 1, 0, -1):
 		var j := rng.randi_range(0, i)
@@ -508,7 +508,7 @@ func _spawn_props(room: Room, d: Dictionary, seed_: int) -> void:
 		var ok := false
 		for k in 12:
 			pos = Vector2(rng.randf_range(1.0, size.x / TILE - 1.0), rng.randf_range(1.0, size.y / TILE - 1.0)) * TILE
-			if not _near_door(pos, doors, 120.0) and not _in_obstacle(room, pos):
+			if not _near_door(pos, doors, 120.0) and not _in_obstacle(room, pos) and room.is_walkable(pos, 10.0):
 				ok = true
 				break
 		if not ok:

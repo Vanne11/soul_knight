@@ -336,7 +336,7 @@ func _keep_off_player(positions: Array) -> void:
 					best_d = c.distance_to(p)
 					best = c
 			p = best
-		positions[i] = Vector2(clampf(p.x, inner.position.x, inner.end.x), clampf(p.y, inner.position.y, inner.end.y))
+		positions[i] = room.snap_global(Vector2(clampf(p.x, inner.position.x, inner.end.x), clampf(p.y, inner.position.y, inner.end.y)), 24.0)  # y en suelo pisable (forma de sala)
 
 
 # ---------------------------------------------------------------------------------

@@ -63,6 +63,8 @@ static func paint(room: Room, size: Vector2i, floor_num: int, run_seed: int) -> 
 		return  # reino sin arte propio: se queda el suelo de siempre
 	var w := size.x
 	var h := size.y
+	if room.shape_size == Vector2i.ZERO:
+		room.set_shape("rect", size, PackedByteArray(), Vector2i(w / 2, h / 2))
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([run_seed, floor_num, room.grid_pos])
 	var deep: bool = RM.floor_stage(floor_num) > 1
@@ -75,18 +77,27 @@ static func paint(room: Room, size: Vector2i, floor_num: int, run_seed: int) -> 
 	for x in w:
 		for y in h:
 			var cell := Vector2i(x, y)
+			var kind := room.cell_kind(cell)
+			if kind != 0 and kind != RoomShapes.LOW:
+				continue  # muro, abismo o agua: sin suelo (el muro bajo si lo lleva debajo)
 			var coords: Vector2i
-			var n := y == 0
-			var s := y == h - 1
-			var o := x == 0
-			var e := x == w - 1
+			# Borde pegado a lo que sea muro (el del contorno o un recorte/pedestal interior).
+			var n := _is_wall(room, x, y - 1)
+			var s := _is_wall(room, x, y + 1)
+			var o := _is_wall(room, x - 1, y)
+			var e := _is_wall(room, x + 1, y)
+			if kind == RoomShapes.LOW:
+				n = false
+				s = false
+				o = false
+				e = false
 			if (n or s) and (o or e):
 				coords = Vector2i(4 + (0 if o else 1) if n else 4 + (3 if o else 2), 2)
 			elif n or s or o or e:
 				var dir := 0 if n else (1 if e else (2 if s else 3))
 				var row := 3 if (ornate or rng.randf() < BORDER_B_CHANCE) else 2
 				coords = Vector2i(dir, row)
-			elif motif and x >= mx and x < mx + 3 and y >= my and y < my + 3:
+			elif motif and x >= mx and x < mx + 3 and y >= my and y < my + 3 and _motif_ok(room, mx, my):
 				coords = Vector2i(5 + x - mx, 3 + y - my)
 			elif (ornate or deep) and rng.randf() < (ORNATE_CHANCE if ornate else 0.08):
 				coords = Vector2i(4 + rng.randi_range(0, 3), 1)
@@ -94,3 +105,18 @@ static func paint(room: Room, size: Vector2i, floor_num: int, run_seed: int) -> 
 				var v := _pick_fill(rng, deep)
 				coords = Vector2i(v % 8, v / 8)
 			floor_map.set_cell(0, cell, 0, coords)
+
+
+## Muro (borde de la sala o celda de muro interior); abismo, agua y muro bajo no cuentan.
+static func _is_wall(room: Room, x: int, y: int) -> bool:
+	var k := room.cell_kind(Vector2i(x, y))
+	return k == -1 or k == RoomShapes.WALL
+
+
+## El motivo central de 3x3 solo se pinta si esas nueve celdas son suelo.
+static func _motif_ok(room: Room, mx: int, my: int) -> bool:
+	for x in range(mx, mx + 3):
+		for y in range(my, my + 3):
+			if room.cell_kind(Vector2i(x, y)) != 0:
+				return false
+	return true

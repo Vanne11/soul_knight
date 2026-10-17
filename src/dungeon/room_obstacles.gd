@@ -193,6 +193,8 @@ func _valid(r: Rect2, others: Array[Rect2], gap := GAP) -> bool:
 	var inner := Rect2(STRIP, STRIP, _size.x - STRIP * 2.0, _size.y - STRIP * 2.0)
 	if not inner.encloses(r):
 		return false
+	if not room.rect_walkable(r.grow(18.0)):
+		return false  # forma de sala: ni en recortes ni en huecos ni pegado a ellos
 	for k in _keep:
 		if r.intersects(k):
 			return false
@@ -221,10 +223,13 @@ func _connected(extra: Array[Rect2]) -> bool:
 	var ny := int(ceil(_size.y / CELL))
 	var blocked := PackedByteArray()
 	blocked.resize(nx * ny)
+	var shaped := not room.shape_cells.is_empty()
 	for y in ny:
 		for x in nx:
 			var p := Vector2((x + 0.5) * CELL, (y + 0.5) * CELL)
 			if p.x < 12.0 or p.y < 12.0 or p.x > _size.x - 12.0 or p.y > _size.y - 12.0:
+				blocked[y * nx + x] = 1
+			elif shaped and not room.is_walkable(p, 12.0):
 				blocked[y * nx + x] = 1
 	for list in [_solid, extra]:
 		for r: Rect2 in list:
@@ -236,7 +241,7 @@ func _connected(extra: Array[Rect2]) -> bool:
 	var goals: Array[Vector2i] = []
 	for d in _doors:
 		goals.append(_cell(d.pos + (d.inward as Vector2) * 40.0, nx, ny))
-	goals.append(_cell(_center, nx, ny))
+	goals.append(_cell(room.nearest_walkable(_center, 20.0) if shaped else _center, nx, ny))
 	for sp in _spawns:
 		goals.append(_cell(sp, nx, ny))
 	for g in goals:

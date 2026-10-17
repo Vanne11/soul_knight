@@ -177,6 +177,9 @@ func _collect_avoid() -> void:
 func _free_wall(r: Rect2) -> bool:
 	if not Rect2(Vector2.ZERO, _size).encloses(r):
 		return false
+	# los pies tienen que caer en suelo pisable (forma de sala: recortes, huecos)
+	if not room.rect_walkable(Rect2(r.position.x, r.end.y - 16.0, r.size.x, 16.0)):
+		return false
 	for a in _avoid:
 		if a.intersects(r):
 			return false
@@ -337,6 +340,9 @@ func _build_webs(calm: bool) -> void:
 		if _rng.randf() > p or (count >= 2 and not calm):
 			continue
 		var tex: Texture2D = tex_b if (tex_b and _rng.randf() < 0.3) else tex_a
+		var cell_c := Vector2i(0 if c[0].x < 1.0 else int(_size.x / TILE) - 1, 0 if not c[2] else int(_size.y / TILE) - 1)
+		if not room.is_cell_walkable(cell_c):
+			continue  # esquina recortada por la forma de la sala
 		var s := Sprite2D.new()
 		s.texture = tex
 		s.centered = false
@@ -368,6 +374,10 @@ func _build_crawlers() -> void:
 		# se parte el tramo si cruza una puerta: elegimos solo un lado libre
 		var line := -17.0 if top else (7.0 if _rng.randf() < 0.5 else _size.x - 7.0)
 		var ok := true
+		# el tramo recorre la fila/columna de borde: tiene que ser suelo de punta a punta
+		var run := Rect2(a, 0.0, b - a, TILE) if top else Rect2(0.0 if line < _size.x * 0.5 else _size.x - TILE, a, TILE, b - a)
+		if not room.rect_walkable(run):
+			continue
 		for dr in _avoid:
 			var seg := Rect2(a, line - 6.0, b - a, 12.0) if top else Rect2(line - 6.0, a, 12.0, b - a)
 			if dr.intersects(seg):
@@ -440,7 +450,7 @@ func _build_cover() -> void:
 			var fx := _rng.randf_range(w * 0.5 + 80.0, _size.x - w * 0.5 - 80.0)
 			var fy := _rng.randf_range(h + 40.0, _size.y - 70.0)
 			var r := Rect2(fx - w * 0.5, fy - h, w, h)
-			var bad := center.intersects(r)
+			var bad := center.intersects(r) or not room.rect_walkable(Rect2(r.position.x, r.end.y - 16.0, r.size.x, 16.0))
 			for a in _avoid:
 				if a.intersects(r):
 					bad = true

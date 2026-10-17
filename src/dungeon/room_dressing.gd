@@ -107,39 +107,79 @@ static func _dress(room: Room, rooms: Dictionary, fl: Dictionary, floor_n: int, 
 	face.material = mat
 	root.add_child(face)
 
-	_zocalo(under, k, size)
-	_corners(under, face, k, size)
+	_zocalo(under, k, size, room)
+	_corners(under, face, k, size, room)
 	var door_xs := _doors(room, rooms, root, under, k, size, fl)
 	_variants(room, root, under, face, k, size, rng, door_xs, fl)
 
 
 # ------------------------------------------------------------------ zocalo y esquinas
-static func _zocalo(under: Node2D, k: String, size: Vector2) -> void:
+## Tramos (inicio, fin) en px a lo largo de un lado del rectangulo cuya celda de borde es suelo
+## (en salas con forma el zocalo solo se pinta donde hay suelo; side: 0 arriba, 1 abajo, 2 izq, 3 der).
+static func _edge_runs(room: Room, side: int, w: int, h: int) -> Array[Vector2]:
+	var out: Array[Vector2] = []
+	var n := w if side < 2 else h
+	var start := -1
+	for i in range(n + 1):
+		var ok := false
+		if i < n:
+			var c := [Vector2i(i, 0), Vector2i(i, h - 1), Vector2i(0, i), Vector2i(w - 1, i)][side] as Vector2i
+			ok = room.is_cell_walkable(c)
+		if ok and start < 0:
+			start = i
+		elif not ok and start >= 0:
+			out.append(Vector2(start * TILE, i * TILE))
+			start = -1
+	return out
+
+
+static func _zocalo(under: Node2D, k: String, size: Vector2, room: Room) -> void:
 	var top := _tex(k, "zocalo_top")
 	var side := _tex(k, "zocalo_side")
 	var bot := _tex(k, "zocalo_bottom")
+	var w := int(size.x / TILE)
+	var h := int(size.y / TILE)
 	if top:
-		_strip(under, top, Vector2(0, 0), size.x, false, MASK_FLOOR)
+		for r in _edge_runs(room, 0, w, h):
+			_strip(under, top, Vector2(r.x, 0), r.y - r.x, false, MASK_FLOOR)
 	if side:
-		_strip(under, side, Vector2(0, ZOC_TOP), size.y - ZOC_TOP - ZOC_SIDE, true, MASK_FLOOR)
-		_strip(under, side, Vector2(size.x - ZOC_SIDE, ZOC_TOP), size.y - ZOC_TOP - ZOC_SIDE, true, MASK_FLOOR, true)
+		for r in _edge_runs(room, 2, w, h):
+			var y0 := maxf(r.x, ZOC_TOP)
+			var y1 := minf(r.y, size.y - ZOC_SIDE)
+			if y1 > y0:
+				_strip(under, side, Vector2(0, y0), y1 - y0, true, MASK_FLOOR)
+		for r in _edge_runs(room, 3, w, h):
+			var y0 := maxf(r.x, ZOC_TOP)
+			var y1 := minf(r.y, size.y - ZOC_SIDE)
+			if y1 > y0:
+				_strip(under, side, Vector2(size.x - ZOC_SIDE, y0), y1 - y0, true, MASK_FLOOR, true)
 	if bot:
-		_strip(under, bot, Vector2(0, size.y - ZOC_SIDE), size.x, false, MASK_FLOOR, false, true)
+		for r in _edge_runs(room, 1, w, h):
+			_strip(under, bot, Vector2(r.x, size.y - ZOC_SIDE), r.y - r.x, false, MASK_FLOOR, false, true)
 	# esquinas internas de arriba: arista de piedra pegada a la cara frontal
 	var pil := _tex(k, "pilaster")
 	if pil:
 		var ph := float(pil.get_height())
-		_spr(under, pil, Vector2(0, ZOC_TOP - ph), MASK_WALL)
-		_spr(under, pil, Vector2(size.x - pil.get_width(), ZOC_TOP - ph), MASK_WALL, true)
+		if room.is_cell_walkable(Vector2i(0, 0)):
+			_spr(under, pil, Vector2(0, ZOC_TOP - ph), MASK_WALL)
+		if room.is_cell_walkable(Vector2i(w - 1, 0)):
+			_spr(under, pil, Vector2(size.x - pil.get_width(), ZOC_TOP - ph), MASK_WALL, true)
 
 
-static func _corners(_under: Node2D, face: Node2D, k: String, size: Vector2) -> void:
+static func _corners(_under: Node2D, face: Node2D, k: String, size: Vector2, room: Room) -> void:
 	var col := _tex(k, "column")
 	if col == null:
 		return
+	var cw_i := int(size.x / TILE) - 1
+	var ch_i := int(size.y / TILE) - 1
 	var cw := float(col.get_width())
 	var ch := float(col.get_height())
+	var corner_cells := [Vector2i(0, 0), Vector2i(cw_i, 0), Vector2i(0, ch_i), Vector2i(cw_i, ch_i)]
+	var corner_i := -1
 	for c: Vector2 in [Vector2(-0.5, -0.5), Vector2(size.x / TILE + 0.5, -0.5), Vector2(-0.5, size.y / TILE + 0.5), Vector2(size.x / TILE + 0.5, size.y / TILE + 0.5)]:
+		corner_i += 1
+		if not room.is_cell_walkable(corner_cells[corner_i]):
+			continue  # esquina recortada por la forma de la sala
 		var base := c * TILE + Vector2(0, TILE * 0.5 + 4.0)  # pie de la columna: borde inferior de la celda
 		_spr(face, col, base - Vector2(cw * 0.5, ch), MASK_WALL)
 
@@ -224,7 +264,7 @@ static func _variants(room: Room, root: Live, under: Node2D, face: Node2D, k: St
 	var slots: Array[int] = []
 	for i in range(1, w):
 		var x := float(i * TILE)
-		var blocked := false
+		var blocked := not (room.is_cell_walkable(Vector2i(i - 1, 0)) and room.is_cell_walkable(Vector2i(i, 0)))
 		for dx in door_xs:
 			if absf(dx - x) < 78.0:
 				blocked = true
@@ -280,6 +320,13 @@ static func _variants(room: Room, root: Live, under: Node2D, face: Node2D, k: St
 			elif side == 2:
 				pos = Vector2(size.x - ZOC_SIDE - 30.0, size.y * u)
 			var near_door := false
+			var lc := Vector2i(int((pos.x + 15.0) / TILE), 0)  # celda de suelo junto a la que cae el ladrillo
+			if side == 1:
+				lc = Vector2i(0, int(pos.y / TILE))
+			elif side == 2:
+				lc = Vector2i(w - 1, int(pos.y / TILE))
+			if not room.is_cell_walkable(lc):
+				near_door = true
 			for dp in door_pts:
 				if dp.distance_to(pos + Vector2(15, 7)) < 110.0:
 					near_door = true
