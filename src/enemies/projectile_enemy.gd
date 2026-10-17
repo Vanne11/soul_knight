@@ -14,6 +14,8 @@ func _ready() -> void:
 	add_to_group("enemy_attack")
 	Sound.play("enemy_shoot")
 	body_entered.connect(_on_body_entered)
+	ActorFx.add_projectile_shadow(self, 5.0, 10.0)
+	ActorFx.add_glow(self, Color(0.71, 0.9, 0.42), 0.5, 0.34)
 
 func _physics_process(delta: float) -> void:
 	global_position += Vector2.RIGHT.rotated(global_rotation) * speed * delta

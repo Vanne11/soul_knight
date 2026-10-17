@@ -671,6 +671,7 @@ func _build_calm_room(room: Room) -> void:
 			var stone := Polygon2D.new()
 			stone.polygon = PackedVector2Array([Vector2(-18, 26), Vector2(-18, -18), Vector2(-10, -28), Vector2(10, -28), Vector2(18, -18), Vector2(18, 26)])
 			stone.color = Color("8a8494")
+			stone.set_meta("tall", true)
 			_add_prop(room, center, stone,
 				tr("PROP_INSCRIPTION"),
 				func(_p, it):
@@ -692,8 +693,28 @@ func _add_prop(room: Room, pos: Vector2, visual: Node2D, text: String, on_use: C
 	it.position = pos
 	it.prompt_text = text
 	it.add_child(visual)
+	_prop_shadow(it, visual)
 	it.used.connect(on_use.bind(it))
 	room.props_node.add_child.call_deferred(it)
+
+## Sombra de contacto (y proyectada si el dibujo es alto) segun el tamano del dibujo.
+func _prop_shadow(it: Node2D, visual: Node2D) -> void:
+	if visual.has_meta("flat"):
+		return
+	var polys: Array = visual.get_children().filter(func(c): return c is Polygon2D)
+	if visual is Polygon2D:
+		polys.append(visual)
+	if polys.is_empty():
+		return
+	var r := 0.0
+	var foot := 0.0
+	for c in polys:
+		for pt in c.polygon:
+			r = maxf(r, absf(pt.x))
+			foot = maxf(foot, pt.y)
+	LightKit.add_contact_shadow(it, r + 4.0, foot + 2.0)
+	if visual.has_meta("tall"):
+		LightKit.mark_caster(it, r, foot + 2.0)
 
 func _disc(radius: float, color: Color) -> Polygon2D:
 	var p := Polygon2D.new()
@@ -706,6 +727,7 @@ func _disc(radius: float, color: Color) -> Polygon2D:
 
 func _hatch_visual() -> Node2D:
 	var n := Node2D.new()
+	n.set_meta("flat", true)  # agujero en el suelo: sin sombra
 	n.add_child(_disc(30, Color("b08d4a")))
 	n.add_child(_disc(24, Color("0d0b0f")))
 	return n

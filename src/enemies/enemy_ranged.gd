@@ -61,6 +61,7 @@ func find_owning_room() -> Room:
 	return null
 
 func _ready() -> void:
+	ActorFx.setup_actor(self, animated_sprite)
 	current_health = max_health
 	add_to_group("enemy")
 	

@@ -13,6 +13,8 @@ var _t: float = 0.0
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
+	ActorFx.add_projectile_shadow(self, 4.0, 9.0)
+	ActorFx.add_glow(self, Color(1.0, 0.8, 0.35), 0.55, 0.32)
 
 func _physics_process(delta: float) -> void:
 	position += Vector2.RIGHT.rotated(rotation) * speed * delta
