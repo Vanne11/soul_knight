@@ -41,6 +41,10 @@ const RECOIL_MAX := 6.0
 const RECOIL_RETURN := 70.0  # px/s
 var _recoil := 0.0
 var _weapon_base_x := 16.0
+## Mano de cada cuadro de animacion (tools/gen_hand_anchors.py): el arma se cuelga de ahi
+## y sigue el vaiven del caminar y el golpe del ataque. {animacion: [[x, y], ...]}
+const HAND_ANCHORS := "res://assets/data/hand_anchors.json"
+var _hand: Dictionary = {}
 const PLAYER_BULLET := preload("res://src/player/player_bullet.tscn")
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -53,7 +57,7 @@ const PLAYER_BULLET := preload("res://src/player/player_bullet.tscn")
 
 func _ready() -> void:
 	add_to_group("player")
-	_weapon_base_x = weapon_sprite.position.x
+	_weapon_base_x = _grip_offset()
 	_player_stats.health_changed.connect(_on_health_changed)
 	_player_stats.shields_changed.connect(_on_shields_changed)
 	_player_stats.stamina_changed.connect(_on_stamina_changed)
@@ -63,6 +67,7 @@ func _ready() -> void:
 	
 	_player_stats.reset_for_new_run()
 	_apply_character()
+	_load_hand_anchors()
 	ActorFx.setup_actor(self, animated_sprite)
 	
 	if hurtbox:
@@ -97,7 +102,7 @@ func _update_dash_lift() -> void:
 	if is_dashing and dash_duration > 0.0:
 		lift = sin(clampf(1.0 - _dash_timer / dash_duration, 0.0, 1.0) * PI) * DASH_LIFT
 	animated_sprite.position.y = -lift
-	weapon_pivot.position.y = 6.0 - lift
+	weapon_pivot.position = _hand_position()
 	_recoil = maxf(0.0, _recoil - RECOIL_RETURN * get_physics_process_delta_time())
 	weapon_sprite.position.x = _weapon_base_x - _recoil
 	var shadow := get_node_or_null("ContactShadow") as Sprite2D
@@ -106,6 +111,35 @@ func _update_dash_lift() -> void:
 			_shadow_scale = shadow.scale
 		shadow.scale = _shadow_scale * (1.0 - 0.3 * lift / DASH_LIFT)
 		shadow.modulate.a = 1.0 - 0.25 * lift / DASH_LIFT
+
+func _load_hand_anchors() -> void:
+	var f := FileAccess.open(HAND_ANCHORS, FileAccess.READ)
+	if f == null:
+		return
+	var all = JSON.parse_string(f.get_as_text())
+	if all is Dictionary:
+		_hand = all.get(_rm().character, {})
+
+
+## Mano del cuadro actual en coordenadas del jugador (con giro y elevacion del dash).
+## Sin datos para el personaje, el punto fijo de siempre.
+func _hand_position() -> Vector2:
+	var pts: Array = _hand.get(animated_sprite.animation, [])
+	var tex := animated_sprite.sprite_frames.get_frame_texture(animated_sprite.animation, animated_sprite.frame) if animated_sprite.sprite_frames else null
+	if pts.is_empty() or tex == null:
+		return Vector2(0, 6.0 + animated_sprite.position.y)
+	var p: Array = pts[animated_sprite.frame % pts.size()]
+	var local := (Vector2(p[0], p[1]) + Vector2(0.5, 0.5) - tex.get_size() * 0.5) * animated_sprite.scale
+	if animated_sprite.flip_h:
+		local.x = -local.x
+	return animated_sprite.position + animated_sprite.offset + local
+
+
+## El arma se agarra por su primer tercio: la mano queda sobre la empunadura.
+func _grip_offset() -> float:
+	if weapon_sprite.texture == null:
+		return 16.0
+	return weapon_sprite.texture.get_width() * weapon_sprite.scale.x * 0.2
 
 func _handle_timers(delta: float) -> void:
 	if _dash_timer > 0.0:
@@ -285,7 +319,7 @@ func _shoot() -> void:
 		b.global_position = weapon_pivot.global_position + Vector2.RIGHT.rotated(ang) * 14.0
 
 func _muzzle_flash() -> void:
-	var tip := 16.0
+	var tip := _weapon_base_x
 	if weapon_sprite.texture:
 		tip += weapon_sprite.texture.get_width() * weapon_sprite.scale.x * 0.5
 	ActorFx.muzzle_flash(weapon_pivot, Vector2(tip, 0), Color(1.0, 0.78, 0.4))
@@ -409,6 +443,7 @@ func _drop_weapon(id: String) -> void:
 func equip_weapon(item: Item) -> void:
 	current_weapon = item
 	weapon_sprite.texture = item.sprite
+	_weapon_base_x = _grip_offset()
 	if not collected_items.has(item.id):
 		collected_items.append(item.id)
 	print("Equipped: %s" % item.display_name)
