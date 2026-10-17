@@ -54,6 +54,7 @@ var _toast_label: RichTextLabel
 var _toast_queue: Array = []  # [texto bbcode, segundos]
 var _toast_time := 0.0
 var _stack: VBoxContainer
+var _codex_toast: CodexToast
 var _prompt: PanelContainer
 var _prompt_label: RichTextLabel
 ## Quien muestra el cuadro de interaccion ahora: solo el responde a E.
@@ -96,6 +97,8 @@ func _ready() -> void:
 	_hint.add_theme_font_size_override("font_size", 12)
 	_hint.add_theme_color_override("font_color", Color("b08d4a"))
 	_panel.get_child(0).add_child(_hint)
+	_codex_toast = CodexToast.new()
+	add_child(_codex_toast)
 	var ge := get_node("/root/GlobalEvents")
 	ge.run_started.connect(_on_run_started)
 	ge.player_died.connect(_on_player_died)
@@ -419,7 +422,7 @@ func _on_intox(_level: float, tier: int) -> void:
 func _on_lore_unlocked(entry_id: String) -> void:
 	var entry = get_node("/root/LoreDatabase").get_entry(entry_id)
 	if entry:
-		toast(tr("NARRATOR_LORE_UNLOCKED") % Loc.lore_title(entry))  # una linea: el objeto es lo importante
+		_codex_toast.show_entry(entry)  # panel con imagen (antes: toast de una linea)
 
 
 # ---------------------------------------------------------------- memoria
