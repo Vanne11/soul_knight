@@ -284,6 +284,11 @@ func _spawn_room_enemies(room: Room) -> void:
 		return
 	room.spawn_enemies(ENEMY_SCENES, _generate_enemy_data_for_room(room), _has_real_weapon())
 
+## Balance (2026-10-17, a revisar con la autora): dano base de los enemigos comunes
+## (antes 8) y multiplicador de los enjambres (ladillas, espermatozoides, calambres...).
+const ENEMY_DAMAGE_BASE := 6.0
+const SWARM_DAMAGE_MULT := 0.5
+
 func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 	var floor_n: int = _run_manager.current_floor
 	var fd: Dictionary = _run_manager.floor_data()
@@ -298,7 +303,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 	for i in range(count):
 		var info := {
 			"health": (30.0 + floor_n * 10.0) * RNG.randf_range(0.85, 1.15),
-			"damage": (8.0 + floor_n * 3.0) * RNG.randf_range(0.85, 1.15),
+			"damage": (ENEMY_DAMAGE_BASE + floor_n * 3.0) * RNG.randf_range(0.85, 1.15),
 			"drops": [{"item_id": "coin", "chance": COIN_DROP_CHANCE}, {"item_id": "health_small", "chance": 0.08},
 				{"item_id": _random_loot_id(), "chance": 0.06}],
 		}
@@ -339,7 +344,11 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				info.name = names[t]
 				info.frames = _frames_path(roster[t])
 				if types[t] == 2:
-					info.group = 3  # los enjambres nunca vienen solos
+					# Los enjambres nunca vienen solos, pero cada bicho pega poco: rapidos y
+					# debiles. Antes pegaban como un enemigo pesado y, de a tres desde el
+					# piso 1, te encerraban y mataban en segundos.
+					info.group = 2 if floor_n <= 2 else 3
+					info.damage *= SWARM_DAMAGE_MULT
 				if room.room_type == Room.RoomType.INTOXICATION:
 					info.drops.append({"item_id": "whiskey", "chance": 0.5})
 		data.append(info)

@@ -34,6 +34,7 @@ var _sneeze_push: float = 0.0
 var _aim: Vector2 = Vector2.RIGHT
 var _using_pad := false
 const DASH_LIFT := 9.0
+const ENEMY_LAYER := 2  # capa fisica de los enemigos (collision_layer = 2)
 var _shadow_scale := Vector2.ZERO
 ## Retroceso visual del arma al disparar (px): solo mueve el sprite, nunca el origen de las balas.
 const RECOIL_KICK := 4.0
@@ -147,6 +148,7 @@ func _handle_timers(delta: float) -> void:
 		_dash_cut()
 		if _dash_timer <= 0.0:
 			is_dashing = false
+			set_collision_mask_value(ENEMY_LAYER, true)
 			velocity = velocity.lerp(Vector2.ZERO, 10.0 * delta)
 	
 	if _dash_cooldown_timer > 0.0:
@@ -203,6 +205,8 @@ func _start_dash() -> void:
 		dir = Vector2.DOWN
 	
 	_dash_direction = dir
+	# El dash atraviesa enemigos: un cerco de bichos ya no te deja sin salida.
+	set_collision_mask_value(ENEMY_LAYER, false)
 	Sound.play("dash")
 	velocity = dir * dash_speed * get_node("/root/PlayerStats").speed_modifier
 	get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("FX_DASH"), Color.CYAN)
