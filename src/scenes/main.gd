@@ -44,6 +44,7 @@ func _ready() -> void:
 	add_child(dungeon_generator)
 	
 	add_child(ScreenFx.new())  # vineta, polvo/rayos y mareo (src/fx/screen_fx.gd)
+	add_child(AmbientAudio.new())  # ambiente, antorchas y pasos (src/fx/ambient_audio.gd)
 	_lighting = RoomLighting.new()
 	_lighting.name = "RoomLighting"
 	add_child(_lighting)
