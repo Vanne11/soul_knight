@@ -393,9 +393,9 @@ var _kq_seen := false
 var _dead_t := 0.0
 
 
-## Red de seguridad: una sala con todos sus enemigos muertos que no se limpio (p. ej. la espinilla
-## que revienta por tiempo emite enemy_killed sin autor y main solo comprueba la sala cuando
-## mata el jugador) se limpia a los 2 s. Respeta clear_gate: no toca las salas con objetivo abierto.
+## Red de seguridad (respaldo): main._on_enemy_killed ya comprueba la sala con cualquier muerte,
+## con o sin autor; si aun asi quedara una sala con todos sus enemigos muertos sin limpiar
+## (muertes sin enemy_killed, enemigos quitados a mano...) se limpia a los 2 s. Respeta clear_gate: no toca las salas con objetivo abierto.
 func _dead_room_watch(delta: float) -> void:
 	var r: Room = main.current_room
 	if r == null or r.cleared or r.enemies_spawned.is_empty() or not (r.room_type in COMBATISH or r.room_type in [Room.RoomType.MINIBOSS, Room.RoomType.BOSS]):

@@ -953,7 +953,9 @@ func _on_enemy_killed(enemy: Node, killer: Node) -> void:
 			_game_controller.get_player_stats().heal(regen)
 		get_node("/root/RunManager").total_enemies_killed += 1
 		get_node("/root/RunManager").total_damage_dealt += enemy.max_health  # Approximate
-		_check_room_clear_for_enemy(enemy)
+	# La sala se comprueba con cualquier muerte (la espinilla que revienta sola, explosiones,
+	# invocados...), no solo las del jugador; room_cleared() ya respeta oleadas y clear_gate.
+	_check_room_clear_for_enemy(enemy)
 
 func _check_room_clear_for_enemy(killed_enemy: Node) -> void:
 	if not current_room:
