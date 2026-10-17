@@ -86,7 +86,7 @@ func reset_for_new_run() -> void:
 	# Sin esto las mejoras (y el +25 de escudo de Pitocles) se acumulaban entre partidas.
 	var rm := get_node("/root/RunManager")
 	max_health = BASE_HEALTH + 5.0 * rm.meta_level("vida")
-	max_shields = BASE_SHIELDS + 5.0 * rm.meta_level("escudo")
+	max_shields = (BASE_SHIELDS + 5.0 * rm.meta_level("escudo")) * Censura.mult("shield")  # Censura: menos escudo
 	max_stamina = BASE_STAMINA + 10.0 * rm.meta_level("estamina")
 	current_health = max_health
 	current_shields = max_shields
@@ -262,6 +262,7 @@ func _player_pos() -> Vector2:
 	return p.global_position + Vector2(0, -30) if p else Vector2.ZERO
 
 func heal(amount: float) -> void:
+	amount *= Censura.mult("heal")  # Censura: curacion escasa (orbes, fuente, robo de vida...)
 	current_health = min(max_health, current_health + amount)
 	health_changed.emit(current_health, max_health)
 	_ge.player_healed.emit(amount)
@@ -346,8 +347,9 @@ func apply_stat_mod(stat: String, value: float) -> void:
 			current_health += value
 			health_changed.emit(current_health, max_health)
 		"max_shields_flat":
-			max_shields += value
-			current_shields += value
+			var sv := value * (Censura.mult("shield") if value > 0.0 else 1.0)  # Censura: el escudo ganado vale menos
+			max_shields += sv
+			current_shields += sv
 			shields_changed.emit(current_shields, max_shields)
 		"max_stamina_flat":
 			max_stamina += value
@@ -433,7 +435,7 @@ func infect(kind: String, seconds: float, source: String = "") -> bool:
 		return false
 	var first := contagion_time <= 0.0
 	contagion_kind = kind
-	contagion_time = maxf(contagion_time, seconds)
+	contagion_time = maxf(contagion_time, seconds * Censura.mult("contagion_time"))  # Censura: contagio mas largo
 	_contagion_tick_t = CONTAGION[kind].tick
 	contagion_changed.emit(contagion_kind, contagion_time)
 	if first:

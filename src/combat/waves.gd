@@ -128,7 +128,7 @@ static func start(main: Node, room_: Room, seal: bool) -> bool:
 static func build_pool(main: Node, room_: Room, floor_n: int, soft: bool) -> Array[Dictionary]:
 	var pool: Array[Dictionary] = []
 	pool.assign(main._generate_enemy_data_for_room(room_))
-	var mult: float = 1.0 if soft else float(_curve(floor_n).mult)
+	var mult: float = 1.0 if soft else float(_curve(floor_n).mult) * Censura.mult("wave_mult")  # Censura: mas bichos por sala
 	var extra := roundi(float(pool.size()) * (mult - 1.0))
 	if extra > 0:
 		var more: Array = main._generate_enemy_data_for_room(room_)

@@ -234,6 +234,10 @@ func _build_select() -> void:
 	title.add_theme_constant_override("shadow_offset_x", 4)
 	title.add_theme_constant_override("shadow_offset_y", 4)
 	_select.add_child(title)
+	if get_node("/root/RunManager").daily_requested:  # partida del dia: aviso bajo el titulo
+		var dl := HudStyle.pixel_label(tr("CENSURA_DAILY_NOTICE") % RunManager.daily_date(), 16, Color("ffc93c"), true)
+		dl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_select.add_child(dl)
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 24)
@@ -339,7 +343,10 @@ func choose(id: String) -> void:
 	var rm = get_node("/root/RunManager")
 	rm.character = id
 	Narrator.say("select_" + id)
-	rm.start_new_run()
+	if rm.daily_requested:
+		rm.start_daily_run()  # partida del dia: semilla de la fecha (ver RunManager.daily_seed)
+	else:
+		rm.start_new_run()
 	Transition.change_scene("res://src/scenes/main.tscn")
 
 
