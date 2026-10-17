@@ -46,6 +46,7 @@ func _ready() -> void:
 	var hit_fx := HitFx.new()  # sacudida, pausa al impactar y destello (src/fx/hit_fx.gd)
 	hit_fx.camera = camera
 	add_child(hit_fx)
+	add_child(WorldFx.new())  # polvo, casquillos, chispas, huellas, ambiente (src/fx/world_fx.gd)
 	add_child(ScreenFx.new())  # vineta, polvo/rayos y mareo (src/fx/screen_fx.gd)
 	add_child(AmbientAudio.new())  # ambiente, antorchas y pasos (src/fx/ambient_audio.gd)
 	_lighting = RoomLighting.new()
