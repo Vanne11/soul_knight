@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "tampon"
+display_name = "Tampón"
+description = "Tapa la siguiente herida y corta el ardor y el contagio por segundo durante 40 s. Pequeño, discreto y más útil que la mitad de tus armas."
+rarity = 0
+tags = ["consumible", "defensa", "utilidad"]
+effects = []
+max_stack = 5
+consumable = true
+base_value = 40
+custom_data = {"affinity": "vulva", "locale": "items_extra", "block": "3b", "slot": true, "use_effects": [{"type": 13, "hits": 1}, {"type": 17, "duration": 40.0}]}

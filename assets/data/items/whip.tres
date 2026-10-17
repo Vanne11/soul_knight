@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "whip"
+display_name = "Látigo de Cuero"
+description = "Alcance medio: abanico de tres chasquidos que atraviesan hasta 2 enemigos. Consensuado, anunciado y con palabra de seguridad."
+rarity = 2
+tags = ["arma", "cuerpo"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 260
+custom_data = {"base_damage": 8, "fire_rate": 0.55, "projectile_speed": 820, "spread": 0.2, "pellets": 3, "range": 215, "pierce": 2, "knockback_mult": 1.4, "bullet_color": "d9a066", "locale": "items_extra", "block": "3b"}

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "towel_mesh"
+display_name = "Toalla de Malla"
+description = "Absorbe los próximos 3 golpes, pero roza: vas un 8% más lento mientras dure. ¿Sala larga y sin baño a la vista? Malla."
+rarity = 1
+tags = ["consumible", "defensa", "utilidad", "toalla"]
+effects = []
+max_stack = 3
+consumable = true
+base_value = 64
+custom_data = {"affinity": "neutral", "chafe": {"speed": 0.92, "seconds": 75.0}, "locale": "items_extra", "block": "3b", "slot": true, "use_effects": [{"type": 13, "hits": 3}]}

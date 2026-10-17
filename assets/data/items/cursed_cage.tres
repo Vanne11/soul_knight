@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "cursed_cage"
+display_name = "Jaula de Castidad Maldita"
+description = "MALDITA. +35 de escudo máximo y absorbe 2 golpes, pero ocupa una ranura y no deja pasar hormonas. Se quita con una llave (se gasta). Mucha defensa y nada de diversión."
+rarity = 3
+tags = ["maldito", "único", "defensa"]
+effects = []
+base_value = 0
+custom_data = {"affinity": "pene", "curse": true, "price": 30, "passive_mods": [{"stat": "max_shields_flat", "value": 35.0}], "use_effects": [{"type": 13, "hits": 2}], "locale": "items_extra", "block": "3b"}

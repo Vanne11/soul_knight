@@ -1,0 +1,59 @@
+{
+  "_info": "Frases del narrador sobre los objetos de la etapa 3b (toallas, tampon, lado pene, latigo, latex, jaula, sets, ranuras). Eventos item_get_<id> (al recoger, una vez por partida), item_use_<id> (al usar, una vez por partida), item_set_<reino> y item_curse_freed. Mismo formato que lines.json.",
+
+  "item_get_towel_mesh": [
+    "Toalla de malla: absorbe tres golpes, pero roza. ¿Sala larga y sin baño a la vista? Malla. ¿Paseo tranquilo? Tela. Elegir bien es media batalla."
+  ],
+  "item_get_towel_cotton": [
+    "Toalla de tela: menos aguante, cero roce. Cada cuerpo tiene su favorita y ninguna elección es mala. Solo cambia la sala."
+  ],
+  "item_get_towel_night": [
+    "La toalla nocturna. Larga, rara y cara. Está hecha para aguantar toda una noche, o toda una pelea de jefe. Úsala con ganas."
+  ],
+  "item_use_towel_mesh": [
+    "Puesta. Si empieza a rozar, es normal: cada piel reacciona distinto. Para eso existe la de tela."
+  ],
+  "item_get_tampon": [
+    "Un tampón. Pequeño, discreto y heroico. Y recuerda: se cambia cada pocas horas, aunque estés rescatando el reino."
+  ],
+  "item_get_talc": [
+    "Talco para la entrepierna. Zona seca, zona feliz. Nadie lo dice en voz alta, pero salva más batallas que la espada."
+  ],
+  "item_get_emergency_briefs": [
+    "Calzoncillos limpios de emergencia. Tu madre tenía razón: siempre hay que llevar unos limpios. Nunca se sabe cuándo habrá un golpe."
+  ],
+  "item_get_deodorant_machote": [
+    "Desodorante «Machote». Huele a bosque, a testosterona y a decisiones discutibles. Los enemigos huyen; las narices honestas, también."
+  ],
+  "item_get_testicle_kit": [
+    "Kit de autoexamen testicular. Es el momento de decirlo sin vergüenza: una vez al mes, después de la ducha, tocar y mirar si hay bultos o cambios."
+  ],
+  "item_use_testicle_kit": [
+    "Revisado, mapa a la vista. La vida real funciona igual: una vez al mes, tras la ducha, con las manos tibias, buscas bultos o cambios. Si encuentras algo, al médico sin miedo. Detectado a tiempo, casi siempre se cura."
+  ],
+  "item_get_psa_test": [
+    "Examen de PSA. Un análisis de sangre y nada más. Lo cuento serio y sin susto: desde los 50 años, o 45 si hay antecedentes en la familia, se conversa con el médico."
+  ],
+  "item_use_psa_test": [
+    "Resultados a la vista: ahora ves lo que de verdad hay dentro de cada bicho. Un PSA alto no es una sentencia: a veces es solo una próstata inflamada. Lo importante es mirar a tiempo."
+  ],
+  "item_get_whip": [
+    "El látigo de cuero. Alcance medio, tres chasquidos en abanico. Aquí es consensuado, anunciado y con palabra de seguridad. Allá afuera, también debería serlo."
+  ],
+  "item_get_latex_suit": [
+    "El traje de látex. Mucha defensa, cero sigilo, y rechina al caminar. Elegante como un tanque y ruidoso como uno."
+  ],
+  "item_get_cursed_cage": [
+    "La jaula de castidad maldita. Te cubre bien, sí, pero cierra con llave y tú quedas fuera de la fiesta hormonal. Los pactos con candado casi nunca salen baratos."
+  ],
+  "item_curse_freed": [
+    "Libre. La llave se fue con el candado. Respira, que lo importante es salir de las jaulas, de cualquier tipo."
+  ],
+
+  "item_set_pene": [
+    "Set de Penelandia completo. Orgullo de reino, con todas sus consecuencias. Si además eres de allí, se nota el doble."
+  ],
+  "item_set_vulva": [
+    "Set de Vulvania completo. Todo en su ciclo, todo en su sitio. Si además eres de allí, se nota el doble."
+  ]
+}

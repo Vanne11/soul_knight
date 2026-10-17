@@ -58,6 +58,10 @@ var guard_hits: int = 0
 var revive_charges: int = 0
 var revive_fraction: float = 0.4
 const MAX_GUARD := 3
+## Objetos de ranura (src/items/item_slots.gd): el tampon corta el dano por segundo (ardor) y el
+## talco da inmunidad al contagio durante un rato.
+var _dot_immune_left: float = 0.0
+var _infect_immune_left: float = 0.0
 
 var _last_damage_time: float = 0.0
 var _ge = null
@@ -102,6 +106,8 @@ func reset_for_new_run() -> void:
 	_temp_mods.clear()
 	guard_hits = 0
 	revive_charges = 0
+	_dot_immune_left = 0.0
+	_infect_immune_left = 0.0
 	emit_all_signals()
 
 func _handle_stamina_regen(delta: float) -> void:
@@ -124,6 +130,7 @@ func _handle_intoxication_decay(delta: float) -> void:
 ## de la afinidad del heroe (ver Player.apply_item_effect, que escala antes de llamar aqui).
 ## 10 REGEN {rate, duration} | 11 TEMP_MOD {stat, magnitude, duration} |
 ## 12 REDUCE_DAMAGE {magnitude (multiplicador), duration} | 13 GUARD {hits} | 14 REVIVE {fraction}
+## 17 DOT_IMMUNE {duration} (+ cura el ardor ya activo) | 18 INFECT_IMMUNE {duration} (+ cura el contagio)
 func apply_item_effect(e: Dictionary) -> void:
 	match int(e.type):
 		10:
@@ -145,6 +152,13 @@ func apply_item_effect(e: Dictionary) -> void:
 		14:
 			revive_charges = 1  # solo una a la vez
 			revive_fraction = float(e.get("fraction", 0.4))
+		17:
+			_dot_immune_left = float(e.duration)
+			if contagion_kind == "ardor":
+				clear_contagion()
+		18:
+			_infect_immune_left = float(e.duration)
+			clear_contagion()
 	status_changed.emit()
 
 func _handle_timed_effects(delta: float) -> void:
@@ -159,6 +173,14 @@ func _handle_timed_effects(delta: float) -> void:
 		_dr_left -= delta
 		if _dr_left <= 0.0:
 			_dr_mult = 1.0
+			status_changed.emit()
+	if _dot_immune_left > 0.0:
+		_dot_immune_left -= delta
+		if _dot_immune_left <= 0.0:
+			status_changed.emit()
+	if _infect_immune_left > 0.0:
+		_infect_immune_left -= delta
+		if _infect_immune_left <= 0.0:
 			status_changed.emit()
 	for stat in _temp_mods.keys():
 		var t: Dictionary = _temp_mods[stat]
@@ -177,6 +199,10 @@ func active_statuses() -> Array:
 		out.append({"key": "STATUS_DEFENSE", "left": _dr_left})
 	for stat in _temp_mods:
 		out.append({"key": "STATUS_MOD_" + String(stat).to_upper(), "left": _temp_mods[stat].left})
+	if _dot_immune_left > 0.0:
+		out.append({"key": "STATUS_DOT_IMMUNE", "left": _dot_immune_left})
+	if _infect_immune_left > 0.0:
+		out.append({"key": "STATUS_INFECT_IMMUNE", "left": _infect_immune_left})
 	if guard_hits > 0:
 		out.append({"key": "STATUS_GUARD", "left": -1.0, "count": guard_hits})
 	if revive_charges > 0:
@@ -366,6 +392,10 @@ func is_protected() -> bool:
 ## Intenta contagiar. Devuelve true si te contagia; false si el preservativo te protege.
 func infect(kind: String, seconds: float) -> bool:
 	if not CONTAGION.has(kind) or DebugMenu.god_mode:
+		return false
+	if _infect_immune_left > 0.0 or (_dot_immune_left > 0.0 and CONTAGION[kind].dot > 0.0):
+		contagion_blocked_count += 1
+		_ge.show_floating_text.emit(get_tree().get_first_node_in_group("player").global_position + Vector2(0, -34), tr("FX_PROTECTED"), Color("7fe0a0"))
 		return false
 	if is_protected():
 		contagion_blocked_count += 1

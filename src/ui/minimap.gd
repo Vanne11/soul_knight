@@ -76,6 +76,12 @@ func _draw() -> void:
 		for n in gen.room_graph.get(pos, []):
 			known[n] = true
 
+	# Kit de autoexamen (src/items/item_actions.gd): revela todo el piso, secretas incluidas.
+	var revealed: bool = main.has_meta("map_revealed_floor") and main.get_meta("map_revealed_floor") == get_node("/root/RunManager").current_floor
+	if revealed:
+		for pos in gen.rooms:
+			known[pos] = true
+
 	# Encaja todo el piso (no solo lo conocido) para que el mapa no "salte".
 	var bounds := Rect2i()
 	var first := true
@@ -113,7 +119,7 @@ func _draw() -> void:
 		draw_rect(r, Color("0d0b0f"), false, 1.0)
 		# Tienda y jefe se ven en cuanto conoces la sala; el resto, al pisarla.
 		var icon: String = ICONS.get(room.room_type, "")
-		if not visited.has(pos) and room.room_type not in [Room.RoomType.SHOP, Room.RoomType.BOSS]:
+		if not visited.has(pos) and not revealed and room.room_type not in [Room.RoomType.SHOP, Room.RoomType.BOSS]:
 			icon = "?"
 		if room.room_type == Room.RoomType.BOSS:
 			icon = tr("MAP_ICON_BOSS")

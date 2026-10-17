@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "latex_suit"
+display_name = "Traje de Látex"
+description = "+20 de escudo máximo, pero te mueves un 8% más lento y rechinas al caminar. Defensa total, sigilo nulo. Se pega a todo, hasta a tus decisiones."
+rarity = 2
+tags = ["reliquia", "pasivo", "defensa", "tanque"]
+equip_slot = 2
+effects = [{"type": 0, "stat": "max_shields_flat", "magnitude": 20.0}, {"type": 0, "stat": "speed", "magnitude": 0.92}]
+base_value = 220
+custom_data = {"affinity": "neutral", "locale": "items_extra", "block": "3b"}

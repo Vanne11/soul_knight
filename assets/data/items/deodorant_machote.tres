@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "deodorant_machote"
+display_name = "Desodorante en Spray \"Machote\""
+description = "Suelta una nube durante 7 s que espanta a los enemigos (los jefes ni la huelen). Olor a bosque, a testosterona y a decisiones discutibles."
+rarity = 1
+tags = ["consumible", "utilidad", "cc"]
+effects = []
+max_stack = 3
+consumable = true
+base_value = 80
+custom_data = {"affinity": "pene", "locale": "items_extra", "block": "3b", "slot": true, "use_effects": [{"type": 7, "custom_data": {"type": "deodorant", "radius": 140.0, "seconds": 7.0}}]}

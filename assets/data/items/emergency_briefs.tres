@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "emergency_briefs"
+display_name = "Calzoncillos Limpios de Emergencia"
+description = "Absorben los próximos 2 golpes y limpian cualquier contagio. Tu madre tenía razón: siempre hay que llevar unos limpios."
+rarity = 1
+tags = ["consumible", "defensa", "utilidad"]
+effects = []
+max_stack = 3
+consumable = true
+base_value = 72
+custom_data = {"affinity": "pene", "locale": "items_extra", "block": "3b", "slot": true, "use_effects": [{"type": 13, "hits": 2}, {"type": 4, "status_effect": null, "custom_data": {"cleanse": true}}]}

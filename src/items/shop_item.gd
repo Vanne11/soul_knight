@@ -52,8 +52,8 @@ func _prompt_text() -> String:
 	if rm.coins < price:
 		action = tr("SHOP_POOR") % [price, rm.coins]
 	var aff := Loc.affinity_line(_item)
-	return "[color=#ffd75a][b]%s[/b][/color]\n[font_size=13]%s[/font_size]%s\n[color=#b08d4a]%s[/color]" % [
-		Loc.item_name(_item), Loc.item_desc(_item), "\n[font_size=12]%s[/font_size]" % aff if aff != "" else "", action]
+	return "[color=#ffd75a][b]%s[/b][/color]\n[font_size=13]%s[/font_size]%s%s\n[color=#b08d4a]%s[/color]" % [
+		Loc.item_name(_item), Loc.item_desc(_item), "\n[font_size=12]%s[/font_size]" % aff if aff != "" else "", ItemSlots.hint_line(_item), action]
 
 
 func _use(player: Node) -> void:
@@ -61,6 +61,12 @@ func _use(player: Node) -> void:
 	if rm.coins < price:
 		Sound.play("poor")
 		return
+	var block := ItemSlots.pickup_block(player, _item)
+	if block != "":  # p. ej. con la jaula puesta no entran hormonas: no se cobra
+		get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position + Vector2(0, -46), tr(block), Color("c05a5a"))
+		Sound.play("locked")
+		return
+	ItemSlots.of(player)
 	rm.add_coins(-price)
 	if "mejora" in _item.tags:
 		rm.upgrades_bought[item_id] = rm.upgrades_bought.get(item_id, 0) + 1

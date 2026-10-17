@@ -24,6 +24,7 @@ func _load_items() -> void:
 				var icon_path := "res://assets/sprites/items/%s.png" % item.id
 				if not item.sprite and ResourceLoader.exists(icon_path):
 					item.sprite = load(icon_path)
+				_normalize_slot_item(item)
 				_items[item.id] = item
 				for tag in item.tags:
 					if not _items_by_tag.has(tag):
@@ -33,6 +34,31 @@ func _load_items() -> void:
 					_items_by_rarity[item.rarity] = []
 				_items_by_rarity[item.rarity].append(item)
 	print("Loaded %d items" % _items.size())
+
+## Consumibles de ranura (ver src/items/item_slots.gd): se GUARDAN al recogerlos y se usan con
+## 1-4. Aqui sus efectos pasan de `effects` (que Player aplica al recoger) a
+## custom_data.use_effects; los .tres nuevos ya vienen asi. Siguen siendo instantaneos (se aplican
+## al recogerlos) los orbes de vida, hormonas, mejoras, llaves y monedas.
+const INSTANT_IDS := ["health_small", "health_large"]
+const INSTANT_TAGS := ["moneda", "hormona", "mejora", "llave"]
+
+static func is_slot_candidate(item: Item) -> bool:
+	if not item.consumable or not ("consumible" in item.tags) or item.id in INSTANT_IDS:
+		return false
+	for t in INSTANT_TAGS:
+		if t in item.tags:
+			return false
+	return item.custom_data.get("hormone", "") == ""
+
+func _normalize_slot_item(item: Item) -> void:
+	if not is_slot_candidate(item):
+		return
+	var cd := item.custom_data.duplicate()
+	if not cd.has("use_effects"):
+		cd["use_effects"] = item.effects.duplicate()
+		item.effects = []
+	cd["slot"] = true
+	item.custom_data = cd
 
 func get_item(item_id: String) -> Variant:
 	return _items[item_id] if _items.has(item_id) else null

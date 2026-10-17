@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "talc"
+display_name = "Talco para la Entrepierna"
+description = "Quita la picazón y da inmunidad al contagio durante 25 s. Zona seca, zona feliz."
+rarity = 0
+tags = ["consumible", "defensa", "utilidad", "desintoxicante"]
+effects = []
+max_stack = 4
+consumable = true
+base_value = 48
+custom_data = {"affinity": "pene", "locale": "items_extra", "block": "3b", "slot": true, "use_effects": [{"type": 15, "intox": 0.0, "allergy": true}, {"type": 18, "duration": 25.0}]}

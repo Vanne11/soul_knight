@@ -1,7 +1,7 @@
 extends Control
 class_name ItemSlot
 
-## UI slot for consumable items
+## Casilla de la franja: solo muestra lo que guarda ItemSlots (teclas 1-4 / cruceta).
 
 var item_id: String = ""
 var quantity: int = 0
@@ -18,7 +18,7 @@ func setup(index: int, key_text: String) -> void:
 	HudStyle.style_label(count_label, 16, HudStyle.CREAM)
 	clear()
 
-func set_item(item_id_new: String, qty: int) -> void:
+func set_item(item_id_new: String, qty: int, cursed := false) -> void:
 	item_id = item_id_new
 	quantity = qty
 	
@@ -32,8 +32,11 @@ func set_item(item_id_new: String, qty: int) -> void:
 		count_label.text = str(quantity)
 	else:
 		count_label.text = ""
-	
 	icon.visible = true
+	icon.modulate = Color(1.0, 0.55, 0.55) if cursed else Color.WHITE
+	if item:
+		tooltip_text = "%s\n%s" % [Loc.item_name(item), Loc.item_desc(item)]
+		mouse_filter = Control.MOUSE_FILTER_PASS
 
 func clear() -> void:
 	item_id = ""
@@ -41,28 +44,12 @@ func clear() -> void:
 	icon.texture = preload("res://assets/sprites/ui/placeholder.png")
 	icon.visible = false
 	count_label.text = ""
+	icon.modulate = Color.WHITE
+	tooltip_text = ""
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-func use_item() -> bool:
-	if item_id == "":
-		return false
-	
-	var item = get_node("/root/ItemDatabase").get_item(item_id)
-	if not item or not item.consumable:
-		return false
-	
-	get_node("/root/ItemDatabase").apply_effects(item, get_tree().get_nodes_in_group("player")[0])
-	
-	quantity -= 1
-	if quantity <= 0:
-		clear()
-	else:
-		count_label.text = str(quantity)
-	
-	get_node("/root/GlobalEvents").inventory_changed.emit()
-	return true
-
-func _gui_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and not event.echo:
-		var key_map = {KEY_1: 0, KEY_2: 1, KEY_3: 2, KEY_4: 3}
-		if key_map.has(event.keycode) and key_map[event.keycode] == slot_index:
-			use_item()
+## Destello al usar la casilla.
+func flash() -> void:
+	var tw := create_tween()
+	tw.tween_property($Background, "modulate", Color(1.8, 1.8, 1.8), 0.05)
+	tw.tween_property($Background, "modulate", Color.WHITE, 0.25)

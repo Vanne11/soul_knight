@@ -38,15 +38,54 @@ def parse_tres_strings(path: Path) -> dict:
     return out
 
 
-def collect_items() -> dict:
+# Objetos de la etapa 3b: su texto vive en locale/items_extra.csv (marca en el .tres:
+# custom_data {"locale": "items_extra"}). Ademas, los textos de interfaz de ranuras, sets y estados.
+EXTRA_MARK = '"locale": "items_extra"'
+EXTRA_UI = {
+    "PICKUP_SLOT_HINT": "Se guarda en una ranura (teclas 1-4 o cruceta).",
+    "PICKUP_CURSE_HINT": "Maldito: ocupa una ranura hasta que lo quites con una llave.",
+    "FX_SLOT_FULL": "Sin ranura libre: se usa al instante",
+    "FX_CAGE_NO_HORMONE": "La jaula no deja pasar hormonas",
+    "FX_CURSE_NO_SLOT": "Necesitas una ranura libre",
+    "FX_CURSED": "¡Maldito!",
+    "FX_CURSE_FREED": "¡Libre!",
+    "FX_CURSE_NEEDS_KEY": "Hace falta una llave",
+    "FX_SET_COMPLETE": "¡Set completo! %s",
+    "FX_LATEX_SQUEAK": "*ñic*",
+    "FX_STIM_CRASH": "¡Bajón!",
+    "STATUS_DOT_IMMUNE": "Sin ardor",
+    "STATUS_INFECT_IMMUNE": "Inmune al contagio",
+    "STATUS_CHAFE": "Roce de malla",
+    "HUD_SET_ON": "Set %s: ACTIVO",
+    "HUD_SET_PROGRESS": "Set %s: %d/%d",
+    "SET_PENE_NAME": "Orgullo de Penelandia",
+    "SET_PENE_DESC": "3 objetos de Penelandia: +10% de daño y +5% de crítico. Si tu héroe es de allí, más.",
+    "SET_VULVA_NAME": "Ciclo de Vulvania",
+    "SET_VULVA_DESC": "3 objetos de Vulvania: +10% de cadencia y estamina un 20% más rápida. Si tu héroe es de allí, más.",
+}
+
+
+def _item_rows(extra: bool) -> dict:
     rows = {}
     for p in sorted((ROOT / "assets/data/items").glob("*.tres")):
         d = parse_tres_strings(p)
         if "id" not in d:
             continue
+        if (EXTRA_MARK in p.read_text(encoding="utf-8")) != extra:
+            continue
         k = d["id"].upper()
         rows[f"ITEM_{k}_NAME"] = d.get("display_name", "")
         rows[f"ITEM_{k}_DESC"] = d.get("description", "")
+    return rows
+
+
+def collect_items() -> dict:
+    return _item_rows(False)
+
+
+def collect_items_extra() -> dict:
+    rows = _item_rows(True)
+    rows.update(EXTRA_UI)
     return rows
 
 
@@ -135,6 +174,7 @@ def collect_world() -> dict:
 
 SOURCES = {
     "items": collect_items,
+    "items_extra": collect_items_extra,
     "lore": collect_lore,
     "narrator": collect_narrator,
     "world": collect_world,

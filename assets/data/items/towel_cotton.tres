@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "towel_cotton"
+display_name = "Toalla de Tela"
+description = "Absorbe los próximos 2 golpes, sin roce, y la estamina se recarga un 30% más rápido durante 30 s. ¿Paseo tranquilo? Tela."
+rarity = 1
+tags = ["consumible", "defensa", "utilidad", "toalla"]
+effects = []
+max_stack = 3
+consumable = true
+base_value = 56
+custom_data = {"affinity": "neutral", "locale": "items_extra", "block": "3b", "slot": true, "use_effects": [{"type": 13, "hits": 2}, {"type": 11, "stat": "stamina_regen", "magnitude": 1.3, "duration": 30.0}]}

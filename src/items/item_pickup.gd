@@ -58,8 +58,8 @@ func _prompt_text() -> String:
 		action = tr("PICKUP_SWAP") % Loc.item_name(_player.current_weapon)
 	elif _item.equip_slot == Item.EquipSlot.WEAPON:
 		action = tr("PICKUP_WIELD")
-	return "[color=#%s][b]%s[/b][/color]\n[font_size=13]%s[/font_size]%s\n[color=#b08d4a]%s[/color]" % [
-		color, Loc.item_name(_item), Loc.item_desc(_item), _affinity_suffix(), action]
+	return "[color=#%s][b]%s[/b][/color]\n[font_size=13]%s[/font_size]%s%s\n[color=#b08d4a]%s[/color]" % [
+		color, Loc.item_name(_item), Loc.item_desc(_item), _affinity_suffix() + ItemSlots.hint_line(_item), "", action]
 
 
 func _affinity_suffix() -> String:
@@ -68,6 +68,12 @@ func _affinity_suffix() -> String:
 
 
 func _use(player: Node) -> void:
+	var block := ItemSlots.pickup_block(player, _item)
+	if block != "":
+		get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position + Vector2(0, -46), tr(block), Color("c05a5a"))
+		Sound.play("locked")
+		return
+	ItemSlots.of(player)  # las ranuras tienen que existir antes de recoger (guardan el objeto)
 	finish()
 	player.add_item_to_inventory(item_id)
 	queue_free()

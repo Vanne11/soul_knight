@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "towel_night"
+display_name = "Toalla Nocturna"
+description = "Cobertura total: absorbe 3 golpes y recorta un 40% el daño durante 2 minutos. Aguanta toda la pelea del jefe. Rara, cara y larga como su nombre."
+rarity = 2
+tags = ["consumible", "defensa", "utilidad", "toalla", "rara"]
+effects = []
+max_stack = 1
+consumable = true
+base_value = 320
+custom_data = {"affinity": "neutral", "price": 40, "locale": "items_extra", "block": "3b", "slot": true, "use_effects": [{"type": 13, "hits": 3}, {"type": 12, "magnitude": 0.6, "duration": 120.0}]}

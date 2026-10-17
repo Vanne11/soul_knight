@@ -215,6 +215,7 @@ func _physics_process(delta: float) -> void:
 	if _grid_t <= 0.0:
 		_build_grid(room)
 	var enemies := _alive_enemies(room)
+	_use_slots(not enemies.is_empty(), delta)
 	if not enemies.is_empty():
 		_fight(enemies, delta)
 	elif _unstick_t > 0.0:
@@ -241,6 +242,26 @@ func _physics_process(delta: float) -> void:
 	_label.text = "BOT · piso %d · %s · %s\n%s · golpes recibidos: %d" % [
 		_floor_n, Room.RoomType.keys()[room.room_type], "limpia" if room.cleared else "sin limpiar",
 		_goal_text, _hits]
+
+
+var _slot_t := 0.0
+
+
+## Ranuras 1-4: el bot cura con lo que lleve cuando le queda poca vida y se protege (toallas,
+## calzoncillos...) al entrar en pelea. Asi tambien se prueba el uso real de las ranuras.
+func _use_slots(fighting: bool, delta: float) -> void:
+	_slot_t -= delta
+	if _slot_t > 0.0:
+		return
+	var slots := ItemSlots.find(player)
+	if slots == null:
+		return
+	var st := get_node("/root/PlayerStats")
+	_slot_t = 1.5
+	if st.current_health < st.max_health * 0.5 and slots.use_first_with_tag("curación"):
+		_say("  usa una ranura: curacion")
+	elif fighting and st.guard_hits <= 0 and slots.use_first_with_tag("defensa"):
+		_say("  usa una ranura: defensa")
 
 
 func _on_room(room: Room) -> void:
@@ -543,6 +564,8 @@ func _things(room: Room) -> Array:
 			var it = c.get("_item")
 			if it != null and it.equip_slot == Item.EquipSlot.WEAPON and player.current_weapon != null:
 				continue
+			if it != null and "maldito" in it.tags:
+				continue  # la jaula maldita no deja pasar hormonas: el bot no la coge
 			out.append(c)
 		elif path.ends_with("chest.gd") and not c.get("_opened"):
 			out.append(c)

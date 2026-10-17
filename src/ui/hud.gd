@@ -20,6 +20,7 @@ var _contagion_label: Label  # contagio de ITS (picazon / ardor)
 ## Estados temporales de objetos (regeneracion, buffs, guardia...): lista bajo la franja.
 var _status_label: Label
 var _status_cache := ""
+var _slots_seen: Array = []
 var _last_hp := -1.0
 
 var _stats: PlayerStats
@@ -65,7 +66,7 @@ func _ready() -> void:
 	_stats.stamina_changed.connect(_on_stamina_changed)
 	_stats.intoxication_changed.connect(_on_intoxication_changed)
 	_stats.contagion_changed.connect(_on_contagion_changed)
-	_events.item_picked_up.connect(_on_item_picked_up)
+	_events.item_used.connect(func(_i): _flash_used())
 	_events.inventory_changed.connect(_refresh_slots)
 	_runs.run_started.connect(_on_run_started)
 	_events.boss_health_changed.connect(_on_boss_health_changed)
@@ -99,6 +100,12 @@ func _process(_delta: float) -> void:
 		if st.left >= 0.0:
 			t += " %ds" % ceili(st.left)
 		lines.append(t)
+	var m := _slots()
+	if m:
+		if m.slots != _slots_seen:
+			_slots_seen = m.slots.duplicate(true)
+			_refresh_slots()
+		lines.append_array(m.status_lines())
 	var txt := "\n".join(lines)
 	if txt != _status_cache:
 		_status_cache = txt
@@ -149,25 +156,24 @@ func _on_intoxication_changed(level: float, tier: int) -> void:
 	# Visual feedback on tier change
 	intox_bar.set_color([Color("c046d4"), Color("f2c53d"), Color("f08a2a"), Color("ff3df0")][tier])
 
-func _on_item_picked_up(item: Variant, qty: int) -> void:
-	if "mejora" in item.tags:
-		return  # las mejoras de la tienda son permanentes, no ocupan casilla
-	# Try to add to existing slot or find empty
-	for slot in item_slots:
-		if slot.item_id == item.id:
-			slot.set_item(item.id, slot.quantity + qty)
-			return
-	
-	for slot in item_slots:
-		if slot.item_id == "":
-			slot.set_item(item.id, qty)
-			return
-	
-	# Inventory full - drop on ground (handled by pickup logic)
+## Las casillas muestran lo que guarda ItemSlots (hijo del jugador; el HUD lo crea si falta).
+func _slots() -> ItemSlots:
+	var p := get_tree().get_first_node_in_group("player")
+	return ItemSlots.of(p) if p else null
 
 func _refresh_slots() -> void:
-	# Could sync with actual inventory system later
-	pass
+	var m := _slots()
+	for i in item_slots.size():
+		var s: Dictionary = m.slots[i] if m else {}
+		if s.is_empty():
+			item_slots[i].clear()
+		else:
+			item_slots[i].set_item(s.id, s.qty, s.has("applied"))
+
+func _flash_used() -> void:
+	var m := _slots()
+	if m and m.last_used >= 0 and m.last_used < item_slots.size():
+		item_slots[m.last_used].flash()
 
 func _on_run_started(_seed: int) -> void:
 	_update_floor_label()
@@ -305,8 +311,6 @@ func _notification(what: int) -> void:
 			if pair[0].is_connected(pair[1]):
 				pair[0].disconnect(pair[1])
 		if is_instance_valid(_events):
-			if _events.item_picked_up.is_connected(_on_item_picked_up):
-				_events.item_picked_up.disconnect(_on_item_picked_up)
 			if _events.inventory_changed.is_connected(_refresh_slots):
 				_events.inventory_changed.disconnect(_refresh_slots)
 		if is_instance_valid(_runs) and _runs.run_started.is_connected(_on_run_started):
