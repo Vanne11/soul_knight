@@ -720,10 +720,11 @@ func _show_floor_card() -> void:
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.set_anchors_preset(Control.PRESET_FULL_RECT)
-	label.add_theme_font_size_override("font_size", 56)
-	label.add_theme_color_override("font_color", Color("cfc4ae"))
-	label.add_theme_color_override("font_outline_color", Color("0d0b0f"))
-	label.add_theme_constant_override("outline_size", 10)
+	# fuente pixel como el resto del HUD, crema con sombra dura (el color del piso
+	# se perdia contra el suelo del mismo tono)
+	HudStyle.style_label(label, 48, HudStyle.CREAM, true)
+	label.add_theme_constant_override("shadow_offset_x", 4)
+	label.add_theme_constant_override("shadow_offset_y", 4)
 	layer.add_child(label)
 	add_child(layer)
 	var tw := label.create_tween()
