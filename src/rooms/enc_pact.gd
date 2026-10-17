@@ -6,10 +6,16 @@ extends RoomDynamic
 ##   Recato   +30% dano          / el mundo se queda gris y el narrador calla
 ##   Escote   +35% cadencia      / te chupa el 30% de la vida que tengas (nunca te mata)
 ##   Perlas   +20% velocidad     / se queda con la mitad de tus monedas y te rompe el escudo
+## PACTO MAYOR (a veces, mas en la 2a etapa de un reino): una maldicion de TODA la partida a cambio
+## de mas botin. Va por las claves de Censura (Censura.PACT_CURSES: mult()/has()), maximo 2 por
+## partida, y se ofrece como opcion 4 (antes de largarse), asi la primera opcion sigue siendo corta.
 ## Bot: primera opcion de cualquier eleccion; si pacta con el Recato, lo unico que cambia
 ## es el color y que el narrador calla.
 
 const SECS := 240.0
+const MAJOR_CHANCE := 0.22        # probabilidad de ofrecerlo en la 1a etapa de un reino
+const MAJOR_CHANCE_STAGE2 := 0.6  # y en la 2a
+const CHEST_SCENE := preload("res://src/items/chest.tscn")
 const INTERACTABLE := preload("res://src/items/interactable.gd")
 
 var _npc: Node2D
@@ -43,10 +49,18 @@ func _ask(_pl: Node) -> void:
 	if finished:
 		return
 	Narrator.say("rm_pact_offer")
-	var opts := [tr("RM_PACT_1"), tr("RM_PACT_2"), tr("RM_PACT_3"), tr("RM_PACT_NO")]
+	var opts := [tr("RM_PACT_1"), tr("RM_PACT_2"), tr("RM_PACT_3")]
+	var curse := _roll_curse()
+	if curse != "":
+		opts.append(tr("RM_PACT_MAJOR") % [Censura.curse_name(curse), Censura.curse_curse(curse), Censura.curse_prize(curse)])
+		Narrator.say("pm_offer")
+	opts.append(tr("RM_PACT_NO"))
 	Narrator.choose(tr("RM_PACT_Q"), opts)
 	var pick: int = await Narrator.chosen
 	if not is_instance_valid(self):
+		return
+	if curse != "" and pick == 3:
+		_seal_major(curse)
 		return
 	match pick:
 		0:
@@ -70,6 +84,38 @@ func _ask(_pl: Node) -> void:
 	Sound.play("puzzle_solve")
 	toast(tr("RM_PACT_DONE_T"), tr("RM_PACT_DONE_%d" % (pick + 1)), "c08cff")
 	Narrator.say("rm_pact_done")
+	_close()
+
+
+## Maldicion que se ofrece ahora ("" = ninguna): no en la partida del dia (todos juegan lo mismo),
+## solo si caben mas pactos mayores, y con mas probabilidad en la 2a etapa.
+func _roll_curse() -> String:
+	if rm().daily_mode:
+		return ""
+	var left := Censura.available_curses()
+	if left.is_empty():
+		return ""
+	var p := MAJOR_CHANCE_STAGE2 if RunManager.floor_stage(rm().current_floor) >= 2 else MAJOR_CHANCE
+	if RNG.randf() >= p:
+		return ""
+	return left[RNG.randi_range(0, left.size() - 1)]
+
+
+## Sella el pacto mayor: la maldicion queda en Censura hasta que acabe la partida; el premio de
+## claves (coin_drop) ya va incluido, y los cofres de regalo se sueltan aqui.
+func _seal_major(id: String) -> void:
+	if not Censura.add_curse(id):
+		_close()
+		return
+	var cofres := int(Censura.PACT_CURSES[id].get("cofres", 0))
+	for i in cofres:
+		var c := CHEST_SCENE.instantiate()
+		c.contents = "weapon" if i == 0 else ""
+		c.position = (_it.position if _it != null else center()) + Vector2(-70 - 60 * i, 20)
+		room.pickups_node.add_child.call_deferred(c)
+	Sound.play("puzzle_solve")
+	toast(tr("RM_PACT_MAJOR_T"), tr("RM_PACT_MAJOR_D") % Censura.curse_name(id), "ff5a7a")
+	Narrator.say("pm_done")
 	_close()
 
 

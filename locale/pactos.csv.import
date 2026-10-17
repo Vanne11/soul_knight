@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://do6y68a03pq47"
+
+[deps]
+
+files=["res://locale/pactos.es.translation", "res://locale/pactos.en.translation"]
+
+source_file="res://locale/pactos.csv"
+dest_files=["res://locale/pactos.es.translation", "res://locale/pactos.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
