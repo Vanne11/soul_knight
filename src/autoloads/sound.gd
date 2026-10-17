@@ -57,18 +57,21 @@ func play(sfx_name: String, pitch_jitter := 0.06) -> void:
 	var p := _players[_next]
 	_next = (_next + 1) % VOICES
 	p.stream = _sfx[sfx_name]
+	p.volume_db = SFX_DB  # la voz puede haberlo bajado en este reproductor
 	p.pitch_scale = 1.0 + randf_range(-pitch_jitter, pitch_jitter)
 	p.play()
 
 
 ## "Voz" de texto que se escribe: una silaba por letra, el tono sale de la
 ## propia letra (misma frase = misma melodia) + pitch base del que habla.
-func voice(ch: String, base_pitch := 1.0) -> void:
+## vol_offset_db: ajuste sobre el volumen de los efectos (negativo = mas bajo).
+func voice(ch: String, base_pitch := 1.0, vol_offset_db := 0.0) -> void:
 	if not _sfx.has("voice") or ch.is_empty():
 		return
 	var p := _players[_next]
 	_next = (_next + 1) % VOICES
 	p.stream = _sfx["voice"]
+	p.volume_db = SFX_DB + vol_offset_db
 	p.pitch_scale = base_pitch * (0.85 + float(ch.to_lower().unicode_at(0) % 7) * 0.05) + randf_range(-0.03, 0.03)
 	p.play()
 
