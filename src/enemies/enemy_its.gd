@@ -108,7 +108,7 @@ func _process(delta: float) -> void:
 func _try_infect() -> void:
 	var c: Array = CONTAGION_OF.get(its_kind, ["picazon", 0.3, 6.0])
 	if RNG.randf() < float(c[1]):
-		get_node("/root/PlayerStats").infect(c[0], float(c[2]))
+		get_node("/root/PlayerStats").infect(c[0], float(c[2]), its_kind)
 
 
 func _strike() -> void:
