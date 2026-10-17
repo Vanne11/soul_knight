@@ -150,6 +150,17 @@ func _on_door_entered_room(room: Room, door: Door) -> void:
 		return
 	_enter_room(next_room, next_room.door_to(room.grid_pos))
 
+
+## Pista del reino del piso ("explore_pene", "boss_vulva"...); si no existe, la generica.
+func _room_track(room: Room) -> String:
+	var base := "boss" if room.room_type == Room.RoomType.BOSS and not room.cleared else "explore"
+	var kingdom: String = str(_run_manager.floor_data().get("kingdom", ""))
+	var themed := base + "_" + kingdom
+	if kingdom != "" and ResourceLoader.exists(Sound.MUSIC_DIR + themed + ".wav"):
+		return themed
+	return base
+
+
 func _enter_room(room: Room, entry_door: Door = null) -> void:
 	if current_room:
 		current_room.on_player_exit()
@@ -164,7 +175,7 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	visited_rooms[room.grid_pos] = true
 	if entry_door:
 		Sound.play("door")
-	Sound.music("boss" if room.room_type == Room.RoomType.BOSS and not room.cleared else "explore")
+	Sound.music(_room_track(room))
 	room.cleared_callback = _on_room_cleared.bind(room)
 	room.on_player_enter()
 	_connect_room_doors(room)
