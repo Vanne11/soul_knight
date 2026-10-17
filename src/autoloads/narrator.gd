@@ -372,6 +372,19 @@ func _process(delta: float) -> void:
 			_toast.visible = true
 
 
+## Rectangulo en pantalla que ocupan ahora las cajas visibles (narrador, aviso, eleccion...);
+## tamano 0 si no hay ninguna. Lo usa el panel de manos para subir en vez de quedar tapado.
+func occupied_rect() -> Rect2:
+	var r := Rect2()
+	var first := true
+	for c in _stack.get_children():
+		if c is Control and c.visible:
+			var cr: Rect2 = c.get_global_rect()
+			r = cr if first else r.merge(cr)
+			first = false
+	return r
+
+
 ## Como los matorrales: si el jugador baja hasta las cajas, se vuelven transparentes para
 ## no taparlo (y lo que tenga cerca). Con una eleccion abierta no: hay que leerla.
 const FADE_ALPHA := 0.3
