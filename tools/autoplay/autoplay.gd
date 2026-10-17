@@ -230,6 +230,9 @@ func _finish(victory: bool) -> void:
 	for i in _issues:
 		_say("  - " + i)
 	_label.text = "BOT · FIN: %s · problemas: %d" % ["VICTORIA" if victory else "derrota", _issues.size()]
+	if "--quit-on-end" in OS.get_cmdline_user_args():
+		await _wait_s(12.0)  # que se vea la pantalla final
+		get_tree().quit()
 
 
 # ------------------------------------------------------------------ pelea

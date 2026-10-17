@@ -473,6 +473,10 @@ func _pick_hormone_room() -> void:
 	var candidates: Array = dungeon_generator.rooms.values().filter(func(r): return r.room_type == Room.RoomType.MINIBOSS)
 	if candidates.is_empty():
 		candidates = dungeon_generator.rooms.values().filter(func(r): return r.room_type == Room.RoomType.COMBAT)
+	if candidates.is_empty():
+		# Pisos sin minijefe ni combate normal (solo trampa/antro): sin esto la hormona solo
+		# se podia comprar y, sin monedas, la Puerta Hormonal dejaba la partida sin salida.
+		candidates = dungeon_generator.rooms.values().filter(func(r): return r.room_type in FIGHT_ROOMS)
 	if not candidates.is_empty():
 		_hormone_room = candidates[RNG.randi_range(0, candidates.size() - 1)]
 
