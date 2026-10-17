@@ -17,6 +17,20 @@ var _transition_lock: float = 0.0
 func _process(delta: float) -> void:
 	if _transition_lock > 0.0:
 		_transition_lock -= delta
+		if _transition_lock <= 0.0:
+			_recheck_doors()
+
+
+## Si durante el bloqueo de transicion el jugador ya se metio en una puerta, el area no
+## vuelve a avisar (body_entered solo salta al entrar): se dejaba al jugador pegado en
+## la puerta hasta salir y volver a entrar. Al terminar el bloqueo se revisa a mano.
+func _recheck_doors() -> void:
+	if current_room == null or floor_completed:
+		return
+	for door: Door in current_room.doors.values():
+		if door.overlaps_body(player) and door.try_open(player):
+			_on_door_entered_room(current_room, door)
+			return
 
 ## true tras morir (la victoria final ya pone run_active en false): no se pausa.
 var _ending := false

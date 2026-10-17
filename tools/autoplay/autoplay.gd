@@ -50,22 +50,78 @@ func _ready() -> void:
 	_log = FileAccess.open(LOG_PATH, FileAccess.WRITE)
 	_t0 = Time.get_ticks_msec() / 1000.0
 	var hero := _arg("--hero=", "vulvalquiria")
-	var seed_v := int(_arg("--seed=", "0"))
 	if _arg("--fast", "") != "" or "--fast" in OS.get_cmdline_user_args():
 		Engine.time_scale = 1.6
+	# La escena tools/autoplay solo lanza: el bot de verdad cuelga de la raiz (asi
+	# sobrevive a los cambios de escena) y la escena pasa al menu principal.
+	if get_tree().current_scene == self or get_parent() != get_tree().root:
+		var bot := Node.new()
+		bot.name = "AutoplayBot"
+		bot.set_script(get_script())
+		get_tree().root.add_child.call_deferred(bot)
+		get_tree().change_scene_to_file.call_deferred("res://src/scenes/main_menu.tscn")
+		set_physics_process(false)
+		set_process(false)
+		return
 	DebugMenu.god_mode = true
-	var rm := get_node("/root/RunManager")
-	rm.character = hero
-	rm.start_new_run(seed_v) if seed_v != 0 else rm.start_new_run()
-	_say("Partida nueva: heroe=%s semilla=%d" % [hero, rm.current_seed])
-	main = load("res://src/scenes/main.tscn").instantiate()
-	get_tree().root.add_child.call_deferred(main)
 	_build_overlay()
-	await get_tree().process_frame
-	await get_tree().process_frame
+	await _wait_s(2.5)
+	# Menu principal: "Nueva partida", como lo haria una persona.
+	_label.text = "BOT · menu: Nueva partida"
+	var menu := get_tree().current_scene
+	_say("Menu principal -> Nueva partida")
+	menu.start_btn.pressed.emit()
+	# Intro: leer cada lamina y seguir con una tecla hasta llegar a elegir heroe.
+	await _wait_s(1.5)
+	var intro := get_tree().current_scene
+	var slides := 0
+	while intro and is_instance_valid(intro) and not intro._select.visible:
+		_label.text = "BOT · intro: lamina %d" % (slides + 1)
+		await _wait_s(1.6)
+		if intro._select.visible:
+			break
+		_tap_key(KEY_SPACE)  # termina de escribir
+		await _wait_s(1.4)
+		# ojo: con la eleccion ya visible, Espacio pulsaria el boton enfocado (Pitocles)
+		if intro._select.visible:
+			break
+		_tap_key(KEY_SPACE)  # siguiente lamina
+		slides += 1
+		if slides > 20:
+			_issue("La intro no llega a la eleccion de heroe")
+			break
+	_say("Intro vista (%d laminas) -> eleccion de heroe" % slides)
+	_label.text = "BOT · eligiendo heroe: %s" % hero
+	await _wait_s(2.5)
+	var btn: Button = intro.find_child("Choose_" + hero, true, false)
+	if btn == null:
+		_issue("No encuentro el boton de elegir a " + hero)
+		return
+	btn.pressed.emit()
+	_say("Heroe elegido: %s" % hero)
+	# Partida
+	while get_tree().get_first_node_in_group("main") == null:
+		await get_tree().process_frame
+	main = get_tree().get_first_node_in_group("main")
+	await _wait_s(0.5)
 	player = main.player
-	get_node("/root/PlayerStats").health_changed.connect(func(_c, _m): pass)
+	_say("Partida nueva: semilla=%d" % get_node("/root/RunManager").current_seed)
 	player.get_node("Hurtbox").area_entered.connect(func(a): if a.is_in_group("enemy_attack"): _hits += 1)
+
+
+func _wait_s(t: float) -> void:
+	await get_tree().create_timer(t, true, false, true).timeout
+
+
+func _tap_key(code: Key) -> void:
+	var e := InputEventKey.new()
+	e.physical_keycode = code
+	e.keycode = code
+	e.pressed = true
+	Input.parse_input_event(e)
+	var u := e.duplicate()
+	u.pressed = false
+	Input.parse_input_event(u)
 
 
 func _arg(prefix: String, def: String) -> String:
@@ -106,7 +162,10 @@ func _build_overlay() -> void:
 
 # ------------------------------------------------------------------ bucle
 func _physics_process(delta: float) -> void:
-	if _done or main == null or not is_instance_valid(main) or player == null:
+	if _done or player == null:
+		return
+	if main == null or not is_instance_valid(main):
+		_finish(get_node("/root/RunManager").last_run_victory)
 		return
 	_release_all()
 	if Narrator._choice.visible:
@@ -237,6 +296,8 @@ func _line_clear(a: Vector2, b: Vector2) -> bool:
 
 # ------------------------------------------------------------------ explorar
 func _explore(room: Room) -> void:
+	if room.room_type == Room.RoomType.PUZZLE and room.has_meta("puzzle") and _solve_puzzle(room.get_meta("puzzle")):
+		return
 	# 1) cosas para recoger o usar en esta sala
 	var target := _next_thing(room)
 	if target:
@@ -269,6 +330,27 @@ func _explore(room: Room) -> void:
 		_press_move((dp - player.global_position).normalized())
 	else:
 		_steer_to(dp)
+
+
+## Puzzle de memoria: pisa las placas en el orden de la secuencia, volviendo al centro
+## entre una y otra (la placa solo cuenta al entrar).
+var _pz_back := false
+
+func _solve_puzzle(pz: Node2D) -> bool:
+	if pz.get("_done"):
+		return false
+	_goal_text = "puzzle: paso %d de %d" % [pz._step + 1, pz._seq.size()]
+	if pz._busy:
+		_steer_to(pz.global_position)  # mira la secuencia desde el centro
+		_pz_back = false
+		return true
+	var i: int = pz._seq[pz._step]
+	var plate: Vector2 = pz.global_position + Vector2((i % 2 - 0.5) * pz.SPACING, (i / 2 - 0.5) * pz.SPACING)
+	var target := pz.global_position if _pz_back else plate
+	if player.global_position.distance_to(target) < 12.0:
+		_pz_back = not _pz_back
+	_steer_to(target)
+	return true
 
 
 func _thing_name(n: Node) -> String:
@@ -347,7 +429,13 @@ func _next_room(room: Room) -> Room:
 			prev[nb] = cur
 			queue.append(nb)
 	var goal = null
+	# Sin arma: primero la sala del cofre con el arma (el juego la esconde lejos).
+	var wr = main.get("_weapon_room")
+	if player.current_weapon == null and wr != null and is_instance_valid(wr) and wr.grid_pos in order and wr.grid_pos != room.grid_pos:
+		goal = wr.grid_pos
 	for pos in order:
+		if goal != null:
+			break
 		var r: Room = rooms[pos]
 		if pos != room.grid_pos and not _visited.has(pos) and r.room_type != Room.RoomType.BOSS:
 			goal = pos
@@ -478,9 +566,20 @@ func _press_move(dir: Vector2) -> void:
 
 
 func _release_all() -> void:
-	for a in ["move_left", "move_right", "move_up", "move_down", "attack", "dash", "interact"]:
+	for a in ["move_left", "move_right", "move_up", "move_down", "attack", "dash"]:
 		if Input.is_action_pressed(a):
 			Input.action_release(a)
+
+
+var _interact_frames := 0
+
+## E se suelta en el bucle de dibujo (no en el de fisica): asi el juego alcanza a leerla.
+func _process(_delta: float) -> void:
+	if Input.is_action_pressed("interact"):
+		_interact_frames += 1
+		if _interact_frames > 2:
+			Input.action_release("interact")
+			_interact_frames = 0
 
 
 func _watch_stuck(delta: float, room: Room) -> void:
@@ -491,6 +590,12 @@ func _watch_stuck(delta: float, room: Room) -> void:
 	_still_t += delta
 	if _still_t > 6.0 and _alive_enemies(room).is_empty():
 		_issue("El bot quedo quieto 6 s en %s %s (objetivo: %s)" % [Room.RoomType.keys()[room.room_type], room.grid_pos, _goal_text])
+		_say("  depuracion: pos=%s vel=%s celda_libre=%s ruta=%s goal=%s celdas=%d input=(%s,%s,%s,%s) choice=%s pausa=%s" % [
+			player.global_position - room.global_position, player.velocity, _grid.has(_cell(player.global_position)),
+			_path.slice(0, 3).map(func(v): return v - room.global_position), _path_goal - room.global_position, _grid.size(),
+			Input.get_action_strength("move_left"), Input.get_action_strength("move_right"),
+			Input.get_action_strength("move_up"), Input.get_action_strength("move_down"),
+			Narrator._choice.visible, get_tree().paused])
 		_still_t = -STUCK_S
 		_path.clear()
 	if _room_t > 120.0 and not room.cleared and room.room_type not in [Room.RoomType.PUZZLE, Room.RoomType.START, Room.RoomType.SHOP]:
