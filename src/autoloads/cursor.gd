@@ -5,10 +5,11 @@ extends Node
 const ESCENA_PARTIDA := "res://src/scenes/main.tscn"
 const BASE := Vector2(1280, 720)
 const MIRA := "res://assets/sprites/ui/hud/cursor_aim%s.png"
-const PUNTERO := "res://assets/sprites/ui/hud/cursor_pointer%s.png"
+## En menus: la toallita con alas (cursor_pointer.png, la flecha dorada, queda de repuesto).
+const PUNTERO := "res://assets/sprites/ui/hud/cursor_pad%s.png"
 # Hotspots en px de arte (se multiplican por la escala): centro de la mira / punta del puntero.
 const HOT_MIRA := Vector2(7, 7)
-const HOT_PUNTERO := Vector2(1, 1)
+const HOT_PUNTERO := Vector2(7, 1)
 
 var _mira := {}
 var _puntero := {}
@@ -47,9 +48,9 @@ func _aplicar() -> void:
 	if _estado_mira:
 		Input.set_custom_mouse_cursor(_mira[e], Input.CURSOR_ARROW, HOT_MIRA * e + Vector2(e, e) * 0.5)
 	else:
-		Input.set_custom_mouse_cursor(_puntero[e], Input.CURSOR_ARROW, HOT_PUNTERO * e)
+		Input.set_custom_mouse_cursor(_puntero[e], Input.CURSOR_ARROW, HOT_PUNTERO * e + Vector2(e * 0.5, 0))
 	# La manita de los botones también usa el puntero propio.
-	Input.set_custom_mouse_cursor(_puntero[e], Input.CURSOR_POINTING_HAND, HOT_PUNTERO * e)
+	Input.set_custom_mouse_cursor(_puntero[e], Input.CURSOR_POINTING_HAND, HOT_PUNTERO * e + Vector2(e * 0.5, 0))
 
 
 ## Al cerrar, soltar los cursores: si no, Input retiene las texturas cuando el

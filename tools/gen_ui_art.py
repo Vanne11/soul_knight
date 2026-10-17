@@ -366,6 +366,32 @@ def cursors():
                 px[1 + x, 1 + y] = cols[c]
     _outline(im)
     _save_cursor(im, "cursor_pointer")
+    # Toallita higienica con alas para los menus (idea de Nico): punta arriba al centro.
+    rows = [
+        "....WWWWW....",
+        "...WWWWWWL...",
+        "...WWPPPWL...",
+        "...WPPPPPL...",
+        "...WPPBPPL...",
+        ".WWWPBBBPLWL.",
+        "WWWWPBBBPLWWL",
+        "WWWWPPPPPLWWL",
+        ".LLWPPPPPLLL.",
+        "...WPPPPPL...",
+        "...WPPPPPL...",
+        "...WWPPPWL...",
+        "...WWWWWWL...",
+        "....LLLLL....",
+    ]
+    cols = {"W": (255, 250, 242, 255), "P": (255, 196, 222, 255), "B": (110, 182, 255, 255), "L": (196, 184, 200, 255)}
+    im = new(15, 16)
+    px = im.load()
+    for y, r in enumerate(rows):
+        for x, c in enumerate(r):
+            if c in cols:
+                px[1 + x, 1 + y] = cols[c]
+    _outline(im)
+    _save_cursor(im, "cursor_pad")
 
 
 if __name__ == "__main__":
