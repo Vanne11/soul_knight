@@ -12,5 +12,6 @@
 		{"variant": "herpes", "name": "Herpes Recurrente", "type": "its", "weight": 0.04, "its": "herpes"}
 	],
 	"weights": [0.35, 0.3, 0.35],
-	"needs": []
+	"needs": [],
+	"miniboss": {"type": "gran_candado", "variant": "gran_candado", "name": "El Gran Candado"}
 }

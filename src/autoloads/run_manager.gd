@@ -20,6 +20,7 @@ class_name RunManager
 ##   van seguidas en el orden de los prefijos.
 ## elite_chance: probabilidad de que un bicho comun salga reforzado (mas vida/dano, aura roja).
 ## needs: hormonas que exige la Puerta Hormonal de la sala del jefe (solo stage 2).
+## miniboss: {type, variant, name} opcional: minijefe propio de la sala MINIBOSS (sin el, dos gigantes del roster).
 ## tint: color de la sala cuando la liberas (antes de eso esta gris: censurada). En el
 ##   JSON va en hex ("7fe0a0") y aqui se convierte a Color.
 ## FLOORS se carga una vez al cargar el script (static var): mismo Array de Dictionary que

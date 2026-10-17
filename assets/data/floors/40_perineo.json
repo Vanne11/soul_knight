@@ -22,5 +22,6 @@
 		{"variant": "espinilla", "name": "Espinilla Reventona", "type": "espinilla", "weight": 0.1}
 	],
 	"weights": [0.25, 0.2, 0.2],
-	"needs": []
+	"needs": [],
+	"miniboss": {"type": "gran_urologo", "variant": "gran_urologo", "name": "El Gran Urólogo"}
 }

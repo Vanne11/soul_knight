@@ -24,5 +24,6 @@
 	"weights": [0.25, 0.2, 0.2],
 	"boss": "aduanero",
 	"boss_name": "EL ADUANERO HORMONAL",
-	"needs": ["testosterona", "estrogeno"]
+	"needs": ["testosterona", "estrogeno"],
+	"miniboss": {"type": "gran_urologo", "variant": "gran_urologo", "name": "El Gran Urólogo"}
 }

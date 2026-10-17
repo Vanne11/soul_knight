@@ -335,7 +335,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 	var has_boss: bool = RunManager.floor_has_boss(_run_manager.current_floor)
 	var count := RNG.randi_range(2, 4) + RunManager.depth_i(_run_manager.current_floor)
 	if room.room_type == Room.RoomType.MINIBOSS:
-		count = 2
+		count = 1 if fd.has("miniboss") else 2  # minijefe propio del piso (datos) o dos gigantes
 	elif room.room_type == Room.RoomType.BOSS:
 		count = 1 if has_boss else GUARDIAN_ESCORTS + 1
 	
@@ -387,6 +387,13 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				info.frames = _frames_path(roster[0])
 				info.scale = 1.8
 				info.elite = true
+				info.drops.append({"item_id": "health_large", "chance": 1.0})
+			Room.RoomType.MINIBOSS when fd.has("miniboss"):
+				# Minijefe propio (Gran Urologo, Gran Candado): su script ya multiplica vida/dano y escala.
+				var mb: Dictionary = fd.miniboss
+				info.enemy_type = str(mb.type)
+				info.name = str(mb.name)
+				info.frames = _frames_path(str(mb.variant))
 				info.drops.append({"item_id": "health_large", "chance": 1.0})
 			Room.RoomType.MINIBOSS:
 				info.enemy_type = "melee"
