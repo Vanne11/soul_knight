@@ -1,0 +1,31 @@
+keys,es,en
+AFFIX_FMT,%s [%s],%s [%s]
+AFFIX_AND, y , and 
+AFFIX_RAPIDO,Veloz,Fast
+AFFIX_BLINDADO,Blindado,Armored
+AFFIX_VAMPIRO,Vampiro,Vampire
+AFFIX_EXPLOSIVO,Explosivo,Explosive
+AFFIX_INVOCADOR,Invocador,Summoner
+AFFIX_SALTARIN,Saltarín,Blinker
+AFFIX_REFLECTOR,Espejado,Mirrored
+AFFIX_VENENOSO,Venenoso,Venomous
+AFFIX_VENGATIVO,Vengativo,Vengeful
+AFFIX_PEGAJOSO,Pegajoso,Sticky
+AFFIX_RAPIDO_DESC,Corre un 30% más. Su aviso de ataque sigue igual.,Runs 30% faster. Its attack warning is unchanged.
+AFFIX_BLINDADO_DESC,Escudo azul: hay que romperlo antes de tocarle la vida.,Blue shield: break it before you can touch its health.
+AFFIX_VAMPIRO_DESC,Se cura cuando te hace daño.,Heals whenever it hurts you.
+AFFIX_EXPLOSIVO_DESC,Al morir deja un círculo que revienta: sal del área o esquiva.,Leaves a circle on death that goes off: leave the area or dash.
+AFFIX_INVOCADOR_DESC,Cada pocos segundos suelta crías (máximo 3).,Every few seconds it spawns minions (max 3).
+AFFIX_SALTARIN_DESC,Se reposiciona cerca de ti; un aro cian avisa dónde.,Repositions near you; a cyan ring warns where.
+AFFIX_REFLECTOR_DESC,"Algunas balas rebotan hacia ti, más lentas.","Some bullets bounce back at you, slower."
+AFFIX_VENENOSO_DESC,Va dejando charcos verdes que escuecen.,Leaves stinging green puddles behind.
+AFFIX_VENGATIVO_DESC,"Si matas a un compañero, se enfurece unos segundos.","If you kill a teammate, it rages for a few seconds."
+AFFIX_PEGAJOSO_DESC,"Si lo tocas, te ralentiza un rato.",Touch it and it slows you down for a while.
+AFFIX_SHIELD_BREAK,¡Escudo roto!,Shield broken!
+AFFIX_SUMMON,¡Refuerzos!,Backup!
+AFFIX_REFLECT,¡Rebote!,Bounce!
+AFFIX_VENGE,¡Venganza!,Revenge!
+AFFIX_STICK,¡Pegajoso!,Sticky!
+LORE_ELITES_TITLE,Élites con Afijos,Elites with Affixes
+LORE_ELITES_TEXT,"A veces un bicho común se mira al espejo, se cree especial y le sale un ego del tamaño de un anillo rojo. Son los élites, y la censura los clasificó como 'personal con responsabilidades'. Cada uno trae uno o dos afijos, que son como las propinas: nadie los pidió y siempre cuestan. El Veloz corre más de la cuenta. El Blindado llega con un escudo azul que hay que romper primero (no, no se negocia). El Vampiro se cura con tu dolor, el Explosivo se despide con fuegos artificiales y avisa, el Invocador trae primos, el Saltarín aparece donde menos lo esperas (pero un aro cian lo delata), el Espejado te devuelve las balas con cariño, el Venenoso deja charcos que nadie pidió, el Vengativo se ofende si le matas a un amigo y el Pegajoso, bueno, es pegajoso. Cuanto más hondo bajas, más probable es que vengan de a dos. Moraleja: mira los iconitos sobre su cabeza antes de decidir cómo pelear. Y si ves 'Explosivo y Vampiro', corre.","Sometimes an ordinary critter looks in the mirror, decides it is special, and grows an ego the size of a red ring. Those are the elites, which censorship filed under 'staff with responsibilities'. Each one carries one or two affixes, which are like tips: nobody asked for them and they always cost you. The Fast one runs more than it should. The Armored one arrives with a blue shield you have to break first (no, it is not negotiable). The Vampire heals on your pain, the Explosive says goodbye with fireworks and warns you first, the Summoner brings cousins, the Blinker shows up where you least expect it (but a cyan ring gives it away), the Mirrored one returns your bullets with affection, the Venomous one leaves puddles nobody asked for, the Vengeful one takes offence if you kill its friend, and the Sticky one, well, is sticky. The deeper you go, the likelier they come in pairs. Moral: read the little icons over their heads before deciding how to fight. And if you see 'Explosive and Vampire', run."
+LORE_ELITES_FLAVOR,Mata a 3 élites con afijos.,Kill 3 elites with affixes.

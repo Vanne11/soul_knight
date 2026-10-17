@@ -115,6 +115,7 @@ func spawn_enemies(enemy_data: Array[Dictionary], seal := true) -> void:
 				enemy.get_node("AnimatedSprite2D").scale *= data.scale
 			if data.get("elite", false):
 				enemy.add_child(EliteAura.new())  # reforzado: aura roja bajo los pies
+			Affixes.attach(enemy, data.get("affixes", []))  # afijos de elite (src/enemies/affixes)
 			
 			enemies_spawned.append(enemy)
 			_add_enemy_deferred(enemy, spawn_points[i] + Vector2(g * 28, (g % 2) * 24))

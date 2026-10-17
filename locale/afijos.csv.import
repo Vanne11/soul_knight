@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://ccvdhd0u6jahd"
+
+[deps]
+
+files=["res://locale/afijos.es.translation", "res://locale/afijos.en.translation"]
+
+source_file="res://locale/afijos.csv"
+dest_files=["res://locale/afijos.es.translation", "res://locale/afijos.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
