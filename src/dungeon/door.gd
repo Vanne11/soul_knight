@@ -48,7 +48,11 @@ func set_state(new_state: State) -> void:
 	state_changed.emit(get_direction_name(), int(state))
 
 func _update_visuals() -> void:
-	var path := "res://assets/sprites/environment/door_%s_%s.png" % [get_direction_name(), _STATE_NAMES[state]]
+	var file := "door_%s_%s.png" % [get_direction_name(), _STATE_NAMES[state]]
+	# juego de puertas del reino del piso (tools/gen_door_art.py), con respaldo a las genericas
+	var path := "res://assets/sprites/environment/doors/%s/%s" % [get_node("/root/RunManager").floor_data().get("kingdom", "neutral"), file]
+	if not ResourceLoader.exists(path):
+		path = "res://assets/sprites/environment/" + file
 	if ResourceLoader.exists(path):
 		sprite.texture = load(path)
 	

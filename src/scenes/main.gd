@@ -212,6 +212,7 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	_spawn_room_enemies(room)
 	
 	get_node("/root/RunManager").current_room_index = _get_room_index(room)
+	BossIntro.on_enter_room(self, room)  # presentacion del jefe (primera vez)
 	print("Entered room: %s at %s" % [room.room_type, room.grid_pos])
 
 func _narrate_room(room: Room) -> void:
