@@ -1,46 +1,65 @@
 [gd_resource type="SpriteFrames" format=3]
 
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/idle_00.png" id="1_idle0"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/idle_01.png" id="2_idle1"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/idle_02.png" id="3_idle2"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/idle_03.png" id="4_idle3"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walk_00.png" id="5_walk0"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walk_01.png" id="6_walk1"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walk_02.png" id="7_walk2"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walk_03.png" id="8_walk3"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walk_04.png" id="9_walk4"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walk_05.png" id="10_walk5"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/attack_00.png" id="11_attack0"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/attack_01.png" id="12_attack1"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/attack_02.png" id="13_attack2"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/attack_03.png" id="14_attack3"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/dash_00.png" id="15_dash0"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/dash_01.png" id="16_dash1"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/dash_02.png" id="17_dash2"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/hurt_00.png" id="18_hurt0"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/hurt_01.png" id="19_hurt1"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/hurt_02.png" id="20_hurt2"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/death_00.png" id="21_death0"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/death_01.png" id="22_death1"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/death_02.png" id="23_death2"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/death_03.png" id="24_death3"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/death_04.png" id="25_death4"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/death_05.png" id="26_death5"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/idle_00.png" id="1_idle00"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/idle_01.png" id="2_idle01"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/idle_02.png" id="3_idle02"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/idle_03.png" id="4_idle03"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walk_00.png" id="5_walk00"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walk_01.png" id="6_walk01"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walk_02.png" id="7_walk02"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walk_03.png" id="8_walk03"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walk_04.png" id="9_walk04"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walk_05.png" id="10_walk05"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/attack_00.png" id="11_attack00"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/attack_01.png" id="12_attack01"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/attack_02.png" id="13_attack02"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/attack_03.png" id="14_attack03"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/dash_00.png" id="15_dash00"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/dash_01.png" id="16_dash01"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/dash_02.png" id="17_dash02"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/hurt_00.png" id="18_hurt00"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/hurt_01.png" id="19_hurt01"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/hurt_02.png" id="20_hurt02"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/death_00.png" id="21_death00"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/death_01.png" id="22_death01"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/death_02.png" id="23_death02"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/death_03.png" id="24_death03"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/death_04.png" id="25_death04"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/death_05.png" id="26_death05"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walkup_00.png" id="27_walkup00"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walkup_01.png" id="28_walkup01"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walkup_02.png" id="29_walkup02"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walkup_03.png" id="30_walkup03"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walkup_04.png" id="31_walkup04"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/walkup_05.png" id="32_walkup05"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/idleup_00.png" id="33_idleup00"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/idleup_01.png" id="34_idleup01"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/idleup_02.png" id="35_idleup02"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/idleup_03.png" id="36_idleup03"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/camera_00.png" id="37_camera00"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/camera_01.png" id="38_camera01"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/camera_02.png" id="39_camera02"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/camera_03.png" id="40_camera03"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/gesture_00.png" id="41_gesture00"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/gesture_01.png" id="42_gesture01"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/gesture_02.png" id="43_gesture02"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/vulvalquiria/gesture_03.png" id="44_gesture03"]
 
 [resource]
-animations = [{
+animations = [
+{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_idle0")
+"texture": ExtResource("1_idle00")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_idle1")
+"texture": ExtResource("2_idle01")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_idle2")
+"texture": ExtResource("3_idle02")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_idle3")
+"texture": ExtResource("4_idle03")
 }],
 "loop": true,
 "name": &"idle",
@@ -48,22 +67,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_walk0")
+"texture": ExtResource("5_walk00")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_walk1")
+"texture": ExtResource("6_walk01")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_walk2")
+"texture": ExtResource("7_walk02")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_walk3")
+"texture": ExtResource("8_walk03")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_walk4")
+"texture": ExtResource("9_walk04")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_walk5")
+"texture": ExtResource("10_walk05")
 }],
 "loop": true,
 "name": &"walk",
@@ -71,16 +90,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("11_attack0")
+"texture": ExtResource("11_attack00")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_attack1")
+"texture": ExtResource("12_attack01")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_attack2")
+"texture": ExtResource("13_attack02")
 }, {
 "duration": 1.0,
-"texture": ExtResource("14_attack3")
+"texture": ExtResource("14_attack03")
 }],
 "loop": false,
 "name": &"attack",
@@ -88,13 +107,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("15_dash0")
+"texture": ExtResource("15_dash00")
 }, {
 "duration": 1.0,
-"texture": ExtResource("16_dash1")
+"texture": ExtResource("16_dash01")
 }, {
 "duration": 1.0,
-"texture": ExtResource("17_dash2")
+"texture": ExtResource("17_dash02")
 }],
 "loop": false,
 "name": &"dash",
@@ -102,13 +121,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("18_hurt0")
+"texture": ExtResource("18_hurt00")
 }, {
 "duration": 1.0,
-"texture": ExtResource("19_hurt1")
+"texture": ExtResource("19_hurt01")
 }, {
 "duration": 1.0,
-"texture": ExtResource("20_hurt2")
+"texture": ExtResource("20_hurt02")
 }],
 "loop": false,
 "name": &"hurt",
@@ -116,24 +135,147 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("21_death0")
+"texture": ExtResource("21_death00")
 }, {
 "duration": 1.0,
-"texture": ExtResource("22_death1")
+"texture": ExtResource("22_death01")
 }, {
 "duration": 1.0,
-"texture": ExtResource("23_death2")
+"texture": ExtResource("23_death02")
 }, {
 "duration": 1.0,
-"texture": ExtResource("24_death3")
+"texture": ExtResource("24_death03")
 }, {
 "duration": 1.0,
-"texture": ExtResource("25_death4")
+"texture": ExtResource("25_death04")
 }, {
 "duration": 1.0,
-"texture": ExtResource("26_death5")
+"texture": ExtResource("26_death05")
 }],
 "loop": false,
 "name": &"death",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("27_walkup00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_walkup01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_walkup02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_walkup03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_walkup04")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_walkup05")
+}],
+"loop": true,
+"name": &"walk_up",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("33_idleup00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_idleup01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_idleup02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_idleup03")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("37_camera00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_camera01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_camera02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_camera03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_camera03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_camera02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_camera03")
+}],
+"loop": false,
+"name": &"camera",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("41_gesture00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_gesture01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_gesture02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_gesture03")
+}],
+"loop": true,
+"name": &"gesture",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_walk00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_walk01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_walk02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_walk03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_walk04")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_walk05")
+}],
+"loop": true,
+"name": &"walk_down",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_idle00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_idle01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_idle02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_idle03")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 6.0
 }]

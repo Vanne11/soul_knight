@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "huevo_suerte"
+display_name = "Huevo de la Suerte"
+description = "Puesto por él mismo, que es mamífero y no debería. +4 de vida máxima y +5% de crítico. Biología: 0, suerte: 1."
+rarity = 1
+tags = ["reliquia", "pasivo", "especial", "equilibrado"]
+equip_slot = 2
+effects = [{"type": 0, "stat": "max_health_flat", "magnitude": 4.0}, {"type": 0, "stat": "crit_chance", "magnitude": 0.05}]
+base_value = 0

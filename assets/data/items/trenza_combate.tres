@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "trenza_combate"
+display_name = "Trenza de Combate"
+description = "Tejida con paciencia, que a ella le falta. +8% de crítico y +8% de cadencia. Tirar de ella es mala idea."
+rarity = 1
+tags = ["reliquia", "pasivo", "especial", "ofensa"]
+equip_slot = 2
+effects = [{"type": 0, "stat": "crit_chance", "magnitude": 0.08}, {"type": 0, "stat": "fire_rate", "magnitude": 1.08}]
+base_value = 0

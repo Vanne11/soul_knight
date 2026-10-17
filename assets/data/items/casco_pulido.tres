@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "casco_pulido"
+display_name = "Casco Pulido"
+description = "Pulido cada noche con un trapo y rencor. Absorbe el primer golpe y cansa menos. Nadie sabe por qué brilla tanto; Pitocles tampoco."
+rarity = 1
+tags = ["reliquia", "pasivo", "especial", "tanque"]
+equip_slot = 2
+effects = [{"type": 13, "hits": 1}, {"type": 0, "stat": "stamina_regen", "magnitude": 1.15}]
+base_value = 0

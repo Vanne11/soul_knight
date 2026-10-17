@@ -1,0 +1,25 @@
+keys,es,en
+HERO_BLOCK,¡BLOQUEO!,BLOCKED!
+HERO_PARRY,¡PARRY!,PARRY!
+HERO_GUARD_BREAK,¡Escudo roto!,Shield broken!
+HERO_RAM,¡FALANGE!,PHALANX!
+HERO_GLIDE,¡Alas!,Wings!
+HERO_SCREAM,¡AAAAAAAH!,AAAAAAAH!
+HERO_EGG,¡Huevo!,Egg!
+HERO_SPUR,¡Espolón!,Spur!
+HERO_ELECTRO,Te siento...,I can feel you...
+HERO_QUIP_PITOCLES_1,Brilla más que mi futuro.,Shinier than my future.
+HERO_QUIP_PITOCLES_2,Pulir. Siempre pulir.,Polish. Always polish.
+HERO_QUIP_PITOCLES_3,Esto no lo pagan.,Nobody pays for this.
+HERO_QUIP_VULVALQUIRIA_1,¿Ya? ¿Ya?,Now? Now?
+HERO_QUIP_VULVALQUIRIA_2,Esta trenza tiene vida propia.,This braid has a life of its own.
+HERO_QUIP_VULVALQUIRIA_3,"Cero paciencia, ¿lo dije?","Zero patience, did I say?"
+HERO_QUIP_ORNITORRINCO_1,¿Cuac? No. ¿Guau? Tampoco.,Quack? No. Woof? Also no.
+HERO_QUIP_ORNITORRINCO_2,Soy un pato. Un pato raro.,I'm a duck. A weird duck.
+HERO_QUIP_ORNITORRINCO_3,Otra vez me confundieron.,Mistaken for something else. Again.
+ITEM_CASCO_PULIDO_NAME,Casco Pulido,Polished Helmet
+ITEM_CASCO_PULIDO_DESC,Pulido cada noche con un trapo y rencor. Absorbe el primer golpe y cansa menos. Nadie sabe por qué brilla tanto; Pitocles tampoco.,Polished every night with a rag and resentment. Absorbs the first hit and tires you less. Nobody knows why it shines so much; neither does Pitocles.
+ITEM_TRENZA_COMBATE_NAME,Trenza de Combate,Battle Braid
+ITEM_TRENZA_COMBATE_DESC,"Tejida con paciencia, que a ella le falta. +8% de crítico y +8% de cadencia. Tirar de ella es mala idea.","Woven with patience, which she lacks. +8% crit chance and +8% fire rate. Pulling on it is a bad idea."
+ITEM_HUEVO_SUERTE_NAME,Huevo de la Suerte,Lucky Egg
+ITEM_HUEVO_SUERTE_DESC,"Puesto por él mismo, que es mamífero y no debería. +4 de vida máxima y +5% de crítico. Biología: 0, suerte: 1.","Laid by himself, who is a mammal and shouldn't. +4 max health and +5% crit chance. Biology: 0, luck: 1."
