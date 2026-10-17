@@ -23,6 +23,8 @@ var cleared_callback: Variant = null
 ## "bendicion" (de reward_kingdom), "monedas", "vida", "hormona" o "".
 var reward: String = ""
 var reward_kingdom: String = ""
+## Sala en penumbra (la sortea RoomLighting al generar el piso).
+var is_dark: bool = false
 
 @onready var floor_tilemap: TileMap = $Floor
 @onready var walls_tilemap: TileMap = $Walls

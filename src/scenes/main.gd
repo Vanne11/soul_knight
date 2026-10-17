@@ -32,6 +32,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	PauseMenu.open(self)
 
 var dungeon_generator: DungeonGenerator
+var _lighting: RoomLighting
 @onready var _game_controller: GameController = get_node("/root/GameController")
 @onready var _global_events: GlobalEvents = get_node("/root/GlobalEvents")
 @onready var _run_manager: RunManager = _game_controller.get_run_manager()
@@ -42,6 +43,10 @@ func _ready() -> void:
 	dungeon_generator.name = "DungeonGenerator"
 	add_child(dungeon_generator)
 	
+	_lighting = RoomLighting.new()
+	_lighting.name = "RoomLighting"
+	add_child(_lighting)
+	_lighting.setup(player)
 	_setup_camera()
 	_generate_dungeon()
 	_game_controller.get_player_stats().emit_all_signals()
@@ -61,6 +66,7 @@ func _generate_dungeon() -> void:
 	dungeon_root = dungeon_generator.generate_floor(_run_manager.current_floor, seed)
 	visited_rooms.clear()
 	add_child(dungeon_root)
+	_lighting.setup_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)
 	_lock_secret_rooms()
 	
 	# Start player in start room
@@ -155,6 +161,7 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	# Update camera limits to room bounds
 	_update_camera_limits(room)
 	
+	_lighting.enter_room(room)
 	_paint_room(room, room.cleared or room.room_type in CALM_ROOMS)
 	_label_doors(room)
 	if room.room_type in [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]:
@@ -457,6 +464,7 @@ func _paint_room(room: Room, colored: bool, animate := false) -> void:
 	else:
 		room.floor_tilemap.modulate = target_floor
 		room.walls_tilemap.modulate = target_walls
+	_lighting.paint(room, colored, animate)
 
 func _on_room_cleared(room: Room) -> void:
 	if floor_completed:
