@@ -34,6 +34,7 @@ const PUDDLES := {
 	"mixto": [["aceite", 0.5], ["water", 0.35], ["dudoso", 0.15]],
 	"censura": [["tinta", 0.65], ["water", 0.35]],
 }
+const WET_PATCHES := {"patch_neutral_b": "mud", "patch_mixto_a": "arena", "patch_censura_b": "tinta"}
 const STAMPS := {"mixto": "stamp_mixto", "censura": "stamp_censura"}
 const CALM := [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]
 
@@ -249,6 +250,11 @@ func _build_patches(n: int) -> bool:
 		var name := "patch_%s_%s" % [kingdom, "a" if _rng.randf() < 0.5 else "b"]
 		_blob(pos, rx, ry, name)
 		made = true
+		# Parches que se pisan como liquido (WorldFx deja huellas): barro, arena, alquitran.
+		if WET_PATCHES.has(name):
+			var zones: Array = room.get_meta("wet_zones", [])
+			zones.append({"center": pos, "rx": rx, "ry": ry, "kind": WET_PATCHES[name]})
+			room.set_meta("wet_zones", zones)
 	return made
 
 

@@ -42,10 +42,10 @@ const GLITTER := [Color(1.0, 0.48, 0.75), Color(1.0, 0.85, 0.3), Color(0.45, 0.9
 	Color(0.55, 1.0, 0.7), Color(0.78, 0.6, 1.0), Color(1.0, 1.0, 1.0)]
 
 ## Pasos de huella: cuanto liquido queda al salir del charco y cada cuantos px se pisa.
-const WET_STEPS := 7.0
+const WET_STEPS := 10.0
 const STEP_PLAYER := 15.0
 const STEP_ENEMY := 20.0
-const FOOT_LIFE := 5.5
+const FOOT_LIFE := 7.0
 
 
 class P extends RefCounted:
@@ -158,7 +158,6 @@ var _last_shot := 0
 var _was_dashing := false
 var _foot_tex: Texture2D
 var _splat_tex: Array[Texture2D] = []
-var _img_cache := {}
 
 
 func _ready() -> void:
@@ -379,59 +378,38 @@ func _collect_puddles() -> void:
 		var parts := path.get_basename().split("_")
 		if parts.size() < 3:
 			continue
-		var img := _image_of(s.texture)
-		_puddles.append({"pos": s.global_position, "kind": parts[1], "img": img,
-			"size": Vector2(s.texture.get_size()), "flip": s.flip_h, "col": _avg_color(img, parts[1])})
-
-
-func _image_of(tex: Texture2D) -> Image:
-	var key := tex.resource_path
-	if not _img_cache.has(key):
-		var im := tex.get_image()
-		if im.is_compressed():
-			im.decompress()
-		im.convert(Image.FORMAT_RGBA8)
-		_img_cache[key] = im
-	return _img_cache[key]
-
-
-func _avg_color(im: Image, kind: String) -> Color:
-	var r := 0.0
-	var g := 0.0
-	var b := 0.0
-	var n := 0.0
-	for y in range(0, im.get_height(), 2):
-		for x in range(0, im.get_width(), 2):
-			var c := im.get_pixel(x, y)
-			if c.a > 0.5:
-				r += c.r
-				g += c.g
-				b += c.b
-				n += 1.0
-	if n < 4.0:
-		return LIQUID.get(kind, Color.GRAY)
-	var avg := Color(r / n, g / n, b / n)
-	# el agua mojada brilla: se aclara para que la huella se lea sobre el suelo
-	if kind == "water":
-		avg = avg.lerp(Color.WHITE, 0.45)
-	return avg
+		# Elipse del charco (sin leer pixeles: en la web la textura no se puede leer de
+		# vuelta y antes la deteccion fallaba entera, sin una sola huella).
+		var half := Vector2(s.texture.get_size()) * 0.5 * s.scale.abs() * 0.85
+		_puddles.append({"pos": s.global_position, "kind": parts[1], "half": half, "col": _wet_color(parts[1])})
+	# Parches de barro, arena o alquitran pintados en el suelo (RoomDecals los anota).
+	for z in _room.get_meta("wet_zones", []):
+		_puddles.append({"pos": _room.global_position + z.center, "kind": z.kind,
+			"half": Vector2(z.rx, z.ry) * 0.9, "col": _wet_color(z.kind)})
 
 
 ## Devuelve el charco que cubre el punto (o {}).
 func _puddle_at(pt: Vector2) -> Dictionary:
 	for pd in _puddles:
-		var half: Vector2 = pd.size * 0.5
+		var h: Vector2 = pd.half
 		var d: Vector2 = pt - pd.pos
-		if absf(d.x) >= half.x or absf(d.y) >= half.y:
-			continue
-		var x := int(d.x + half.x)
-		if pd.flip:
-			x = int(pd.size.x) - 1 - x
-		var y := int(d.y + half.y)
-		var im: Image = pd.img
-		if x >= 0 and y >= 0 and x < im.get_width() and y < im.get_height() and im.get_pixel(x, y).a > 0.4:
+		if (d.x * d.x) / (h.x * h.x) + (d.y * d.y) / (h.y * h.y) <= 1.0:
 			return pd
 	return {}
+
+
+## Color de la huella: una huella mojada se lee mas oscura y saturada que el suelo
+## (con el color del liquido tal cual, barro sobre tierra no se veia).
+func _wet_color(kind: String) -> Color:
+	match kind:
+		"water":
+			return Color(0.06, 0.1, 0.16)  # suelo mojado: oscurece, no tine
+		"arena":
+			return Color(0.42, 0.33, 0.18)
+		"mud", "tinta", "aceite":
+			return LIQUID.get(kind, Color.GRAY).darkened(0.45)
+	var c: Color = LIQUID.get(kind, Color.GRAY)
+	return Color.from_hsv(c.h, minf(1.0, c.s * 1.4), c.v * 0.8)
 
 
 # ------------------------------------------------------------------ eventos de combate
@@ -684,10 +662,11 @@ func _track(a: Node2D, is_player: bool, dt: float, seen: Dictionary) -> void:
 			var dirn := move.normalized()
 			var perp: Vector2 = dirn.orthogonal() * 3.5 * st.side
 			var col: Color = st.col
-			col.a = 0.9 * frac if pd.is_empty() else 0.9
+			var strong := 0.55 if st.kind == "water" else 0.95  # el agua solo oscurece el suelo
+			col.a = strong * (0.35 + 0.65 * frac) if pd.is_empty() else strong
 			if frac <= 0.0:
 				return
-			var scl := 1.0 if is_player else 0.75
+			var scl := 1.3 if is_player else 1.0
 			_add_decal(_foot_tex, foot_pos + perp, col, FOOT_LIFE * 0.35, FOOT_LIFE,
 				st.side < 0.0, scl, dirn.angle() + PI * 0.5)
 
