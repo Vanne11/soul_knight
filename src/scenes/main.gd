@@ -292,6 +292,8 @@ func _spawn_room_enemies(room: Room) -> void:
 		if _has_real_weapon():
 			room.seal_doors()
 		return
+	if Waves.enabled_for(room) and Waves.start(self, room, _has_real_weapon()):
+		return  # oleadas y formaciones (src/combat/waves.gd)
 	room.spawn_enemies(_generate_enemy_data_for_room(room), _has_real_weapon())
 
 ## Balance (2026-10-17, a revisar con la autora): dano base de los enemigos comunes
