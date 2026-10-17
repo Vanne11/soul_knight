@@ -14,3 +14,4 @@ tests/
 .DS_Store
 Thumbs.db
 tools/_intro_raw/
+.claude/

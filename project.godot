@@ -26,6 +26,7 @@ RunManager="res://src/autoloads/run_manager.gd"
 GameController="res://src/autoloads/game_controller.gd"
 Narrator="*res://src/autoloads/narrator.gd"
 DebugMenu="*res://src/autoloads/debug_menu.gd"
+Settings="*res://src/autoloads/settings.gd"
 Sound="*res://src/autoloads/sound.gd"
 
 [display]
@@ -33,7 +34,8 @@ Sound="*res://src/autoloads/sound.gd"
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/mode/window_mode=0
-rendering/quality/2d/default_canvas_item_texture_filter=0
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
 
 [input]
 
@@ -104,11 +106,12 @@ pause={
 
 physics/2d/default_gravity=0
 
-[rendering]
-
-rendering/renderer/rendering_method="forward_plus"
-
 [internationalization]
 
 locale/fallback="es"
-locale/translations=PackedStringArray("res://locale/ui.en.translation", "res://locale/ui.es.translation")
+locale/translations=PackedStringArray("res://locale/ui.en.translation", "res://locale/ui.es.translation", "res://locale/settings.en.translation", "res://locale/settings.es.translation")
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+rendering/renderer/rendering_method="forward_plus"

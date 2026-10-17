@@ -1,0 +1,13 @@
+keys,es,en
+PAUSE_TITLE,PAUSA,PAUSED
+PAUSE_RESUME,CONTINUAR,RESUME
+PAUSE_SETTINGS,AJUSTES,SETTINGS
+PAUSE_MENU,VOLVER AL MENÚ,BACK TO MENU
+PAUSE_QUIT,SALIR DEL JUEGO,QUIT GAME
+PAUSE_NOTE,"Si vuelves al menú, esta partida se abandona y no da huesos.","If you go back to the menu, this run is abandoned and gives no bones."
+SETTINGS_TITLE,AJUSTES,SETTINGS
+SETTINGS_MUSIC,Música,Music
+SETTINGS_SFX,Efectos,Effects
+SETTINGS_FULLSCREEN,Pantalla completa,Fullscreen
+SETTINGS_LANGUAGE,Idioma,Language
+SETTINGS_BACK,VOLVER,BACK
