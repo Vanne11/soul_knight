@@ -792,6 +792,7 @@ func _build_calm_room(room: Room) -> void:
 					Sound.play("room_clear")
 					Narrator.toast(tr("PROP_FOUNTAIN_TOAST_TITLE"), tr("PROP_FOUNTAIN_TOAST_BODY"))
 					it.finish())
+			Consultorio.build(self, room)  # consultorio opcional (src/edu)
 		Room.RoomType.LORE:
 			var stone := Polygon2D.new()
 			stone.polygon = PackedVector2Array([Vector2(-18, 26), Vector2(-18, -18), Vector2(-10, -28), Vector2(10, -28), Vector2(18, -18), Vector2(18, 26)])
@@ -803,6 +804,7 @@ func _build_calm_room(room: Room) -> void:
 					_read_inscription()
 					stone.color = Color("5a5662")
 					it.finish())
+			MitoVerdad.build(self, room)  # Mito o Verdad opcional (src/edu)
 
 ## Lee una entrada de historia (mundo, personajes, lugares, enemigos), mejor una nueva.
 func _read_inscription() -> void:

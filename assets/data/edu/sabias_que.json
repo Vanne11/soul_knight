@@ -1,0 +1,85 @@
+{
+  "_info": "Datos de la pantalla de muerte (¿Sabías que...?). Textos en locale/edu.csv (clave EDU_FACT_<ID>). validar: true = pendiente de que Vanessa lo valide.",
+  "items": [
+    {
+      "id": "condon_uso",
+      "fuente": "OMS, hoja informativa sobre preservativos",
+      "validar": true
+    },
+    {
+      "id": "condon_caduca",
+      "fuente": "OMS, hoja informativa sobre preservativos",
+      "validar": true
+    },
+    {
+      "id": "its_sin_sintomas",
+      "fuente": "OMS, nota descriptiva sobre infecciones de transmisión sexual",
+      "validar": true
+    },
+    {
+      "id": "vph_vacuna",
+      "fuente": "OMS, nota descriptiva sobre VPH y cáncer cervicouterino; MINSAL, Programa Nacional de Inmunizaciones",
+      "validar": true
+    },
+    {
+      "id": "marcha_atras",
+      "fuente": "OMS, Planificación familiar: un manual mundial para proveedores",
+      "validar": true
+    },
+    {
+      "id": "himen",
+      "fuente": "OMS, ONU Mujeres y ACNUDH, declaración interinstitucional contra las pruebas de virginidad (2018)",
+      "validar": true
+    },
+    {
+      "id": "tamano",
+      "fuente": "Veale et al., BJU International, 2015",
+      "validar": true
+    },
+    {
+      "id": "clitoris",
+      "fuente": "Herbenick et al., Journal of Sex & Marital Therapy, 2018",
+      "validar": true
+    },
+    {
+      "id": "indetectable",
+      "fuente": "OMS y ONUSIDA",
+      "validar": true
+    },
+    {
+      "id": "test_vih",
+      "fuente": "MINSAL, Chile",
+      "validar": true
+    },
+    {
+      "id": "pastilla",
+      "fuente": "OMS, anticoncepción de emergencia",
+      "validar": true
+    },
+    {
+      "id": "primera_vez",
+      "fuente": "OMS, planificación familiar",
+      "validar": true
+    },
+    {
+      "id": "masturbacion",
+      "fuente": "UNESCO, Orientaciones técnicas internacionales sobre educación en sexualidad (2018)",
+      "validar": true
+    },
+    {
+      "id": "pap",
+      "fuente": "MINSAL, Chile; OMS",
+      "validar": true
+    },
+    {
+      "id": "hormonal",
+      "fuente": "OMS, planificación familiar",
+      "validar": true
+    },
+    {
+      "id": "regla",
+      "fuente": "OMS, planificación familiar",
+      "validar": true
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "_info": "Consultorio de las salas de descanso. precio = monedas base (sube un 15% por piso, como la tienda). inmunidad_seg = segundos de inmunidad al contagio del preservativo de bolsillo. validar: true = pendiente de Vanessa (la vacuna VPH es un guiño de juego: inmuniza al VPH Verrugón durante la partida).",
+  "preservativo": {
+    "precio": 6,
+    "inmunidad_seg": 150,
+    "validar": true
+  },
+  "vacuna_vph": {
+    "precio": 15,
+    "validar": true
+  }
+}

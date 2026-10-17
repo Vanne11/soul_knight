@@ -292,7 +292,13 @@ func _open_codex() -> void:
 			var k := maxi(1, mini(int(560.0 / img.get_width()), int(250.0 / img.get_height())))
 			pic.texture = img
 			pic.custom_minimum_size = Vector2(img.get_width(), img.get_height()) * k
-		text.text = "[b]%s[/b]\n\n%s\n\n[i]%s[/i]" % [Loc.lore_title(e), Loc.lore_text(e), Loc.lore_flavor(e)])
+		text.text = "[b]%s[/b]\n\n%s\n\n[i]%s[/i]" % [Loc.lore_title(e), Loc.lore_text(e), Loc.lore_flavor(e)] + _edu_source(e.id))
+
+
+## Linea "Fuente: ..." al final del detalle del codice (solo entradas educativas).
+func _edu_source(lore_id: String) -> String:
+	var s := Edu.source_line(lore_id)
+	return "\n\n" + s if s != "" else ""
 
 
 func _on_start() -> void:

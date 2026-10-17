@@ -1,0 +1,53 @@
+{
+  "_info": "Fuente breve por entrada del códice (id de assets/data/lore). Se muestra solo en el detalle del códice. validar: true = pendiente de Vanessa.",
+  "items": {
+    "ene_vph": {
+      "fuente": "OMS, nota descriptiva sobre VPH y cáncer cervicouterino; MINSAL, Programa Nacional de Inmunizaciones",
+      "validar": true
+    },
+    "ene_mito_marcha": {
+      "fuente": "OMS, Planificación familiar: un manual mundial para proveedores",
+      "validar": true
+    },
+    "ene_mito_himen": {
+      "fuente": "OMS, ONU Mujeres y ACNUDH, declaración interinstitucional contra las pruebas de virginidad (2018)",
+      "validar": true
+    },
+    "ene_mito_mano": {
+      "fuente": "UNESCO, Orientaciones técnicas internacionales sobre educación en sexualidad (2018)",
+      "validar": true
+    },
+    "condom_lore": {
+      "fuente": "OMS, hoja informativa sobre preservativos",
+      "validar": true
+    },
+    "ene_clamidia": {
+      "fuente": "OMS, nota descriptiva sobre infecciones de transmisión sexual; MINSAL, Chile",
+      "validar": true
+    },
+    "ene_herpes": {
+      "fuente": "OMS, nota descriptiva sobre el herpes simple",
+      "validar": true
+    },
+    "ene_gonorrea": {
+      "fuente": "OMS, nota descriptiva sobre infecciones de transmisión sexual; MINSAL, Chile",
+      "validar": true
+    },
+    "ene_sifilis": {
+      "fuente": "OMS, nota descriptiva sobre infecciones de transmisión sexual; MINSAL, Chile",
+      "validar": true
+    },
+    "ene_ladilla": {
+      "fuente": "CDC, información sobre piojos del pubis (ladillas)",
+      "validar": true
+    },
+    "morning_after_pill_lore": {
+      "fuente": "OMS, anticoncepción de emergencia",
+      "validar": true
+    },
+    "birth_control_lore": {
+      "fuente": "OMS, Planificación familiar: un manual mundial para proveedores",
+      "validar": true
+    }
+  }
+}
