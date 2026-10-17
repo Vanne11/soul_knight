@@ -807,12 +807,338 @@ def proyectil_gota():
     print("ok gota")
 
 
+# ------------------------------------------------- palacio de la censura + rehechos
+# Pixel de Censura, Barra Negra y Sello Censor (palacio) y Clamidia / Calambre:
+# personajes con carita, mismo tamano y animaciones que los anteriores.
+SKIN = [(252, 226, 204, 255), (236, 188, 160, 255), (214, 150, 132, 255),
+        (190, 118, 118, 255), (246, 206, 196, 255), (224, 168, 120, 255)]
+GLITCH = [(150, 152, 168, 255), (206, 208, 220, 255), (96, 98, 116, 255)]
+INK_BAR = (38, 34, 48, 255)
+INK_BAR_HI = (96, 90, 116, 255)
+INK_BAR_SH = (22, 20, 30, 255)
+GLOVE = (244, 244, 250, 255)
+HEAD_SK = (216, 208, 226, 255)
+HEAD_SK_DK = (162, 152, 182, 255)
+RED_HI = (255, 120, 110, 255)
+RED_MD = (206, 52, 60, 255)
+RED_DK = (140, 30, 44, 255)
+WOOD_HI = (190, 134, 90, 255)
+RUBBER = (46, 42, 56, 255)
+PAPER = (255, 244, 232, 255)
+
+
+def face(d, cx, cy, eyes="angry", mouth="line", gap=3):
+    """Carita comun (ojos a cx-gap y cx+gap)."""
+    for ex in (cx - gap - 1, cx + gap - 1):
+        if eyes == "x":
+            d.line([(ex - 1, cy - 1), (ex + 1, cy + 1)], fill=PUPIL)
+            d.line([(ex - 1, cy + 1), (ex + 1, cy - 1)], fill=PUPIL)
+        elif eyes == "hurt":
+            d.line([(ex - 1, cy - 1), (ex + 1, cy)], fill=PUPIL)
+            d.line([(ex - 1, cy + 1), (ex + 1, cy)], fill=PUPIL)
+        else:
+            d.rectangle([ex - 1, cy - 1, ex + 1, cy + 2], fill=EYE_W)
+            d.rectangle([ex, cy, ex + 1, cy + 1], fill=PUPIL)
+    if eyes == "angry":
+        d.line([(cx - gap - 3, cy - 3), (cx - 1, cy - 2)], fill=PUPIL)
+        d.line([(cx + 1, cy - 2), (cx + gap + 3, cy - 3)], fill=PUPIL)
+    if mouth == "open":
+        d.rectangle([cx - 2, cy + 4, cx + 1, cy + 6], fill=MOUTH)
+        d.line([(cx - 2, cy + 4), (cx + 1, cy + 4)], fill=TEETH)
+    elif mouth == "smirk":
+        d.line([(cx - 2, cy + 5), (cx, cy + 5)], fill=PUPIL)
+        d.line([(cx, cy + 5), (cx + 2, cy + 4)], fill=PUPIL)
+    else:
+        d.line([(cx - 2, cy + 5), (cx + 1, cy + 5)], fill=PUPIL)
+
+
+# ---- pixel de censura: un mosaico de pixelado vivo, con ojos que asoman
+def pixel_censura(bob=0, block=4, legs=(0, 0), eyes="angry", mouth="smirk", shimmer=0,
+                  scatter=0.0, lean=0):
+    im = Image.new("RGBA", (24, 36), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    n = 16 // block
+    x0, y0 = 4 + lean, 9 + bob
+    if scatter < 0.2:
+        # patitas y bracitos de bloque
+        for lx, up in ((7, legs[0]), (14, legs[1])):
+            d.rectangle([lx + lean, 25 + bob - up, lx + 2 + lean, 30 - up], fill=GLITCH[2])
+            d.rectangle([lx - 1 + lean, 30 - up, lx + 3 + lean, 31 - up], fill=GLITCH[0])
+        d.rectangle([x0 - 3, 16 + bob, x0 - 1, 18 + bob], fill=SKIN[2])
+        d.rectangle([x0 + 16, 16 + bob, x0 + 18, 18 + bob], fill=SKIN[2])
+    cxm = x0 + 8
+    cym = y0 + 8
+    for j in range(n):
+        for i in range(n):
+            h = (i * 7 + j * 13 + shimmer * 5 + (i * j) % 3) % 11
+            if h in (3, 8) and shimmer % 2 == 1:
+                col = GLITCH[(i + j) % 2]
+            elif h == 5:
+                col = GLITCH[2] if shimmer % 3 == 0 else GLITCH[0]
+            else:
+                col = SKIN[(i * 3 + j * 5 + h) % len(SKIN)]
+            bx, by = x0 + i * block, y0 + j * block
+            if scatter:
+                vx, vy = bx + block / 2 - cxm, by + block / 2 - cym
+                bx += int(vx * scatter * 1.1) + (i % 2) * int(scatter * 2)
+                by += int(vy * scatter * 0.9 + scatter * 6 * ((i + j) % 3))
+                size = max(1, int(block * (1.0 - scatter * 0.65)))
+            else:
+                size = block
+            if (i * 5 + j * 3) % 4 == 0 and scatter > 0.55:
+                continue
+            d.rectangle([bx, by, bx + size - 1, by + size - 1], fill=col)
+            if size >= 3:
+                d.line([(bx, by + size - 1), (bx + size - 1, by + size - 1)], fill=_mix(col, (80, 40, 50, 255), 0.25))
+    if scatter < 0.2:
+        # ventana de cara: el mosaico se aparta para dejar ver los ojos
+        d.rectangle([x0 + 3, y0 + 3, x0 + 12, y0 + 8], fill=(255, 238, 224, 255))
+        face(d, x0 + 8, y0 + 4, eyes, mouth, gap=3)
+    # pixeles sueltos flotando a los lados (el pixelado se les escapa)
+    if scatter < 0.2:
+        for k, (fx, fy) in enumerate(((x0 - 2, y0 - 2), (x0 + 17, y0 + 1), (x0 - 1, y0 + 17))):
+            if (k + shimmer) % 3:
+                d.rectangle([fx, fy + (shimmer % 2), fx + 1, fy + 1 + (shimmer % 2)], fill=SKIN[(k + shimmer) % 6])
+    return outline(im)
+
+
+def frames_pixel_censura():
+    idle = pixel_censura(shimmer=0)
+    walk = [pixel_censura(0, legs=(2, 0), shimmer=1), pixel_censura(-1, shimmer=2),
+            pixel_censura(0, legs=(0, 2), shimmer=3), pixel_censura(-1, shimmer=4)]
+    attack = [pixel_censura(0, block=4, eyes="angry", mouth="open", shimmer=1),
+              pixel_censura(-1, block=8, eyes="angry", mouth="open", shimmer=2, lean=-1),
+              pixel_censura(0, block=8, eyes="angry", mouth="open", shimmer=3, lean=-2)]
+    hurt = [tint(pixel_censura(0, eyes="hurt", mouth="open", shimmer=2), (255, 60, 70), 0.55),
+            tint(pixel_censura(0, eyes="hurt", shimmer=3), (255, 255, 255), 0.4)]
+    death = [pixel_censura(1, eyes="x", mouth="open", shimmer=1),
+             pixel_censura(2, eyes="x", scatter=0.45, shimmer=1),
+             pixel_censura(3, eyes="x", scatter=0.8, shimmer=2),
+             pixel_censura(4, eyes="x", scatter=1.2, shimmer=3)]
+    for i in (2, 3):
+        death[i] = tint(death[i], (60, 50, 70), 0.3 * (i - 1))
+    return {"idle": [idle], "walk": walk, "attack": attack, "hurt": hurt, "death": death}
+
+
+# ---- barra negra: censor con cabeza que carga una barra de censura como cuerpo
+def barra_negra(bob=0, legs=(0, 0), lean=0, eyes="angry", mouth="line", swing=0, glare=0, thrust=0):
+    im = Image.new("RGBA", (32, 48), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    # patitas
+    for lx, up in ((9, legs[0]), (19, legs[1])):
+        d.rectangle([lx, 34 + bob - up, lx + 2, 43 - up], fill=HEAD_SK_DK)
+        d.rectangle([lx - 1, 43 - up, lx + 4, 45 - up], fill=INK_BAR)
+    # barra (se dibuja aparte para poder inclinarla al atacar)
+    bar = Image.new("RGBA", (32, 48), (0, 0, 0, 0))
+    bd = ImageDraw.Draw(bar)
+    bx0, bx1 = 2 + lean, 29 + lean + thrust
+    by0, by1 = 20 + bob, 34 + bob
+    bd.rounded_rectangle([bx0, by0, bx1, by1], radius=2, fill=INK_BAR)
+    bd.line([(bx0 + 2, by0 + 1), (bx1 - 2, by0 + 1)], fill=INK_BAR_HI)
+    bd.line([(bx0 + 1, by1 - 1), (bx1 - 1, by1 - 1)], fill=INK_BAR_SH)
+    # remaches y brillo "tachado": la barra de censura de toda la vida
+    for rx in (bx0 + 3, bx1 - 4):
+        bd.rectangle([rx, by0 + 4, rx + 1, by0 + 5], fill=INK_BAR_HI)
+        bd.rectangle([rx, by1 - 5, rx + 1, by1 - 4], fill=INK_BAR_HI)
+    gx = bx0 + 6 + glare * 6
+    bd.line([(gx, by0 + 3), (gx + 3, by0 + 3)], fill=(150, 144, 170, 255))
+    bd.line([(gx - 2, by0 + 6), (gx + 1, by0 + 6)], fill=(120, 114, 140, 255))
+    # el mensaje de la barra: carita de "NO" (dos ojillos rojos asomando)
+    cy = by0 + 8
+    if eyes == "x":
+        for ex in (bx0 + 8, bx1 - 11):
+            bd.line([(ex, cy - 2), (ex + 2, cy)], fill=RED_HI)
+            bd.line([(ex, cy), (ex + 2, cy - 2)], fill=RED_HI)
+    else:
+        for ex in (bx0 + 8, bx1 - 11):
+            bd.rectangle([ex, cy - 1, ex + 2, cy + 1], fill=RED_MD if eyes != "hurt" else RED_HI)
+    if swing:
+        bar = bar.rotate(swing, resample=Image.NEAREST, center=(16 + lean, 27 + bob))
+    im.alpha_composite(bar)
+    d = ImageDraw.Draw(im)
+    # manos con guante que sujetan la barra por los costados
+    hy = 27 + bob - (4 if swing else 0)
+    for hx in (bx0 - 1, bx1 + 1):
+        d.ellipse([hx - 2, hy - 2, hx + 2, hy + 2], fill=GLOVE)
+    # cabeza encima: redonda, con cara de funcionario ofendido
+    hx0, hy0 = 16 + lean + thrust // 2, 12 + bob - (2 if swing else 0)
+    d.ellipse([hx0 - 8, hy0 - 8, hx0 + 8, hy0 + 7], fill=HEAD_SK)
+    d.ellipse([hx0 + 1, hy0 + 1, hx0 + 7, hy0 + 6], fill=HEAD_SK_DK)
+    d.ellipse([hx0 - 6, hy0 - 6, hx0 - 1, hy0 - 2], fill=(238, 232, 244, 255))
+    # bonete negro de censor
+    d.rectangle([hx0 - 7, hy0 - 9, hx0 + 7, hy0 - 6], fill=INK_BAR)
+    d.rectangle([hx0 - 4, hy0 - 12, hx0 + 4, hy0 - 9], fill=INK_BAR)
+    d.line([(hx0 - 3, hy0 - 11), (hx0 + 2, hy0 - 11)], fill=INK_BAR_HI)
+    face(d, hx0, hy0 - 3, eyes, mouth, gap=3)
+    return outline(im)
+
+
+def frames_barra_negra():
+    idle = barra_negra()
+    walk = [barra_negra(0, (2, 0), glare=0), barra_negra(-1, glare=1),
+            barra_negra(0, (0, 2), glare=2), barra_negra(-1, glare=1)]
+    attack = [barra_negra(0, mouth="open", swing=-8, lean=1),
+              barra_negra(-1, mouth="open", swing=12, lean=-1),
+              barra_negra(0, mouth="open", lean=-1, thrust=2, glare=2)]
+    hurt = [tint(barra_negra(0, eyes="hurt", mouth="open"), (255, 60, 70), 0.55),
+            tint(barra_negra(0, eyes="hurt"), (255, 255, 255), 0.4)]
+    dead = barra_negra(0, eyes="x", mouth="open")
+    death = [death_frame(dead, i, center=(16, 44)) for i in range(4)]
+    return {"idle": [idle], "walk": walk, "attack": attack, "hurt": hurt, "death": death}
+
+
+# ---- sello censor: sello de goma con cara que estampa CENSURADO
+def sello(bob=0, legs=(0, 0), lean=0, eyes="angry", mouth="line", lift=0, squash=0, ink=0):
+    im = Image.new("RGBA", (32, 48), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    base_y = 35 + bob + squash  # parte alta de la base de goma
+    # patitas bajo la base
+    for lx, up in ((9, legs[0]), (19, legs[1])):
+        d.rectangle([lx, 40 - up, lx + 2, 44 - up], fill=HEAD_SK_DK)
+        d.rectangle([lx - 1, 44 - up, lx + 4, 45 - up], fill=INK_BAR)
+    if ink:  # charco de tinta de la estampada
+        d.ellipse([16 - 8 - ink * 2, 42, 16 + 8 + ink * 2, 46], fill=RED_MD)
+        for sx_ in (-12, 11):
+            d.rectangle([16 + sx_ - ink, 41, 16 + sx_ + ink, 42], fill=RED_HI)
+    top = 6 + bob - lift + (squash // 2)
+    # mango de madera (perilla + cuello)
+    d.rectangle([14 + lean, top + 5, 18 + lean, top + 11], fill=(120, 76, 50, 255))
+    d.ellipse([10 + lean, top, 22 + lean, top + 8], fill=(150, 98, 62, 255))
+    d.ellipse([11 + lean, top + 1, 16 + lean, top + 4], fill=WOOD_HI)
+    # cuerpo rojo (la tapa del sello) con cara
+    bx0, bx1 = 6 + lean, 25 + lean
+    d.rounded_rectangle([bx0, top + 11, bx1, base_y - 1], radius=3, fill=RED_MD)
+    d.line([(bx0 + 2, top + 12), (bx1 - 2, top + 12)], fill=RED_HI)
+    d.rectangle([bx1 - 3, top + 14, bx1 - 1, base_y - 3], fill=RED_DK)
+    # etiqueta de papel con "texto" ilegible de CENSURADO
+    ly = base_y - 6
+    d.rectangle([bx0 + 3, ly, bx1 - 3, ly + 3], fill=PAPER)
+    for tx in range(bx0 + 5, bx1 - 4, 3):
+        d.line([(tx, ly + 1), (tx + 1, ly + 1)], fill=INK_BAR)
+    face(d, 16 + lean, top + 16, eyes, mouth, gap=4)
+    # base de goma negra con borde de tinta
+    d.rounded_rectangle([bx0 - 2, base_y, bx1 + 2, base_y + 4], radius=1, fill=RUBBER)
+    d.line([(bx0 - 1, base_y + 4), (bx1 + 1, base_y + 4)], fill=RED_MD)
+    d.line([(bx0, base_y + 1), (bx1, base_y + 1)], fill=(96, 90, 116, 255))
+    return outline(im)
+
+
+def frames_sello():
+    idle = sello()
+    walk = [sello(0, (2, 0)), sello(-1), sello(0, (0, 2)), sello(-1)]
+    attack = [sello(0, lift=5, mouth="open", lean=0, legs=(1, 1)),
+              sello(0, lift=8, mouth="open", legs=(1, 1)),
+              sello(0, squash=3, mouth="open", ink=3, legs=(-1, -1), lean=-1)]
+    hurt = [tint(sello(0, eyes="hurt", mouth="open"), (255, 255, 90), 0.5),
+            tint(sello(0, eyes="hurt"), (255, 255, 255), 0.4)]
+    dead = sello(0, eyes="x", mouth="open")
+    death = [death_frame(dead, i, center=(16, 44)) for i in range(4)]
+    return {"idle": [idle], "walk": walk, "attack": attack, "hurt": hurt, "death": death}
+
+
+# ---- clamidia: bacteria de cilios, ojos entornados y sonrisita de "yo no fui"
+def clamidia(bob=0, legs=(0, 0), eyes="sleepy", mouth="sly", lean=0, puff=0, cil=0):
+    hi, md, dk = ITS_COL["clamidia"]
+    w, h = 32, 40
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    cx, cy = 16 + lean, 22 + bob
+    rx, ry = 9 + puff, 8 + puff
+    for fx, off in ((-4, legs[0]), (4, legs[1])):
+        d.rectangle([cx + fx - 2, 31 + off + bob, cx + fx + 1, 35 + off], fill=dk)
+        d.ellipse([cx + fx - 3, 34 + off, cx + fx + 2, 36 + off], fill=dk)
+    # cilios radiales con perlita en la punta
+    for k in range(14):
+        a = k * (2 * math.pi / 14)
+        ln = 4 + (cil + k) % 2 + puff
+        x1, y1 = cx + math.cos(a) * (rx - 1), cy + math.sin(a) * (ry - 1)
+        x2, y2 = cx + math.cos(a) * (rx + ln), cy + math.sin(a) * (ry + ln)
+        d.line([(x1, y1), (x2, y2)], fill=dk)
+        d.rectangle([round(x2) - 1, round(y2) - 1, round(x2), round(y2)], fill=hi)
+    d.ellipse([cx - rx, cy - ry, cx + rx, cy + ry], fill=md)
+    d.ellipse([cx - rx + 2, cy - ry + 1, cx - 1, cy - 1], fill=hi)
+    d.ellipse([cx + 1, cy + 2, cx + rx - 1, cy + ry - 1], fill=dk)
+    # cuerpo de inclusion: la mancha oscura que delata a la clamidia
+    d.ellipse([cx + 3, cy + 1, cx + 8, cy + 5], fill=(92, 72, 150, 255))
+    d.point([(cx + 4, cy + 2)], fill=hi)
+    its_eyes(d, cx, cy - 2, eyes)
+    its_mouth(d, cx, cy - 2, mouth)
+    return outline(im)
+
+
+def frames_clamidia():
+    idle = clamidia()
+    walk = [clamidia(0, (2, 0), cil=0), clamidia(-1, cil=1), clamidia(0, (0, 2), cil=0), clamidia(-1, cil=1)]
+    attack = [clamidia(0, eyes="angry", mouth="open", puff=0, cil=1), clamidia(0, eyes="angry", mouth="open", puff=1, lean=-1),
+              clamidia(0, eyes="angry", mouth="open", puff=2, lean=-2, cil=1)]
+    hurt = [tint(clamidia(0, eyes="hurt", mouth="open"), (255, 60, 70), 0.55),
+            tint(clamidia(0, eyes="hurt"), (255, 255, 255), 0.4)]
+    dead = clamidia(0, eyes="x")
+    death = [death_frame(dead, i, center=(16, 36)) for i in range(4)]
+    return {"idle": [idle], "walk": walk, "attack": attack, "hurt": hurt, "death": death}
+
+
+# ---- calambre: musculo anudado que se contrae, con chispas
+CR_HI = (255, 150, 206, 255)
+CR_MD = (214, 58, 150, 255)
+CR_DK = (140, 28, 100, 255)
+CR_FIB = (172, 38, 120, 255)
+
+
+def calambre(bob=0, legs=(0, 0), eyes="angry", mouth="grit", squeeze=0, spark=0, lean=0):
+    im = Image.new("RGBA", (24, 36), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    cx = 12 + lean
+    for fx, off in ((-4, legs[0]), (3, legs[1])):
+        d.rectangle([cx + fx, 29 + bob - off, cx + fx + 2, 32 - off], fill=CR_DK)
+        d.rectangle([cx + fx - 1, 32 - off, cx + fx + 3, 33 - off], fill=(60, 20, 50, 255))
+    # dos vientres musculares con la cintura anudada entre ambos
+    pinch = 2 + max(squeeze, 0)
+    top = [cx - 8, 2 + bob, cx + 8, 14 + bob]
+    bot = [cx - 7, 18 + bob, cx + 7, 30 + bob]
+    d.ellipse(top, fill=CR_MD)
+    d.ellipse(bot, fill=CR_MD)
+    d.rectangle([cx - pinch, 12 + bob, cx + pinch, 19 + bob], fill=CR_MD)
+    d.ellipse([cx - 6, 3 + bob, cx - 1, 8 + bob], fill=CR_HI)
+    d.ellipse([cx - 5, 18 + bob, cx - 1, 22 + bob], fill=CR_HI)
+    # fibras tensas y venita marcada
+    for fx in (-5, 4):
+        d.line([(cx + fx, 21 + bob), (cx + fx - 1, 27 + bob)], fill=CR_FIB)
+    d.line([(cx + 5, 6 + bob), (cx + 6, 10 + bob)], fill=CR_FIB)
+    # nudo: banda oscura cruzando la cintura
+    d.line([(cx - pinch - 1, 15 + bob), (cx + pinch + 1, 18 + bob)], fill=CR_DK)
+    d.line([(cx - pinch - 1, 18 + bob), (cx + pinch + 1, 15 + bob)], fill=CR_DK)
+    # cara en el vientre de arriba
+    face(d, cx, 6 + bob, eyes, "line" if mouth != "grit" else "open", gap=3)
+    if mouth == "grit":
+        d.rectangle([cx - 2, 10 + bob, cx + 1, 11 + bob], fill=TEETH)
+        d.point([(cx - 1, 10 + bob), (cx + 1, 10 + bob)], fill=MOUTH)
+    # chispas en zigzag de los espasmos
+    if spark:
+        spark_zig(d, cx + 8, 4 + bob, cx + 11, 12 + bob, BOLT, seed=spark)
+        spark_zig(d, cx - 8, 14 + bob, cx - 11, 22 + bob, BOLT, seed=spark + 1)
+        d.point([(cx + 11, 3 + bob), (cx - 11, 13 + bob)], fill=BOLT_HI)
+    return outline(im)
+
+
+def frames_calambre():
+    idle = calambre(spark=0)
+    walk = [calambre(0, (2, 0), spark=1), calambre(-1, squeeze=1), calambre(0, (0, 2), spark=2), calambre(-1, squeeze=1)]
+    attack = [calambre(0, squeeze=-1, spark=1), calambre(-1, squeeze=2, spark=2, lean=-1),
+              calambre(0, squeeze=2, spark=3, lean=-1)]
+    hurt = [tint(calambre(0, eyes="hurt"), (255, 255, 255), 0.55), tint(calambre(0, eyes="hurt", spark=2), (255, 255, 120), 0.4)]
+    dead = calambre(0, eyes="x", mouth="open")
+    death = [death_frame(dead, i, center=(12, 32)) for i in range(4)]
+    return {"idle": [idle], "walk": walk, "attack": attack, "hurt": hurt, "death": death}
+
+
 VARIANTS = {"especulo": frames_especulo, "dildo_electrico": frames_dildo_electrico,
             "hemorroide": frames_hemorroide, "inspector_fluidos": frames_inspector, "pelusa_perineal": frames_pelusa,
-            "clamidia": lambda: frames_its("clamidia"), "herpes": lambda: frames_its("herpes"),
+            "clamidia": frames_clamidia, "herpes": lambda: frames_its("herpes"),
             "gonorrea": lambda: frames_its("gonorrea"), "vph": lambda: frames_its("vph"),
             "sifilis": lambda: frames_its("sifilis"), "verruguita": frames_verruguita,
-            "espinilla": frames_espinilla}
+            "espinilla": frames_espinilla, "pixel_censura": frames_pixel_censura,
+            "barra_negra": frames_barra_negra, "sello": frames_sello, "calambre": frames_calambre}
 ANIM = {  # nombre: (loop, fps)
     "idle": (True, 4.0), "walk": (True, 8.0), "attack": (False, 10.0),
     "bite": (False, 18.0), "sprout": (False, 8.0), "burst": (False, 14.0), "hurt": (False, 10.0), "death": (False, 6.0),
