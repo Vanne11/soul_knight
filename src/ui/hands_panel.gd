@@ -8,7 +8,7 @@ extends PanelContainer
 ## El dash no va aqui: su glifo y cargas van junto a la barra de estamina (dash_hint.gd).
 ## Los iconos son act_*.png en assets/sprites/ui/glyphs (tools/gen_input_glyphs.py): cambiar un PNG basta.
 ## Solo LEE al jugador (arma, _ammo, _heat, _dash_left...). Textos: locale/teclas.csv.
-## F1 vuelve a mostrar la ayuda de teclas (KeyHelp).
+## H vuelve a mostrar la ayuda de teclas (KeyHelp); F1 es el menu de depuracion.
 
 const ICON_DIR := "res://assets/sprites/ui/glyphs/"
 const ACT_ICONS := {
@@ -183,5 +183,5 @@ func _update_left() -> void:
 
 
 func _unhandled_input(e: InputEvent) -> void:
-	if e is InputEventKey and e.pressed and not e.echo and e.physical_keycode == KEY_F1 and is_instance_valid(_help):
+	if e is InputEventKey and e.pressed and not e.echo and e.physical_keycode == KEY_H and is_instance_valid(_help):
 		_help.show_help("manual")

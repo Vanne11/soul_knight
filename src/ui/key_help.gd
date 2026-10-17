@@ -4,7 +4,7 @@ extends PanelContainer
 ## Ayuda breve y NO bloqueante con glifos: "[glifo] Atacar · [glifo] Dash · [glifo] Guardia ...".
 ## Sale al empezar la primera partida y al recoger la primera arma (cada motivo una sola vez, se
 ## guarda en user://teclas_ayuda.cfg); se va sola a los 12 s o al usar cualquiera de las acciones
-## (pasado 1.5 s de gracia). F1 la muestra de nuevo cuando quieras (reason "manual", sin guardar).
+## (pasado 1.5 s de gracia). H la muestra de nuevo cuando quieras (reason "manual", sin guardar).
 ## Los glifos siguen al dispositivo (mando/teclado). Textos: locale/teclas.csv.
 
 const PATH := "user://teclas_ayuda.cfg"
