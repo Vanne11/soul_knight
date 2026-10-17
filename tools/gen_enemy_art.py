@@ -146,6 +146,14 @@ def frames_especulo():
 
 
 # ---------------------------------------------------------- dildo electrico
+P_MD = (232, 84, 178, 255)
+P_DK = (150, 40, 118, 255)
+P_HI = (255, 150, 214, 255)
+P_TIP = (255, 150, 214, 255)
+G_MD = (134, 138, 153, 255)
+G_DK = (70, 72, 86, 255)
+G_SH = (50, 52, 64, 255)
+G_HI = (216, 221, 227, 255)
 B_HI = (150, 214, 255, 255)
 B_MD = (74, 150, 240, 255)
 B_DK = (44, 92, 190, 255)
@@ -168,42 +176,45 @@ def spark_zig(d, x0, y0, x1, y1, col, seed=0):
 
 
 def dildo_electrico(bob=0, legs=(0, 0), lean=0, eyes="angry", charge=0, seed=0):
-    """Capsula azul electrico con carita, dos puntas de electrodo arriba y un rayo
-    amarillo en la panza. charge 0..2 = cuanta chispa le sale (aviso del disparo)."""
+    """Cilindro rosa erguido de punta redondeada mas clara (como el arma dildo_taser),
+    base metalica gris con patitas y chispas cian/amarillas en la punta.
+    charge 0..2 = cuanta chispa le sale (aviso del disparo)."""
     im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
     y0 = bob
     # patitas
     for lx, up in ((10 + lean, legs[0]), (17 + lean, legs[1])):
-        d.rectangle([lx, 41 + y0 - up, lx + 3, 45 - up], fill=B_DK)
-        d.rectangle([lx - 1, 45 - up, lx + 4, 46 - up], fill=B_SH)
-    bx0, by0, bx1, by1 = 8 + lean, 15 + y0, 23 + lean, 42 + y0
-    # cuerpo: capsula vertical con brillo a la izquierda y sombra a la derecha
-    d.rounded_rectangle([bx0, by0, bx1, by1], radius=7, fill=B_MD)
-    d.rounded_rectangle([bx0 + 1, by0 + 2, bx0 + 4, by1 - 4], radius=2, fill=B_HI)
-    d.rectangle([bx1 - 3, by0 + 5, bx1 - 1, by1 - 4], fill=B_DK)
-    d.line([(bx0 + 3, by1 - 1), (bx1 - 3, by1 - 1)], fill=B_SH)
-    # aro metalico bajo la cabeza
-    d.rectangle([bx0 + 1, by0 + 11, bx1 - 1, by0 + 12], fill=B_DK)
-    # rayo amarillo en la panza
-    cx, cy = bx0 + 7, by0 + 14
-    d.polygon([(cx + 2, cy), (cx - 3, cy + 5), (cx, cy + 5), (cx - 2, cy + 10), (cx + 4, cy + 3), (cx + 1, cy + 3)], fill=BOLT)
-    d.line([(cx + 2, cy + 1), (cx - 2, cy + 5)], fill=BOLT_HI)
-    # electrodo: dos puntas metalicas arriba y chispa entre ellas
-    ex = bx0 + 7
-    d.rectangle([ex - 2, by0 - 4, ex - 1, by0 + 1], fill=M_LO)
-    d.rectangle([ex + 1, by0 - 4, ex + 2, by0 + 1], fill=M_LO)
-    d.point([(ex - 2, by0 - 4), (ex + 1, by0 - 4)], fill=M_HI)
-    d.rectangle([ex - 3, by0 + 1, ex + 3, by0 + 1], fill=M_DK)
+        d.rectangle([lx, 42 + y0 - up, lx + 3, 45 - up], fill=G_DK)
+        d.rectangle([lx - 1, 45 - up, lx + 4, 46 - up], fill=G_SH)
+    bx0, bx1 = 8 + lean, 23 + lean
+    top, base = 13 + y0, 33 + y0
+    # cuerpo rosa
+    d.rectangle([bx0, top + 6, bx1, base], fill=P_MD)
+    d.rectangle([bx1 - 3, top + 6, bx1 - 1, base], fill=P_DK)
+    d.rectangle([bx0 + 1, top + 6, bx0 + 3, base], fill=P_HI)
+    # punta redondeada mas clara
+    d.rounded_rectangle([bx0, top, bx1, top + 14], radius=7, fill=P_TIP)
+    d.rectangle([bx1 - 3, top + 4, bx1 - 1, top + 13], fill=P_MD)
+    d.rectangle([bx0 + 2, top + 2, bx0 + 4, top + 4], fill=(255, 215, 238, 255))
+    # base metalica gris
+    d.rounded_rectangle([bx0 - 1, base + 1, bx1 + 1, base + 9], radius=2, fill=G_MD)
+    d.rectangle([bx0, base + 2, bx0 + 2, base + 8], fill=G_HI)
+    d.rectangle([bx1 - 2, base + 2, bx1, base + 8], fill=G_DK)
+    d.line([(bx0 + 2, base + 5), (bx1 - 2, base + 5)], fill=G_DK)
+    # chispas en la punta
+    ex = (bx0 + bx1) // 2
+    ty = top - 1
     if charge >= 1:
-        spark_zig(d, ex - 1, by0 - 5, ex + 1, by0 - 5, SPARK, seed)
-        d.point([(ex, by0 - 6), (ex, by0 - 7)], fill=BOLT_HI)
+        d.point([(ex - 1, ty - 1), (ex + 1, ty - 2)], fill=SPARK)
+        spark_zig(d, ex - 3, ty - 2, ex + 3, ty - 2, SPARK, seed)
+        d.point([(ex, ty - 3)], fill=BOLT_HI)
     if charge >= 2:
-        spark_zig(d, ex - 2, by0 - 4, ex - 9, by0 - 9, BOLT, seed + 1)
-        spark_zig(d, ex + 2, by0 - 4, ex + 9, by0 - 8, BOLT, seed + 2)
-        d.point([(ex - 10, by0 - 5), (ex + 10, by0 - 3)], fill=SPARK)
+        spark_zig(d, ex - 4, ty, ex - 11, ty - 6, BOLT, seed + 1)
+        spark_zig(d, ex + 4, ty, ex + 11, ty - 5, BOLT, seed + 2)
+        spark_zig(d, ex, ty - 3, ex + 1, ty - 9, SPARK, seed + 3)
+        d.point([(ex - 12, ty - 2), (ex + 12, ty), (ex - 7, ty - 9)], fill=SPARK)
     # cara
-    fx, fy = bx0 + 3, by0 + 4
+    fx, fy = bx0 + 3, top + 7
     if eyes == "x":
         for ecx in (fx, fx + 6):
             d.line([(ecx - 1, fy - 1), (ecx + 1, fy + 1)], fill=PUPIL)
@@ -216,7 +227,14 @@ def dildo_electrico(bob=0, legs=(0, 0), lean=0, eyes="angry", charge=0, seed=0):
             d.line([(fx - 2, fy - 3), (fx + 2, fy - 2)], fill=PUPIL)
             d.line([(fx + 4, fy - 2), (fx + 8, fy - 3)], fill=PUPIL)
         d.point([(fx - 1, fy + 4), (fx + 7, fy + 4)], fill=BLUSH)
-        d.line([(fx + 1, fy + 5), (fx + 5, fy + 5)], fill=PUPIL)  # boquita
+    # boca: sonrisa torcida; abierta al cargar
+    if charge >= 1:
+        d.rectangle([fx + 1, fy + 5, fx + 5, fy + 7], fill=MOUTH)
+        d.line([(fx + 2, fy + 5), (fx + 4, fy + 5)], fill=TEETH)
+    elif eyes == "hurt":
+        d.line([(fx + 1, fy + 6), (fx + 5, fy + 5)], fill=PUPIL)
+    else:
+        d.line([(fx + 1, fy + 5), (fx + 5, fy + 5)], fill=PUPIL)
     return outline(im)
 
 
