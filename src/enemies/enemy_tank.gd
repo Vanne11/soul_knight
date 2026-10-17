@@ -223,7 +223,9 @@ func _drop_loot() -> void:
 		if RNG.randf() < drop.chance:
 			var pickup = ITEM_PICKUP_SCENE.instantiate()
 			pickup.item_id = drop.item_id
-			pickup.position = global_position + Vector2(RNG.randf_range(-30, 30), RNG.randf_range(-30, 30))
+			# El contenedor es la sala (Node2D desplazado): en su espacio local, no en el global
+			# (antes la sala se sumaba dos veces y el botin caia fuera del mapa).
+			pickup.position = _drop_container().to_local(global_position + Vector2(RNG.randf_range(-30, 30), RNG.randf_range(-30, 30)))
 			# Deferred: die() runs inside a physics query flush, and adding an
 			# Area2D there raises "Can't change this state while flushing queries".
 			_drop_container().add_child.call_deferred(pickup)

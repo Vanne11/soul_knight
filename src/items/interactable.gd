@@ -19,6 +19,7 @@ func _ready() -> void:
 		add_child(shape)
 		collision_layer = 0
 		collision_mask = 1  # el jugador
+	add_to_group("interactable")
 	body_entered.connect(_on_enter)
 	body_exited.connect(_on_exit)
 
@@ -33,6 +34,19 @@ func _on_exit(body: Node) -> void:
 	if body == _player:
 		_player = null
 		Narrator.clear_prompt(self)
+		_handoff()
+
+
+## Si queda otro interactuable con el jugador encima, que vuelva a mostrar su cuadro:
+## antes, al recoger un objeto pegado a otro, el segundo no respondia a E hasta salir
+## y volver a entrar.
+func _handoff() -> void:
+	if Narrator.prompt_owner != null:
+		return
+	for n in get_tree().get_nodes_in_group("interactable"):
+		if n != self and is_instance_valid(n) and n.get("_player") != null and n.is_processing():
+			n.refresh_prompt()
+			return
 
 
 func refresh_prompt() -> void:
@@ -58,6 +72,7 @@ func finish() -> void:
 	Narrator.clear_prompt(self)
 	_player = null
 	set_process(false)
+	_handoff()
 	set_deferred("monitoring", false)
 
 
