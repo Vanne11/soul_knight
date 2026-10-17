@@ -75,17 +75,17 @@ func try_open(player: Node) -> bool:
 			return true
 		elif required_intoxication_tier > 0 and get_node("/root/PlayerStats").intoxication_tier >= required_intoxication_tier:
 			set_state(State.OPEN)
-			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "La intoxicación abre la cerradura...", Color.MAGENTA)
+			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("DOOR_INTOX_OPENS"), Color.MAGENTA)
 			return true
 		else:
-			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "CERRADO. Requiere: %s" % _get_requirement_text(), Color.RED)
+			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("DOOR_LOCKED") % _get_requirement_text(), Color.RED)
 			Sound.play("locked")
 			if required_key == "" and required_intoxication_tier == 0:
 				Narrator.say_first("door_secret")
 			return false
 	
 	if state == State.SEALED:
-		get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "SELLADO. Limpia la habitación.", Color.RED)
+		get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("DOOR_SEALED"), Color.RED)
 		return false
 	
 	if state == State.CLOSED:
@@ -115,11 +115,10 @@ func set_hint(text: String, color := Color("f2ead6")) -> void:
 
 func _get_requirement_text() -> String:
 	if required_key != "":
-		return "Llave: %s" % required_key
+		return tr("DOOR_REQ_KEY") % required_key
 	if required_intoxication_tier > 0:
-		var names = ["Sober", "Tipsy", "Drunk", "Blackout"]
-		return "Intoxicación: %s" % names[required_intoxication_tier]
-	return "resolver el puzzle del piso"
+		return tr("DOOR_REQ_INTOX") % tr("INTOX_TIER_%d" % required_intoxication_tier).capitalize()
+	return tr("DOOR_REQ_PUZZLE")
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):

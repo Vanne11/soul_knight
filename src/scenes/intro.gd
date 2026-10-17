@@ -125,7 +125,7 @@ func _build_story() -> void:
 	_hint.offset_left = -300
 	_hint.offset_right = 300
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_hint.text = "[cualquier tecla] seguir      [ESC] saltar la historia"
+	_hint.text = tr("INTRO_HINT")
 	_hint.add_theme_color_override("font_color", Color("b48cff"))
 	add_child(_hint)
 
@@ -228,7 +228,7 @@ func _build_select() -> void:
 	_select.theme = HudStyle.menu_theme()
 	_select.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(_select)
-	var title := HudStyle.pixel_label("ELIGE A TU HÉROE", 48, Color("ff4f9a"), true)
+	var title := HudStyle.pixel_label(tr("INTRO_CHOOSE_TITLE"), 48, Color("ff4f9a"), true)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_constant_override("shadow_offset_x", 4)
 	title.add_theme_constant_override("shadow_offset_y", 4)
@@ -243,7 +243,7 @@ func _build_select() -> void:
 		if first_btn == null:
 			first_btn = btn
 	var story_btn := Button.new()
-	story_btn.text = "Ver la historia otra vez"
+	story_btn.text = tr("INTRO_REPLAY")
 	story_btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	HudStyle.juice_button(story_btn)
 	story_btn.pressed.connect(func():
@@ -293,7 +293,7 @@ func _card(id: String, parent: Control) -> Button:
 		l.add_theme_color_override("font_color", pair[2])
 		v.add_child(l)
 	var btn := Button.new()
-	btn.text = "ELEGIR"
+	btn.text = tr("INTRO_CHOOSE_BTN")
 	btn.custom_minimum_size = Vector2(0, 44)
 	btn.size_flags_vertical = Control.SIZE_SHRINK_END | Control.SIZE_EXPAND
 	btn.pressed.connect(choose.bind(id))

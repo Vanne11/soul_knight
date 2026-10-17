@@ -6,13 +6,13 @@ extends CanvasLayer
 @onready var _game_controller: GameController = get_node("/root/GameController")
 
 const INSULTS := [
-	"MORISTE, CABRÓN",
-	"SE TE CAYÓ EL PENE",
-	"VUELVE AL ÚTERO",
-	"HASTA MI ABUELA LO HACE MEJOR",
-	"EL HÍGADO TE LLORA",
-	"PAQUETE DE LECHE DERRAME",
-	"ERROR 404: SKILL NOT FOUND",
+	"GAMEOVER_INSULT_1",
+	"GAMEOVER_INSULT_2",
+	"GAMEOVER_INSULT_3",
+	"GAMEOVER_INSULT_4",
+	"GAMEOVER_INSULT_5",
+	"GAMEOVER_INSULT_6",
+	"GAMEOVER_INSULT_7",
 ]
 
 var _root: Control
@@ -41,7 +41,7 @@ func _ready() -> void:
 	_root.add_child(art)
 
 	# titulo: dos capas (sombra dura + color) que caen desde arriba y rebotan
-	var title_text: String = "LO HICISTE. ¿Y AHORA QUÉ?" if victory else INSULTS[RNG.randi_range(0, INSULTS.size() - 1)]
+	var title_text: String = tr("GAMEOVER_VICTORY_TITLE") if victory else tr(INSULTS[RNG.randi_range(0, INSULTS.size() - 1)])
 	var title := Control.new()
 	title.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -67,12 +67,12 @@ func _ready() -> void:
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 10)
 	panel.add_child(box)
-	box.add_child(HudStyle.pixel_label("LA PARTIDA", 16, HudStyle.GOLD, true))
+	box.add_child(HudStyle.pixel_label(tr("GAMEOVER_RUN"), 16, HudStyle.GOLD, true))
 	var rows := [
-		["stairs", "PISO", floor_n, ""],
-		["skull", "ENEMIGOS", kills, ""],
-		["clock", "TIEMPO", time_sec, "time"],
-		["bone", "HUESOS", rm.last_huesos, "+"],
+		["stairs", tr("GAMEOVER_FLOOR"), floor_n, ""],
+		["skull", tr("GAMEOVER_ENEMIES"), kills, ""],
+		["clock", tr("GAMEOVER_TIME"), time_sec, "time"],
+		["bone", tr("GAMEOVER_BONES"), rm.last_huesos, "+"],
 	]
 	var delay := 0.6
 	for r in rows:
@@ -88,7 +88,7 @@ func _ready() -> void:
 		_count_up(val, int(r[2]), r[3], delay)
 		delay += 0.25
 	var hint := Label.new()
-	hint.text = "Total: %d huesos. Gástalos en Mejoras, en el menú." % rm.meta_currency
+	hint.text = tr("GAMEOVER_BONES_TOTAL") % rm.meta_currency
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	hint.custom_minimum_size.x = 280
 	hint.add_theme_font_size_override("font_size", 13)
@@ -105,9 +105,9 @@ func _ready() -> void:
 	buttons.alignment = BoxContainer.ALIGNMENT_CENTER
 	buttons.add_theme_constant_override("separation", 16)
 	_root.add_child(buttons)
-	var retry := _button(buttons, "OTRA VEZ", _on_retry)
-	_button(buttons, "MENÚ", _on_menu)
-	_button(buttons, "RENDIRSE", _on_quit)
+	var retry := _button(buttons, tr("GAMEOVER_RETRY"), _on_retry)
+	_button(buttons, tr("GAMEOVER_MENU"), _on_menu)
+	_button(buttons, tr("GAMEOVER_QUIT"), _on_quit)
 	retry.grab_focus.call_deferred()
 
 

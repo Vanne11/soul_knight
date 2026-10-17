@@ -103,7 +103,6 @@ func _on_intoxication_changed(level: float, tier: int) -> void:
 	var max_intox = get_node("/root/PlayerStats").max_intoxication
 	intox_bar.update_bar(level, max_intox)
 	
-	var tier_names = ["SOBRIO", "ACHISPADO", "BORRACHO", "BLACKOUT"]
 	var tier_colors = [
 		Color(0.5, 1, 0.5),
 		Color(1, 0.9, 0.3),
@@ -111,7 +110,7 @@ func _on_intoxication_changed(level: float, tier: int) -> void:
 		Color(1, 0.3, 1)
 	]
 	
-	intox_label.text = tier_names[tier]
+	intox_label.text = tr("INTOX_TIER_%d" % tier)
 	intox_label.add_theme_color_override("font_color", tier_colors[tier])
 	
 	# Visual feedback on tier change
@@ -144,7 +143,7 @@ func _on_run_started(_seed: int) -> void:
 func _update_floor_label() -> void:
 	var n: int = _runs.current_floor
 	var fd: Dictionary = _runs.floor_data()
-	floor_label.text = "PISO %d · %s" % [n, fd.name]
+	floor_label.text = tr("HUD_FLOOR") % [n, fd.name]
 	floor_label.add_theme_color_override("font_color", fd.get("tint", HudStyle.CREAM))
 	_coin_label.text = str(_runs.coins)
 	# hormonas conseguidas: su frasco, a tamano real del arte del objeto
@@ -155,7 +154,7 @@ func _update_floor_label() -> void:
 			var t := TextureRect.new()
 			t.texture = load("res://assets/sprites/items/hormone_%s.png" % h)
 			t.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-			t.tooltip_text = h
+			t.tooltip_text = tr("HUD_HORMONE_" + str(h).to_upper())
 			t.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			_horm_box.add_child(t)
 

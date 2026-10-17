@@ -1,0 +1,143 @@
+keys,es,en
+INTOX_TIER_0,SOBRIO,SOBER
+INTOX_TIER_1,ACHISPADO,TIPSY
+INTOX_TIER_2,BORRACHO,DRUNK
+INTOX_TIER_3,BLACKOUT,BLACKOUT
+GAMEOVER_VICTORY_TITLE,LO HICISTE. ¿Y AHORA QUÉ?,YOU DID IT. NOW WHAT?
+GAMEOVER_INSULT_1,"MORISTE, CABRÓN","YOU DIED, ASSHOLE"
+GAMEOVER_INSULT_2,SE TE CAYÓ EL PENE,YOUR DICK FELL OFF
+GAMEOVER_INSULT_3,VUELVE AL ÚTERO,GET BACK IN THE WOMB
+GAMEOVER_INSULT_4,HASTA MI ABUELA LO HACE MEJOR,EVEN MY GRANDMA DOES IT BETTER
+GAMEOVER_INSULT_5,EL HÍGADO TE LLORA,YOUR LIVER IS WEEPING
+GAMEOVER_INSULT_6,PAQUETE DE LECHE DERRAME,PACKAGE OF SPILLED MILK
+GAMEOVER_INSULT_7,ERROR 404: SKILL NOT FOUND,ERROR 404: SKILL NOT FOUND
+GAMEOVER_RUN,LA PARTIDA,THE RUN
+GAMEOVER_FLOOR,PISO,FLOOR
+GAMEOVER_ENEMIES,ENEMIGOS,ENEMIES
+GAMEOVER_TIME,TIEMPO,TIME
+GAMEOVER_BONES,HUESOS,BONES
+GAMEOVER_BONES_TOTAL,"Total: %d huesos. Gástalos en Mejoras, en el menú.","Total: %d bones. Spend them on Upgrades, in the menu."
+GAMEOVER_RETRY,OTRA VEZ,AGAIN
+GAMEOVER_MENU,MENÚ,MENU
+GAMEOVER_QUIT,RENDIRSE,GIVE UP
+MENU_NEW_GAME,NUEVA PARTIDA,NEW RUN
+MENU_UPGRADES,MEJORAS,UPGRADES
+MENU_CODEX,CÓDICE,CODEX
+MENU_SETTINGS_WIP,AJUSTES (WIP),SETTINGS (WIP)
+MENU_QUIT,SALIR,QUIT
+MENU_WORLD,EL MUNDO,THE WORLD
+MENU_TITLE,ROGUE REPRODUCTIVE,ROGUE REPRODUCTIVE
+MENU_SUBTITLE,"LA GRAN CENSURA · ÓRGANOS, HORMONAS Y MALAS DECISIONES","THE GREAT CENSORSHIP · ORGANS, HORMONES AND BAD DECISIONS"
+MENU_WORLD_GRAY,El mundo sigue gris. Libera una región venciendo a su jefe: queda a color para siempre.,The world is still gray. Free a region by beating its boss: it stays in color forever.
+MENU_WORLD_FREED,%d de %d regiones liberadas. Cada una te regala una bendición al llegar.,%d of %d regions freed. Each one hands you a blessing when you arrive.
+MENU_BONES,%d HUESOS,%d BONES
+MENU_BEST_FLOOR,MEJOR PISO %d,BEST FLOOR %d
+MENU_CODEX_PCT,CÓDICE %.0f%%,CODEX %.0f%%
+MENU_BACK,VOLVER,BACK
+MENU_UPGRADES_TITLE,MEJORAS PERMANENTES,PERMANENT UPGRADES
+MENU_UPGRADES_INFO,"Huesos: %d   (se ganan al terminar cada partida: 10 por piso, 1 cada 3 enemigos)","Bones: %d   (earned when each run ends: 10 per floor, 1 per 3 enemies)"
+MENU_UPGRADE_MAX,%s — %s   [%d/%d] MÁXIMO,%s — %s   [%d/%d] MAXED
+MENU_UPGRADE_BUY,%s — %s   [%d/%d]   %d huesos,%s — %s   [%d/%d]   %d bones
+CODEX_TITLE,CÓDICE  (%.0f%% descubierto),CODEX  (%.0f%% discovered)
+CODEX_HINT,"Elige una entrada. Las que faltan se descubren jugando: inscripciones, objetos, enemigos y jefes.","Pick an entry. The missing ones are discovered by playing: inscriptions, items, enemies and bosses."
+INTRO_HINT,[cualquier tecla] seguir      [ESC] saltar la historia,[any key] continue      [ESC] skip the story
+INTRO_CHOOSE_TITLE,ELIGE A TU HÉROE,CHOOSE YOUR HERO
+INTRO_REPLAY,Ver la historia otra vez,Watch the story again
+INTRO_CHOOSE_BTN,ELEGIR,CHOOSE
+HUD_FLOOR,PISO %d · %s,FLOOR %d · %s
+HUD_FLOOR_ONE,PISO 1,FLOOR 1
+HUD_HORMONE_TESTOSTERONA,testosterona,testosterone
+HUD_HORMONE_ESTROGENO,estrogeno,estrogen
+MAP_ROOM_COMBAT,Combate,Combat
+MAP_ROOM_SHOP,Tienda,Shop
+MAP_ROOM_LORE,Inscripción,Inscription
+MAP_ROOM_TREASURE,Tesoro,Treasure
+MAP_ROOM_REST,Descanso,Rest
+MAP_ROOM_TRAP,Trampa,Trap
+MAP_ROOM_PUZZLE,Acertijo,Riddle
+MAP_ROOM_SECRET,Secreta,Secret
+MAP_ROOM_BOSS,Jefe,Boss
+MAP_ROOM_INTOXICATION,Antro,Dive bar
+MAP_ROOM_MINIBOSS,Minijefe,Miniboss
+MAP_ROOM_START,Inicio,Start
+MAP_LABEL,%s · [M] mapa,%s · [M] map
+MAP_ICON_BOSS,J,B
+MAP_ICON_START,I,S
+DOOR_REQ_KEY,Llave: %s,Key: %s
+DOOR_REQ_INTOX,Intoxicación: %s,Intoxication: %s
+DOOR_REQ_PUZZLE,resolver el puzzle del piso,solve the floor's puzzle
+DOOR_INTOX_OPENS,La intoxicación abre la cerradura...,The intoxication opens the lock...
+DOOR_LOCKED,CERRADO. Requiere: %s,LOCKED. Requires: %s
+DOOR_SEALED,SELLADO. Limpia la habitación.,SEALED. Clear the room.
+DOOR_HINT_WEAPON,ARMA,WEAPON
+DOOR_HINT_BOSS,JEFE,BOSS
+DOOR_HINT_SHOP,TIENDA,SHOP
+DOOR_HINT_REST,DESCANSO,REST
+DOOR_HINT_TREASURE,TESORO,TREASURE
+DOOR_HINT_LORE,INSCRIPCIÓN,INSCRIPTION
+DOOR_HINT_PUZZLE,ACERTIJO,RIDDLE
+DOOR_HINT_MINIBOSS,MINIJEFE · ,MINIBOSS · 
+DOOR_HINT_BLESSING,BENDICIÓN,BLESSING
+DOOR_HINT_ALLERGY,(te da alergia),(gives you an allergy)
+DOOR_HINT_COINS,MONEDAS,COINS
+DOOR_HINT_LIFE,VIDA,LIFE
+DOOR_HINT_HORMONE,HORMONA,HORMONE
+DOOR_HINT_FIGHT,SOLO PELEA,JUST A FIGHT
+KINGDOM_PENE,PENELANDIA,PENELAND
+KINGDOM_VULVA,VULVANIA,VULVANIA
+KINGDOM_MIXED,MIXTA,MIXED
+FX_NO_STAMINA,Sin estamina!,Out of stamina!
+FX_DASH,DASH!,DASH!
+FX_PUNCH,¡CRAC! (tu mano),CRACK! (your hand)
+FX_SNEEZE,¡ACHÍS!,ACHOO!
+FX_INTOX,Intoxicación: %s,Intoxication: %s
+FX_CHARGE,¡CARGA!,CHARGE!
+FX_NO_WEAPON,SIN ARMA NO PASAS,"NO WEAPON, NO ENTRY"
+FX_HORMONE_DOOR,PUERTA HORMONAL: falta %s,HORMONE DOOR: missing %s
+FX_FLOOR_DONE,¡PISO %d COMPLETADO!,FLOOR %d COMPLETE!
+FLOOR_CARD,PISO %d\n%s,FLOOR %d\n%s
+FLOOR_REMEMBERS,[b]%s te recuerda.[/b] Ya la liberaste una vez. Elige una bendición de regalo:,[b]%s remembers you.[/b] You already freed it once. Pick a free blessing:
+FLOOR_LIBERATED_TITLE,REGIÓN LIBERADA PARA SIEMPRE,REGION FREED FOREVER
+FLOOR_LIBERATED_BODY,%s ya no vuelve al gris. En próximas partidas te dará una bendición al llegar.,%s will never go gray again. In future runs it will give you a blessing on arrival.
+FLOOR_BOSS_DEFEATED,[b]Jefe derrotado.[/b] Elige una mejora para el resto de la partida:,[b]Boss defeated.[/b] Pick an upgrade for the rest of the run:
+FLOOR_HATCH,[b]Escotilla al piso %d[/b]\n[font_size=13]Recoge lo que quieras antes: no se vuelve.[/font_size]\n[color=#b08d4a][E] Bajar[/color],[b]Hatch to floor %d[/b]\n[font_size=13]Grab whatever you want first: there's no coming back.[/font_size]\n[color=#b08d4a][E] Go down[/color]
+BOSS_REWARD_HEALTH,+10 vida máxima,+10 max health
+BOSS_REWARD_STAMINA,+15 estamina máxima,+15 max stamina
+BOSS_REWARD_SHIELD,+10 escudo máximo,+10 max shield
+BLESSING_PICK,[b]Bendición de %s.[/b] Elige una:,[b]Blessing of %s.[/b] Pick one:
+BLESSING_LEVEL,  [nivel %d],  [level %d]
+BLESSING_FOREIGN,  [AJENA: doble efecto + ALERGIA],  [FOREIGN: double effect + ALLERGY]
+ENEMY_GIANT,%s Gigante,Giant %s
+PROP_FOUNTAIN,[color=#6aa8ff][b]Fuente de Lubricante Bendito[/b][/color]\n[font_size=13]Cura toda la vida y la estamina. Un trago por fuente.[/font_size]\n[color=#b08d4a][E] Beber[/color],[color=#6aa8ff][b]Fountain of Blessed Lube[/b][/color]\n[font_size=13]Fully heals health and stamina. One sip per fountain.[/font_size]\n[color=#b08d4a][E] Drink[/color]
+PROP_FOUNTAIN_TOAST_TITLE,Fuente,Fountain
+PROP_FOUNTAIN_TOAST_BODY,Vida y estamina al máximo.,Health and stamina maxed out.
+PROP_INSCRIPTION,[color=#c08cff][b]Inscripción antigua[/b][/color]\n[font_size=13]Alguien grabó algo aquí antes de la censura.[/font_size]\n[color=#b08d4a][E] Leer[/color],[color=#c08cff][b]Ancient inscription[/b][/color]\n[font_size=13]Someone carved something here before the censorship.[/font_size]\n[color=#b08d4a][E] Read[/color]
+PROP_INSCRIPTION_SAY,INSCRIPCIÓN: [b]%s.[/b] %s,INSCRIPTION: [b]%s.[/b] %s
+NARRATOR_NAME,NARRADOR,NARRATOR
+NARRATOR_HINT,▶ clic / espacio,▶ click / space
+NARRATOR_LORE_UNLOCKED,Lore desbloqueado: %s,Lore unlocked: %s
+SHOP_BUY,[E] Comprar por %d monedas,[E] Buy for %d coins
+SHOP_POOR,Cuesta %d monedas. Tienes %d.,Costs %d coins. You have %d.
+PICKUP_TAKE,[E] Recoger,[E] Pick up
+PICKUP_SWAP,[E] Cambiar por tu %s (la dejas aquí),[E] Swap for your %s (you leave it here)
+PICKUP_WIELD,[E] Empuñar,[E] Wield
+DEBUG_TITLE,MODO DESARROLLADOR  (F1 cierra)\nPiso %d · semilla %d · sala %s %s,DEVELOPER MODE  (F1 closes)\nFloor %d · seed %d · room %s %s
+DEBUG_PLAYER_HEAD,— Jugador —,— Player —
+DEBUG_GOD,Modo dios (no recibes daño),God mode (you take no damage)
+DEBUG_HEAL,Curar todo,Heal all
+DEBUG_COINS,+50 monedas,+50 coins
+DEBUG_BONES,+100 huesos,+100 bones
+DEBUG_HORMONES,Todas las hormonas,All hormones
+DEBUG_INTOX,Intox %d,Intox %d
+DEBUG_ITEMS_HEAD,— Objetos y armas —,— Items and weapons —
+DEBUG_WEAPON_TAG,[ARMA] ,[WEAPON] 
+DEBUG_GIVE,Dar objeto,Give item
+DEBUG_ROOM_HEAD,— Sala actual —,— Current room —
+DEBUG_KILL,Matar enemigos,Kill enemies
+DEBUG_SECRETS,Abrir secretas,Open secrets
+DEBUG_MAP,Revelar mapa,Reveal map
+DEBUG_GOTO_HEAD,— Ir a sala —,— Go to room —
+DEBUG_GO,Ir,Go
+DEBUG_FLOOR_HEAD,— Piso —,— Floor —
+DEBUG_FLOOR,Piso %d,Floor %d
+DEBUG_CHAR_HEAD,— Personaje (reinicia el piso) —,— Character (restarts the floor) —

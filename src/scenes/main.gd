@@ -63,7 +63,7 @@ func _generate_dungeon() -> void:
 		# Region liberada en otra partida: te recibe con un regalo.
 		get_tree().create_timer(2.6).timeout.connect(func():
 			Narrator.say("liberated_floor")
-			_offer_blessing(_floor_kingdom(), "[b]%s te recuerda.[/b] Ya la liberaste una vez. Elige una bendición de regalo:" % _run_manager.floor_data().name))
+			_offer_blessing(_floor_kingdom(), tr("FLOOR_REMEMBERS") % _run_manager.floor_data().name))
 	if start_room:
 		_enter_room(start_room)
 	else:
@@ -96,14 +96,14 @@ func _on_door_entered_room(room: Room, door: Door) -> void:
 		# A un jefe no se entra a puñetazos: la puerta no deja pasar y el narrador se ensaña.
 		_transition_lock = 1.5
 		get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position + Vector2(0, -40),
-			"SIN ARMA NO PASAS", Color("ff7ac0"))
+			tr("FX_NO_WEAPON"), Color("ff7ac0"))
 		Narrator.say_first("door_no_weapon")
 		return
 	if next_room.room_type == Room.RoomType.BOSS and not _missing_hormones().is_empty():
 		# Puerta Hormonal: solo pasa quien lleve la hormona del reino. Aunque le dé alergia.
 		_transition_lock = 1.5
 		get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position + Vector2(0, -40),
-			"PUERTA HORMONAL: falta %s" % ", ".join(_missing_hormones()), Color("ff7ac0"))
+			tr("FX_HORMONE_DOOR") % ", ".join(_missing_hormones().map(func(h): return tr("HUD_HORMONE_" + str(h).to_upper()))), Color("ff7ac0"))
 		Narrator.say_first("door_hormonal")
 		get_node("/root/LoreDatabase").custom_event("hormone_door")
 		return
@@ -284,7 +284,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				info.enemy_type = 0
 				info.health *= 3.5
 				info.damage *= 1.4
-				info.name = "%s Gigante" % names[0]
+				info.name = tr("ENEMY_GIANT") % names[0]
 				info.frames = _frames_path(roster[0])
 				info.scale = 1.6
 				info.drops.append({"item_id": "health_large", "chance": 0.8})
@@ -489,24 +489,24 @@ func _complete_floor() -> void:
 		_run_manager.end_run(true)
 		get_tree().create_timer(4.0).timeout.connect(func(): get_tree().change_scene_to_file("res://src/scenes/game_over.tscn"))
 		return
-	get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position, "¡PISO %d COMPLETADO!" % floor_n, Color.GOLD)
+	get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position, tr("FX_FLOOR_DONE") % floor_n, Color.GOLD)
 	if _run_manager.liberate(floor_n):
-		Narrator.toast("REGIÓN LIBERADA PARA SIEMPRE", "%s ya no vuelve al gris. En próximas partidas te dará una bendición al llegar." % _run_manager.floor_data().name, "ffd75a")
+		Narrator.toast(tr("FLOOR_LIBERATED_TITLE"), tr("FLOOR_LIBERATED_BODY") % _run_manager.floor_data().name, "ffd75a")
 	# Recompensa: una mejora a elegir. Luego, sin prisa: recoges el botin y bajas por la escotilla.
 	await get_tree().create_timer(1.5).timeout
-	Narrator.choose("[b]Jefe derrotado.[/b] Elige una mejora para el resto de la partida:", BOSS_REWARDS.map(func(r): return r[0]))
+	Narrator.choose(tr("FLOOR_BOSS_DEFEATED"), BOSS_REWARDS.map(func(r): return tr(r[0])))
 	var pick: Array = BOSS_REWARDS[await Narrator.chosen]
 	_game_controller.get_player_stats().apply_stat_mod(pick[1], pick[2])
 	Sound.play("puzzle_solve")
 	_add_prop(boss_room, boss_room.get_center_position() + Vector2(0, 150), _hatch_visual(),
-		"[b]Escotilla al piso %d[/b]\n[font_size=13]Recoge lo que quieras antes: no se vuelve.[/font_size]\n[color=#b08d4a][E] Bajar[/color]" % (floor_n + 1),
+		tr("FLOOR_HATCH") % (floor_n + 1),
 		func(_p, it): it.finish(); _advance_to_next_floor())
 
 ## [texto, stat, cantidad] (apply_stat_mod, valores fijos que se suman).
 const BOSS_REWARDS := [
-	["+10 vida máxima", "max_health_flat", 10.0],
-	["+15 estamina máxima", "max_stamina_flat", 15.0],
-	["+10 escudo máximo", "max_shields_flat", 10.0],
+	["BOSS_REWARD_HEALTH", "max_health_flat", 10.0],
+	["BOSS_REWARD_STAMINA", "max_stamina_flat", 15.0],
+	["BOSS_REWARD_SHIELD", "max_shields_flat", 10.0],
 ]
 
 # ---------------------------------------------------------------- recompensas por sala
@@ -514,7 +514,11 @@ const BOSS_REWARDS := [
 ## por el piso es una decision, no un pasillo.
 const FIGHT_ROOMS := [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION, Room.RoomType.TRAP, Room.RoomType.MINIBOSS]
 const KINGDOM_COLORS := {"pene": Color("6ec6ff"), "vulva": Color("ff7ac0"), "mixto": Color("ffc93c")}
-const KINGDOM_NAMES := {"pene": "PENELANDIA", "vulva": "VULVANIA"}
+const KINGDOM_NAMES := {"pene": "KINGDOM_PENE", "vulva": "KINGDOM_VULVA"}
+
+## Nombre visible del reino (MAYUSCULAS); los que no estan (mixto) salen como MIXTA.
+func _kingdom_name(k: String) -> String:
+	return tr(KINGDOM_NAMES.get(k, "KINGDOM_MIXED"))
 ## Sala del cofre del arma inicial (su puerta dice ARMA mientras vayas desarmado).
 var _weapon_room: Room = null
 
@@ -552,24 +556,24 @@ func _label_doors(room: Room) -> void:
 
 func _room_hint(room: Room) -> Array:
 	if room == _weapon_room and not _has_real_weapon():
-		return ["ARMA", Color("ffa64a")]
+		return [tr("DOOR_HINT_WEAPON"), Color("ffa64a")]
 	match room.room_type:
-		Room.RoomType.BOSS: return ["JEFE", Color("ff5050")]
-		Room.RoomType.SHOP: return ["TIENDA", Color("ffd75a")]
-		Room.RoomType.REST: return ["DESCANSO", Color("6aa8ff")] if not room.has_meta("calm_built") else ["", Color.WHITE]
-		Room.RoomType.TREASURE: return ["TESORO", Color("ffd75a")] if not room.has_meta("calm_built") else ["", Color.WHITE]
-		Room.RoomType.LORE: return ["INSCRIPCIÓN", Color("c08cff")] if not room.has_meta("calm_built") else ["", Color.WHITE]
-		Room.RoomType.PUZZLE: return ["ACERTIJO", Color("c08cff")]
-	var head := "MINIJEFE · " if room.room_type == Room.RoomType.MINIBOSS else ""
+		Room.RoomType.BOSS: return [tr("DOOR_HINT_BOSS"), Color("ff5050")]
+		Room.RoomType.SHOP: return [tr("DOOR_HINT_SHOP"), Color("ffd75a")]
+		Room.RoomType.REST: return [tr("DOOR_HINT_REST"), Color("6aa8ff")] if not room.has_meta("calm_built") else ["", Color.WHITE]
+		Room.RoomType.TREASURE: return [tr("DOOR_HINT_TREASURE"), Color("ffd75a")] if not room.has_meta("calm_built") else ["", Color.WHITE]
+		Room.RoomType.LORE: return [tr("DOOR_HINT_LORE"), Color("c08cff")] if not room.has_meta("calm_built") else ["", Color.WHITE]
+		Room.RoomType.PUZZLE: return [tr("DOOR_HINT_PUZZLE"), Color("c08cff")]
+	var head := tr("DOOR_HINT_MINIBOSS") if room.room_type == Room.RoomType.MINIBOSS else ""
 	match room.reward:
 		"bendicion":
 			var k := room.reward_kingdom
-			var warn := "\n(te da alergia)" if _run_manager.is_foreign(k) else ""
-			return [head + "BENDICIÓN\n" + KINGDOM_NAMES[k] + warn, KINGDOM_COLORS[k]]
-		"monedas": return [head + "MONEDAS", Color("ffd75a")]
-		"vida": return [head + "VIDA", Color("ff6b6b")]
-		"hormona": return [head + "HORMONA", Color("c08cff")]
-	return [head + "SOLO PELEA", Color(0.6, 0.6, 0.65)]
+			var warn := ("\n" + tr("DOOR_HINT_ALLERGY")) if _run_manager.is_foreign(k) else ""
+			return [head + tr("DOOR_HINT_BLESSING") + "\n" + _kingdom_name(k) + warn, KINGDOM_COLORS[k]]
+		"monedas": return [head + tr("DOOR_HINT_COINS"), Color("ffd75a")]
+		"vida": return [head + tr("DOOR_HINT_LIFE"), Color("ff6b6b")]
+		"hormona": return [head + tr("DOOR_HINT_HORMONE"), Color("c08cff")]
+	return [head + tr("DOOR_HINT_FIGHT"), Color(0.6, 0.6, 0.65)]
 
 func _give_reward(room: Room) -> void:
 	var center := room.get_center_position()
@@ -582,17 +586,17 @@ func _give_reward(room: Room) -> void:
 			_spawn_pickup(room, "health_large", center + Vector2(0, -30))
 		"bendicion":
 			await get_tree().create_timer(0.7).timeout
-			_offer_blessing(room.reward_kingdom, "[b]Bendición de %s.[/b] Elige una:" % KINGDOM_NAMES[room.reward_kingdom].capitalize())
+			_offer_blessing(room.reward_kingdom, tr("BLESSING_PICK") % _kingdom_name(room.reward_kingdom).capitalize())
 
 func _offer_blessing(kingdom: String, title: String) -> void:
 	var ids: Array = _run_manager.roll_blessings(kingdom)
 	var options := ids.map(func(id):
 		var b: Dictionary = RunManager.BLESSINGS[id]
 		var lvl: int = _run_manager.blessing(id)
-		var tag := ("  [nivel %d]" % (lvl + 1)) if lvl > 0 else ""
+		var tag := (tr("BLESSING_LEVEL") % (lvl + 1)) if lvl > 0 else ""
 		if _run_manager.is_foreign(b.kingdom):
-			tag += "  [AJENA: doble efecto + ALERGIA]"
-		return "%s (%s): %s%s" % [b.name, KINGDOM_NAMES.get(b.kingdom, "MIXTA").capitalize(), b.desc, tag])
+			tag += tr("BLESSING_FOREIGN")
+		return "%s (%s): %s%s" % [b.name, _kingdom_name(b.kingdom).capitalize(), b.desc, tag])
 	Narrator.say_first("blessing_first")
 	Narrator.choose(title, options)
 	_take_blessing(ids[await Narrator.chosen])
@@ -631,7 +635,7 @@ func _build_calm_room(room: Room) -> void:
 			fountain.add_child(_disc(28, Color("cfc4ae")))
 			fountain.add_child(water)
 			_add_prop(room, center, fountain,
-				"[color=#6aa8ff][b]Fuente de Lubricante Bendito[/b][/color]\n[font_size=13]Cura toda la vida y la estamina. Un trago por fuente.[/font_size]\n[color=#b08d4a][E] Beber[/color]",
+				tr("PROP_FOUNTAIN"),
 				func(_p, it):
 					var ps = _game_controller.get_player_stats()
 					ps.heal(ps.max_health)
@@ -639,14 +643,14 @@ func _build_calm_room(room: Room) -> void:
 					ps.stamina_changed.emit(ps.current_stamina, ps.max_stamina)
 					water.color = Color(0.35, 0.35, 0.38)
 					Sound.play("room_clear")
-					Narrator.toast("Fuente", "Vida y estamina al máximo.")
+					Narrator.toast(tr("PROP_FOUNTAIN_TOAST_TITLE"), tr("PROP_FOUNTAIN_TOAST_BODY"))
 					it.finish())
 		Room.RoomType.LORE:
 			var stone := Polygon2D.new()
 			stone.polygon = PackedVector2Array([Vector2(-18, 26), Vector2(-18, -18), Vector2(-10, -28), Vector2(10, -28), Vector2(18, -18), Vector2(18, 26)])
 			stone.color = Color("8a8494")
 			_add_prop(room, center, stone,
-				"[color=#c08cff][b]Inscripción antigua[/b][/color]\n[font_size=13]Alguien grabó algo aquí antes de la censura.[/font_size]\n[color=#b08d4a][E] Leer[/color]",
+				tr("PROP_INSCRIPTION"),
 				func(_p, it):
 					_read_inscription()
 					stone.color = Color("5a5662")
@@ -659,7 +663,7 @@ func _read_inscription() -> void:
 	var fresh := pool.filter(func(e): return not e.unlocked)
 	var entry = (fresh if not fresh.is_empty() else pool)[RNG.randi_range(0, (fresh if not fresh.is_empty() else pool).size() - 1)]
 	lore.unlock_entry(entry.id)
-	Narrator.say_raw("INSCRIPCIÓN: [b]%s.[/b] %s" % [entry.title, entry.text])
+	Narrator.say_raw(tr("PROP_INSCRIPTION_SAY") % [entry.title, entry.text])
 
 func _add_prop(room: Room, pos: Vector2, visual: Node2D, text: String, on_use: Callable) -> void:
 	var it := INTERACTABLE.new()
@@ -699,7 +703,7 @@ func _show_floor_card() -> void:
 	layer.layer = 40
 	var label := Label.new()
 	var floor_n: int = _run_manager.current_floor
-	label.text = "PISO %d\n%s" % [floor_n, _run_manager.floor_data().name]
+	label.text = tr("FLOOR_CARD") % [floor_n, _run_manager.floor_data().name]
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.set_anchors_preset(Control.PRESET_FULL_RECT)

@@ -161,7 +161,7 @@ func _start_charge() -> void:
 	_charge_duration_timer = charge_duration
 	
 	# Visual/sound cue
-	get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "¡CARGA!", Color.RED)
+	get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("FX_CHARGE"), Color.RED)
 
 func _find_target() -> void:
 	var players = get_tree().get_nodes_in_group("player")

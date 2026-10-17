@@ -95,7 +95,7 @@ theme_override_constants/separation = 6
 layout_mode = 2
 clip_text = true
 text_overrun_behavior = 3
-text = "PISO 1"
+text = "HUD_FLOOR_ONE"
 
 [node name="Purse" type="HBoxContainer" parent="Band/Row/Info"]
 layout_mode = 2
@@ -105,4 +105,4 @@ theme_override_constants/separation = 6
 [node name="IntoxicationLabel" type="Label" parent="Band/Row"]
 layout_mode = 2
 size_flags_vertical = 4
-text = "SOBRIO"
+text = "INTOX_TIER_0"

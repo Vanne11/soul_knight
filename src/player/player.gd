@@ -129,7 +129,7 @@ func _handle_dash(delta: float) -> void:
 		if get_node("/root/PlayerStats").use_stamina(dash_stamina_cost):
 			_start_dash()
 		else:
-			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "Sin estamina!", Color.YELLOW)
+			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("FX_NO_STAMINA"), Color.YELLOW)
 
 func _start_dash() -> void:
 	is_dashing = true
@@ -144,7 +144,7 @@ func _start_dash() -> void:
 	_dash_direction = dir
 	Sound.play("dash")
 	velocity = dir * dash_speed * get_node("/root/PlayerStats").speed_modifier
-	get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "DASH!", Color.CYAN)
+	get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("FX_DASH"), Color.CYAN)
 	if _rm().blessing("equilibrio") > 0 and current_weapon:
 		_ring(10, get_weapon_damage() * _player_stats.damage_modifier)
 	
@@ -153,7 +153,7 @@ func _handle_attack(delta: float) -> void:
 	if Input.is_action_pressed("attack") and not Narrator.ate_input() and _attack_timer <= 0.0 and not current_weapon:
 		# Sin cuerpo a cuerpo: a manos limpias te rompes tu antes que ellos.
 		_attack_timer = 1.0
-		_global_events.show_floating_text.emit(global_position + Vector2(0, -30), "¡CRAC! (tu mano)", Color("ff7ac0"))
+		_global_events.show_floating_text.emit(global_position + Vector2(0, -30), tr("FX_PUNCH"), Color("ff7ac0"))
 		Narrator.say_first("no_weapon_attack")
 		Sound.play("crack")
 	elif Input.is_action_pressed("attack") and not Narrator.ate_input() and _attack_timer <= 0.0:
@@ -287,7 +287,7 @@ func _sneeze() -> void:
 	var dir := Vector2.RIGHT.rotated(RNG.randf() * TAU)
 	velocity = dir * 420.0
 	_sneeze_push = 0.15
-	_global_events.show_floating_text.emit(global_position + Vector2(0, -30), "¡ACHÍS!", Color("ff7ac0"))
+	_global_events.show_floating_text.emit(global_position + Vector2(0, -30), tr("FX_SNEEZE"), Color("ff7ac0"))
 
 func start_allergy(seconds: float) -> void:
 	_allergy = maxf(_allergy, seconds)
@@ -332,8 +332,7 @@ func _on_stamina_changed(current: float, max: float) -> void:
 	pass
 
 func _on_intoxication_changed(level: float, tier: int) -> void:
-	var tier_names = ["Sober", "Tipsy", "Drunk", "BLACKOUT"]
-	get_node("/root/GlobalEvents").show_floating_text.emit(global_position, "Intoxicación: %s" % tier_names[tier], Color.MAGENTA)
+	get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("FX_INTOX") % tr("INTOX_TIER_%d" % tier).capitalize(), Color.MAGENTA)
 	
 	if tier == 3:
 		animated_sprite.modulate = Color(1.0, 0.5, 1.0, 0.8)
