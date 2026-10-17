@@ -231,6 +231,7 @@ const ENEMY_SCENES: Array[PackedScene] = [
 	preload("res://src/enemies/enemy_swarmer.tscn"),
 	preload("res://src/enemies/enemy_tank.tscn"),
 	preload("res://src/enemies/enemy_boss.tscn"),
+	preload("res://src/enemies/enemy_taser.tscn"),  # 5: a distancia, chispas (Dildo Electrico)
 ]
 ## Economia (medida con tests/economy_sim.gd): ~8 salas por piso, ~3.8 de combate.
 ## Cada moneda recogida vale 1-2. Sale a unas 28 monedas en el piso 1 y 43 en el 5:

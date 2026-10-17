@@ -145,7 +145,95 @@ def frames_especulo():
     return {"idle": [idle], "walk": walk, "attack": attack, "bite": bite, "hurt": hurt, "death": death}
 
 
-VARIANTS = {"especulo": frames_especulo}
+# ---------------------------------------------------------- dildo electrico
+B_HI = (150, 214, 255, 255)
+B_MD = (74, 150, 240, 255)
+B_DK = (44, 92, 190, 255)
+B_SH = (30, 56, 128, 255)
+BOLT = (255, 226, 80, 255)
+BOLT_HI = (255, 250, 200, 255)
+SPARK = (120, 240, 255, 255)
+
+
+def spark_zig(d, x0, y0, x1, y1, col, seed=0):
+    """Rayito en zigzag de 1 px entre dos puntos."""
+    pts = [(x0, y0)]
+    n = 4
+    for i in range(1, n):
+        t = i / n
+        off = ((i + seed) % 3 - 1) * 2
+        pts.append((x0 + (x1 - x0) * t + off, y0 + (y1 - y0) * t + (off // 2)))
+    pts.append((x1, y1))
+    d.line(pts, fill=col)
+
+
+def dildo_electrico(bob=0, legs=(0, 0), lean=0, eyes="angry", charge=0, seed=0):
+    """Capsula azul electrico con carita, dos puntas de electrodo arriba y un rayo
+    amarillo en la panza. charge 0..2 = cuanta chispa le sale (aviso del disparo)."""
+    im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    y0 = bob
+    # patitas
+    for lx, up in ((10 + lean, legs[0]), (17 + lean, legs[1])):
+        d.rectangle([lx, 41 + y0 - up, lx + 3, 45 - up], fill=B_DK)
+        d.rectangle([lx - 1, 45 - up, lx + 4, 46 - up], fill=B_SH)
+    bx0, by0, bx1, by1 = 8 + lean, 15 + y0, 23 + lean, 42 + y0
+    # cuerpo: capsula vertical con brillo a la izquierda y sombra a la derecha
+    d.rounded_rectangle([bx0, by0, bx1, by1], radius=7, fill=B_MD)
+    d.rounded_rectangle([bx0 + 1, by0 + 2, bx0 + 4, by1 - 4], radius=2, fill=B_HI)
+    d.rectangle([bx1 - 3, by0 + 5, bx1 - 1, by1 - 4], fill=B_DK)
+    d.line([(bx0 + 3, by1 - 1), (bx1 - 3, by1 - 1)], fill=B_SH)
+    # aro metalico bajo la cabeza
+    d.rectangle([bx0 + 1, by0 + 11, bx1 - 1, by0 + 12], fill=B_DK)
+    # rayo amarillo en la panza
+    cx, cy = bx0 + 7, by0 + 14
+    d.polygon([(cx + 2, cy), (cx - 3, cy + 5), (cx, cy + 5), (cx - 2, cy + 10), (cx + 4, cy + 3), (cx + 1, cy + 3)], fill=BOLT)
+    d.line([(cx + 2, cy + 1), (cx - 2, cy + 5)], fill=BOLT_HI)
+    # electrodo: dos puntas metalicas arriba y chispa entre ellas
+    ex = bx0 + 7
+    d.rectangle([ex - 2, by0 - 4, ex - 1, by0 + 1], fill=M_LO)
+    d.rectangle([ex + 1, by0 - 4, ex + 2, by0 + 1], fill=M_LO)
+    d.point([(ex - 2, by0 - 4), (ex + 1, by0 - 4)], fill=M_HI)
+    d.rectangle([ex - 3, by0 + 1, ex + 3, by0 + 1], fill=M_DK)
+    if charge >= 1:
+        spark_zig(d, ex - 1, by0 - 5, ex + 1, by0 - 5, SPARK, seed)
+        d.point([(ex, by0 - 6), (ex, by0 - 7)], fill=BOLT_HI)
+    if charge >= 2:
+        spark_zig(d, ex - 2, by0 - 4, ex - 9, by0 - 9, BOLT, seed + 1)
+        spark_zig(d, ex + 2, by0 - 4, ex + 9, by0 - 8, BOLT, seed + 2)
+        d.point([(ex - 10, by0 - 5), (ex + 10, by0 - 3)], fill=SPARK)
+    # cara
+    fx, fy = bx0 + 3, by0 + 4
+    if eyes == "x":
+        for ecx in (fx, fx + 6):
+            d.line([(ecx - 1, fy - 1), (ecx + 1, fy + 1)], fill=PUPIL)
+            d.line([(ecx - 1, fy + 1), (ecx + 1, fy - 1)], fill=PUPIL)
+    else:
+        for ecx in (fx, fx + 6):
+            d.rectangle([ecx - 1, fy - 1, ecx + 2, fy + 2], fill=EYE_W)
+            d.rectangle([ecx + 1, fy, ecx + 2, fy + 1], fill=PUPIL)
+        if eyes == "angry":
+            d.line([(fx - 2, fy - 3), (fx + 2, fy - 2)], fill=PUPIL)
+            d.line([(fx + 4, fy - 2), (fx + 8, fy - 3)], fill=PUPIL)
+        d.point([(fx - 1, fy + 4), (fx + 7, fy + 4)], fill=BLUSH)
+        d.line([(fx + 1, fy + 5), (fx + 5, fy + 5)], fill=PUPIL)  # boquita
+    return outline(im)
+
+
+def frames_dildo_electrico():
+    idle = dildo_electrico(0, charge=0)
+    walk = [dildo_electrico(0, (2, 0), seed=0), dildo_electrico(-1, (0, 0), seed=1),
+            dildo_electrico(0, (0, 2), seed=2), dildo_electrico(-1, (0, 0), seed=3)]
+    attack = [dildo_electrico(0, charge=1, seed=0), dildo_electrico(-1, charge=2, lean=-1, seed=1),
+              dildo_electrico(-1, charge=2, lean=-1, seed=2)]
+    hurt = [tint(dildo_electrico(0, eyes="hurt", charge=1), (255, 60, 70), 0.55),
+            tint(dildo_electrico(0, eyes="hurt"), (255, 255, 255), 0.4)]
+    dead = dildo_electrico(0, eyes="x")
+    death = [death_frame(dead, i) for i in range(4)]
+    return {"idle": [idle], "walk": walk, "attack": attack, "hurt": hurt, "death": death}
+
+
+VARIANTS = {"especulo": frames_especulo, "dildo_electrico": frames_dildo_electrico}
 ANIM = {  # nombre: (loop, fps)
     "idle": (True, 4.0), "walk": (True, 8.0), "attack": (False, 10.0),
     "bite": (False, 18.0), "hurt": (False, 10.0), "death": (False, 6.0),
