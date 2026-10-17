@@ -202,6 +202,7 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	RoomDecor.build(room, _run_manager.floor_data().kingdom, _run_manager.current_seed, _run_manager.current_floor)  # decoracion junto a los muros (una vez por sala)
 	_paint_room(room, room.cleared or room.room_type in CALM_ROOMS)
 	_label_doors(room)
+	RoomDirector.on_enter(self, room, entry_door)  # dinamicas de sala (src/rooms/room_director.gd)
 	if room.room_type in [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]:
 		_build_calm_room(room)
 	if room.room_type == Room.RoomType.SHOP:
@@ -285,6 +286,8 @@ func _frames_path(variant: String) -> String:
 	return "res://assets/sprites/enemies/%s_sprite_frames.tres" % variant
 
 func _spawn_room_enemies(room: Room) -> void:
+	if RoomDirector.takes_over(room):
+		return  # la dinamica de la sala (aguantar, sigilo) crea sus propios enemigos
 	if room.cleared or room.room_type not in [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION, Room.RoomType.TRAP, Room.RoomType.MINIBOSS, Room.RoomType.BOSS]:
 		return
 	if not room.enemies_spawned.is_empty():

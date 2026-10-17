@@ -1,0 +1,138 @@
+{
+  "_info": "Dinamicas de sala (bloque 3c): objetivos, modificadores, entorno y encuentros. Los eventos rm_* los dicen src/rooms/*.gd (en combate el narrador calla: las frases salen al limpiar la sala).",
+  "rm_celo": [
+    "Sala en celo. Los bichos están a mil y no precisamente por ti.",
+    "Aquí flota algo en el aire. No lo respires. Bueno, respíralo, qué más da."
+  ],
+  "rm_lubricado": [
+    "El suelo está lubricado. No pregunto con qué. Tú tampoco.",
+    "Resbala. La física de este reino es muy sugerente."
+  ],
+  "rm_aduanera": [
+    "Una aduana en medio de una mazmorra. Burocracia: lo único que sobrevive a todo."
+  ],
+  "rm_aduanera_ask": [
+    "El aduanero te mira de arriba abajo. Con demasiado detalle."
+  ],
+  "rm_aduanera_paid": [
+    "Mordida pagada. Qué bien funciona el sistema para quien tiene con qué."
+  ],
+  "rm_aduanera_fight": [
+    "¿Pelear contra la burocracia? Valiente. Inútil, pero valiente."
+  ],
+  "rm_apagon": [
+    "Se fue la luz. Qué momento más oportuno para que todo te toque."
+  ],
+  "rm_censurada": [
+    "Barras negras por todas partes. Lo que no se ve, no existe. Esa es la filosofía de la casa."
+  ],
+  "rm_escort": [
+    "Un óvulo a escoltar. Pequeño, frágil y con todo el futuro por delante. Qué presión.",
+    "Escolta. Tú pegas tiros, el óvulo camina y yo opino. Reparto justo."
+  ],
+  "rm_escort_ok": [
+    "Entregado. La trompa está encantada. Se le nota en la... bueno, en toda ella.",
+    "Misión cumplida. Una vida de óvulo, a salvo. Tú, bastante menos."
+  ],
+  "rm_escort_fail": [
+    "Se rompió el óvulo. Mala suerte. Ha sido tu primera vez como padre, se nota.",
+    "Lo has roto. Sin premio. Esto es lo que pasa cuando te sueltan a un óvulo."
+  ],
+  "rm_hold": [
+    "La fiesta. Aguanta 45 segundos. La música es horrible y los invitados, peores."
+  ],
+  "rm_hold_ok": [
+    "Se acabó la fiesta. Te dejan una botella y mal aliento. Como en cualquier fiesta decente."
+  ],
+  "rm_thief": [
+    "Una ladilla con buena cara. Ya sabes lo que eso significa: va a por tu cartera."
+  ],
+  "rm_thief_stole": [
+    "Te robó. Una ladilla. Ni los parásitos te respetan.",
+    "Tu dinero, ahora de otra. Se lo han llevado con la mayor naturalidad."
+  ],
+  "rm_thief_caught": [
+    "Atrapada. El dinero vuelve a tu bolsillo, que es donde mejor está."
+  ],
+  "rm_thief_escaped": [
+    "Se escapó. Estará esperándote en la sala de al lado. Las ladillas son muy de quedarse."
+  ],
+  "rm_thief_again": [
+    "Otra vez ella. Con el mismo descaro y las mismas monedas, que son tuyas."
+  ],
+  "rm_thief_lost": [
+    "Se fue con tu dinero. Lo gastará en cera. Nadie se libra de la cera."
+  ],
+  "rm_stealth": [
+    "Sigilo. La Censura patrulla con linternas. No te iluminan tanto desde la última vez que fuiste a un concierto."
+  ],
+  "rm_stealth_ok": [
+    "Ni se enteraron. Qué orgullo. Un orgullo discreto, claro."
+  ],
+  "rm_stealth_alarm": [
+    "Te vieron. La sala se llena de gente. Pasa en las mejores familias... y en las peores."
+  ],
+  "rm_clock": [
+    "La Censura entra por la puerta, pintándolo todo de gris. Corre. O mata. O las dos cosas."
+  ],
+  "rm_clock_ok": [
+    "A tiempo. La Censura retrocede avergonzada. Se le nota."
+  ],
+  "rm_clock_fail": [
+    "La Censura te alcanzó. Gris. Todo gris. Ya sabes cómo acaba esto."
+  ],
+  "rm_challenge": [
+    "Un reto. Yo propongo, tú sufres, el premio te lo pongo yo. Sistema perfecto."
+  ],
+  "rm_challenge_ok": [
+    "Lo cumpliste. No me lo esperaba. Anoto: una (1) sorpresa agradable en toda la partida."
+  ],
+  "rm_challenge_fail": [
+    "Fallaste. Lo esperaba. Es lo más gratificante de ser pesimista: se tiene razón casi siempre."
+  ],
+  "rm_barrels": [
+    "Barriles rojos. Rojo significa peligro, o vino. Hoy, peligro."
+  ],
+  "rm_torches": [
+    "Hay antorchas en el techo. Deberías haberlas mirado antes. Quiero decir: esquívalas."
+  ],
+  "rm_traps": [
+    "Trampas. Con aviso, que no soy un monstruo. Los bichos no leen los avisos, por cierto."
+  ],
+  "rm_pact": [
+    "Una oferta de la Hoja de Parra. Cuando tu Pudorosidad te ofrece algo, lee la letra pequeña."
+  ],
+  "rm_pact_offer": [
+    "Poder a cambio de un costo. Lo de siempre: nadie da nada gratis, ni las hojas."
+  ],
+  "rm_pact_done": [
+    "Pacto sellado. No hace falta firmar: ya me encargo yo de recordártelo."
+  ],
+  "rm_pact_no": [
+    "Te largas sin pactar. Prudente. Aburrido, pero prudente."
+  ],
+  "rm_roulette": [
+    "Un vendedor ambulante con gabardina. No es lo que piensas. Bueno, sí lo es."
+  ],
+  "rm_roulette_ask": [
+    "La ruleta del preservativo. El único juego donde ganar significa que todo aguantó."
+  ],
+  "rm_roulette_win": [
+    "Intacto. Ganas. Que no se te suba a la cabeza."
+  ],
+  "rm_roulette_jackpot": [
+    "¡Premio gordo! Extra grande. Pregunta a quien quieras: eso siempre da suerte."
+  ],
+  "rm_roulette_lose": [
+    "Pinchado. Pierdes. Lección: confía en la protección, no en el vendedor."
+  ],
+  "rm_market": [
+    "Mercado negro. Aquí se vende lo que Su Pudorosidad prohibió, y se paga con sangre."
+  ],
+  "rm_market_buy": [
+    "Comprado con sangre. Cálido. Es lo más íntimo que has hecho en toda la partida."
+  ],
+  "rm_market_poor": [
+    "No te queda sangre suficiente. Ni los vampiros dan fiado."
+  ]
+}
