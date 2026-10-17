@@ -97,7 +97,7 @@ func _open() -> void:
 		return wa if wa != wb else a < b)
 	for id in ids:
 		var it = db.get_item(id)
-		items.add_item("%s%s (%s)" % [tr("DEBUG_WEAPON_TAG") if it.equip_slot == Item.EquipSlot.WEAPON else "", it.display_name, id])
+		items.add_item("%s%s (%s)" % [tr("DEBUG_WEAPON_TAG") if it.equip_slot == Item.EquipSlot.WEAPON else "", Loc.item_name(it), id])
 		items.set_item_metadata(items.item_count - 1, id)
 	box.add_child(items)
 	_row(box, {tr("DEBUG_GIVE"): func(): main.player.add_item_to_inventory(items.get_selected_metadata())})

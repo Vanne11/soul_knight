@@ -76,7 +76,7 @@ func _generate_dungeon() -> void:
 		# Region liberada en otra partida: te recibe con un regalo.
 		get_tree().create_timer(2.6).timeout.connect(func():
 			Narrator.say("liberated_floor")
-			_offer_blessing(_floor_kingdom(), tr("FLOOR_REMEMBERS") % _run_manager.floor_data().name))
+			_offer_blessing(_floor_kingdom(), tr("FLOOR_REMEMBERS") % Loc.floor_name(_run_manager.floor_data())))
 	if start_room:
 		_enter_room(start_room)
 	else:
@@ -504,7 +504,7 @@ func _complete_floor() -> void:
 		return
 	get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position, tr("FX_FLOOR_DONE") % floor_n, Color.GOLD)
 	if _run_manager.liberate(floor_n):
-		Narrator.toast(tr("FLOOR_LIBERATED_TITLE"), tr("FLOOR_LIBERATED_BODY") % _run_manager.floor_data().name, "ffd75a")
+		Narrator.toast(tr("FLOOR_LIBERATED_TITLE"), tr("FLOOR_LIBERATED_BODY") % Loc.floor_name(_run_manager.floor_data()), "ffd75a")
 	# Recompensa: una mejora a elegir. Luego, sin prisa: recoges el botin y bajas por la escotilla.
 	await get_tree().create_timer(1.5).timeout
 	Narrator.choose(tr("FLOOR_BOSS_DEFEATED"), BOSS_REWARDS.map(func(r): return tr(r[0])))
@@ -609,7 +609,7 @@ func _offer_blessing(kingdom: String, title: String) -> void:
 		var tag := (tr("BLESSING_LEVEL") % (lvl + 1)) if lvl > 0 else ""
 		if _run_manager.is_foreign(b.kingdom):
 			tag += tr("BLESSING_FOREIGN")
-		return "%s (%s): %s%s" % [b.name, _kingdom_name(b.kingdom).capitalize(), b.desc, tag])
+		return "%s (%s): %s%s" % [Loc.blessing(id, "name"), _kingdom_name(b.kingdom).capitalize(), Loc.blessing(id, "desc"), tag])
 	Narrator.say_first("blessing_first")
 	Narrator.choose(title, options)
 	_take_blessing(ids[await Narrator.chosen])
@@ -676,7 +676,7 @@ func _read_inscription() -> void:
 	var fresh := pool.filter(func(e): return not e.unlocked)
 	var entry = (fresh if not fresh.is_empty() else pool)[RNG.randi_range(0, (fresh if not fresh.is_empty() else pool).size() - 1)]
 	lore.unlock_entry(entry.id)
-	Narrator.say_raw(tr("PROP_INSCRIPTION_SAY") % [entry.title, entry.text])
+	Narrator.say_raw(tr("PROP_INSCRIPTION_SAY") % [Loc.lore_title(entry), Loc.lore_text(entry)])
 
 func _add_prop(room: Room, pos: Vector2, visual: Node2D, text: String, on_use: Callable) -> void:
 	var it := INTERACTABLE.new()
@@ -716,7 +716,7 @@ func _show_floor_card() -> void:
 	layer.layer = 40
 	var label := Label.new()
 	var floor_n: int = _run_manager.current_floor
-	label.text = tr("FLOOR_CARD") % [floor_n, _run_manager.floor_data().name]
+	label.text = tr("FLOOR_CARD") % [floor_n, Loc.floor_name(_run_manager.floor_data())]
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.set_anchors_preset(Control.PRESET_FULL_RECT)

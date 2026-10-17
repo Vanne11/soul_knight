@@ -1,0 +1,142 @@
+keys,es,en
+NARR_INTRO_SLIDES_0,"Hace mucho, en un mundo donde nadie se tapaba nada, existían dos reinos: PENELANDIA y VULVANIA.","Long ago, in a world where nobody covered anything up, there were two kingdoms: PENELAND and VULVANIA."
+NARR_INTRO_SLIDES_1,Llevaban siglos en una Guerra Fría Hormonal. Nadie recuerda por qué empezó. Probablemente por quién deja la tapa del váter levantada.,They'd been locked in a Cold Hormonal War for centuries. Nobody remembers why it started. Probably over who leaves the toilet seat up.
+NARR_INTRO_SLIDES_2,Cada reino es alérgico a las hormonas del otro. Testosterona en Vulvania: estornudos. Estrógeno en Penelandia: estornudos y ganas de hablar de sentimientos. Horrible.,Each kingdom is allergic to the other's hormones. Testosterone in Vulvania: sneezing. Estrogen in Peneland: sneezing and the urge to talk about feelings. Horrible.
+NARR_INTRO_SLIDES_3,"Entonces llegó ELLA. Su Pudorosidad, LA HOJA DE PARRA. Una hoja verde, gigante, con gafitas y collar de perlas.","Then SHE arrived. Her Modesty, THE FIG LEAF. A giant green leaf with tiny glasses and a pearl necklace."
+NARR_INTRO_SLIDES_4,"Y lo tapó todo. Pinturas, estatuas, libros de biología. Cubrió el mundo de vergüenza, y la vergüenza lo volvió GRIS.","And she covered everything. Paintings, statues, biology textbooks. She smothered the world in shame, and shame turned it GRAY."
+NARR_INTRO_SLIDES_5,"Ahora los habitantes de ambos reinos vagan censurados, rencorosos y bastante irritables. Te van a atacar. No es personal. Bueno, un poco sí.","Now the inhabitants of both kingdoms wander around censored, bitter and rather cranky. They're going to attack you. It's nothing personal. Okay, a little personal."
+NARR_INTRO_SLIDES_6,"Tu misión: cruzar la Selva Púbica, los dos reinos y la tierra de nadie, y arrancar a esa hoja de su palacio.","Your mission: cross the Pubic Jungle, both kingdoms and no man's land, and rip that leaf off its palace."
+NARR_INTRO_SLIDES_7,Para lograrlo necesitarás la hormona del reino contrario. Te dará alergia. Te hará estornudar. Lo siento: a veces lo que necesitas es justo lo que te sienta fatal.,To do it you'll need the hormone of the opposite kingdom. It'll make you allergic. It'll make you sneeze. Sorry: sometimes what you need is exactly what makes you feel awful.
+NARR_INTRO_SLIDES_8,"Yo soy el narrador. Comentaré tus fracasos. Pocas veces, lo prometo. No mucho. Bueno, ya veremos.","I'm the narrator. I'll comment on your failures. Rarely, I promise. Not much. Well, we'll see."
+NARR_SELECT_PITOCLES_0,"Pitocles. Casco griego, escudo redondo y la autoestima de un capitán de barco en una bañera. Buena elección. Supongo.","Pitocles. Greek helmet, round shield and the self-esteem of a ship captain in a bathtub. Good choice. I guess."
+NARR_SELECT_VULVALQUIRIA_0,"Vulvalquiria. Trenzas, alas en el casco y cero paciencia. La Hoja de Parra ya está sudando clorofila.","Vulvalkyrie. Braids, wings on the helmet and zero patience. The Fig Leaf is already sweating chlorophyll."
+NARR_SELECT_ORNITORRINCO_0,"El Ornitorrinco. Ni la naturaleza sabe qué es. Él tampoco. Pero es inmune a las alergias, y eso ya es más de lo que tienes tú.","The Platypus. Not even nature knows what he is. Neither does he. But he's immune to allergies, and that's more than you can say."
+NARR_FIRST_RUN_0,Primera vez aquí. Qué ilusión. Te doy un consejo gratis: el dash te hace invencible mientras dura. Úsalo. Nadie lo usa.,First time here. How exciting. Free advice: the dash makes you invincible while it lasts. Use it. Nobody does.
+NARR_RUN_START_0,Run número {runs}. {hero} vuelve a la carga. Literalmente.,Run number {runs}. {hero} charges back in. Literally.
+NARR_RUN_START_1,Otra vez aquí. Llevas {deaths} muertes. La Hoja de Parra ya te tiene un apodo cariñoso.,Back again. You've died {deaths} times. The Fig Leaf already has a cute nickname for you.
+NARR_RUN_START_2,"Nueva run. Mismo héroe. Mismas manos desnudas. La esperanza es gratis, las armas no.","New run. Same hero. Same bare hands. Hope is free, weapons aren't."
+NARR_RUN_START_3,Run {runs}. Hay gente que aprende de sus errores. Y hay héroes con nombre de chiste.,Run {runs}. Some people learn from their mistakes. And some heroes have a joke for a name.
+NARR_FLOOR_1_0,"Piso 1: LA SELVA PÚBICA. Una jungla densa, rizada y sin podar desde la censura. Cuidado con las ladillas: son pequeñas, pero tienen sindicato.","Floor 1: THE PUBIC JUNGLE. A thick, curly jungle, unpruned since the censorship. Watch out for the crab lice: they're small, but they have a union."
+NARR_FLOOR_2_0,"Piso 2: PENELANDIA. Todo es alargado, todo es orgulloso y todo huele a desodorante de 3 euros. Aquí manda el Testículo Primordial.","Floor 2: PENELAND. Everything is long, everything is proud and everything smells like 3-dollar deodorant. The Primordial Testicle rules here."
+NARR_FLOOR_3_0,"Piso 3: VULVANIA. Elegante, cíclica y con muy poca paciencia para turistas. La reina Ovaria II no recibe visitas sin cita previa.","Floor 3: VULVANIA. Elegant, cyclical and with very little patience for tourists. Queen Ovaria II doesn't receive visitors without an appointment."
+NARR_FLOOR_4_0,"Piso 4: EL PERINEO. La tierra de nadie entre los dos reinos. Literalmente. Anatómicamente. Aquí no vive nadie, solo un aduanero con un sello.","Floor 4: THE PERINEUM. No man's land between the two kingdoms. Literally. Anatomically. Nobody lives here, just a customs officer with a stamp."
+NARR_FLOOR_5_0,Piso 5: EL PALACIO DE LA CENSURA. Todo está pixelado. Todo tiene una barra negra encima. Huele a moralina y a pegamento de hoja.,Floor 5: THE PALACE OF CENSORSHIP. Everything is pixelated. Everything has a black bar over it. Smells of moralizing and leaf glue.
+NARR_ROOM_COMBAT_0,Las puertas se cierran. Hay bichos. Ya sabes cómo va esto.,The doors close. There are critters. You know how this goes.
+NARR_ROOM_COMBAT_1,"Sala gris, gente censurada y de mal humor. Libéralos a golpes, que es como se libera a la gente en los videojuegos.","Gray room, censored people in a bad mood. Set them free with your fists, which is how people get freed in video games."
+NARR_ROOM_BOSS_0,"La sala del jefe. Respira hondo. No sirve de nada, pero respira.","The boss room. Take a deep breath. It won't help, but breathe."
+NARR_ROOM_SHOP_0,"Una tienda. El tendero es una caja registradora con opiniones. Ponte encima de algo y pulsa E. Si tienes dinero, cosa que dudo.","A shop. The shopkeeper is a cash register with opinions. Stand on something and press E. If you have money, which I doubt."
+NARR_ROOM_SHOP_1,Tienda. Los precios son abusivos. Como todo en este reino desde la censura.,Shop. Prices are abusive. Like everything in this kingdom since the censorship.
+NARR_ROOM_SECRET_0,Una sala secreta. La has encontrado tú solito. Estoy... casi orgulloso.,A secret room. You found it all by yourself. I'm... almost proud.
+NARR_ROOM_INTOXICATION_0,Huele a bar de carretera. Aquí se viene a beber y a tomar malas decisiones. Bienvenido a casa.,Smells like a roadside bar. People come here to drink and make bad decisions. Welcome home.
+NARR_ROOM_EMPTY_0,"Una sala vacía. Disfruta del silencio. Ah, no, que estoy yo.","An empty room. Enjoy the silence. Oh wait, no, I'm here."
+NARR_ROOM_CLEARED_0,"Sala liberada. ¿Ves? El color vuelve. Igual que tu dignidad. Bueno, el color sí.","Room freed. See? The color is coming back. Just like your dignity. Well, the color is."
+NARR_ROOM_CLEARED_1,"Despejado. La vergüenza se va, los colores vuelven y tú sigues igual de torpe.","Cleared. The shame leaves, the colors return and you're as clumsy as ever."
+NARR_ROOM_CLEARED_2,"Limpio. Si sigues así, la Hoja de Parra va a tener que buscar trabajo.",Clean. Keep this up and the Fig Leaf will have to find a new job.
+NARR_PLAYER_HIT_0,"Ese golpe avisó. Brilló, tembló, casi te manda una carta certificada.","That hit gave you a warning. It glowed, it trembled, it practically sent you a registered letter."
+NARR_PLAYER_HIT_1,El dash existe. ESPACIO. La barra grande.,The dash exists. SPACE. The big bar.
+NARR_PLAYER_HIT_2,Te han dado. Ya van varias. Empiezo a pensar que es tu estrategia.,You got hit. Several times now. I'm starting to think it's your strategy.
+NARR_LOW_HEALTH_0,Te queda poca vida. Momento ideal para tomar decisiones todavía peores.,You're low on health. Perfect time to make even worse decisions.
+NARR_LOW_HEALTH_1,"Vida crítica. La pantalla de 'MORISTE, CABRÓN' ya está calentando.","Critical health. The 'YOU DIED, ASSHOLE' screen is already warming up."
+NARR_SHIELD_BROKEN_0,"Escudo roto. Se regenera si aguantas tres segundos sin que te toquen. Tres. Para ti, una eternidad.","Shield broken. It regenerates if you last three seconds without being touched. Three. For you, an eternity."
+NARR_NO_STAMINA_0,Sin estamina. Tu cardio es tan bueno como tu sentido de la orientación.,Out of stamina. Your cardio is as good as your sense of direction.
+NARR_DASH_SPAM_0,"Dash, dash, dash. ¿Estás jugando o tienes un tic?","Dash, dash, dash. Are you playing or do you have a tic?"
+NARR_IGNORED_0,¡Eh! ¿Te vas sin leerme? Léeme. En un futuro seré importante.,Hey! Leaving without reading me? Read me. One day I'll be important.
+NARR_IGNORED_1,"Pasas de mí como de los términos y condiciones. Algún día te daré pistas, y entonces vendrás llorando.","You skip me like the terms and conditions. One day I'll give you hints, and then you'll come crying."
+NARR_IGNORED_2,"Vale, cambia de sala a mitad de frase. Yo lo apunto todo. TODO.","Fine, change rooms mid-sentence. I write everything down. EVERYTHING."
+NARR_IGNORED_3,Te recuerdo que soy el único aquí que sabe cómo se resuelven las cosas. Léeme.,Let me remind you I'm the only one here who knows how things get solved. Read me.
+NARR_PUZZLE_HINT_0,"Te ayudo, porque me lees. El orden es: {seq}. De nada.","I'll help you, because you read me. The order is: {seq}. You're welcome."
+NARR_PUZZLE_HINT_1,"Mira que es fácil: {seq}. Pisa despacito, que te veo nervioso.","It's so easy: {seq}. Step slowly, you look nervous."
+NARR_PUZZLE_HINT_REFUSED_0,¿Ahora quieres ayuda? Me has dejado con la palabra en la boca {n} veces. Sufre un poco. Falla otras dos y ya veremos.,Now you want help? You left me hanging {n} times. Suffer a little. Fail two more times and we'll see.
+NARR_WEAPON_HUNT_0,"Sin arma. Como siempre. Hay un cofre con algo que dispara en la sala más alejada de aquí. Llegar ya es otra historia: corre, esquiva y no pegues a nadie con esas manitas.","No weapon. As usual. There's a chest with something that shoots in the room farthest from here. Getting there is a different story: run, dodge and don't hit anyone with those little hands."
+NARR_WEAPON_HUNT_1,"Tus armas, como tu dignidad, no vienen de serie. Hay un cofre al fondo del piso, en la sala más lejana. Las salas no se cerrarán mientras vayas desarmado: huye con estilo.","Your weapons, like your dignity, don't come standard. There's a chest at the far end of the floor, in the farthest room. Rooms won't lock while you're unarmed: flee with style."
+NARR_NO_WEAPON_ATTACK_0,"¿A puñetazos? ¿Con esas muñecas de cristal? Te fracturas tú antes que ellos. Busca un arma, héroe de porcelana.","Punching? With those glass wrists? You'll break before they do. Find a weapon, porcelain hero."
+NARR_NO_WEAPON_ATTACK_1,Eso que ha sonado no era el enemigo: era tu escafoides. Sin arma no se pega. Lo dice tu traumatólogo y lo digo yo.,"That sound wasn't the enemy: it was your scaphoid. No weapon, no hitting. Says your orthopedist and says I."
+NARR_NO_WEAPON_ATTACK_2,"Manos limpias, huesos rotos. Hay una pistola en el suelo. Es negra, brilla y no se rompe. Al contrario que tú.","Clean hands, broken bones. There's a pistol on the floor. It's black, it's shiny and it doesn't break. Unlike you."
+NARR_PUZZLE_START_0,"Baldosas que brillan. Pisa en el mismo orden en que se encienden. Es memoria, no física cuántica. Para ti, lo mismo.","Glowing tiles. Step on them in the same order they light up. It's memory, not quantum physics. For you, the same thing."
+NARR_PUZZLE_START_1,"Un acertijo. Las baldosas se encienden en orden; repítelo con los pies. Si lo resuelves, se abre algo secreto. Si no, me río.","A riddle. The tiles light up in order; repeat it with your feet. Solve it and something secret opens. Don't, and I laugh."
+NARR_PUZZLE_FAIL_0,"Mal. Otra vez. Te lo repito despacito, como a un niño. O a un jefe de piso.","Wrong. Again. I'll say it slowly, like to a child. Or a floor manager."
+NARR_PUZZLE_FAIL_1,Esa no era. Ni de lejos. Tienes la memoria de un pez borracho.,That wasn't it. Not even close. You have the memory of a drunk goldfish.
+NARR_PUZZLE_SOLVED_0,"Correcto. Has oído un clic lejano: una sala secreta acaba de abrirse. No te emociones, seguro que hay algo feo dentro.","Correct. You heard a faraway click: a secret room just opened. Don't get excited, there's probably something ugly inside."
+NARR_DOOR_SECRET_0,Cerrada a cal y canto. En algún lugar del piso hay baldosas que brillan. Resuélvelo y esto se abre.,Sealed tight. Somewhere on this floor there are glowing tiles. Solve it and this opens.
+NARR_KILL_FIRST_0,Primera víctima. Era un ciudadano censurado con mala leche. Ahora es un ciudadano censurado sin leche.,First victim. A censored citizen in a bad mood. Now a censored citizen in no mood at all.
+NARR_KILL_0,Uno menos.,One down.
+NARR_KILL_1,"Lo has liberado. Del mundo de los vivos, pero liberado.","You freed him. From the world of the living, but freed."
+NARR_KILL_STREAK_0,Cinco seguidos sin que te toquen. ¿Quién eres y qué has hecho con el torpe de antes?,Five in a row without getting hit. Who are you and what have you done with the clumsy one from before?
+NARR_IDLE_0,"¿Hola? Si no vas a jugar, al menos apaga la pantalla.","Hello? If you're not going to play, at least turn off the screen."
+NARR_IDLE_1,"Llevas un rato quieto. Los enemigos no esperan. Yo sí, pero cobro por horas.","You've been standing still a while. Enemies don't wait. I do, but I charge by the hour."
+NARR_PICKUP_WEAPON_0,"{item}. Por fin algo mejor que tus puños. El listón estaba en el suelo, pero lo has superado.","{item}. Finally something better than your fists. The bar was on the floor, but you cleared it."
+NARR_PICKUP_WEAPON_1,Ahora tienes {item}. Apunta con el ratón. O hacia donde camines. O reza.,Now you have {item}. Aim with the mouse. Or wherever you walk. Or pray.
+NARR_PICKUP_ALCOHOL_0,Alcohol. La solución a todos los problemas que el alcohol causó.,Alcohol. The solution to all the problems alcohol caused.
+NARR_PICKUP_ALCOHOL_1,{item}. Apuntado en tu historial clínico. Con letra grande.,{item}. Added to your medical record. In big letters.
+NARR_PICKUP_HEAL_0,Curación. Te la doy porque si mueres rápido me aburro.,Healing. I'm giving it to you because if you die fast I get bored.
+NARR_PICKUP_RELIC_0,{item}. Una reliquia. Seguro que tiene un efecto secundario. Mejor no leas la letra pequeña.,{item}. A relic. It surely has a side effect. Better not read the fine print.
+NARR_PICKUP_KEY_0,Una llave. Abre algo. Como tus heridas emocionales.,A key. It opens something. Like your emotional wounds.
+NARR_PICKUP_GENERIC_0,"{item}. Recogido. No sé para qué, pero bueno.","{item}. Picked up. I don't know what for, but okay."
+NARR_HORMONE_FOUND_0,"Ahí está: la hormona que pide la Puerta Hormonal del jefe. Si es la del reino contrario, te va a sentar fatal. Cógela igual. Así es la vida.","There it is: the hormone the boss's Hormonal Door wants. If it's the opposite kingdom's, it'll make you feel awful. Grab it anyway. That's life."
+NARR_DOOR_NO_WEAPON_0,"¿A un jefe? ¿A PUÑETAZOS? Qué patético. Hasta la Hoja de Parra siente vergüenza ajena, y eso que es su trabajo. Busca un arma: cofres, tienda, lo que sea.","A boss? With your FISTS? How pathetic. Even the Fig Leaf feels secondhand embarrassment, and that's literally her job. Find a weapon: chests, shop, whatever."
+NARR_DOOR_NO_WEAPON_1,La puerta te mira las manos vacías y se ríe. Yo también. Vuelve cuando tengas algo más peligroso que tus nudillos.,The door looks at your empty hands and laughs. So do I. Come back when you have something more dangerous than your knuckles.
+NARR_DOOR_NO_WEAPON_2,"Sin arma. Otra vez. Hay ladillas mejor equipadas que tú. Hay un cofre por ahí esperándote, campeón.","No weapon. Again. There are crab lice better equipped than you. There's a chest around here waiting for you, champ."
+NARR_DOOR_NO_WEAPON_3,¿Pensabas derrotar a un jefe con tus manitas? Qué tierno. Qué inútil. Qué tú.,You thought you'd beat a boss with your little hands? How cute. How useless. How very you.
+NARR_DOOR_HORMONAL_0,"PUERTA HORMONAL. Te huele, arruga la nariz y no se abre. Necesitas la hormona de este reino. Está en alguna sala del piso. O en la tienda, a precio de oro.","HORMONAL DOOR. It sniffs you, wrinkles its nose and won't open. You need this kingdom's hormone. It's in some room on this floor. Or in the shop, at gold-plated prices."
+NARR_DOOR_HORMONAL_1,"La puerta dice que no. Le faltan hormonas. A ti también, pero ese es otro tema.","The door says no. It's missing hormones. So are you, but that's another matter."
+NARR_ALLERGY_0,"¡Reacción alérgica! Hormona del reino contrario. Te vas a hinchar, vas a estornudar y vas a salir volando sin querer. Pero la puerta se abrirá. Merece la pena. Creo.","Allergic reaction! Hormone from the opposite kingdom. You'll swell up, sneeze and go flying by accident. But the door will open. Worth it. I think."
+NARR_ALLERGY_1,"Alergia. Estornudos durante un rato. Lo necesitabas, aunque te siente como una patada. Como el gimnasio. Como la terapia.","Allergy. Sneezing for a while. You needed it, even if it hits like a kick. Like the gym. Like therapy."
+NARR_SNEEZE_0,Salud.,Bless you.
+NARR_SNEEZE_1,Jesús.,Gesundheit.
+NARR_SNEEZE_2,"¿Otra vez? Tápate la boca, guarro.","Again? Cover your mouth, you pig."
+NARR_PLATYPUS_IMMUNE_0,El ornitorrinco se lo traga sin pestañear. Ni alergia ni nada. La ventaja de no ser de ningún sitio.,"The platypus swallows it without blinking. No allergy, nothing. The perk of not being from anywhere."
+NARR_CHEST_0,"Un cofre. Dentro hay algo. Si es mejor que lo que llevas, cosa fácil, quédatelo.","A chest. There's something inside. If it's better than what you're carrying, which is easy, keep it."
+NARR_SHOP_BUY_0,Comprado. El capitalismo sobrevive incluso a la censura.,Bought. Capitalism survives even censorship.
+NARR_SHOP_POOR_0,No te llega. Mata más cosas. Así funciona la economía aquí.,You can't afford it. Kill more things. That's how the economy works here.
+NARR_INTOX_1_0,"Achispado. +10% de daño, -5% de puntería. Por fin un número que te representa.","Tipsy. +10% damage, -5% aim. Finally a number that represents you."
+NARR_INTOX_2_0,Borracho. Pegas más fuerte y disparas más torcido. Como tu tío en las bodas.,Drunk. You hit harder and shoot more crooked. Like your uncle at weddings.
+NARR_INTOX_3_0,BLACKOUT. +50% de daño. No recordarás nada. Yo sí. Para siempre.,BLACKOUT. +50% damage. You won't remember a thing. I will. Forever.
+NARR_INTOX_SOBER_0,"Sobrio otra vez. Qué horror. Ahora lo ves todo con claridad, incluido lo malo que eres.","Sober again. What a horror. Now you see everything clearly, including how bad you are."
+NARR_LORE_UNLOCKED_0,Lore desbloqueado: '{name}'. Nadie lo lee. Demuéstrame que me equivoco.,Lore unlocked: '{name}'. Nobody reads it. Prove me wrong.
+NARR_BLESSING_FIRST_0,"Una bendición de reino. Elige bien: se acumulan, se combinan y definen cómo vas a pegar el resto de la partida. Si mezclas los dos reinos, a lo mejor pasa algo bonito.","A kingdom blessing. Choose wisely: they stack, they combine and they define how you'll hit for the rest of the run. Mix the two kingdoms and maybe something beautiful happens."
+NARR_BLESSING_FOREIGN_0,"Bendición del reino contrario. Pega el doble, sí. Y te da alergia, también. Nadie dijo que la integración fuera gratis.","A blessing from the opposite kingdom. It hits twice as hard, yes. And it makes you allergic, too. Nobody said integration was free."
+NARR_LIBERATED_FLOOR_0,"Esta región ya la liberaste en otra vida. Se acuerda de ti. Más que yo de tus aciertos, desde luego.","You freed this region in another life. It remembers you. More than I remember your successes, that's for sure."
+NARR_RUN_START_PROGRESS_0,Llevas {n} regiones liberadas para siempre. Quedan {left}. La Hoja de Parra ya no duerme tranquila.,You have {n} regions freed forever. {left} to go. The Fig Leaf no longer sleeps soundly.
+NARR_RUN_START_PROGRESS_1,{n} regiones a color. {left} todavía en gris. Lo tuyo no es talento: es cabezonería. Funciona.,{n} regions in color. {left} still in gray. It's not talent: it's stubbornness. It works.
+NARR_DEATH_BOSS_0,"{boss} te ha mandado a casa. La próxima vez que entres ya sabes cómo ataca. Eso, o vuelves a morir igual.","{boss} sent you home. Next time you go in you'll know how it attacks. That, or you'll die the same way again."
+NARR_DEATH_BOSS_1,"Muerto contra {boss}. Has llegado hasta el jefe, que no es poco. Bueno, sí es poco. Pero menos poco que antes.","Dead against {boss}. You made it to the boss, which is not nothing. Well, it is nothing. But less nothing than before."
+NARR_DEATH_0,"MORISTE, CABRÓN. Muerte número {deaths}. Las estoy coleccionando.","YOU DIED, ASSHOLE. Death number {deaths}. I'm collecting them."
+NARR_DEATH_1,Has muerto. La Hoja de Parra ha tapado tu cadáver con una hojita. Qué detalle.,You died. The Fig Leaf covered your corpse with a tiny leaf. How thoughtful.
+NARR_DEATH_2,Muerte {deaths}. Tu lápida pondrá: 'No usó el dash'.,Death {deaths}. Your tombstone will say: 'Didn't use the dash'.
+NARR_DEATH_SAME_FLOOR_0,Otra vez en el piso {floor}. Llevas {n} muertes aquí. Ya podrías empadronarte.,Floor {floor} again. You've died {n} times here. You could register as a resident.
+NARR_FLOOR_COMPLETE_0,Piso liberado. El color vuelve a esta zona. Siguiente. Peor. Siempre peor.,Floor freed. Color returns to this area. Next. Worse. Always worse.
+NARR_FLOOR_COMPLETE_1,Lo pasaste. No sé cómo. Revisaré los logs.,You made it. I don't know how. I'll check the logs.
+NARR_VICTORY_0,La Hoja de Parra ha caído. El mundo recupera sus colores y la gente vuelve a ir como le da la gana. ¿Y ahora qué? Exacto. Nada. Sal a la calle. O dale a 'Nueva run'. Sé que lo harás.,The Fig Leaf has fallen. The world gets its colors back and people go back to doing whatever they please. So now what? Exactly. Nothing. Go outside. Or hit 'New run'. I know you will.
+NARR_INTERRUPT_0,"...espera, me corrijo: lo estás haciendo todavía peor de lo que dije.","...wait, let me correct myself: you're doing even worse than I said."
+NARR_INTERRUPT_1,Nota mental: no encariñarse. Morirá pronto.,Mental note: don't get attached. He'll die soon.
+NARR_REPEAT_PREFIX_0,Te lo repito porque sé que no lees: ,I'm repeating this because I know you don't read: 
+NARR_BOSS1_INTRO_0,"DOÑA CERA CALIENTE: ¡Pero qué es esta selva, cariño! Siéntate, que esto no duele nada. MENTIRA. Duele muchísimo.","MADAME HOT WAX: What is this jungle, darling! Sit down, this won't hurt at all. LIE. It hurts like hell."
+NARR_BOSS1_PHASE2_0,DOÑA CERA CALIENTE: ¡Tirón a contrapelo! ¡Es por tu bien!,MADAME HOT WAX: Against the grain! It's for your own good!
+NARR_BOSS1_PHASE3_0,DOÑA CERA CALIENTE: ¡Brasileña completa! ¡Y luego ingles brillantes!,MADAME HOT WAX: Full Brazilian! And then shiny groins for everyone!
+NARR_BOSS1_DEATH_0,DOÑA CERA CALIENTE: Me... me he quemado yo... con mi propia cera...,MADAME HOT WAX: I... I burned myself... with my own wax...
+NARR_BOSS1_AFTER_0,La selva vuelve a crecer libre. Como debe ser. Cada uno con su jardín como quiera.,The jungle grows back free. As it should. Everyone gets to keep their garden however they like.
+NARR_BOSS1_TAUNT_0,"DOÑA CERA CALIENTE: ¡Quieto, que te dejo calvo de un tirón!","MADAME HOT WAX: Hold still, I'll yank you bald in one go!"
+NARR_BOSS2_INTRO_0,TESTÍCULO PRIMORDIAL: Así que tú eres lo que salió de este reino. Qué... decepción.,PRIMORDIAL TESTICLE: So you're what came out of this kingdom. What a... disappointment.
+NARR_BOSS2_PHASE2_0,TESTÍCULO PRIMORDIAL: ¡Te di la vida! ¡Te di TODO! ¿Y así me lo pagas?,PRIMORDIAL TESTICLE: I gave you life! I gave you EVERYTHING! And this is how you repay me?
+NARR_BOSS2_PHASE3_0,"TESTÍCULO PRIMORDIAL: ¡Si caigo yo, cae la próxima generación! ...que tampoco iba a ser mejor que tú.","PRIMORDIAL TESTICLE: If I fall, so does the next generation! ...which wouldn't have been any better than you."
+NARR_BOSS2_DEATH_0,TESTÍCULO PRIMORDIAL: Fui yo quien te creó... y fui yo quien te abandonó...,PRIMORDIAL TESTICLE: It was I who created you... and it was I who abandoned you...
+NARR_BOSS2_AFTER_0,Has derrotado al patriarca de Penelandia. Freud estaría tomando apuntes.,You've defeated the patriarch of Peneland. Freud would be taking notes.
+NARR_BOSS2_TAUNT_0,"TESTÍCULO PRIMORDIAL: Esquiva, inútil. ¿No te enseñé nada?","PRIMORDIAL TESTICLE: Dodge, useless. Didn't I teach you anything?"
+NARR_BOSS3_INTRO_0,SU MAJESTAD OVARIA II: Una visita sin cita previa. Qué ordinariez. Una vez al mes recibo. Y hoy no es el día.,HER MAJESTY OVARIA II: A visitor without an appointment. How vulgar. I receive once a month. And today is not the day.
+NARR_BOSS3_PHASE2_0,SU MAJESTAD OVARIA II: ¡Calambres reales! ¡Arrodíllate ante el ciclo!,HER MAJESTY OVARIA II: Royal cramps! Kneel before the cycle!
+NARR_BOSS3_PHASE3_0,SU MAJESTAD OVARIA II: ¡Te advierto que estoy en mis días! ¡Todos ellos!,"HER MAJESTY OVARIA II: I warn you, I'm on my period! All of them!"
+NARR_BOSS3_DEATH_0,SU MAJESTAD OVARIA II: Dile a la Hoja... que su corona... era de plástico...,HER MAJESTY OVARIA II: Tell the Leaf... that her crown... was plastic...
+NARR_BOSS3_AFTER_0,Vulvania vuelve a tener color. Y a la reina le has quitado una semana de dolor de cabeza. De nada.,Vulvania has color again. And you saved the queen a week of headaches. You're welcome.
+NARR_BOSS3_TAUNT_0,SU MAJESTAD OVARIA II: Qué poco elegante. ¿Ni una reverencia?,HER MAJESTY OVARIA II: How inelegant. Not even a curtsy?
+NARR_BOSS4_INTRO_0,EL ADUANERO HORMONAL: Documentación. Pasaporte hormonal. Certificado de alergias. ¿No? Pues a la cola. Y la cola eres tú.,THE HORMONE CUSTOMS OFFICER: Documents. Hormonal passport. Allergy certificate. No? Then get in line. And the line is you.
+NARR_BOSS4_PHASE2_0,EL ADUANERO HORMONAL: ¡Formulario 27-B! ¡Por triplicado! ¡Con sello!,THE HORMONE CUSTOMS OFFICER: Form 27-B! In triplicate! With a stamp!
+NARR_BOSS4_PHASE3_0,"EL ADUANERO HORMONAL: ¡CIERRE DE FRONTERA! ¡Nadie pasa! ¡Ni penes, ni vulvas, ni ornitorrincos!","THE HORMONE CUSTOMS OFFICER: BORDER CLOSED! Nobody gets through! Not penises, not vulvas, not platypuses!"
+NARR_BOSS4_DEATH_0,EL ADUANERO HORMONAL: Está bien... sello de paso... aprobado... con reparos...,THE HORMONE CUSTOMS OFFICER: Fine... crossing stamp... approved... with reservations...
+NARR_BOSS4_AFTER_0,"La frontera ya no existe. Penes y vulvas podrán cruzar sin papeles. El caos. La libertad. Lo mismo, en realidad.","The border no longer exists. Penises and vulvas can cross without papers. Chaos. Freedom. Same thing, really."
+NARR_BOSS4_TAUNT_0,EL ADUANERO HORMONAL: ¡Denegado! ¡Siguiente!,THE HORMONE CUSTOMS OFFICER: Denied! Next!
+NARR_BOSS5_INTRO_0,"SU PUDOROSIDAD, LA HOJA DE PARRA: ¡Tápate, sinvergüenza! ¡En mi palacio se viene vestido! ¡Y callado!","HER MODESTY, THE FIG LEAF: Cover yourself, you shameless creature! In my palace you come dressed! And quiet!"
+NARR_BOSS5_PHASE2_0,"SU PUDOROSIDAD, LA HOJA DE PARRA: ¡Censura! ¡Más censura! ¡Píxeles por todas partes!","HER MODESTY, THE FIG LEAF: Censorship! More censorship! Pixels everywhere!"
+NARR_BOSS5_PHASE3_0,"SU PUDOROSIDAD, LA HOJA DE PARRA: ¡Si yo caigo, todo quedará al descubierto! ¡TODO! ¡Hasta lo de tu tía!","HER MODESTY, THE FIG LEAF: If I fall, everything will be exposed! EVERYTHING! Even your aunt's business!"
+NARR_BOSS5_DEATH_0,"SU PUDOROSIDAD, LA HOJA DE PARRA: Qué... vergüenza...","HER MODESTY, THE FIG LEAF: How... embarrassing..."
+NARR_BOSS5_AFTER_0,"Se acabó la censura. El mundo vuelve a tener color. Y la Hoja de Parra, por fin, se ha quedado en pelotas. Simbólicamente.",Censorship is over. The world has color again. And the Fig Leaf has finally been left stark naked. Symbolically.
+NARR_BOSS5_TAUNT_0,"SU PUDOROSIDAD, LA HOJA DE PARRA: ¡Qué indecencia de esquivas!","HER MODESTY, THE FIG LEAF: What an indecent way to dodge!"
