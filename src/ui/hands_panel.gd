@@ -16,6 +16,10 @@ const ACT_ICONS := {
 	"GLYPH_ABILITY_VULVALQUIRIA": "scream", "GLYPH_ABILITY_ORNITORRINCO": "egg",
 }
 const DIM := Color(0.42, 0.4, 0.48)
+const NAME_W := 118.0  # ancho de la columna del nombre del arma
+const MARGIN := 8.0  # separacion con el borde de la pantalla
+const LIFT_GAP := 6.0  # aire entre el panel y la caja del narrador cuando lo deja encima
+const LIFT_SPEED := 10.0  # suavizado de la subida/bajada (mayor = mas rapido)
 
 var _player: Player
 var _w_icon: TextureRect
@@ -25,14 +29,15 @@ var _w_heat: ColorRect
 var _w_sig := ""
 var _acts: Array = []  # {icon, bar, action}
 var _help: KeyHelp
+var _lift := 0.0  # px que sube el panel para no quedar bajo las cajas del narrador
 
 
 func _init() -> void:
 	set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
 	grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	grow_vertical = Control.GROW_DIRECTION_BEGIN
-	offset_right = -8
-	offset_bottom = -8
+	offset_right = -MARGIN
+	offset_bottom = -MARGIN
 
 
 func _ready() -> void:
@@ -86,8 +91,11 @@ func _build_right(v: Control) -> void:
 	t.add_theme_constant_override("separation", 0)
 	t.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_w_name = HudStyle.pixel_label("", 16, HudStyle.CREAM)
-	_w_name.custom_minimum_size.x = 110
-	_w_name.clip_text = true
+	_w_name.custom_minimum_size.x = NAME_W
+	# nombres largos: ver _fit_name (16 en una linea o 8 en dos, nunca recortado a medias)
+	_w_name.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_w_name.max_lines_visible = 2
+	_w_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_w_ammo = HudStyle.pixel_label("", 16, HudStyle.GOLD)
 	_w_heat = ColorRect.new()
 	_w_heat.custom_minimum_size = Vector2(60, 4)
@@ -133,13 +141,41 @@ func _build_left(v: Control) -> void:
 		_acts.append({"icon": ic, "bar": bar, "action": h[0], "main": h[0] == main_action})
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	_avoid_narrator(delta)
 	if _player == null or not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group("player") as Player
 		if _player == null:
 			return
 	_update_weapon()
 	_update_left()
+
+
+## Las cajas del narrador (y avisos) salen abajo al centro y a veces llegan hasta este panel: en
+## vez de taparlo, el panel sube hasta quedar justo encima mientras se solapen, con transicion suave.
+## Si no se solapan (cajas estrechas, ventana ancha) no se mueve. La transparencia de las cajas
+## cuando el heroe baja hasta ellas sigue siendo cosa de Narrator.
+func _avoid_narrator(delta: float) -> void:
+	var target := 0.0
+	var box: Rect2 = Narrator.occupied_rect()
+	if box.size.y > 0.0:
+		var mine := Rect2(global_position.x, get_viewport_rect().size.y - MARGIN - size.y, size.x, size.y)
+		if mine.position.x < box.end.x + LIFT_GAP and mine.end.x > box.position.x - LIFT_GAP:
+			# lo que falta para que el borde de abajo del panel quede sobre el borde de arriba de la caja
+			target = maxf(0.0, mine.end.y - box.position.y + LIFT_GAP)
+	_lift = lerpf(_lift, target, 1.0 - exp(-LIFT_SPEED * delta))
+	if absf(_lift - target) < 0.5:
+		_lift = target
+	offset_bottom = -MARGIN - _lift
+
+
+## Nombre del arma sin recortes: tamano 16 si cabe en una linea; si no, 8 (multiplo del pixel
+## de la fuente, nunca difuminado) en hasta dos lineas; lo que aun sobre se corta con "...".
+func _fit_name(text: String) -> void:
+	var f: Font = _w_name.get_theme_font("font")
+	var big := f.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x <= NAME_W
+	_w_name.add_theme_font_size_override("font_size", 16 if big else 8)
+	_w_name.text = text
 
 
 func _update_weapon() -> void:
@@ -155,7 +191,7 @@ func _update_weapon() -> void:
 	_w_sig = sig
 	if w:
 		_w_icon.texture = w.sprite if w.sprite else load(ICON_DIR + "act_fist.png")
-		_w_name.text = Loc.item_name(w)
+		_fit_name(Loc.item_name(w))
 		_w_ammo.text = "%d/%d" % [ammo, mag] if mag > 0 else ""
 		_w_heat.visible = mag <= 0 and cd.has("heat_per_shot") or heat > 0.02
 		_w_heat.custom_minimum_size.x = maxf(2.0, 60.0 * clampf(heat, 0.0, 1.0))
@@ -165,7 +201,7 @@ func _update_weapon() -> void:
 			_help.show_help("weapon")
 	else:
 		_w_icon.texture = load(ICON_DIR + "act_fist.png")
-		_w_name.text = tr("GLYPH_FIST")
+		_fit_name(tr("GLYPH_FIST"))
 		_w_ammo.text = ""
 		_w_heat.visible = false
 
