@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dgwbrxjf825k7"
+
+[deps]
+
+files=["res://locale/narrator_ia.es.translation", "res://locale/narrator_ia.en.translation"]
+
+source_file="res://locale/narrator_ia.csv"
+dest_files=["res://locale/narrator_ia.es.translation", "res://locale/narrator_ia.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
