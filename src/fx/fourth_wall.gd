@@ -31,6 +31,9 @@ const START_CHANCE := 0.4      # comentario de historial/chispa al empezar una r
 const NIGHT_CHANCE := 0.7      # una vez por sesion, de 0:00 a 5:59
 const BOSS_LINE_CHANCE := 0.7
 const HEROES := ["pitocles", "vulvalquiria", "ornitorrinco"]
+## Pedir y usar el nombre del jugador: APAGADO por ahora (en celular escribir es un cacho).
+## Todo el codigo queda listo; poner true para reactivarlo.
+const ASK_NAME_ENABLED := false
 
 var data := {"name": "", "asked": false, "runs": {}, "deaths": {}, "boss_deaths": {}, "runs_total": 0, "last_seen": 0}
 ## Para pruebas: hora fingida (-1 = la real) y modo bot forzado.
@@ -63,7 +66,7 @@ var _farewell_open := false
 
 var player_name: String:
 	get:
-		return String(data.name)
+		return String(data.name) if ASK_NAME_ENABLED else ""
 
 
 func _ready() -> void:
@@ -415,7 +418,7 @@ func menu_opened() -> void:
 	await get_tree().create_timer(1.2).timeout
 	if not _in_menu:
 		return
-	if not bool(data.asked):
+	if ASK_NAME_ENABLED and not bool(data.asked):
 		ask_name()
 	elif _lang_changed:
 		_lang_changed = false
