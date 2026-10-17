@@ -56,6 +56,7 @@ func _show_main() -> void:
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	v.add_child(title)
 	_first_btn = _button(v, tr("PAUSE_RESUME"), close)
+	_button(v, tr("BTREE_TAB"), _show_blessings)
 	_button(v, tr("PAUSE_SETTINGS"), _show_settings)
 	_button(v, tr("PAUSE_MENU"), _to_menu)
 	_button(v, tr("PAUSE_QUIT"), func(): get_tree().quit())
@@ -77,6 +78,14 @@ func _show_settings() -> void:
 	sp.focus_first.call_deferred()
 
 
+func _show_blessings() -> void:
+	_clear_holder()
+	var bt := BlessingTree.new()
+	_holder.add_child(bt)
+	bt.closed.connect(_show_main)
+	bt.focus_first.call_deferred()
+
+
 func _clear_holder() -> void:
 	for c in _holder.get_children():
 		_holder.remove_child(c)
@@ -96,7 +105,7 @@ func _button(parent: Control, text: String, cb: Callable) -> Button:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and not event.is_echo():
 		get_viewport().set_input_as_handled()
-		if _holder.get_child_count() > 0 and _holder.get_child(0) is SettingsPanel:
+		if _holder.get_child_count() > 0 and (_holder.get_child(0) is SettingsPanel or _holder.get_child(0) is BlessingTree):
 			_show_main()
 		else:
 			close()

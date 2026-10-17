@@ -216,32 +216,49 @@ func _update_portrait() -> void:
 	$Band/Row/Portrait.add_child(bg)
 	$Band/Row/Portrait.move_child(bg, 0)
 
-## Tu build: bendiciones con su nivel, en el color de su reino. Arriba a la izquierda.
-var _blessings: RichTextLabel
+## Tu build: una fila de iconos de bendicion con puntitos de nivel, en el color de su reino.
+## Abajo a la izquierda (arriba a la izquierda ya estan los estados y las lineas de Set).
+var _blessings: HBoxContainer
 
 func _build_blessings() -> void:
-	_blessings = RichTextLabel.new()
-	_blessings.bbcode_enabled = true
-	_blessings.fit_content = true
-	_blessings.scroll_active = false
+	_blessings = HBoxContainer.new()
+	_blessings.add_theme_constant_override("separation", 6)
 	_blessings.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_blessings.position = Vector2(10, BAND + 6)
-	_blessings.size = Vector2(260, 0)
-	_blessings.add_theme_font_override("normal_font", HudStyle.FONT)
-	_blessings.add_theme_font_size_override("normal_font_size", 16)
-	_blessings.add_theme_color_override("font_shadow_color", HudStyle.SHADOW)
-	_blessings.add_theme_constant_override("shadow_offset_x", 2)
-	_blessings.add_theme_constant_override("shadow_offset_y", 2)
+	_blessings.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
+	_blessings.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_blessings.offset_left = 10
+	_blessings.offset_bottom = -10
 	add_child(_blessings)
 	_update_blessings()
 
 func _update_blessings() -> void:
-	var colors := {"pene": "6ec6ff", "vulva": "ff7ac0", "mixto": "ffc93c"}
-	var lines := []
+	for c in _blessings.get_children():
+		c.queue_free()
 	for id in _runs.blessings:
-		var b: Dictionary = RunManager.BLESSINGS[id]
-		lines.append("[color=#%s]%s %d[/color]" % [colors[b.kingdom], Loc.blessing(id, "name"), _runs.blessings[id]])
-	_blessings.text = "\n".join(lines)
+		var lvl: int = _runs.blessings[id]
+		var col: Color = BlessingPicker.kingdom_color(id)
+		var box := VBoxContainer.new()
+		box.add_theme_constant_override("separation", 2)
+		box.mouse_filter = Control.MOUSE_FILTER_STOP
+		box.tooltip_text = "%s  [%d]\n%s" % [Loc.blessing(id, "name"), lvl, Loc.blessing(id, "desc")]
+		var ic := TextureRect.new()
+		ic.texture = BlessingPicker.icon_tex(id)
+		ic.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		ic.custom_minimum_size = Vector2(36, 36)
+		ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		box.add_child(ic)
+		var pips := HBoxContainer.new()
+		pips.add_theme_constant_override("separation", 2)
+		pips.alignment = BoxContainer.ALIGNMENT_CENTER
+		pips.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		for i in mini(lvl, 8):
+			var r := ColorRect.new()
+			r.custom_minimum_size = Vector2(4, 4)
+			r.color = col
+			r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			pips.add_child(r)
+		box.add_child(pips)
+		_blessings.add_child(box)
 
 var _boss_bar: UIBar
 var _boss_label: Label

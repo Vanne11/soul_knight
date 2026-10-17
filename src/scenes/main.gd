@@ -737,16 +737,9 @@ func _give_reward(room: Room) -> void:
 
 func _offer_blessing(kingdom: String, title: String) -> void:
 	var ids: Array = _run_manager.roll_blessings(kingdom)
-	var options := ids.map(func(id):
-		var b: Dictionary = RunManager.BLESSINGS[id]
-		var lvl: int = _run_manager.blessing(id)
-		var tag := (tr("BLESSING_LEVEL") % (lvl + 1)) if lvl > 0 else ""
-		if _run_manager.is_foreign(b.kingdom):
-			tag += tr("BLESSING_FOREIGN")
-		return "%s (%s): %s%s" % [Loc.blessing(id, "name"), _kingdom_name(b.kingdom).capitalize(), Loc.blessing(id, "desc"), tag])
 	Narrator.say_first("blessing_first")
-	Narrator.choose(title, options)
-	_take_blessing(ids[await Narrator.chosen])
+	var picker := BlessingPicker.open(self, title, ids)
+	_take_blessing(ids[await picker.picked])
 
 func _take_blessing(id: String) -> void:
 	var b: Dictionary = RunManager.BLESSINGS[id]

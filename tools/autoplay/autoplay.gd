@@ -180,6 +180,11 @@ func _physics_process(delta: float) -> void:
 		_hits_real += 1
 	_iframes_prev = ifr
 	_release_all()
+	var picker := get_tree().get_first_node_in_group("blessing_picker") as BlessingPicker
+	if picker:
+		_say("Eleccion de bendicion (cartas) -> carta 1")
+		picker.bot_pick(0)
+		return
 	if Narrator._choice.visible:
 		_say("Eleccion: \"%s\" -> opcion 1" % Narrator._choice_label.text.left(60))
 		Narrator._pick_choice(0)
