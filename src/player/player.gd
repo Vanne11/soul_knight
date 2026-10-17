@@ -250,8 +250,13 @@ func _input(event: InputEvent) -> void:
 		_using_pad = false
 
 ## Siempre al raton; con mando, hacia donde caminas.
+## Apuntado forzado (lo usa el bot de pruebas tools/autoplay; ZERO = normal).
+var aim_override := Vector2.ZERO
+
 func _update_aim() -> void:
-	if not _using_pad:
+	if aim_override != Vector2.ZERO:
+		_aim = aim_override.normalized()
+	elif not _using_pad:
 		var to_mouse := get_global_mouse_position() - weapon_pivot.global_position
 		if to_mouse.length() > 4.0:
 			_aim = to_mouse.normalized()
