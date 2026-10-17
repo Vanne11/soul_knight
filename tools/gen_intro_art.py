@@ -5,6 +5,9 @@ Lee la key de ~/.kaggle/gemini_key (o GEMINI_API_KEY). Guarda el original en
 tools/_intro_raw/ (ignorado) y la version final 320x180 en
 assets/sprites/intro/slide_NN.png: se reduce, se cuantiza a una paleta corta y
 el juego la muestra a 4x con filtro nearest => pixel art de verdad, nitido.
+Nota: la slide_00 original traia dibujado "PENELANDIA / VULVANIA" (el modelo no hizo caso al
+"No text"); se borraron esos rotulos a mano en el PNG final para que valga en todos los idiomas.
+Si se regenera, revisar que no vuelva a salir texto dibujado.
 """
 import base64
 import json

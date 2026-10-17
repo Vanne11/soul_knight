@@ -25,7 +25,8 @@ var _tween: Tween
 const CHARS_PER_SEC := 55.0
 const PAUSES := {".": 0.32, "!": 0.32, "?": 0.32, ":": 0.22, ",": 0.12}
 ## Palabras en MAYUSCULAS de la historia: se pintan del color de su reino.
-const WORD_COLORS := {"PENELANDIA": "6ec6ff", "VULVANIA": "ff7ac0", "LA HOJA DE PARRA": "7fe0a0", "GRIS": "9a9aa6"}
+const WORD_COLORS := {"PENELANDIA": "6ec6ff", "VULVANIA": "ff7ac0", "LA HOJA DE PARRA": "7fe0a0", "GRIS": "9a9aa6",
+	"PENELAND": "6ec6ff", "THE FIG LEAF": "7fe0a0", "GRAY": "9a9aa6"}  # ingles
 var _plain := ""      ## texto sin bbcode: lo que se va "diciendo"
 var _shown := 0.0     ## letras visibles (fraccionario)
 var _wait := 0.0      ## pausa por puntuacion
@@ -160,7 +161,7 @@ func _decorate(line: String) -> String:
 	for m in re.search_all(line):
 		var w := m.get_string()
 		var col: String = WORD_COLORS.get(w, "ff4f9a")
-		var fx := "jitter" if w == "GRIS" else "bob"
+		var fx := "jitter" if (w == "GRIS" or w == "GRAY") else "bob"
 		out += line.substr(last, m.get_start() - last) + "[color=#%s][%s]%s[/%s][/color]" % [col, fx, w, fx.get_slice(" ", 0)]
 		last = m.get_end()
 	return out + line.substr(last)
