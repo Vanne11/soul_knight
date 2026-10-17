@@ -3,6 +3,8 @@ ITEM_ABSINTHE_NAME,Absenta Ilegal,Illegal Absinthe
 ITEM_ABSINTHE_DESC,"La hada verde te susurra verdades. +50 intoxicación, -30% precisión, +40% daño, visión borrosa. Prohibida en 12 países y 3 dimensiones.","The green fairy whispers truths to you. +50 intoxication, -30% accuracy, +40% damage, blurry vision. Banned in 12 countries and 3 dimensions."
 ITEM_BANDAGES_NAME,Vendas Sucias,Dirty Bandages
 ITEM_BANDAGES_DESC,Curan 30 vida. Probablemente usadas. 'Mejor no preguntar por qué huelen así.',Heal 30 health. Probably used. 'Better not ask why they smell like that.'
+ITEM_CASCO_PULIDO_NAME,Casco Pulido,Polished Helmet
+ITEM_CASCO_PULIDO_DESC,Pulido cada noche con un trapo y rencor. Absorbe el primer golpe y cansa menos. Nadie sabe por qué brilla tanto; Pitocles tampoco.,Polished every night with a rag and resentment. Absorbs the first hit and tires you less. Nobody knows why it shines so much; neither does Pitocles.
 ITEM_CHAMOMILE_TEA_NAME,Té de Manzanilla,Chamomile Tea
 ITEM_CHAMOMILE_TEA_DESC,Calma los nervios: +30 estamina y la estamina se recarga el doble de rápido durante 20 s. -10 intoxicación. Aprobado por la abuela.,Calms the nerves: +30 stamina and stamina recharges twice as fast for 20 s. -10 intoxication. Grandma approved.
 ITEM_CHOCOLATE_BAR_NAME,Barra de Chocolate,Chocolate Bar
@@ -29,6 +31,8 @@ ITEM_HORMONE_TESTOSTERONA_NAME,Testosterona de Contrabando,Smuggled Testosterone
 ITEM_HORMONE_TESTOSTERONA_DESC,"Hormona oficial de Penelandia. Abre sus Puertas Hormonales. A las vulvas les da alergia: estornudos, hinchazón y ganas de discutir de fútbol.","Official hormone of Peneland. Opens its Hormonal Doors. Vulvas are allergic: sneezing, swelling and an urge to argue about football."
 ITEM_HOT_WATER_BOTTLE_NAME,Bolsa de Agua Caliente,Hot Water Bottle
 ITEM_HOT_WATER_BOTTLE_DESC,"Regeneras 2.5 de vida por segundo durante 12 s. Calorcito de hogar, cólicos incluidos. 'Mejor que cualquier pareja que has tenido.'","Regenerate 2.5 health per second for 12 s. Homey warmth, cramps included. 'Better than any partner you've ever had.'"
+ITEM_HUEVO_SUERTE_NAME,Huevo de la Suerte,Lucky Egg
+ITEM_HUEVO_SUERTE_DESC,"Puesto por él mismo, que es mamífero y no debería. +4 de vida máxima y +5% de crítico. Biología: 0, suerte: 1.","Laid by himself, who is a mammal and shouldn't. +4 max health and +5% crit chance. Biology: 0, luck: 1."
 ITEM_IBUPROFEN_NAME,Ibuprofeno de 600,Ibuprofen 600
 ITEM_IBUPROFEN_DESC,"Recibes un 30% menos de daño durante 25 s. Cura el dolor, la fiebre y las ganas de ir al médico. Tomar con comida (opcional, nadie lo hace).","Take 30% less damage for 25 s. Cures pain, fever and the urge to see a doctor. Take with food (optional, nobody does)."
 ITEM_JOCKSTRAP_NAME,Suspensorio Deportivo,Athletic Jockstrap
@@ -97,6 +101,8 @@ ITEM_TEQUILA_NAME,Tequila Barato,Cheap Tequila
 ITEM_TEQUILA_DESC,"Quema la garganta. +30 intoxicación, -20% precisión, +25% daño, +10% velocidad. 'Un caballito no hace daño', mientes.","Burns the throat. +30 intoxication, -20% accuracy, +25% damage, +10% speed. 'One little shot won't hurt,' you lie."
 ITEM_TRAP_BEAR_NAME,Trampa de Oso (Tamaño Humano),Bear Trap (Human Size)
 ITEM_TRAP_BEAR_DESC,"Colócala. Enemigo pisa -> inmovilizado 3s, 60 daño, sangrado 10/s 5s. 'Click. Aaaaah. Click.'","Place it. Enemy steps on it -> immobilized 3s, 60 damage, bleeding 10/s for 5s. 'Click. Aaaaah. Click.'"
+ITEM_TRENZA_COMBATE_NAME,Trenza de Combate,Battle Braid
+ITEM_TRENZA_COMBATE_DESC,"Tejida con paciencia, que a ella le falta. +8% de crítico y +8% de cadencia. Tirar de ella es mala idea.","Woven with patience, which she lacks. +8% crit chance and +8% fire rate. Pulling on it is a bad idea."
 ITEM_UPGRADE_DAMAGE_NAME,Proteína Sospechosa,Suspicious Protein
 ITEM_UPGRADE_DAMAGE_DESC,+10% de daño. La etiqueta dice 'whey'. No era whey.,+10% damage. The label says 'whey'. It wasn't whey.
 ITEM_UPGRADE_HEALTH_NAME,Batido de Vitalidad,Vitality Shake
