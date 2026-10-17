@@ -33,4 +33,6 @@ func _on_body_entered(body: Node) -> void:
 		if pierce > 0:
 			pierce -= 1
 			return
+	elif body.has_method("hit_by_bullet"):  # barriles y cajas rompibles (RoomObstacles)
+		body.hit_by_bullet(damage, Vector2.RIGHT.rotated(rotation))
 	queue_free()

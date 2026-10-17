@@ -297,6 +297,14 @@ func _door_points(room: Room) -> Array[Vector2]:
 	return out
 
 
+## Posicion dentro de la huella de un obstaculo (RoomObstacles): no soltar objetos ahi.
+func _in_obstacle(room: Room, pos: Vector2) -> bool:
+	for r: Rect2 in room.get_meta("obstacle_rects", []):
+		if r.grow(10.0).has_point(pos):
+			return true
+	return false
+
+
 func _near_door(p: Vector2, doors: Array[Vector2], dist: float) -> bool:
 	for dp in doors:
 		if p.distance_to(dp) < dist:
@@ -487,7 +495,7 @@ func _spawn_props(room: Room, d: Dictionary, seed_: int) -> void:
 		var ok := false
 		for k in 12:
 			pos = Vector2(rng.randf_range(1.0, size.x / TILE - 1.0), rng.randf_range(1.0, size.y / TILE - 1.0)) * TILE
-			if not _near_door(pos, doors, 120.0):
+			if not _near_door(pos, doors, 120.0) and not _in_obstacle(room, pos):
 				ok = true
 				break
 		if not ok:
@@ -740,6 +748,10 @@ func _update_cast_shadows(d: Dictionary) -> void:
 				continue
 			var q := PhysicsRayQueryParameters2D.create(l.global_position, foot, 1)
 			q.exclude = exclude
+			if n is CollisionObject2D:  # un obstaculo no se tapa a si mismo la luz
+				var ex: Array[RID] = exclude.duplicate()
+				ex.append((n as CollisionObject2D).get_rid())
+				q.exclude = ex
 			if not space.intersect_ray(q).is_empty():
 				continue
 			var k := 1.0 - dist / reach

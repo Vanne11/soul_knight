@@ -69,6 +69,7 @@ func _generate_dungeon() -> void:
 	add_child(dungeon_root)
 	_lighting.setup_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)
 	RoomDressing.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # muros 3/4, zocalo, puertas
+	RoomObstacles.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # rocas, columnas, barriles, pinchos
 	_lock_secret_rooms()
 	
 	# Start player in start room
