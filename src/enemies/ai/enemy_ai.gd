@@ -146,7 +146,7 @@ static func _hook_narrator() -> void:
 
 
 ## Al limpiar la sala (ya no hay combate) el narrador comenta una de las cosas raras que paso.
-static func _on_room_cleared(_room: Node) -> void:
+static func _on_room_cleared(_room: Node = null) -> void:  # RunManager.clear_room emite sin sala
 	if _pending_comments.is_empty():
 		return
 	var ev: String = _pending_comments[RNG.randi_range(0, _pending_comments.size() - 1)]

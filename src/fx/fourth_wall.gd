@@ -380,7 +380,7 @@ func _on_player_died() -> void:
 	_save()
 
 
-func _on_room_cleared(_room: Node) -> void:
+func _on_room_cleared(_room: Node = null) -> void:  # RunManager.clear_room emite sin sala
 	if _is_bot() or _now() - _argue_last < ARGUE_COOL_S or randf() > ARGUE_CHANCE:
 		return
 	await get_tree().create_timer(1.5).timeout
