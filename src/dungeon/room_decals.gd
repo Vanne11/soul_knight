@@ -173,7 +173,7 @@ func _collect_avoid() -> void:
 
 
 func _wants_carpet(t: int) -> bool:
-	if room.doors.is_empty() or t == Room.RoomType.PUZZLE:
+	if room.doors.is_empty() or t == Room.RoomType.PUZZLE or room.shape_id != "rect":
 		return false
 	if t == Room.RoomType.BOSS or t == Room.RoomType.SHOP or kingdom == "censura":
 		return true
@@ -311,6 +311,8 @@ func _pick(r: float, margin: float, check_taken := true) -> Variant:
 
 func _is_free(p: Vector2, r: float, check_taken := true, on_carpet := false) -> bool:
 	var box := Rect2(p - Vector2(r, r), Vector2(r, r) * 2.0)
+	if not room.rect_walkable(box.grow(6.0)):
+		return false  # fuera del suelo pisable (forma de sala)
 	for a in _avoid:
 		if a.intersects(box):
 			return false

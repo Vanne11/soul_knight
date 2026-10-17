@@ -43,6 +43,7 @@ func generate_floor(floor: int, seed_override: int = 0) -> Node2D:
 	_layout_doors()
 	_assign_room_types()
 	_place_special_rooms()
+	_assign_room_shapes()
 	_paint_floor_tiles()
 	
 	return dungeon_root
@@ -177,6 +178,16 @@ func _wall_atlas(room: Room, x: int, y: int, front_face: bool, themed: bool) -> 
 		return Vector2i(0, 0)
 	var v := hash(Vector3i(room.grid_pos.x * 131 + x, room.grid_pos.y * 137 + y, current_floor)) & 1
 	return Vector2i((1 if front_face else 0) + v * 2, 0)
+
+## Forma del interior de cada sala (src/dungeon/room_shapes.gd). Va tras los tipos y los puntos de
+## aparicion: no consume el RNG del trazado, y deja los puntos de aparicion en suelo pisable.
+func _assign_room_shapes() -> void:
+	for pos in rooms:
+		var room: Room = rooms[pos]
+		RoomShapes.assign(room, room_sizes[pos], current_floor, seed)
+		for sp in room.get_node("SpawnPoints").get_children():
+			if sp is Node2D:
+				sp.position = room.nearest_walkable(sp.position, 24.0)
 
 ## Suelo propio del reino del piso. Va tras asignar los tipos de sala (el tipo cambia el ornamento).
 func _paint_floor_tiles() -> void:

@@ -29,6 +29,13 @@ var is_dark: bool = false
 ## (matar a todos no basta). Vacio = comportamiento de siempre.
 var clear_gate: Callable = Callable()
 
+## Forma del interior (src/dungeon/room_shapes.gd). Vacia = rectangulo completo pisable.
+## Tipos de celda: 0 suelo, 1 muro, 2 abismo, 3 agua, 4 muro bajo (solo el 0 se pisa).
+var shape_id: String = "rect"
+var shape_size: Vector2i = Vector2i.ZERO
+var shape_cells: PackedByteArray = PackedByteArray()
+var shape_anchor: Vector2i = Vector2i(-1, -1)
+
 @onready var floor_tilemap: TileMap = $Floor
 @onready var walls_tilemap: TileMap = $Walls
 @onready var doors_node: Node2D = $Doors
@@ -39,6 +46,128 @@ var clear_gate: Callable = Callable()
 func _ready() -> void:
 	_setup_doors()
 	_setup_spawn_points()
+
+# ------------------------------------------------------------------ forma de la sala (API de suelo pisable)
+## Todo en coordenadas LOCALES de la sala (pixeles, baldosas de 64) salvo snap_global.
+func set_shape(id: String, size: Vector2i, cells: PackedByteArray, anchor: Vector2i) -> void:
+	shape_id = id
+	shape_size = size
+	shape_cells = cells
+	shape_anchor = anchor
+
+
+func _shape_dims() -> Vector2i:
+	if shape_size != Vector2i.ZERO:
+		return shape_size
+	if floor_tilemap != null and floor_tilemap.is_inside_tree():
+		return floor_tilemap.get_used_rect().size
+	return Vector2i.ZERO
+
+
+## Tipo de la celda (0 suelo, 1 muro, 2 abismo, 3 agua, 4 muro bajo); -1 fuera de la sala.
+func cell_kind(c: Vector2i) -> int:
+	var d := _shape_dims()
+	if c.x < 0 or c.y < 0 or c.x >= d.x or c.y >= d.y:
+		return -1
+	if shape_cells.is_empty():
+		return 0
+	return shape_cells[c.y * d.x + c.x]
+
+
+func is_cell_walkable(c: Vector2i) -> bool:
+	return cell_kind(c) == 0
+
+
+## true si el punto esta en suelo pisable; con `margin` tambien sus cuatro esquinas (un cuerpo de ese radio).
+func is_walkable(pos: Vector2, margin := 0.0) -> bool:
+	if margin <= 0.0:
+		return is_cell_walkable(Vector2i(floori(pos.x / 64.0), floori(pos.y / 64.0)))
+	for o in [Vector2(-margin, -margin), Vector2(margin, -margin), Vector2(-margin, margin), Vector2(margin, margin)]:
+		var q: Vector2 = pos + o
+		if not is_cell_walkable(Vector2i(floori(q.x / 64.0), floori(q.y / 64.0))):
+			return false
+	return true
+
+
+## true si TODAS las celdas que toca el rectangulo (local, px) son suelo pisable.
+func rect_walkable(r: Rect2) -> bool:
+	var x0 := floori(r.position.x / 64.0)
+	var y0 := floori(r.position.y / 64.0)
+	var x1 := floori((r.end.x - 0.01) / 64.0)
+	var y1 := floori((r.end.y - 0.01) / 64.0)
+	for x in range(x0, x1 + 1):
+		for y in range(y0, y1 + 1):
+			if not is_cell_walkable(Vector2i(x, y)):
+				return false
+	return true
+
+
+## Suelo pisable como rectangulos (local, px): tramos horizontales fusionados hacia abajo.
+func walkable_rect_list() -> Array[Rect2]:
+	var d := _shape_dims()
+	var out: Array[Rect2] = []
+	if d == Vector2i.ZERO:
+		return out
+	var open: Dictionary = {}  # "x0,x1" -> Rect2 en construccion (en celdas)
+	for y in range(d.y + 1):
+		var runs: Array[Vector2i] = []
+		if y < d.y:
+			var x := 0
+			while x < d.x:
+				if not is_cell_walkable(Vector2i(x, y)):
+					x += 1
+					continue
+				var x1 := x
+				while x1 + 1 < d.x and is_cell_walkable(Vector2i(x1 + 1, y)):
+					x1 += 1
+				runs.append(Vector2i(x, x1))
+				x = x1 + 1
+		var next_open: Dictionary = {}
+		for run in runs:
+			var key := "%d,%d" % [run.x, run.y]
+			if open.has(key):
+				var r: Rect2 = open[key]
+				r.size.y += 1.0
+				next_open[key] = r
+				open.erase(key)
+			else:
+				next_open[key] = Rect2(float(run.x), float(y), float(run.y - run.x + 1), 1.0)
+		for key in open:
+			var r: Rect2 = open[key]
+			out.append(Rect2(r.position * 64.0, r.size * 64.0))
+		open = next_open
+	return out
+
+
+## El punto pisable mas cercano a `pos` (con `margin` de aire hasta lo no pisable). Si ya vale, el mismo.
+func nearest_walkable(pos: Vector2, margin := 18.0) -> Vector2:
+	if is_walkable(pos, margin):
+		return pos
+	var d := _shape_dims()
+	if d == Vector2i.ZERO:
+		return pos
+	var m := minf(margin, 30.0)
+	var best := pos
+	var best_d := INF
+	for x in d.x:
+		for y in d.y:
+			if not is_cell_walkable(Vector2i(x, y)):
+				continue
+			var cr := Rect2(Vector2(x, y) * 64.0, Vector2(64, 64)).grow(-m)
+			var q := Vector2(clampf(pos.x, cr.position.x, cr.end.x), clampf(pos.y, cr.position.y, cr.end.y))
+			var dd := q.distance_squared_to(pos)
+			if dd < best_d:
+				best_d = dd
+				best = q
+	return best
+
+
+## Igual que nearest_walkable pero con posiciones globales.
+func snap_global(pos: Vector2, margin := 18.0) -> Vector2:
+	if shape_cells.is_empty():
+		return pos  # rectangulo completo: nada que corregir
+	return nearest_walkable(pos - global_position, margin) + global_position
+
 
 func _setup_doors() -> void:
 	# Rebuild the dict from the actual children so each door appears exactly once.
@@ -126,7 +255,7 @@ func spawn_enemies(enemy_data: Array[Dictionary], seal := true, positions: Array
 			Affixes.attach(enemy, data.get("affixes", []))  # afijos de elite (src/enemies/affixes)
 			
 			enemies_spawned.append(enemy)
-			_add_enemy_deferred(enemy, (positions[i] if use_pos else spawn_points[i]) + Vector2(g * 28, (g % 2) * 24))
+			_add_enemy_deferred(enemy, snap_global((positions[i] if use_pos else spawn_points[i]) + Vector2(g * 28, (g % 2) * 24), 22.0))
 	
 	if enemies_spawned.size() > 0 and seal:
 		seal_doors()
@@ -267,7 +396,10 @@ func get_center_position() -> Vector2:
 	if floor_tilemap and floor_tilemap.tile_set:
 		var rect := floor_tilemap.get_used_rect()
 		if rect.size.x > 0 and rect.size.y > 0:
-			return floor_tilemap.map_to_local(rect.get_center())
+			var c := floor_tilemap.map_to_local(rect.get_center())
+			if not shape_cells.is_empty() and not is_walkable(c, 20.0):
+				c = nearest_walkable(c, 20.0)  # centro ocupado por un hueco o un pedestal
+			return c
 	return Vector2.ZERO
 
 func can_enter(player_intoxication_tier: int) -> bool:
