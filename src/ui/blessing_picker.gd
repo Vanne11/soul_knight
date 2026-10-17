@@ -70,8 +70,11 @@ func _ready() -> void:
 	v.add_theme_constant_override("separation", 18)
 	center.add_child(v)
 	var re := RegEx.create_from_string("\\[/?[a-z]+\\]")
-	var title := HudStyle.pixel_label(re.sub(_title, "", true), 24, HudStyle.GOLD, true)
+	# Dos lineas: la frase en negrita arriba y "Elige una" abajo; ajusta al ancho de las cartas.
+	var title := HudStyle.pixel_label(re.sub(_title.replace("[/b] ", "\n"), "", true), 24, HudStyle.GOLD, true)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	title.custom_minimum_size = Vector2(880, 0)
 	v.add_child(title)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 22)
