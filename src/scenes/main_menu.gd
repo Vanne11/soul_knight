@@ -164,12 +164,17 @@ func _update_meta_info() -> void:
 # ---------------------------------------------------------------- ventanas
 ## Ventana encima del menu con titulo, contenido y "Volver".
 func _window(title_text: String) -> VBoxContainer:
+	# velo oscuro detras: la caja es semitransparente y se colaba el menu
+	var dim := ColorRect.new()
+	dim.color = Color(0.04, 0.02, 0.06, 0.85)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_root.add_child(dim)
 	var panel := PanelContainer.new()
 	panel.set_anchors_preset(Control.PRESET_FULL_RECT)
 	panel.offset_left = 120; panel.offset_right = -120
 	panel.offset_top = 60; panel.offset_bottom = -60
 	panel.add_theme_stylebox_override("panel", HudStyle.panel_box(22))
-	_root.add_child(panel)
+	dim.add_child(panel)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 12)
 	panel.add_child(box)
@@ -177,8 +182,10 @@ func _window(title_text: String) -> VBoxContainer:
 	var back := Button.new()
 	back.text = "VOLVER"
 	back.pressed.connect(func():
-		panel.queue_free()
-		_update_meta_info())
+		dim.queue_free()
+		_update_meta_info()
+		start_btn.grab_focus())
+	HudStyle.juice_button(back)
 	box.add_child(back)
 	back.grab_focus.call_deferred()
 	return box
@@ -214,6 +221,8 @@ func _fill_upgrades(info: Label, rows: VBoxContainer) -> void:
 		rows.add_child(b)
 
 ## Codice: lo que has descubierto (inscripciones, objetos, enemigos...). Lo demas, "???".
+## Cada entrada lleva su imagen: el objeto, el bicho, el heroe o la ilustracion
+## del lugar. Las bloqueadas salen en silueta negra, para picar la curiosidad.
 func _open_codex() -> void:
 	var lore = _game_controller.get_lore_database()
 	var box := _window("CÓDICE  (%.0f%% descubierto)" % lore.get_completion_percentage())
@@ -221,21 +230,120 @@ func _open_codex() -> void:
 	split.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(split)
 	var list := ItemList.new()
-	list.custom_minimum_size = Vector2(320, 0)
+	list.custom_minimum_size = Vector2(340, 0)
+	list.fixed_icon_size = Vector2i(32, 32)
+	list.add_theme_constant_override("icon_margin", 8)
 	split.add_child(list)
+	var detail := VBoxContainer.new()
+	detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	detail.add_theme_constant_override("separation", 12)
+	split.add_child(detail)
+	var frame := PanelContainer.new()
+	frame.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	frame.visible = false
+	detail.add_child(frame)
+	var pic := TextureRect.new()
+	pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	pic.stretch_mode = TextureRect.STRETCH_SCALE
+	frame.add_child(pic)
 	var text := RichTextLabel.new()
 	text.bbcode_enabled = true
-	text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	text.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	text.text = "Elige una entrada. Las que faltan se descubren jugando: inscripciones, objetos, enemigos y jefes."
-	split.add_child(text)
+	detail.add_child(text)
 	var entries: Array = lore.get_all_entries()
 	entries.sort_custom(func(a, b): return a.unlocked and not b.unlocked if a.unlocked != b.unlocked else a.title < b.title)
 	for e in entries:
-		list.add_item(e.title if e.unlocked else "???")
+		var img: Texture2D = _codex_image(e)
+		list.add_item(e.title if e.unlocked else "???", _thumb(img, not e.unlocked) if img else null)
 		list.set_item_disabled(list.item_count - 1, not e.unlocked)
 	list.item_selected.connect(func(i):
 		var e = entries[i]
+		var img: Texture2D = _codex_image(e)
+		frame.visible = img != null
+		if img:
+			# escala entera (pixel art nitido): lo mas grande que quepa en ~560x250
+			var k := maxi(1, mini(int(560.0 / img.get_width()), int(250.0 / img.get_height())))
+			pic.texture = img
+			pic.custom_minimum_size = Vector2(img.get_width(), img.get_height()) * k
 		text.text = "[b]%s[/b]\n\n%s\n\n[i]%s[/i]" % [e.title, e.text, e.flavor_text])
+
+
+## Imagen de una entrada del codice, deducida de lo que la desbloquea.
+func _codex_image(e) -> Texture2D:
+	if e.sprite:
+		return e.sprite
+	var uc = e.unlock_condition if e.unlock_condition is Dictionary else {}
+	var target: String = str(uc.get("target_id", ""))
+	var path := ""
+	match e.category:
+		LoreEntry.Category.ITEM:
+			path = "res://assets/sprites/items/%s.png" % target
+		LoreEntry.Category.ENEMY:
+			var v: String = _enemy_variants().get(target, "")
+			if v != "":
+				path = "res://assets/sprites/enemies/%s_idle_00.png" % v
+		LoreEntry.Category.CHARACTER:
+			path = "res://assets/sprites/player/%s/portrait.png" % target.trim_prefix("play_")
+	if path == "" or not ResourceLoader.exists(path):
+		path = CODEX_ART.get(e.id, "")
+	return load(path) if path != "" and ResourceLoader.exists(path) else null
+
+## Entradas sin objeto/bicho propio: su ilustracion de la intro o de pantalla.
+const CODEX_ART := {
+	"world_intro": "res://assets/sprites/intro/slide_00.png",
+	"guerra_fria": "res://assets/sprites/intro/slide_01.png",
+	"alergia_hormonal": "res://assets/sprites/intro/slide_02.png",
+	"floor_anatomy": "res://assets/sprites/intro/slide_00.png",
+	"loc_selva": "res://assets/sprites/intro/slide_06.png",
+	"loc_penelandia": "res://assets/sprites/intro/slide_00.png",
+	"loc_vulvania": "res://assets/sprites/intro/slide_00.png",
+	"loc_perineo": "res://assets/sprites/intro/slide_01.png",
+	"loc_palacio": "res://assets/sprites/intro/slide_04.png",
+	"puerta_hormonal": "res://assets/sprites/intro/slide_07.png",
+	"player_identity": "res://assets/sprites/intro/slide_08.png",
+	"death_meaning": "res://assets/sprites/ui/screens/gameover.png",
+	"final_censura": "res://assets/sprites/ui/screens/victory.png",
+	"drunk_secret": "res://assets/sprites/items/whiskey.png",
+	"intoxication_mechanic": "res://assets/sprites/items/absinthe.png",
+	"boss_phases": "res://assets/sprites/intro/slide_03.png",
+}
+
+## Nombre visible del enemigo -> variante de sprite (rosters y jefes de cada piso).
+func _enemy_variants() -> Dictionary:
+	var m := {}
+	for f in RunManager.FLOORS:
+		for pair in [["roster", "names"], ["alt_roster", "alt_names"]]:
+			if f.has(pair[0]):
+				for i in f[pair[0]].size():
+					m[f[pair[1]][i]] = f[pair[0]][i]
+		for x in f.get("extra", []):
+			m[x.name] = x.variant
+		m[f.boss_name] = f.boss
+	return m
+
+## Miniatura 32x32 sin suavizar; en silueta negra si aun no se descubrio.
+func _thumb(tex: Texture2D, silhouette: bool) -> Texture2D:
+	var img := tex.get_image()
+	if img.is_compressed():
+		img.decompress()
+	img.convert(Image.FORMAT_RGBA8)
+	var used := img.get_used_rect()
+	if used.size.x > 0:
+		img = img.get_region(used)
+	var k := minf(32.0 / img.get_width(), 32.0 / img.get_height())
+	var w := maxi(1, int(img.get_width() * k))
+	var h := maxi(1, int(img.get_height() * k))
+	img.resize(w, h, Image.INTERPOLATE_NEAREST)
+	var out := Image.create(32, 32, false, Image.FORMAT_RGBA8)
+	out.blit_rect(img, Rect2i(Vector2i.ZERO, img.get_size()), Vector2i((32 - w) / 2, (32 - h) / 2))
+	if silhouette:
+		for y in 32:
+			for x in 32:
+				var c := out.get_pixel(x, y)
+				if c.a > 0.0:
+					out.set_pixel(x, y, Color(0.05, 0.03, 0.08, c.a))
+	return ImageTexture.create_from_image(out)
 
 func _on_start() -> void:
 	# historia + eleccion de personaje; la run empieza alli

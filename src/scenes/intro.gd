@@ -245,6 +245,7 @@ func _build_select() -> void:
 	var story_btn := Button.new()
 	story_btn.text = "Ver la historia otra vez"
 	story_btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	HudStyle.juice_button(story_btn)
 	story_btn.pressed.connect(func():
 		_slide = -1
 		_select.visible = false
