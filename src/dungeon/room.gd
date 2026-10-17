@@ -88,13 +88,17 @@ func _add_enemy_deferred(enemy: Node2D, pos: Vector2) -> void:
 
 ## seal=false deja las puertas abiertas (main lo usa si vas desarmado: puedes huir).
 ## enemy_data[i].enemy_type = id de EnemyRegistry ("melee", "its"...; por defecto "melee").
-func spawn_enemies(enemy_data: Array[Dictionary], seal := true) -> void:
-	if spawn_points.is_empty() or enemy_data.is_empty():
+## positions (opcional, globales, una por entrada): donde aparece cada una (oleadas y
+## formaciones, src/combat/waves.gd); vacio = los puntos de aparicion de la sala, al azar.
+func spawn_enemies(enemy_data: Array[Dictionary], seal := true, positions: Array = []) -> void:
+	if enemy_data.is_empty() or (spawn_points.is_empty() and positions.is_empty()):
 		return
 
-	RNG.shuffle(spawn_points)  # Array.shuffle() usa el azar global: misma semilla, mazmorra distinta
+	var use_pos := not positions.is_empty()
+	if not use_pos:
+		RNG.shuffle(spawn_points)  # Array.shuffle() usa el azar global: misma semilla, mazmorra distinta
 
-	for i in range(min(enemy_data.size(), spawn_points.size())):
+	for i in range(mini(enemy_data.size(), positions.size() if use_pos else spawn_points.size())):
 		var data = enemy_data[i]
 		var scene: PackedScene = EnemyRegistry.scene(str(data.get("enemy_type", EnemyRegistry.FALLBACK)))
 
@@ -117,7 +121,7 @@ func spawn_enemies(enemy_data: Array[Dictionary], seal := true) -> void:
 				enemy.add_child(EliteAura.new())  # reforzado: aura roja bajo los pies
 			
 			enemies_spawned.append(enemy)
-			_add_enemy_deferred(enemy, spawn_points[i] + Vector2(g * 28, (g % 2) * 24))
+			_add_enemy_deferred(enemy, (positions[i] if use_pos else spawn_points[i]) + Vector2(g * 28, (g % 2) * 24))
 	
 	if enemies_spawned.size() > 0 and seal:
 		seal_doors()
@@ -152,6 +156,10 @@ func _as_drop_list(raw) -> Array[Dictionary]:
 
 func room_cleared() -> void:
 	if cleared:
+		return
+	# Oleadas pendientes (src/combat/waves.gd): la sala no se da por limpia hasta la ultima.
+	var waves: Variant = get_meta("waves") if has_meta("waves") else null
+	if waves != null and is_instance_valid(waves) and waves.hold_clear():
 		return
 	cleared = true
 	unseal_doors()

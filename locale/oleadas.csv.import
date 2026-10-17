@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://jutc6owqqquo"
+
+[deps]
+
+files=["res://locale/oleadas.es.translation", "res://locale/oleadas.en.translation"]
+
+source_file="res://locale/oleadas.csv"
+dest_files=["res://locale/oleadas.es.translation", "res://locale/oleadas.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
