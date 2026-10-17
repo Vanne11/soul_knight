@@ -13,6 +13,8 @@ const RM := preload("res://src/autoloads/run_manager.gd")
 
 ## Pesos de las 12 variantes de relleno: las limpias (0-4) mandan, las raras (10-11) casi no salen.
 const FILL_WEIGHTS: Array[float] = [14.0, 14.0, 13.0, 12.0, 10.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0]
+## 2a etapa de cada reino: suelo mas sucio/agrietado (mandan las variantes "raras" 5-11) y mas ornamento.
+const DEEP_FILL_WEIGHTS: Array[float] = [4.0, 4.0, 5.0, 6.0, 6.0, 9.0, 10.0, 10.0, 9.0, 8.0, 7.0, 6.0]
 const ORNATE_CHANCE := 0.22
 const BORDER_B_CHANCE := 0.25
 const MOTIF_MIN := Vector2i(11, 8)
@@ -39,13 +41,14 @@ static func tileset_for(kingdom: String) -> TileSet:
 	return ts
 
 
-static func _pick_fill(rng: RandomNumberGenerator) -> int:
+static func _pick_fill(rng: RandomNumberGenerator, deep := false) -> int:
+	var weights: Array[float] = DEEP_FILL_WEIGHTS if deep else FILL_WEIGHTS
 	var total := 0.0
-	for w in FILL_WEIGHTS:
+	for w in weights:
 		total += w
 	var r := rng.randf() * total
-	for i in FILL_WEIGHTS.size():
-		r -= FILL_WEIGHTS[i]
+	for i in weights.size():
+		r -= weights[i]
 		if r <= 0.0:
 			return i
 	return 0
@@ -62,6 +65,7 @@ static func paint(room: Room, size: Vector2i, floor_num: int, run_seed: int) -> 
 	var h := size.y
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([run_seed, floor_num, room.grid_pos])
+	var deep: bool = RM.floor_stage(floor_num) > 1
 	var ornate: bool = room.room_type in [Room.RoomType.BOSS, Room.RoomType.SHOP, Room.RoomType.TREASURE]
 	var motif := ornate or (w >= MOTIF_MIN.x and h >= MOTIF_MIN.y)
 	var mx := (w - 3) / 2
@@ -84,9 +88,9 @@ static func paint(room: Room, size: Vector2i, floor_num: int, run_seed: int) -> 
 				coords = Vector2i(dir, row)
 			elif motif and x >= mx and x < mx + 3 and y >= my and y < my + 3:
 				coords = Vector2i(5 + x - mx, 3 + y - my)
-			elif ornate and rng.randf() < ORNATE_CHANCE:
+			elif (ornate or deep) and rng.randf() < (ORNATE_CHANCE if ornate else 0.08):
 				coords = Vector2i(4 + rng.randi_range(0, 3), 1)
 			else:
-				var v := _pick_fill(rng)
+				var v := _pick_fill(rng, deep)
 				coords = Vector2i(v % 8, v / 8)
 			floor_map.set_cell(0, cell, 0, coords)

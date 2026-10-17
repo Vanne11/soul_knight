@@ -86,7 +86,7 @@ func _ready() -> void:
 	current_health = max_health
 	add_to_group("enemy")
 	add_to_group("boss")
-	_floor = get_node("/root/RunManager").current_floor
+	_floor = RunManager.region_index(get_node("/root/RunManager").current_floor) + 1  # reino 1..5 (el jefe es de la 2a etapa)
 	hurtbox.area_entered.connect(_on_hurtbox_entered)
 	hitbox.add_to_group("enemy_attack")
 	hitbox.monitorable = false

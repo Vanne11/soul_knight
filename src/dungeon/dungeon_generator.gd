@@ -450,7 +450,7 @@ func _place_special_rooms() -> void:
 			room.required_intoxication_tier = 2
 
 func _add_spawn_points(room: Room) -> void:
-	var count = RNG.randi_range(2, 4) + current_floor
+	var count = RNG.randi_range(2, 4) + RunManager.depth_i(current_floor)
 	# Rooms are still outside the tree here, so use the recorded tile size
 	# instead of the @onready TileMap.
 	var room_size: Vector2i = room_sizes.get(room.grid_pos, Vector2i(8, 6))

@@ -99,16 +99,23 @@ def collect_world() -> dict:
                        check=True, stdout=subprocess.DEVNULL)
         w = json.loads(out.read_text(encoding="utf-8"))
     rows = {}
-    for i, f in enumerate(w["FLOORS"], start=1):
-        rows[f"FLOOR_{i}_NAME"] = f["name"]
-        # version corta para el mapa del menu (quita el articulo largo del palacio)
-        rows[f"FLOOR_{i}_SHORT"] = f["name"].replace("EL PALACIO DE LA ", "PALACIO ")
+    regions = []
+    for f in w["FLOORS"]:
+        if f["region"] not in regions:
+            regions.append(f["region"])
+        # 1a etapa FLOOR_<reino>_*, 2a etapa FLOOR_<reino>B_* (ver Loc.floor_name)
+        i = f"{regions.index(f['region']) + 1}{'B' if f.get('stage', 1) > 1 else ''}"
+        if f.get("stage", 1) == 1:  # los nombres de 2a etapa viven en locale/etapas.csv (a mano)
+            rows[f"FLOOR_{i}_NAME"] = f["name"]
+            # version corta para el mapa del menu (quita el articulo largo del palacio)
+            rows[f"FLOOR_{i}_SHORT"] = f["name"].replace("EL PALACIO DE LA ", "PALACIO ")
         for roster, names in (("roster", "names"), ("alt_roster", "alt_names")):
             for v, n in zip(f.get(roster, []), f.get(names, [])):
                 rows[enemy_key(v)] = n
         for x in f.get("extra", []):
             rows[enemy_key(x["variant"])] = x["name"]
-        rows[boss_key(f["boss"])] = f["boss_name"]
+        if f.get("boss"):
+            rows[boss_key(f["boss"])] = f["boss_name"]
     for cid, c in w["CHARACTERS"].items():
         k = cid.upper()
         for field in ("name", "title", "perk", "bio"):

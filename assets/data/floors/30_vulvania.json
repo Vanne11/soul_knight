@@ -1,5 +1,8 @@
 {
 	"name": "VULVANIA",
+	"region": "vulvania",
+	"stage": 1,
+	"elite_chance": 0.05,
 	"kingdom": "vulva",
 	"tint": "ff7ac0",
 	"roster": ["ovulo", "trompa", "calambre"],
@@ -11,7 +14,5 @@
 		{"variant": "vph", "name": "VPH Verrugón", "type": "its", "weight": 0.05, "its": "vph"}
 	],
 	"weights": [0.4, 0.3, 0.3],
-	"boss": "reina_ovaria",
-	"boss_name": "SU MAJESTAD OVARIA II",
-	"needs": ["estrogeno"]
+	"needs": []
 }

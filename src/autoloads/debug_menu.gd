@@ -157,15 +157,18 @@ func _spawn_enemy(t: String) -> void:
 	var rm := get_node("/root/RunManager")
 	var fd: Dictionary = rm.floor_data()
 	var room: Room = main.current_room
-	var info := {"enemy_type": t, "health": 40.0 + rm.current_floor * 10.0, "damage": 8.0 + rm.current_floor * 3.0}
+	var dp: float = RunManager.depth(rm.current_floor)
+	var info := {"enemy_type": t, "health": 40.0 + dp * 10.0, "damage": 8.0 + dp * 3.0}
 	var slot := ["melee", "ranged", "swarmer"].find(t)  # puesto en el roster del piso
 	if slot >= 0:
 		info.name = fd.names[slot]
 		info.frames = main._frames_path(fd.roster[slot])
 	elif t == "boss":
+		if str(fd.boss) == "":
+			return  # piso de 1a etapa: no hay jefe del reino
 		info.name = fd.boss_name
 		info.frames = main._frames_path(fd.boss)
-		info.health = EnemyBoss.health_for_floor(rm.current_floor)
+		info.health = EnemyBoss.health_for_floor(RunManager.region_index(rm.current_floor) + 1)
 		info.script = EnemyBoss.script_path(fd.boss)
 	var data: Array[Dictionary] = [info]
 	room.cleared = false  # para que al matarlo la sala se vuelva a abrir

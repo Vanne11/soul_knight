@@ -22,7 +22,7 @@ const MASK_WALL := 2
 const PILLARS := [Vector2i(4, 3), Vector2i(11, 3), Vector2i(4, 8), Vector2i(11, 8)]
 const ENEMIES := ["granito", "testiculo", "ovulo", "aduanero", "barra_negra"]
 ## Probabilidad de que una sala salga en penumbra con antorchas, por piso
-## (indice de RunManager.FLOORS): cuanto mas hondo, mas salas oscuras.
+## (indice de reino 0..4; la 2a etapa suma RoomLighting.DEEP_DARK_BONUS): cuanto mas hondo, mas salas oscuras.
 const DARK_CHANCE := [0.25, 0.35, 0.45, 0.55, 0.65]
 
 ## Oscuridad ambiental (punto 1). Censurada: mas oscura y fria (punto 6).
@@ -551,6 +551,12 @@ func _process(delta: float) -> void:
 
 
 # ------------------------------------------------------------------ estados
+## kingdom_idx recorre los 10 pisos (2 etapas por reino); la penumbra va por reino y sube en la 2a etapa.
+func _dark_chance() -> float:
+	var f := kingdom_idx + 1
+	return DARK_CHANCE[RunManager.region_index(f)] + (RoomLighting.DEEP_DARK_BONUS if RunManager.floor_stage(f) > 1 else 0.0)
+
+
 func _kingdom() -> Dictionary:
 	return RunManager.FLOORS[kingdom_idx]
 
@@ -640,7 +646,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		KEY_5: blob_shadows = not blob_shadows
 		KEY_6: torches_on = not torches_on
 		KEY_7: room_dark = not room_dark
-		KEY_N: room_dark = randf() < DARK_CHANCE[kingdom_idx]
+		KEY_N: room_dark = randf() < _dark_chance()
 		KEY_R:
 			_spawn_props()
 			return
@@ -670,7 +676,7 @@ func _update_label() -> void:
 	avg /= maxf(_fps_samples.size(), 1)
 	_label.text = "%s · %s · %s · %d fps\n1 luz:%s  2 reino  3 censura  4 sombras muros:%s  5 sombras personajes:%s  6 antorchas:%s  7 oscura/clara  N sortear (%d%%)  R objetos  F12 foto" % [
 		_kingdom().name, "LIBERADA" if colored else "CENSURADA", "SALA OSCURA" if room_dark else "SALA CLARA", int(avg),
-		_on(lights_on), _on(cast_shadows), _on(blob_shadows), _on(torches_on), int(DARK_CHANCE[kingdom_idx] * 100)]
+		_on(lights_on), _on(cast_shadows), _on(blob_shadows), _on(torches_on), int(_dark_chance() * 100)]
 
 
 func _on(b: bool) -> String:
@@ -716,11 +722,11 @@ func _auto_capture(dir: String) -> void:
 	await _wait(5)
 	_shot(dir.path_join("03_selva_censurada.png"))
 	room_dark = false
-	_set_state(1, true)
+	_set_state(2, true)  # Penelandia (indice de piso 0..9)
 	await _wait(5)
 	_shot(dir.path_join("04_penelandia_claro.png"))
 	room_dark = true
-	_set_state(3, true)
+	_set_state(6, true)  # El Perineo
 	_player.position = Vector2(ROOM.x * 0.25, ROOM.y * 0.5) * TILE
 	await _wait(10)
 	_shot(dir.path_join("05_perineo_oscuro.png"))

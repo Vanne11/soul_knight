@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dh6fqie86npgm"
+
+[deps]
+
+files=["res://locale/narrator_etapas.es.translation", "res://locale/narrator_etapas.en.translation"]
+
+source_file="res://locale/narrator_etapas.csv"
+dest_files=["res://locale/narrator_etapas.es.translation", "res://locale/narrator_etapas.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

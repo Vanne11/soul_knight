@@ -1,5 +1,8 @@
 {
 	"name": "EL PALACIO DE LA CENSURA",
+	"region": "palacio",
+	"stage": 1,
+	"elite_chance": 0.05,
 	"kingdom": "censura",
 	"tint": "b48cff",
 	"roster": ["barra_negra", "sello", "pixel_censura"],
@@ -9,7 +12,5 @@
 		{"variant": "herpes", "name": "Herpes Recurrente", "type": "its", "weight": 0.04, "its": "herpes"}
 	],
 	"weights": [0.35, 0.3, 0.35],
-	"boss": "hoja_de_parra",
-	"boss_name": "SU PUDOROSIDAD, LA HOJA DE PARRA",
 	"needs": []
 }

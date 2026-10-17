@@ -100,6 +100,7 @@ static func narr_line(key: String, fallback: String) -> String:
 
 # ------------------------------------------------------------------ mundo
 ## Piso: numero 1..N o el diccionario de RunManager.FLOORS. short = version del mapa.
+## Claves: 1a etapa FLOOR_<reino 1..5>_NAME/SHORT (las de siempre); 2a etapa FLOOR_<reino>B_NAME/SHORT.
 static func floor_name(floor_or_fd, short := false) -> String:
 	var floors: Array = RunManager.FLOORS
 	var n := 0
@@ -115,7 +116,18 @@ static func floor_name(floor_or_fd, short := false) -> String:
 		fb = fb.replace("EL PALACIO DE LA ", "PALACIO ")
 	if n < 1:
 		return fb
-	return tr_or("FLOOR_%d_%s" % [n, "SHORT" if short else "NAME"], fb)
+	var suffix := "B" if RunManager.floor_stage(n) > 1 else ""
+	return tr_or("FLOOR_%d%s_%s" % [RunManager.region_index(n) + 1, suffix, "SHORT" if short else "NAME"], fb)
+
+
+## Nombre del reino al que pertenece el piso (el de su 1a etapa): "LA SELVA PÚBICA" para el
+## Folículo Profundo. Para textos de liberacion, que valen para las dos etapas.
+static func region_name(floor_n: int, short := false) -> String:
+	var r := RunManager.floor_region(floor_n)
+	for i in RunManager.FLOORS.size():
+		if RunManager.FLOORS[i].region == r:
+			return floor_name(i + 1, short)
+	return floor_name(floor_n, short)
 
 
 static func _build_enemy_keys() -> void:
@@ -126,7 +138,8 @@ static func _build_enemy_keys() -> void:
 					_enemy_keys[f[pair[1]][i]] = "ENEMY_%s_NAME" % String(f[pair[0]][i]).to_upper()
 		for x in f.get("extra", []):
 			_enemy_keys[x.name] = "ENEMY_%s_NAME" % String(x.variant).to_upper()
-		_enemy_keys[f.boss_name] = "BOSS_%s_NAME" % String(f.boss).trim_prefix("boss_").to_upper()
+		if f.boss_name != "":
+			_enemy_keys[f.boss_name] = "BOSS_%s_NAME" % String(f.boss).trim_prefix("boss_").to_upper()
 
 
 ## Nombre visible (en espanol, tal cual en los datos) de enemigo o jefe -> traducido.

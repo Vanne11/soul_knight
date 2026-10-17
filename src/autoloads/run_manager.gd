@@ -14,7 +14,12 @@ class_name RunManager
 ## extra: bichos opcionales del piso aparte del trio. type = id de EnemyRegistry
 ##   ("melee", "its", ...). Ademas se suman los de assets/data/floors/extra/*.json
 ##   (ver _load_extra_files): asi cada bloque de enemigos nuevos va en su propio archivo.
-## needs: hormonas que exige la Puerta Hormonal de la sala del jefe.
+## region: id estable del reino ("selva", "penelandia"...). Cada reino tiene 2 pisos (etapas):
+##   stage 1 = sin jefe (su sala final es un guardian que abre la salida) y stage 2 = jefe del
+##   reino (clave "boss"/"boss_name"; solo la 2a etapa las tiene). Las etapas de un reino
+##   van seguidas en el orden de los prefijos.
+## elite_chance: probabilidad de que un bicho comun salga reforzado (mas vida/dano, aura roja).
+## needs: hormonas que exige la Puerta Hormonal de la sala del jefe (solo stage 2).
 ## tint: color de la sala cuando la liberas (antes de eso esta gris: censurada). En el
 ##   JSON va en hex ("7fe0a0") y aqui se convierte a Color.
 ## FLOORS se carga una vez al cargar el script (static var): mismo Array de Dictionary que
@@ -61,6 +66,14 @@ static func _load_floors() -> Array:
 			f.tint = Color(str(f.tint))
 		if not f.has("extra"):
 			f.extra = []
+		f.id = _floor_id(file)
+		if not f.has("region"):
+			f.region = f.id
+		f.stage = int(f.get("stage", 1))
+		f.elite_chance = float(f.get("elite_chance", 0.0))
+		if not f.has("boss"):
+			f.boss = ""
+			f.boss_name = ""
 		floors.append(f)
 		ids.append(_floor_id(file))
 	_load_extra_files(floors, ids)
@@ -175,18 +188,82 @@ func roll_blessings(kingdom: String) -> Array:
 		out[2] = "equilibrio"
 	return out
 
-## Regiones cuyo jefe has derrotado alguna vez (indice de piso). Para siempre.
+## Regiones (reinos) cuyo jefe has derrotado alguna vez, por id estable (floor.region). Para
+## siempre. Vencer al jefe de la 2a etapa libera el reino entero: sus dos pisos.
 var liberated: Array = []
 
-func is_liberated(floor_n: int) -> bool:
-	return floor_n in liberated
+## Ids de region en orden, sin repetir (cada reino son 2 pisos).
+static func regions() -> Array:
+	var out: Array = []
+	for f in FLOORS:
+		if f.region not in out:
+			out.append(f.region)
+	return out
 
+static func _floor_at(floor_n: int) -> Dictionary:
+	return FLOORS[clampi(floor_n - 1, 0, FLOORS.size() - 1)]
+
+## Id de la region del piso n (1..FLOORS.size()).
+static func floor_region(floor_n: int) -> String:
+	return _floor_at(floor_n).region
+
+## Indice de reino 0..N-1 del piso n (el "piso" de antes del cambio a 2 etapas).
+static func region_index(floor_n: int) -> int:
+	return maxi(regions().find(floor_region(floor_n)), 0)
+
+## 1 o 2.
+static func floor_stage(floor_n: int) -> int:
+	return int(_floor_at(floor_n).stage)
+
+## Solo la ultima etapa de cada reino tiene jefe.
+static func floor_has_boss(floor_n: int) -> bool:
+	return str(_floor_at(floor_n).boss) != ""
+
+## "Profundidad" para escalar dificultad (vida, dano, cantidad, precios, premios): el numero de
+## reino 1..5 de siempre, con +0.5 en la 2a etapa. Asi la curva por reino es la de antes y la
+## 2a etapa es medio paso mas dura; NO se duplica la escalada por tener el doble de pisos.
+static func depth(floor_n: int) -> float:
+	return float(region_index(floor_n) + 1) + 0.5 * float(floor_stage(floor_n) - 1)
+
+## Depth redondeado para cantidades enteras (enemigos por sala, largo de puzzles...).
+static func depth_i(floor_n: int) -> int:
+	return roundi(depth(floor_n))
+
+func is_liberated(floor_n: int) -> bool:
+	return floor_region(floor_n) in liberated
+
+func is_region_liberated(region: String) -> bool:
+	return region in liberated
+
+## Libera la region del piso (sus dos etapas). true si era nueva.
 func liberate(floor_n: int) -> bool:
-	if floor_n in liberated:
+	var r := floor_region(floor_n)
+	if r in liberated:
 		return false
-	liberated.append(floor_n)
+	liberated.append(r)
 	save_meta_progression()
 	return true
+
+## Guardados viejos (antes de las etapas): enteros = indice de piso 1..5 (el reino k). Se pasan a
+## id de region sin perder progreso. Tambien acepta 0..4 si aparece un 0. Ids desconocidos se descartan.
+static func migrate_liberated(raw: Array) -> Array:
+	var regs := regions()
+	var zero_based := false
+	for v in raw:
+		if (v is int or v is float) and int(v) == 0:
+			zero_based = true
+	var out: Array = []
+	for v in raw:
+		var id := ""
+		if v is String and v in regs:
+			id = v
+		elif v is int or v is float:
+			var i := int(v) - (0 if zero_based else 1)
+			if i >= 0 and i < regs.size():
+				id = regs[i]
+		if id != "" and id not in out:
+			out.append(id)
+	return out
 
 func floor_data() -> Dictionary:
 	return FLOORS[clampi(current_floor - 1, 0, FLOORS.size() - 1)]
@@ -242,8 +319,10 @@ func _ready() -> void:
 	var data = load_meta_progression()
 	meta_currency = int(data.get("meta_currency", 0))
 	meta_upgrades = data.get("meta_upgrades", {})
+	liberated = migrate_liberated(data.get("liberated", []))
 	best_floor = int(data.get("best_floor", 0))
-	liberated = data.get("liberated", []).map(func(f): return int(f))
+	if int(data.get("save_version", 1)) < 2 and best_floor > 0:
+		best_floor = best_floor * 2 - 1  # antes 5 pisos (1 por reino); ahora 2 por reino
 	total_runs = int(data.get("total_runs", 0))
 	unlocked_perks = []
 	for perk in data.get("unlocked_perks", []):
@@ -263,9 +342,9 @@ func buy_meta(id: String) -> bool:
 	save_meta_progression()
 	return true
 
-## Huesos: 10 por piso superado, 1 cada 3 enemigos, 50 extra si ganas.
+## Huesos: 5 por piso superado (10 pisos: lo mismo que antes con 5), 1 cada 3 enemigos, 50 extra si ganas.
 func huesos_for_run(victory: bool) -> int:
-	return (current_floor - 1) * 10 + total_enemies_killed / 3 + (50 if victory else 0)
+	return (current_floor - 1) * 5 + total_enemies_killed / 3 + (50 if victory else 0)
 
 func start_new_run(seed: int = 0) -> void:
 	if seed == 0:
@@ -364,6 +443,7 @@ func save_meta_progression() -> void:
 		"total_runs": total_runs,
 		"best_floor": best_floor,
 		"liberated": liberated,
+		"save_version": 2,
 	}
 	var file = FileAccess.open("user://meta_save.json", FileAccess.WRITE)
 	if file:

@@ -415,8 +415,8 @@ func _on_run_started(_seed: int) -> void:
 	var freed: int = get_node("/root/RunManager").liberated.size()
 	if _memory.runs == 1:
 		say("first_run")  # despues basta con la presentacion del piso
-	elif freed > 0 and freed < 5:
-		say("run_start_progress", {"n": freed, "left": 5 - freed})
+	elif freed > 0 and freed < RunManager.regions().size():
+		say("run_start_progress", {"n": freed, "left": RunManager.regions().size() - freed})
 
 
 func _on_player_died() -> void:
@@ -429,7 +429,8 @@ func _on_player_died() -> void:
 	_showing = false  # la frase de muerte no espera a que pases la anterior
 	var n: int = _memory.deaths_by_floor[key]
 	var main := get_tree().get_first_node_in_group("main")
-	if main and main.current_room and main.current_room.room_type == Room.RoomType.BOSS:
+	if main and main.current_room and main.current_room.room_type == Room.RoomType.BOSS \
+			and RunManager.floor_has_boss(get_node("/root/RunManager").current_floor):
 		say("death_boss", {"boss": Loc.enemy_name(get_node("/root/RunManager").floor_data().boss_name)})
 	elif n >= 3 and randf() < 0.5:
 		say("death_same_floor", {"floor": floor_n, "n": n})

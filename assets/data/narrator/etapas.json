@@ -1,0 +1,34 @@
+{
+  "_info": "Frases de inicio de piso (cada piso, 1a y 2a etapa de cada reino). Evento = floor_<id del piso> (id = nombre del archivo en assets/data/floors sin prefijo ni .json). Sustituyen a floor_1..floor_5 de lines.json, que quedaron sin uso al pasar a 10 pisos.",
+
+  "floor_selva_publica": [
+    "LA SELVA PÚBICA. Una jungla densa, rizada y sin podar desde la censura. Cuidado con las ladillas: son pequeñas, pero tienen sindicato."
+  ],
+  "floor_foliculo_profundo": [
+    "FOLÍCULO PROFUNDO. Más adentro de la selva, donde cada pelo tiene raíz, rencor y representación sindical. Aquí los bichos vienen reforzados. Y al fondo, la cera."
+  ],
+  "floor_penelandia": [
+    "PENELANDIA. Todo es alargado, todo es orgulloso y todo huele a desodorante de 3 euros. Aquí manda el Testículo Primordial."
+  ],
+  "floor_conducto_deferente": [
+    "CONDUCTO DEFERENTE. Un pasillo estrecho, húmedo y con mucho tráfico. Todo va en una dirección y nadie pregunta adónde. El Testículo Primordial espera al final del túnel."
+  ],
+  "floor_vulvania": [
+    "VULVANIA. Elegante, cíclica y con muy poca paciencia para turistas. La reina Ovaria II no recibe visitas sin cita previa."
+  ],
+  "floor_trompas_falopio": [
+    "TROMPAS DE FALOPIO. Dos pasillos largos, curvos y dudosamente iluminados. Su Majestad espera al final del recorrido, con la corona torcida."
+  ],
+  "floor_perineo": [
+    "EL PERINEO. La tierra de nadie entre los dos reinos. Literalmente. Anatómicamente. Aquí no vive nadie, solo un aduanero con un sello."
+  ],
+  "floor_aduana_interior": [
+    "ADUANA INTERIOR. Ventanillas, colas y formularios por triplicado. Aquí hasta los bichos tienen los papeles en regla. Los tuyos, dudo. El Aduanero lo comprobará."
+  ],
+  "floor_palacio_censura": [
+    "EL PALACIO DE LA CENSURA. Todo está pixelado. Todo tiene una barra negra encima. Huele a moralina y a pegamento de hoja."
+  ],
+  "floor_archivo_clasificado": [
+    "ARCHIVO CLASIFICADO. Estanterías infinitas de expedientes tachados. Todo lo que alguien no quiso que se supiera, por orden alfabético. La Hoja de Parra, al fondo, con su sello."
+  ]
+}

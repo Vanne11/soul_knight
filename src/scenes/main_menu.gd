@@ -116,9 +116,12 @@ func _world_strip() -> Control:
 	var rm = _game_controller.get_run_manager()
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 4)
-	for i in RunManager.FLOORS.size():
-		var f: Dictionary = RunManager.FLOORS[i]
-		var free: bool = rm.is_liberated(i + 1)
+	var regions := RunManager.regions()
+	for i in regions.size():
+		# un reino = sus dos etapas: se muestra con el nombre y color de la 1a
+		var first := 1 + RunManager.FLOORS.find_custom(func(x): return x.region == regions[i])
+		var f: Dictionary = RunManager.FLOORS[first - 1]
+		var free: bool = rm.is_region_liberated(regions[i])
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 8)
 		var dot := ColorRect.new()
@@ -126,13 +129,13 @@ func _world_strip() -> Control:
 		dot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		dot.color = f.tint if free else Color(0.4, 0.4, 0.44)
 		row.add_child(dot)
-		row.add_child(HudStyle.pixel_label("%d %s" % [i + 1, Loc.floor_name(i + 1, true)], 16,
+		row.add_child(HudStyle.pixel_label("%d %s" % [i + 1, Loc.floor_name(first, true)], 16,
 			f.tint.lightened(0.2) if free else Color(0.55, 0.55, 0.6)))
 		col.add_child(row)
 	var n: int = rm.liberated.size()
 	var caption := Label.new()
 	caption.text = tr("MENU_WORLD_GRAY") if n == 0 \
-		else tr("MENU_WORLD_FREED") % [n, RunManager.FLOORS.size()]
+		else tr("MENU_WORLD_FREED") % [n, regions.size()]
 	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	caption.custom_minimum_size.x = 250
 	caption.add_theme_font_size_override("font_size", 13)

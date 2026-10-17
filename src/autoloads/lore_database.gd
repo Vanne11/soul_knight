@@ -101,7 +101,7 @@ func _on_item_picked_up(item: Variant, qty: int) -> void:
 	_check_all()
 
 func _on_floor_completed(floor: int) -> void:
-	_floor_reached = maxi(_floor_reached, floor)
+	_floor_reached = maxi(_floor_reached, RunManager.region_index(floor) + 1)  # REACH_FLOOR cuenta reinos (1..5), no pisos 1..10
 	_check_all()
 
 func _on_player_intoxication_changed(_level: float, tier: int) -> void:

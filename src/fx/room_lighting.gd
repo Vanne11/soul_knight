@@ -13,6 +13,10 @@ class_name RoomLighting
 const TILE := 64
 ## Probabilidad de sala en penumbra por piso (indice 0..4).
 const DARK_CHANCE := [0.25, 0.35, 0.45, 0.55, 0.65]
+## Extra de salas en penumbra en la 2a etapa de cada reino.
+const DEEP_DARK_BONUS := 0.15
+const DEEP_AMBIENT := Color(0.78, 0.76, 0.88)  # ambiente de salas claras en la 2a etapa
+const DEEP_AMBIENT_DARK := Color(0.8, 0.8, 0.85, 1.0)  # multiplica el de las salas oscuras
 const AMBIENT_FREE := Color(0.13, 0.12, 0.16)
 const AMBIENT_BOSS := Color(0.17, 0.08, 0.09)
 const AMBIENT_CENSORED := Color(0.09, 0.09, 0.12)
@@ -32,6 +36,7 @@ const WALL_SHADE := 20.0  # ancho (px) de la sombra de contacto de los muros
 const WALL_SHADE_ALPHA := 0.5
 
 var current_room: Room = null
+var _dark_bonus := 0.0
 var _player: Node2D
 var _hero_light: PointLight2D
 var _ambient: CanvasModulate
@@ -88,7 +93,9 @@ func setup(player: Node2D) -> void:
 
 # ------------------------------------------------------------------ sorteo
 func setup_floor(rooms: Dictionary, floor_n: int, seed_: int) -> void:
-	_floor_idx = clampi(floor_n - 1, 0, DARK_CHANCE.size() - 1)
+	# Penumbra por reino (indice 0..4), no por piso 1..10; la 2a etapa es mas oscura (DEEP_DARK_BONUS).
+	_floor_idx = clampi(RunManager.region_index(floor_n), 0, DARK_CHANCE.size() - 1)
+	_dark_bonus = DEEP_DARK_BONUS if RunManager.floor_stage(floor_n) > 1 else 0.0
 	_seed = seed_
 	_decor.clear()
 	_bullets.clear()
@@ -104,7 +111,7 @@ func _roll_dark(room: Room, floor_n: int) -> bool:
 			return false
 		Room.RoomType.BOSS:
 			return true
-	return _hash01(_seed, floor_n, room.grid_pos.x, room.grid_pos.y) < DARK_CHANCE[_floor_idx]
+	return _hash01(_seed, floor_n, room.grid_pos.x, room.grid_pos.y) < DARK_CHANCE[_floor_idx] + _dark_bonus
 
 
 ## Hash entero determinista (sin estado global) -> 0..1.
@@ -170,9 +177,15 @@ func _tint_now() -> Color:
 func _apply_ambient(room: Room, animate: bool) -> void:
 	_tint = _tint_now()
 	var amb := Color.WHITE
+	# 2a etapa de cada reino: todo un paso mas hondo (mas frio y apagado, tambien en salas claras).
+	var deep: bool = RunManager.floor_stage(get_node("/root/RunManager").current_floor) > 1 if has_node("/root/RunManager") else false
 	if room.is_dark:
 		var free := AMBIENT_BOSS if room.room_type == Room.RoomType.BOSS else AMBIENT_FREE.lerp(_tint.darkened(0.7), 0.3)
 		amb = free if _colored else AMBIENT_CENSORED
+		if deep:
+			amb = amb * DEEP_AMBIENT_DARK
+	elif deep:
+		amb = DEEP_AMBIENT
 	if _ambient_tween and _ambient_tween.is_valid():
 		_ambient_tween.kill()
 	if animate:

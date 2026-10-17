@@ -1,5 +1,8 @@
 {
 	"name": "EL PERINEO",
+	"region": "perineo",
+	"stage": 1,
+	"elite_chance": 0.05,
 	"kingdom": "mixto",
 	"tint": "ffc93c",
 	"roster": ["testiculo", "trompa", "calambre"],
@@ -19,7 +22,5 @@
 		{"variant": "espinilla", "name": "Espinilla Reventona", "type": "espinilla", "weight": 0.1}
 	],
 	"weights": [0.25, 0.2, 0.2],
-	"boss": "aduanero",
-	"boss_name": "EL ADUANERO HORMONAL",
-	"needs": ["testosterona", "estrogeno"]
+	"needs": []
 }

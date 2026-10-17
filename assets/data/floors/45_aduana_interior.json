@@ -1,0 +1,28 @@
+{
+	"name": "ADUANA INTERIOR",
+	"region": "perineo",
+	"stage": 2,
+	"elite_chance": 0.2,
+	"kingdom": "mixto",
+	"tint": "bf962d",
+	"roster": ["testiculo", "trompa", "calambre"],
+	"names": ["Testículo Errante", "Trompa Escupidora", "Calambre"],
+	"alt_roster": ["ovulo", "vesicula", "espermatozoide"],
+	"alt_names": ["Óvulo Rodante", "Vesícula Resentida", "Espermatozoide"],
+	"extra": [
+		{"variant": "especulo", "name": "Espéculo Mordedor", "type": "melee", "weight": 0.2},
+		{"variant": "hemorroide", "name": "Hemorroide Fronteriza", "type": "tank", "weight": 0.15},
+		{"variant": "inspector_fluidos", "name": "Inspector de Fluidos", "type": "inspector", "weight": 0.25},
+		{"variant": "pelusa_perineal", "name": "Pelusa Perineal", "type": "swarmer", "weight": 0.25},
+		{"variant": "clamidia", "name": "Clamidia Clandestina", "type": "its", "weight": 0.08, "its": "clamidia"},
+		{"variant": "herpes", "name": "Herpes Recurrente", "type": "its", "weight": 0.08, "its": "herpes"},
+		{"variant": "gonorrea", "name": "Gonorrea Goteante", "type": "its", "weight": 0.08, "its": "gonorrea"},
+		{"variant": "vph", "name": "VPH Verrugón", "type": "its", "weight": 0.08, "its": "vph"},
+		{"variant": "sifilis", "name": "Sífilis Imitadora", "type": "its", "weight": 0.08, "its": "sifilis"},
+		{"variant": "espinilla", "name": "Espinilla Reventona", "type": "espinilla", "weight": 0.1}
+	],
+	"weights": [0.25, 0.2, 0.2],
+	"boss": "aduanero",
+	"boss_name": "EL ADUANERO HORMONAL",
+	"needs": ["testosterona", "estrogeno"]
+}

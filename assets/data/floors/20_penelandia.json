@@ -1,5 +1,8 @@
 {
 	"name": "PENELANDIA",
+	"region": "penelandia",
+	"stage": 1,
+	"elite_chance": 0.05,
 	"kingdom": "pene",
 	"tint": "6ec6ff",
 	"roster": ["testiculo", "vesicula", "espermatozoide"],
@@ -9,7 +12,5 @@
 		{"variant": "gonorrea", "name": "Gonorrea Goteante", "type": "its", "weight": 0.05, "its": "gonorrea"}
 	],
 	"weights": [0.45, 0.2, 0.35],
-	"boss": "testiculo_primordial",
-	"boss_name": "TESTÍCULO PRIMORDIAL",
-	"needs": ["testosterona"]
+	"needs": []
 }

@@ -1,0 +1,18 @@
+{
+	"name": "ARCHIVO CLASIFICADO",
+	"region": "palacio",
+	"stage": 2,
+	"elite_chance": 0.2,
+	"kingdom": "censura",
+	"tint": "8769bf",
+	"roster": ["barra_negra", "sello", "pixel_censura"],
+	"names": ["Barra Negra", "Sello Censor", "Píxel de Censura"],
+	"extra": [
+		{"variant": "sifilis", "name": "Sífilis Imitadora", "type": "its", "weight": 0.04, "its": "sifilis"},
+		{"variant": "herpes", "name": "Herpes Recurrente", "type": "its", "weight": 0.04, "its": "herpes"}
+	],
+	"weights": [0.35, 0.3, 0.35],
+	"boss": "hoja_de_parra",
+	"boss_name": "SU PUDOROSIDAD, LA HOJA DE PARRA",
+	"needs": []
+}

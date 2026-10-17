@@ -127,4 +127,10 @@ func _draw() -> void:
 			draw_string(_font, Vector2(r.position.x, r.get_center().y + fs * 0.35), icon, HORIZONTAL_ALIGNMENT_CENTER, r.size.x, fs, col)
 
 	if current:
-		_label.text = tr("MAP_LABEL") % tr(ROOM_NAMES.get(current.room_type, "?"))
+		var rname: String = tr(ROOM_NAMES.get(current.room_type, "?"))
+		var rm := get_node_or_null("/root/RunManager")
+		if rm:
+			if current.room_type == Room.RoomType.BOSS and not RunManager.floor_has_boss(rm.current_floor):
+				rname = tr("MAP_ROOM_GUARD")  # 1a etapa: la sala final es un guardian, no un jefe
+			rname = "%s · %s" % [Loc.floor_name(rm.floor_data(), true), rname]  # nombre de la etapa
+		_label.text = tr("MAP_LABEL") % rname

@@ -94,18 +94,18 @@ func _generate_dungeon() -> void:
 	
 	# Start player in start room
 	var start_room = _find_start_room()
-	Narrator.say("floor_%d" % _run_manager.current_floor)  # antes que la pista del arma
+	Narrator.say("floor_" + str(_run_manager.floor_data().id))  # antes que la pista del arma (frases en narrator/etapas.json)
 	_weapon_room = null
 	if start_room and not _has_real_weapon():
 		_hide_weapon_chest(start_room)
 	_pick_hormone_room()
 	_assign_rewards()
 	_show_floor_card()
-	if _run_manager.is_liberated(_run_manager.current_floor):
-		# Region liberada en otra partida: te recibe con un regalo.
+	if _run_manager.is_liberated(_run_manager.current_floor) and RunManager.floor_stage(_run_manager.current_floor) == 1:
+		# Region liberada en otra partida: te recibe con un regalo (al entrar al reino, no en la 2a etapa).
 		get_tree().create_timer(2.6).timeout.connect(func():
 			Narrator.say("liberated_floor")
-			_offer_blessing(_floor_kingdom(), tr("FLOOR_REMEMBERS") % Loc.floor_name(_run_manager.floor_data())))
+			_offer_blessing(_floor_kingdom(), tr("FLOOR_REMEMBERS") % Loc.region_name(_run_manager.current_floor)))
 	if start_room:
 		_enter_room(start_room)
 	else:
@@ -155,6 +155,8 @@ func _on_door_entered_room(room: Room, door: Door) -> void:
 ## Pista del reino del piso ("explore_pene", "boss_vulva"...); si no existe, la generica.
 func _room_track(room: Room) -> String:
 	var base := "boss" if room.room_type == Room.RoomType.BOSS and not room.cleared else "explore"
+	if base == "boss" and not RunManager.floor_has_boss(_run_manager.current_floor):
+		base = "explore"  # el guardian de la 1a etapa no es jefe: sin musica de jefe
 	var kingdom: String = str(_run_manager.floor_data().get("kingdom", ""))
 	var themed := base + "_" + kingdom
 	if kingdom != "" and ResourceLoader.exists(Sound.MUSIC_DIR + themed + ".wav"):
@@ -315,15 +317,27 @@ const ITS_INTOX_WEIGHT_MULT := 3.0
 ## antes de que reviente) y casi nunca suelta moneda.
 const ESPINILLA_HEALTH_MULT := 0.5
 const ESPINILLA_COIN_CHANCE := 0.15
+## Elites (bicho comun reforzado; la probabilidad es "elite_chance" de cada piso, mas alta en la
+## 2a etapa) y guardian de fin de la 1a etapa (sala final sin jefe: minijefe reforzado + escoltas).
+const ELITE_HEALTH_MULT := 2.2
+const ELITE_DAMAGE_MULT := 1.3
+const ELITE_SCALE := 1.25
+const ELITE_COIN_CHANCE := 0.5
+const GUARDIAN_HEALTH_MULT := 7.0
+const GUARDIAN_DAMAGE_MULT := 1.5
+const GUARDIAN_ESCORTS := 2
 
 func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
-	var floor_n: int = _run_manager.current_floor
+	# floor_n = profundidad (reino 1..5, +0.5 en la 2a etapa), no el numero de piso 1..10: asi
+	# la curva de vida/dano por reino es la de antes (ver RunManager.depth).
+	var floor_n: float = RunManager.depth(_run_manager.current_floor)
 	var fd: Dictionary = _run_manager.floor_data()
-	var count := RNG.randi_range(2, 4) + floor_n
+	var has_boss: bool = RunManager.floor_has_boss(_run_manager.current_floor)
+	var count := RNG.randi_range(2, 4) + RunManager.depth_i(_run_manager.current_floor)
 	if room.room_type == Room.RoomType.MINIBOSS:
 		count = 2
 	elif room.room_type == Room.RoomType.BOSS:
-		count = 1
+		count = 1 if has_boss else GUARDIAN_ESCORTS + 1
 	
 	# Must stay typed: Room.spawn_enemies() expects Array[Dictionary].
 	var data: Array[Dictionary] = []
@@ -355,14 +369,25 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				w *= ITS_INTOX_WEIGHT_MULT
 			weights = weights + [w]
 		match room.room_type:
-			Room.RoomType.BOSS:
+			Room.RoomType.BOSS when has_boss:
+				var region_n: int = RunManager.region_index(_run_manager.current_floor) + 1  # el jefe escala por reino, como antes
 				info.enemy_type = "boss"
-				info.health = EnemyBoss.health_for_floor(floor_n)
+				info.health = EnemyBoss.health_for_floor(region_n)
 				info.script = EnemyBoss.script_path(fd.boss)
-				info.damage = 12.0 + floor_n * 4.0
+				info.damage = 12.0 + region_n * 4.0
 				info.name = fd.boss_name
 				info.frames = _frames_path(fd.boss)
 				info.drops = [{"item_id": "health_large", "chance": 1.0}]
+			Room.RoomType.BOSS when i == 0:
+				# Sala final de la 1a etapa: guardian (minijefe reforzado) que abre la salida.
+				info.enemy_type = "melee"
+				info.health *= GUARDIAN_HEALTH_MULT
+				info.damage *= GUARDIAN_DAMAGE_MULT
+				info.name = tr("ENEMY_GIANT") % names[0]
+				info.frames = _frames_path(roster[0])
+				info.scale = 1.8
+				info.elite = true
+				info.drops.append({"item_id": "health_large", "chance": 1.0})
 			Room.RoomType.MINIBOSS:
 				info.enemy_type = "melee"
 				info.health *= 3.5
@@ -392,10 +417,18 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 					# Los enjambres nunca vienen solos, pero cada bicho pega poco: rapidos y
 					# debiles. Antes pegaban como un enemigo pesado y, de a tres desde el
 					# piso 1, te encerraban y mataban en segundos.
-					info.group = 2 if floor_n <= 2 else 3
+					info.group = 2 if floor_n <= 2.0 else 3
 					info.damage *= SWARM_DAMAGE_MULT
 				if room.room_type == Room.RoomType.INTOXICATION:
 					info.drops.append({"item_id": "whiskey", "chance": 0.5})
+				# Elite: mas vida y dano, algo mas grande y con aura roja. Mas comunes en la 2a etapa.
+				# (No toca a las espinillas: reventar de un tiro es su gracia.)
+				if types[t] != "espinilla" and RNG.randf() < float(fd.get("elite_chance", 0.0)):
+					info.health *= ELITE_HEALTH_MULT
+					info.damage *= ELITE_DAMAGE_MULT
+					info.scale = ELITE_SCALE
+					info.elite = true
+					info.drops.append({"item_id": "coin", "chance": ELITE_COIN_CHANCE})
 		data.append(info)
 	return data
 
@@ -483,7 +516,7 @@ func _build_puzzle(room: Room) -> void:
 		room.get_meta("puzzle").play()  # al volver a entrar, repite la secuencia
 		return
 	var pz := PUZZLE_PLATES.new()
-	pz.length = 3 + _run_manager.current_floor / 2
+	pz.length = 3 + RunManager.depth_i(_run_manager.current_floor) / 2
 	pz.position = room.get_center_position()
 	pz.solved.connect(_on_puzzle_solved.bind(room))
 	room.set_meta("puzzle", pz)
@@ -566,9 +599,11 @@ func _on_room_cleared(room: Room) -> void:
 		_give_reward(room)
 	if room.room_type == Room.RoomType.BOSS:
 		_spawn_chest(room, "weapon")
-		var n := BOSS_COINS_BASE + _run_manager.current_floor
+		var n := BOSS_COINS_BASE + RunManager.depth_i(_run_manager.current_floor)
 		for i in n:
 			_spawn_pickup(room, "coin", room.get_center_position() + Vector2((i - (n - 1) / 2.0) * 30, 40))
+		if not RunManager.floor_has_boss(_run_manager.current_floor):
+			_complete_floor()  # 1a etapa: vencer al guardian abre la salida (sin jefe, sin liberar)
 	else:
 		Sound.play("room_clear")
 		for i in COINS_PER_ROOM_CLEAR:
@@ -582,6 +617,7 @@ func _complete_floor() -> void:
 	Sound.play("floor_complete")
 	var boss_room := current_room
 	var floor_n: int = _run_manager.current_floor
+	var boss_floor: bool = RunManager.floor_has_boss(floor_n)
 	if floor_n >= RunManager.FLOORS.size():
 		_run_manager.liberate(floor_n)
 		Narrator.say("victory")
@@ -590,14 +626,18 @@ func _complete_floor() -> void:
 		get_tree().create_timer(4.0).timeout.connect(func(): Transition.change_scene("res://src/scenes/game_over.tscn"))
 		return
 	get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position, tr("FX_FLOOR_DONE") % floor_n, Color.GOLD)
-	if _run_manager.liberate(floor_n):
-		Narrator.toast(tr("FLOOR_LIBERATED_TITLE"), tr("FLOOR_LIBERATED_BODY") % Loc.floor_name(_run_manager.floor_data()), "ffd75a")
-	# Recompensa: una mejora a elegir. Luego, sin prisa: recoges el botin y bajas por la escotilla.
-	await get_tree().create_timer(1.5).timeout
-	Narrator.choose(tr("FLOOR_BOSS_DEFEATED"), BOSS_REWARDS.map(func(r): return tr(r[0])))
-	var pick: Array = BOSS_REWARDS[await Narrator.chosen]
-	_game_controller.get_player_stats().apply_stat_mod(pick[1], pick[2])
-	Sound.play("puzzle_solve")
+	if boss_floor:
+		# Vencer al jefe libera el reino entero (sus dos etapas); el toast usa el nombre del reino.
+		if _run_manager.liberate(floor_n):
+			Narrator.toast(tr("FLOOR_LIBERATED_TITLE"), tr("FLOOR_LIBERATED_BODY") % Loc.region_name(floor_n), "ffd75a")
+		# Recompensa: una mejora a elegir. Luego, sin prisa: recoges el botin y bajas por la escotilla.
+		await get_tree().create_timer(1.5).timeout
+		Narrator.choose(tr("FLOOR_BOSS_DEFEATED"), BOSS_REWARDS.map(func(r): return tr(r[0])))
+		var pick: Array = BOSS_REWARDS[await Narrator.chosen]
+		_game_controller.get_player_stats().apply_stat_mod(pick[1], pick[2])
+		Sound.play("puzzle_solve")
+	else:
+		await get_tree().create_timer(1.5).timeout  # guardian vencido: sin mejora, solo la salida
 	_add_prop(boss_room, boss_room.get_center_position() + Vector2(0, 150), _hatch_visual(),
 		tr("FLOOR_HATCH") % (floor_n + 1),
 		func(_p, it): it.finish(); _advance_to_next_floor())
@@ -658,7 +698,10 @@ func _room_hint(room: Room) -> Array:
 	if room == _weapon_room and not _has_real_weapon():
 		return [tr("DOOR_HINT_WEAPON"), Color("ffa64a")]
 	match room.room_type:
-		Room.RoomType.BOSS: return [tr("DOOR_HINT_BOSS"), Color("ff5050")]
+		Room.RoomType.BOSS:
+			if not RunManager.floor_has_boss(_run_manager.current_floor):
+				return [tr("DOOR_HINT_GUARD"), Color("ff9a50")]
+			return [tr("DOOR_HINT_BOSS"), Color("ff5050")]
 		Room.RoomType.SHOP: return [tr("DOOR_HINT_SHOP"), Color("ffd75a")]
 		Room.RoomType.REST: return [tr("DOOR_HINT_REST"), Color("6aa8ff")] if not room.has_meta("calm_built") else ["", Color.WHITE]
 		Room.RoomType.TREASURE: return [tr("DOOR_HINT_TREASURE"), Color("ffd75a")] if not room.has_meta("calm_built") else ["", Color.WHITE]
@@ -679,7 +722,7 @@ func _give_reward(room: Room) -> void:
 	var center := room.get_center_position()
 	match room.reward:
 		"monedas":
-			var n := 4 + _run_manager.current_floor
+			var n := 4 + RunManager.depth_i(_run_manager.current_floor)
 			for i in n:
 				_spawn_pickup(room, "coin", center + Vector2((i - (n - 1) / 2.0) * 28, -30))
 		"vida":

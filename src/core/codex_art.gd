@@ -52,7 +52,8 @@ static func _enemy_variants() -> Dictionary:
 					m[f[pair[1]][i]] = f[pair[0]][i]
 		for x in f.get("extra", []):
 			m[x.name] = x.variant
-		m[f.boss_name] = f.boss
+		if f.boss_name != "":
+			m[f.boss_name] = f.boss
 	return m
 
 ## Miniatura size x size sin suavizar (escala entera si cabe, vecino mas cercano);
