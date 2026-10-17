@@ -153,6 +153,8 @@ def collect_world() -> dict:
                 rows[enemy_key(v)] = n
         for x in f.get("extra", []):
             rows[enemy_key(x["variant"])] = x["name"]
+        if f.get("miniboss"):  # minijefe propio de la sala MINIBOSS
+            rows[enemy_key(f["miniboss"]["variant"])] = f["miniboss"]["name"]
         if f.get("boss"):
             rows[boss_key(f["boss"])] = f["boss_name"]
     for cid, c in w["CHARACTERS"].items():
