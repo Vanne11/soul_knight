@@ -95,6 +95,8 @@ func reset_for_new_run() -> void:
 	intoxication_tier = 0
 	damage_modifier = 1.0
 	speed_modifier = 1.0
+	if has_meta("sticky_on"):  # afijo Pegajoso a medias: que no divida la velocidad nueva
+		remove_meta("sticky_on")
 	accuracy_modifier = 1.0
 	crit_chance_modifier = 0.0
 	crit_damage_modifier = 1.5
