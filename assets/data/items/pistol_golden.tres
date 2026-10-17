@@ -6,10 +6,10 @@
 script = ExtResource("1")
 id = "pistol_golden"
 display_name = "Pistola Dorada (Compensación)"
-description = "Brilla más que tu futuro. Daño base 15, precisión perfecta. 'Tamaño del cañón inversamente proporcional a otra cosa.'"
+description = "Precisa y con crítico alto (+20%); las balas atraviesan a un enemigo. Cadencia media. 'Tamaño del cañón inversamente proporcional a otra cosa.'"
 rarity = 3
 tags = ["arma"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}, {"type": 0, "stat": "accuracy", "magnitude": 1.5}]
 base_value = 500
-custom_data = {"base_damage": 15, "fire_rate": 0.35, "projectile_speed": 600, "spread": 0.01}
+custom_data = {"base_damage": 11, "fire_rate": 0.34, "projectile_speed": 650, "spread": 0.01, "crit_bonus": 0.2, "pierce": 1}

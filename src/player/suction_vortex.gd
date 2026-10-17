@@ -2,15 +2,16 @@ extends Node2D
 class_name SuctionVortex
 
 ## Satisfyer: un pulso que vuela corto, se planta y succiona a los enemigos
-## cercanos hacia su centro mientras les hace dano a tics. Sirve para juntar
-## grupos y rematarlos con otra arma (o con el mismo vortice).
+## cercanos hacia su centro mientras les hace dano a tics (poco) y los aturde
+## con cada tic. Es un arma de control: junta grupos y los inmoviliza para
+## rematarlos con otra arma (o con el mismo vortice).
 
 var damage: float = 5.0  ## por tic
 var speed: float = 380.0
 var travel_time: float = 0.3
 var duration: float = 1.5
 var radius: float = 120.0
-var pull: float = 240.0
+var pull: float = 300.0
 var tick: float = 0.25
 var _t := 0.0
 var _tick_t := 0.0
@@ -55,7 +56,8 @@ func _suck(delta: float) -> void:
 			var strength := pull * f * (0.5 + 0.5 * (1.0 - d / radius))
 			e.move_and_collide(to_c / d * minf(strength * delta, d))
 		if hit and e.has_method("take_damage"):
-			e.take_damage(damage, player, Vector2.ZERO)
+			# el empujoncito hacia el centro aturde un instante a cada tic (los jefes no lo notan)
+			e.take_damage(damage, player, to_c.normalized() * 50.0 if d > 4.0 else Vector2.ZERO)
 			if ps.lifesteal > 0.0:
 				ps.heal(damage * ps.lifesteal)
 

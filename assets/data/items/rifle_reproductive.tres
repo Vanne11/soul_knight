@@ -6,10 +6,10 @@
 script = ExtResource("1")
 id = "rifle_reproductive"
 display_name = "Fusil Fecundador"
-description = "Precisión quirúrgica. Daño base 18, alta cadencia. 'Cada disparo es un potencial hijo... o una baja confirmada.'"
+description = "Mucho daño por bala y puntería de cirujano, pero con cargador: 6 tiros y recarga larga. 'Cada disparo es un potencial hijo... o una baja confirmada.'"
 rarity = 3
 tags = ["arma"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
 base_value = 400
-custom_data = {"base_damage": 18, "fire_rate": 0.15, "projectile_speed": 800, "spread": 0.02}
+custom_data = {"base_damage": 24, "fire_rate": 0.5, "projectile_speed": 900, "spread": 0.02, "magazine": 6, "reload": 1.3}

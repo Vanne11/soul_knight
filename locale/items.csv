@@ -30,7 +30,7 @@ ITEM_KEY_DRUNK_DESC,Solo funciona si estás borracho. La cerradura tiene forma d
 ITEM_KEY_MASTER_NAME,Llave Maestra Dorada,Golden Master Key
 ITEM_KEY_MASTER_DESC,Abre cualquier cerradura. Incluyendo las de tu corazón. Requiere intoxicación tier 3 (Blackout). Único uso.,Opens any lock. Including the ones around your heart. Requires intoxication tier 3 (Blackout). Single use.
 ITEM_LAUNCHER_CONDOM_NAME,Lanzapreservativos Múltiple,Multi-Condom Launcher
-ITEM_LAUNCHER_CONDOM_DESC,"Dispara 3 preservativos explosivos. Daño base 12 c/u, área de efecto. 'Protección a distancia. Seguridad primero.'","Fires 3 explosive condoms. Base damage 12 each, area of effect. 'Protection from a distance. Safety first.'"
+ITEM_LAUNCHER_CONDOM_DESC,"Lanza 3 preservativos lentos que explotan en área al chocar o al acabarse la mecha (parpadean antes). Daño en área, poca cadencia. 'Protección a distancia. Seguridad primero.'","Fires 3 slow condoms that explode in an area on impact or when the fuse runs out (they blink first). Area damage, low fire rate. 'Protection from a distance. Safety first.'"
 ITEM_MEAD_NAME,Hidromiel de Valhalla,Valhalla Mead
 ITEM_MEAD_DESC,"Bebida de dioses caídos. +40 intoxicación, -10% precisión, +30% daño, +15% velocidad. 'Odín bebió esto. Odín también se cayó de su caballo.'","Drink of fallen gods. +40 intoxication, -10% accuracy, +30% damage, +15% speed. 'Odin drank this. Odin also fell off his horse.'"
 ITEM_MEDKIT_NAME,Botiquín Completo,Full Medkit
@@ -38,9 +38,9 @@ ITEM_MEDKIT_DESC,"Cura 100 vida, limpia efectos negativos, restaura escudos. 'Pa
 ITEM_MYSTERY_FLUID_NAME,Fluido Misterioso (?),Mystery Fluid (?)
 ITEM_MYSTERY_FLUID_DESC,"¿Qué es? ¿Orina? ¿Semen? ¿Leche materna? ¿Agua del grifo? Efecto aleatorio: cura, daña, emborracha, revela mapa, spawn enemigo. 'Solo hay una forma de saberlo.'","What is it? Pee? Semen? Breast milk? Tap water? Random effect: heals, hurts, gets you drunk, reveals the map, spawns an enemy. 'There's only one way to find out.'"
 ITEM_PISTOL_BASIC_NAME,Pistola de Plástico,Plastic Pistol
-ITEM_PISTOL_BASIC_DESC,"Dispara balas de foam. Daño base 8. 'Es un juguete', dice la caja. Duele igual.","Fires foam bullets. Base damage 8. 'It's a toy,' says the box. It hurts just the same."
+ITEM_PISTOL_BASIC_DESC,"Fiable y precisa, sin trucos ni costes. 'Es un juguete', dice la caja. Duele igual.","Reliable and accurate, no tricks and no downsides. 'It's a toy,' says the box. It hurts just the same."
 ITEM_PISTOL_GOLDEN_NAME,Pistola Dorada (Compensación),Golden Pistol (Compensation)
-ITEM_PISTOL_GOLDEN_DESC,"Brilla más que tu futuro. Daño base 15, precisión perfecta. 'Tamaño del cañón inversamente proporcional a otra cosa.'","Shines brighter than your future. Base damage 15, perfect accuracy. 'Barrel size inversely proportional to something else.'"
+ITEM_PISTOL_GOLDEN_DESC,Precisa y con crítico alto (+20%); las balas atraviesan a un enemigo. Cadencia media. 'Tamaño del cañón inversamente proporcional a otra cosa.',Accurate with a high crit chance (+20%); bullets pierce one enemy. Medium fire rate. 'Barrel size inversely proportional to something else.'
 ITEM_RELIC_BIRTH_CONTROL_NAME,Anticonceptivo Maldito,Cursed Contraceptive
 ITEM_RELIC_BIRTH_CONTROL_DESC,"Evita consecuencias. -50% intoxicación ganada, enemigos dejan 25% menos loot. 'Seguro, pero aburrido.'","Avoids consequences. -50% intoxication gained, enemies drop 25% less loot. 'Safe, but boring.'"
 ITEM_RELIC_CONDOM_NAME,Preservativo de Titanio,Titanium Condom
@@ -60,15 +60,15 @@ ITEM_RELIC_TESTOSTERONE_DESC,"Masculinidad tóxica embotellada. +100% vida, +50%
 ITEM_RELIC_VIAGRA_NAME,Viagra Vudú,Voodoo Viagra
 ITEM_RELIC_VIAGRA_DESC,"Dureza eterna. +50% daño, +30% tamaño proyectil, -20% velocidad movimiento. 'Cuatro horas después sigues disparando.'","Eternal hardness. +50% damage, +30% projectile size, -20% movement speed. 'Four hours later you're still shooting.'"
 ITEM_RIFLE_REPRODUCTIVE_NAME,Fusil Fecundador,Fertilizing Rifle
-ITEM_RIFLE_REPRODUCTIVE_DESC,"Precisión quirúrgica. Daño base 18, alta cadencia. 'Cada disparo es un potencial hijo... o una baja confirmada.'","Surgical precision. Base damage 18, high fire rate. 'Every shot is a potential child... or a confirmed kill.'"
+ITEM_RIFLE_REPRODUCTIVE_DESC,"Mucho daño por bala y puntería de cirujano, pero con cargador: 6 tiros y recarga larga. 'Cada disparo es un potencial hijo... o una baja confirmada.'","Heavy damage per bullet and surgical aim, but with a magazine: 6 rounds and a long reload. 'Every shot is a potential child... or a confirmed kill.'"
 ITEM_RUM_NAME,Ron de Cañamo,Hemp Rum
 ITEM_RUM_DESC,"Dulce, espeso, pirata. +35 intoxicación, -20% precisión, +25% daño, +5% lifesteal. 'Yo ho ho y una botella de... arrepentimiento.'","Sweet, thick, piratey. +35 intoxication, -20% accuracy, +25% damage, +5% lifesteal. 'Yo ho ho and a bottle of... regret.'"
 ITEM_SATISFYER_NAME,Satisfyer de Asedio,Siege Satisfyer
-ITEM_SATISFYER_DESC,"Lanza un pulso que se planta y succiona a todos los enemigos cercanos hacia el centro, dañándolos sin parar. Daño 5 por tic, ROF 0.9s. 'Tecnología de ondas de presión. Los enemigos no se resisten. Nadie se resiste.'","Launches a pulse that plants itself and sucks all nearby enemies toward the center, damaging them nonstop. Damage 5 per tick, ROF 0.9s. 'Pressure-wave technology. Enemies don't resist. Nobody resists.'"
+ITEM_SATISFYER_DESC,"Control, no daño: el pulso se planta, succiona y aturde a todo lo cercano mientras lo daña muy poco. Úsalo para juntar enemigos y remátalos con otra cosa. 'Tecnología de ondas de presión. Los enemigos no se resisten. Nadie se resiste.'","Control, not damage: the pulse plants itself, sucks in and staggers everything nearby while barely hurting it. Group enemies up, then finish them with something else. 'Pressure-wave technology. Enemies don't resist. Nobody resists.'"
 ITEM_SHOTGUN_PELVIC_NAME,Escopeta Pélvica,Pelvic Shotgun
-ITEM_SHOTGUN_PELVIC_DESC,"Dispara perdigones en forma de... ya sabes. Daño base 25, spread amplio. Corto alcance, alto daño. 'Para cuando necesitas abrir piernas... y cráneos.'","Fires pellets in the shape of... you know. Base damage 25, wide spread. Short range, high damage. 'For when you need to open legs... and skulls.'"
+ITEM_SHOTGUN_PELVIC_DESC,"Brutal a quemarropa, casi inútil de lejos: el daño cae con la distancia y el alcance es corto. Empuja mucho. 'Para cuando necesitas abrir piernas... y cráneos.'","Brutal point-blank, nearly useless at range: damage falls off with distance and reach is short. Big knockback. 'For when you need to open legs... and skulls.'"
 ITEM_SMG_VIBRATOR_NAME,Subfusil Vibratorio,Vibrating SMG
-ITEM_SMG_VIBRATOR_DESC,"Alta cadencia, vibra en la mano. Daño base 8, ROF 0.08s. 'No es un juguete sexual. Bueno, técnicamente sí.'","High fire rate, buzzes in your hand. Base damage 8, ROF 0.08s. 'It's not a sex toy. Well, technically it is.'"
+ITEM_SMG_VIBRATOR_DESC,"Ráfaga muy rápida pero poco daño y mucha dispersión. Se calienta: si la mantienes apretada se sobrecalienta y se bloquea un momento. 'No es un juguete sexual. Bueno, técnicamente sí.'","Very fast burst but low damage and wide spread. It heats up: hold the trigger too long and it overheats and locks for a moment. 'It's not a sex toy. Well, technically it is.'"
 ITEM_STIMULANT_COMBAT_NAME,Estimulante de Combate,Combat Stimulant
 ITEM_STIMULANT_COMBAT_DESC,"+40% velocidad, +30% cadencia, +25% daño 15s. Luego crash: -50% stats 10s. 'Rendimiento a crédito.'","+40% speed, +30% fire rate, +25% damage for 15s. Then the crash: -50% stats for 10s. 'Performance on credit.'"
 ITEM_SYRINGE_ADRENALINE_NAME,Jeringa de Adrenalina,Adrenaline Syringe
@@ -89,3 +89,5 @@ ITEM_VODKA_NAME,Vodka de Patata,Potato Vodka
 ITEM_VODKA_DESC,"Incoloro, inodoro, traicionero. +25 intoxicación, -15% precisión, +20% daño. 'Es agua, dice el ruso. Es mentira, dice tu hígado.'","Colorless, odorless, treacherous. +25 intoxication, -15% accuracy, +20% damage. 'It's water,' says the Russian. 'It's a lie,' says your liver."
 ITEM_WHISKEY_NAME,Whiskey Barato,Cheap Whiskey
 ITEM_WHISKEY_DESC,"Te emborracha un poco. +15 intoxicación, -10% precisión, +15% daño. 'Para el dolor', te dices.","Gets you a little drunk. +15 intoxication, -10% accuracy, +15% damage. 'For the pain,' you tell yourself."
+ITEM_DILDO_TASER_NAME,Dildo Eléctrico,Electric Dildo
+ITEM_DILDO_TASER_DESC,"Dispara chispas cuyo arco salta a otros 2 enemigos cercanos (50% del daño). Poco daño contra uno solo, mejor contra grupos. 'Descarga de 12.000 voltios. Garantía de 3 meses.'","Fires sparks whose arc jumps to 2 other nearby enemies (50% damage). Weak against a single target, better against groups. '12,000 volts. 3-month warranty.'"

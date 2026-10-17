@@ -47,6 +47,20 @@ var _weapon_base_x := 16.0
 const HAND_ANCHORS := "res://assets/data/hand_anchors.json"
 var _hand: Dictionary = {}
 const PLAYER_BULLET := preload("res://src/player/player_bullet.tscn")
+const WEAPON_GAUGE := preload("res://src/player/weapon_gauge.gd")
+## Mecanicas por arma (custom_data): cargador/recarga ("magazine", "reload") y calor
+## ("heat_per_shot"). El medidor bajo los pies las muestra (weapon_gauge.gd).
+const HEAT_MAX := 100.0
+const HEAT_COOL := 30.0        # enfriamiento por segundo sin disparar
+const HEAT_LOCK_COOL := 60.0   # enfriamiento forzado tras sobrecalentar
+const HEAT_UNLOCK := 35.0      # al bajar de aqui el arma vuelve a disparar
+const IDLE_RELOAD_S := 1.0     # sin disparar este rato, el cargador se rellena solo
+var _ammo := 0
+var _reload_t := 0.0           # >0 = recargando (segundos que faltan)
+var _reload_total := 1.0
+var _heat := 0.0
+var _overheated := false
+var _gauge: Node2D = null
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hurtbox: Area2D = $Hurtbox
@@ -59,6 +73,8 @@ const PLAYER_BULLET := preload("res://src/player/player_bullet.tscn")
 func _ready() -> void:
 	add_to_group("player")
 	_weapon_base_x = _grip_offset()
+	_gauge = WEAPON_GAUGE.new()
+	add_child(_gauge)
 	_player_stats.health_changed.connect(_on_health_changed)
 	_player_stats.shields_changed.connect(_on_shields_changed)
 	_player_stats.stamina_changed.connect(_on_stamina_changed)
@@ -93,6 +109,7 @@ func _physics_process(delta: float) -> void:
 	_handle_dash(delta)
 	_update_aim()
 	_update_dash_lift()
+	_update_weapon_state(delta)
 	_handle_attack(delta)
 	_handle_interaction()
 	move_and_slide()
@@ -221,9 +238,111 @@ func _handle_attack(delta: float) -> void:
 		_global_events.show_floating_text.emit(global_position + Vector2(0, -30), tr("FX_PUNCH"), Color("ff7ac0"))
 		Narrator.say_first("no_weapon_attack")
 		Sound.play("crack")
-	elif Input.is_action_pressed("attack") and not Narrator.ate_input() and _attack_timer <= 0.0:
+	elif Input.is_action_pressed("attack") and not Narrator.ate_input() and _attack_timer <= 0.0 and _weapon_ready():
 		_shoot()
-		_attack_timer = float(current_weapon.custom_data.get("fire_rate", attack_cooldown)) / (get_node("/root/PlayerStats").fire_rate_modifier * get_node("/root/PlayerStats").get_intoxication_effects().get("speed", 1.0))
+		_attack_timer = float(current_weapon.custom_data.get("fire_rate", attack_cooldown)) / _rate_mult()
+		_after_shot()
+
+## Cadencia total: bendiciones/reliquias x intoxicacion.
+func _rate_mult() -> float:
+	return _player_stats.fire_rate_modifier * _player_stats.get_intoxication_effects().get("speed", 1.0)
+
+## false mientras el arma recarga o esta sobrecalentada (el gatillo no hace nada).
+func _weapon_ready() -> bool:
+	if _reload_t > 0.0 or _overheated:
+		return false
+	var mag := int(current_weapon.custom_data.get("magazine", 0))
+	if mag > 0 and _ammo <= 0:
+		_start_reload()
+		return false
+	return true
+
+func _start_reload() -> void:
+	_reload_total = maxf(0.2, float(current_weapon.custom_data.get("reload", 1.2)) / _rate_mult())
+	_reload_t = _reload_total
+	_global_events.show_floating_text.emit(global_position + Vector2(0, -34), tr("FX_RELOAD"), Color("ffd27a"))
+
+## Gasta bala del cargador o suma calor tras cada disparo.
+func _after_shot() -> void:
+	_since_shot = 0.0
+	var cd: Dictionary = current_weapon.custom_data
+	if int(cd.get("magazine", 0)) > 0:
+		_ammo -= 1
+		if _ammo <= 0:
+			_start_reload()
+	var hps := float(cd.get("heat_per_shot", 0.0))
+	if hps > 0.0:
+		_heat += hps
+		if _heat >= HEAT_MAX:
+			_heat = HEAT_MAX
+			_overheated = true
+			Sound.play("hurt")
+			_global_events.show_floating_text.emit(global_position + Vector2(0, -34), tr("FX_OVERHEAT"), Color("ff5a3c"))
+			_steam_puff()
+
+var _since_shot := 9.0
+
+## Recarga, enfriamiento, color/inclinacion del arma y medidor. Corre cada frame de fisica.
+func _update_weapon_state(delta: float) -> void:
+	_since_shot += delta
+	if current_weapon == null:
+		_gauge.set("kind", "")
+		return
+	var cd: Dictionary = current_weapon.custom_data
+	var mag := int(cd.get("magazine", 0))
+	var hps := float(cd.get("heat_per_shot", 0.0))
+	var tilt := 0.0
+	var tint := Color.WHITE
+	if mag > 0:
+		if _reload_t > 0.0:
+			_reload_t -= delta
+			if _reload_t <= 0.0:
+				_ammo = mag
+				Sound.play("crack")
+			else:
+				tilt = sin(clampf(1.0 - _reload_t / _reload_total, 0.0, 1.0) * PI) * 0.9
+		elif _ammo < mag and _since_shot > IDLE_RELOAD_S:
+			_start_reload()
+		_gauge.set("kind", "ammo")
+		_gauge.set("count", mag)
+		_gauge.set("ammo", _ammo)
+		_gauge.set("progress", 1.0 - _reload_t / _reload_total if _reload_t > 0.0 else -1.0)
+	elif hps > 0.0:
+		if _overheated:
+			_heat -= HEAT_LOCK_COOL * delta
+			if _heat <= HEAT_UNLOCK:
+				_overheated = false
+		elif _since_shot > 0.2:
+			_heat -= HEAT_COOL * delta
+		_heat = maxf(0.0, _heat)
+		tint = Color.WHITE.lerp(Color(1.0, 0.3, 0.2), clampf(_heat / HEAT_MAX, 0.0, 1.0) * 0.9)
+		_gauge.set("kind", "heat")
+		_gauge.set("value", _heat / HEAT_MAX)
+		_gauge.set("locked", _overheated)
+	else:
+		_gauge.set("kind", "")
+	weapon_sprite.modulate = tint
+	weapon_sprite.rotation = tilt * (-1.0 if weapon_sprite.flip_v else 1.0)
+
+## Vapor que sale del arma al sobrecalentarse.
+func _steam_puff() -> void:
+	var p := CPUParticles2D.new()
+	p.position = Vector2(_weapon_base_x + (weapon_sprite.texture.get_width() * weapon_sprite.scale.x * 0.5 if weapon_sprite.texture else 8.0), 0)
+	p.amount = 14
+	p.lifetime = 0.7
+	p.one_shot = true
+	p.explosiveness = 0.8
+	p.emitting = true
+	p.direction = Vector2.UP
+	p.spread = 50.0
+	p.gravity = Vector2(0, -40)
+	p.initial_velocity_min = 25.0
+	p.initial_velocity_max = 55.0
+	p.scale_amount_min = 2.0
+	p.scale_amount_max = 3.5
+	p.color = Color(0.9, 0.9, 0.9, 0.7)
+	weapon_pivot.add_child(p)
+	get_tree().create_timer(1.0).timeout.connect(p.queue_free)
 
 func get_weapon_damage() -> float:
 	# Weapons store their damage inside custom_data (see assets/data/items),
@@ -297,11 +416,13 @@ func _shoot() -> void:
 		v.damage = dmg * (_player_stats.crit_damage_modifier if RNG.randf() < _player_stats.crit_chance_modifier else 1.0)
 		v.radius = float(cd.get("vortex_radius", v.radius))
 		v.duration = float(cd.get("vortex_duration", v.duration))
+		v.pull = float(cd.get("vortex_pull", v.pull))
 		v.rotation = _aim.angle()
 		get_parent().add_child(v)
 		v.global_position = weapon_pivot.global_position + _aim * 14.0
 		return
-	var count: int = int(cd.get("pellets", cd.get("projectiles", 1)))
+	var base_count: int = int(cd.get("pellets", cd.get("projectiles", 1)))
+	var count: int = base_count
 	# borracho = mas dispersion, no fallos aleatorios
 	var spread: float = float(cd.get("spread", 0.05)) / accuracy
 	var extra: int = _rm().blessing("descarga")
@@ -310,20 +431,37 @@ func _shoot() -> void:
 		dmg *= 0.7
 		spread = maxf(spread, 0.12)  # en abanico, no todas por el mismo sitio
 	_attack_anim = 0.15
+	var crit_chance: float = _player_stats.crit_chance_modifier + float(cd.get("crit_bonus", 0.0))
+	var speed: float = float(cd.get("projectile_speed", 500)) * _player_stats.projectile_speed_modifier
 	for i in range(count):
 		var b := PLAYER_BULLET.instantiate()
 		var ang := _aim.angle() + RNG.randf_range(-spread, spread)
 		if count > 1:
 			ang += (i - (count - 1) / 2.0) * spread
-		# escopeta: base_damage repartido entre perdigones (x2 si aciertan todos a quemarropa)
-		b.damage = dmg * 2.0 / count if cd.has("pellets") else dmg
-		var crit := RNG.randf() < _player_stats.crit_chance_modifier
+		# escopeta: el dano del arma se reparte entre los perdigones PROPIOS (las extra de
+		# Descarga Multiple suman encima); x2 si aciertan todos a quemarropa
+		b.damage = dmg * 2.0 / base_count if cd.has("pellets") else dmg
+		var crit := RNG.randf() < crit_chance
 		if crit:
 			b.damage *= _player_stats.crit_damage_modifier
-		b.speed = float(cd.get("projectile_speed", 500)) * _player_stats.projectile_speed_modifier
+		b.speed = speed
 		b.crit = crit
 		b.rotation = ang
+		if cd.has("range"):
+			b.lifetime = float(cd["range"]) / speed
+		if cd.has("falloff_end"):  # caida de dano por distancia (escopeta)
+			b.falloff_start = float(cd.get("falloff_start", 0.0))
+			b.falloff_end = float(cd["falloff_end"])
+			b.falloff_min = float(cd.get("falloff_min", 0.2))
+		b.explosion_radius = float(cd.get("explosion_radius", 0.0))
+		b.chain = int(cd.get("chain", 0))
+		b.chain_radius = float(cd.get("chain_radius", 110.0))
+		b.chain_mult = float(cd.get("chain_mult", 0.5))
+		if cd.has("bullet_color"):
+			b.tint = Color(cd["bullet_color"])
 		_bless_bullet(b)
+		b.pierce += int(cd.get("pierce", 0))
+		b.knockback *= float(cd.get("knockback_mult", 1.0))
 		get_parent().add_child(b)
 		b.global_position = weapon_pivot.global_position + Vector2.RIGHT.rotated(ang) * 14.0
 
@@ -451,6 +589,10 @@ func _drop_weapon(id: String) -> void:
 
 func equip_weapon(item: Item) -> void:
 	current_weapon = item
+	_ammo = int(item.custom_data.get("magazine", 0))
+	_reload_t = 0.0
+	_heat = 0.0
+	_overheated = false
 	weapon_sprite.texture = item.sprite
 	_weapon_base_x = _grip_offset()
 	if not collected_items.has(item.id):
