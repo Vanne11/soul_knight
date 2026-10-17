@@ -111,7 +111,9 @@ func _seal_major(id: String) -> void:
 	for i in cofres:
 		var c := CHEST_SCENE.instantiate()
 		c.contents = "weapon" if i == 0 else ""
-		c.position = (_it.position if _it != null else center()) + Vector2(-70 - 60 * i, 20)
+		var want := (_it.position if _it != null else center()) + Vector2(-70 - 60 * i, 20)
+		var spot := RoomUtil.free_spot(main, room, want, 26.0)
+		c.position = want if spot == Vector2.INF else spot  # que no caiga en un muro o un hueco
 		room.pickups_node.add_child.call_deferred(c)
 	Sound.play("puzzle_solve")
 	toast(tr("RM_PACT_MAJOR_T"), tr("RM_PACT_MAJOR_D") % Censura.curse_name(id), "ff5a7a")
