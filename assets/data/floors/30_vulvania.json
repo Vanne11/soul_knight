@@ -1,0 +1,17 @@
+{
+	"name": "VULVANIA",
+	"kingdom": "vulva",
+	"tint": "ff7ac0",
+	"roster": ["ovulo", "trompa", "calambre"],
+	"names": ["Óvulo Rodante", "Trompa Escupidora", "Calambre"],
+	"extra": [
+		{"variant": "especulo", "name": "Espéculo Mordedor", "type": "melee", "weight": 0.25},
+		{"variant": "dildo_electrico", "name": "Dildo Eléctrico", "type": "taser", "weight": 0.2},
+		{"variant": "clamidia", "name": "Clamidia Clandestina", "type": "its", "weight": 0.05, "its": "clamidia"},
+		{"variant": "vph", "name": "VPH Verrugón", "type": "its", "weight": 0.05, "its": "vph"}
+	],
+	"weights": [0.4, 0.3, 0.3],
+	"boss": "reina_ovaria",
+	"boss_name": "SU MAJESTAD OVARIA II",
+	"needs": ["estrogeno"]
+}

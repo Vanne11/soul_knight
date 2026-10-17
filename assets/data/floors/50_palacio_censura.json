@@ -1,0 +1,15 @@
+{
+	"name": "EL PALACIO DE LA CENSURA",
+	"kingdom": "censura",
+	"tint": "b48cff",
+	"roster": ["barra_negra", "sello", "pixel_censura"],
+	"names": ["Barra Negra", "Sello Censor", "Píxel de Censura"],
+	"extra": [
+		{"variant": "sifilis", "name": "Sífilis Imitadora", "type": "its", "weight": 0.04, "its": "sifilis"},
+		{"variant": "herpes", "name": "Herpes Recurrente", "type": "its", "weight": 0.04, "its": "herpes"}
+	],
+	"weights": [0.35, 0.3, 0.35],
+	"boss": "hoja_de_parra",
+	"boss_name": "SU PUDOROSIDAD, LA HOJA DE PARRA",
+	"needs": []
+}

@@ -1,0 +1,15 @@
+{
+	"name": "PENELANDIA",
+	"kingdom": "pene",
+	"tint": "6ec6ff",
+	"roster": ["testiculo", "vesicula", "espermatozoide"],
+	"names": ["Testículo Errante", "Vesícula Resentida", "Espermatozoide"],
+	"extra": [
+		{"variant": "herpes", "name": "Herpes Recurrente", "type": "its", "weight": 0.05, "its": "herpes"},
+		{"variant": "gonorrea", "name": "Gonorrea Goteante", "type": "its", "weight": 0.05, "its": "gonorrea"}
+	],
+	"weights": [0.45, 0.2, 0.35],
+	"boss": "testiculo_primordial",
+	"boss_name": "TESTÍCULO PRIMORDIAL",
+	"needs": ["testosterona"]
+}

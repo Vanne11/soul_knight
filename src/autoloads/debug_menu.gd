@@ -119,7 +119,7 @@ func _open() -> void:
 	})
 	var spawns := {}
 	for t in ["melee", "ranged", "swarmer", "tank", "boss"]:
-		spawns["+" + t] = _spawn_enemy.bind(["melee", "ranged", "swarmer", "tank", "boss"].find(t))
+		spawns["+" + t] = _spawn_enemy.bind(t)
 	_row(box, spawns)
 
 	_label(box, tr("DEBUG_GOTO_HEAD"))
@@ -151,16 +151,18 @@ func _open() -> void:
 	_row(box, chars)
 
 
-func _spawn_enemy(t: int) -> void:
+## t = id de EnemyRegistry ("melee", "boss"...).
+func _spawn_enemy(t: String) -> void:
 	var main := _main()
 	var rm := get_node("/root/RunManager")
 	var fd: Dictionary = rm.floor_data()
 	var room: Room = main.current_room
 	var info := {"enemy_type": t, "health": 40.0 + rm.current_floor * 10.0, "damage": 8.0 + rm.current_floor * 3.0}
-	if t < 3:
-		info.name = fd.names[t]
-		info.frames = main._frames_path(fd.roster[t])
-	elif t == 4:
+	var slot := ["melee", "ranged", "swarmer"].find(t)  # puesto en el roster del piso
+	if slot >= 0:
+		info.name = fd.names[slot]
+		info.frames = main._frames_path(fd.roster[slot])
+	elif t == "boss":
 		info.name = fd.boss_name
 		info.frames = main._frames_path(fd.boss)
 		info.health = EnemyBoss.health_for_floor(rm.current_floor)
@@ -168,7 +170,7 @@ func _spawn_enemy(t: int) -> void:
 	var data: Array[Dictionary] = [info]
 	room.cleared = false  # para que al matarlo la sala se vuelva a abrir
 	room.spawn_points = [main.player.global_position + Vector2(160, 0)]
-	room.spawn_enemies(main.ENEMY_SCENES, data)
+	room.spawn_enemies(data)
 
 
 func _label(parent: Control, text: String) -> void:
