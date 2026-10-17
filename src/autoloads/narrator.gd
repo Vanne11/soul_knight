@@ -2,7 +2,9 @@ extends CanvasLayer
 
 ## El narrador: solo habla en momentos que importan al jugador (inicio de run y
 ## de piso, puertas que no se abren, mecanicas nuevas, el jefe, la muerte).
-## Nunca durante un combate. Las frases viven en assets/data/narrator/lines.json.
+## Nunca durante un combate. Las frases viven en assets/data/narrator/*.json: lines.json
+## (las de siempre) y un archivo por bloque (p.ej. tienda.json), fusionados al arrancar
+## (ver _load_lines). Asi cada bloque agrega sus frases sin tocar lines.json.
 ##   Narrator.say("evento")         se encola; hay que pasarla con clic/espacio
 ##   Narrator.say_first("evento")   solo la primera vez en la run
 ##   Narrator.toast(titulo, texto)  aviso breve con el mismo estilo; se va solo
@@ -12,7 +14,9 @@ extends CanvasLayer
 
 signal chosen(index: int)
 
-const LINES_PATH := "res://assets/data/narrator/lines.json"
+const LINES_DIR := "res://assets/data/narrator/"
+## Archivo principal: se carga primero y sus claves de traduccion son las de siempre.
+const MAIN_FILE := "lines.json"
 const MEMORY_PATH := "user://narrator.json"
 const CHARS_PER_SEC := 45.0
 ## Voz del narrador (el "bla-bla"): mas grave que la intro (1.0) y -4 dB, porque
@@ -23,7 +27,10 @@ const TOAST_SECONDS := 4.0
 const TOAST_SECONDS_SHORT := 1.8
 const RARITY_COLORS := ["f2ead6", "7ad67a", "6aa8ff", "c08cff", "ffa64a", "9a9a9a"]
 
+## evento -> frases en espanol (todas las de todos los archivos, en orden de carga)
 var _lines: Dictionary = {}
+## evento -> claves de traduccion, paralelas a _lines (ver Loc.narr_key)
+var _keys: Dictionary = {}
 ## evento -> indices de frase pendientes de la bolsa (se traduce al elegir, no al barajar)
 var _bags: Dictionary = {}
 var _memory := {"runs": 0, "deaths": 0, "deaths_by_floor": {}}
@@ -67,7 +74,8 @@ var _choice_row: VBoxContainer
 func _ready() -> void:
 	layer = 50
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	_lines = load(LINES_PATH).data
+	Loc.load_unregistered_translations()  # locale/<bloque>.csv sin registrar en project.godot
+	_load_lines()
 	_load_memory()
 	_stack = VBoxContainer.new()
 	_stack.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -204,7 +212,11 @@ func _pick_choice(i: int) -> void:
 
 
 func get_lines(event: String) -> Array:
-	return Loc.narr_lines(event, _lines.get(event, []))
+	var out := []
+	var raw: Array = _lines.get(event, [])
+	for i in raw.size():
+		out.append(Loc.narr_line(_keys[event][i], raw[i]))
+	return out
 
 
 func has_lines(event: String) -> bool:
@@ -276,7 +288,7 @@ func _pick(event: String) -> String:
 		bag.shuffle()
 		_bags[event] = bag
 	var idx: int = bag.pop_back()
-	return Loc.narr_line(event, idx, _lines[event][idx])
+	return Loc.narr_line(_keys[event][idx], _lines[event][idx])
 
 
 func _show(line: String) -> void:
@@ -442,6 +454,56 @@ func _on_lore_unlocked(entry_id: String) -> void:
 	var entry = get_node("/root/LoreDatabase").get_entry(entry_id)
 	if entry:
 		_codex_toast.show_entry(entry)  # panel con imagen (antes: toast de una linea)
+
+
+# ---------------------------------------------------------------- frases
+## Archivos de frases: lines.json primero y luego el resto de *.json en orden
+## alfabetico (determinista). ResourceLoader.list_directory lista igual en el editor
+## que en un export (ya resuelve .import/.remap dentro del .pck).
+static func narrator_files() -> PackedStringArray:
+	var extra: Array[String] = []
+	for f in ResourceLoader.list_directory(LINES_DIR):
+		if f.get_extension() == "json" and f != MAIN_FILE:
+			extra.append(f)
+	extra.sort()
+	var out := PackedStringArray()
+	if ResourceLoader.exists(LINES_DIR + MAIN_FILE):
+		out.append(MAIN_FILE)
+	out.append_array(extra)
+	return out
+
+
+## Fusiona todos los archivos. Si dos traen el mismo evento, sus frases se concatenan
+## (las de lines.json primero). Cada frase guarda su clave de traduccion, que depende
+## solo de su archivo, evento e indice dentro de ese archivo: agregar o quitar otro
+## archivo no mueve las traducciones. Las claves "_algo" son comentarios, no eventos.
+func _load_lines() -> void:
+	_lines.clear()
+	_keys.clear()
+	var used := {}  # clave -> archivo, para avisar si dos frases chocan
+	for file in narrator_files():
+		var res = load(LINES_DIR + file)
+		if not (res is JSON) or not (res.data is Dictionary):
+			push_warning("Narrator: %s no es un diccionario JSON valido" % file)
+			continue
+		var stem := file.get_basename()
+		for event in res.data:
+			var lines = res.data[event]
+			if String(event).begins_with("_"):
+				continue
+			if not (lines is Array):
+				push_warning("Narrator: %s: '%s' debe ser una lista de frases" % [file, event])
+				continue
+			if not _lines.has(event):
+				_lines[event] = []
+				_keys[event] = []
+			for i in lines.size():
+				var key := Loc.narr_key(stem, event, i)
+				if used.has(key):
+					push_warning("Narrator: la clave %s (%s) choca con otra de %s" % [key, file, used[key]])
+				used[key] = file
+				_lines[event].append(String(lines[i]))
+				_keys[event].append(key)
 
 
 # ---------------------------------------------------------------- memoria

@@ -10,6 +10,34 @@ extends RefCounted
 ## Claves (locale/items|lore|narrator|world.csv) las genera tools/extract_locale_data.py.
 
 static var _enemy_keys: Dictionary = {}  # nombre en espanol -> clave
+static var _extra_loaded := false
+
+const LOCALE_DIR := "res://locale/"
+
+
+## Carga las traducciones de locale/ que no esten en project.godot (locale/translations):
+## cada bloque crea su locale/<bloque>.csv, Godot genera <bloque>.<idioma>.translation al
+## importarlo y aqui se suma sola, sin tocar project.godot. Lo llama el Narrator al
+## arrancar (es el primer autoload con textos). tools/register_locales.py las registra
+## en project.godot para dejarlo ordenado; con eso esto no hace nada.
+## Devuelve las rutas cargadas (para pruebas).
+static func load_unregistered_translations() -> PackedStringArray:
+	var loaded := PackedStringArray()
+	if _extra_loaded:
+		return loaded
+	_extra_loaded = true
+	var registered: PackedStringArray = ProjectSettings.get_setting("internationalization/locale/translations", PackedStringArray())
+	var files := Array(ResourceLoader.list_directory(LOCALE_DIR))
+	files.sort()
+	for f in files:
+		var path: String = LOCALE_DIR + f
+		if f.get_extension() != "translation" or path in registered:
+			continue
+		var t := load(path) as Translation
+		if t:
+			TranslationServer.add_translation(t)
+			loaded.append(path)
+	return loaded
 
 
 static func tr_or(key: String, fallback: String) -> String:
@@ -55,16 +83,19 @@ static func lore_flavor(e) -> String:
 
 
 # ------------------------------------------------------------------ narrador
-## Frase i-esima del evento (mismo orden e indices que lines.json).
-static func narr_line(event: String, i: int, fallback: String) -> String:
-	return tr_or("NARR_%s_%d" % [event.to_upper(), i], fallback)
+## Clave de traduccion de la frase i-esima de un evento en assets/data/narrator/<stem>.json
+## (i = indice dentro de ESE archivo). lines.json conserva las claves de siempre
+## (NARR_<EVENTO>_<i>, locale/narrator.csv); los demas archivos llevan su nombre delante,
+## con doble guion bajo para no chocar con eventos de lines.json:
+## NARR_<STEM>__<EVENTO>_<i> (locale/narrator_<stem>.csv, ver tools/extract_locale_data.py).
+static func narr_key(stem: String, event: String, i: int) -> String:
+	if stem == "lines":
+		return "NARR_%s_%d" % [event.to_upper(), i]
+	return "NARR_%s__%s_%d" % [stem.to_upper(), event.to_upper(), i]
 
 
-static func narr_lines(event: String, raw: Array) -> Array:
-	var out := []
-	for i in raw.size():
-		out.append(narr_line(event, i, raw[i]))
-	return out
+static func narr_line(key: String, fallback: String) -> String:
+	return tr_or(key, fallback)
 
 
 # ------------------------------------------------------------------ mundo

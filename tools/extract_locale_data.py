@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Genera/actualiza los CSV de traduccion de DATOS del juego (locale/items|lore|narrator|world.csv).
+"""Genera/actualiza los CSV de traduccion de DATOS del juego (locale/items|lore|narrator|world.csv
+y un locale/narrator_<stem>.csv por cada assets/data/narrator/<stem>.json distinto de lines.json).
 
 Fuente de verdad del espanol: assets/data/items/*.tres, assets/data/lore/*.tres,
-assets/data/narrator/lines.json y las constantes de src/autoloads/run_manager.gd
+assets/data/narrator/*.json y las constantes de src/autoloads/run_manager.gd
 (FLOORS, CHARACTERS, BLESSINGS, META_UPGRADES; se vuelcan con tools/dump_world.gd).
 
 - La columna `es` SIEMPRE se regenera desde los datos.
@@ -62,14 +63,24 @@ def collect_lore() -> dict:
     return rows
 
 
-def collect_narrator() -> dict:
-    data = json.loads((ROOT / "assets/data/narrator/lines.json").read_text(encoding="utf-8"))
+NARRATOR_DIR = ROOT / "assets/data/narrator"
+
+
+def narr_key(stem: str, event: str, i: int) -> str:
+    """Igual que Loc.narr_key: lines.json conserva NARR_<EVENTO>_<i>; el resto lleva el archivo."""
+    if stem == "lines":
+        return f"NARR_{event.upper()}_{i}"
+    return f"NARR_{stem.upper()}__{event.upper()}_{i}"
+
+
+def collect_narrator(stem: str = "lines") -> dict:
+    data = json.loads((NARRATOR_DIR / f"{stem}.json").read_text(encoding="utf-8"))
     rows = {}
     for event, lines in data.items():
         if event.startswith("_"):
             continue
         for i, line in enumerate(lines):
-            rows[f"NARR_{event.upper()}_{i}"] = line
+            rows[narr_key(stem, event, i)] = line
     return rows
 
 
@@ -121,6 +132,10 @@ SOURCES = {
     "narrator": collect_narrator,
     "world": collect_world,
 }
+# Un CSV por archivo extra del narrador: cada bloque toca solo el suyo.
+for _p in sorted(NARRATOR_DIR.glob("*.json")):
+    if _p.stem != "lines":
+        SOURCES[f"narrator_{_p.stem}"] = (lambda s: lambda: collect_narrator(s))(_p.stem)
 
 
 def read_existing(path: Path) -> dict:

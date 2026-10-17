@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Comprueba locale/items|lore|narrator|world.csv contra los datos del juego.
+"""Comprueba locale/items|lore|narrator|world.csv (y narrator_<stem>.csv) contra los datos del juego.
 
 - Todas las claves que Loc puede pedir existen (y no sobran).
 - Ninguna columna de idioma vacia (salvo que el espanol tambien lo este).
@@ -25,6 +25,10 @@ def main() -> int:
     for name, fn in ex.SOURCES.items():
         expected = fn()
         path = ex.LOCALE / f"{name}.csv"
+        if not path.exists():
+            print(f"[{name}] falta {path.name}: corre tools/extract_locale_data.py")
+            errors += 1
+            continue
         with path.open(newline="", encoding="utf-8") as fh:
             rows = list(csv.DictReader(fh))
         keys = [r["keys"] for r in rows]
