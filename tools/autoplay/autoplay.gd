@@ -175,6 +175,10 @@ func _physics_process(delta: float) -> void:
 		Narrator._pick_choice(0)
 		return
 	if get_tree().paused:
+		_heartbeat_t -= delta
+		if _heartbeat_t <= 0.0:
+			_heartbeat_t = 10.0
+			_say("  latido: juego en PAUSA (narrador/menu); prompt=%s eleccion=%s" % [Narrator.prompt_owner, Narrator._choice.visible])
 		return
 	var rm := get_node("/root/RunManager")
 	if not rm.run_active:
@@ -207,6 +211,14 @@ func _physics_process(delta: float) -> void:
 		player.aim_override = Vector2.ZERO
 		_explore(room)
 	_watch_stuck(delta, room)
+	_heartbeat_t -= delta
+	if _heartbeat_t <= 0.0:
+		_heartbeat_t = 10.0
+		var en := _alive_enemies(room)
+		_say("  latido: sala %s %s limpia=%s pos=%s enemigos=%d %s objetivo=%s arma=%s intox=%d pausa=%s" % [
+			Room.RoomType.keys()[room.room_type], room.grid_pos, room.cleared, player.global_position - room.global_position,
+			en.size(), en.map(func(e): return e.global_position - room.global_position).slice(0, 3), _goal_text,
+			player.current_weapon != null, get_node("/root/PlayerStats").intoxication_tier, get_tree().paused])
 	_label.text = "BOT · piso %d · %s · %s\n%s · golpes recibidos: %d" % [
 		_floor_n, Room.RoomType.keys()[room.room_type], "limpia" if room.cleared else "sin limpiar",
 		_goal_text, _hits]
@@ -355,6 +367,8 @@ var _pz_back := false
 func _solve_puzzle(pz: Node2D) -> bool:
 	if pz.get("_done"):
 		return false
+	if pz._seq.is_empty() or pz._step >= pz._seq.size():
+		return false  # todavia sin secuencia (recien creado)
 	_goal_text = "puzzle: paso %d de %d" % [pz._step + 1, pz._seq.size()]
 	if pz._busy:
 		_steer_to(pz.global_position)  # mira la secuencia desde el centro
@@ -596,6 +610,7 @@ func _release_all() -> void:
 
 
 var _interact_frames := 0
+var _heartbeat_t := 10.0
 
 ## E se suelta en el bucle de dibujo (no en el de fisica): asi el juego alcanza a leerla.
 func _process(_delta: float) -> void:
