@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://drw8tscco1keg"
+
+[deps]
+
+files=["res://locale/heroes.es.translation", "res://locale/heroes.en.translation"]
+
+source_file="res://locale/heroes.csv"
+dest_files=["res://locale/heroes.es.translation", "res://locale/heroes.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

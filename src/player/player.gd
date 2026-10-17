@@ -18,6 +18,26 @@ var _dash_timer: float = 0.0
 var _dash_cooldown_timer: float = 0.0
 var _attack_timer: float = 0.0
 var _dash_direction: Vector2 = Vector2.ZERO
+## Cargas de dash (Vulvalquiria: 2). Se gasta una por dash y se rellenan juntas tras el enfriamiento.
+var dash_charges := 1
+var _dash_left := 1
+var _dash_refill := 0.0
+## Habilidad propia del heroe (src/player/abilities/<heroe>.gd), nodo hijo creado en _apply_character.
+var ability: HeroAbility = null
+## "Mirar a camara" y gestos de espera (ver _update_animation y look_at_camera).
+var _camera_left := 0.0
+var _gesture_left := 0.0
+var _idle_t := 0.0
+var _gesture_in := 7.0
+const GESTURE_EVERY := Vector2(6.0, 12.0)
+const GESTURE_TIME := 2.4
+const HERO_ABILITIES := {
+	"pitocles": preload("res://src/player/abilities/pitocles.gd"),
+	"vulvalquiria": preload("res://src/player/abilities/vulvalquiria.gd"),
+	"ornitorrinco": preload("res://src/player/abilities/ornitorrinco.gd"),
+}
+## Objeto con el que arranca cada heroe (reliquia pasiva; tag "especial" = no sale de botin).
+const STARTING_ITEMS := {"pitocles": "casco_pulido", "vulvalquiria": "trenza_combate", "ornitorrinco": "huevo_suerte"}
 var _last_move_direction: Vector2 = Vector2.DOWN
 ## Invulnerabilidad tras recibir un golpe (y durante el dash): sin esto un grupo
 ## de espermatozoides te borra en un frame y no hay forma "justa" de esquivar.
@@ -98,13 +118,31 @@ func _apply_character() -> void:
 	var frames := "res://assets/sprites/player/%s/sprite_frames.tres" % rm.character
 	if ResourceLoader.exists(frames):
 		animated_sprite.sprite_frames = load(frames)
-	match rm.character:
-		"pitocles":
-			_player_stats.max_shields += 10.0
-			_player_stats.current_shields = _player_stats.max_shields
-			_player_stats.emit_all_signals()
-		"vulvalquiria":
-			dash_stamina_cost *= 0.5
+	# Cada heroe juega distinto: numeros y habilidad en src/player/abilities/.
+	if HERO_ABILITIES.has(rm.character):
+		ability = HERO_ABILITIES[rm.character].new()
+		ability.name = "HeroAbility"
+		add_child(ability)
+		ability.setup(self)
+		var gauge := AbilityGauge.new()
+		gauge.ability = ability
+		add_child(gauge)
+	_dash_left = dash_charges
+	get_tree().create_timer(0.4).timeout.connect(_give_starting_item)
+	_gesture_in = RNG.randf_range(GESTURE_EVERY.x, GESTURE_EVERY.y)
+
+## Entrega el objeto inicial una vez que el HUD ya existe (para que ocupe su casilla).
+func _give_starting_item() -> void:
+	var id: String = STARTING_ITEMS.get(_rm().character, "")
+	if id != "" and is_instance_valid(self) and not collected_items.has(id) \
+			and get_node("/root/ItemDatabase").get_item(id) != null:
+		add_item_to_inventory(id)
+
+## Se gira hacia el jugador (cuarta pared): gesto propio de cada heroe. Lo puede llamar
+## cualquier sistema (`if player.has_method("look_at_camera")`). Caminar lo cancela.
+func look_at_camera(seconds := 2.5) -> void:
+	_camera_left = seconds
+	_gesture_left = 0.0
 
 func _physics_process(delta: float) -> void:
 	_handle_timers(delta)
@@ -122,6 +160,8 @@ func _update_dash_lift() -> void:
 	var lift := 0.0
 	if is_dashing and dash_duration > 0.0:
 		lift = sin(clampf(1.0 - _dash_timer / dash_duration, 0.0, 1.0) * PI) * DASH_LIFT
+	if ability:
+		lift += ability.hover_lift()
 	animated_sprite.position.y = -lift
 	weapon_pivot.position = _hand_position()
 	_recoil = maxf(0.0, _recoil - RECOIL_RETURN * get_physics_process_delta_time())
@@ -130,8 +170,8 @@ func _update_dash_lift() -> void:
 	if shadow:
 		if _shadow_scale == Vector2.ZERO:
 			_shadow_scale = shadow.scale
-		shadow.scale = _shadow_scale * (1.0 - 0.3 * lift / DASH_LIFT)
-		shadow.modulate.a = 1.0 - 0.25 * lift / DASH_LIFT
+		shadow.scale = _shadow_scale * (1.0 - 0.3 * minf(lift, DASH_LIFT) / DASH_LIFT)
+		shadow.modulate.a = 1.0 - 0.25 * minf(lift, DASH_LIFT) / DASH_LIFT
 
 func _load_hand_anchors() -> void:
 	var f := FileAccess.open(HAND_ANCHORS, FileAccess.READ)
@@ -145,7 +185,12 @@ func _load_hand_anchors() -> void:
 ## Mano del cuadro actual en coordenadas del jugador (con giro y elevacion del dash).
 ## Sin datos para el personaje, el punto fijo de siempre.
 func _hand_position() -> Vector2:
-	var pts: Array = _hand.get(animated_sprite.animation, [])
+	var anchor_anim: String = animated_sprite.animation
+	if anchor_anim.begins_with("walk"):  # walk_up/walk_down cuelgan del mismo vaiven
+		anchor_anim = "walk"
+	elif anchor_anim.begins_with("idle") or anchor_anim in ["camera", "gesture"]:
+		anchor_anim = "idle"
+	var pts: Array = _hand.get(anchor_anim, [])
 	var tex := animated_sprite.sprite_frames.get_frame_texture(animated_sprite.animation, animated_sprite.frame) if animated_sprite.sprite_frames else null
 	if pts.is_empty() or tex == null:
 		return Vector2(0, 6.0 + animated_sprite.position.y)
@@ -166,6 +211,8 @@ func _handle_timers(delta: float) -> void:
 	if _dash_timer > 0.0:
 		_dash_timer -= delta
 		_dash_cut()
+		if ability:
+			ability.on_dash_tick(_dash_direction)
 		if _dash_timer <= 0.0:
 			is_dashing = false
 			set_collision_mask_value(ENEMY_LAYER, true)
@@ -173,6 +220,12 @@ func _handle_timers(delta: float) -> void:
 	
 	if _dash_cooldown_timer > 0.0:
 		_dash_cooldown_timer -= delta
+	if _dash_refill > 0.0:
+		_dash_refill -= delta
+		if _dash_refill <= 0.0:
+			_dash_left = dash_charges
+	_camera_left = maxf(0.0, _camera_left - delta)
+	_gesture_left = maxf(0.0, _gesture_left - delta)
 	
 	if _attack_timer > 0.0:
 		_attack_timer -= delta
@@ -204,12 +257,14 @@ func _handle_movement(delta: float) -> void:
 		_last_move_direction = input_dir
 	
 	var speed_mult = get_node("/root/PlayerStats").speed_modifier * get_node("/root/PlayerStats").get_intoxication_effects().get("speed", 1.0) * get_node("/root/PlayerStats").contagion_speed_mult()
+	if ability:
+		speed_mult *= ability.speed_mult()
 	velocity = input_dir * move_speed * speed_mult
 	
 	_update_animation(input_dir)
 
 func _handle_dash(delta: float) -> void:
-	if Input.is_action_just_pressed("dash") and not Narrator.ate_input() and not is_dashing and _dash_cooldown_timer <= 0.0:
+	if Input.is_action_just_pressed("dash") and not Narrator.ate_input() and not is_dashing and _dash_cooldown_timer <= 0.0 and _dash_left > 0:
 		if get_node("/root/PlayerStats").use_stamina(dash_stamina_cost):
 			_start_dash()
 		else:
@@ -218,7 +273,13 @@ func _handle_dash(delta: float) -> void:
 func _start_dash() -> void:
 	is_dashing = true
 	_dash_timer = dash_duration
-	_dash_cooldown_timer = dash_cooldown * pow(0.7, _rm().blessing("escurridiza"))
+	var full_cd: float = dash_cooldown * pow(0.7, _rm().blessing("escurridiza"))
+	if _dash_left >= dash_charges:
+		_dash_refill = full_cd  # arranca la recarga de todas las cargas
+	_dash_left -= 1
+	_dash_cooldown_timer = full_cd if _dash_left <= 0 else 0.25
+	if ability:
+		ability.on_dash_start(_last_move_direction)
 	_dash_hits.clear()
 	
 	var dir = _last_move_direction
@@ -236,6 +297,8 @@ func _start_dash() -> void:
 	
 
 func _handle_attack(delta: float) -> void:
+	if ability and not ability.can_attack():
+		return
 	if Input.is_action_pressed("attack") and not Narrator.ate_input() and _attack_timer <= 0.0 and not current_weapon:
 		# Sin cuerpo a cuerpo: a manos limpias te rompes tu antes que ellos.
 		_attack_timer = 1.0
@@ -526,8 +589,11 @@ func stop_allergy() -> void:
 ## El resto (otro reino, neutral u ornitorrinco) funciona normal: no castiga.
 func affinity_boost(item: Item) -> float:
 	var aff: String = item.custom_data.get("affinity", "neutral")
+	if aff != "neutral" and _rm().character == "ornitorrinco":
+		return PLATYPUS_BOOST  # usa objetos de ambos reinos, sin alergia y con algo de provecho
 	return AFFINITY_BOOST if aff != "neutral" and aff == _rm().character_data().kingdom else 1.0
 const AFFINITY_BOOST := 1.5
+const PLATYPUS_BOOST := 1.25
 
 ## Multiplicador escalado por afinidad: 1.3 -> 1.45, 0.7 -> 0.55 (el cambio crece, no el valor).
 static func _boost_mult(m: float, boost: float) -> float:
@@ -599,10 +665,32 @@ func _handle_interaction() -> void:
 func _update_animation(dir: Vector2) -> void:
 	if not animated_sprite:
 		return
-	
-	var anim = "idle"
-	if dir != Vector2.ZERO:
+	var moving := dir != Vector2.ZERO
+	var shooting := _attack_anim > 0.0 or Input.is_action_pressed("attack") \
+			or Time.get_ticks_msec() - _last_shot_ms < FACE_AIM_MS
+	var anim := "idle"
+	if moving:
 		anim = "walk"
+		# vertical sin disparar: de frente al bajar, de espaldas al subir
+		if not shooting and absf(dir.y) > absf(dir.x) * 1.3:
+			anim = "walk_down" if dir.y > 0.0 else "walk_up"
+		_idle_t = 0.0
+		_camera_left = 0.0
+		_gesture_left = 0.0
+	elif shooting or is_dashing:
+		_idle_t = 0.0
+	else:
+		_idle_t += get_physics_process_delta_time()
+		if _camera_left > 0.0:
+			anim = "camera"
+		elif _gesture_left > 0.0:
+			anim = "gesture"
+		elif _idle_t > _gesture_in:
+			_gesture_in = RNG.randf_range(GESTURE_EVERY.x, GESTURE_EVERY.y)
+			_idle_t = 0.0
+			_gesture_left = GESTURE_TIME
+			anim = "gesture"
+			_idle_quip()
 	if _attack_anim > 0.0:
 		anim = "attack"
 	if is_dashing:
@@ -610,7 +698,12 @@ func _update_animation(dir: Vector2) -> void:
 	
 	if animated_sprite.sprite_frames.has_animation(anim):
 		animated_sprite.play(anim)
-	
+
+## Murmullo del heroe en sus gestos de espera (textos en locale/heroes.csv).
+func _idle_quip() -> void:
+	var key := "HERO_QUIP_%s_%d" % [_rm().character.to_upper(), RNG.randi_range(1, 3)]
+	if tr(key) != key:
+		_global_events.show_floating_text.emit(global_position + Vector2(0, -36), tr(key), Color("fff1d6"))
 
 func _on_health_changed(current: float, max: float) -> void:
 	pass
@@ -633,6 +726,8 @@ func _on_intoxication_changed(level: float, tier: int) -> void:
 
 func _on_hurtbox_entered(area: Area2D) -> void:
 	if not area.is_in_group("enemy_attack"):
+		return
+	if ability and ability.try_guard(area, float(area.damage) if "damage" in area else 10.0):
 		return
 	if area.has_method("on_hit"):
 		area.on_hit()  # los proyectiles desaparecen aunque no hagan daño
