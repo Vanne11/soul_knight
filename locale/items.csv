@@ -41,7 +41,6 @@ ITEM_KEY_MASTER_NAME,Llave Maestra Dorada,Golden Master Key
 ITEM_KEY_MASTER_DESC,Abre cualquier cerradura. Incluyendo las de tu corazón. Requiere intoxicación tier 3 (Blackout). Único uso.,Opens any lock. Including the ones around your heart. Requires intoxication tier 3 (Blackout). Single use.
 ITEM_LAUNCHER_CONDOM_NAME,Lanzapreservativos Múltiple,Multi-Condom Launcher
 ITEM_LAUNCHER_CONDOM_DESC,"Lanza 3 preservativos lentos que explotan en área al chocar o al acabarse la mecha (parpadean antes). Daño en área, poca cadencia. 'Protección a distancia. Seguridad primero.'","Fires 3 slow condoms that explode in an area on impact or when the fuse runs out (they blink first). Area damage, low fire rate. 'Protection from a distance. Safety first.'"
-ITEM_LAUNCHER_CONDOM_DESC,"Dispara 3 preservativos explosivos. Daño base 12 c/u, área de efecto. 'Protección a distancia. Seguridad primero.'","Fires 3 explosive condoms. Base damage 12 each, area of effect. 'Protection from a distance. Safety first.'"
 ITEM_LUBE_GEL_NAME,Gel Lubricante de Farmacia,Drugstore Lube Gel
 ITEM_LUBE_GEL_DESC,"+30% de velocidad durante 15 s. Todo resbala, incluido tu futuro. No confundir con el Lubricante Cuántico: este viene en sobre y huele a aloe.","+30% speed for 15 s. Everything slides, including your future. Not to be confused with the Quantum Lubricant: this one comes in a sachet and smells like aloe."
 ITEM_MEAD_NAME,Hidromiel de Valhalla,Valhalla Mead
@@ -58,7 +57,6 @@ ITEM_PISTOL_BASIC_NAME,Pistola de Plástico,Plastic Pistol
 ITEM_PISTOL_BASIC_DESC,"Fiable y precisa, sin trucos ni costes. 'Es un juguete', dice la caja. Duele igual.","Reliable and accurate, no tricks and no downsides. 'It's a toy,' says the box. It hurts just the same."
 ITEM_PISTOL_GOLDEN_NAME,Pistola Dorada (Compensación),Golden Pistol (Compensation)
 ITEM_PISTOL_GOLDEN_DESC,Precisa y con crítico alto (+20%); las balas atraviesan a un enemigo. Cadencia media. 'Tamaño del cañón inversamente proporcional a otra cosa.',Accurate with a high crit chance (+20%); bullets pierce one enemy. Medium fire rate. 'Barrel size inversely proportional to something else.'
-ITEM_PISTOL_GOLDEN_DESC,"Brilla más que tu futuro. Daño base 15, precisión perfecta. 'Tamaño del cañón inversamente proporcional a otra cosa.'","Shines brighter than your future. Base damage 15, perfect accuracy. 'Barrel size inversely proportional to something else.'"
 ITEM_PROTEIN_SHAKE_NAME,Batido de Proteínas Sospechoso,Suspicious Protein Shake
 ITEM_PROTEIN_SHAKE_DESC,"+25% de cadencia de disparo durante 15 s y +10 de vida. Sabe a tiza con vainilla. El tarro dice 'testosterona natural'. La etiqueta, no tanto.","+25% fire rate for 15 s and +10 health. Tastes like chalk with vanilla. The tub says 'natural testosterone'. The label, not so much."
 ITEM_RELIC_BIRTH_CONTROL_NAME,Anticonceptivo Maldito,Cursed Contraceptive
