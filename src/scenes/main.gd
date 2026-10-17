@@ -251,6 +251,7 @@ const ENEMY_SCENES: Array[PackedScene] = [
 	preload("res://src/enemies/enemy_tank.tscn"),
 	preload("res://src/enemies/enemy_boss.tscn"),
 	preload("res://src/enemies/enemy_taser.tscn"),  # 5: a distancia, chispas (Dildo Electrico)
+	preload("res://src/enemies/enemy_inspector.tscn"),  # 6: a distancia, sellos que rebotan (Inspector de Fluidos)
 ]
 ## Economia (medida con tests/economy_sim.gd): ~8 salas por piso, ~3.8 de combate.
 ## Cada moneda recogida vale 1-2. Sale a unas 28 monedas en el piso 1 y 43 en el 5:
@@ -288,6 +289,10 @@ func _spawn_room_enemies(room: Room) -> void:
 ## (antes 8) y multiplicador de los enjambres (ladillas, espermatozoides, calambres...).
 const ENEMY_DAMAGE_BASE := 6.0
 const SWARM_DAMAGE_MULT := 0.5
+## Tanque (Hemorroide Fronteriza): multiplica la vida/dano generica del piso. Queda entre
+## el minijefe (x3.5 vida) y el jefe; el tanque base (500 vida, 40 dano) no escala con el piso.
+const TANK_HEALTH_MULT := 5.0
+const TANK_DAMAGE_MULT := 1.5
 
 func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 	var floor_n: int = _run_manager.current_floor
@@ -343,6 +348,9 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				info.enemy_type = types[t]
 				info.name = names[t]
 				info.frames = _frames_path(roster[t])
+				if types[t] == 3:
+					info.health *= TANK_HEALTH_MULT
+					info.damage *= TANK_DAMAGE_MULT
 				if types[t] == 2:
 					# Los enjambres nunca vienen solos, pero cada bicho pega poco: rapidos y
 					# debiles. Antes pegaban como un enemigo pesado y, de a tres desde el

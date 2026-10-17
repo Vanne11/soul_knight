@@ -26,6 +26,7 @@ var _windup_timer: float = 0.0
 var _charge_duration_timer: float = 0.0
 var _is_charging: bool = false
 var _charge_dir: Vector2 = Vector2.ZERO
+var _hit_done := false
 
 enum State { IDLE, CHASE, CHARGE_WINDUP, CHARGING, STUNNED, DEAD }
 
@@ -65,9 +66,10 @@ func _ready() -> void:
 	if hurtbox:
 		hurtbox.area_entered.connect(_on_hurtbox_entered)
 	if hitbox:
-		# The player's Hurtbox only reacts to areas in this group, and nothing
-		# registered it, so enemies could never deal damage.
 		hitbox.add_to_group("enemy_attack")
+		# Solo hace dano durante la embestida (ver _strike), nunca por roce.
+		hitbox.monitorable = false
+		hitbox.monitoring = true
 
 func _physics_process(delta: float) -> void:
 	if state == State.DEAD:
@@ -117,6 +119,8 @@ func _update_state() -> void:
 		State.CHARGING:
 			if _is_charging == false:
 				state = State.CHASE
+				if animated_sprite:
+					animated_sprite.modulate = Color.WHITE
 				_charge_timer = charge_cooldown
 		State.STUNNED:
 			pass
@@ -135,6 +139,7 @@ func _execute_state(delta: float) -> void:
 			_update_animation(Vector2.ZERO)
 		State.CHARGING:
 			velocity = _charge_dir * charge_speed
+			_strike()
 			if animated_sprite:
 				animated_sprite.modulate = Color(1, 0, 0)  # Red charging
 			_update_animation(_charge_dir)
@@ -159,10 +164,19 @@ func _start_charge() -> void:
 	# The state was never moved to CHARGING, so the tank stayed locked in
 	# CHARGE_WINDUP forever: velocity always lerped to zero and it never moved.
 	state = State.CHARGING
+	_hit_done = false
 	_charge_duration_timer = charge_duration
 	
 	# Visual/sound cue
 	get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("FX_CHARGE"), Color.RED)
+
+## Golpe activo de la embestida: mira a quien solapa el hitbox AHORA (igual que el melee).
+func _strike() -> void:
+	if _hit_done:
+		return
+	for b in hitbox.get_overlapping_bodies():
+		if b.has_method("receive_hit") and b.receive_hit(damage):
+			_hit_done = true
 
 func _find_target() -> void:
 	var players = get_tree().get_nodes_in_group("player")
