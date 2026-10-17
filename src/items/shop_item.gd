@@ -24,6 +24,7 @@ func _ready() -> void:
 		return
 	price = price_for(_item, get_node("/root/RunManager"))
 	sprite.texture = _item.sprite
+	ActorFx.setup_object(self, sprite, false)
 	label.text = "%d $" % price
 	label.add_theme_font_size_override("font_size", 12)
 

@@ -33,6 +33,8 @@ var _sneeze_in: float = 0.0
 var _sneeze_push: float = 0.0
 var _aim: Vector2 = Vector2.RIGHT
 var _using_pad := false
+const DASH_LIFT := 9.0
+var _shadow_scale := Vector2.ZERO
 const PLAYER_BULLET := preload("res://src/player/player_bullet.tscn")
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -54,6 +56,7 @@ func _ready() -> void:
 	
 	_player_stats.reset_for_new_run()
 	_apply_character()
+	ActorFx.setup_actor(self, animated_sprite)
 	
 	if hurtbox:
 		hurtbox.area_entered.connect(_on_hurtbox_entered)
@@ -76,9 +79,24 @@ func _physics_process(delta: float) -> void:
 	_handle_movement(delta)
 	_handle_dash(delta)
 	_update_aim()
+	_update_dash_lift()
 	_handle_attack(delta)
 	_handle_interaction()
 	move_and_slide()
+
+## Solo visual: en el dash el sprite sube en arco; la sombra se queda en el suelo y se achica.
+func _update_dash_lift() -> void:
+	var lift := 0.0
+	if is_dashing and dash_duration > 0.0:
+		lift = sin(clampf(1.0 - _dash_timer / dash_duration, 0.0, 1.0) * PI) * DASH_LIFT
+	animated_sprite.position.y = -lift
+	weapon_pivot.position.y = 6.0 - lift
+	var shadow := get_node_or_null("ContactShadow") as Sprite2D
+	if shadow:
+		if _shadow_scale == Vector2.ZERO:
+			_shadow_scale = shadow.scale
+		shadow.scale = _shadow_scale * (1.0 - 0.3 * lift / DASH_LIFT)
+		shadow.modulate.a = 1.0 - 0.25 * lift / DASH_LIFT
 
 func _handle_timers(delta: float) -> void:
 	if _dash_timer > 0.0:
@@ -214,6 +232,7 @@ func _home_bonus() -> float:
 func _shoot() -> void:
 	_last_shot_ms = Time.get_ticks_msec()
 	Sound.play("shoot")
+	_muzzle_flash()
 	var cd: Dictionary = current_weapon.custom_data
 	var effects = _player_stats.get_intoxication_effects()
 	var accuracy: float = maxf(0.2, _player_stats.accuracy_modifier * _get_effect_multiplier(effects, "accuracy") * _weapon_mod("accuracy"))
@@ -252,6 +271,12 @@ func _shoot() -> void:
 		_bless_bullet(b)
 		get_parent().add_child(b)
 		b.global_position = weapon_pivot.global_position + Vector2.RIGHT.rotated(ang) * 14.0
+
+func _muzzle_flash() -> void:
+	var tip := 16.0
+	if weapon_sprite.texture:
+		tip += weapon_sprite.texture.get_width() * weapon_sprite.scale.x * 0.5
+	ActorFx.muzzle_flash(weapon_pivot, Vector2(tip, 0), Color(1.0, 0.78, 0.4))
 
 func _rm() -> Node:
 	return get_node("/root/RunManager")

@@ -12,6 +12,8 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	if ResourceLoader.exists("res://assets/sprites/environment/chest_closed.png"):
 		sprite.texture = load("res://assets/sprites/environment/chest_closed.png")
+	ActorFx.setup_object(self, sprite)
+	ActorFx.add_item_glow(self, sprite, Color(1.0, 0.8, 0.35), 0.55, 0.6)
 
 func _on_body_entered(body: Node) -> void:
 	if _opened or not body.is_in_group("player"):

@@ -21,10 +21,22 @@ func _ready() -> void:
 		return
 	if _item.sprite:
 		sprite.texture = _item.sprite
+	ActorFx.setup_object(self, sprite, false, 0.3)
+	ActorFx.add_item_glow(self, sprite, _glow_color(), 0.4, 0.4)
 	_bob_tween = create_tween().set_loops()
 	# se anima el sprite, no el Area2D: position:y es absoluto y mandaba el pickup a y=±8
 	_bob_tween.tween_property(sprite, "position:y", -8.0, 1.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	_bob_tween.tween_property(sprite, "position:y", 0.0, 1.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+
+func _glow_color() -> Color:
+	if "moneda" in _item.tags:
+		return Color("ffd75a")
+	if _item.custom_data.get("hormone", "") != "" or "hormona" in _item.tags:
+		return Color("c08cff")
+	if _item.consumable:
+		return Color("ff7aa0")
+	return Color(RARITY_COLORS[clampi(_item.rarity, 0, RARITY_COLORS.size() - 1)])
 
 
 func _on_enter(body: Node) -> void:

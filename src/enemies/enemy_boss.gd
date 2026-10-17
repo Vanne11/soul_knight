@@ -40,6 +40,7 @@ var _hit_done := false
 
 
 func _ready() -> void:
+	ActorFx.setup_actor(self, animated_sprite)
 	current_health = max_health
 	add_to_group("enemy")
 	add_to_group("boss")
