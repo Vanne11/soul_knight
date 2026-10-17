@@ -53,7 +53,7 @@ static func free_spot(main: Node, room: Room, prefer: Vector2, radius := 22.0, a
 	shape.radius = radius
 	var q := PhysicsShapeQueryParameters2D.new()
 	q.shape = shape
-	q.collision_mask = 1
+	q.collision_mask = 65  # muros + huecos
 	var size := size_of(room)
 	var avoid: Array[Vector2] = []
 	for t in taken:

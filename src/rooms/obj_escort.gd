@@ -82,7 +82,7 @@ func _place() -> bool:
 				if len < min_len:
 					continue
 				var perp := (b - a).orthogonal().normalized() * 13.0
-				if not (RoomUtil.line_clear(main, room, a, b) and RoomUtil.line_clear(main, room, a + perp, b + perp) and RoomUtil.line_clear(main, room, a - perp, b - perp)):
+				if not (RoomUtil.line_clear(main, room, a, b, 65) and RoomUtil.line_clear(main, room, a + perp, b + perp, 65) and RoomUtil.line_clear(main, room, a - perp, b - perp, 65)):
 					continue
 				var score := len - a.distance_to(from_local) * 0.7  # el ovulo sale cerca de ti y la trompa queda lejos
 				if score > best_score:
@@ -97,7 +97,7 @@ func _place() -> bool:
 func _build_egg() -> void:
 	egg = CharacterBody2D.new()
 	egg.collision_layer = 0
-	egg.collision_mask = 1
+	egg.collision_mask = 65
 	egg.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	var cs := CollisionShape2D.new()
 	var sh := CircleShape2D.new()
@@ -264,7 +264,7 @@ func _best_dir() -> Vector2:
 	var best_score := -INF
 	for i in STEPS:
 		var dir := Vector2.RIGHT.rotated(TAU * i / STEPS)
-		var q := PhysicsRayQueryParameters2D.create(egg.global_position, egg.global_position + dir * LOOK, 1)
+		var q := PhysicsRayQueryParameters2D.create(egg.global_position, egg.global_position + dir * LOOK, 65)
 		var hit := space.intersect_ray(q)
 		var free_len := LOOK if hit.is_empty() else egg.global_position.distance_to(hit.position)
 		if free_len < 24.0:

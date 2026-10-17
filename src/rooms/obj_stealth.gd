@@ -99,9 +99,9 @@ func _route(pts: Array[Vector2], rng: RandomNumberGenerator) -> Array[Vector2]:
 		var cand: Array[Vector2] = [a]
 		for k in rng.randi_range(1, 3):
 			var b: Vector2 = pts[rng.randi_range(0, pts.size() - 1)]
-			if b.distance_to(cand[-1]) > 150.0 and RoomUtil.line_clear(main, room, cand[-1], b):
+			if b.distance_to(cand[-1]) > 150.0 and RoomUtil.line_clear(main, room, cand[-1], b, 65):
 				cand.append(b)
-		if cand.size() >= 2 and RoomUtil.line_clear(main, room, cand[-1], cand[0]):
+		if cand.size() >= 2 and RoomUtil.line_clear(main, room, cand[-1], cand[0], 65):
 			out = cand
 			break
 	return out
