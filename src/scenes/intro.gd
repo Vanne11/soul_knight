@@ -239,8 +239,10 @@ func _build_select() -> void:
 	row.add_theme_constant_override("separation", 24)
 	_select.add_child(row)
 	var first_btn: Button = null
+	var cards: Array[Button] = []
 	for id in ORDER:
 		var btn := _card(id, row)
+		cards.append(btn)
 		if first_btn == null:
 			first_btn = btn
 	var story_btn := Button.new()
@@ -256,6 +258,21 @@ func _build_select() -> void:
 			n.visible = true
 		_next_slide())
 	_select.add_child(story_btn)
+	# Navegacion: izquierda/derecha rotan entre los heroes (en circulo) y solo abajo
+	# lleva a "Ver la historia"; desde ahi, arriba vuelve al ultimo heroe enfocado.
+	for i in cards.size():
+		var c := cards[i]
+		c.focus_neighbor_left = c.get_path_to(cards[(i - 1 + cards.size()) % cards.size()])
+		c.focus_neighbor_right = c.get_path_to(cards[(i + 1) % cards.size()])
+		c.focus_neighbor_bottom = c.get_path_to(story_btn)
+		c.focus_neighbor_top = c.get_path_to(c)
+		c.focus_next = c.focus_neighbor_right
+		c.focus_previous = c.focus_neighbor_left
+		c.focus_entered.connect(func(): story_btn.focus_neighbor_top = story_btn.get_path_to(c))
+	story_btn.focus_neighbor_top = story_btn.get_path_to(first_btn)
+	story_btn.focus_neighbor_left = story_btn.get_path_to(story_btn)
+	story_btn.focus_neighbor_right = story_btn.get_path_to(story_btn)
+	story_btn.focus_neighbor_bottom = story_btn.get_path_to(story_btn)
 	_select.visible = false
 	_select.set_meta("first", first_btn)
 
