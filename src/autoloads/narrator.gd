@@ -338,6 +338,7 @@ func _voice_tick() -> void:
 
 func _process(delta: float) -> void:
 	_voice_tick()
+	_fade_near_player(delta)
 	_hint.visible = _label.visible_ratio >= 1.0
 	var room := _current_room()
 	if _showing and room != null and _line_room != null and room != _line_room:
@@ -357,6 +358,24 @@ func _process(delta: float) -> void:
 			_toast_label.text = t[0]
 			_toast_time = t[1]
 			_toast.visible = true
+
+
+## Como los matorrales: si el jugador baja hasta las cajas, se vuelven transparentes para
+## no taparlo (y lo que tenga cerca). Con una eleccion abierta no: hay que leerla.
+const FADE_ALPHA := 0.3
+const FADE_MARGIN := 24.0
+
+func _fade_near_player(delta: float) -> void:
+	var target := 1.0
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player and not _choice.visible:
+		# Rectangulo del heroe en pantalla (cuerpo de ~32x48 por el zoom de la camara).
+		var xf := player.get_global_transform_with_canvas()
+		var half := Vector2(16, 24) * xf.get_scale()
+		var body := Rect2(xf.origin - half, half * 2.0)
+		if _stack.get_global_rect().grow(FADE_MARGIN).intersects(body):
+			target = FADE_ALPHA
+	_stack.modulate.a = move_toward(_stack.modulate.a, target, delta * 4.0)
 
 
 func _input(event: InputEvent) -> void:
