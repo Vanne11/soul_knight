@@ -399,6 +399,8 @@ func _line_clear(a: Vector2, b: Vector2) -> bool:
 func _explore(room: Room) -> void:
 	if room.room_type == Room.RoomType.PUZZLE and room.has_meta("puzzle") and _solve_puzzle(room.get_meta("puzzle")):
 		return
+	if _quest_step(room):
+		return
 	# 1) cosas para recoger o usar en esta sala
 	var target := _next_thing(room)
 	if target and target != _thing_cur:
@@ -444,26 +446,61 @@ func _explore(room: Room) -> void:
 		_steer_to(dp)
 
 
-## Puzzle de memoria: pisa las placas en el orden de la secuencia, volviendo al centro
-## entre una y otra (la placa solo cuenta al entrar).
-var _pz_back := false
-
+## Acertijos de sala (src/puzzles/): cada Puzzle sabe resolverse y publica bot_step(pos)
+## -> {"go": punto global, "interact": bool}. Aqui solo se camina hacia ese punto (recto: en
+## las salas de acertijo no hay obstaculos) y se pulsa E si lo pide.
 func _solve_puzzle(pz: Node2D) -> bool:
-	if pz.get("_done"):
+	if not pz.has_method("bot_step"):
 		return false
-	if pz._seq.is_empty() or pz._step >= pz._seq.size():
-		return false  # todavia sin secuencia (recien creado)
-	_goal_text = "puzzle: paso %d de %d" % [pz._step + 1, pz._seq.size()]
-	if pz._busy:
-		_steer_to(pz.global_position)  # mira la secuencia desde el centro
-		_pz_back = false
-		return true
-	var i: int = pz._seq[pz._step]
-	var plate: Vector2 = pz.global_position + Vector2((i % 2 - 0.5) * pz.SPACING, (i / 2 - 0.5) * pz.SPACING)
-	var target := pz.global_position if _pz_back else plate
-	if player.global_position.distance_to(target) < 12.0:
-		_pz_back = not _pz_back
-	_steer_to(target)
+	if pz.get("done"):
+		if not pz.has_meta("bot_logged"):
+			pz.set_meta("bot_logged", true)
+			_say("Acertijo %s resuelto (fallos: %d, reino %s)" % [pz.get("kind"), pz.get("fails"), pz.get("kingdom")])
+		return false
+	if not pz.has_meta("bot_seen"):
+		pz.set_meta("bot_seen", true)
+		_say("Acertijo %s: a resolverlo (reino %s, profundidad %d)" % [pz.get("kind"), pz.get("kingdom"), pz.get("depth")])
+	var st: Dictionary = pz.bot_step(player.global_position)
+	if st.is_empty():
+		_goal_text = "acertijo %s: esperando" % pz.get("kind")
+		return true  # mirando el acertijo (secuencia que suena, estatua que se desmorona...)
+	_goal_text = "acertijo %s" % pz.get("kind")
+	var d: Vector2 = st.go - player.global_position
+	if d.length() > 3.0:
+		_press_move(d.normalized())
+	if st.interact and _interact_t <= 0.0:
+		Input.action_press("interact")
+		_interact_t = 0.35
+	return true
+
+
+## Misiones de llave (src/items/key_quests.gd): el bot las hace igual que un jugador. Con
+## enemigos vivos pelea (custodios, ladron que huye); aqui solo lo demas. Devuelve true si
+## se ocupo de la sala este fotograma. `_quest_room` empuja a _next_room hacia otra sala.
+var _quest_room: Room = null
+var _kq_state := ""
+
+func _quest_step(room: Room) -> bool:
+	_quest_room = null
+	var kq = main.get_node_or_null("KeyQuests")
+	if kq == null or not kq.ready_ok or player.current_weapon == null:
+		return false  # sin arma no hay custodios que valgan: primero el arma
+	if kq.state != _kq_state:
+		_kq_state = kq.state
+		_say("Mision de llave %s: %s (llave en %s, cofre en %s)" % [kq.kind, kq.state, kq.home.grid_pos, kq.vault.grid_pos])
+	var g: Dictionary = kq.bot_goal(room)
+	if g.is_empty():
+		return false
+	if g.has("room"):
+		_quest_room = g.room
+		return false  # _next_room elige el camino
+	_goal_text = "llave %s (%s)" % [kq.kind, kq.state]
+	var d: Vector2 = g.go - player.global_position
+	if d.length() > 4.0:
+		_steer_to(g.go)
+	if g.interact and d.length() < 28.0 and _interact_t <= 0.0:
+		Input.action_press("interact")
+		_interact_t = 0.35
 	return true
 
 
@@ -551,9 +588,11 @@ func _next_room(room: Room) -> Room:
 			prev[nb] = cur
 			queue.append(nb)
 	var goal = null
+	if _quest_room != null and _quest_room != room and _quest_room.grid_pos in order:
+		goal = _quest_room.grid_pos  # mision de llave: ir a la sala de la llave / del cofre
 	# Sin arma: primero la sala del cofre con el arma (el juego la esconde lejos).
 	var wr = main.get("_weapon_room")
-	if player.current_weapon == null and wr != null and is_instance_valid(wr) and wr.grid_pos in order and wr.grid_pos != room.grid_pos:
+	if goal == null and player.current_weapon == null and wr != null and is_instance_valid(wr) and wr.grid_pos in order and wr.grid_pos != room.grid_pos:
 		goal = wr.grid_pos
 	for pos in order:
 		if goal != null:
