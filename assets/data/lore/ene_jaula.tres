@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_jaula"
+title = "Jaula Carcelera"
+text = "Salta encima de ti y te encierra unos segundos: sin disparar, sin dash, sin poder moverte con soltura. Hay que machacar los botones para salir, que es lo más parecido a pedir ayuda que tiene este género. Una jaula de castidad es un objeto que algunas personas adultas eligen usar por gusto; lo que la hace una pesadilla aquí es la parte que falta: nadie la eligió. En la vida real, lo que separa un juego de una agresión es el acuerdo, una palabra de seguridad y la llave siempre a mano. La Jaula Carcelera no tiene ninguna de las tres."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Jaula Carcelera", "count": 8}
+flavor_text = "Vence a 8 jaulas carceleras (aprende a esquivar el salto)."

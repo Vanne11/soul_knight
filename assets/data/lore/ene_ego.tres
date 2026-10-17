@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_ego"
+title = "Ego Inflado"
+text = "Un globo con corbata que se agranda hablando de tamaño. Cuanto más se infla, más fuerte pega y más lento va; cada golpe tuyo es la verdad, y la verdad lo desinfla. Si lo dejas, revienta con un pfffft de aire caliente. Con Pitocles se hincha el doble (hay confianza para fanfarronear), con Vulvalquiria casi nada (a ella no le impresiona) y con el Ornitorrinco algo menos (no tiene ni con qué compararse). La verdad: según grandes estudios, el promedio en erección ronda los 13 cm, y la mayoría cree que es más por culpa del porno. El tamaño importa mucho menos que la conversación."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Ego Inflado", "count": 6}
+flavor_text = "Vence a 6 Egos Inflados (a base de verdades)."

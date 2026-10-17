@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_dedo"
+title = "Dedo del Urólogo"
+text = "Un dedo gigante con guante de látex que solo ataca por la espalda. Te rodea, paciente, buscando el ángulo; si lo mantienes al frente, no puede hacerte nada y se choca de vergüenza. Es la caricatura de un examen real: el tacto rectal, que dura unos segundos, incomoda más de lo que duele y permite al urólogo palpar la próstata. Junto con el análisis de sangre del PSA, es la forma de detectar a tiempo el cáncer de próstata, y se recomienda conversarlo con el médico desde los 50 años (desde los 45 si hay antecedentes en la familia). Un minuto de incomodidad contra años de ventaja. Y no, no es el fin de nadie."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Dedo del Urólogo", "count": 6}
+flavor_text = "Vence a 6 Dedos del Urólogo (y no les des la espalda)."

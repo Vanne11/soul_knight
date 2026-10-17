@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_mito_mano"
+title = "Mito: Mano Peluda"
+text = "El mito: 'si te tocas, te salen pelos en la mano'. Esta mano trepadora se llena de pelos cuando le pegas, pero ya ves: no pica más fuerte, no cambia nada, es pura fachada, como el mito. La verdad: la palma de la mano no tiene folículos pilosos, así que no puede salirle pelo a nadie por nada; y la masturbación no causa ceguera, acné ni ningún otro castigo de abuela. Es una práctica muy común, normal y sin riesgo para la salud; lo único que conviene es hacerlo con manos limpias, en privado y sin culpa. (Dato a validar por Vanessa.)"
+category = 3
+unlock_condition = {"type": 0, "target_id": "Mano Peluda", "count": 1}
+flavor_text = "Vence a la Mano Peluda para romper el mito."
