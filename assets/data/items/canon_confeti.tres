@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "canon_confeti"
+display_name = "Cañón de Confeti"
+description = "Escopeta de fiesta: una nube de confeti de poco daño que ATURDE a lo que alcanza. Corto alcance. 'Felicidades: ahora no te pueden pegar. Por un rato.'"
+rarity = 2
+tags = ["arma", "control"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 260
+custom_data = {"affinity": "vulva", "base_damage": 8, "fire_rate": 0.75, "projectile_speed": 520, "spread": 0.18, "pellets": 9, "range": 230, "falloff_start": 90, "falloff_end": 230, "falloff_min": 0.35, "stun": 0.9, "confetti": true, "knockback_mult": 0.6}

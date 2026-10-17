@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "chancleta_voladora"
+display_name = "Chancleta Voladora"
+description = "Cuerpo a cuerpo en combo: dos chancletazos rápidos y un tercero devastador que lanza lejos a todo el abanico. Sin munición ni calor. 'Aprendida de mamá. Puntería heredada.'"
+rarity = 1
+tags = ["arma", "cuerpo"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 220
+custom_data = {"affinity": "neutral", "special": "combo", "base_damage": 9, "fire_rate": 0.3, "reach": 66, "arc": 2.0, "combo_steps": 3, "combo_window": 0.7, "finisher_mult": 2.5, "finisher_rate": 0.55, "knockback_mult": 1.0}

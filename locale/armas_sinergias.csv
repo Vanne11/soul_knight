@@ -1,0 +1,46 @@
+keys,es,en
+FX_SYNERGY,¡SINERGIA! %s,SYNERGY! %s
+SYN_TITLE,SINERGIAS ACTIVAS (%d de %d),ACTIVE SYNERGIES (%d of %d)
+SYN_NONE,"Ninguna todavía: prueba a mezclar armas, bendiciones y objetos.","None yet: try mixing weapons, blessings and items."
+SYN_DESCARGA_NACIONAL_NAME,Descarga Nacional,National Discharge
+SYN_DESCARGA_NACIONAL_DESC,+2 perdigones por disparo,+2 pellets per shot
+SYN_DESCARGA_NACIONAL_COND,Calibre Grueso + Escopeta Pélvica,Thick Caliber + Pelvic Shotgun
+SYN_VIBRACION_SOSTENIDA_NAME,Vibración Sostenida,Sustained Vibration
+SYN_VIBRACION_SOSTENIDA_DESC,Se calienta un 45% más despacio,Heats up 45% slower
+SYN_VIBRACION_SOSTENIDA_COND,Ciclo Acelerado + Subfusil Vibratorio,Accelerated Cycle + Vibrating SMG
+SYN_DOBLE_PENETRACION_NAME,Doble Penetración,Double Penetration
+SYN_DOBLE_PENETRACION_DESC,Los chasquidos atraviesan 2 enemigos más,Cracks pierce 2 more enemies
+SYN_DOBLE_PENETRACION_COND,Penetración + Látigo de Cuero,Penetration + Leather Whip
+SYN_PIEL_DE_SEDA_NAME,Piel de Seda,Silky Skin
+SYN_PIEL_DE_SEDA_DESC,El rayo se calienta un 40% menos,The beam heats up 40% less
+SYN_PIEL_DE_SEDA_COND,Ciclo Acelerado + Depiladora Láser,Accelerated Cycle + Laser Hair Remover
+SYN_SIEMPRE_VUELVE_NAME,Siempre Vuelve,It Always Comes Back
+SYN_SIEMPRE_VUELVE_DESC,Al volver pega un 50% más y empuja más,On the way back it hits 50% harder and pushes more
+SYN_SIEMPRE_VUELVE_COND,Embestida + Bumerán de Silicona,Charge + Silicone Boomerang
+SYN_TENSION_ACUMULADA_NAME,Tensión Acumulada,Built-Up Tension
+SYN_TENSION_ACUMULADA_DESC,La ballesta se carga un 35% más rápido,The crossbow charges 35% faster
+SYN_TENSION_ACUMULADA_COND,Testosterona Pura + Ballesta Tántrica,Pure Testosterone + Tantric Crossbow
+SYN_FIESTA_SORPRESA_NAME,Fiesta Sorpresa,Surprise Party
+SYN_FIESTA_SORPRESA_DESC,"+3 confetis y aturden 0,5 s más",+3 confetti and 0.5 s more stun
+SYN_FIESTA_SORPRESA_COND,Descarga Múltiple + Cañón de Confeti,Multi-Discharge + Confetti Cannon
+SYN_CHANCLA_MATERNA_NAME,Chancla Materna,Motherly Flip-Flop
+SYN_CHANCLA_MATERNA_DESC,+40% de alcance y el 3.er golpe suelta 8 balas en círculo,+40% reach and the 3rd hit sprays 8 bullets in a circle
+SYN_CHANCLA_MATERNA_COND,Orgullo Herido + Chancleta Voladora,Wounded Pride + Flying Flip-Flop
+SYN_SPA_IMPROVISADO_NAME,Spa Improvisado,Makeshift Spa
+SYN_SPA_IMPROVISADO_DESC,"Estar en tu charco te cura 1,5 de vida por segundo",Standing in your puddle heals 1.5 HP per second
+SYN_SPA_IMPROVISADO_COND,Regeneración Cíclica + Lanzador de Globos de Agua,Cyclic Regeneration + Water Balloon Launcher
+SYN_DOBLE_PROTECCION_NAME,Doble Protección,Double Protection
+SYN_DOBLE_PROTECCION_DESC,Atrapa en un 50% más de radio y devuelve el doble de daño,Catches in a 50% wider radius and returns double damage
+SYN_DOBLE_PROTECCION_COND,Preservativo de Titanio + Preservativo Atrapabalas,Titanium Condom + Bullet-Catching Condom
+SYN_LUBRICACION_EFICIENTE_NAME,Lubricación Eficiente,Efficient Lubrication
+SYN_LUBRICACION_EFICIENTE_DESC,"El vórtice abarca un 40% más, tira un 30% más y dura más","The vortex spans 40% more, pulls 30% harder and lasts longer"
+SYN_LUBRICACION_EFICIENTE_COND,Lubricante Cuántico + Satisfyer,Quantum Lube + Satisfyer
+SYN_CORTE_Y_FUGA_NAME,Corte y Fuga,Cut and Run
+SYN_CORTE_Y_FUGA_DESC,"El Dash Cortante hace x1,8 de daño",Slicing Dash deals x1.8 damage
+SYN_CORTE_Y_FUGA_COND,Dash Cortante + Escurridiza,Slicing Dash + Slippery
+SYN_ORGULLO_DE_CASA_NAME,Orgullo de Casa,Home Pride
+SYN_ORGULLO_DE_CASA_DESC,+8% de daño y +8% de cadencia,+8% damage and +8% fire rate
+SYN_ORGULLO_DE_CASA_COND,Set de objetos de tu reino + tu héroe,Your kingdom's item set + your hero
+SYN_TODO_INCLUIDO_NAME,Todo Incluido,All Inclusive
+SYN_TODO_INCLUIDO_DESC,+12% de daño y +6% de crítico,+12% damage and +6% crit
+SYN_TODO_INCLUIDO_COND,Ornitorrinco + los dos sets de objetos,Platypus + both item sets

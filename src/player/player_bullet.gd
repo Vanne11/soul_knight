@@ -25,16 +25,26 @@ var chain := 0
 var chain_radius := 110.0
 var chain_mult := 0.5
 var tint := Color.WHITE
+## Globo de agua (etapa 6d): explota en agua (sin mecha rosa) y deja un charco `puddle`
+## {radius, time, slow}. `skin` cambia la textura; `stun` aturde (segundos) al golpear (confeti).
+var water := false
+var puddle: Dictionary = {}
+var skin: Texture2D = null
+var stun := 0.0
 var _done := false
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	ActorFx.add_projectile_shadow(self, 4.0, 9.0)
+	if skin != null:
+		$Sprite2D.texture = skin
 	var glow_col := Color(1.0, 0.8, 0.35)
 	if tint != Color.WHITE:
 		$Sprite2D.modulate = tint
 		glow_col = tint
-	if explosion_radius > 0.0:
+	if explosion_radius > 0.0 and water:
+		glow_col = Color(0.4, 0.7, 1.0)
+	elif explosion_radius > 0.0:
 		$Sprite2D.scale = Vector2.ONE * 1.8
 		glow_col = Color(1.0, 0.45, 0.7)
 		$Sprite2D.modulate = Color(1.0, 0.7, 0.85)
@@ -44,7 +54,7 @@ func _physics_process(delta: float) -> void:
 	position += Vector2.RIGHT.rotated(rotation) * speed * delta
 	_dist += speed * delta
 	_t += delta
-	if explosion_radius > 0.0:
+	if explosion_radius > 0.0 and not water:
 		# la mecha avisa: el preservativo parpadea mas rapido al acercarse a estallar
 		var left := lifetime - _t
 		if left < 0.35:
@@ -92,8 +102,12 @@ func _explode() -> void:
 			c.hit_by_bullet(damage, (c.global_position - global_position).normalized())
 	var fx := ExplosionFx.new()
 	fx.radius = explosion_radius
+	if water:
+		fx.modulate = Color(0.45, 1.0, 1.4)
 	get_parent().add_child(fx)
 	fx.global_position = global_position
+	if not puddle.is_empty():
+		Puddle.spawn(get_parent(), global_position, puddle)
 	HitFx.shake(0.4)
 	HitFx.hitstop()
 	get_node("/root/Sound").play("crack", 0.15)
@@ -134,6 +148,8 @@ func _on_body_entered(body: Node) -> void:
 		body.take_damage(dmg, get_tree().get_first_node_in_group("player"), Vector2.RIGHT.rotated(rotation) * knockback)
 		if crit or dmg >= STRONG_HIT:
 			HitFx.hitstop()
+		if stun > 0.0 and body.has_method("stun") and not body.is_in_group("boss"):
+			body.stun(stun)
 		var ps := get_node("/root/PlayerStats")
 		if ps.lifesteal > 0.0:
 			ps.heal(dmg * ps.lifesteal)

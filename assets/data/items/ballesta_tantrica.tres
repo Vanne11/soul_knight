@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ballesta_tantrica"
+display_name = "Ballesta Tántrica"
+description = "Mantén el gatillo para tensar la cuerda: más carga, más daño y más enemigos atravesados. Soltar antes es un chasquido flojo; aguantar de más, sale sola. 'Lo bueno se hace esperar.'"
+rarity = 3
+tags = ["arma", "carga"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 420
+custom_data = {"affinity": "pene", "special": "charge", "base_damage": 12, "fire_rate": 0.25, "projectile_speed": 950, "range": 560, "charge_time": 1.1, "charge_mult": 3.5, "charge_pierce": 3, "charge_hold": 0.8, "spread": 0.0, "bullet_color": "ffd27a"}

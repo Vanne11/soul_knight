@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "globos_agua"
+display_name = "Lanzador de Globos de Agua"
+description = "Globos que revientan en área y dejan un charco 4 s que frena a los enemigos a la mitad. Poco daño, mucho control. 'Está tibia. Tranquilos, es agua.'"
+rarity = 2
+tags = ["arma", "explosivo", "área"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 290
+custom_data = {"affinity": "neutral", "special": "balloon", "base_damage": 14, "fire_rate": 0.85, "projectile_speed": 310, "range": 270, "explosion_radius": 55, "puddle_radius": 62, "puddle_time": 4.0, "puddle_slow": 0.5}

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boomerang_silicona"
+display_name = "Bumerán de Silicona"
+description = "Lo lanzas, atraviesa todo, da la vuelta y pega otra vez al volver. Hasta que no lo atrapas no puedes lanzar otro. 'Siempre vuelve. Como el ex.'"
+rarity = 2
+tags = ["arma", "arrojadizo"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 270
+custom_data = {"affinity": "pene", "special": "boomerang", "base_damage": 13, "fire_rate": 0.4, "range": 230, "projectile_speed": 540, "knockback_mult": 0.8}

@@ -83,6 +83,17 @@ var _reload_total := 1.0
 var _heat := 0.0
 var _overheated := false
 var _gauge: Node2D = null
+## Armas con mecanica propia (etapa 6d, src/weapons/): bumeran en vuelo, estado del combo,
+## carga de la ballesta y espera especial tras el golpe final del combo.
+var _boomerang: Node = null
+var _wstate: Dictionary = {}
+var _charge := 0.0
+var _charge_full := 0.0
+var _charge_mult := 1.0
+var _charge_frac := 0.0
+var _cd_override := -1.0
+const CONFETTI_TEX := preload("res://assets/sprites/projectiles/confetti.png")
+const CONFETTI_COLORS := ["ff5a8c", "5ac8ff", "ffd75a", "7aeb9a", "ff9a4a", "c58cff"]
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hurtbox: Area2D = $Hurtbox
@@ -112,6 +123,7 @@ func _ready() -> void:
 	
 	if hurtbox:
 		hurtbox.area_entered.connect(_on_hurtbox_entered)
+	Synergies.of(self)  # sinergias con nombre (src/items/synergies.gd)
 
 func _apply_character() -> void:
 	var rm = get_node("/root/RunManager")
@@ -318,6 +330,9 @@ func _handle_attack(delta: float) -> void:
 	var st := _status()
 	if st != null and st.blocks_shoot():
 		return
+	if current_weapon != null and current_weapon.custom_data.get("special", "") == "charge":
+		_handle_charge(delta)
+		return
 	if Input.is_action_pressed("attack") and not Narrator.ate_input() and _attack_timer <= 0.0 and not current_weapon:
 		# Sin cuerpo a cuerpo: a manos limpias te rompes tu antes que ellos.
 		_attack_timer = 1.0
@@ -325,9 +340,46 @@ func _handle_attack(delta: float) -> void:
 		Narrator.say_first("no_weapon_attack")
 		Sound.play("crack")
 	elif Input.is_action_pressed("attack") and not Narrator.ate_input() and _attack_timer <= 0.0 and _weapon_ready():
+		_cd_override = -1.0
 		_shoot()
-		_attack_timer = float(current_weapon.custom_data.get("fire_rate", attack_cooldown)) / _rate_mult()
+		var base_cd := float(current_weapon.custom_data.get("fire_rate", attack_cooldown))
+		if _cd_override > 0.0:
+			base_cd = _cd_override
+		_attack_timer = base_cd / _rate_mult()
 		_after_shot()
+
+## Ballesta Tantrica: mantener tensa la cuerda; al soltar (o tras aguantar el maximo) dispara
+## con el dano y la penetracion de la carga. Con el gatillo siempre apretado (bot) se auto-dispara.
+func _handle_charge(delta: float) -> void:
+	var cd: Dictionary = current_weapon.custom_data
+	var need := _charge_need()
+	var held := Input.is_action_pressed("attack") and not Narrator.ate_input()
+	if held and _attack_timer <= 0.0:
+		_charge += delta
+		if _charge >= need:
+			_charge_full += delta
+			if _charge_full >= float(cd.get("charge_hold", 1.2)):
+				_release_charge()
+	elif _charge > 0.0:
+		_release_charge()
+	else:
+		_charge_full = 0.0
+
+func _charge_need() -> float:
+	var need := float(current_weapon.custom_data.get("charge_time", 1.0)) / _rate_mult()
+	return need * (0.65 if Synergies.has("tension_acumulada") else 1.0)
+
+func _release_charge() -> void:
+	var cd: Dictionary = current_weapon.custom_data
+	_charge_frac = clampf(_charge / maxf(_charge_need(), 0.01), 0.0, 1.0)
+	_charge_mult = lerpf(1.0, float(cd.get("charge_mult", 3.0)), _charge_frac)
+	_charge = 0.0
+	_charge_full = 0.0
+	_shoot()
+	_charge_mult = 1.0
+	_charge_frac = 0.0
+	_attack_timer = float(cd.get("fire_rate", attack_cooldown)) / _rate_mult()
+	_after_shot()
 
 ## Cadencia total: bendiciones/reliquias x intoxicacion.
 func _rate_mult() -> float:
@@ -337,6 +389,8 @@ func _rate_mult() -> float:
 func _weapon_ready() -> bool:
 	if _reload_t > 0.0 or _overheated:
 		return false
+	if _boomerang != null and is_instance_valid(_boomerang) and current_weapon.custom_data.get("special", "") == "boomerang":
+		return false  # el bumeran no se lanza otra vez hasta atraparlo
 	var mag := int(current_weapon.custom_data.get("magazine", 0))
 	if mag > 0 and _ammo <= 0:
 		_start_reload()
@@ -357,6 +411,10 @@ func _after_shot() -> void:
 		if _ammo <= 0:
 			_start_reload()
 	var hps := float(cd.get("heat_per_shot", 0.0))
+	if Synergies.has("vibracion_sostenida"):
+		hps *= 0.55
+	if Synergies.has("piel_de_seda"):
+		hps *= 0.6
 	if hps > 0.0:
 		_heat += hps
 		if _heat >= HEAT_MAX:
@@ -405,6 +463,12 @@ func _update_weapon_state(delta: float) -> void:
 		_gauge.set("kind", "heat")
 		_gauge.set("value", _heat / HEAT_MAX)
 		_gauge.set("locked", _overheated)
+	elif cd.get("special", "") == "charge":
+		var frac := clampf(_charge / maxf(_charge_need(), 0.01), 0.0, 1.0)
+		tint = Color.WHITE.lerp(Color(1.0, 0.85, 0.4), frac * 0.8)
+		_gauge.set("kind", "charge")
+		_gauge.set("value", frac)
+		_gauge.set("locked", frac >= 1.0)
 	else:
 		_gauge.set("kind", "")
 	weapon_sprite.modulate = tint
@@ -488,13 +552,20 @@ func _home_bonus() -> float:
 
 func _shoot() -> void:
 	_last_shot_ms = Time.get_ticks_msec()
-	Sound.play("shoot")
-	_muzzle_flash()
-	_recoil = minf(RECOIL_MAX, _recoil + RECOIL_KICK)
 	var cd: Dictionary = current_weapon.custom_data
+	var special: String = cd.get("special", "")
+	var quiet := special == "beam" and Engine.get_physics_frames() % 6 != 0  # el rayo no ametralla el sonido
+	if not quiet:
+		Sound.play("shoot")
+	if special != "beam" and special != "combo":
+		_muzzle_flash()
+		_recoil = minf(RECOIL_MAX, _recoil + RECOIL_KICK)
 	var effects = _player_stats.get_intoxication_effects()
 	var accuracy: float = maxf(0.2, _player_stats.accuracy_modifier * _get_effect_multiplier(effects, "accuracy") * _weapon_mod("accuracy"))
 	var dmg: float = get_weapon_damage() * _player_stats.damage_modifier * _get_effect_multiplier(effects, "damage") * _weapon_mod("damage") * _home_bonus()
+	dmg *= 1.0 + (affinity_boost(current_weapon) - 1.0) * 0.2  # arma de tu reino: hasta +10%
+	if special == "charge":
+		dmg *= _charge_mult
 	# Satisfyer: en vez de balas lanza un vortice que succiona (base_damage = dano por tic)
 	if cd.has("vortex"):
 		_attack_anim = 0.15
@@ -503,12 +574,24 @@ func _shoot() -> void:
 		v.radius = float(cd.get("vortex_radius", v.radius))
 		v.duration = float(cd.get("vortex_duration", v.duration))
 		v.pull = float(cd.get("vortex_pull", v.pull))
+		if Synergies.has("lubricacion_eficiente"):
+			v.radius *= 1.4
+			v.pull *= 1.3
+			v.duration += 0.5
 		v.rotation = _aim.angle()
 		get_parent().add_child(v)
 		v.global_position = weapon_pivot.global_position + _aim * 14.0
 		return
+	if special != "" and special != "charge":
+		_attack_anim = 0.15
+		_cd_override = SpecialShots.fire(self, cd, dmg, _aim, weapon_pivot.global_position + _aim * 14.0)
+		return
 	var base_count: int = int(cd.get("pellets", cd.get("projectiles", 1)))
 	var count: int = base_count
+	if Synergies.has("descarga_nacional"):
+		count += 2
+	if Synergies.has("fiesta_sorpresa"):
+		count += 3
 	# borracho = mas dispersion, no fallos aleatorios
 	var spread: float = float(cd.get("spread", 0.05)) / accuracy
 	var extra: int = _rm().blessing("descarga")
@@ -517,7 +600,7 @@ func _shoot() -> void:
 		dmg *= 0.7
 		spread = maxf(spread, 0.12)  # en abanico, no todas por el mismo sitio
 	_attack_anim = 0.15
-	var crit_chance: float = _player_stats.crit_chance_modifier + float(cd.get("crit_bonus", 0.0))
+	var crit_chance: float = _player_stats.crit_chance_modifier + float(cd.get("crit_bonus", 0.0)) + 0.25 * _charge_frac
 	var speed: float = float(cd.get("projectile_speed", 500)) * _player_stats.projectile_speed_modifier
 	for i in range(count):
 		var b := PLAYER_BULLET.instantiate()
@@ -545,8 +628,19 @@ func _shoot() -> void:
 		b.chain_mult = float(cd.get("chain_mult", 0.5))
 		if cd.has("bullet_color"):
 			b.tint = Color(cd["bullet_color"])
+		if cd.get("confetti", false):
+			b.tint = Color(CONFETTI_COLORS[RNG.randi_range(0, CONFETTI_COLORS.size() - 1)])
+			b.skin = CONFETTI_TEX
+			b.scale = Vector2.ONE * 1.6
+		if cd.has("stun"):
+			b.stun = float(cd["stun"]) + (0.5 if Synergies.has("fiesta_sorpresa") else 0.0)
 		_bless_bullet(b)
 		b.pierce += int(cd.get("pierce", 0))
+		if Synergies.has("doble_penetracion"):
+			b.pierce += 2
+		if special == "charge":
+			b.pierce += roundi(float(cd.get("charge_pierce", 0)) * _charge_frac)
+			b.scale = Vector2.ONE * (1.0 + 0.7 * _charge_frac)
 		b.knockback *= float(cd.get("knockback_mult", 1.0))
 		get_parent().add_child(b)
 		b.global_position = weapon_pivot.global_position + Vector2.RIGHT.rotated(ang) * 14.0
@@ -584,7 +678,7 @@ func _dash_cut() -> void:
 	for e in get_tree().get_nodes_in_group("enemy"):
 		if e not in _dash_hits and is_instance_valid(e) and e.global_position.distance_to(global_position) < 40.0:
 			_dash_hits.append(e)
-			e.take_damage(get_weapon_damage() * _player_stats.damage_modifier * 1.5 * lvl, self, _dash_direction * 200.0)
+			e.take_damage(get_weapon_damage() * _player_stats.damage_modifier * 1.5 * lvl * (1.8 if Synergies.has("corte_y_fuga") else 1.0), self, _dash_direction * 200.0)
 
 func _sneeze() -> void:
 	_sneeze_in = RNG.randf_range(3.0, 6.0)
@@ -779,10 +873,14 @@ func equip_weapon(item: Item) -> void:
 	_reload_t = 0.0
 	_heat = 0.0
 	_overheated = false
+	_charge = 0.0
+	_charge_full = 0.0
+	_wstate = {}
 	weapon_sprite.texture = item.sprite
 	_weapon_base_x = _grip_offset()
 	if not collected_items.has(item.id):
 		collected_items.append(item.id)
+	Synergies.of(self).refresh()
 	print("Equipped: %s" % item.display_name)
 
 func has_item(item_id: String) -> bool:

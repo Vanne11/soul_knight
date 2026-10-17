@@ -1,7 +1,8 @@
 extends Node2D
 
 ## Medidor minimo bajo los pies del jugador para las armas con mecanica:
-## "ammo" = casillas de cargador (y barra de recarga) / "heat" = barra de calor.
+## "ammo" = casillas de cargador (y barra de recarga) / "heat" = barra de calor /
+## "charge" = barra de carga de la ballesta (parpadea al llegar al maximo).
 ## Solo se dibuja cuando aporta informacion; el jugador le pasa los valores cada frame.
 
 var kind := ""
@@ -36,6 +37,13 @@ func _draw() -> void:
 			for i in count:
 				var r := Rect2(-W * 0.5 + i * w + 1.0, 0, w - 2.0, H)
 				draw_rect(r, Color("fff1d6") if i < ammo else Color(0.05, 0.04, 0.06, 0.7))
+	elif kind == "charge":
+		if value <= 0.02:
+			return
+		var ccol := Color("ffd27a").lerp(Color("fff7c8"), value)
+		if locked and int(Time.get_ticks_msec() / 90) % 2 == 0:
+			ccol = Color("ff8a3c")
+		_bar(value, ccol)
 	elif kind == "heat":
 		if value <= 0.02:
 			return
