@@ -119,3 +119,11 @@ func _start_track(track: String) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F2:
 		AudioServer.set_bus_mute(0, not AudioServer.is_bus_mute(0))
+
+
+## Al cerrar, soltar la pista: si no, Godot avisa de que el stream sigue en uso.
+func _exit_tree() -> void:
+	if _fade:
+		_fade.kill()
+	_music.stop()
+	_music.stream = null
