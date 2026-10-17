@@ -50,3 +50,10 @@ func _aplicar() -> void:
 		Input.set_custom_mouse_cursor(_puntero[e], Input.CURSOR_ARROW, HOT_PUNTERO * e)
 	# La manita de los botones también usa el puntero propio.
 	Input.set_custom_mouse_cursor(_puntero[e], Input.CURSOR_POINTING_HAND, HOT_PUNTERO * e)
+
+
+## Al cerrar, soltar los cursores: si no, Input retiene las texturas cuando el
+## RenderingServer ya no existe y Godot avisa de fugas al salir.
+func _exit_tree() -> void:
+	Input.set_custom_mouse_cursor(null, Input.CURSOR_ARROW)
+	Input.set_custom_mouse_cursor(null, Input.CURSOR_POINTING_HAND)
