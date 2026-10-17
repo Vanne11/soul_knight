@@ -315,6 +315,7 @@ func _show_select() -> void:
 	_select.visible = true
 	create_tween().tween_property(_bg, "color", Color("2a1440"), 0.5)
 	(_select.get_meta("first") as Button).grab_focus()
+	FourthWall.select_shown()  # cuarta pared: un heroe opina desde las sombras
 
 
 func choose(id: String) -> void:

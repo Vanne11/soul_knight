@@ -1,0 +1,6 @@
+keys,es,en
+CP_NAME_TITLE,"¿Cómo te llamo, valiente?","What should I call you, brave one?"
+CP_NAME_HINT,"Es opcional y solo se guarda en tu equipo. Los héroes lo usarán poco.","Optional, and it's only saved on your device. The heroes will use it sparingly."
+CP_NAME_PLACEHOLDER,"Tu nombre o apodo","Your name or nickname"
+CP_NAME_OK,"Listo","Done"
+CP_NAME_SKIP,"Prefiero que no","I'd rather not"

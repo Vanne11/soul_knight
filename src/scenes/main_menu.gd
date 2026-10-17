@@ -6,6 +6,7 @@ func _ready() -> void:
 	Sound.music("menu")  # sigue sonando en la intro y la eleccion de heroe
 	_create_ui()
 	_update_meta_info()
+	FourthWall.menu_opened()  # cuarta pared: nombre (una vez) y comentario de vuelta
 
 func _create_ui() -> void:
 	var root := Control.new()
@@ -302,4 +303,5 @@ func _on_continue() -> void:
 	pass
 
 func _on_quit() -> void:
+	await FourthWall.farewell()  # despedida corta (~2 s, se salta con una tecla)
 	get_tree().quit()

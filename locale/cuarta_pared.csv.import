@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dbll8xcg36u8f"
+
+[deps]
+
+files=["res://locale/cuarta_pared.es.translation", "res://locale/cuarta_pared.en.translation"]
+
+source_file="res://locale/cuarta_pared.csv"
+dest_files=["res://locale/cuarta_pared.es.translation", "res://locale/cuarta_pared.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

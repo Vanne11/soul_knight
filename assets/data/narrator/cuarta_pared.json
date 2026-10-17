@@ -1,0 +1,157 @@
+{
+  "_info": "Cuarta pared (src/fx/fourth_wall.gd): los heroes te hablan, el juego sabe de ti. Mismo formato que lines.json. Placeholders: {name} (solo si el jugador dio su nombre), {time}, {hero_deaths}, {hero_runs}, {fav}, {boss}, {n}, {days}, {boss_up}. ' || ' separa narrador y heroe en una discusion.",
+  "night_pitocles": [
+    "PITOCLES: Son las {time}. Yo debería estar en el cuartel. Y tú, en la cama.",
+    "PITOCLES: ¿Jugando de madrugada? En mi época eso se llamaba insomnio.",
+    "PITOCLES: {name}, a dormir. Es una orden. Mi autoridad es dudosa, pero es una orden."
+  ],
+  "night_vulvalquiria": [
+    "VULVALQUIRIA: ¿A las {time}? Yo trasnocho, pero tú abusas.",
+    "VULVALQUIRIA: Mañana tendrás ojeras. Yo no: soy valquiria.",
+    "VULVALQUIRIA: {name}, ¿no deberías dormir? Y no me mires así, yo no duermo por trabajo."
+  ],
+  "night_ornitorrinco": [
+    "ORNITORRINCO: Soy casi nocturno. ¿Y tú? Ah, nocturno por vocación.",
+    "ORNITORRINCO: Las {time}. A esta hora hasta el código se pregunta qué hace despierto.",
+    "ORNITORRINCO: {name}, el sueño es un bien escaso. Como los ornitorrincos."
+  ],
+  "idle_pitocles": [
+    "PITOCLES: Descanso, bien. Pero que conste: yo no pedí esta pausa.",
+    "PITOCLES: Veinte segundos quieto. Eso lo hago yo en guardia. Tú no tienes excusa."
+  ],
+  "idle_vulvalquiria": [
+    "VULVALQUIRIA: ¿Vas a jugar o a mirarme?",
+    "VULVALQUIRIA: Si me vas a mirar, avisa y me peino.",
+    "VULVALQUIRIA: {name}, el teclado está ahí. Aprieta algo."
+  ],
+  "idle_ornitorrinco": [
+    "ORNITORRINCO: Quieto tú, quieto yo. ¿Somos una pintura?",
+    "ORNITORRINCO: ¿Hola? ¿Se colgó el juego o me colgué yo?"
+  ],
+  "pause_pitocles": [
+    "PITOCLES: En la guerra no había botón de pausa. Había miedo."
+  ],
+  "pause_vulvalquiria": [
+    "VULVALQUIRIA: Pausar no te hace mejor.",
+    "VULVALQUIRIA: Cuarta pausa. Ya sé que respiras; apúrate."
+  ],
+  "pause_ornitorrinco": [
+    "ORNITORRINCO: Cada pausa me deja congelado a media idea. Es incómodo."
+  ],
+  "back_pitocles": [
+    "PITOCLES: ¿Me dejaste por otra pestaña? Qué poca lealtad."
+  ],
+  "back_vulvalquiria": [
+    "VULVALQUIRIA: Volviste. ¿Era mejor la otra ventana?",
+    "VULVALQUIRIA: Te vi irte. No hice drama. Un poco."
+  ],
+  "back_ornitorrinco": [
+    "ORNITORRINCO: Te fuiste. Yo seguí aquí, existiendo sin público."
+  ],
+  "back": [
+    "¿Me dejaste por otra pestaña? Tranquilo: soy un narrador maduro. Solo tomé nota.",
+    "Bienvenido de vuelta. Tu otra ventana no era tan interesante, ¿verdad?"
+  ],
+  "hist_pitocles": [
+    "PITOCLES: Llevo {hero_deaths} muertes por tu culpa. Las cuento.",
+    "PITOCLES: ¿Otra vez yo? Ya van {hero_runs} partidas. Soy veterano de ti."
+  ],
+  "hist_vulvalquiria": [
+    "VULVALQUIRIA: {hero_deaths} muertes. Yo, la impaciente. Aprende a esquivar, {name}.",
+    "VULVALQUIRIA: {hero_deaths} veces caída. Voy a pedirte un seguro."
+  ],
+  "hist_ornitorrinco": [
+    "ORNITORRINCO: Me has matado {hero_deaths} veces. ¿Soy un personaje o un recurso renovable?",
+    "ORNITORRINCO: ¿Soy un personaje o un error del código? Pregunto por curiosidad, no por rencor."
+  ],
+  "jealous_pitocles": [
+    "PITOCLES: ¿Hoy me tocó a mí? Claro, {fav} está descansando."
+  ],
+  "jealous_vulvalquiria": [
+    "VULVALQUIRIA: {fav}, siempre {fav}. ¿Yo soy el repuesto?"
+  ],
+  "jealous_ornitorrinco": [
+    "ORNITORRINCO: Me eliges cuando {fav} está ocupado. Lo sé. Lo anoto."
+  ],
+  "fav_pitocles": [
+    "PITOCLES: Soy tu favorito, ¿no? No lo digo por orgullo. Bueno, un poco."
+  ],
+  "fav_vulvalquiria": [
+    "VULVALQUIRIA: Soy tu favorita. Los otros están celosos y se nota desde aquí."
+  ],
+  "fav_ornitorrinco": [
+    "ORNITORRINCO: ¿Soy tu favorito? Nadie me elige. Ah, tú sí. Gracias, supongo."
+  ],
+  "boss_killer": [
+    "{boss} te tiene de hijo: {n} muertes tuyas. Casi te debe la pensión.",
+    "{boss} ya se sabe tu nombre de memoria. Van {n} veces.",
+    "Dicen que {boss} te espera con ansias. {n} muertes dan para una amistad."
+  ],
+  "start_pitocles": [
+    "PITOCLES: Otra misión. Otra vez yo. Otra vez sin ascenso."
+  ],
+  "start_vulvalquiria": [
+    "VULVALQUIRIA: Vamos ya, que el mundo no se salva con charla."
+  ],
+  "start_ornitorrinco": [
+    "ORNITORRINCO: ¿Soy un personaje o un error del código? Da igual, vamos.",
+    "ORNITORRINCO: La autora me dibujó apurada. Se nota en el pico. Vamos."
+  ],
+  "argue_pitocles": [
+    "Pitocles venció con un valor casi sospechoso. || PITOCLES: Eso no pasó así. Fue pura estrategia.",
+    "Pitocles sobrevivió de milagro. || PITOCLES: ¿Milagro? Fue talento. Escríbelo bien."
+  ],
+  "argue_vulvalquiria": [
+    "Vulvalquiria avanzó, peleó y tuvo suerte. || VULVALQUIRIA: ¿Suerte? Corrige eso, narrador.",
+    "Otra sala limpia, casi sin sudar. || VULVALQUIRIA: Sin 'casi'. Sin sudar."
+  ],
+  "argue_ornitorrinco": [
+    "El Ornitorrinco ganó por accidente. || ORNITORRINCO: Eso no pasó así. Fue accidente con intención.",
+    "Una sala más. El Ornitorrinco no sabe cómo. || ORNITORRINCO: Yo tampoco. Pero que conste que fui yo."
+  ],
+  "boss_dead_first": [
+    "{boss_up}: Soy el primer jefe. Tutorial. Me da vergüenza."
+  ],
+  "boss_dead": [
+    "{boss_up}: ¿Eso era todo? Yo también me aburría de mí.",
+    "{boss_up}: El contrato decía 'vencible'. Ahora lo entiendo.",
+    "{boss_up}: Díganle al narrador que esto se negocia."
+  ],
+  "select_pitocles": [
+    "PITOCLES: Elige bien, recluta. Y si no soy yo, que sepa de escudos."
+  ],
+  "select_vulvalquiria": [
+    "VULVALQUIRIA: Mírame. Mírame. No pierdas tiempo."
+  ],
+  "select_ornitorrinco": [
+    "ORNITORRINCO: Yo no pedí estar aquí. Pero ya que estoy, elígeme."
+  ],
+  "menu_return": [
+    "Volviste. Con {deaths} muertes encima y todo. Eso es fe.",
+    "Los héroes ya se pelean por quién va primero. Elige rápido, que sudan.",
+    "Hola otra vez, {name}. Te extrañábamos. Yo no, pero ellos sí."
+  ],
+  "menu_days": [
+    "{days} días sin venir. Hasta los enemigos se preocuparon."
+  ],
+  "menu_music_off": [
+    "¿Bajaste la música? ¿Mi banda sonora te parece un problema?"
+  ],
+  "menu_lang": [
+    "¿Cambiaste de idioma? Ahora mis insultos suenan distinto. Duelen igual."
+  ],
+  "farewell": [
+    "¿Ya te vas? Nosotros seguimos aquí, censurados.",
+    "Cierra con cuidado. Nos quedamos a oscuras con los bugs.",
+    "Vuelve pronto, {name}. Vulvalquiria ya te guarda rencor."
+  ],
+  "farewell_pitocles": [
+    "PITOCLES: Descansa, recluta. Yo hago guardia."
+  ],
+  "farewell_vulvalquiria": [
+    "VULVALQUIRIA: Hasta luego. Y apúrate al volver."
+  ],
+  "farewell_ornitorrinco": [
+    "ORNITORRINCO: Cuando cierres, ¿sigo existiendo? Mejor no me lo cuentes."
+  ]
+}

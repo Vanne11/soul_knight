@@ -31,6 +31,7 @@ Settings="*res://src/autoloads/settings.gd"
 Sound="*res://src/autoloads/sound.gd"
 Cursor="*res://src/autoloads/cursor.gd"
 Transition="*res://src/autoloads/transition.gd"
+FourthWall="*res://src/fx/fourth_wall.gd"
 
 [display]
 
