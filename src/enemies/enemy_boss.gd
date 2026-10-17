@@ -792,7 +792,22 @@ func take_damage(amount: float, source: Node = null, _kb: Vector2 = Vector2.ZERO
 		_enter_phase(2)
 	elif current_phase == 2 and current_health <= max_health * PHASE3_AT:
 		_enter_phase(3)
+	elif Censura.has("jefe_furia") and not _furia and current_phase == 3 and current_health <= max_health * 0.15:
+		_enter_furia()  # Censura: fase extra de furia al 15%
 	return amount
+
+
+## Censura (regla "furia"): al 15% de vida el jefe se enfurece: mas rapido, pega mas y ataca antes.
+var _furia := false
+func _enter_furia() -> void:
+	_furia = true
+	move_speed *= 1.35
+	damage *= 1.25
+	if state == State.IDLE:
+		_timer = minf(_timer, 0.4)
+	HitFx.shake(0.4)
+	animated_sprite.modulate = Color(2.0, 0.4, 0.4)
+	_ge.show_floating_text.emit(global_position + Vector2(0, -160), tr("CENSURA_FURIA"), Color("ff4f9a"))
 
 
 func _enter_phase(n: int) -> void:

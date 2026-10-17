@@ -309,6 +309,20 @@ const META_UPGRADES := {
 	"monedas": {"name": "Hucha Escondida", "desc": "+5 monedas al empezar", "cost": 10, "max": 3},
 }
 var meta_upgrades: Dictionary = {}
+
+## --- Censura (src/run/censura_levels.gd) y partida del dia: meta persistente ---
+## Nivel mas alto jugable (0 al principio; ganar en el maximo desbloquea el siguiente).
+var censura_unlocked := 0
+## Nivel elegido en el menu para la proxima partida (siempre <= censura_unlocked).
+var censura_selected := 0
+## Nivel recien desbloqueado en la ultima partida (0 = ninguno); lo lee main.gd para avisar.
+var last_censura_unlocked := 0
+## Partida del dia: el menu pide una (daily_requested) y start_new_run la marca (daily_mode).
+## fecha "AAAA-MM-DD" (UTC) -> {"victory": bool, "floor": int, "time": float, "hero": String}
+var daily_requested := false
+var daily_mode := false
+var daily_records: Dictionary = {}
+const DAILY_KEEP := 60  # fechas que se guardan
 var best_floor := 0
 var total_runs := 0
 ## Huesos ganados en la ultima partida (los ensena game_over).
@@ -325,6 +339,11 @@ func _ready() -> void:
 	if int(data.get("save_version", 1)) < 2 and best_floor > 0:
 		best_floor = best_floor * 2 - 1  # antes 5 pisos (1 por reino); ahora 2 por reino
 	total_runs = int(data.get("total_runs", 0))
+	# Censura y partida del dia: campos nuevos; un guardado viejo sin ellos arranca en 0 / vacio.
+	censura_unlocked = clampi(int(data.get("censura_unlocked", 0)), 0, Censura.MAX_LEVEL)
+	censura_selected = clampi(int(data.get("censura_selected", 0)), 0, censura_unlocked)
+	var dr = data.get("daily_records", {})
+	daily_records = dr if dr is Dictionary else {}
 	unlocked_perks = []
 	for perk in data.get("unlocked_perks", []):
 		unlocked_perks.append(str(perk))
@@ -352,6 +371,11 @@ func start_new_run(seed: int = 0) -> void:
 		seed = Time.get_ticks_msec()
 	current_seed = seed
 	RNG.randomize(seed)
+	# Partida del dia (pedida desde el menu): siempre Censura 0, para que todos jueguen lo mismo.
+	daily_mode = daily_requested
+	daily_requested = false
+	Censura.level = 0 if daily_mode else clampi(censura_selected, 0, censura_unlocked)
+	last_censura_unlocked = 0
 	
 	current_floor = starting_floor
 	current_room_index = 0
@@ -397,8 +421,56 @@ func end_run(victory: bool = false) -> void:
 	meta_currency += last_huesos
 	total_runs += 1
 	best_floor = maxi(best_floor, current_floor)
+	if victory and Censura.level == censura_unlocked and censura_unlocked < Censura.MAX_LEVEL:
+		censura_unlocked += 1  # ganar en tu nivel maximo abre el siguiente
+		last_censura_unlocked = censura_unlocked
+	if daily_mode:
+		_record_daily(victory, current_floor, run_time)
 	save_meta_progression()
 	print("Run ended: victory=%s floor=%d time=%.1fs" % [victory, current_floor, run_time])
+
+## --- Partida del dia ---
+## Fecha de hoy en UTC ("AAAA-MM-DD"): la misma para todo el mundo ese dia.
+static func daily_date() -> String:
+	var d := Time.get_date_dict_from_system(true)
+	return "%04d-%02d-%02d" % [d.year, d.month, d.day]
+
+## Semilla de una fecha: una mezcla entera propia (no hash(), para que no dependa de la version del motor).
+static func daily_seed(date: String = "") -> int:
+	if date == "":
+		date = daily_date()
+	var h := 5381
+	for c in date.to_utf8_buffer():
+		h = ((h * 33) + c) & 0x7fffffff
+	h = (h * 1103515245 + 12345) & 0x7fffffff
+	return maxi(h, 1)  # 0 significaria "semilla al azar"
+
+## Empieza la partida del dia (con el heroe ya elegido).
+func start_daily_run() -> void:
+	daily_requested = true
+	start_new_run(daily_seed())
+
+## Mejor resultado de hoy (o de la fecha dada); {} si no hay.
+func daily_record(date: String = "") -> Dictionary:
+	return daily_records.get(date if date != "" else daily_date(), {})
+
+## Mejor = victoria > mas piso > menos tiempo (solo la victoria compara tiempo con otra victoria).
+static func _daily_better(a: Dictionary, b: Dictionary) -> bool:
+	if bool(a.victory) != bool(b.victory):
+		return bool(a.victory)
+	if int(a.floor) != int(b.floor):
+		return int(a.floor) > int(b.floor)
+	return float(a.time) < float(b.time) if bool(a.victory) else false
+
+func _record_daily(victory: bool, floor_n: int, time: float) -> void:
+	var rec := {"victory": victory, "floor": floor_n, "time": time, "hero": character}
+	var key := daily_date()
+	if not daily_records.has(key) or _daily_better(rec, daily_records[key]):
+		daily_records[key] = rec
+	var keys := daily_records.keys()
+	keys.sort()
+	while keys.size() > DAILY_KEEP:
+		daily_records.erase(keys.pop_front())
 
 func advance_floor() -> void:
 	current_floor += 1
@@ -444,6 +516,9 @@ func save_meta_progression() -> void:
 		"total_runs": total_runs,
 		"best_floor": best_floor,
 		"liberated": liberated,
+		"censura_unlocked": censura_unlocked,
+		"censura_selected": censura_selected,
+		"daily_records": daily_records,
 		"save_version": 2,
 	}
 	var file = FileAccess.open("user://meta_save.json", FileAccess.WRITE)

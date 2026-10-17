@@ -37,11 +37,15 @@ func _create_ui() -> void:
 	panel.add_child(vbox)
 
 	start_btn = _menu_button(vbox, tr("MENU_NEW_GAME"), _on_start)
+	daily_btn = _menu_button(vbox, tr("CENSURA_DAILY_BTN"), _on_daily)
+	daily_btn.tooltip_text = tr("CENSURA_DAILY_TIP")
 	continue_btn = _menu_button(vbox, tr("MENU_UPGRADES"), _open_upgrades)
 	lore_btn = _menu_button(vbox, tr("MENU_CODEX"), _open_codex)
 	settings_btn = _menu_button(vbox, tr("SETTINGS_TITLE"), _open_settings)
 	quit_btn = _menu_button(vbox, tr("MENU_QUIT"), _on_quit)
 	start_btn.grab_focus.call_deferred()
+
+	_build_censura_selector(root)
 
 	# derecha: el mundo (regiones liberadas) + tu progreso
 	var side := PanelContainer.new()
@@ -145,6 +149,11 @@ func _world_strip() -> Control:
 	return col
 
 var start_btn: Button
+var daily_btn: Button
+var _cens_label: Label
+var _cens_rules: GridContainer
+var _cens_down: Button
+var _cens_up: Button
 var continue_btn: Button
 var lore_btn: Button
 var settings_btn: Button
@@ -301,7 +310,99 @@ func _edu_source(lore_id: String) -> String:
 	return "\n\n" + s if s != "" else ""
 
 
+## Selector de Censura (nivel 0 = juego normal): flechas hasta el maximo desbloqueado y la
+## lista de reglas activas. Solo aparece cuando hay algo que elegir (tras la primera victoria).
+func _build_censura_selector(root: Control) -> void:
+	var rm = _game_controller.get_run_manager()
+	var panel := PanelContainer.new()
+	panel.position = Vector2(36, 548)
+	panel.custom_minimum_size = Vector2(300, 0)
+	root.add_child(panel)
+	var v := VBoxContainer.new()
+	v.add_theme_constant_override("separation", 4)
+	panel.add_child(v)
+	var row := HBoxContainer.new()
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_theme_constant_override("separation", 10)
+	v.add_child(row)
+	_cens_down = Button.new()
+	_cens_down.text = "◀"
+	_cens_down.pressed.connect(_censura_step.bind(-1))
+	row.add_child(_cens_down)
+	_cens_label = HudStyle.pixel_label("", 16, Color("ff4f9a"), true)
+	_cens_label.custom_minimum_size.x = 150
+	_cens_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	row.add_child(_cens_label)
+	_cens_up = Button.new()
+	_cens_up.text = "▶"
+	_cens_up.pressed.connect(_censura_step.bind(1))
+	row.add_child(_cens_up)
+	# reglas activas: panel aparte, a la derecha bajo "El mundo" (a la izquierda no cabe la lista)
+	var rpanel := PanelContainer.new()
+	rpanel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	rpanel.offset_left = -326
+	rpanel.offset_right = -36
+	rpanel.offset_top = 530
+	root.add_child(rpanel)
+	_cens_rules = GridContainer.new()  # 2 columnas: con 10 reglas una sola no cabe
+	_cens_rules.columns = 2
+	_cens_rules.add_theme_constant_override("h_separation", 10)
+	_cens_rules.add_theme_constant_override("v_separation", 3)
+	rpanel.add_child(_cens_rules)
+	panel.visible = rm.censura_unlocked > 0
+	rpanel.visible = panel.visible
+	_refresh_censura()
+
+
+func _censura_step(d: int) -> void:
+	var rm = _game_controller.get_run_manager()
+	rm.censura_selected = clampi(rm.censura_selected + d, 0, rm.censura_unlocked)
+	rm.save_meta_progression()
+	_refresh_censura()
+
+
+func _refresh_censura() -> void:
+	var rm = _game_controller.get_run_manager()
+	var n: int = rm.censura_selected
+	_cens_label.text = tr("CENSURA_LEVEL") % [n, rm.censura_unlocked]
+	_cens_down.disabled = n <= 0
+	_cens_up.disabled = n >= rm.censura_unlocked
+	Censura.level = n  # solo para que rule_ids() de abajo use el nivel elegido
+	for c in _cens_rules.get_children():
+		c.queue_free()
+	if n == 0:
+		_cens_rules.add_child(_rule_label(tr("CENSURA_NORMAL")))
+	for id in Censura.rule_ids():
+		_cens_rules.add_child(_rule_label("• " + Censura.rule_name(id)))
+	_cens_rules.tooltip_text = "\n".join(Censura.rule_ids().map(func(id): return "%s: %s" % [Censura.rule_name(id), Censura.rule_desc(id)]))
+	# partida del dia: resumen del record de hoy en el boton
+	var rec: Dictionary = rm.daily_record()
+	daily_btn.text = tr("CENSURA_DAILY_BTN") if rec.is_empty() else tr("CENSURA_DAILY_BTN_REC") % _daily_summary(rec)
+
+
+func _rule_label(text: String) -> Label:
+	var l := Label.new()
+	l.text = text
+	l.add_theme_font_size_override("font_size", 12)
+	l.add_theme_color_override("font_color", Color(0.9, 0.82, 0.88))
+	return l
+
+
+func _daily_summary(rec: Dictionary) -> String:
+	if bool(rec.get("victory", false)):
+		var t := int(rec.get("time", 0.0))
+		return tr("CENSURA_DAILY_WIN") % [t / 60, t % 60]
+	return tr("CENSURA_DAILY_FLOOR") % int(rec.get("floor", 1))
+
+
+func _on_daily() -> void:
+	# misma historia + eleccion de heroe; intro.gd arranca la run con la semilla de hoy
+	_game_controller.get_run_manager().daily_requested = true
+	Transition.change_scene("res://src/scenes/intro.tscn")
+
+
 func _on_start() -> void:
+	_game_controller.get_run_manager().daily_requested = false
 	# historia + eleccion de personaje; la run empieza alli
 	Transition.change_scene("res://src/scenes/intro.tscn")
 

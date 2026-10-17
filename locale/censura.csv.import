@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://c03dhyieyvae5"
+
+[deps]
+
+files=["res://locale/censura.es.translation", "res://locale/censura.en.translation"]
+
+source_file="res://locale/censura.csv"
+dest_files=["res://locale/censura.es.translation", "res://locale/censura.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

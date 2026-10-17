@@ -88,4 +88,4 @@ static func consultorio_cfg() -> Dictionary:
 
 ## Precio en monedas: sube con el piso igual que la tienda (shop_item.gd FLOOR_MARKUP).
 static func price(base: int) -> int:
-	return int(round(base * (1.0 + 0.15 * (RunManager.depth(rm().current_floor) - 1.0))))
+	return int(round(base * (1.0 + 0.15 * (RunManager.depth(rm().current_floor) - 1.0)) * Censura.mult("price")))

@@ -347,7 +347,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 		var info := {
 			"health": (30.0 + floor_n * 10.0) * RNG.randf_range(0.85, 1.15),
 			"damage": (ENEMY_DAMAGE_BASE + floor_n * 3.0) * RNG.randf_range(0.85, 1.15),
-			"drops": [{"item_id": "coin", "chance": COIN_DROP_CHANCE}, {"item_id": "health_small", "chance": 0.08},
+			"drops": [{"item_id": "coin", "chance": COIN_DROP_CHANCE * Censura.mult("coin_drop")}, {"item_id": "health_small", "chance": 0.08},
 				{"item_id": _random_loot_id(), "chance": 0.06}],
 		}
 		# El Perineo es tierra de nadie: mezcla bichos de los dos reinos.
@@ -374,7 +374,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 			Room.RoomType.BOSS when has_boss:
 				var region_n: int = RunManager.region_index(_run_manager.current_floor) + 1  # el jefe escala por reino, como antes
 				info.enemy_type = "boss"
-				info.health = EnemyBoss.health_for_floor(region_n)
+				info.health = EnemyBoss.health_for_floor(region_n) * Censura.mult("boss_health")
 				info.script = EnemyBoss.script_path(fd.boss)
 				info.damage = 12.0 + region_n * 4.0
 				info.name = fd.boss_name
@@ -434,7 +434,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				# (No toca a las espinillas: reventar de un tiro es su gracia.)
 				# Las escoltas del guardian (sala final de la 1a etapa) siempre son elite.
 				var escort: bool = room.room_type == Room.RoomType.BOSS and not has_boss
-				if types[t] != "espinilla" and (escort or RNG.randf() < float(fd.get("elite_chance", 0.0))):
+				if types[t] != "espinilla" and (escort or RNG.randf() < float(fd.get("elite_chance", 0.0)) * Censura.mult("elite_chance")):
 					info.health *= ELITE_HEALTH_MULT
 					info.damage *= ELITE_DAMAGE_MULT
 					info.scale = ELITE_SCALE
@@ -637,6 +637,9 @@ func _complete_floor() -> void:
 		Narrator.say("victory")
 		get_node("/root/LoreDatabase").custom_event("victory")
 		_run_manager.end_run(true)
+		if _run_manager.last_censura_unlocked > 0:  # Censura: ganar abre el nivel siguiente (ver RunManager.end_run)
+			Narrator.say("censura_up")
+			Narrator.toast(tr("CENSURA_UNLOCKED_TITLE"), tr("CENSURA_UNLOCKED_BODY") % _run_manager.last_censura_unlocked, "ff4f9a")
 		get_tree().create_timer(4.0).timeout.connect(func(): Transition.change_scene("res://src/scenes/game_over.tscn"))
 		return
 	get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position, tr("FX_FLOOR_DONE") % floor_n, Color.GOLD)
@@ -887,6 +890,15 @@ func _show_floor_card() -> void:
 	label.add_theme_constant_override("shadow_offset_x", 4)
 	label.add_theme_constant_override("shadow_offset_y", 4)
 	layer.add_child(label)
+	if Censura.level > 0:  # indicador discreto del nivel de Censura bajo el nombre del piso
+		var cl := Label.new()
+		cl.text = tr("CENSURA_BADGE") % Censura.level
+		cl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		cl.set_anchors_preset(Control.PRESET_FULL_RECT)
+		cl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		cl.offset_top = 190
+		HudStyle.style_label(cl, 20, Color("ff4f9a"), true)
+		layer.add_child(cl)
 	add_child(layer)
 	var tw := label.create_tween()
 	tw.tween_interval(1.6)
