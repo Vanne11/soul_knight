@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_pelusa"
+title = "Pelusa Perineal"
+text = "Aparece donde nadie limpia, y en las fronteras no limpia nadie. Es una bola gris con escarapela que flota sin rumbo en grupitos, convencida de que es una patrulla. Se para, brilla un segundo y se lanza en línea recta. Pesa poco, pega poco y da muchísima grima. Aun así, ya sabes lo que dicen: donde hay pelusa, ha habido movimiento."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Pelusa Perineal", "count": 15}
+flavor_text = "Mata 15 pelusas perineales."
