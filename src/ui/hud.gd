@@ -77,6 +77,7 @@ func _ready() -> void:
 	_events.blessings_changed.connect(_update_blessings)
 	_build_boss_bar()
 	_build_blessings()
+	_build_key_hints()
 	add_child(Minimap.new())
 	_update_floor_label()
 	_update_portrait()
@@ -259,6 +260,12 @@ func _update_blessings() -> void:
 			pips.add_child(r)
 		box.add_child(pips)
 		_blessings.add_child(box)
+
+## Teclas a la vista: el dash junto a la barra de estamina (dash_hint.gd) y abajo a la derecha el
+## panel de manos con arma, escudo/habilidad y pausa (hands_panel.gd).
+func _build_key_hints() -> void:
+	stamina_bar.add_child(DashHint.new())
+	add_child(HandsPanel.new())
 
 var _boss_bar: UIBar
 var _boss_label: Label

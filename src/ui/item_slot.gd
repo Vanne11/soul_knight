@@ -15,8 +15,23 @@ func setup(index: int, key_text: String) -> void:
 	slot_index = index
 	key_label.text = key_text
 	HudStyle.style_label(key_label, 16, HudStyle.GOLD, true)
+	_use_glyph(index)
 	HudStyle.style_label(count_label, 16, HudStyle.CREAM)
 	clear()
+
+## La insignia de la esquina muestra la tecla real (teclado) o la direccion de la cruceta
+## (mando) de "slot_N", leida del InputMap; sustituye al numero fijo de antes.
+func _use_glyph(index: int) -> void:
+	var g := InputGlyph.new()
+	g.action = "slot_%d" % (index + 1)
+	g.position = Vector2(-8, 0)
+	$Background.add_child(g)
+	g.visibility_changed.connect(func():
+		# sin glifo (accion sin tecla): se queda el numero de siempre
+		key_label.visible = not g.visible
+		$Background/Badge.visible = not g.visible)
+	key_label.visible = not g.visible
+	$Background/Badge.visible = not g.visible
 
 func set_item(item_id_new: String, qty: int, cursed := false) -> void:
 	item_id = item_id_new
