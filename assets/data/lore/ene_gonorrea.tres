@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_gonorrea"
+title = "Gonorrea Goteante"
+text = "Va dejando gotitas por donde pasa, como quien riega una planta que nadie pidió. Pisarlas escuece, pero no más que eso. La gonorrea real da ardor al orinar o flujo extraño, o nada de nada, y se cura con antibióticos si se detecta a tiempo. Ojo: hoy hay cepas resistentes, así que no te automediques y ve a control. Y usa condón, que es baratísimo."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Gonorrea Goteante", "count": 10}
+flavor_text = "Mata 10 gonorreas goteantes."

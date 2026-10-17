@@ -10,5 +10,5 @@ description = "Protección total. Escudos +50%, inmunidad a efectos de estado se
 rarity = 3
 tags = ["reliquia", "pasivo", "defensa"]
 equip_slot = 2
-effects = [{"type": 0, "stat": "max_shields", "magnitude": 1.5}, {"type": 4, "status_effect": null, "custom_data": {"immunity": ["burn", "poison", "lust"]}}]
+effects = [{"type": 0, "stat": "max_shields", "magnitude": 1.5}, {"type": 4, "status_effect": null, "custom_data": {"immunity": ["burn", "poison", "lust", "its"]}}]
 base_value = 300

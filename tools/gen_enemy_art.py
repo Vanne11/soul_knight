@@ -523,8 +523,177 @@ def frames_pelusa():
     return {"idle": [idle], "walk": walk, "attack": attack, "hurt": hurt, "death": death}
 
 
+# ------------------------------------------------------------------ microbios ITS
+# Infecciones de transmision sexual: microbios caricaturescos 32x40 con carita. Los
+# villanos son ellos, no las personas. Cada uno lleva un guino visual a su infeccion.
+ITS_COL = {  # hi, md, dk
+    "clamidia": ((236, 228, 255, 255), (196, 182, 236, 255), (140, 124, 190, 255)),
+    "herpes": ((255, 170, 160, 255), (232, 96, 96, 255), (168, 52, 70, 255)),
+    "gonorrea": ((236, 240, 130, 255), (186, 200, 66, 255), (122, 140, 40, 255)),
+    "vph": ((255, 226, 196, 255), (230, 178, 140, 255), (170, 118, 96, 255)),
+    "sifilis": ((220, 170, 255, 255), (160, 100, 220, 255), (104, 56, 160, 255)),
+}
+BLISTER = (255, 244, 214, 255)
+WART = (190, 132, 100, 255)
+WART_HI = (226, 176, 140, 255)
+DROP = (150, 190, 40, 255)
+DROP_HI = (214, 236, 120, 255)
+MUST = (60, 36, 30, 255)
+GLASS = (240, 240, 250, 255)
+
+
+def its_eyes(d, cx, cy, eyes):
+    for ecx in (cx - 5, cx + 3):
+        if eyes == "x":
+            d.line([(ecx - 1, cy - 2), (ecx + 2, cy + 1)], fill=PUPIL)
+            d.line([(ecx - 1, cy + 1), (ecx + 2, cy - 2)], fill=PUPIL)
+        elif eyes == "sleepy":  # asintomatica: parpados a media asta
+            d.rectangle([ecx - 1, cy - 2, ecx + 3, cy + 1], fill=EYE_W)
+            d.rectangle([ecx + 1, cy - 1, ecx + 2, cy + 1], fill=PUPIL)
+            d.line([(ecx - 1, cy - 2), (ecx + 3, cy - 2)], fill=PUPIL)
+        elif eyes == "hurt":
+            d.line([(ecx - 1, cy - 1), (ecx + 2, cy)], fill=PUPIL)
+            d.line([(ecx - 1, cy + 1), (ecx + 2, cy)], fill=PUPIL)
+        else:
+            d.rectangle([ecx - 1, cy - 3, ecx + 3, cy + 1], fill=EYE_W)
+            d.rectangle([ecx + 1, cy - 2, ecx + 2, cy + 1], fill=PUPIL)
+    if eyes == "angry":
+        d.line([(cx - 7, cy - 5), (cx - 2, cy - 3)], fill=PUPIL)
+        d.line([(cx + 2, cy - 3), (cx + 7, cy - 5)], fill=PUPIL)
+    d.point([(cx - 8, cy + 3), (cx + 7, cy + 3)], fill=BLUSH)
+
+
+def its_mouth(d, cx, cy, mouth):
+    if mouth == "open":
+        d.rectangle([cx - 3, cy + 4, cx + 2, cy + 7], fill=MOUTH)
+        d.rectangle([cx - 3, cy + 4, cx + 2, cy + 4], fill=TEETH)
+    elif mouth == "sly":
+        d.line([(cx - 3, cy + 5), (cx, cy + 6)], fill=PUPIL)
+        d.line([(cx, cy + 6), (cx + 3, cy + 4)], fill=PUPIL)
+    else:
+        d.line([(cx - 2, cy + 5), (cx + 2, cy + 5)], fill=PUPIL)
+
+
+def its_microbe(kind, bob=0, legs=(0, 0), eyes="angry", mouth="line", lean=0, puff=0, ghost=False, sx=0, drip=0):
+    w, h = 32, 40
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    hi, md, dk = ITS_COL[kind]
+    cx, cy = 16 + lean, 24 + bob
+    rx, ry = 11 + puff, 10 + puff
+    # patitas
+    for fx, off in ((-5, legs[0]), (5, legs[1])):
+        d.ellipse([cx + fx - 3, h - 8 + off - 1, cx + fx + 3, h - 3 + off], fill=dk)
+    if kind == "sifilis":
+        # espiroqueta: cuerpo en tirabuzon vertical
+        for i in range(5):
+            yy = cy - 10 + i * 5 + (i % 2)
+            dx = (-2, 2)[(i + sx) % 2]
+            d.ellipse([cx - 11 + dx, yy - 3, cx + 11 + dx, yy + 4], fill=md if i % 2 == 0 else dk)
+            d.ellipse([cx - 9 + dx, yy - 3, cx + 2 + dx, yy], fill=hi if i % 2 == 0 else md)
+        # disfraz: gafas redondas y bigote falso (la gran imitadora)
+        for ecx in (cx - 5, cx + 4):
+            d.ellipse([ecx - 4, cy - 8, ecx + 4, cy], outline=MUST, fill=GLASS)
+        d.line([(cx - 1, cy - 4), (cx, cy - 4)], fill=MUST)
+        its_eyes(d, cx, cy - 4, "happy" if eyes == "angry" else eyes)
+        d.rectangle([cx - 6, cy + 2, cx + 5, cy + 4], fill=MUST)
+        d.point([(cx - 7, cy + 3), (cx + 6, cy + 3)], fill=MUST)
+    else:
+        d.ellipse([cx - rx, cy - ry, cx + rx, cy + ry], fill=md)
+        d.ellipse([cx - rx + 2, cy - ry + 1, cx - 1, cy - 1], fill=hi)
+        d.ellipse([cx + 1, cy + 1, cx + rx - 2, cy + ry - 1], fill=dk)
+        if kind == "clamidia":
+            # sin sintomas: puntitos de "no pasa nada" y mirada de reojo
+            for px_, py_ in ((-8, -6), (7, -7), (0, -10)):
+                d.point([(cx + px_, cy + py_)], fill=hi)
+        elif kind == "herpes":
+            for bx, by, br in ((-6, -9, 3), (2, -11, 3), (8, -5, 2), (-9, -2, 2)):
+                d.ellipse([cx + bx - br, cy + by - br, cx + bx + br, cy + by + br], fill=BLISTER, outline=dk)
+                d.point([(cx + bx - 1, cy + by - 1)], fill=(255, 255, 255, 255))
+        elif kind == "gonorrea":
+            # gotitas colgando del cuerpo
+            for gx, gl in ((-7, 3), (-1, 5), (6, 2)):
+                gl += drip
+                d.rectangle([cx + gx - 1, cy + ry - 1, cx + gx, cy + ry + gl - 2], fill=DROP)
+                d.ellipse([cx + gx - 2, cy + ry + gl - 3, cx + gx + 1, cy + ry + gl], fill=DROP_HI)
+        elif kind == "vph":
+            # coliflor de verruguitas en la coronilla y los costados
+            for bx, by, br in ((-5, -10, 3), (1, -12, 3), (6, -9, 3), (-10, -3, 2), (10, -2, 2), (-2, -8, 2)):
+                d.ellipse([cx + bx - br, cy + by - br, cx + bx + br, cy + by + br], fill=WART, outline=dk)
+                d.point([(cx + bx - 1, cy + by - 1)], fill=WART_HI)
+        its_eyes(d, cx, cy - 1, eyes)
+        its_mouth(d, cx, cy - 1, mouth)
+    if ghost:
+        # contorno punteado: apenas se ve (asintomatica)
+        px = im.load()
+        for y in range(h):
+            for x in range(w):
+                r, g, b, a = px[x, y]
+                if a:
+                    px[x, y] = (r, g, b, 200 if (x + y) % 3 == 0 else 120)
+    return outline(im)
+
+
+def verruguita(bob=0, eyes="angry", legs=(0, 0)):
+    """Minion del VPH 16x18: una verruga con patitas."""
+    im = Image.new("RGBA", (16, 18), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    for fx, off in ((-3, legs[0]), (3, legs[1])):
+        d.ellipse([8 + fx - 2, 14 + off, 8 + fx + 1, 16 + off], fill=ITS_COL["vph"][2])
+    d.ellipse([2, 3 + bob, 13, 14 + bob], fill=WART, outline=ITS_COL["vph"][2])
+    d.ellipse([3, 4 + bob, 8, 8 + bob], fill=WART_HI)
+    for ex in (5, 9):
+        if eyes == "x":
+            d.point([(ex, 8 + bob), (ex + 1, 9 + bob)], fill=PUPIL)
+        else:
+            d.rectangle([ex, 7 + bob, ex + 1, 9 + bob], fill=EYE_W)
+            d.point([(ex + 1, 8 + bob)], fill=PUPIL)
+    d.line([(6, 11 + bob), (9, 11 + bob)], fill=PUPIL)
+    return outline(im)
+
+
+def residuo_herpes():
+    """Ampolla seca que deja el herpes al caer (24x16): pisala para rematarlo."""
+    im = Image.new("RGBA", (24, 16), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    hi, md, dk = ITS_COL["herpes"]
+    d.ellipse([2, 6, 21, 14], fill=dk)
+    d.ellipse([5, 3, 18, 12], fill=md)
+    d.ellipse([8, 4, 14, 8], fill=BLISTER)
+    d.point([(9, 5)], fill=(255, 255, 255, 255))
+    d.line([(7, 10), (11, 11)], fill=dk)
+    return outline(im)
+
+
+def frames_its(kind, legs_walk=True):
+    eyes0 = "sleepy" if kind == "clamidia" else ("happy" if kind == "sifilis" else "angry")
+    g = kind == "clamidia"
+    mk = lambda **k: its_microbe(kind, ghost=False, **k)
+    idle = mk(eyes=eyes0, mouth="sly" if kind in ("clamidia", "sifilis") else "line")
+    walk = [mk(eyes=eyes0, legs=(2, 0), drip=0), mk(bob=-1, eyes=eyes0, drip=1, sx=1),
+            mk(eyes=eyes0, legs=(0, 2), drip=0), mk(bob=-1, eyes=eyes0, drip=1, sx=1)]
+    attack = [mk(eyes="angry", mouth="open", puff=0), mk(eyes="angry", mouth="open", puff=1, lean=-1),
+              mk(eyes="angry", mouth="open", puff=1, lean=-2)]
+    hurt = [tint(mk(eyes="hurt", mouth="open"), (255, 60, 70), 0.55), tint(mk(eyes="hurt"), (255, 255, 255), 0.4)]
+    dead = mk(eyes="x")
+    death = [death_frame(dead, i, center=(16, 36)) for i in range(4)]
+    return {"idle": [idle], "walk": walk, "attack": attack, "hurt": hurt, "death": death}
+
+
+def frames_verruguita():
+    idle = verruguita()
+    walk = [verruguita(legs=(1, 0)), verruguita(bob=-1), verruguita(legs=(0, 1)), verruguita(bob=-1)]
+    attack = [verruguita(eyes="angry", bob=1), verruguita(eyes="angry"), verruguita(eyes="angry", bob=-1)]
+    hurt = [tint(verruguita(), (255, 60, 70), 0.55), tint(verruguita(), (255, 255, 255), 0.4)]
+    death = [death_frame(verruguita(eyes="x"), i, center=(8, 16)) for i in range(4)]
+    return {"idle": [idle], "walk": walk, "attack": attack, "hurt": hurt, "death": death}
+
+
 VARIANTS = {"especulo": frames_especulo, "dildo_electrico": frames_dildo_electrico,
-            "hemorroide": frames_hemorroide, "inspector_fluidos": frames_inspector, "pelusa_perineal": frames_pelusa}
+            "hemorroide": frames_hemorroide, "inspector_fluidos": frames_inspector, "pelusa_perineal": frames_pelusa,
+            "clamidia": lambda: frames_its("clamidia"), "herpes": lambda: frames_its("herpes"),
+            "gonorrea": lambda: frames_its("gonorrea"), "vph": lambda: frames_its("vph"),
+            "sifilis": lambda: frames_its("sifilis"), "verruguita": frames_verruguita}
 ANIM = {  # nombre: (loop, fps)
     "idle": (True, 4.0), "walk": (True, 8.0), "attack": (False, 10.0),
     "bite": (False, 18.0), "hurt": (False, 10.0), "death": (False, 6.0),
@@ -561,6 +730,10 @@ def proyectil_sello():
 
 
 if __name__ == "__main__":
+    if sys.argv[1:] == ["residuo"]:
+        residuo_herpes().save(OUT / "herpes_residuo.png")
+        print("ok residuo")
+        sys.exit(0)
     if sys.argv[1:] == ["sello"]:
         proyectil_sello()
         sys.exit(0)

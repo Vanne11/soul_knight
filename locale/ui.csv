@@ -140,3 +140,12 @@ DEBUG_GO,Ir,Go
 DEBUG_FLOOR_HEAD,— Piso —,— Floor —
 DEBUG_FLOOR,Piso %d,Floor %d
 DEBUG_CHAR_HEAD,— Personaje (reinicia el piso) —,— Character (restarts the floor) —
+FX_PROTECTED,¡Protegido!,Protected!
+FX_CONTAGION_PICAZON,¡Picazón!,Itchy!
+FX_CONTAGION_ARDOR,¡Ardor!,Burning!
+HUD_CONTAGION_PICAZON,PICAZÓN,ITCH
+HUD_CONTAGION_ARDOR,ARDOR,BURN
+FX_VERRUGAS,¡VERRUGAS!,WARTS!
+FX_SIFILIS,¡Sífilis!,Syphilis!
+FX_REMATE,¡REMATE!,FINISHED!
+FX_REBROTA,¡REBROTA!,FLARE-UP!

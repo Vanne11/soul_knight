@@ -133,6 +133,8 @@
   ],
   "sneeze": ["Salud.", "Jesús.", "¿Otra vez? Tápate la boca, guarro."],
   "platypus_immune": ["El ornitorrinco se lo traga sin pestañear. Ni alergia ni nada. La ventaja de no ser de ningún sitio."],
+  "its_contagion": ["Te han contagiado algo. Leve y pasajero, pero es la prueba de que las ITS existen y de que el preservativo no es opcional. Para la próxima: protección. Y chequeos periódicos, que muchas ni se notan."],
+  "its_protected": ["¿Ves? El preservativo te protegió del contagio. Las ITS no se notan siempre, pero el látex trabaja a tiempo completo. Un aplauso para la protección. Y para quien la usa."],
   "chest": ["Un cofre. Dentro hay algo. Si es mejor que lo que llevas, cosa fácil, quédatelo."],
   "shop_buy": ["Comprado. El capitalismo sobrevive incluso a la censura."],
   "shop_poor": ["No te llega. Mata más cosas. Así funciona la economía aquí."],

@@ -8,6 +8,8 @@ signal shields_changed(current: float, max: float)
 signal stamina_changed(current: float, max: float)
 signal intoxication_changed(level: float, tier: int)
 signal stat_modified(stat: String, value: float)
+## Contagio de ITS: kind "" = sano. El HUD lo muestra; el preservativo lo evita.
+signal contagion_changed(kind: String, seconds: float)
 
 enum IntoxicationTier { SOBER = 0, TIPSY = 1, DRUNK = 2, BLACKOUT = 3 }
 
@@ -53,6 +55,7 @@ func _process(delta: float) -> void:
 	_handle_stamina_regen(delta)
 	_handle_shield_regen(delta)
 	_handle_intoxication_decay(delta)
+	_handle_contagion(delta)
 
 func reset_for_new_run() -> void:
 	# Sin esto las mejoras (y el +25 de escudo de Pitocles) se acumulaban entre partidas.
@@ -75,6 +78,7 @@ func reset_for_new_run() -> void:
 	fire_rate_modifier = 1.0
 	_shield_regen_timer = 0.0
 	_last_damage_time = 0.0
+	clear_contagion()
 	emit_all_signals()
 
 func _handle_stamina_regen(delta: float) -> void:
@@ -220,3 +224,86 @@ func emit_all_signals() -> void:
 	shields_changed.emit(current_shields, max_shields)
 	stamina_changed.emit(current_stamina, max_stamina)
 	intoxication_changed.emit(intoxication_level, intoxication_tier)
+
+# ------------------------------------------------------------------ contagio (ITS)
+## Efectos leves y temporales de los golpes de las ITS. No acumulan: reinfectar
+## solo renueva el tiempo (y cambia de tipo si es otro). Lo evita cualquier objeto
+## con inmunidad "its" (Preservativo de Titanio, Lanzapreservativos...): ver is_protected().
+## speed: multiplicador de velocidad; dot: dano cada tick segundos (directo, sin iframes).
+const CONTAGION := {
+	"picazon": {"speed": 0.88, "dot": 0.0, "tick": 0.0},
+	"ardor": {"speed": 1.0, "dot": 1.0, "tick": 2.0},
+}
+const CONTAGION_IMMUNITY_ID := "its"
+var contagion_kind: String = ""
+var contagion_time: float = 0.0
+var _contagion_tick_t: float = 0.0
+var contagion_blocked_count: int = 0  # veces que el preservativo te salvo (para pruebas)
+
+## True si llevas algo con efecto de inmunidad "its". Las armas solo valen en la mano.
+func is_protected() -> bool:
+	var player := get_tree().get_first_node_in_group("player")
+	if player == null or not ("collected_items" in player):
+		return false
+	var db := get_node("/root/ItemDatabase")
+	for id in player.collected_items:
+		var item = db.get_item(id)
+		if item == null:
+			continue
+		if item.equip_slot == Item.EquipSlot.WEAPON and not ("current_weapon" in player and player.current_weapon == item):
+			continue
+		for fx in item.effects:
+			if fx is Dictionary and int(fx.get("type", -1)) == 4 and CONTAGION_IMMUNITY_ID in fx.get("custom_data", {}).get("immunity", []):
+				return true
+	return false
+
+## Intenta contagiar. Devuelve true si te contagia; false si el preservativo te protege.
+func infect(kind: String, seconds: float) -> bool:
+	if not CONTAGION.has(kind) or DebugMenu.god_mode:
+		return false
+	if is_protected():
+		contagion_blocked_count += 1
+		_ge.show_floating_text.emit(get_tree().get_first_node_in_group("player").global_position + Vector2(0, -34), tr("FX_PROTECTED"), Color("7fe0a0"))
+		_narrate_later("its_protected")
+		return false
+	var first := contagion_time <= 0.0
+	contagion_kind = kind
+	contagion_time = maxf(contagion_time, seconds)
+	_contagion_tick_t = CONTAGION[kind].tick
+	contagion_changed.emit(contagion_kind, contagion_time)
+	if first:
+		_ge.show_floating_text.emit(get_tree().get_first_node_in_group("player").global_position + Vector2(0, -34), tr("FX_CONTAGION_" + kind.to_upper()), Color("c8e04a"))
+		_narrate_later("its_contagion")
+	return true
+
+func clear_contagion() -> void:
+	contagion_kind = ""
+	contagion_time = 0.0
+	contagion_changed.emit("", 0.0)
+
+func contagion_speed_mult() -> float:
+	return CONTAGION[contagion_kind].speed if contagion_time > 0.0 else 1.0
+
+## El narrador calla en pleno combate (y say_first gastaria el evento): espera a que acabe.
+var _narr_pending: Array[String] = []
+
+func _narrate_later(event: String) -> void:
+	if event not in _narr_pending:
+		_narr_pending.append(event)
+
+func _handle_contagion(delta: float) -> void:
+	if not _narr_pending.is_empty() and not Narrator._in_combat():
+		Narrator.say_first(_narr_pending.pop_front())
+	if contagion_time <= 0.0:
+		return
+	contagion_time -= delta
+	var c: Dictionary = CONTAGION[contagion_kind]
+	if c.dot > 0.0:
+		_contagion_tick_t -= delta
+		if _contagion_tick_t <= 0.0:
+			_contagion_tick_t = c.tick
+			take_damage(c.dot)
+	if contagion_time <= 0.0:
+		clear_contagion()
+	else:
+		contagion_changed.emit(contagion_kind, contagion_time)
