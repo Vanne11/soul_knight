@@ -136,10 +136,10 @@ func _count_up(label: Label, target: int, suffix: String, delay: float) -> void:
 
 func _on_retry() -> void:
 	_game_controller.get_run_manager().start_new_run()
-	get_tree().change_scene_to_file("res://src/scenes/main.tscn")
+	Transition.change_scene("res://src/scenes/main.tscn")
 
 func _on_menu() -> void:
-	get_tree().change_scene_to_file("res://src/scenes/main_menu.tscn")
+	Transition.change_scene("res://src/scenes/main_menu.tscn")
 
 func _on_quit() -> void:
 	get_tree().quit()

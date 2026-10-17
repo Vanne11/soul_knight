@@ -109,4 +109,4 @@ func close() -> void:
 
 func _to_menu() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file(MENU_SCENE)
+	Transition.change_scene(MENU_SCENE)
