@@ -2,6 +2,9 @@ extends Node
 
 ## Bot de pruebas: juega una partida completa (5 pisos) para ver si el juego es jugable.
 ## Uso: godot --path . res://tools/autoplay/autoplay.tscn  [-- --hero=pitocles --seed=123 --fast]
+## Dinamicas de sala (src/rooms): --force-dyn=<escort|hold|thief|stealth|clock|challenge|celo|lubricado|
+## aduanera|apagon|censurada|barriles|antorchas|trampas|pacto|ruleta|mercado> las fuerza en toda sala donde
+## quepan; --no-god=1 juega sin modo dios (para medir los peligros de sala); --armed=1 empieza con pistola.
 ## Se mueve con las acciones reales (move_*, attack, dash, interact), apunta con
 ## Player.aim_override, navega cada sala con una grilla sobre las colisiones reales y
 ## recorre el piso sala por sala hasta el jefe. Lo que lo traba queda en el registro
@@ -69,7 +72,8 @@ func _ready() -> void:
 		set_physics_process(false)
 		set_process(false)
 		return
-	DebugMenu.god_mode = true
+	DebugMenu.god_mode = _arg("--no-god=", "") == ""  # --no-god=1: sin modo dios (mide dificultad y peligros de sala)
+	RoomDirector.force_kind = _arg("--force-dyn=", "")  # prueba: fuerza esa dinamica de sala en todas las salas donde quepa
 	# para alargar los jefes y ver todos sus desafios: --boss-hp=1,1,12,12,12 (multiplicador por piso)
 	EnemyBoss.test_hp_mults = Array(_arg("--boss-hp=", "1").split(",", false)).map(func(x): return float(x))
 	_build_overlay()
@@ -113,6 +117,8 @@ func _ready() -> void:
 	main = get_tree().get_first_node_in_group("main")
 	await _wait_s(0.5)
 	player = main.player
+	if _arg("--armed=", "") != "":
+		player.equip_weapon(get_node("/root/ItemDatabase").get_item("pistol_basic"))  # prueba: sin la busqueda inicial del arma
 	_say("Partida nueva: semilla=%d" % get_node("/root/RunManager").current_seed)
 	player.get_node("Hurtbox").area_entered.connect(func(a): if a.is_in_group("enemy_attack"): _hits += 1)
 
@@ -668,6 +674,31 @@ func _build_grid(room: Room) -> void:
 			q.transform = Transform2D(0, p)
 			if space.intersect_shape(q, 1).is_empty():
 				_grid[Vector2i(x, y)] = true
+	_avoid_hazards(room)
+
+
+## Peligros de las dinamicas de sala (src/rooms, grupo "rooms_hazard"): pinchos, cera, fuego de
+## antorchas... Sus zonas (hazard_zones(): [{c: centro global, r: radio}]) salen de la rejilla
+## para que el bot las rodee; el viento de los ventiladores no mata, se ignora. La rejilla se
+## rehace cada 0,4 s mientras haya peligros (los fuegos y charcos aparecen y se van).
+func _avoid_hazards(room: Room) -> void:
+	var any := false
+	for n in get_tree().get_nodes_in_group("rooms_hazard"):
+		if not is_instance_valid(n) or not n.has_method("hazard_zones") or not room.is_ancestor_of(n):
+			continue
+		any = true
+		for z in n.hazard_zones():
+			var c: Vector2 = z.c
+			var r: float = z.r
+			var c0 := _cell(c)
+			var span := int(r / CELL) + 1
+			for dx in range(-span, span + 1):
+				for dy in range(-span, span + 1):
+					var k := c0 + Vector2i(dx, dy)
+					if _center(k).distance_to(c) <= r:
+						_grid.erase(k)
+	if any:
+		_grid_t = 0.4
 
 
 func _cell(p: Vector2) -> Vector2i:

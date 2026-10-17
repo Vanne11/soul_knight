@@ -25,6 +25,9 @@ var reward: String = ""
 var reward_kingdom: String = ""
 ## Sala en penumbra (la sortea RoomLighting al generar el piso).
 var is_dark: bool = false
+## Dinamica de sala con objetivo (src/rooms): mientras devuelva false la sala no se limpia
+## (matar a todos no basta). Vacio = comportamiento de siempre.
+var clear_gate: Callable = Callable()
 
 @onready var floor_tilemap: TileMap = $Floor
 @onready var walls_tilemap: TileMap = $Walls
@@ -161,6 +164,9 @@ func room_cleared() -> void:
 	# Oleadas pendientes (src/combat/waves.gd): la sala no se da por limpia hasta la ultima.
 	var waves: Variant = get_meta("waves") if has_meta("waves") else null
 	if waves != null and is_instance_valid(waves) and waves.hold_clear():
+		return
+	# Objetivo de sala abierto (src/rooms/, director de dinamicas): matar a todos no basta.
+	if clear_gate.is_valid() and not clear_gate.call():
 		return
 	cleared = true
 	unseal_doors()
