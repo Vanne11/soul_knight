@@ -24,7 +24,9 @@ var _room: Room
 var _room_t := 0.0
 var _floor_t := 0.0
 var _visited := {}
-var _used := {}  # instance_id -> true (interactuables ya usados)
+var _used := {}
+var _thing_cur: Node = null
+var _thing_t := 0.0  # instance_id -> true (interactuables ya usados)
 var _grid := {}  # Vector2i -> true si se puede pisar
 var _grid_t := 0.0
 var _path: Array[Vector2] = []
@@ -300,19 +302,30 @@ func _explore(room: Room) -> void:
 		return
 	# 1) cosas para recoger o usar en esta sala
 	var target := _next_thing(room)
+	if target and target != _thing_cur:
+		_thing_cur = target
+		_thing_t = 0.0
 	if target:
+		_thing_t += get_physics_process_delta_time()
+		if _thing_t > 12.0:
+			_used[target.get_instance_id()] = true
+			_issue("No se alcanza %s en sala %s (pos relativa %s)" % [_thing_name(target), Room.RoomType.keys()[room.room_type], target.global_position - room.global_position])
+			return
 		_goal_text = "recoger/usar: %s" % _thing_name(target)
 		var tp: Vector2 = target.global_position
 		if player.global_position.distance_to(tp) < 26.0:
 			if _interact_t <= 0.0:
 				Input.action_press("interact")
 				_interact_t = 0.35
+				if target.get_script().resource_path.ends_with("interactable.gd"):
+					_used[target.get_instance_id()] = true  # inscripcion, fuente, escotilla: una vez
 				var n := int(target.get_meta("bot_tries", 0)) + 1
 				target.set_meta("bot_tries", n)
 				if n > 6:
 					_used[target.get_instance_id()] = true
 					_issue("No se pudo usar/recoger %s en sala %s" % [_thing_name(target), Room.RoomType.keys()[room.room_type]])
-		else:
+		# hasta quedar encima: a 26 px el cuerpo todavia no toca el area del objeto
+		if player.global_position.distance_to(tp) > 4.0:
 			_steer_to(tp)
 		return
 	# 2) siguiente sala
@@ -377,6 +390,7 @@ func _next_thing(room: Room) -> Node2D:
 
 func _things(room: Room) -> Array:
 	var out := []
+	var generic := []
 	var rm := get_node("/root/RunManager")
 	var missing: Array = main._missing_hormones()
 	for c in room.pickups_node.get_children() + room.props_node.get_children() + room.get_children():
@@ -398,9 +412,11 @@ func _things(room: Room) -> Array:
 			if (h != "" and h in missing) or (player.current_weapon == null and it.type == 0):
 				out.append(c)
 		elif path.ends_with("interactable.gd"):
-			# escotilla al piso siguiente: solo cuando ya no queda nada mas
-			out.append(c)
-	return out.filter(func(n): return n.get_parent() != null)
+			generic.append(c)
+	out = out.filter(func(n): return n.get_parent() != null and not _used.has(n.get_instance_id()))
+	if out.is_empty():
+		out = generic  # inscripciones, fuente y la escotilla al piso siguiente: al final
+	return out
 
 
 ## Plan de piso: la sala sin visitar mas cercana (por el grafo); despues el jefe.
