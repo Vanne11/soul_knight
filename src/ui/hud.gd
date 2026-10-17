@@ -69,6 +69,7 @@ func _ready() -> void:
 	_events.inventory_changed.connect(_refresh_slots)
 	_runs.run_started.connect(_on_run_started)
 	_events.boss_health_changed.connect(_on_boss_health_changed)
+	_events.boss_charges_changed.connect(_on_boss_charges_changed)
 	_events.floor_completed.connect(func(_f): _update_floor_label())
 	_events.coins_changed.connect(func(_c): _update_floor_label())
 	_events.hormones_changed.connect(_update_floor_label)
@@ -238,6 +239,7 @@ func _update_blessings() -> void:
 
 var _boss_bar: UIBar
 var _boss_label: Label
+var _boss_pips: HBoxContainer
 
 func _build_boss_bar() -> void:
 	var box := VBoxContainer.new()
@@ -252,10 +254,31 @@ func _build_boss_bar() -> void:
 	_boss_bar.custom_minimum_size = Vector2(600, 28)
 	box.add_child(_boss_label)
 	box.add_child(_boss_bar)
+	_boss_pips = HBoxContainer.new()
+	_boss_pips.alignment = BoxContainer.ALIGNMENT_CENTER
+	_boss_pips.add_theme_constant_override("separation", 6)
+	_boss_pips.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	box.add_child(_boss_pips)
 	_boss_bar.set_icon("skull")
 	_boss_bar.set_color(Color("c8283a"))
 	box.visible = false
 	add_child(box)
+
+## Curas que le quedan al jefe (cada intento de canalizar gasta una).
+func _on_boss_charges_changed(left: int, total: int) -> void:
+	for c in _boss_pips.get_children():
+		c.queue_free()
+	if total <= 0:
+		return
+	var lbl := HudStyle.pixel_label(tr("BOSS_CHARGES"), 14, Color("ffe08a"), true)
+	_boss_pips.add_child(lbl)
+	for i in total:
+		var r := ColorRect.new()
+		r.custom_minimum_size = Vector2(16, 16)
+		r.color = Color("ffd23f") if i < left else Color(0.15, 0.1, 0.12, 0.8)
+		r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_boss_pips.add_child(r)
+
 
 func _on_boss_health_changed(boss_name: String, current: float, max_hp: float) -> void:
 	_boss_label.text = Loc.enemy_name(boss_name)

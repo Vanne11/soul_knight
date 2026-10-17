@@ -163,7 +163,8 @@ func _spawn_enemy(t: int) -> void:
 	elif t == 4:
 		info.name = fd.boss_name
 		info.frames = main._frames_path(fd.boss)
-		info.health = 450.0 + rm.current_floor * 150.0
+		info.health = EnemyBoss.health_for_floor(rm.current_floor)
+		info.script = EnemyBoss.script_path(fd.boss)
 	var data: Array[Dictionary] = [info]
 	room.cleared = false  # para que al matarlo la sala se vuelva a abrir
 	room.spawn_points = [main.player.global_position + Vector2(160, 0)]

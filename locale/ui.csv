@@ -167,3 +167,52 @@ STATUS_MOD_STAMINA_REGEN,Estamina rápida,Fast stamina
 STATUS_GUARD,Golpe absorbido,Hit absorbed
 STATUS_REVIVE,Revives una vez,Revive once
 FX_POP_SAFE,¡Pop!,Pop!
+BOSS_SHIELD,¡ESCUDO!,SHIELDED!
+BOSS_OVA_CYCLE,¡ESCUDO DEL CICLO!,CYCLE SHIELD!
+BOSS_OVA_STUN,¡OVULACIÓN INTERRUMPIDA!,OVULATION INTERRUPTED!
+BOSS_ADU_STOP,¡QUIETO!,FREEZE!
+BOSS_ADU_GO,¡CIRCULE!,KEEP MOVING!
+BOSS_ADU_CLOSED,VENTANILLA CERRADA,WINDOW CLOSED
+BOSS_HOJA_BLUSH,*se ruboriza*,*blushes*
+BOSS_HOJA_SHIELD,¡ESCUDO DE HOJAS!,LEAF SHIELD!
+BOSS_HOJA_BARE,¡AL DESCUBIERTO!,EXPOSED!
+BOSS_CHAN_CERA,¡SE RECALIENTA!,SHE'S REHEATING!
+BOSS_CHAN_TEST,¡SE RECARGA!,RECHARGING!
+BOSS_CHAN_OVA,¡SE REGENERA!,REGENERATING!
+BOSS_CHAN_ADU,¡SELLANDO PAPELES!,STAMPING PAPERS!
+BOSS_CHAN_HOJA,¡SE CUBRE DE HOJAS!,COVERING UP WITH LEAVES!
+BOSS_CHAN_BREAK,¡INTERRUMPIDO!,INTERRUPTED!
+BOSS_CHAN_DONE,¡RECUPERADO!,RECOVERED!
+BOSS_CHAN_BAR,¡INTERRÚMPELO!,INTERRUPT IT!
+BOSS_CHARGES,CURAS,HEALS
+BOSS_CH_TIRA_T,¡ATRAPA LA TIRA!,CATCH THE STRIP!
+BOSS_CH_TIRA_D,Tócala (o hazle dash) antes de que se recaliente.,Touch it (or dash into it) before she reheats.
+BOSS_CH_GUARDAESPALDAS_T,¡GUARDAESPALDAS!,BODYGUARDS!
+BOSS_CH_GUARDAESPALDAS_D,Ábrete paso con dash y pégale de cerca.,Dash through and hit him up close.
+BOSS_CH_CARRERA_T,¡CARRERA AL ÓVULO!,RACE TO THE EGG!
+BOSS_CH_CARRERA_D,Llega al óvulo antes que la manada.,Reach the egg before the pack does.
+BOSS_CH_GUARDIAN_T,¡EL ÓVULO REAL!,THE ROYAL EGG!
+BOSS_CH_GUARDIAN_D,Destruye a su guardián.,Destroy her guardian.
+BOSS_CH_CLONES_T,¡TRES REINAS!,THREE QUEENS!
+BOSS_CH_CLONES_D,Pega a la real: solo ella tiene sombra.,Hit the real one: only she casts a shadow.
+BOSS_CH_VELAS_T,¡ENCIENDE LOS BRASEROS!,LIGHT THE BRAZIERS!
+BOSS_CH_VELAS_D,Quédate sobre cada uno hasta que prenda.,Stand on each one until it lights.
+BOSS_CH_VENTANILLAS_T,¡TRÁMITE!,PAPERWORK!
+BOSS_CH_VENTANILLAS_D,Pisa las ventanillas en orden:,Step on the windows in order:
+BOSS_CH_APAGON_T,¡APAGÓN DE OFICINA!,OFFICE BLACKOUT!
+BOSS_CH_APAGON_D,Encuéntralo en la oscuridad y pégale.,Find him in the dark and hit him.
+BOSS_CH_LINTERNA_T,¡INSPECCIÓN!,INSPECTION!
+BOSS_CH_LINTERNA_D,Llega al interruptor sin que el haz te toque.,Reach the switch without the beam touching you.
+BOSS_CH_LINTERNA_HIT,¡Visto! Vuelves al inicio,Spotted! Back to the start
+BOSS_CH_SELLO_T,¡DEVUELVE EL SELLO!,RETURN TO SENDER!
+BOSS_CH_SELLO_D,Haz dash contra el sello cuando llegue.,Dash into the stamp as it arrives.
+BOSS_CH_BURBUJA_T,¡BURBUJA DE HOJAS!,LEAF BUBBLE!
+BOSS_CH_BURBUJA_D,Mete balas por la abertura.,Shoot through the gap.
+BOSS_CH_APAGON_CENSURADO_T,¡APAGÓN CENSURADO!,CENSORED BLACKOUT!
+BOSS_CH_APAGON_CENSURADO_D,Encuéntrala en la oscuridad y pégale.,Find her in the dark and hit her.
+BOSS_CH_ACHICA_T,¡SE CIERRA LA SALA!,THE ROOM IS CLOSING!
+BOSS_CH_ACHICA_D,Llega al botón antes de quedar encerrado.,Reach the button before you're sealed in.
+BOSS_CH_CLONES_HOJAS_T,¡CUATRO HOJAS!,FOUR LEAVES!
+BOSS_CH_CLONES_HOJAS_D,Pega a la real: solo ella tiene sombra.,Hit the real one: only she casts a shadow.
+BOSS_CH_SECUENCIA_T,¡COPIA EL BAILE!,COPY THE DANCE!
+BOSS_CH_SECUENCIA_D,Repite la secuencia con dashes.,Repeat the sequence with dashes.

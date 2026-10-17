@@ -114,6 +114,8 @@ func spawn_enemies(enemy_scenes: Array[PackedScene], enemy_data: Array[Dictionar
 		for g in range(int(data.get("group", 1))):
 			var enemy = scene.instantiate()
 			
+			if data.has("script") and ResourceLoader.exists(data.script):
+				enemy.set_script(load(data.script))  # jefes: cada uno con sus ataques
 			if data.has("name"): enemy.enemy_name = data.name
 			if data.has("health"): enemy.max_health = data.health
 			if data.has("damage"): enemy.damage = data.damage

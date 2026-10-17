@@ -45,6 +45,8 @@ func _suck(delta: float) -> void:
 	for e in get_tree().get_nodes_in_group("enemy"):
 		if not is_instance_valid(e) or not e is CharacterBody2D or float(e.get("current_health")) <= 0.0:
 			continue
+		if e.has_method("is_suck_immune") and e.is_suck_immune():
+			continue
 		var to_c: Vector2 = global_position - e.global_position
 		var d := to_c.length()
 		if d > radius:

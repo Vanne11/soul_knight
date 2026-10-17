@@ -40,6 +40,10 @@ var _dash_cd := 0.0
 var _strafe := 1.0
 var _strafe_t := 0.0
 var _hits := 0
+var _hits_real := 0  # golpes que de verdad llegan (zonas de jefe incluidas, que no son Areas)
+var _iframes_prev := 0.0
+var _boss_t0 := -1.0
+var _boss_hits0 := 0
 var _done := false
 var _floor_n := 0
 var _issues: Array[String] = []
@@ -66,6 +70,8 @@ func _ready() -> void:
 		set_process(false)
 		return
 	DebugMenu.god_mode = true
+	# para alargar los jefes y ver todos sus desafios: --boss-hp=1,1,12,12,12 (multiplicador por piso)
+	EnemyBoss.test_hp_mults = Array(_arg("--boss-hp=", "1").split(",", false)).map(func(x): return float(x))
 	_build_overlay()
 	await _wait_s(2.5)
 	# Menu principal: "Nueva partida", como lo haria una persona.
@@ -169,6 +175,10 @@ func _physics_process(delta: float) -> void:
 	if main == null or not is_instance_valid(main):
 		_finish(get_node("/root/RunManager").last_run_victory)
 		return
+	var ifr: float = float(player.get("_iframes"))
+	if ifr > _iframes_prev + 0.3:
+		_hits_real += 1
+	_iframes_prev = ifr
 	_release_all()
 	if Narrator._choice.visible:
 		_say("Eleccion: \"%s\" -> opcion 1" % Narrator._choice_label.text.left(60))
@@ -207,6 +217,15 @@ func _physics_process(delta: float) -> void:
 	var enemies := _alive_enemies(room)
 	if not enemies.is_empty():
 		_fight(enemies, delta)
+	elif _unstick_t > 0.0:
+		# Desatascar: si el jugador lleva 3 s sin moverse (encajado contra algo que la
+		# rejilla del bot no ve) prueba una direccion al azar y un dash.
+		player.aim_override = Vector2.ZERO
+		_unstick_t -= delta
+		_press_move(_unstick_dir)
+		if _unstick_t < 1.0 and _dash_cd <= 0.0:
+			Input.action_press("dash")
+			_dash_cd = 1.0
 	else:
 		player.aim_override = Vector2.ZERO
 		_explore(room)
@@ -231,7 +250,19 @@ func _on_room(room: Room) -> void:
 	_path.clear()
 	_path_goal = Vector2.INF
 	_grid_t = 0.0
+	if room.room_type == Room.RoomType.BOSS and not room.cleared:
+		_boss_t0 = Time.get_ticks_msec() / 1000.0
+		_boss_hits0 = _hits_real
+		if not get_node("/root/GlobalEvents").enemy_killed.is_connected(_on_boss_killed):
+			get_node("/root/GlobalEvents").enemy_killed.connect(_on_boss_killed)
 	_say("Sala %s %s (%s)" % [Room.RoomType.keys()[room.room_type], room.grid_pos, "oscura" if room.is_dark else "clara"])
+
+
+func _on_boss_killed(e: Node, _k: Node) -> void:
+	if e.is_in_group("boss") and _boss_t0 >= 0.0:
+		var secs := Time.get_ticks_msec() / 1000.0 - _boss_t0
+		_say("JEFE %s derrotado en %.0f s (reloj real, --fast=1.6x), golpes recibidos en la pelea: %d" % [e.enemy_name, secs, _hits_real - _boss_hits0])
+		_boss_t0 = -1.0
 
 
 func _finish(victory: bool) -> void:
@@ -261,6 +292,10 @@ func _fight(enemies: Array, delta: float) -> void:
 	var pp := player.global_position
 	enemies.sort_custom(func(a, b): return a.global_position.distance_to(pp) < b.global_position.distance_to(pp))
 	var t: Node2D = enemies[0]
+	for e in enemies:
+		if e.get("_channeling") == true and player.current_weapon != null:
+			_boss_challenge(e, delta)  # el jefe se esta curando: cumplir su desafio
+			return
 	var to_t := t.global_position - pp
 	var dist := to_t.length()
 	_goal_text = "pelea contra %s (%d vivos)" % [t.get("enemy_name") if t.get("enemy_name") else t.name, enemies.size()]
@@ -286,6 +321,55 @@ func _fight(enemies: Array, delta: float) -> void:
 		return
 	_press_move(_avoid_walls(move.normalized()))
 	_dodge()
+
+
+## Desafio de canalizacion de un jefe. El jefe publica ayudas para el bot (bot_goal_pos: a donde
+## ir; bot_aim_pos / bot_target_node: a donde disparar; bot_dash_vec: dash en esa direccion;
+## bot_dash_now: dash ya). El bot dispara siempre y se mueve segun esas ayudas.
+var _dash_pre := 0
+
+func _boss_challenge(b: Node2D, _delta: float) -> void:
+	_goal_text = "desafio del jefe"
+	var pp := player.global_position
+	var aim: Vector2 = b.global_position + Vector2(0, -50)
+	var bt = b.get("bot_target_node")
+	if bt != null and is_instance_valid(bt):
+		aim = bt.global_position + Vector2(0, -40)
+	var ap = b.get("bot_aim_pos")
+	if ap != null:
+		aim = ap
+	player.aim_override = aim - pp
+	Input.action_press("attack")
+	var dv: Vector2 = b.get("bot_dash_vec")
+	var goal = b.get("bot_goal_pos")
+	if b.get("bot_dash_now") == true and _dash_cd <= 0.0:
+		Input.action_press("dash")
+		_dash_cd = 1.0
+		return
+	if dv != Vector2.ZERO and _dash_cd <= 0.0:
+		_press_move(dv.normalized())
+		_dash_pre += 1
+		if _dash_pre >= 3:
+			Input.action_press("dash")
+			_dash_cd = 1.0
+			_dash_pre = 0
+		return
+	_dash_pre = 0
+	if goal != null:
+		var g: Vector2 = goal
+		if pp.distance_to(g) > 14.0:
+			_press_move(_avoid_walls((g - pp).normalized()))
+		return
+	# sin destino: distancia comoda al jefe con vaiven lateral
+	var to_b := aim - pp
+	var d := to_b.length()
+	var dir := to_b.normalized()
+	var mv := dir.orthogonal() * _strafe * 0.7
+	if d < KEEP_NEAR:
+		mv -= dir
+	elif d > KEEP_FAR:
+		mv += dir
+	_press_move(_avoid_walls(mv.normalized()))
 
 
 func _dodge() -> void:
@@ -488,6 +572,8 @@ func _next_room(room: Room) -> Room:
 			_issue("Piso %d: todo explorado y no se puede entrar al jefe (arma=%s, faltan hormonas=%s)" % [
 				_floor_n, main._has_real_weapon(), main._missing_hormones()])
 		return null
+	if goal == room.grid_pos:
+		return null
 	var step = goal
 	while prev[step] != room.grid_pos:
 		step = prev[step]
@@ -621,14 +707,30 @@ func _process(_delta: float) -> void:
 			_interact_frames = 0
 
 
+var _unstick_t := 0.0
+var _unstick_dir := Vector2.RIGHT
+var _unstick_n := 0
+
 func _watch_stuck(delta: float, room: Room) -> void:
 	if player.global_position.distance_to(_last_pos) > 2.0:
 		_last_pos = player.global_position
 		_still_t = 0.0
+		if _unstick_t <= 0.0:
+			_unstick_n = 0
 		return
 	_still_t += delta
+	if _still_t > 3.0 and _unstick_t <= 0.0 and _unstick_n < 8 and _alive_enemies(room).is_empty():
+		_unstick_n += 1
+		_unstick_t = 1.6
+		_unstick_dir = Vector2.RIGHT.rotated(randf() * TAU)
+		_still_t = 0.0
+		_path.clear()
 	if _still_t > 6.0 and _alive_enemies(room).is_empty():
 		_issue("El bot quedo quieto 6 s en %s %s (objetivo: %s)" % [Room.RoomType.keys()[room.room_type], room.grid_pos, _goal_text])
+		_say("  jugador: dash=%s sneeze_push=%s allergy=%s time_scale=%s paused=%s fisica=%s proceso=%s modo=%s iframes=%s capa=%s mascara=%s" % [
+			player.get("is_dashing"), player.get("_sneeze_push"), player.get("_allergy"), Engine.time_scale, get_tree().paused,
+			player.is_physics_processing(), player.is_processing(), player.process_mode, player.get("_iframes"),
+			player.collision_layer, player.collision_mask])
 		_say("  depuracion: pos=%s vel=%s celda_libre=%s ruta=%s goal=%s celdas=%d input=(%s,%s,%s,%s) choice=%s pausa=%s" % [
 			player.global_position - room.global_position, player.velocity, _grid.has(_cell(player.global_position)),
 			_path.slice(0, 3).map(func(v): return v - room.global_position), _path_goal - room.global_position, _grid.size(),

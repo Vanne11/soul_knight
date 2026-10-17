@@ -364,7 +364,8 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 		match room.room_type:
 			Room.RoomType.BOSS:
 				info.enemy_type = 4
-				info.health = 450.0 + floor_n * 150.0
+				info.health = EnemyBoss.health_for_floor(floor_n)
+				info.script = EnemyBoss.script_path(fd.boss)
 				info.damage = 12.0 + floor_n * 4.0
 				info.name = fd.boss_name
 				info.frames = _frames_path(fd.boss)
