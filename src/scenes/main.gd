@@ -455,16 +455,12 @@ func _pick_hormone_room() -> void:
 # ---------------------------------------------------------------- color (la censura)
 ## Las salas nacen grises (censuradas) y recuperan el color al liberarlas.
 func _paint_room(room: Room, colored: bool, animate := false) -> void:
-	var tint: Color = _run_manager.floor_data().tint
-	var target_floor := tint if colored else Color(0.42, 0.42, 0.46)
-	var target_walls := tint.darkened(0.35) if colored else Color(0.3, 0.3, 0.34)
-	if animate:
-		var tw := room.create_tween().set_parallel()
-		tw.tween_property(room.floor_tilemap, "modulate", target_floor, 1.2)
-		tw.tween_property(room.walls_tilemap, "modulate", target_walls, 1.2)
-	else:
-		room.floor_tilemap.modulate = target_floor
-		room.walls_tilemap.modulate = target_walls
+	# Sin modulate: el arte de cada reino ya trae su color y el shader lo desatura/devuelve.
+	Censor.apply(room, room.floor_tilemap)
+	Censor.apply(room, room.walls_tilemap)
+	room.floor_tilemap.modulate = Color.WHITE
+	room.walls_tilemap.modulate = Color.WHITE
+	Censor.set_colored(room, colored, animate)
 	_lighting.paint(room, colored, animate)
 
 func _on_room_cleared(room: Room) -> void:

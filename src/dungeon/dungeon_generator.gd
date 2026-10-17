@@ -40,6 +40,7 @@ func generate_floor(floor: int, seed_override: int = 0) -> Node2D:
 	_layout_doors()
 	_assign_room_types()
 	_place_special_rooms()
+	_paint_floor_tiles()
 	
 	return dungeon_root
 
@@ -152,6 +153,16 @@ func _setup_room_tilemap(room: Room, size: Vector2) -> void:
 	for y in range(h):
 		walls_map.set_cell(0, Vector2i(-1, y), WALL_SOURCE, Vector2i(0, 0))
 		walls_map.set_cell(0, Vector2i(w, y), WALL_SOURCE, Vector2i(0, 0))
+
+## Suelo propio del reino del piso. Va tras asignar los tipos de sala (el tipo cambia el ornamento).
+func _paint_floor_tiles() -> void:
+	for pos in rooms:
+		FloorTiles.paint(rooms[pos], room_sizes[pos], current_floor, seed)
+		# Toda sala nace gris (censurada) hasta que main la libera: el material va desde ya.
+		for n in ["Floor", "Walls"]:
+			var tm := rooms[pos].get_node_or_null(n) as CanvasItem
+			if tm:
+				Censor.apply(rooms[pos], tm)
 
 func _connect_rooms() -> void:
 	var room_positions = rooms.keys()
