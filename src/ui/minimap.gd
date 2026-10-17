@@ -22,6 +22,7 @@ const ICONS := {Room.RoomType.SHOP: "$", Room.RoomType.BOSS: "J", Room.RoomType.
 var _big := false
 var _font: Font
 var _label: Label
+var _map_hint: HBoxContainer  # "[M] mapa" con el glifo de la tecla
 
 var _frame := HudStyle.panel_box(0)
 
@@ -32,6 +33,7 @@ func _ready() -> void:
 	_label = HudStyle.pixel_label("", 16)
 	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(_label)
+	_build_map_hint()
 	_resize()
 
 func _resize() -> void:
@@ -47,6 +49,7 @@ func _resize() -> void:
 	# mas ancho que el mapa y alineado a la derecha: el texto crece hacia la izquierda
 	_label.position = Vector2(-200, s.y + 4)
 	_label.size = Vector2(s.x + 200, 20)
+	_place_map_hint()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_M:
@@ -139,4 +142,22 @@ func _draw() -> void:
 			if current.room_type == Room.RoomType.BOSS and not RunManager.floor_has_boss(rm.current_floor):
 				rname = tr("MAP_ROOM_GUARD")  # 1a etapa: la sala final es un guardian, no un jefe
 			rname = "%s · %s" % [Loc.floor_name(rm.floor_data(), true), rname]  # nombre de la etapa
-		_label.text = tr("MAP_LABEL") % rname
+		_label.text = rname
+		_place_map_hint()
+
+## Glifo de "map" + "mapa" a la derecha del nombre de la sala (en mando no hay tecla: se esconde).
+func _build_map_hint() -> void:
+	_map_hint = InputGlyphs.labeled("map", "GLYPH_MAP", HudStyle.CREAM, 16)
+	_map_hint.add_theme_constant_override("separation", 4)
+	_map_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_map_hint)
+
+func _place_map_hint() -> void:
+	if _map_hint == null:
+		return
+	# el texto de la sala se recorta a la izquierda del indicador de la tecla
+	var w := _map_hint.get_combined_minimum_size().x if _map_hint.visible else 0.0
+	var s := BIG if _big else SMALL
+	_map_hint.size = Vector2(w, 28)
+	_map_hint.position = Vector2(s.x - w, s.y + 2)
+	_label.size.x = s.x + 200 - w - 8

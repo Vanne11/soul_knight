@@ -20,6 +20,8 @@ func _ready() -> void:
 		collision_layer = 0
 		collision_mask = 1  # el jugador
 	add_to_group("interactable")
+	# si el jugador cambia de teclado a mando con el cuadro abierto, que cambie el glifo
+	InputGlyphs.watcher().device_changed.connect(func(_p): if _player and Narrator.prompt_owner == self: refresh_prompt())
 	body_entered.connect(_on_enter)
 	body_exited.connect(_on_exit)
 
@@ -51,7 +53,7 @@ func _handoff() -> void:
 
 func refresh_prompt() -> void:
 	if _player:
-		Narrator.prompt(self, _prompt_text())
+		Narrator.prompt(self, InputGlyphs.localize(_prompt_text()))
 
 
 func _prompt_text() -> String:

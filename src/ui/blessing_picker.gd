@@ -84,10 +84,29 @@ func _ready() -> void:
 		var card := _build_card(i, _ids[i])
 		row.add_child(card)
 		_cards.append(card)
-	var hint := HudStyle.pixel_label(tr("BPICK_HINT"), 16, Color(0.8, 0.72, 0.78))
-	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	v.add_child(hint)
+	v.add_child(_build_hint())
 	_select(0)
+
+
+## Ayuda de abajo: teclado/raton ("1-3 / flechas + ENTER, o clic") o, si el ultimo
+## dispositivo fue el mando, "CRUCETA / ESTICK + (A)" con el glifo del boton de aceptar.
+func _build_hint() -> HBoxContainer:
+	var box := HBoxContainer.new()
+	box.alignment = BoxContainer.ALIGNMENT_CENTER
+	box.add_theme_constant_override("separation", 8)
+	var l := HudStyle.pixel_label("", 16, Color(0.8, 0.72, 0.78))
+	box.add_child(l)
+	var gbox := HBoxContainer.new()  # el glifo decide su propia visibilidad: se oculta la caja
+	var g := InputGlyph.new()
+	g.action = "ui_accept"
+	gbox.add_child(g)
+	box.add_child(gbox)
+	var upd := func(pad: bool):
+		l.text = tr("GLYPH_BPICK_PAD") if pad else tr("BPICK_HINT")
+		gbox.visible = pad
+	upd.call(InputGlyphs.is_pad())
+	InputGlyphs.watcher().device_changed.connect(upd)
+	return box
 
 
 func _build_card(i: int, id: String) -> PanelContainer:

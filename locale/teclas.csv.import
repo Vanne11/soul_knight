@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dybm8ba4qu30d"
+
+[deps]
+
+files=["res://locale/teclas.es.translation", "res://locale/teclas.en.translation"]
+
+source_file="res://locale/teclas.csv"
+dest_files=["res://locale/teclas.es.translation", "res://locale/teclas.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
