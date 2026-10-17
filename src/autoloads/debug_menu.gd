@@ -58,36 +58,36 @@ func _open() -> void:
 	scroll.add_child(box)
 
 	var room: Room = main.current_room
-	_label(box, "MODO DESARROLLADOR  (F1 cierra)\nPiso %d · semilla %d · sala %s %s" % [
+	_label(box, tr("DEBUG_TITLE") % [
 		rm.current_floor, rm.current_seed, Room.RoomType.keys()[room.room_type], room.grid_pos])
 
-	_label(box, "— Jugador —")
+	_label(box, tr("DEBUG_PLAYER_HEAD"))
 	var god := CheckButton.new()
-	god.text = "Modo dios (no recibes daño)"
+	god.text = tr("DEBUG_GOD")
 	god.button_pressed = god_mode
 	god.toggled.connect(func(on): god_mode = on)
 	box.add_child(god)
 	_row(box, {
-		"Curar todo": func():
+		tr("DEBUG_HEAL"): func():
 			ps.heal(ps.max_health)
 			ps.restore_shields_full(),
-		"+50 monedas": func(): rm.add_coins(50),
-		"+100 huesos": func():
+		tr("DEBUG_COINS"): func(): rm.add_coins(50),
+		tr("DEBUG_BONES"): func():
 			rm.meta_currency += 100
 			rm.save_meta_progression(),
-		"Todas las hormonas": func():
+		tr("DEBUG_HORMONES"): func():
 			rm.hormones["testosterona"] = true
 			rm.hormones["estrogeno"] = true
 			get_node("/root/GlobalEvents").hormones_changed.emit(),
 	})
 	var intox := {}
 	for tier in 4:
-		intox["Intox %d" % tier] = func():
+		intox[tr("DEBUG_INTOX") % tier] = func():
 			ps.reduce_intoxication(ps.max_intoxication)
 			ps.add_intoxication([0.0, 35.0, 65.0, 95.0][tier] * ps.max_intoxication / 100.0)
 	_row(box, intox)
 
-	_label(box, "— Objetos y armas —")
+	_label(box, tr("DEBUG_ITEMS_HEAD"))
 	var items := OptionButton.new()
 	var ids: Array = db._items.keys()
 	# armas primero, luego por nombre
@@ -97,23 +97,23 @@ func _open() -> void:
 		return wa if wa != wb else a < b)
 	for id in ids:
 		var it = db.get_item(id)
-		items.add_item("%s%s (%s)" % ["[ARMA] " if it.equip_slot == Item.EquipSlot.WEAPON else "", it.display_name, id])
+		items.add_item("%s%s (%s)" % [tr("DEBUG_WEAPON_TAG") if it.equip_slot == Item.EquipSlot.WEAPON else "", it.display_name, id])
 		items.set_item_metadata(items.item_count - 1, id)
 	box.add_child(items)
-	_row(box, {"Dar objeto": func(): main.player.add_item_to_inventory(items.get_selected_metadata())})
+	_row(box, {tr("DEBUG_GIVE"): func(): main.player.add_item_to_inventory(items.get_selected_metadata())})
 
-	_label(box, "— Sala actual —")
+	_label(box, tr("DEBUG_ROOM_HEAD"))
 	_row(box, {
-		"Matar enemigos": func():
+		tr("DEBUG_KILL"): func():
 			for e in room.enemies_spawned.duplicate():
 				if is_instance_valid(e) and e.has_method("take_damage"):
 					e.take_damage(999999.0, main.player, Vector2.ZERO),
-		"Abrir secretas": func():
+		tr("DEBUG_SECRETS"): func():
 			main.unlock_secret_rooms()
 			for r in main.dungeon_generator.rooms.values():
 				if r.has_meta("puzzle"):
 					r.get_meta("puzzle").solve(),
-		"Revelar mapa": func():
+		tr("DEBUG_MAP"): func():
 			for pos in main.dungeon_generator.rooms:
 				main.visited_rooms[pos] = true,
 	})
@@ -122,26 +122,26 @@ func _open() -> void:
 		spawns["+" + t] = _spawn_enemy.bind(["melee", "ranged", "swarmer", "tank", "boss"].find(t))
 	_row(box, spawns)
 
-	_label(box, "— Ir a sala —")
+	_label(box, tr("DEBUG_GOTO_HEAD"))
 	var rooms := OptionButton.new()
 	for r in main.dungeon_generator.rooms.values():
 		rooms.add_item("%s %s" % [Room.RoomType.keys()[r.room_type], r.grid_pos])
 		rooms.set_item_metadata(rooms.item_count - 1, r)
 	box.add_child(rooms)
-	_row(box, {"Ir": func():
+	_row(box, {tr("DEBUG_GO"): func():
 		_close()
 		main._enter_room(rooms.get_selected_metadata())})
 
-	_label(box, "— Piso —")
+	_label(box, tr("DEBUG_FLOOR_HEAD"))
 	var floors := {}
 	for n in range(1, RunManager.FLOORS.size() + 1):
-		floors["Piso %d" % n] = func():
+		floors[tr("DEBUG_FLOOR") % n] = func():
 			_close()
 			rm.current_floor = n - 1
 			main._advance_to_next_floor()
 	_row(box, floors)
 
-	_label(box, "— Personaje (reinicia el piso) —")
+	_label(box, tr("DEBUG_CHAR_HEAD"))
 	var chars := {}
 	for c in RunManager.CHARACTERS:
 		chars[RunManager.CHARACTERS[c].name] = func():

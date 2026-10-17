@@ -36,11 +36,11 @@ func _on_enter(body: Node) -> void:
 
 func _prompt_text() -> String:
 	var color: String = RARITY_COLORS[clampi(_item.rarity, 0, RARITY_COLORS.size() - 1)]
-	var action := "[E] Recoger"
+	var action := tr("PICKUP_TAKE")
 	if _item.equip_slot == Item.EquipSlot.WEAPON and _player.current_weapon:
-		action = "[E] Cambiar por tu %s (la dejas aquí)" % _player.current_weapon.display_name
+		action = tr("PICKUP_SWAP") % _player.current_weapon.display_name
 	elif _item.equip_slot == Item.EquipSlot.WEAPON:
-		action = "[E] Empuñar"
+		action = tr("PICKUP_WIELD")
 	return "[color=#%s][b]%s[/b][/color]\n[font_size=13]%s[/font_size]\n[color=#b08d4a]%s[/color]" % [
 		color, _item.display_name, _item.description, action]
 

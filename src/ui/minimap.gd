@@ -8,11 +8,11 @@ class_name Minimap
 const SMALL := Vector2(210, 140)
 const BIG := Vector2(720, 420)  # deja libre el cuadro del narrador
 const ROOM_NAMES := {
-	Room.RoomType.COMBAT: "Combate", Room.RoomType.SHOP: "Tienda", Room.RoomType.LORE: "Inscripción",
-	Room.RoomType.TREASURE: "Tesoro", Room.RoomType.REST: "Descanso",
-	Room.RoomType.TRAP: "Trampa", Room.RoomType.PUZZLE: "Acertijo", Room.RoomType.SECRET: "Secreta",
-	Room.RoomType.BOSS: "Jefe", Room.RoomType.INTOXICATION: "Antro", Room.RoomType.MINIBOSS: "Minijefe",
-	Room.RoomType.START: "Inicio",
+	Room.RoomType.COMBAT: "MAP_ROOM_COMBAT", Room.RoomType.SHOP: "MAP_ROOM_SHOP", Room.RoomType.LORE: "MAP_ROOM_LORE",
+	Room.RoomType.TREASURE: "MAP_ROOM_TREASURE", Room.RoomType.REST: "MAP_ROOM_REST",
+	Room.RoomType.TRAP: "MAP_ROOM_TRAP", Room.RoomType.PUZZLE: "MAP_ROOM_PUZZLE", Room.RoomType.SECRET: "MAP_ROOM_SECRET",
+	Room.RoomType.BOSS: "MAP_ROOM_BOSS", Room.RoomType.INTOXICATION: "MAP_ROOM_INTOXICATION", Room.RoomType.MINIBOSS: "MAP_ROOM_MINIBOSS",
+	Room.RoomType.START: "MAP_ROOM_START",
 }
 ## Letra dentro de la sala en el mapa (las que no salen aqui no llevan marca).
 const ICONS := {Room.RoomType.SHOP: "$", Room.RoomType.BOSS: "J", Room.RoomType.START: "I",
@@ -115,12 +115,16 @@ func _draw() -> void:
 		var icon: String = ICONS.get(room.room_type, "")
 		if not visited.has(pos) and room.room_type not in [Room.RoomType.SHOP, Room.RoomType.BOSS]:
 			icon = "?"
+		if room.room_type == Room.RoomType.BOSS:
+			icon = tr("MAP_ICON_BOSS")
+		elif room.room_type == Room.RoomType.START:
+			icon = tr("MAP_ICON_START")
 		if icon != "":
 			var fs := int(clampf(r.size.y * 0.6, 9, 28))
-			var col := Color("ff5050") if icon == "J" else (Color("ffd700") if icon == "$" else Color("0d0b0f"))
+			var col := Color("ff5050") if room.room_type == Room.RoomType.BOSS else (Color("ffd700") if room.room_type == Room.RoomType.SHOP else Color("0d0b0f"))
 			if room == current:
 				col = Color("0d0b0f")  # sobre el amarillo de "estas aqui" no se veia
 			draw_string(_font, Vector2(r.position.x, r.get_center().y + fs * 0.35), icon, HORIZONTAL_ALIGNMENT_CENTER, r.size.x, fs, col)
 
 	if current:
-		_label.text = "%s · [M] mapa" % ROOM_NAMES.get(current.room_type, "?")
+		_label.text = tr("MAP_LABEL") % tr(ROOM_NAMES.get(current.room_type, "?"))

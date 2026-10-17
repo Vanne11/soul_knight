@@ -81,7 +81,7 @@ func _ready() -> void:
 	_panel = _make_box(460)
 	_label = _panel.get_child(0).get_child(0)
 	_hint = Label.new()
-	_hint.text = "▶ clic / espacio"
+	_hint.text = "NARRATOR_HINT"  # clave: el Label la traduce solo y sigue el idioma en vivo
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_hint.add_theme_font_size_override("font_size", 12)
 	_hint.add_theme_color_override("font_color", Color("b08d4a"))
@@ -273,7 +273,7 @@ func _show(line: String) -> void:
 	_line_raw = line if speaker == "NARRADOR" else "%s: %s" % [speaker, line]
 	_line_room = _current_room()
 	_complaining = false
-	_label.text = "[color=#%s][b]%s:[/b][/color] %s" % [color, speaker, line]
+	_label.text = "[color=#%s][b]%s:[/b][/color] %s" % [color, tr("NARRATOR_NAME") if speaker == "NARRADOR" else speaker, line]
 	_label.visible_ratio = 0.0
 	_panel.visible = true
 	if _tween:
@@ -368,7 +368,7 @@ func _on_intox(_level: float, tier: int) -> void:
 func _on_lore_unlocked(entry_id: String) -> void:
 	var entry = get_node("/root/LoreDatabase").get_entry(entry_id)
 	if entry:
-		toast("Lore desbloqueado: " + entry.title)  # una linea: el objeto es lo importante
+		toast(tr("NARRATOR_LORE_UNLOCKED") % entry.title)  # una linea: el objeto es lo importante
 
 
 # ---------------------------------------------------------------- memoria

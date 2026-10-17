@@ -204,11 +204,8 @@ func apply_stat_mod(stat: String, value: float) -> void:
 
 func get_intoxication_tier_name() -> String:
 	match intoxication_tier:
-		0: return "Sober"
-		1: return "Tipsy"
-		2: return "Drunk"
-		3: return "Blackout"
-		_: return "Unknown"
+		0, 1, 2, 3: return tr("INTOX_TIER_%d" % intoxication_tier)  # solo para mostrar: la logica usa el numero
+		_: return "?"
 
 func get_intoxication_effects() -> Dictionary:
 	match intoxication_tier:

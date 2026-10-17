@@ -34,12 +34,12 @@ func _create_ui() -> void:
 	vbox.add_theme_constant_override("separation", 10)
 	panel.add_child(vbox)
 
-	start_btn = _menu_button(vbox, "NUEVA PARTIDA", _on_start)
-	continue_btn = _menu_button(vbox, "MEJORAS", _open_upgrades)
-	lore_btn = _menu_button(vbox, "CÓDICE", _open_codex)
-	settings_btn = _menu_button(vbox, "AJUSTES (WIP)", func(): pass)
+	start_btn = _menu_button(vbox, tr("MENU_NEW_GAME"), _on_start)
+	continue_btn = _menu_button(vbox, tr("MENU_UPGRADES"), _open_upgrades)
+	lore_btn = _menu_button(vbox, tr("MENU_CODEX"), _open_codex)
+	settings_btn = _menu_button(vbox, tr("MENU_SETTINGS_WIP"), func(): pass)
 	settings_btn.disabled = true  # settings_menu.tscn aun no existe
-	quit_btn = _menu_button(vbox, "SALIR", _on_quit)
+	quit_btn = _menu_button(vbox, tr("MENU_QUIT"), _on_quit)
 	start_btn.grab_focus.call_deferred()
 
 	# derecha: el mundo (regiones liberadas) + tu progreso
@@ -52,7 +52,7 @@ func _create_ui() -> void:
 	var sv := VBoxContainer.new()
 	sv.add_theme_constant_override("separation", 8)
 	side.add_child(sv)
-	sv.add_child(HudStyle.pixel_label("EL MUNDO", 16, HudStyle.GOLD, true))
+	sv.add_child(HudStyle.pixel_label(tr("MENU_WORLD"), 16, HudStyle.GOLD, true))
 	sv.add_child(_world_strip())
 	var meta_box := VBoxContainer.new()
 	meta_box.add_theme_constant_override("separation", 4)
@@ -79,7 +79,7 @@ func _build_logo(root: Control) -> void:
 	root.add_child(holder)
 	var layers := [[Vector2(8, 8), Color("1a0b26")], [Vector2(4, 4), Color("b08d4a")], [Vector2.ZERO, Color("ff4f9a")]]
 	for l in layers:
-		var t := HudStyle.pixel_label("ROGUE REPRODUCTIVE", 64, l[1], true)
+		var t := HudStyle.pixel_label(tr("MENU_TITLE"), 64, l[1], true)
 		t.add_theme_constant_override("shadow_offset_x", 0)
 		t.add_theme_constant_override("shadow_offset_y", 0)
 		t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -94,7 +94,7 @@ func _build_logo(root: Control) -> void:
 	sb.content_margin_left = 14
 	sb.content_margin_right = 14
 	ribbon.add_theme_stylebox_override("panel", sb)
-	ribbon.add_child(HudStyle.pixel_label("LA GRAN CENSURA · ÓRGANOS, HORMONAS Y MALAS DECISIONES", 16, HudStyle.CREAM))
+	ribbon.add_child(HudStyle.pixel_label(tr("MENU_SUBTITLE"), 16, HudStyle.CREAM))
 	holder.add_child(ribbon)
 	ribbon.size = ribbon.get_combined_minimum_size()
 	ribbon.position = Vector2(-roundf(ribbon.size.x / 2.0), 90)
@@ -131,8 +131,8 @@ func _world_strip() -> Control:
 		col.add_child(row)
 	var n: int = rm.liberated.size()
 	var caption := Label.new()
-	caption.text = "El mundo sigue gris. Libera una región venciendo a su jefe: queda a color para siempre." if n == 0 \
-		else "%d de %d regiones liberadas. Cada una te regala una bendición al llegar." % [n, RunManager.FLOORS.size()]
+	caption.text = tr("MENU_WORLD_GRAY") if n == 0 \
+		else tr("MENU_WORLD_FREED") % [n, RunManager.FLOORS.size()]
 	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	caption.custom_minimum_size.x = 250
 	caption.add_theme_font_size_override("font_size", 13)
@@ -154,7 +154,7 @@ func _update_meta_info() -> void:
 	var lore_pct = _game_controller.get_lore_database().get_completion_percentage()
 	for c in _meta_box.get_children():
 		c.queue_free()
-	for pair in [["bone", "%d HUESOS" % rm.meta_currency], ["stairs", "MEJOR PISO %d" % rm.best_floor], ["skull", "CÓDICE %.0f%%" % lore_pct]]:
+	for pair in [["bone", tr("MENU_BONES") % rm.meta_currency], ["stairs", tr("MENU_BEST_FLOOR") % rm.best_floor], ["skull", tr("MENU_CODEX_PCT") % lore_pct]]:
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 8)
 		row.add_child(HudStyle.icon(pair[0]))
@@ -180,7 +180,7 @@ func _window(title_text: String) -> VBoxContainer:
 	panel.add_child(box)
 	box.add_child(HudStyle.pixel_label(title_text, 24, Color("ff4f9a"), true))
 	var back := Button.new()
-	back.text = "VOLVER"
+	back.text = tr("MENU_BACK")
 	back.pressed.connect(func():
 		dim.queue_free()
 		_update_meta_info()
@@ -192,7 +192,7 @@ func _window(title_text: String) -> VBoxContainer:
 
 ## Mejoras permanentes: se pagan con los huesos que deja cada partida.
 func _open_upgrades() -> void:
-	var box := _window("MEJORAS PERMANENTES")
+	var box := _window(tr("MENU_UPGRADES_TITLE"))
 	var info := Label.new()
 	box.add_child(info)
 	var rows := VBoxContainer.new()
@@ -201,7 +201,7 @@ func _open_upgrades() -> void:
 
 func _fill_upgrades(info: Label, rows: VBoxContainer) -> void:
 	var rm = _game_controller.get_run_manager()
-	info.text = "Huesos: %d   (se ganan al terminar cada partida: 10 por piso, 1 cada 3 enemigos)" % rm.meta_currency
+	info.text = tr("MENU_UPGRADES_INFO") % rm.meta_currency
 	for c in rows.get_children():
 		c.queue_free()
 	for id in RunManager.META_UPGRADES:
@@ -210,10 +210,10 @@ func _fill_upgrades(info: Label, rows: VBoxContainer) -> void:
 		var b := Button.new()
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		if lvl >= u.max:
-			b.text = "%s — %s   [%d/%d] MÁXIMO" % [u.name, u.desc, lvl, u.max]
+			b.text = tr("MENU_UPGRADE_MAX") % [u.name, u.desc, lvl, u.max]
 			b.disabled = true
 		else:
-			b.text = "%s — %s   [%d/%d]   %d huesos" % [u.name, u.desc, lvl, u.max, rm.meta_cost(id)]
+			b.text = tr("MENU_UPGRADE_BUY") % [u.name, u.desc, lvl, u.max, rm.meta_cost(id)]
 			b.disabled = rm.meta_currency < rm.meta_cost(id)
 		b.pressed.connect(func():
 			rm.buy_meta(id)
@@ -225,7 +225,7 @@ func _fill_upgrades(info: Label, rows: VBoxContainer) -> void:
 ## del lugar. Las bloqueadas salen en silueta negra, para picar la curiosidad.
 func _open_codex() -> void:
 	var lore = _game_controller.get_lore_database()
-	var box := _window("CÓDICE  (%.0f%% descubierto)" % lore.get_completion_percentage())
+	var box := _window(tr("CODEX_TITLE") % lore.get_completion_percentage())
 	var split := HSplitContainer.new()
 	split.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(split)
@@ -249,7 +249,7 @@ func _open_codex() -> void:
 	var text := RichTextLabel.new()
 	text.bbcode_enabled = true
 	text.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	text.text = "Elige una entrada. Las que faltan se descubren jugando: inscripciones, objetos, enemigos y jefes."
+	text.text = tr("CODEX_HINT")
 	detail.add_child(text)
 	var entries: Array = lore.get_all_entries()
 	entries.sort_custom(func(a, b): return a.unlocked and not b.unlocked if a.unlocked != b.unlocked else a.title < b.title)

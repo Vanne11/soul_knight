@@ -46,9 +46,9 @@ static func price_for(item: Item, rm: Node) -> int:
 
 func _prompt_text() -> String:
 	var rm = get_node("/root/RunManager")
-	var action := "[E] Comprar por %d monedas" % price
+	var action := tr("SHOP_BUY") % price
 	if rm.coins < price:
-		action = "Cuesta %d monedas. Tienes %d." % [price, rm.coins]
+		action = tr("SHOP_POOR") % [price, rm.coins]
 	return "[color=#ffd75a][b]%s[/b][/color]\n[font_size=13]%s[/font_size]\n[color=#b08d4a]%s[/color]" % [
 		_item.display_name, _item.description, action]
 
