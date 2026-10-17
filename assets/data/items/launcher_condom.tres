@@ -10,6 +10,6 @@ description = "Lanza 3 preservativos lentos que explotan en área al chocar o al
 rarity = 3
 tags = ["arma", "explosivo", "área"]
 equip_slot = 1
-effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}, {"type": 4, "status_effect": null, "custom_data": {"immunity": ["its"]}}]
 base_value = 450
 custom_data = {"base_damage": 14, "fire_rate": 1.3, "projectile_speed": 280, "spread": 0.15, "projectiles": 3, "explosion_radius": 75, "range": 260}

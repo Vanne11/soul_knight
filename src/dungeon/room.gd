@@ -107,6 +107,7 @@ func spawn_enemies(enemy_scenes: Array[PackedScene], enemy_data: Array[Dictionar
 			4: scene = enemy_scenes[4] if enemy_scenes.size() > 4 else enemy_scenes[0]  # boss
 			5: scene = enemy_scenes[5] if enemy_scenes.size() > 5 else enemy_scenes[1]  # taser (a distancia)
 			6: scene = enemy_scenes[6] if enemy_scenes.size() > 6 else enemy_scenes[1]  # inspector (sellos que rebotan)
+			8: scene = enemy_scenes[8] if enemy_scenes.size() > 8 else enemy_scenes[0]  # microbios de ITS
 			_: scene = enemy_scenes[0]
 		
 		for g in range(int(data.get("group", 1))):
@@ -116,6 +117,7 @@ func spawn_enemies(enemy_scenes: Array[PackedScene], enemy_data: Array[Dictionar
 			if data.has("health"): enemy.max_health = data.health
 			if data.has("damage"): enemy.damage = data.damage
 			if data.has("speed"): enemy.move_speed = data.speed
+			if data.has("its") and "its_kind" in enemy: enemy.its_kind = data.its
 			if data.has("drops"): enemy.drop_table = _as_drop_list(data.drops if g == 0 else [])
 			if data.has("frames") and ResourceLoader.exists(data.frames):
 				enemy.get_node("AnimatedSprite2D").sprite_frames = load(data.frames)

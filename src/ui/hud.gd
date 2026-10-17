@@ -16,6 +16,7 @@ const BAND := 72
 @onready var _purse: HBoxContainer = $Band/Row/Info/Purse
 var _coin_label: Label
 var _horm_box: HBoxContainer
+var _contagion_label: Label  # contagio de ITS (picazon / ardor)
 var _last_hp := -1.0
 
 var _stats: PlayerStats
@@ -42,6 +43,9 @@ func _ready() -> void:
 	_horm_box.add_theme_constant_override("separation", 2)
 	_horm_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_purse.add_child(_horm_box)
+	_contagion_label = HudStyle.pixel_label("", 14, Color("c8e04a"))
+	_contagion_label.visible = false
+	_purse.add_child(_contagion_label)
 	_setup_bars()
 	_setup_slots()
 	
@@ -53,6 +57,7 @@ func _ready() -> void:
 	_stats.shields_changed.connect(_on_shields_changed)
 	_stats.stamina_changed.connect(_on_stamina_changed)
 	_stats.intoxication_changed.connect(_on_intoxication_changed)
+	_stats.contagion_changed.connect(_on_contagion_changed)
 	_events.item_picked_up.connect(_on_item_picked_up)
 	_events.inventory_changed.connect(_refresh_slots)
 	_runs.run_started.connect(_on_run_started)
@@ -70,6 +75,11 @@ func _ready() -> void:
 	# Initial update
 	_stats.emit_all_signals()
 	_refresh_slots()
+
+func _on_contagion_changed(kind: String, seconds: float) -> void:
+	_contagion_label.visible = kind != ""
+	if kind != "":
+		_contagion_label.text = "%s %ds" % [tr("HUD_CONTAGION_" + kind.to_upper()), ceili(seconds)]
 
 func _setup_bars() -> void:
 	health_bar.set_icon("heart")

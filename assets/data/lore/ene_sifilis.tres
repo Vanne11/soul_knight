@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_sifilis"
+title = "Sífilis Imitadora"
+text = "La llaman «la gran imitadora» porque sus síntomas se parecen a los de muchas otras cosas, y ella se toma el apodo muy en serio: se disfraza de otro bicho de la sala, con gafas y bigote falso incluidos. Se quita el disfraz justo antes de embestirte, o apenas la golpeas. Se cura con penicilina si se detecta a tiempo, y un simple análisis de sangre la descubre aunque se haga la desentendida. Chequéate, no cuesta nada."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Sífilis Imitadora", "count": 10}
+flavor_text = "Mata 10 sífilis imitadoras."

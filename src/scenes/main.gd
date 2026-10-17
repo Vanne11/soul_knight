@@ -263,6 +263,7 @@ const ENEMY_SCENES: Array[PackedScene] = [
 	preload("res://src/enemies/enemy_boss.tscn"),
 	preload("res://src/enemies/enemy_taser.tscn"),  # 5: a distancia, chispas (Dildo Electrico)
 	preload("res://src/enemies/enemy_inspector.tscn"),  # 6: a distancia, sellos que rebotan (Inspector de Fluidos)
+	preload("res://src/enemies/enemy_its.tscn"),  # 8: microbios de ITS (its_kind en los datos); el 7 es de la Espinilla
 ]
 ## Economia (medida con tests/economy_sim.gd): ~8 salas por piso, ~3.8 de combate.
 ## Cada moneda recogida vale 1-2. Sale a unas 28 monedas en el piso 1 y 43 en el 5:
@@ -304,6 +305,17 @@ const SWARM_DAMAGE_MULT := 0.5
 ## el minijefe (x3.5 vida) y el jefe; el tanque base (500 vida, 40 dano) no escala con el piso.
 const TANK_HEALTH_MULT := 5.0
 const TANK_DAMAGE_MULT := 1.5
+## ITS (tipo 8): multiplicadores sobre la vida/dano generica del piso + velocidad. Ninguna
+## es mas letal que un bicho comun; su gracia es la mecanica y el contagio leve.
+const ITS_STATS := {
+	"clamidia": {"health": 0.7, "damage": 1.0, "speed": 150.0},
+	"herpes": {"health": 0.9, "damage": 0.9, "speed": 105.0},
+	"gonorrea": {"health": 1.0, "damage": 0.8, "speed": 110.0},
+	"vph": {"health": 1.2, "damage": 0.7, "speed": 85.0},
+	"sifilis": {"health": 1.0, "damage": 1.1, "speed": 115.0},
+}
+## En las salas de intoxicacion (el antro) las ITS salen el triple de a menudo.
+const ITS_INTOX_WEIGHT_MULT := 3.0
 
 func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 	var floor_n: int = _run_manager.current_floor
@@ -332,12 +344,17 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 		# indices de ENEMY_SCENES por puesto del roster: 0 melee, 1 ranged, 2 swarmer
 		var types: Array = [0, 1, 2]
 		var weights: Array = fd.weights
+		var its_kinds: Array = ["", "", ""]
 		# bichos extra del piso (aparte del trio fijo): {variant, name, type, weight}
 		for x in fd.get("extra", []):
 			roster = roster + [x.variant]
 			names = names + [x.name]
 			types = types + [x.type]
-			weights = weights + [x.weight]
+			its_kinds = its_kinds + [x.get("its", "")]
+			var w: float = x.weight
+			if x.has("its") and room.room_type == Room.RoomType.INTOXICATION:
+				w *= ITS_INTOX_WEIGHT_MULT
+			weights = weights + [w]
 		match room.room_type:
 			Room.RoomType.BOSS:
 				info.enemy_type = 4
@@ -362,6 +379,12 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				if types[t] == 3:
 					info.health *= TANK_HEALTH_MULT
 					info.damage *= TANK_DAMAGE_MULT
+				if its_kinds[t] != "":
+					var st: Dictionary = ITS_STATS[its_kinds[t]]
+					info.its = its_kinds[t]
+					info.health *= st.health
+					info.damage *= st.damage
+					info.speed = st.speed
 				if types[t] == 2:
 					# Los enjambres nunca vienen solos, pero cada bicho pega poco: rapidos y
 					# debiles. Antes pegaban como un enemigo pesado y, de a tres desde el

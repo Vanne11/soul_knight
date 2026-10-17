@@ -199,7 +199,7 @@ func _handle_movement(delta: float) -> void:
 	if input_dir != Vector2.ZERO:
 		_last_move_direction = input_dir
 	
-	var speed_mult = get_node("/root/PlayerStats").speed_modifier * get_node("/root/PlayerStats").get_intoxication_effects().get("speed", 1.0)
+	var speed_mult = get_node("/root/PlayerStats").speed_modifier * get_node("/root/PlayerStats").get_intoxication_effects().get("speed", 1.0) * get_node("/root/PlayerStats").contagion_speed_mult()
 	velocity = input_dir * move_speed * speed_mult
 	
 	_update_animation(input_dir)
