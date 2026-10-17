@@ -437,6 +437,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 					info.damage *= ELITE_DAMAGE_MULT
 					info.scale = ELITE_SCALE
 					info.elite = true
+					info.affixes = Affixes.roll(types[t], floor_n)  # 1-2 afijos (src/enemies/affixes)
 					info.drops.append({"item_id": "coin", "chance": ELITE_COIN_CHANCE})
 		data.append(info)
 	return data

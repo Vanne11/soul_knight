@@ -197,6 +197,7 @@ func control(delta: float) -> bool:
 
 ## Se llama ANTES de restar la vida. Devuelve el dano final (golpe por sorpresa a dormidos).
 func on_damage(amount: float, source: Node = null) -> float:
+	amount = Affixes.filter_damage(enemy, amount, source)  # afijos de elite (blindado absorbe)
 	if _dead:
 		return amount
 	_ignored_t = 0.0
