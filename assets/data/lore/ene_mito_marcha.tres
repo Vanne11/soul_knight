@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_mito_marcha"
+title = "Mito: Marcha Atrás"
+text = "El mito: 'si te retiras a tiempo no pasa nada'. Este enemigo embiste y justo antes de terminar da marcha atrás... dejando atrás un par de espermatozoides de sorpresa. La verdad: el coito interrumpido es un método poco fiable; con uso típico falla en cerca de 1 de cada 5 parejas al año, porque el líquido preseminal puede arrastrar espermatozoides y porque nadie tiene reflejos perfectos. Tampoco protege de las ITS. Si no se busca un embarazo, funcionan mucho mejor el preservativo y los métodos hormonales o de larga duración. (Dato a validar por Vanessa.)"
+category = 3
+unlock_condition = {"type": 0, "target_id": "Marcha Atrás", "count": 1}
+flavor_text = "Vence a la Marcha Atrás para romper el mito."

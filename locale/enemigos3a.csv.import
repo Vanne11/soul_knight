@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://c66inoff7fryw"
+
+[deps]
+
+files=["res://locale/enemigos3a.es.translation", "res://locale/enemigos3a.en.translation"]
+
+source_file="res://locale/enemigos3a.csv"
+dest_files=["res://locale/enemigos3a.es.translation", "res://locale/enemigos3a.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

@@ -259,11 +259,24 @@ func _handle_movement(delta: float) -> void:
 	var speed_mult = get_node("/root/PlayerStats").speed_modifier * get_node("/root/PlayerStats").get_intoxication_effects().get("speed", 1.0) * get_node("/root/PlayerStats").contagion_speed_mult()
 	if ability:
 		speed_mult *= ability.speed_mult()
+	var st := _status()  # estados de enemigos (status_effects.gd): enrollado, jaula, correa...
+	if st != null:
+		speed_mult *= st.speed_mult()
 	velocity = input_dir * move_speed * speed_mult
+	if st != null:
+		velocity += st.pull_velocity()
 	
 	_update_animation(input_dir)
 
+## Estados que le ponen los enemigos (null si nunca te han puesto uno). Ver status_effects.gd.
+func _status() -> StatusEffects:
+	var n := get_node_or_null("StatusEffects")
+	return n if n is StatusEffects else null
+
 func _handle_dash(delta: float) -> void:
+	var st := _status()
+	if st != null and st.blocks_dash():
+		return
 	if Input.is_action_just_pressed("dash") and not Narrator.ate_input() and not is_dashing and _dash_cooldown_timer <= 0.0 and _dash_left > 0:
 		if get_node("/root/PlayerStats").use_stamina(dash_stamina_cost):
 			_start_dash()
@@ -298,6 +311,9 @@ func _start_dash() -> void:
 
 func _handle_attack(delta: float) -> void:
 	if ability and not ability.can_attack():
+		return
+	var st := _status()
+	if st != null and st.blocks_shoot():
 		return
 	if Input.is_action_pressed("attack") and not Narrator.ate_input() and _attack_timer <= 0.0 and not current_weapon:
 		# Sin cuerpo a cuerpo: a manos limpias te rompes tu antes que ellos.

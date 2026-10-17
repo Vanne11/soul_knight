@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_mordaza"
+title = "La Mordaza"
+text = "Lanza bolas con correa que te silencian: sin habilidades de héroe durante unos segundos, y hasta el narrador se queda callado (que ya es mucho decir). Es el enemigo más fiel a la idea del Palacio: tapar la boca, sobre todo a quien tiene algo que decir. Un apunte serio dentro de la broma: cuando una mordaza se usa por gusto entre adultos, jamás se usa sin una palabra o señal de seguridad que no dependa de hablar (soltar un objeto, por ejemplo). Sin eso, deja de ser un juego."
+category = 3
+unlock_condition = {"type": 0, "target_id": "La Mordaza", "count": 6}
+flavor_text = "Vence a 6 Mordazas (el silencio también se rompe a tiros)."

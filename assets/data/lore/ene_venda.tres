@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_venda"
+title = "Venda en los Ojos"
+text = "Te lanza un paño negro y de pronto ves un círculo pequeño alrededor de tu héroe y poco más. Con el Ornitorrinco dura menos: la electrorrecepción ve aunque el ojo no. La venda es uno de los juegos más antiguos: quitar un sentido para afinar los otros, y confiar. Esa palabra, confiar, es la clave: a nadie se le venda sin que lo sepa, sin que lo haya querido y sin poder quitársela cuando quiera. Aquí te la ponen igual. Por eso es un enemigo."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Venda en los Ojos", "count": 6}
+flavor_text = "Vence a 6 Vendas en los Ojos."
