@@ -1,0 +1,31 @@
+keys,es,en
+DOOR_HINT_ELITE,"SALA ÉLITE
+RIESGO Y BOTÍN","ELITE ROOM
+RISK AND LOOT"
+MAP_ROOM_ELITE,Sala élite,Elite room
+MAP_CENSORED,[ MAPA CENSURADO ],[ MAP CENSORED ]
+ELITE_CLEAR_TITLE,Sala élite despejada,Elite room cleared
+ELITE_CLEAR_BODY,"Botín grande: cofre de arma, monedas y vida.","Big loot: weapon chest, coins and health."
+EVT_TAG,EVENTO: %s,EVENT: %s
+EVT_INSPECCION_NAME,INSPECCIÓN GENERAL,GENERAL INSPECTION
+EVT_INSPECCION_PHRASE,Hoy hay revisión en todas las salas.,Every room gets checked today.
+EVT_CALOR_NAME,OLA DE CALOR,HEAT WAVE
+EVT_CALOR_PHRASE,Todo el mundo va más acelerado de lo normal.,Everybody is moving faster than usual.
+EVT_CENSURA_NAME,CENSURA TOTAL,TOTAL CENSORSHIP
+EVT_CENSURA_PHRASE,El mapa ha sido retirado por indecente.,The map was removed for indecency.
+EVT_ESPUMA_NAME,FIESTA DE ESPUMA,FOAM PARTY
+EVT_ESPUMA_PHRASE,Suelo resbaladizo. Camina como si fuera un lunes.,Slippery floor. Walk like it's Monday.
+EVT_LUZ_NAME,CORTE DE LUZ,POWER OUTAGE
+EVT_LUZ_PHRASE,Alguien no pagó la cuenta. Todo en penumbra.,Somebody skipped the bill. Everything in the dark.
+EVT_REBAJAS_NAME,DÍA DE REBAJAS,SALE DAY
+EVT_REBAJAS_PHRASE,Tienda a mitad de precio. Pero hay cola.,Shop at half price. But there's a crowd.
+TT_PROMPT,Reloj de pared: contrarreloj (%s),Wall clock: time trial (%s)
+TT_OFFER_TITLE,Contrarreloj opcional,Optional time trial
+TT_OFFER_BODY,Llega a la sala final en %s y habrá premio. Toca el reloj de pared para aceptar.,Reach the final room in %s for a prize. Touch the wall clock to accept.
+TT_ACCEPT_TITLE,Contrarreloj aceptada,Time trial accepted
+TT_ACCEPT_BODY,Te quedan %s. Sin presión.,%s left. No pressure.
+TT_HUD,CONTRARRELOJ  %s,TIME TRIAL  %s
+TT_WIN_TITLE,¡A tiempo!,On time!
+TT_WIN_BODY,Premio de puntualidad: %d monedas.,Punctuality prize: %d coins.
+TT_LATE_TITLE,Llega la Censura,The Censorship arrives
+TT_LATE_BODY,Te pasaste del tiempo: el mundo palidece y cada sala trae un enemigo más.,You ran out of time: the world fades and every room brings one more enemy.

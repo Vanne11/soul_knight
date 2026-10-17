@@ -88,6 +88,7 @@ func _generate_dungeon() -> void:
 	visited_rooms.clear()
 	add_child(dungeon_root)
 	_lighting.setup_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)
+	FloorEvents.setup(self, dungeon_generator.rooms, _run_manager.current_floor, _run_manager.current_seed)  # evento de piso + contrarreloj (src/run/floor_events.gd)
 	RoomDressing.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # muros 3/4, zocalo, puertas
 	RoomObstacles.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # rocas, columnas, barriles, pinchos
 	_lock_secret_rooms()
@@ -100,6 +101,7 @@ func _generate_dungeon() -> void:
 		_hide_weapon_chest(start_room)
 	_pick_hormone_room()
 	_assign_rewards()
+	_coin_mult = _compute_coin_mult()
 	_show_floor_card()
 	if _run_manager.is_liberated(_run_manager.current_floor) and RunManager.floor_stage(_run_manager.current_floor) == 1:
 		# Region liberada en otra partida: te recibe con un regalo (al entrar al reino, no en la 2a etapa).
@@ -217,6 +219,7 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	
 	get_node("/root/RunManager").current_room_index = _get_room_index(room)
 	BossIntro.on_enter_room(self, room)  # presentacion del jefe (primera vez)
+	FloorEvents.on_room_enter(room)  # reloj de la contrarreloj / llegada al jefe
 	print("Entered room: %s at %s" % [room.room_type, room.grid_pos])
 
 func _narrate_room(room: Room) -> void:
@@ -266,6 +269,10 @@ func _get_room_index(room: Room) -> int:
 ## Economia (medida con tests/economy_sim.gd): ~8 salas por piso, ~3.8 de combate.
 ## Cada moneda recogida vale 1-2. Sale a unas 28 monedas en el piso 1 y 43 en el 5:
 ## una mejora o un arma por piso, no todo. Los precios estan en shop_item.gd.
+## Etapa 6b: los pisos tienen 7-12 salas; _coin_mult (monedas de salas de pelea, sin contar la
+## sala elite, que es premio opcional) mantiene el total del piso cerca de la referencia
+## de COIN_BASE_FIGHTS salas de pelea, con tope para no romper pisos pequenos.
+const COIN_BASE_FIGHTS := 3.8
 const COIN_DROP_CHANCE := 0.4
 const COINS_PER_ROOM_CLEAR := 2
 const BOSS_COINS_BASE := 4
@@ -278,6 +285,9 @@ const INTERACTABLE := preload("res://src/items/interactable.gd")
 ## Salas sin enemigos: entrar ya las "libera" (salen en color).
 const CALM_ROOMS := [Room.RoomType.START, Room.RoomType.SHOP, Room.RoomType.SECRET, Room.RoomType.LORE,
 	Room.RoomType.TREASURE, Room.RoomType.REST]
+
+## Multiplicador de monedas del piso (ver COIN_BASE_FIGHTS).
+var _coin_mult := 1.0
 
 ## Sala cuya recompensa es la hormona que exige la Puerta Hormonal del jefe.
 var _hormone_room: Room = null
@@ -338,7 +348,10 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 	var floor_n: float = RunManager.depth(_run_manager.current_floor)
 	var fd: Dictionary = _run_manager.floor_data()
 	var has_boss: bool = RunManager.floor_has_boss(_run_manager.current_floor)
-	var count := RNG.randi_range(2, 4) + RunManager.depth_i(_run_manager.current_floor)
+	var count := RNG.randi_range(2, 4) + RunManager.depth_i(_run_manager.current_floor) + FloorEvents.extra_enemies()
+	var elite_room: bool = room.has_meta("elite_room")  # sala elite (6b): todos elite, uno mas
+	if elite_room:
+		count += 1
 	if room.room_type == Room.RoomType.MINIBOSS:
 		count = 1 if fd.has("miniboss") else 2  # minijefe propio del piso (datos) o dos gigantes
 	elif room.room_type == Room.RoomType.BOSS:
@@ -350,7 +363,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 		var info := {
 			"health": (30.0 + floor_n * 10.0) * RNG.randf_range(0.85, 1.15),
 			"damage": (ENEMY_DAMAGE_BASE + floor_n * 3.0) * RNG.randf_range(0.85, 1.15),
-			"drops": [{"item_id": "coin", "chance": COIN_DROP_CHANCE * Censura.mult("coin_drop")}, {"item_id": "health_small", "chance": 0.08},
+			"drops": [{"item_id": "coin", "chance": COIN_DROP_CHANCE * _coin_mult * Censura.mult("coin_drop")}, {"item_id": "health_small", "chance": 0.08},
 				{"item_id": _random_loot_id(), "chance": 0.06}],
 		}
 		# El Perineo es tierra de nadie: mezcla bichos de los dos reinos.
@@ -410,6 +423,10 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				info.drops.append({"item_id": "health_large", "chance": 0.8})
 			_:
 				var t := _weighted_index(weights)
+				for _try in range(6 if elite_room else 0):  # sin espinillas en la sala elite (no se refuerzan)
+					if types[t] != "espinilla":
+						break
+					t = _weighted_index(weights)
 				info.enemy_type = types[t]
 				info.name = names[t]
 				info.frames = _frames_path(roster[t])
@@ -436,7 +453,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				# Elite: mas vida y dano, algo mas grande y con aura roja. Mas comunes en la 2a etapa.
 				# (No toca a las espinillas: reventar de un tiro es su gracia.)
 				# Las escoltas del guardian (sala final de la 1a etapa) siempre son elite.
-				var escort: bool = room.room_type == Room.RoomType.BOSS and not has_boss
+				var escort: bool = (room.room_type == Room.RoomType.BOSS and not has_boss) or elite_room or FloorEvents.force_elite(room, i)
 				if types[t] != "espinilla" and (escort or RNG.randf() < float(fd.get("elite_chance", 0.0)) * Censura.mult("elite_chance")):
 					info.health *= ELITE_HEALTH_MULT
 					info.damage *= ELITE_DAMAGE_MULT
@@ -576,7 +593,7 @@ func _pick_hormone_room() -> void:
 	_hormone_room = null
 	var candidates: Array = dungeon_generator.rooms.values().filter(func(r): return r.room_type == Room.RoomType.MINIBOSS)
 	if candidates.is_empty():
-		candidates = dungeon_generator.rooms.values().filter(func(r): return r.room_type == Room.RoomType.COMBAT)
+		candidates = dungeon_generator.rooms.values().filter(func(r): return r.room_type == Room.RoomType.COMBAT and not r.has_meta("elite_room"))
 	if candidates.is_empty():
 		# Pisos sin minijefe ni combate normal (solo trampa/antro): sin esto la hormona solo
 		# se podia comprar y, sin monedas, la Puerta Hormonal dejaba la partida sin salida.
@@ -623,7 +640,7 @@ func _on_room_cleared(room: Room) -> void:
 			_complete_floor()  # 1a etapa: vencer al guardian abre la salida (sin jefe, sin liberar)
 	else:
 		Sound.play("room_clear")
-		for i in COINS_PER_ROOM_CLEAR:
+		for i in maxi(1, roundi(COINS_PER_ROOM_CLEAR * _coin_mult)):
 			_spawn_pickup(room, "coin", room.get_center_position() + Vector2(-20 + i * 40, 60))
 
 func _complete_floor() -> void:
@@ -689,11 +706,18 @@ func _floor_kingdom() -> String:
 		return k
 	return "pene" if RNG.randf() < 0.5 else "vulva"
 
+func _compute_coin_mult() -> float:
+	var fights := dungeon_generator.rooms.values().filter(func(r): return r.room_type in FIGHT_ROOMS and not r.has_meta("elite_room")).size()
+	return clampf(COIN_BASE_FIGHTS / maxf(fights, 1.0), 0.6, 1.2)
+
 func _assign_rewards() -> void:
 	var fights: Array = dungeon_generator.rooms.values().filter(func(r): return r.room_type in FIGHT_ROOMS)
 	RNG.shuffle(fights)
 	var blessed := 0
 	for room in fights:
+		if room.has_meta("elite_room"):
+			room.reward = "elite"  # premio gordo (ver _give_reward); no cuenta como bendicion
+			continue
 		if room == _hormone_room and not _missing_hormones().is_empty():
 			room.reward = "hormona"
 			continue
@@ -715,6 +739,8 @@ func _label_doors(room: Room) -> void:
 		door.set_hint(hint[0], hint[1])
 
 func _room_hint(room: Room) -> Array:
+	if room.has_meta("elite_room") and not room.cleared:
+		return [tr("DOOR_HINT_ELITE"), Color("ff6a3a")]
 	if room == _weapon_room and not _has_real_weapon():
 		return [tr("DOOR_HINT_WEAPON"), Color("ffa64a")]
 	match room.room_type:
@@ -742,9 +768,18 @@ func _give_reward(room: Room) -> void:
 	var center := room.get_center_position()
 	match room.reward:
 		"monedas":
-			var n := 4 + RunManager.depth_i(_run_manager.current_floor)
+			var n := maxi(2, roundi((4 + RunManager.depth_i(_run_manager.current_floor)) * _coin_mult))
 			for i in n:
 				_spawn_pickup(room, "coin", center + Vector2((i - (n - 1) / 2.0) * 28, -30))
+		"elite":
+			# Sala elite: cofre de arma y botin grande (premio por el riesgo, fuera del camino).
+			Narrator.toast(tr("ELITE_CLEAR_TITLE"), tr("ELITE_CLEAR_BODY"), "ff7a4a")
+			Narrator.say("elite_clear")
+			_spawn_chest(room, "weapon", Vector2(0, -40))
+			var ne := 8 + 2 * RunManager.depth_i(_run_manager.current_floor)
+			for i in ne:
+				_spawn_pickup(room, "coin", center + Vector2((i - (ne - 1) / 2.0) * 24, 70))
+			_spawn_pickup(room, "health_large", center + Vector2(-90, 20))
 		"vida":
 			_spawn_pickup(room, "health_large", center + Vector2(0, -30))
 		"bendicion":
