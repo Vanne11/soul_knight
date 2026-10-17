@@ -145,13 +145,33 @@ func _setup_room_tilemap(room: Room, size: Vector2) -> void:
 		for y in range(h):
 			floor_map.set_cell(0, Vector2i(x, y), RNG.randi_range(0, 3), Vector2i(0, 0))
 	
+	# TileSet de muros del reino del piso (si falta, el viejo con la baldosa unica).
+	var themed := _apply_wall_tileset(walls_map)
 	# Incluye las esquinas (-1 y w): sin ellas se veia el fondo por los cuatro rincones.
+	# Con tema: la fila de arriba es la cara frontal (atlas 1/3) y el resto la tapa (0/2);
+	# la variante sale de un hash de la celda (no consume el RNG de la generacion).
 	for x in range(-1, w + 1):
-		walls_map.set_cell(0, Vector2i(x, -1), WALL_SOURCE, Vector2i(0, 0))
-		walls_map.set_cell(0, Vector2i(x, h), WALL_SOURCE, Vector2i(0, 0))
+		walls_map.set_cell(0, Vector2i(x, -1), WALL_SOURCE, _wall_atlas(room, x, -1, true, themed))
+		walls_map.set_cell(0, Vector2i(x, h), WALL_SOURCE, _wall_atlas(room, x, h, false, themed))
 	for y in range(h):
-		walls_map.set_cell(0, Vector2i(-1, y), WALL_SOURCE, Vector2i(0, 0))
-		walls_map.set_cell(0, Vector2i(w, y), WALL_SOURCE, Vector2i(0, 0))
+		walls_map.set_cell(0, Vector2i(-1, y), WALL_SOURCE, _wall_atlas(room, -1, y, false, themed))
+		walls_map.set_cell(0, Vector2i(w, y), WALL_SOURCE, _wall_atlas(room, w, y, false, themed))
+
+## Asigna assets/tilesets/walls_<reino>.tres al TileMap de muros. false si no existe.
+func _apply_wall_tileset(walls_map: TileMap) -> bool:
+	var floors: Array = RunManager.FLOORS
+	var kingdom: String = floors[clampi(current_floor - 1, 0, floors.size() - 1)].kingdom
+	var path := "res://assets/tilesets/walls_%s.tres" % kingdom
+	if not ResourceLoader.exists(path):
+		return false
+	walls_map.tile_set = load(path)
+	return true
+
+func _wall_atlas(room: Room, x: int, y: int, front_face: bool, themed: bool) -> Vector2i:
+	if not themed:
+		return Vector2i(0, 0)
+	var v := hash(Vector3i(room.grid_pos.x * 131 + x, room.grid_pos.y * 137 + y, current_floor)) & 1
+	return Vector2i((1 if front_face else 0) + v * 2, 0)
 
 func _connect_rooms() -> void:
 	var room_positions = rooms.keys()
