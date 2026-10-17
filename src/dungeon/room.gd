@@ -87,30 +87,17 @@ func _add_enemy_deferred(enemy: Node2D, pos: Vector2) -> void:
 
 
 ## seal=false deja las puertas abiertas (main lo usa si vas desarmado: puedes huir).
-func spawn_enemies(enemy_scenes: Array[PackedScene], enemy_data: Array[Dictionary], seal := true) -> void:
-	if spawn_points.is_empty() or enemy_scenes.is_empty() or enemy_data.is_empty():
+## enemy_data[i].enemy_type = id de EnemyRegistry ("melee", "its"...; por defecto "melee").
+func spawn_enemies(enemy_data: Array[Dictionary], seal := true) -> void:
+	if spawn_points.is_empty() or enemy_data.is_empty():
 		return
-	
+
 	RNG.shuffle(spawn_points)  # Array.shuffle() usa el azar global: misma semilla, mazmorra distinta
-	
+
 	for i in range(min(enemy_data.size(), spawn_points.size())):
 		var data = enemy_data[i]
-		var enemy_type = data.enemy_type if data.has("enemy_type") else 0
-		
-		# Select appropriate scene based on enemy_type
-		var scene: PackedScene
-		match enemy_type:
-			0: scene = enemy_scenes[0]  # melee
-			1: scene = enemy_scenes[1] if enemy_scenes.size() > 1 else enemy_scenes[0]  # ranged
-			2: scene = enemy_scenes[2] if enemy_scenes.size() > 2 else enemy_scenes[0]  # swarmer
-			3: scene = enemy_scenes[3] if enemy_scenes.size() > 3 else enemy_scenes[0]  # tank
-			4: scene = enemy_scenes[4] if enemy_scenes.size() > 4 else enemy_scenes[0]  # boss
-			5: scene = enemy_scenes[5] if enemy_scenes.size() > 5 else enemy_scenes[1]  # taser (a distancia)
-			6: scene = enemy_scenes[6] if enemy_scenes.size() > 6 else enemy_scenes[1]  # inspector (sellos que rebotan)
-			8: scene = enemy_scenes[8] if enemy_scenes.size() > 8 else enemy_scenes[0]  # microbios de ITS
-			7: scene = enemy_scenes[7] if enemy_scenes.size() > 7 else enemy_scenes[0]  # espinilla (reventon en anillo)
-			_: scene = enemy_scenes[0]
-		
+		var scene: PackedScene = EnemyRegistry.scene(str(data.get("enemy_type", EnemyRegistry.FALLBACK)))
+
 		for g in range(int(data.get("group", 1))):
 			var enemy = scene.instantiate()
 			

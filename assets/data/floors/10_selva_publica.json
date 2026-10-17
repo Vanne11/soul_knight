@@ -1,0 +1,16 @@
+{
+	"name": "LA SELVA PÚBICA",
+	"kingdom": "neutral",
+	"tint": "7fe0a0",
+	"roster": ["pelo_encarnado", "granito", "ladilla"],
+	"names": ["Pelo Encarnado", "Granito Rencoroso", "Ladilla"],
+	"extra": [
+		{"variant": "espinilla", "name": "Espinilla Reventona", "type": "espinilla", "weight": 0.25},
+		{"variant": "clamidia", "name": "Clamidia Clandestina", "type": "its", "weight": 0.05, "its": "clamidia"},
+		{"variant": "vph", "name": "VPH Verrugón", "type": "its", "weight": 0.05, "its": "vph"}
+	],
+	"weights": [0.4, 0.25, 0.35],
+	"boss": "boss_cera",
+	"boss_name": "DOÑA CERA CALIENTE",
+	"needs": []
+}

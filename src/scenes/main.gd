@@ -53,6 +53,7 @@ var _lighting: RoomLighting
 
 func _ready() -> void:
 	add_to_group("main")
+	EnemyRegistry.preload_all()  # como los preload de antes: sin tirones en el primer spawn
 	dungeon_generator = DungeonGenerator.new()
 	dungeon_generator.name = "DungeonGenerator"
 	add_child(dungeon_generator)
@@ -256,17 +257,9 @@ func _get_room_index(room: Room) -> int:
 			return i
 	return 0
 
-const ENEMY_SCENES: Array[PackedScene] = [
-	preload("res://src/enemies/enemy.tscn"),
-	preload("res://src/enemies/enemy_ranged.tscn"),
-	preload("res://src/enemies/enemy_swarmer.tscn"),
-	preload("res://src/enemies/enemy_tank.tscn"),
-	preload("res://src/enemies/enemy_boss.tscn"),
-	preload("res://src/enemies/enemy_taser.tscn"),  # 5: a distancia, chispas (Dildo Electrico)
-	preload("res://src/enemies/enemy_inspector.tscn"),  # 6: a distancia, sellos que rebotan (Inspector de Fluidos)
-	preload("res://src/enemies/enemy_espinilla.tscn"),  # 7: casi estatica, se infla y revienta en anillo (Espinilla Reventona)
-	preload("res://src/enemies/enemy_its.tscn"),  # 8: microbios de ITS (its_kind en los datos); el 7 es de la Espinilla
-]
+## Las escenas de enemigos salen de EnemyRegistry (src/enemies/enemy_registry.gd) por id:
+## "melee", "ranged", "swarmer", "tank", "boss", "taser" (Dildo Electrico), "inspector"
+## (Inspector de Fluidos), "espinilla" (Espinilla Reventona), "its" (microbios de ITS).
 ## Economia (medida con tests/economy_sim.gd): ~8 salas por piso, ~3.8 de combate.
 ## Cada moneda recogida vale 1-2. Sale a unas 28 monedas en el piso 1 y 43 en el 5:
 ## una mejora o un arma por piso, no todo. Los precios estan en shop_item.gd.
@@ -297,7 +290,7 @@ func _spawn_room_enemies(room: Room) -> void:
 		if _has_real_weapon():
 			room.seal_doors()
 		return
-	room.spawn_enemies(ENEMY_SCENES, _generate_enemy_data_for_room(room), _has_real_weapon())
+	room.spawn_enemies(_generate_enemy_data_for_room(room), _has_real_weapon())
 
 ## Balance (2026-10-17, a revisar con la autora): dano base de los enemigos comunes
 ## (antes 8) y multiplicador de los enjambres (ladillas, espermatozoides, calambres...).
@@ -307,7 +300,7 @@ const SWARM_DAMAGE_MULT := 0.5
 ## el minijefe (x3.5 vida) y el jefe; el tanque base (500 vida, 40 dano) no escala con el piso.
 const TANK_HEALTH_MULT := 5.0
 const TANK_DAMAGE_MULT := 1.5
-## ITS (tipo 8): multiplicadores sobre la vida/dano generica del piso + velocidad. Ninguna
+## ITS (id "its"): multiplicadores sobre la vida/dano generica del piso + velocidad. Ninguna
 ## es mas letal que un bicho comun; su gracia es la mecanica y el contagio leve.
 const ITS_STATS := {
 	"clamidia": {"health": 0.7, "damage": 1.0, "speed": 150.0},
@@ -347,8 +340,8 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 		if fd.has("alt_roster") and RNG.randf() < 0.5:
 			roster = fd.alt_roster
 			names = fd.alt_names
-		# indices de ENEMY_SCENES por puesto del roster: 0 melee, 1 ranged, 2 swarmer
-		var types: Array = [0, 1, 2]
+		# id de EnemyRegistry por puesto del roster
+		var types: Array = ["melee", "ranged", "swarmer"]
 		var weights: Array = fd.weights
 		var its_kinds: Array = ["", "", ""]
 		# bichos extra del piso (aparte del trio fijo): {variant, name, type, weight}
@@ -363,7 +356,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 			weights = weights + [w]
 		match room.room_type:
 			Room.RoomType.BOSS:
-				info.enemy_type = 4
+				info.enemy_type = "boss"
 				info.health = EnemyBoss.health_for_floor(floor_n)
 				info.script = EnemyBoss.script_path(fd.boss)
 				info.damage = 12.0 + floor_n * 4.0
@@ -371,7 +364,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				info.frames = _frames_path(fd.boss)
 				info.drops = [{"item_id": "health_large", "chance": 1.0}]
 			Room.RoomType.MINIBOSS:
-				info.enemy_type = 0
+				info.enemy_type = "melee"
 				info.health *= 3.5
 				info.damage *= 1.4
 				info.name = tr("ENEMY_GIANT") % names[0]
@@ -383,7 +376,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				info.enemy_type = types[t]
 				info.name = names[t]
 				info.frames = _frames_path(roster[t])
-				if types[t] == 3:
+				if types[t] == "tank":
 					info.health *= TANK_HEALTH_MULT
 					info.damage *= TANK_DAMAGE_MULT
 				if its_kinds[t] != "":
@@ -392,10 +385,10 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 					info.health *= st.health
 					info.damage *= st.damage
 					info.speed = st.speed
-				if types[t] == 7:
+				if types[t] == "espinilla":
 					info.health *= ESPINILLA_HEALTH_MULT
 					info.drops = [{"item_id": "coin", "chance": ESPINILLA_COIN_CHANCE}]
-				if types[t] == 2:
+				if types[t] == "swarmer":
 					# Los enjambres nunca vienen solos, pero cada bicho pega poco: rapidos y
 					# debiles. Antes pegaban como un enemigo pesado y, de a tres desde el
 					# piso 1, te encerraban y mataban en segundos.

@@ -5,49 +5,102 @@ class_name RunManager
 
 ## Historia "La Gran Censura": cruzas los dos reinos hasta el palacio de la
 ## Hoja de Parra. Ganar = matar al jefe del ultimo piso.
+##
+## Los pisos viven en datos: assets/data/floors/<NN>_<id>.json, uno por piso, en el
+## orden de su prefijo numerico (10, 20, 30... deja huecos para intercalar pisos).
+## El <id> (nombre del archivo sin prefijo ni .json) sirve para referirse al piso.
+## Claves de cada piso:
 ## roster: [melee, ranged, swarmer] -> variante de sprite (assets/sprites/enemies/<v>_sprite_frames.tres)
-## extra: bichos opcionales del piso aparte del trio (type = indice de ENEMY_SCENES en main.gd).
+## extra: bichos opcionales del piso aparte del trio. type = id de EnemyRegistry
+##   ("melee", "its", ...). Ademas se suman los de assets/data/floors/extra/*.json
+##   (ver _load_extra_files): asi cada bloque de enemigos nuevos va en su propio archivo.
 ## needs: hormonas que exige la Puerta Hormonal de la sala del jefe.
-## tint: color de la sala cuando la liberas (antes de eso esta gris: censurada).
-const FLOORS := [
-	{"name": "LA SELVA PÚBICA", "kingdom": "neutral", "tint": Color("7fe0a0"),
-		"roster": ["pelo_encarnado", "granito", "ladilla"], "names": ["Pelo Encarnado", "Granito Rencoroso", "Ladilla"],
-		"extra": [{"variant": "espinilla", "name": "Espinilla Reventona", "type": 7, "weight": 0.25},
-			{"variant": "clamidia", "name": "Clamidia Clandestina", "type": 8, "weight": 0.05, "its": "clamidia"},
-			{"variant": "vph", "name": "VPH Verrugón", "type": 8, "weight": 0.05, "its": "vph"}],
-		"weights": [0.40, 0.25, 0.35], "boss": "boss_cera", "boss_name": "DOÑA CERA CALIENTE", "needs": []},
-	{"name": "PENELANDIA", "kingdom": "pene", "tint": Color("6ec6ff"),
-		"roster": ["testiculo", "vesicula", "espermatozoide"], "names": ["Testículo Errante", "Vesícula Resentida", "Espermatozoide"],
-		"extra": [{"variant": "herpes", "name": "Herpes Recurrente", "type": 8, "weight": 0.05, "its": "herpes"},
-			{"variant": "gonorrea", "name": "Gonorrea Goteante", "type": 8, "weight": 0.05, "its": "gonorrea"}],
-		"weights": [0.45, 0.20, 0.35], "boss": "testiculo_primordial", "boss_name": "TESTÍCULO PRIMORDIAL", "needs": ["testosterona"]},
-	{"name": "VULVANIA", "kingdom": "vulva", "tint": Color("ff7ac0"),
-		"roster": ["ovulo", "trompa", "calambre"], "names": ["Óvulo Rodante", "Trompa Escupidora", "Calambre"],
-		"extra": [{"variant": "especulo", "name": "Espéculo Mordedor", "type": 0, "weight": 0.25},
-			{"variant": "dildo_electrico", "name": "Dildo Eléctrico", "type": 5, "weight": 0.2},
-			{"variant": "clamidia", "name": "Clamidia Clandestina", "type": 8, "weight": 0.05, "its": "clamidia"},
-			{"variant": "vph", "name": "VPH Verrugón", "type": 8, "weight": 0.05, "its": "vph"}],
-		"weights": [0.40, 0.30, 0.30], "boss": "reina_ovaria", "boss_name": "SU MAJESTAD OVARIA II", "needs": ["estrogeno"]},
-	{"name": "EL PERINEO", "kingdom": "mixto", "tint": Color("ffc93c"),
-		"roster": ["testiculo", "trompa", "calambre"], "names": ["Testículo Errante", "Trompa Escupidora", "Calambre"],
-		"alt_roster": ["ovulo", "vesicula", "espermatozoide"], "alt_names": ["Óvulo Rodante", "Vesícula Resentida", "Espermatozoide"],
-		"extra": [{"variant": "especulo", "name": "Espéculo Mordedor", "type": 0, "weight": 0.20},
-			{"variant": "hemorroide", "name": "Hemorroide Fronteriza", "type": 3, "weight": 0.15},
-			{"variant": "inspector_fluidos", "name": "Inspector de Fluidos", "type": 6, "weight": 0.25},
-			{"variant": "pelusa_perineal", "name": "Pelusa Perineal", "type": 2, "weight": 0.25},
-			{"variant": "clamidia", "name": "Clamidia Clandestina", "type": 8, "weight": 0.08, "its": "clamidia"},
-			{"variant": "herpes", "name": "Herpes Recurrente", "type": 8, "weight": 0.08, "its": "herpes"},
-			{"variant": "gonorrea", "name": "Gonorrea Goteante", "type": 8, "weight": 0.08, "its": "gonorrea"},
-			{"variant": "vph", "name": "VPH Verrugón", "type": 8, "weight": 0.08, "its": "vph"},
-			{"variant": "sifilis", "name": "Sífilis Imitadora", "type": 8, "weight": 0.08, "its": "sifilis"},
-			{"variant": "espinilla", "name": "Espinilla Reventona", "type": 7, "weight": 0.10}],
-		"weights": [0.25, 0.20, 0.20], "boss": "aduanero", "boss_name": "EL ADUANERO HORMONAL", "needs": ["testosterona", "estrogeno"]},
-	{"name": "EL PALACIO DE LA CENSURA", "kingdom": "censura", "tint": Color("b48cff"),
-		"roster": ["barra_negra", "sello", "pixel_censura"], "names": ["Barra Negra", "Sello Censor", "Píxel de Censura"],
-		"extra": [{"variant": "sifilis", "name": "Sífilis Imitadora", "type": 8, "weight": 0.04, "its": "sifilis"},
-			{"variant": "herpes", "name": "Herpes Recurrente", "type": 8, "weight": 0.04, "its": "herpes"}],
-		"weights": [0.35, 0.30, 0.35], "boss": "hoja_de_parra", "boss_name": "SU PUDOROSIDAD, LA HOJA DE PARRA", "needs": []},
-]
+## tint: color de la sala cuando la liberas (antes de eso esta gris: censurada). En el
+##   JSON va en hex ("7fe0a0") y aqui se convierte a Color.
+## FLOORS se carga una vez al cargar el script (static var): mismo Array de Dictionary que
+## antes era const, accesible igual como RunManager.FLOORS.
+const FLOORS_DIR := "res://assets/data/floors/"
+const FLOORS_EXTRA_DIR := "res://assets/data/floors/extra/"
+static var FLOORS: Array = _load_floors()
+
+
+static func _json_files(dir: String) -> PackedStringArray:
+	var files := PackedStringArray()
+	if not DirAccess.dir_exists_absolute(dir):
+		return files
+	for f in DirAccess.get_files_at(dir):
+		if f.ends_with(".json"):
+			files.append(f)
+	files.sort()
+	return files
+
+
+static func _read_json(path: String) -> Variant:
+	var txt := FileAccess.get_file_as_string(path)
+	var data = JSON.parse_string(txt)
+	if data == null:
+		push_error("RunManager: JSON invalido en %s" % path)
+	return data
+
+
+## Id de un piso a partir del archivo: "40_perineo.json" -> "perineo".
+static func _floor_id(file: String) -> String:
+	var base := file.get_basename()
+	var cut := base.find("_")
+	return base.substr(cut + 1) if cut >= 0 and base.left(cut).is_valid_int() else base
+
+
+static func _load_floors() -> Array:
+	var floors: Array = []
+	var ids: Array = []
+	for file in _json_files(FLOORS_DIR):
+		var f = _read_json(FLOORS_DIR + file)
+		if not f is Dictionary:
+			continue
+		if f.has("tint"):
+			f.tint = Color(str(f.tint))
+		if not f.has("extra"):
+			f.extra = []
+		floors.append(f)
+		ids.append(_floor_id(file))
+	_load_extra_files(floors, ids)
+	if floors.is_empty():
+		push_error("RunManager: no hay pisos en %s" % FLOORS_DIR)
+	return floors
+
+
+## Bichos extra por bloque: cada assets/data/floors/extra/<bloque>.json es un Array de
+## {"floor": "<id de piso o lista>" y/o "kingdom": "<reino o lista>", "variant", "name",
+##  "type", "weight", "its"?}. Se agregan (por orden de archivo y de entrada) detras de
+## los "extra" del propio piso. "floor"/"kingdom" solo eligen piso: no se copian.
+static func _load_extra_files(floors: Array, ids: Array) -> void:
+	for file in _json_files(FLOORS_EXTRA_DIR):
+		var list = _read_json(FLOORS_EXTRA_DIR + file)
+		if not list is Array:
+			push_error("RunManager: %s debe ser un Array de bichos" % file)
+			continue
+		for x in list:
+			if not x is Dictionary:
+				continue
+			var want_floor: Array = _as_list(x.get("floor", []))
+			var want_kingdom: Array = _as_list(x.get("kingdom", []))
+			var entry: Dictionary = x.duplicate()
+			entry.erase("floor")
+			entry.erase("kingdom")
+			var hit := false
+			for i in floors.size():
+				if ids[i] in want_floor or floors[i].get("kingdom", "") in want_kingdom:
+					floors[i].extra.append(entry.duplicate())
+					hit = true
+			if not hit:
+				push_warning("RunManager: %s: '%s' no cae en ningun piso" % [file, entry.get("name", "?")])
+
+
+static func _as_list(v) -> Array:
+	if v is Array:
+		return v
+	return [] if str(v) == "" else [str(v)]
+
 
 ## Personajes. Mismas stats base: cada uno tiene un perk distinto, ninguno es "el debil".
 ## hormone: la que llevas de serie. La del reino contrario te da alergia (salvo al ornitorrinco).
