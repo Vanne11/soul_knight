@@ -26,14 +26,33 @@ const LEVELS: Array[Dictionary] = [
 ]
 const MAX_LEVEL := 10
 
+## Maldiciones de los PACTOS MAYORES de la Hoja de Parra (src/rooms/enc_pact.gd). Duran toda la
+## partida y usan las MISMAS claves que los niveles: mult()/has() las combinan con ellos, asi el
+## resto del juego las respeta sin ganchos nuevos. El premio tambien va por clave ("coin_drop" > 1)
+## y, si trae "cofres", la Hoja suelta esa cantidad de cofres en el acto.
+## Textos: PACTO_<ID>_NAME/_CURSE/_PRIZE en locale/pactos.csv.
+const PACT_CURSES := {
+	"avaricia": {"mult": {"coin_drop": 1.6, "price": 1.5}},                                   # mas monedas, tienda carisima
+	"ayuno": {"mult": {"coin_drop": 1.35, "heal": 0.5}, "flags": ["curacion_escasa"], "cofres": 1},  # curas a la mitad
+	"clausura": {"mult": {"coin_drop": 1.3, "wave_mult": 1.3, "enemy_speed": 1.08}, "cofres": 1},    # oleadas mas gordas
+	"inquisicion": {"mult": {"coin_drop": 1.5, "elite_chance": 2.0}, "flags": ["jefe_furia"]},        # mas elites y jefes furiosos
+	"contagio": {"mult": {"coin_drop": 1.45, "contagion_time": 2.0, "enemy_speed": 1.05}, "cofres": 1},   # infecciones el doble de largas
+}
+## Maximo de pactos mayores por partida.
+const MAX_PACT_CURSES := 2
+
 ## Nivel activo en la partida en curso (0 = normal).
 static var level := 0
+## Ids de las maldiciones de pacto activas en la partida en curso (se limpia al empezar partida).
+static var pact_curses: Array = []
 
 
 static func mult(key: String) -> float:
 	var m := 1.0
 	for i in mini(level, LEVELS.size()):
 		m *= float(LEVELS[i].get("mult", {}).get(key, 1.0))
+	for id in pact_curses:
+		m *= float(PACT_CURSES[id].get("mult", {}).get(key, 1.0))
 	return m
 
 
@@ -41,7 +60,40 @@ static func has(flag: String) -> bool:
 	for i in mini(level, LEVELS.size()):
 		if flag in LEVELS[i].get("flags", []):
 			return true
+	for id in pact_curses:
+		if flag in PACT_CURSES[id].get("flags", []):
+			return true
 	return false
+
+
+## Maldiciones de pacto que aun se pueden aceptar (no repetidas, y solo si cabe otra).
+static func available_curses() -> Array:
+	if pact_curses.size() >= MAX_PACT_CURSES:
+		return []
+	return PACT_CURSES.keys().filter(func(id): return id not in pact_curses)
+
+
+static func add_curse(id: String) -> bool:
+	if not PACT_CURSES.has(id) or id in pact_curses or pact_curses.size() >= MAX_PACT_CURSES:
+		return false
+	pact_curses.append(id)
+	return true
+
+
+static func clear_curses() -> void:
+	pact_curses.clear()
+
+
+static func curse_name(id: String) -> String:
+	return TranslationServer.translate("PACTO_%s_NAME" % id.to_upper())
+
+
+static func curse_curse(id: String) -> String:
+	return TranslationServer.translate("PACTO_%s_CURSE" % id.to_upper())
+
+
+static func curse_prize(id: String) -> String:
+	return TranslationServer.translate("PACTO_%s_PRIZE" % id.to_upper())
 
 
 ## Ids de las reglas de los niveles 1..n (por defecto, las del nivel activo), en orden.

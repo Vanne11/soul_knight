@@ -375,6 +375,7 @@ func start_new_run(seed: int = 0) -> void:
 	daily_mode = daily_requested
 	daily_requested = false
 	Censura.level = 0 if daily_mode else clampi(censura_selected, 0, censura_unlocked)
+	Censura.clear_curses()  # las maldiciones de pactos mayores no pasan de una partida a otra
 	last_censura_unlocked = 0
 	
 	current_floor = starting_floor

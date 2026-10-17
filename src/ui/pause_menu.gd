@@ -60,6 +60,7 @@ func _show_main() -> void:
 	_button(v, tr("PAUSE_SETTINGS"), _show_settings)
 	_button(v, tr("PAUSE_MENU"), _to_menu)
 	_button(v, tr("PAUSE_QUIT"), func(): get_tree().quit())
+	_add_rules(v)
 	var note := Label.new()
 	note.text = tr("PAUSE_NOTE")
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -68,6 +69,25 @@ func _show_main() -> void:
 	note.add_theme_color_override("font_color", Color(0.8, 0.72, 0.78))
 	v.add_child(note)
 	_first_btn.grab_focus.call_deferred()
+
+
+## Reglas activas de la partida: nivel de Censura y maldiciones de pactos mayores.
+func _add_rules(v: Control) -> void:
+	var lines: Array[String] = []
+	for id in Censura.rule_ids():
+		lines.append("• " + Censura.rule_name(id))
+	for id in Censura.pact_curses:
+		lines.append("• %s: %s" % [Censura.curse_name(id), Censura.curse_curse(id)])
+	if lines.is_empty():
+		return
+	var head := tr("CENSURA_BADGE") % Censura.level if Censura.level > 0 else tr("PAUSE_PACTS")
+	var l := Label.new()
+	l.text = head + "\n" + "\n".join(lines)
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	l.custom_minimum_size.x = 340
+	l.add_theme_font_size_override("font_size", 13)
+	l.add_theme_color_override("font_color", Color(1.0, 0.55, 0.65))
+	v.add_child(l)
 
 
 func _show_settings() -> void:

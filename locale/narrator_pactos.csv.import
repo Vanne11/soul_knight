@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://gjmofx6gtl0m"
+
+[deps]
+
+files=["res://locale/narrator_pactos.es.translation", "res://locale/narrator_pactos.en.translation"]
+
+source_file="res://locale/narrator_pactos.csv"
+dest_files=["res://locale/narrator_pactos.es.translation", "res://locale/narrator_pactos.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
