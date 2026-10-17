@@ -105,6 +105,7 @@ func spawn_enemies(enemy_scenes: Array[PackedScene], enemy_data: Array[Dictionar
 			2: scene = enemy_scenes[2] if enemy_scenes.size() > 2 else enemy_scenes[0]  # swarmer
 			3: scene = enemy_scenes[3] if enemy_scenes.size() > 3 else enemy_scenes[0]  # tank
 			4: scene = enemy_scenes[4] if enemy_scenes.size() > 4 else enemy_scenes[0]  # boss
+			5: scene = enemy_scenes[5] if enemy_scenes.size() > 5 else enemy_scenes[1]  # taser (a distancia)
 			_: scene = enemy_scenes[0]
 		
 		for g in range(int(data.get("group", 1))):

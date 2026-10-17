@@ -103,9 +103,12 @@ func set_hint(text: String, color := Color("f2ead6")) -> void:
 		_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		_hint.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		_hint.size = Vector2(160, 40)
-		_hint.add_theme_font_size_override("font_size", 11)
-		_hint.add_theme_color_override("font_outline_color", Color("0d0b0f"))
-		_hint.add_theme_constant_override("outline_size", 5)
+		# fuente pixel del HUD a 8 px (multiplo de 8: 1 pixel de arte = 1 de mundo, nitida
+		# con el escalado de la ventana) y sombra dura de 1 px
+		HudStyle.style_label(_hint, 8, color)
+		_hint.add_theme_constant_override("shadow_offset_x", 1)
+		_hint.add_theme_constant_override("shadow_offset_y", 1)
+		_hint.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		_hint.z_index = 5
 		_hint.material = LightKit.unshaded_material()  # legible tambien en sala en penumbra
 		_hint.position = _dir_vectors[direction] * -52.0 - _hint.size / 2
