@@ -13,6 +13,9 @@ const VOICES := 12
 const MIN_GAP_MS := 40
 const SFX_DB := -6.0
 const MUSIC_DB := -14.0
+## Fundido al cambiar de pista.
+const MUSIC_FADE := 0.4
+const FADE_DB := -50.0
 
 var _sfx: Dictionary = {}
 var _last_ms: Dictionary = {}
@@ -20,6 +23,7 @@ var _players: Array[AudioStreamPlayer] = []
 var _next := 0
 var _music: AudioStreamPlayer
 var _music_name := ""
+var _fade: Tween
 
 
 func _ready() -> void:
@@ -76,18 +80,39 @@ func voice(ch: String, base_pitch := 1.0, vol_offset_db := 0.0) -> void:
 	p.play()
 
 
+## Cambia de tema con un fundido corto (FADE s de bajada y FADE de subida).
+## Si ya suena esa pista no hace nada (no reinicia). El volumen del jugador
+## lo ajusta el bus "Music"; aqui solo se mueve volume_db del player.
 func music(track: String) -> void:
 	if track == _music_name:
 		return
 	_music_name = track
+	if _fade:
+		_fade.kill()
+	if not _music.playing:
+		_start_track(track)
+		return
+	# Si hay pista sonando: baja, cambia y sube
+	_fade = create_tween()  # el nodo es ALWAYS: el fundido sigue en pausa
+	_fade.tween_property(_music, "volume_db", FADE_DB, MUSIC_FADE)
+	_fade.tween_callback(_start_track.bind(track))
+	if track != "":
+		_fade.tween_property(_music, "volume_db", MUSIC_DB, MUSIC_FADE)
+
+
+func _start_track(track: String) -> void:
 	if track == "" or not ResourceLoader.exists(MUSIC_DIR + track + ".wav"):
 		_music.stop()
+		_music.volume_db = MUSIC_DB
 		return
 	var s: AudioStreamWAV = load(MUSIC_DIR + track + ".wav")
 	s.loop_mode = AudioStreamWAV.LOOP_FORWARD
 	s.loop_end = int(s.get_length() * s.mix_rate)
 	_music.stream = s
+	_music.volume_db = FADE_DB
 	_music.play()
+	if _fade == null or not _fade.is_valid():
+		_music.volume_db = MUSIC_DB
 
 
 ## F2 silencia todo (los volumenes finos estan en Ajustes).

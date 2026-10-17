@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var _game_controller = get_node("/root/GameController")
 
 func _ready() -> void:
+	Sound.music("menu")  # sigue sonando en la intro y la eleccion de heroe
 	_create_ui()
 	_update_meta_info()
 
