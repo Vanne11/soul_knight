@@ -172,7 +172,8 @@ func take_damage(amount: float, source: Node = null, kb: Vector2 = Vector2.ZERO)
 		_state_timer = 0.15
 	
 	if animated_sprite and state != State.WINDUP:
-		animated_sprite.modulate = Color(2, 0.4, 0.4)
+		animated_sprite.modulate = Color(1.5, 0.65, 0.65)
+		HitFx.flash(animated_sprite)
 		get_tree().create_timer(0.08).timeout.connect(_reset_color)
 	
 	get_node("/root/GlobalEvents").enemy_damaged.emit(self, amount, source)

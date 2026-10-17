@@ -35,6 +35,12 @@ var _aim: Vector2 = Vector2.RIGHT
 var _using_pad := false
 const DASH_LIFT := 9.0
 var _shadow_scale := Vector2.ZERO
+## Retroceso visual del arma al disparar (px): solo mueve el sprite, nunca el origen de las balas.
+const RECOIL_KICK := 4.0
+const RECOIL_MAX := 6.0
+const RECOIL_RETURN := 70.0  # px/s
+var _recoil := 0.0
+var _weapon_base_x := 16.0
 const PLAYER_BULLET := preload("res://src/player/player_bullet.tscn")
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -47,6 +53,7 @@ const PLAYER_BULLET := preload("res://src/player/player_bullet.tscn")
 
 func _ready() -> void:
 	add_to_group("player")
+	_weapon_base_x = weapon_sprite.position.x
 	_player_stats.health_changed.connect(_on_health_changed)
 	_player_stats.shields_changed.connect(_on_shields_changed)
 	_player_stats.stamina_changed.connect(_on_stamina_changed)
@@ -91,6 +98,8 @@ func _update_dash_lift() -> void:
 		lift = sin(clampf(1.0 - _dash_timer / dash_duration, 0.0, 1.0) * PI) * DASH_LIFT
 	animated_sprite.position.y = -lift
 	weapon_pivot.position.y = 6.0 - lift
+	_recoil = maxf(0.0, _recoil - RECOIL_RETURN * get_physics_process_delta_time())
+	weapon_sprite.position.x = _weapon_base_x - _recoil
 	var shadow := get_node_or_null("ContactShadow") as Sprite2D
 	if shadow:
 		if _shadow_scale == Vector2.ZERO:
@@ -233,6 +242,7 @@ func _shoot() -> void:
 	_last_shot_ms = Time.get_ticks_msec()
 	Sound.play("shoot")
 	_muzzle_flash()
+	_recoil = minf(RECOIL_MAX, _recoil + RECOIL_KICK)
 	var cd: Dictionary = current_weapon.custom_data
 	var effects = _player_stats.get_intoxication_effects()
 	var accuracy: float = maxf(0.2, _player_stats.accuracy_modifier * _get_effect_multiplier(effects, "accuracy") * _weapon_mod("accuracy"))
@@ -264,9 +274,11 @@ func _shoot() -> void:
 			ang += (i - (count - 1) / 2.0) * spread
 		# escopeta: base_damage repartido entre perdigones (x2 si aciertan todos a quemarropa)
 		b.damage = dmg * 2.0 / count if cd.has("pellets") else dmg
-		if RNG.randf() < _player_stats.crit_chance_modifier:
+		var crit := RNG.randf() < _player_stats.crit_chance_modifier
+		if crit:
 			b.damage *= _player_stats.crit_damage_modifier
 		b.speed = float(cd.get("projectile_speed", 500)) * _player_stats.projectile_speed_modifier
+		b.crit = crit
 		b.rotation = ang
 		_bless_bullet(b)
 		get_parent().add_child(b)
@@ -381,6 +393,8 @@ func receive_hit(dmg: float) -> bool:
 	_iframes = HIT_IFRAMES
 	_player_stats.take_damage(dmg)
 	Sound.play("hurt")
+	HitFx.flash(animated_sprite)
+	HitFx.shake(clampf(0.25 + dmg * 0.01, 0.25, 0.6))
 	var pride: int = _rm().blessing("orgullo")
 	if pride > 0 and current_weapon and _player_stats.current_health > 0.0:
 		_ring(8, get_weapon_damage() * _player_stats.damage_modifier * pride)

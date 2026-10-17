@@ -60,6 +60,12 @@ func _build() -> void:
 	fx.mouse_entered.connect(fx.grab_focus)
 	box.add_child(_row(tr("SETTINGS_FX"), fx))
 
+	var sh := CheckButton.new()
+	sh.button_pressed = Settings.screen_shake
+	sh.toggled.connect(func(on: bool): Settings.set_screen_shake(on))
+	sh.mouse_entered.connect(sh.grab_focus)
+	box.add_child(_row(tr("SETTINGS_SHAKE"), sh))
+
 	_lang_option = OptionButton.new()
 	_lang_option.custom_minimum_size = Vector2(220, 40)
 	var sel := 0
