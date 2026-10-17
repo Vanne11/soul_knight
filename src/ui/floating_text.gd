@@ -1,30 +1,65 @@
 extends Label
 class_name FloatingText
 
-## Floating text for damage numbers, item pickups, etc.
+## Numero de dano / texto flotante en fuente pixel (Silkscreen + sombra dura).
+## Vive en un CanvasLayer de UI (ver FloatingTextManager): se guarda la posicion
+## de MUNDO y cada frame se proyecta a pantalla redondeada a pixeles enteros, asi
+## la fuente se rasteriza a su tamano real (nitida) aunque la camara tenga zoom.
+## No se anima `scale` (emborrona): solo posicion en pixeles enteros y alpha.
 
-var lifetime: float = 1.5
-var velocity: Vector2 = Vector2.UP * 50
-var fade_delay: float = 0.5
-var _timer: float = 0.0
+var lifetime: float = 1.2
+var fade_delay: float = 0.55
+var rise_px: float = 48.0     # subida total en pixeles de pantalla
+var bounce_px: float = 0.0    # salto extra inicial (criticos)
 
-@onready var tween: Tween = null
+var _world_pos: Vector2 = Vector2.ZERO
+var _t: float = 0.0
+var _mgr: Node = null
 
-func setup(text: String, color: Color = Color.WHITE, is_crit: bool = false) -> void:
-	self.text = text
-	add_theme_color_override("font_color", color)
-	add_theme_font_size_override("font_size", 14 if is_crit else 10)
-	add_theme_color_override("font_outline_color", Color(1, 0.8, 0) if is_crit else Color(0.05, 0.04, 0.06))
-	add_theme_constant_override("outline_size", 3)
-	
-	_timer = 0.0
-	
-	# Build the tween lazily: creating it in _ready() without appending any
-	# tweener logs "started with no Tweeners".
-	tween = create_tween()
-	tween.tween_property(self, "position:y", position.y - 60, lifetime).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tween.tween_property(self, "modulate:a", 0.0, lifetime).set_delay(fade_delay).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	tween.finished.connect(queue_free)
+
+func setup(mgr: Node, world_pos: Vector2, txt: String, color: Color, is_crit: bool, is_number: bool) -> void:
+	_mgr = mgr
+	_world_pos = world_pos
+	_t = 0.0
+	modulate.a = 1.0
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Critico: oro, Bold 24 y "!"; normal: Silkscreen 16. Texto no numerico: 16.
+	if is_crit:
+		txt += "!"
+		color = HudStyle.GOLD
+		lifetime = 1.4
+		rise_px = 64.0
+		bounce_px = 12.0
+	else:
+		lifetime = 1.2
+		rise_px = 48.0
+		bounce_px = 0.0
+	text = txt
+	HudStyle.style_label(self, 24 if is_crit else 16, color, is_crit)
+	# Fuerza el tamano minimo con el texto nuevo para centrar bien.
+	reset_size()
+	size = get_minimum_size()
+	pivot_offset = Vector2.ZERO
+	_place()
+
 
 func _process(delta: float) -> void:
-	_timer += delta
+	_t += delta
+	if _t >= lifetime:
+		_mgr.return_to_pool(self)
+		return
+	if _t > fade_delay:
+		modulate.a = 1.0 - clampf((_t - fade_delay) / (lifetime - fade_delay), 0.0, 1.0)
+	_place()
+
+
+## Mundo -> pantalla, redondeado a pixel entero.
+func _place() -> void:
+	var k := clampf(_t / lifetime, 0.0, 1.0)
+	var rise := (1.0 - pow(1.0 - k, 2.0)) * rise_px
+	# Salto inicial: sube rapido bounce_px y vuelve en el primer ~0.25 s.
+	var hop := 0.0
+	if bounce_px > 0.0 and _t < 0.25:
+		hop = sin(_t / 0.25 * PI) * bounce_px
+	var scr: Vector2 = get_viewport().get_canvas_transform() * _world_pos
+	position = (scr + Vector2(-size.x * 0.5, -size.y * 0.5 - rise - hop)).round()

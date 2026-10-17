@@ -758,7 +758,7 @@ func _check_room_clear_for_enemy(killed_enemy: Node) -> void:
 		current_room.room_cleared()
 
 func _on_show_damage_number(position: Vector2, amount: float, is_crit: bool) -> void:
-	floating_text_mgr.spawn(position, "%.0f" % amount, Color(1, 0.9, 0.2) if is_crit else Color(1, 0.3, 0.3), is_crit)
+	floating_text_mgr.spawn(position, "%.0f" % amount, HudStyle.GOLD if is_crit else Color("ff3b4a"), is_crit)
 
 func _on_show_floating_text(position: Vector2, text: String, color: Color) -> void:
 	floating_text_mgr.spawn(position, text, color)

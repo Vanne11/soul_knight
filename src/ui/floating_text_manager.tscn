@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://src/ui/floating_text_manager.gd" id="1"]
 
-[node name="FloatingTextManager" type="Node"]
+[node name="FloatingTextManager" type="CanvasLayer"]
 script = ExtResource("1")
