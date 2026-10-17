@@ -51,6 +51,15 @@ func _build() -> void:
 	fs.mouse_entered.connect(fs.grab_focus)
 	box.add_child(_row(tr("SETTINGS_FULLSCREEN"), fs))
 
+	var fx := OptionButton.new()
+	fx.custom_minimum_size = Vector2(220, 40)
+	for i in 3:
+		fx.add_item(tr("SETTINGS_FX_%d" % i), i)
+	fx.select(Settings.screen_fx)
+	fx.item_selected.connect(func(i: int): Settings.set_screen_fx(i))
+	fx.mouse_entered.connect(fx.grab_focus)
+	box.add_child(_row(tr("SETTINGS_FX"), fx))
+
 	_lang_option = OptionButton.new()
 	_lang_option.custom_minimum_size = Vector2(220, 40)
 	var sel := 0
