@@ -1,0 +1,65 @@
+{
+  "_info": "Mito o Verdad opcional (placa en las salas de lore). Textos en locale/edu.csv (EDU_MV_<ID>_Q y _A). respuesta: mito|verdad. validar: true = pendiente de Vanessa.",
+  "items": [
+    {
+      "id": "marcha_atras",
+      "respuesta": "mito",
+      "fuente": "OMS, Planificación familiar: un manual mundial para proveedores",
+      "validar": true
+    },
+    {
+      "id": "primera_vez",
+      "respuesta": "mito",
+      "fuente": "OMS, planificación familiar",
+      "validar": true
+    },
+    {
+      "id": "vacuna_vph",
+      "respuesta": "verdad",
+      "fuente": "OMS; MINSAL, Programa Nacional de Inmunizaciones",
+      "validar": true
+    },
+    {
+      "id": "himen",
+      "respuesta": "mito",
+      "fuente": "OMS, ONU Mujeres y ACNUDH, declaración interinstitucional (2018)",
+      "validar": true
+    },
+    {
+      "id": "pelos_mano",
+      "respuesta": "mito",
+      "fuente": "UNESCO, Orientaciones técnicas sobre educación en sexualidad (2018)",
+      "validar": true
+    },
+    {
+      "id": "sin_sintomas",
+      "respuesta": "verdad",
+      "fuente": "OMS, infecciones de transmisión sexual",
+      "validar": true
+    },
+    {
+      "id": "doble_condon",
+      "respuesta": "mito",
+      "fuente": "OMS, hoja informativa sobre preservativos",
+      "validar": true
+    },
+    {
+      "id": "tamano",
+      "respuesta": "mito",
+      "fuente": "Veale et al., BJU International, 2015",
+      "validar": true
+    },
+    {
+      "id": "indetectable",
+      "respuesta": "verdad",
+      "fuente": "OMS y ONUSIDA",
+      "validar": true
+    },
+    {
+      "id": "pastilla_aborta",
+      "respuesta": "mito",
+      "fuente": "OMS, anticoncepción de emergencia",
+      "validar": true
+    }
+  ]
+}

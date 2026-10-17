@@ -109,6 +109,33 @@ func _ready() -> void:
 	_button(buttons, tr("GAMEOVER_MENU"), _on_menu)
 	_button(buttons, tr("GAMEOVER_QUIT"), _on_quit)
 	retry.grab_focus.call_deferred()
+	_add_fact()
+
+
+## Un "¿Sabias que...?" breve sobre los botones: aparece despues de las cifras, sin
+## pedir nada y distinto cada vez (Edu no repite dentro de la sesion).
+func _add_fact() -> void:
+	var fact := Edu.next_fact()
+	if fact == "":
+		return
+	var box := VBoxContainer.new()
+	box.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	box.offset_left = -380
+	box.offset_right = 380
+	box.offset_top = -236
+	box.offset_bottom = -132
+	box.alignment = BoxContainer.ALIGNMENT_END
+	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var head := HudStyle.pixel_label(tr("EDU_FACT_LABEL"), 14, HudStyle.GOLD, true)
+	head.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	box.add_child(head)
+	var body := HudStyle.pixel_label(fact, 15, HudStyle.CREAM, true)
+	body.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	box.add_child(body)
+	box.modulate.a = 0.0
+	_root.add_child(box)
+	create_tween().tween_property(box, "modulate:a", 1.0, 0.6).set_delay(1.8)
 
 
 func _button(parent: Control, text: String, cb: Callable) -> Button:

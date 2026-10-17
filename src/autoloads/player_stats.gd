@@ -118,6 +118,7 @@ func reset_for_new_run() -> void:
 	revive_charges = 0
 	_dot_immune_left = 0.0
 	_infect_immune_left = 0.0
+	vph_vaccinated = false
 	emit_all_signals()
 
 func _handle_stamina_regen(delta: float) -> void:
@@ -388,6 +389,9 @@ var contagion_kind: String = ""
 var contagion_time: float = 0.0
 var _contagion_tick_t: float = 0.0
 var contagion_blocked_count: int = 0  # veces que el preservativo te salvo (para pruebas)
+## Vacuna VPH del consultorio (src/edu): inmune al contagio del VPH Verrugon y sus verruguitas
+## durante la partida. Se borra al empezar otra.
+var vph_vaccinated: bool = false
 
 ## True si llevas algo con efecto de inmunidad "its". Las armas solo valen en la mano.
 func is_protected() -> bool:
@@ -411,8 +415,10 @@ func has_item_immunity(immunity: String) -> bool:
 	return false
 
 ## Intenta contagiar. Devuelve true si te contagia; false si el preservativo te protege.
-func infect(kind: String, seconds: float) -> bool:
+func infect(kind: String, seconds: float, source: String = "") -> bool:
 	if not CONTAGION.has(kind) or DebugMenu.god_mode:
+		return false
+	if vph_vaccinated and _from_vph(source):
 		return false
 	if _infect_immune_left > 0.0 or (_dot_immune_left > 0.0 and CONTAGION[kind].dot > 0.0):
 		contagion_blocked_count += 1
@@ -432,6 +438,20 @@ func infect(kind: String, seconds: float) -> bool:
 		_ge.show_floating_text.emit(get_tree().get_first_node_in_group("player").global_position + Vector2(0, -34), tr("FX_CONTAGION_" + kind.to_upper()), Color("c8e04a"))
 		_narrate_later("its_contagion")
 	return true
+
+## True si el contagio viene del VPH. enemy_its aun no dice quien contagia (source vacio):
+## entonces se mira si hay un VPH o una verruguita pegado al jugador.
+func _from_vph(source: String) -> bool:
+	if source != "":
+		return source in ["vph", "verruguita"]
+	var player := get_tree().get_first_node_in_group("player")
+	if player == null:
+		return false
+	for e in get_tree().get_nodes_in_group("enemy"):
+		if is_instance_valid(e) and e.get("its_kind") in ["vph", "verruguita"] \
+				and (e as Node2D).global_position.distance_to(player.global_position) < 110.0:
+			return true
+	return false
 
 func clear_contagion() -> void:
 	contagion_kind = ""
