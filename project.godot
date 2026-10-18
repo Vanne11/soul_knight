@@ -40,6 +40,7 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 window/mode/window_mode=0
+window/handheld/orientation=4
 
 [input]
 
@@ -156,3 +157,5 @@ physics/2d/default_gravity=0
 
 textures/canvas_textures/default_texture_filter=0
 rendering/renderer/rendering_method="forward_plus"
+rendering/renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
