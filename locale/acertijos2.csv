@@ -3,13 +3,13 @@ PZ_SPH_NAME,Esfinge,Sphinx
 PZ_SPH_ASK,Hablar con la Esfinge,Talk to the Sphinx
 PZ_SPH_TITLE,La Esfinge de Penelandia levanta la ceja: «%s»,"The Sphinx of Penisland raises an eyebrow: ""%s"""
 PZ_SPH_OK_1,«Correcto. Qué decepción: esperaba que lo pensaras sucio.»,"""Correct. What a letdown: I expected you to think dirty."""
-PZ_SPH_OK_2,«Muy bien. Se nota que tienes la mente limpia. O que nadie te ha lavado nunca.»,"""Very good. You must have a clean mind. Or nobody has ever washed you."""
-PZ_SPH_OK_3,"«Acertaste. Te lo voy a apuntar, a ver si me da tiempo antes de que lo olvides.»","""Right. I'll write it down, if I manage before you forget it."""
-PZ_SPH_OK_4,"«Otra buena. Me estás gustando, y eso es raro, porque no tengo gustos.»","""Another good one. I'm starting to like you, which is odd, since I have no tastes."""
+PZ_SPH_OK_2,«Muy bien. Se nota la mente limpia. O que nadie te ha lavado nunca.»,«Very good. A clean mind. Or nobody ever washed it.»
+PZ_SPH_OK_3,«Acertaste. Lo anoto antes de que se te olvide.»,«Correct. I'll note it down before you forget.»
+PZ_SPH_OK_4,"«Otra buena. Me caes bien, y es raro: no tengo gustos.»","«Another good one. I like you, which is odd: I have no tastes.»"
 PZ_SPH_OK_5,«Mira por dónde. Eso no tenía doble sentido. Era simple. Como tú.»,"""Look at that. That one had no double meaning. It was simple. Like you."""
-PZ_SPH_DONE,"«Ya está. Pasa, mortal. Y no pienses mal: la próxima vez que lo hagas, avisa.»","""That's it. Go on, mortal. And don't think dirty: next time you do, say so."""
-PZ_SPH_BAD,"«Mal. Pensaste lo que pensaste y no se lo diré a nadie. Mentira, se lo digo a todos. Empezamos de nuevo.»","""Wrong. You thought what you thought and I won't tell anyone. Lie, I'll tell everyone. Let's start over."""
-PZ_SPH_PITY,"«Me das pena. Te pongo la respuesta buena la primera, que ya es de mala educación verte sufrir.»","""You make me sad. I'll put the right answer first, it's rude to watch you suffer."""
+PZ_SPH_DONE,"«Ya está. Pasa, mortal. Y si pensaste mal, guárdatelo.»","«Done. Pass, mortal. And if you thought dirty, keep it to yourself.»"
+PZ_SPH_BAD,«Mal. Pensaste lo que pensaste y no se lo diré a nadie. Mentira. De nuevo.»,«Wrong. You thought what you thought and I'll tell no one. Lie. Again.»
+PZ_SPH_PITY,"«Me das pena. Te pongo la buena primero, por educación.»","«You make me sad. I'll put the right one first, out of courtesy.»"
 PZ_SPH_Q1,"Entra duro y seco, sale blando y mojado, y todo el mundo se lo mete en la boca sin pudor. ¿Qué es?","It goes in hard and dry, comes out soft and wet, and everyone shoves it in their mouth with no shame. What is it?"
 PZ_SPH_Q1_A0,Un chicle,A chewing gum
 PZ_SPH_Q1_A1,Tu cita de anoche,Last night's date

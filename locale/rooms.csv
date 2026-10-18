@@ -1,5 +1,5 @@
 keys,es,en
-RM_BARRELS_D,"Los rojizos revientan si les disparas. A ellos, a ti y a lo que haya cerca. Elige cuándo.","The reddish ones blow up when shot. Them, you and anything nearby. Pick your moment."
+RM_BARRELS_D,"Revientan si les disparas, y a ti con ellos. Elige el momento.","They burst when shot, and you with them. Pick your moment."
 RM_BARRELS_T,BARRILES EXPLOSIVOS,EXPLOSIVE BARRELS
 RM_CH_FAILED,Reto fallido,Challenge failed
 RM_CH_FAIL_FAST,Se acabó el tiempo. Yo ya me estaba aburriendo.,Time's up. I was already getting bored.
@@ -20,10 +20,10 @@ RM_CH_OK_T,RETO CUMPLIDO,CHALLENGE COMPLETE
 RM_CH_T,RETO DEL NARRADOR,NARRATOR'S CHALLENGE
 RM_CLOCK_BAR,La Censura cubre la sala en %d s,The Censorship covers the room in %d s
 RM_CLOCK_CENSORED,CENSURADO,CENSORED
-RM_CLOCK_D,La Censura entra por la puerta pintándolo todo de gris. Mata a todos antes de que lo cubra. Lo gris te frena y te hiere.,The Censorship comes in through the door painting everything grey. Kill everyone before it covers the room. Grey slows and hurts you.
-RM_CLOCK_FAIL,Todo gris. Sin premio de sala hasta que limpies; lo gris te hiere mientras tanto.,"Everything grey. No room reward, and the grey keeps hurting you until the room is clear."
+RM_CLOCK_D,La Censura entra pintándolo todo de gris. Mata antes de que lo cubra.,The Censorship walks in painting everything grey. Kill before it covers the room.
+RM_CLOCK_FAIL,Todo gris. Sin premio hasta que limpies; lo gris hiere mientras tanto.,All grey. No room reward until you clear it; grey hurts meanwhile.
 RM_CLOCK_FAIL_T,TE ALCANZÓ,IT CAUGHT YOU
-RM_CLOCK_OK,"La Censura retrocede, avergonzada. Premio por rapidez.","The Censorship retreats, embarrassed. Prize for speed."
+RM_CLOCK_OK,La Censura se fue con las tijeras gachas. Premio por rapidez.,The Censorship left with its scissors down. Speed bonus.
 RM_CLOCK_OK_T,A TIEMPO,JUST IN TIME
 RM_CLOCK_T,CONTRA EL RELOJ,AGAINST THE CLOCK
 RM_CUSTOMS_FIGHT,"Pelear (llegan 2 inspectores, y sus decomisos)","Fight (2 inspectors arrive, with their confiscations)"
@@ -36,21 +36,21 @@ RM_DIR_LEFT,de la izquierda,on the left
 RM_DIR_RIGHT,de la derecha,on the right
 RM_DIR_UP,de arriba,above
 RM_ESCORT_BAR,Camino %d%%  ·  Óvulo: %d de vida,Progress %d%%  ·  Egg: %d health
-RM_ESCORT_D,"Llévalo a la trompa. Camina solo si estás cerca, y se paraliza de miedo si se le acerca un bicho.","Get it to the tube. It walks only if you're near, and freezes in fear if a critter comes close."
+RM_ESCORT_D,Llévalo a la trompa. Camina si estás cerca y se congela ante los bichos.,Take it to the tube. It walks if you're close and freezes near critters.
 RM_ESCORT_FAIL,Se rompió. Sin premio de sala. Habrá que explicárselo a su madre.,It broke. No room reward. Somebody has to tell its mother.
 RM_ESCORT_FAIL_T,ÓVULO PERDIDO,EGG LOST
 RM_ESCORT_GOAL,TROMPA,TUBE
-RM_ESCORT_OK,La trompa lo recibe con los brazos abiertos. Botín extra.,The tube welcomes it with open arms. Extra loot.
+RM_ESCORT_OK,"Botín extra. Las trompas no dan propina, pero esta sí.","Extra loot. Tubes don't tip, but this one does."
 RM_ESCORT_OK_T,ÓVULO ENTREGADO,EGG DELIVERED
 RM_ESCORT_T,ESCOLTA DEL ÓVULO,ESCORT THE EGG
 RM_ESCORT_WAVE,¡REFUERZOS!,REINFORCEMENTS!
 RM_HOLD_BAR,Quedan %d s  ·  %d invitados,%d s left  ·  %d guests
-RM_HOLD_D,Aguanta 45 segundos. Llegan invitados en oleadas y nadie se va hasta que acabe la música.,Hold out for 45 seconds. Guests arrive in waves and nobody leaves until the music stops.
-RM_HOLD_OK,Los que quedan se van a casa. Dejan una botella y propina.,The remaining guests head home. They leave a bottle and a tip.
+RM_HOLD_D,Aguanta 45 segundos. Los invitados llegan en oleadas y nadie se va antes.,Hold out 45 seconds. Guests arrive in waves and nobody leaves early.
+RM_HOLD_OK,Los invitados se van a casa. Alguien dejó propina.,The guests go home. Someone left a tip.
 RM_HOLD_OK_T,SE ACABÓ LA FIESTA,PARTY'S OVER
 RM_HOLD_T,LA FIESTA,THE PARTY
 RM_MARKET_BUY,[E] Comprar con %d de vida,[E] Buy with %d health
-RM_MARKET_D,"Objetos raros que Su Pudorosidad prohibiría. Se pagan con sangre, no con monedas.","Rare items Her Modesty would ban. Paid in blood, not coins."
+RM_MARKET_D,"Objetos raros prohibidos por Su Pudorosidad. Se pagan con vida, no monedas.","Rare items banned by Her Modesty. Paid in life, not coins."
 RM_MARKET_NO_BLOOD,Te queda poca sangre,Not enough blood left
 RM_MARKET_T,MERCADO NEGRO,BLACK MARKET
 RM_MOD_ADUANERA,INSPECCIÓN ADUANERA,CUSTOMS INSPECTION
@@ -58,15 +58,15 @@ RM_MOD_ADUANERA_D,Un aduanero exige su mordida. O pelea.,A customs officer deman
 RM_MOD_APAGON,APAGÓN,BLACKOUT
 RM_MOD_APAGON_D,Solo ves lo que alumbra tu halo. Lo demás sí te ve a ti.,You only see what your halo lights. Everything else does see you.
 RM_MOD_CELO,SALA EN CELO,ROOM IN HEAT
-RM_MOD_CELO_D,Los bichos van más rápido y con las hormonas revueltas. Esto paga plus de peligrosidad.,The critters are faster and their hormones are all over the place. Hazard pay applies.
+RM_MOD_CELO_D,Bichos más veloces y con las hormonas revueltas. Paga plus por peligrosidad.,Faster critters with scrambled hormones. Pays hazard pay.
 RM_MOD_CENSURADA,SALA CENSURADA,CENSORED ROOM
-RM_MOD_CENSURADA_D,"Barras negras tapan zonas de la sala y se mueven. Lo que hay debajo, mejor no imaginarlo.",Black bars cover parts of the room and drift around. Better not to imagine what's underneath.
+RM_MOD_CENSURADA_D,"Barras negras tapan zonas y se mueven. Lo de abajo, mejor no imaginarlo.",Black bars cover areas and move. Best not to imagine what's underneath.
 RM_MOD_LUBRICADO,PISO LUBRICADO,LUBRICATED FLOOR
-RM_MOD_LUBRICADO_D,Resbalas al frenar y el dash llega más lejos. Nadie quiere saber de qué es el lubricante.,You slide when you stop and your dash goes further. Nobody wants to know what the lubricant is.
+RM_MOD_LUBRICADO_D,Frenas resbalando y el dash llega más lejos.,You slide when you stop and the dash goes farther.
 RM_PACT_1,Pacto del Recato: +30% daño. El mundo se queda gris y el narrador calla.,Pact of Modesty: +30% damage. The world turns grey and the narrator goes quiet.
 RM_PACT_2,Pacto del Escote: +35% cadencia. Te cuesta el 30% de la vida que tengas.,Pact of Cleavage: +35% fire rate. Costs you 30% of your current health.
-RM_PACT_3,Pacto de las Perlas: +20% velocidad. Pierdes la mitad de tus monedas y el escudo.,Pact of Pearls: +20% speed. You lose half your coins and your shield.
-RM_PACT_DONE_1,"+30% daño. Todo gris. El narrador, mudo (milagro).","+30% damage. Everything grey. The narrator, mute (a miracle)."
+RM_PACT_3,Pacto de las Perlas: +20% velocidad. Cuesta media bolsa y el escudo.,Pact of the Pearls: +20% speed. Costs half your purse and your shield.
+RM_PACT_DONE_1,+30% de daño. Todo gris.,+30% damage. Everything grey.
 RM_PACT_DONE_2,+35% cadencia. La Hoja se llevó su parte en sangre.,+35% fire rate. The Leaf took her cut in blood.
 RM_PACT_DONE_3,+20% velocidad. La Hoja se quedó con la mitad de tus monedas y tu escudo.,+20% speed. The Leaf kept half your coins and your shield.
 RM_PACT_DONE_T,PACTO SELLADO,PACT SEALED
@@ -95,7 +95,7 @@ RM_STEALTH_ALARM,Te vieron. La sala se pone gris y se llena de gente. La caja se
 RM_STEALTH_ALARM_T,¡ALARMA!,ALARM!
 RM_STEALTH_BAR,Sin que te vean...,Unseen...
 RM_STEALTH_BOX,[E] Abrir la caja de decomisos,[E] Open the confiscation crate
-RM_STEALTH_D,La Censura patrulla con linternas. Llega a la caja de decomisos sin que te vean. Los muros tapan la luz.,The Censorship patrols with flashlights. Reach the confiscation crate unseen. Walls block the light.
+RM_STEALTH_D,Llega a la caja de decomisos sin que te vean. Los muros tapan la luz.,Reach the confiscation box unseen. Walls block the light.
 RM_STEALTH_GRACE,Los guardias aún no miran,The guards aren't looking yet
 RM_STEALTH_OK,Ni se enteraron. Hay cofre y las puertas se abren.,They never noticed. There's a chest and the doors open.
 RM_STEALTH_OK_T,DECOMISOS RECUPERADOS,CONFISCATIONS RECOVERED
@@ -118,7 +118,7 @@ RM_TAG_STEALTH,SIGILO,STEALTH
 RM_TAG_THIEF,LADILLA LADRONA,THIEVING CRAB
 RM_TAG_THIEF2,¡AQUÍ ESTÁ LA LADRONA!,THE THIEF IS HERE!
 RM_TAG_TRAMPAS,TRAMPAS,TRAPS
-RM_THIEF_AGAIN,"La ladrona te esperaba con tus %d monedas. Si se escapa ahora, se pierden para siempre.","The thief was waiting with your %d coins. If she escapes now, they're gone for good."
+RM_THIEF_AGAIN,"La ladrona te esperaba con tus %d monedas. Si escapa ahora, se pierden.","The thief was waiting with your %d coins. If she escapes now, they're gone."
 RM_THIEF_AGAIN_T,OTRA VEZ ELLA,HER AGAIN
 RM_THIEF_APPROACH,Se acerca con buena cara...,She's coming over all friendly...
 RM_THIEF_BAR,Escapa en %d s  ·  lleva %d $,Escapes in %d s  ·  carries %d $
@@ -126,19 +126,19 @@ RM_THIEF_CAUGHT,"Recuperas tus %d monedas, con intereses.","You get your %d coin
 RM_THIEF_CAUGHT_OWN,Su bolsa es tuya. Los ladrones también pagan impuestos.,Her purse is yours. Thieves pay taxes too.
 RM_THIEF_CAUGHT_T,¡ATRAPADA!,CAUGHT!
 RM_THIEF_D,Una ladilla se te acerca con muy buena cara. Desconfía.,A crab lice is coming over with a very friendly face. Be suspicious.
-RM_THIEF_ESCAPED_DOOR,"Salió por la puerta %s. Te espera allí. Es una ladilla, es persistente.","She left through the door %s. She's waiting there. She's a louse, she's persistent."
+RM_THIEF_ESCAPED_DOOR,Salió por la puerta %s. Te espera allí.,She left through the %s door. She's waiting there.
 RM_THIEF_ESCAPED_T,SE ESCAPÓ,SHE GOT AWAY
-RM_THIEF_LOST,La ladilla se fue con tus %d monedas. Seguro que las gasta en depilación.,The louse left with your %d coins. Surely spending them on waxing.
+RM_THIEF_LOST,La ladilla huyó con tus %d monedas. Ya no volverán.,The louse fled with your %d coins. They won't be back.
 RM_THIEF_LOST_OWN,"La ladilla se fue con su bolsa. Nadie sale ganando, salvo ella.","The louse left with her purse. Nobody wins, except her."
 RM_THIEF_LOST_T,PERDIDAS,LOST
 RM_THIEF_NAME,Ladilla Ladrona,Thieving Crab Louse
-RM_THIEF_OWN,"No tienes monedas que robar, así que viene con su bolsa. Atrápala y es tuya.","You have no coins to steal, so she came with her own purse. Catch her and it's yours."
+RM_THIEF_OWN,"No tienes monedas que robar, así que trae su bolsa. Atrápala y es tuya.","You have no coins to steal, so she brings her own purse. Catch her and it's yours."
 RM_THIEF_OWN_T,TRAE SU PROPIO BOTÍN,SHE BRINGS HER OWN LOOT
 RM_THIEF_RUNS,¡Se va por la puerta!,She's heading for the door!
-RM_THIEF_STOLE,"La ladilla se llevó %d monedas. Atrápala: si escapa, se pierde con ellas.","The louse made off with %d coins. Catch her: if she escapes, she's gone with them."
+RM_THIEF_STOLE,"La ladilla se llevó %d monedas. Atrápala: si escapa, se pierden con ella.","The louse took %d coins. Catch her: if she escapes, they're gone."
 RM_THIEF_STOLE_T,¡TE ROBARON!,ROBBED!
 RM_THIEF_T,LADILLA LADRONA,THIEVING CRAB
-RM_TORCHES_D,"Una sombra en el suelo avisa dónde cae la próxima. Después, todo arde. Lleva a los bichos ahí.",A shadow on the floor shows where the next one falls. Then everything burns. Lure the critters there.
+RM_TORCHES_D,Una sombra avisa dónde cae la próxima. Después todo arde. Lleva ahí los bichos.,A shadow shows where the next one falls. Then everything burns. Lure the critters there.
 RM_TORCHES_T,ANTORCHAS QUE CAEN,FALLING TORCHES
-RM_TRAPS_D,"Pinchos, cera caliente y ventiladores, siempre con aviso. Los bichos no lo respetan: empújalos.","Spikes, hot wax and fans, always with a warning. The critters don't respect it: push them in."
+RM_TRAPS_D,"Pinchos, cera caliente y ventiladores, con aviso. Los bichos no leen: empújalos.","Spikes, hot wax and fans, with warnings. Critters can't read: push them in."
 RM_TRAPS_T,SALA TRAMPA,TRAP ROOM
