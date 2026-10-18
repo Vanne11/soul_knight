@@ -113,7 +113,7 @@ class _Fall extends Node2D:
 		if pl != null and pl.global_position.distance_to(global_position) <= 38.0:
 			RoomUtil.hurt_player(pl, 0.6 * RoomUtil.std_hit(d))
 		_flames = CPUParticles2D.new()
-		_flames.amount = 26
+		_flames.amount = Settings.fx_amount(26)
 		_flames.lifetime = 0.7
 		_flames.gravity = Vector2(0, -60)
 		_flames.initial_velocity_min = 10.0

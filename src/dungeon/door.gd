@@ -140,7 +140,7 @@ func _spawn_dust(out: Vector2, sealing: bool) -> void:
 	var p := CPUParticles2D.new()
 	p.one_shot = true
 	p.emitting = true
-	p.amount = 14 if sealing else 9
+	p.amount = Settings.fx_amount(14 if sealing else 9)
 	p.lifetime = 0.5
 	p.explosiveness = 0.9
 	p.direction = -out  # hacia dentro de la sala

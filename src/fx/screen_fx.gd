@@ -15,6 +15,8 @@ var _vignette_mat := ShaderMaterial.new()
 var _ambient_mat := ShaderMaterial.new()
 var _intox_mat := ShaderMaterial.new()
 var _intox_rect: ColorRect
+var _ambient_rect: ColorRect
+var _intox_veil: ColorRect  # mareo en calidad baja: velo de color sin leer la pantalla
 
 var _stats: PlayerStats
 var _low_health := 0.0
@@ -35,12 +37,15 @@ func _ready() -> void:
 		parent.move_child.call_deferred(self, 0)  # antes que el HUD (mismo layer)
 
 	_ambient_mat.shader = load("res://src/shaders/ambient.gdshader")
-	_add_rect(_ambient_mat)
+	_ambient_rect = _add_rect(_ambient_mat)
 	_vignette_mat.shader = load("res://src/shaders/vignette.gdshader")
 	_add_rect(_vignette_mat)
 	_intox_mat.shader = load("res://src/shaders/intox.gdshader")
 	_intox_rect = _add_rect(_intox_mat)
 	_intox_rect.visible = false
+	_intox_veil = _add_rect(null)
+	_intox_veil.color = Color(0.45, 0.9, 0.4, 0.0)
+	_intox_veil.visible = false
 
 	_stats = get_node("/root/PlayerStats")
 	_stats.health_changed.connect(_on_health)
@@ -58,7 +63,8 @@ func _add_rect(mat: ShaderMaterial) -> ColorRect:
 	var r := ColorRect.new()
 	r.set_anchors_preset(Control.PRESET_FULL_RECT)
 	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	r.material = mat
+	if mat:
+		r.material = mat
 	add_child(r)
 	return r
 
@@ -94,12 +100,23 @@ func _process(delta: float) -> void:
 	_ambient_mat.set_shader_parameter("dark", _dark)
 	_ambient_mat.set_shader_parameter("light_uv", _player_uv())
 
+	# Calidad: baja apaga el shader de polvo/rayos (pantalla completa) y el de mareo
+	var q: int = Settings.quality
+	var dust_k: float = Settings.Q_DUST_RAYS[q]
+	_ambient_rect.visible = dust_k > 0.0
+	if dust_k < 1.0:
+		_ambient_mat.set_shader_parameter("rays", _rays * dust_k)
+
 	var amount: float = _intox_pct * [1.0, 0.4, 0.0][Settings.screen_fx]
 	LightKit.intox_wobble = amount
-	_intox_rect.visible = amount > 0.01
-	if _intox_rect.visible:
+	var shader_on: bool = amount > 0.01 and Settings.Q_INTOX_SHADER[q]
+	_intox_rect.visible = shader_on
+	_intox_veil.visible = amount > 0.01 and not shader_on
+	if _intox_veil.visible:
+		_intox_veil.color.a = amount * (0.12 + 0.05 * sin(Time.get_ticks_msec() * 0.0015))
+	if shader_on:
 		_intox_mat.set_shader_parameter("amount", amount)
-		_intox_mat.set_shader_parameter("wave", 1.0 if Settings.screen_fx == 0 else 0.3)
+		_intox_mat.set_shader_parameter("wave", 1.0 if Settings.screen_fx == 0 and q == 0 else 0.3)
 
 
 func _player_uv() -> Vector2:

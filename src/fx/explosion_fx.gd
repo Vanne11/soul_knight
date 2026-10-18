@@ -12,7 +12,7 @@ var _t := 0.0
 func _ready() -> void:
 	z_index = 5
 	var p := CPUParticles2D.new()
-	p.amount = 26
+	p.amount = Settings.fx_amount(26)
 	p.lifetime = 0.45
 	p.one_shot = true
 	p.explosiveness = 1.0

@@ -238,6 +238,11 @@ func _process(delta: float) -> void:
 		_ground.queue_redraw()
 
 
+## Tope de particulas segun Ajustes > Calidad.
+func _max_parts() -> int:
+	return int(MAX_PARTS * Settings.Q_PARTICLES[Settings.quality])
+
+
 func _count() -> int:
 	return _air.ps.size() + _glow.ps.size() + _bright.ps.size()
 
@@ -247,12 +252,12 @@ func _layer_for(glow: bool) -> Layer:
 
 
 func _add_bright(q: P) -> void:
-	if _count() < MAX_PARTS:
+	if _count() < _max_parts():
 		_bright.ps.append(q)
 
 
 func _add(q: P, glow := false) -> void:
-	if _count() >= MAX_PARTS:
+	if _count() >= _max_parts():
 		return
 	_layer_for(glow).ps.append(q)
 
@@ -657,6 +662,8 @@ func _track(a: Node2D, is_player: bool, dt: float, seen: Dictionary) -> void:
 		_dust_puff(foot_pos, -move.normalized(), is_player, dashing)
 
 	# huellas de liquido
+	if not Settings.Q_FOOTPRINTS[Settings.quality]:
+		return
 	var pd := _puddle_at(foot_pos)
 	if not pd.is_empty():
 		st.wet = WET_STEPS
@@ -781,7 +788,7 @@ func _droplets(pos: Vector2, aim: Vector2) -> void:
 
 # ------------------------------------------------------------------ ambiente por reino
 func _amb_target() -> int:
-	return int(clampf(_rect.get_area() / 14000.0, 8.0, 26.0))
+	return int(clampf(_rect.get_area() / 14000.0, 8.0, 26.0) * Settings.Q_AMBIENT_FX[Settings.quality])
 
 
 func _prefill_ambient() -> void:
@@ -863,7 +870,7 @@ func _spawn_ambient(age_frac: float) -> void:
 			q.amp = 10.0
 			q.life = randf_range(6.0, 9.0)
 	q.age = age_frac * q.life * 0.8
-	if _count() < MAX_PARTS:
+	if _count() < _max_parts():
 		if glow:
 			_glow.ps.append(q)
 		elif LightKit.dark:

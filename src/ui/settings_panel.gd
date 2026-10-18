@@ -60,6 +60,8 @@ func _build() -> void:
 	fx.mouse_entered.connect(fx.grab_focus)
 	box.add_child(_row(tr("SETTINGS_FX"), fx))
 
+	box.add_child(_quality_row())
+
 	var sh := CheckButton.new()
 	sh.button_pressed = Settings.screen_shake
 	sh.toggled.connect(func(on: bool): Settings.set_screen_shake(on))
@@ -107,6 +109,17 @@ func _build_touch_rows(box: VBoxContainer) -> void:
 	tc.item_selected.connect(func(i: int): Settings.set_touch_mode(i))
 	tc.mouse_entered.connect(tc.grab_focus)
 	box.add_child(_row(tr("SETTINGS_TOUCH"), tc))
+
+## Calidad grafica (Alta / Media / Baja / Automatica). Bloque aparte para mezclar facil con otros ajustes.
+func _quality_row() -> HBoxContainer:
+	var qo := OptionButton.new()
+	qo.custom_minimum_size = Vector2(220, 40)
+	for i in 4:
+		qo.add_item(tr("QUALITY_%d" % i), i)
+	qo.select(Settings.quality_mode)
+	qo.item_selected.connect(func(i: int): Settings.set_quality_mode(i))
+	qo.mouse_entered.connect(qo.grab_focus)
+	return _row(tr("QUALITY_LABEL"), qo)
 
 
 func _row(label_text: String, control: Control) -> HBoxContainer:

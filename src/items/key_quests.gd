@@ -459,7 +459,7 @@ func _burst(at: Vector2, color: Color) -> void:
 	var p := CPUParticles2D.new()
 	p.one_shot = true
 	p.emitting = true
-	p.amount = 18
+	p.amount = Settings.fx_amount(18)
 	p.lifetime = 0.6
 	p.explosiveness = 1.0
 	p.spread = 180.0

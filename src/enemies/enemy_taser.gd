@@ -42,7 +42,7 @@ func _drop_loot() -> void:
 func _crackle() -> void:
 	var p := CPUParticles2D.new()
 	p.position = Vector2(0, -34)
-	p.amount = 18
+	p.amount = Settings.fx_amount(18)
 	p.lifetime = charge_time * 0.6
 	p.one_shot = false
 	p.emitting = true
