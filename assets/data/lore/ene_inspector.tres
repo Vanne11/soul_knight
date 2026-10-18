@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_inspector"
 title = "Inspector de Fluidos"
-text = "Un tubo de ensayo con gorra y mucho cargo. Revisa lo que llevas encima con la misma delicadeza que un trámite de aduana un viernes a las cinco. Se mantiene a distancia, levanta el sello, se queda quieto un momento y estampa tres RECHAZADOS en abanico. Ojo: el sello rebota una vez en la pared, porque a los trámites siempre se les da una segunda vuelta. Esa pausa antes de estampar es tu ventana."
+text = "Un tubo de ensayo con gorra y mucho cargo. Revisa lo que llevas con la delicadeza de un trámite de aduana un viernes a las cinco. Se mantiene a distancia, levanta el sello, se queda quieto y estampa tres RECHAZADOS en abanico; el sello rebota una vez, porque a los trámites siempre se les da una segunda vuelta. Esa pausa es tu ventana."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Inspector de Fluidos", "count": 15}
 flavor_text = "Mata 15 inspectores de fluidos."

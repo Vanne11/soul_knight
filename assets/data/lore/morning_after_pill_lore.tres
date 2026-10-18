@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "morning_after_pill_lore"
 title = "Una Segunda Oportunidad"
-text = "La Pastilla del Día Después no previene lo que crees: previene lo que viene. Cuando mueres, ella se activa, te devuelve un 40% de vida y dos segundos de invulnerabilidad para que pienses en lo que has hecho. Los efectos secundarios incluyen náuseas, arrepentimiento y una profunda reflexión sobre tus decisiones de combate. Solo cabe una a la vez. Porque la vida da segundas oportunidades. Pero terceras, ya no. Terceras no vende ni la farmacia de guardia."
+text = "La Pastilla del Día Después previene lo que viene: al morir te devuelve 40% de vida y dos segundos de invulnerabilidad para reflexionar. Solo cabe una a la vez. Dato: la anticoncepción de emergencia funciona mejor cuanto antes (hasta 5 días), no es abortiva y no protege de ITS. Terceras oportunidades no las vende ni la farmacia de turno."
 category = 2
 unlock_condition = {"type": 4, "target_id": "morning_after_pill", "count": 3}
 flavor_text = "Toma 3 pastillas del día después."

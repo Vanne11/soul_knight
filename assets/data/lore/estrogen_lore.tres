@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "estrogen_lore"
 title = "Estrógeno de Vulvania"
-text = "El tesoro de Vulvania. No te ablanda, como dicen los listillos de Penelandia: te hace constante. Disparas más rápido, tus proyectiles vuelan más lejos y los escudos se regeneran solos, como quien no se rompe nunca del todo. Para la gente de Vulvania es un día cualquiera. Para la gente de Penelandia es una alergia épica: estornudos, hinchazón y una necesidad repentina de hablar de sus sentimientos. Les sienta fatal. Les viene bien."
+text = "El tesoro de Vulvania. No te ablanda, como dicen los listos de Penelandia: te hace constante. Disparas más rápido, tus proyectiles llegan más lejos y los escudos se regeneran solos. Para Vulvania es un día cualquiera. Para Penelandia es una alergia épica: estornudos, hinchazón y ganas de hablar de sus sentimientos. Les sienta fatal. Les viene bien."
 category = 2
 unlock_condition = {"type": 1, "target_id": "relic_estrogen"}
 flavor_text = "Consigue el Estrógeno Concentrado."

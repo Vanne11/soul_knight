@@ -207,6 +207,7 @@ func take_damage(amount: float, source: Node = null, kb: Vector2 = Vector2.ZERO)
 	
 	if actual_kb != Vector2.ZERO and state != State.CHARGING:
 		velocity = actual_kb
+		PitFall.push(self, actual_kb)  # empujado hacia un foso: puede caer
 		state = State.STUNNED
 		call_deferred("_exit_stun")
 	

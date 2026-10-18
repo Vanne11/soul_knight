@@ -14,7 +14,7 @@ const TOUCH_R := 44.0
 
 
 func _say(suffix: String) -> void:
-	var key := "bossalt%d_%s" % [_floor, suffix]
+	var key := "bossalt%d_%s" % [_canon, suffix]
 	if Narrator.has_lines(key):
 		Narrator.say(key)
 

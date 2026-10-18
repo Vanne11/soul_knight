@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "viagra_lore"
 title = "Cuatro Horas Después Sigues Disparando"
-text = "La Viagra Vudú no es medicina. Es un pacto. La tomas y tu arma crece. Los proyectiles se hinchan. El daño se dispara. Te sientes dios. Un dios de la penetración balística. Pero el precio viene después. Cuatro horas. Cuatro horas de erección ininterrumpida. Tu velocidad cae. Tu precisión tambalea. El dolor es constante, sordo, en la base de todo. Intentas soltar el arma. No puedes. Tus dedos están soldados al gatillo. El juego no tiene botón de 'soltar'. Solo 'disparar'. Y disparas. Y disparas. Hasta que la run termina. Y sigues disparando en el menú principal."
+text = "La Viagra Vudú no es medicina: es un pacto. Tomas la pastilla y tu arma crece: los proyectiles se hinchan y el daño se dispara. El precio llega después: cuatro horas de erección ininterrumpida, velocidad a la baja, puntería tambaleante y un dolor sordo en la base de todo. Intentas soltar el arma y no puedes. Sigues disparando incluso en el menú."
 category = 2
 unlock_condition = {"type": 1, "target_id": "relic_viagra", "count": 1}
 flavor_text = "Equipa la Viagra Vudú."

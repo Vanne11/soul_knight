@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_gran_candado"
 title = "El Gran Candado"
-text = "Guardián de las salas secretas del Palacio. Cerrado es casi invulnerable: los golpes rebotan con un clank humillante. Solo se abre, y se deja pegar, justo después de embestir, cuando el esfuerzo le deja con el arco suelto. La censura funciona igual: parece inexpugnable mientras está cerrada, y se vuelve frágil el segundo en que se mueve. Cuando le bajan la vida a la mitad, suelta dos Jaulas para que se unan a la fiesta. Moraleja: toda cerradura tiene una llave, y casi siempre se llama paciencia."
+text = "Guardián de las salas secretas. Cerrado es casi invulnerable: los golpes rebotan con un clank humillante. Solo se abre justo después de embestir, cuando el esfuerzo le deja el arco suelto. Con la mitad de vida suelta dos Jaulas para que se unan a la fiesta. Toda cerradura tiene su llave, y casi siempre se llama paciencia."
 category = 3
 unlock_condition = {"type": 0, "target_id": "El Gran Candado", "count": 1}
 flavor_text = "Vence al Gran Candado."

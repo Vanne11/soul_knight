@@ -266,6 +266,36 @@ static func hurt_enemy(e: Node, dmg: float, from_global: Vector2, kb := 0.0) -> 
 	e.take_damage(dmg, e.get_tree().get_first_node_in_group("player"), away * kb)
 
 
+static var _hz_frame := -1
+static var _hz_cache: Array = []
+
+
+## Zonas peligrosas de las dinamicas de sala vivas (grupo "rooms_hazard"): pinchos, cera, fuego de
+## antorchas, barriles a punto de estallar, sombra de las jaulas. Cada una es
+## {c: centro global, r: radio generoso (bot), ar: radio ajustado (IA enemiga), kind: "spike" |
+##  "vent" | "puddle" | "fire" | "barrel" | "cage", active: peligrosa ahora o ya avisando,
+##  soon: segundos hasta que se active (0 si ya lo esta)}. Se calcula una vez por fisica.
+static func hazard_zones(tree: SceneTree) -> Array:
+	var f := Engine.get_physics_frames()
+	if f == _hz_frame:
+		return _hz_cache
+	_hz_frame = f
+	_hz_cache = []
+	for n in tree.get_nodes_in_group("rooms_hazard"):
+		if is_instance_valid(n) and n.has_method("hazard_zones"):
+			_hz_cache.append_array(n.hazard_zones())
+	return _hz_cache
+
+
+## Primera zona peligrosa que contiene `pos` (con `margin` extra de radio), activa o que se activara
+## en menos de `horizon` segundos. {} si no hay.
+static func hazard_at(tree: SceneTree, pos: Vector2, margin := 0.0, horizon := 0.0) -> Dictionary:
+	for z in hazard_zones(tree):
+		if (z.active or float(z.soon) <= horizon) and pos.distance_to(z.c) <= float(z.get("ar", z.r)) + margin:
+			return z
+	return {}
+
+
 ## Enemigos vivos dentro de la sala (nodos del grupo "enemy").
 static func enemies_in(room: Room) -> Array:
 	var out: Array = []

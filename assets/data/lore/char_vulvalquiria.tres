@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "char_vulvalquiria"
 title = "Vulvalquiria, Guerrera del Norte"
-text = "Vulvalquiria viene de los fiordos del norte de Vulvania, donde el invierno dura nueve meses y la paciencia, cinco minutos. Lleva casco alado, trenzas y un historial de cero batallas perdidas, si no cuentas las que abandonó porque eran aburridas. Esquiva como nadie: su dash cuesta la mitad, lo que en la práctica significa que se escapa de los problemas el doble de rápido que tú. Es alérgica a la testosterona: en Penelandia estornuda, se hincha y le entran unas ganas tremendas de discutir de fútbol con desconocidos. Cuando la Hoja de Parra censuró su sala de trofeos, Vulvalquiria afiló el hacha, se rehízo las trenzas y salió por la puerta sin despedirse. La Hoja todavía no lo sabe, pero ya está en apuros."
+text = "Viene de los fiordos de Vulvania, donde el invierno dura nueve meses y la paciencia, cinco minutos. Cero batallas perdidas, sin contar las que abandonó por aburridas. Hace doble dash, planea con las alas y grita. En Penelandia, alérgica a la testosterona, estornuda y quiere discutir de fútbol. La Hoja le tapó la sala de trofeos."
 category = 1
 unlock_condition = {"type": 10, "target_id": "play_vulvalquiria"}
 flavor_text = "Juega una run con Vulvalquiria."

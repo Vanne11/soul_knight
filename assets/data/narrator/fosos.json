@@ -1,0 +1,8 @@
+{
+  "_info": "Fosos y charcos pegajosos (bloque M1). pit_fall la dice el narrador al caer en un foso, solo a veces y fuera de combate.",
+  "pit_fall": [
+    "Hay un hueco en el suelo. Lo has visto, ¿verdad? Claro que sí.",
+    "Caer es gratis. Lo de levantarse, ya te lo cobro yo.",
+    "El foso te mandó saludos. Y un moretón."
+  ]
+}

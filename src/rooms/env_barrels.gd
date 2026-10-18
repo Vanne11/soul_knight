@@ -15,7 +15,19 @@ const KINGDOM_DIR := "res://assets/sprites/environment/obstacles/%s/barrel.png"
 var barrels: Array[Node] = []
 
 
+## Solo cuentan los barriles con la mecha encendida: el radio de la explosion es zona de peligro
+## (grupo "rooms_hazard"). Un barril apagado no hace nada, los enemigos no lo rompen.
+func hazard_zones() -> Array:
+	var out: Array = []
+	for b in barrels:
+		if is_instance_valid(b) and b.lit:
+			out.append({"c": b.global_position, "r": RADIUS + 16.0, "ar": RADIUS + 10.0,
+					"kind": "barrel", "active": true, "soon": 0.0})
+	return out
+
+
 func start() -> void:
+	add_to_group("rooms_hazard")
 	var s := rsize()
 	var n := 3 + (1 if depth() >= 3.0 else 0)
 	var taken: Array = []

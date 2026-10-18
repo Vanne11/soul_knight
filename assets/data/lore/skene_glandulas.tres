@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "skene_glandulas"
+title = "Las Glándulas de Skene"
+text = "Vulvania no sabía que tenía próstata, y la tenía: las glándulas de Skene, junto a la uretra, se consideran el equivalente femenino de la próstata, y por eso se las llama «próstata femenina». Producen un poquito de líquido que lubrica la zona. Son pequeñas, discretas y jamás salieron en las noticias. Hasta hoy."
+category = 0
+unlock_condition = {"type": 10, "target_id": "prostata_skene"}
+flavor_text = "Cruza la Próstata con Vulvalquiria."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_psa_sospechoso"
+title = "PSA Sospechoso"
+text = "Una cifra flotante que sube; si la dejas subir, se pone roja. Persigue sin dar la cara y asusta más de lo que corresponde. Dato: el PSA es un análisis de sangre que se conversa con el médico desde los 50 años (45 con antecedentes familiares). Un PSA alto no es sentencia: a veces es solo una próstata inflamada."
+category = 3
+unlock_condition = {"type": 0, "target_id": "PSA Sospechoso", "count": 10}
+flavor_text = "Mata 10 PSA Sospechosos."

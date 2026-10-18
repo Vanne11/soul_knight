@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = "boss_alt_4"
-title = "Próstata Burócrata"
-text = "Del tamaño de una nuez y con ventanilla propia. Reparte fichas, cierra cubículos por almuerzo, llena la sala de gente que hace cola y te lanza papeles en espiral. Siempre falta un papel. Siempre. Dato real: la próstata es una glándula del tamaño de una nuez que rodea la uretra y produce parte del líquido seminal; con los años suele agrandarse y los chequeos a partir de los 45-50 años detectan a tiempo lo que da problemas. No es vergüenza: es mantenimiento. Su único mensaje de verdad es ese, aunque tarde tres semanas en decirlo."
+title = "La Ventanilla Única"
+text = "Una ventanilla con piernas y ningún interés en atenderte. Reparte fichas, cierra cubículos por almuerzo, llena la sala de gente en cola y te lanza papeles en espiral. Siempre falta un papel. Hace poco se llamaba otra cosa, pero la próstata se mudó a la región de al lado, con sus datos y todo, y ella se quedó con el escritorio."
 category = 3
 unlock_condition = {"type": 9, "target_id": "LA PRÓSTATA BUROCRÁTICA"}
-flavor_text = "Derrota a la Próstata Burócrata."
+flavor_text = "Derrota a la Ventanilla Única."

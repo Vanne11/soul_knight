@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_correa"
 title = "La Correa"
-text = "Te engancha desde lejos y te arrastra hacia su dueño, que te espera con una embestida. El dash te suelta, y por eso es el que más rápido aprende un jugador. Dentro de su caricatura hay un asunto serio: el juego de roles con correa y collar solo es un juego cuando todas las partes lo acordaron, y nadie lo es cuando una de ellas no puede decir que no. La Correa es una lección de consentimiento disfrazada de enemigo: quien tira sin permiso, pierde el permiso de seguir tirando."
+text = "Te engancha desde lejos y te arrastra hacia su dueño, que espera con una embestida. El dash te suelta. Detrás de la caricatura hay un asunto serio: el juego con correa y collar solo es juego si todas las partes lo acordaron. Quien tira sin permiso pierde el permiso de seguir tirando."
 category = 3
 unlock_condition = {"type": 0, "target_id": "La Correa", "count": 6}
 flavor_text = "Vence a 6 Correas (el dash es tu amigo)."

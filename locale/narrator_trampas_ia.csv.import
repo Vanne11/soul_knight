@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://qiswhy88twyf"
+
+[deps]
+
+files=["res://locale/narrator_trampas_ia.es.translation", "res://locale/narrator_trampas_ia.en.translation"]
+
+source_file="res://locale/narrator_trampas_ia.csv"
+dest_files=["res://locale/narrator_trampas_ia.es.translation", "res://locale/narrator_trampas_ia.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

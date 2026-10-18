@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "char_ornitorrinco"
 title = "El Ornitorrinco, No Especifica"
-text = "Pico de pato. Cola de castor. Pone huevos. Es mamífero. Tiene espolones venenosos. Cuando los primeros naturalistas vieron uno, pensaron que era una broma hecha con trozos de otros animales. La naturaleza tuvo un mal día y el Ornitorrinco lo tuvo peor: le tocó salvar el mundo. No pertenece a Penelandia ni a Vulvania, así que ningún reino lo considera de casa y ninguna hormona le hace nada. Se bebe la testosterona y el estrógeno como quien se bebe un zumo. La Hoja de Parra intentó censurarlo y no supo qué tapar. Desde entonces el Ornitorrinco es oficialmente un problema administrativo. Y le encanta."
+text = "Pico de pato, cola de castor, pone huevos, es mamífero y tiene espolón venenoso. Los primeros naturalistas creyeron que era una broma armada con piezas de otros animales. No pertenece a ningún reino, así que ninguna hormona le hace nada. Habla poco y se pregunta si es un personaje o un error del código. Su sonido: «Ñic.» La Hoja no supo qué tapar."
 category = 1
 unlock_condition = {"type": 10, "target_id": "play_ornitorrinco"}
 flavor_text = "Juega una run con el Ornitorrinco."

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "golden_pistol_lore"
 title = "Oro de Tontos, Plomo de Héroes"
-text = "La pistola dorada no falla. Nunca. Cada bala encuentra su marca. El problema no es la puntería. El problema eres tú. El oro no miente. El oro no perdona. El oro solo amplifica lo que ya eres: un asesino con puntería de cirujano y alma de carnicero. Brillante. Vacío. Perfecto. 15 de daño base. Precisión absoluta. 0.35s entre disparos. Es el arma de alguien que no falla. Alguien que no existe. La compras. La equipas. Fallas el primer tiro. El oro se ríe de ti. 'Tú eras el problema', susurra. 'Siempre fuiste tú.'"
+text = "La pistola dorada no falla: cada bala encuentra su marca. 15 de daño, 0,35 s entre disparos. El problema no es la puntería. El problema eres tú. El oro no miente ni perdona, solo amplifica lo que ya eres: un asesino con puntería de cirujano. La compras, la equipas y fallas el primer tiro. El oro se ríe: siempre fuiste tú."
 category = 2
 unlock_condition = {"type": 1, "target_id": "pistol_golden", "count": 1}
 flavor_text = "Equipa la Pistola Dorada."

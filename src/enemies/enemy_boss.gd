@@ -57,6 +57,9 @@ var _timer: float = 0.0
 var _gen := 0  # sube al cancelar: las corrutinas de ataque viejas se rinden
 var _last_attack: StringName = &""
 var _floor: int = 1
+## Reino del jefe en el orden fijo (1 Selva .. 5 Palacio), igual para todos los heroes: elige
+## sus frases (boss<n>_*). _floor es la posicion en la ruta y escala la dificultad.
+var _canon: int = 1
 var _hit_done := false
 var _charge_dir: Vector2 = Vector2.ZERO
 var _arena: Rect2 = Rect2()
@@ -87,6 +90,7 @@ func _ready() -> void:
 	add_to_group("enemy")
 	add_to_group("boss")
 	_floor = RunManager.region_index(get_node("/root/RunManager").current_floor) + 1  # reino 1..5 (el jefe es de la 2a etapa)
+	_canon = RunManager.canon_region_index(get_node("/root/RunManager").current_floor) + 1
 	hurtbox.area_entered.connect(_on_hurtbox_entered)
 	hitbox.add_to_group("enemy_attack")
 	hitbox.monitorable = false
@@ -882,7 +886,7 @@ func _emit_health() -> void:
 
 
 func _say(suffix: String) -> void:
-	var key := "boss%d_%s" % [_floor, suffix]
+	var key := "boss%d_%s" % [_canon, suffix]
 	if Narrator.has_lines(key):
 		Narrator.say(key)
 

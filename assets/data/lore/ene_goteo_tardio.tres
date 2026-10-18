@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_goteo_tardio"
+title = "Goteo Tardío"
+text = "Dispara de a poco y tarda un mundo en empezar: se queda quieto, se concentra y suelta un hilito de proyectiles que ya no llega como antes. Dato: chorro débil, goteo al final, ganas urgentes o dificultad para empezar son síntomas urinarios comunes con los años. Se consultan: tienen tratamiento."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Goteo Tardío", "count": 10}
+flavor_text = "Mata 10 Goteos Tardíos."

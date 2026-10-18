@@ -36,6 +36,7 @@ const LIQUID := {
 	"water": Color(0.62, 0.82, 1.0), "mud": Color(0.42, 0.28, 0.16), "baba": Color(1.0, 0.82, 0.92),
 	"dudoso": Color(0.82, 0.88, 0.3), "tinta": Color(0.16, 0.08, 0.26), "aceite": Color(0.2, 0.15, 0.1),
 	"whiskey": Color(0.86, 0.52, 0.14),
+	"resina": Color(0.78, 0.5, 0.12), "mermelada": Color(0.72, 0.1, 0.3), "cola": Color(0.92, 0.86, 0.66),
 }
 const PINKS := [Color(1.0, 0.45, 0.7), Color(0.95, 0.3, 0.55), Color(1.0, 0.78, 0.88)]
 const GLITTER := [Color(1.0, 0.48, 0.75), Color(1.0, 0.85, 0.3), Color(0.45, 0.9, 1.0),

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "boss_4"
 title = "El Aduanero Hormonal"
-text = "El único habitante permanente del Perineo. Lleva gorra de plato, una carpeta llena de formularios y un sello gigante que estampa sobre cualquier cosa que se mueva. Su vida es la frontera: quién pasa, quién no, con qué papeles y por qué ventanilla. Pide pasaporte hormonal, certificado de alergias y el formulario 27-B por triplicado. En su última fase cierra la frontera a penes, vulvas y ornitorrincos por igual. Cuando por fin cae, aprueba tu paso con reparos. Y por primera vez en la historia, los dos reinos pueden cruzar sin papeles. El caos. La libertad. Lo mismo, en realidad."
+text = "Gorra de plato, carpeta de formularios y un sello gigante que estampa sobre todo lo que se mueve. Su vida es la frontera: quién pasa, con qué papeles y por qué ventanilla. Pide pasaporte hormonal y el 27-B por triplicado. Clasificar a la gente en casillas siempre deja a alguien afuera. Al caer, el paso queda libre."
 category = 3
 unlock_condition = {"type": 9, "target_id": "EL ADUANERO HORMONAL"}
 flavor_text = "Derrota al guardián del Perineo."

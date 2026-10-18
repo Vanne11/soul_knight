@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_shibari"
 title = "Shibari"
-text = "Un maestro de las cuerdas que te corta la huida con redes: tramos de cuerda delante de ti, justo donde ibas a correr. Tus disparos las rompen y se sueltan solas a los ocho segundos. El shibari (o kinbaku) es un arte japonés de atar con cuerda que algunas personas practican por estética y por confianza; quien lo hace en serio aprende anatomía, estudia nudos que no cortan la circulación y siempre tiene una tijera de emergencia a mano. Este Shibari solo sabe de la parte de las cuerdas."
+text = "Un maestro de las cuerdas que te corta la huida con redes: tramos de cuerda justo donde ibas a correr. Tus disparos las rompen. El shibari es un arte japonés de atar con cuerda; quien lo practica en serio estudia nudos que no cortan la circulación y tiene tijeras de emergencia a mano. Este solo sabe la parte de las cuerdas."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Shibari", "count": 6}
 flavor_text = "Vence a 6 Shibaris."

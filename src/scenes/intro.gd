@@ -342,7 +342,7 @@ func _show_select() -> void:
 func choose(id: String) -> void:
 	var rm = get_node("/root/RunManager")
 	rm.character = id
-	Narrator.say("select_" + id)
+	Narrator.say("chosen_" + id)  # (select_<heroe> es de cuarta_pared.json)
 	if rm.daily_requested:
 		rm.start_daily_run()  # partida del dia: semilla de la fecha (ver RunManager.daily_seed)
 	else:
