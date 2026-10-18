@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_herpes"
 title = "Herpes Recurrente"
-text = "La das por muerta y a los seis segundos vuelve, con la misma cara de «¿me extrañaste?». Si no pisas su ampolla, rebrota con media vida (una sola vez, tiene sus modales). El herpes real funciona parecido: queda latente y reaparece con el estrés o el cansancio. No se cura del todo, pero se controla muy bien con tratamiento, y el preservativo baja el riesgo de contagio. Sin pánico: con información."
+text = "La das por muerta y a los seis segundos vuelve, con cara de «¿me extrañaste?». Si no pisas su ampolla, rebrota con media vida (una sola vez, tiene modales). El herpes real queda latente y reaparece con estrés o cansancio. No se cura del todo, pero se controla muy bien con tratamiento, y el condón baja el riesgo de contagio."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Herpes Recurrente", "count": 10}
 flavor_text = "Mata 10 herpes recurrentes."

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_sonda"
 title = "Sonda Uretral"
-text = "Fina, rápida y con muy mala fama en Penelandia. Se para, apunta una línea roja y sale disparada en línea recta, como lanza. Si falla, queda clavada y agotada. Es la peor pesadilla del Conducto Deferente, y el humor es que ella lo sabe. Dato real, sin drama: la sonda (o catéter) uretral es una herramienta médica que se usa para drenar la vejiga cuando hace falta, siempre por profesionales, con material estéril y lubricante; se tolera mucho mejor de lo que cuenta la fama. Si te toca una, no es un castigo: es que algo necesitaba salir."
+text = "Fina, rápida y con mala fama en Penelandia: se para, apunta una línea roja y sale disparada como lanza. Si falla, queda clavada y agotada. Dato: la sonda uretral es una herramienta médica que drena la vejiga cuando hace falta, siempre por profesionales, con material estéril y lubricante, y se tolera mejor de lo que cuenta la fama."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Sonda Uretral", "count": 8}
 flavor_text = "Vence a 8 Sondas Uretrales."

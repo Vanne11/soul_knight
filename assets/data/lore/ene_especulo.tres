@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_especulo"
 title = "Espéculo Mordedor"
-text = "Instrumental clínico que se escapó de la consulta y nunca volvió. Frío al tacto, siempre lo ha sido, y nadie le pidió permiso a nadie para meterse donde se mete. Avisa abriendo el pico de pato con un chirrido de bisagra y luego cierra de golpe. Si te muerde, que te muerde, al menos ya sabes lo que se siente. Le cuesta abrir y le cuesta cerrar: esa es tu ventana."
+text = "Instrumental clínico que se escapó de la consulta y nunca volvió. Frío, siempre lo fue. Avisa abriendo el pico de pato con un chirrido de bisagra y cierra de golpe. Le cuesta abrir y le cuesta cerrar: esa es tu ventana. Dato: en el papanicolau se usa unos minutos; si algo duele, se avisa y se detiene."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Espéculo Mordedor", "count": 15}
 flavor_text = "Mata 15 espéculos mordedores."

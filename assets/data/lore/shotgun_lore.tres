@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "shotgun_lore"
 title = "Para Cuando Necesitas Abrir Piernas... y Cráneos"
-text = "La Escopeta Pélvica no apunta. Escupe. 6 perdigones en forma de... ya sabes. Daño 25 cada uno. En punto blanco, 150 de daño. A 3 metros, 30. El spread es obsceno. 0.3 radianes. Casi 17 grados. No es un arma de precisión. Es un arma de 'que dios te pille confesado'. La usas en corredores. En habitaciones pequeñas. Contra bosses a quemarropa. El retroceso te empuja hacia atrás. Como la vida. Disparas y te alejas de lo que quieres alcanzar. Pero a veces... a veces todos los perdigones aciertan. Y todo se calla. Por un momento. Luego recargas. 1.2 segundos. La eternidad."
+text = "La Escopeta Pélvica no apunta: escupe. Seis perdigones con una forma que ya te imaginas, 25 de daño cada uno; a quemarropa, 150. Casi 17 grados de dispersión, obscena. Es un arma de «que Dios te pille confesado»: pasillos, cuartos chicos, jefes a bocajarro. El retroceso te empuja hacia atrás, como la vida. Recargar tarda 1,2 segundos. La eternidad."
 category = 2
 unlock_condition = {"type": 1, "target_id": "shotgun_pelvic", "count": 1}
 flavor_text = "Equipa la Escopeta Pélvica."

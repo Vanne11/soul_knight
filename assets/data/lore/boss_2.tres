@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "boss_2"
 title = "El Testículo Primordial"
-text = "El patriarca de Penelandia. Un testículo del tamaño de un coche, con un ojo en el centro que te mira con una decepción de siglos. No ataca con rabia, ataca con expectativas incumplidas. Dispara en abanico, embiste hasta chocar contra la pared (y ahí se queda atontado, recibiendo el doble de daño) y, cuando las cosas se ponen feas, invoca a sus espermatozoides. Al morir susurra: 'Fui yo quien te creó... y fui yo quien te abandonó.' Freud tendría para tres libros. Tú solo tienes un cofre."
+text = "Patriarca de Penelandia: un testículo del tamaño de un coche, con un ojo al centro y una decepción de siglos. Ataca con expectativas incumplidas y refuerzos de espermatozoides. Dato: una vez al mes, tras la ducha, toca y mira si hay bultos o cambios. Si encuentras algo, al médico sin miedo: detectado a tiempo, casi siempre se cura."
 category = 3
 unlock_condition = {"type": 9, "target_id": "TESTÍCULO PRIMORDIAL"}
 flavor_text = "Derrota al patriarca de Penelandia."

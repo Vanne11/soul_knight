@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "steroid_lore"
 title = "Roid Rage: La Rabia que Te Hace Fuerte"
-text = "La inyectas. Duele. Quema. Tu piel se pone roja. Te crece vello en la lengua. Tu vida se duplica. Tu estamina se dispara. Regeneras solo con existir. Te sientes dios. Un dios de músculo y rabia. Pero luego vienen los efectos secundarios. Te mueves lento. Fallas tiros que un niño acertaría. La precisión se va a la mierda. Pero da igual. Cuando aciertas, todo muere. El daño es obsceno. La vida es un buffer infinito. Eres un tanque. Un tanque que no piensa. Solo avanza. Y aplasta. Y gana. Hasta que te encuentras con algo que no se aplasta. Algo que requiere sutileza. Y no la tienes. Porque la cambiaste por músculo. Y mueres. Como siempre. Pero moriste fuerte. Eso cuenta. ¿Verdad?"
+text = "La inyectas: duele, quema, la piel se pone roja y te crece vello en la lengua. Tu vida se duplica, regeneras solo por existir y te sientes un dios de músculo y rabia. Pero te mueves lento y fallas tiros que acertaría un niño. Cuando aciertas, todo muere. Eres un tanque que no piensa. Mueres como siempre, pero moriste fuerte."
 category = 2
 unlock_condition = {"type": 1, "target_id": "relic_steroid", "count": 1}
 flavor_text = "Equipa Esteroides Anabólicos."

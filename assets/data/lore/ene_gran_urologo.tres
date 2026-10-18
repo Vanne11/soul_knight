@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_gran_urologo"
 title = "El Gran Urólogo"
-text = "Una mano entera, con todos sus dedos, y todos con ganas de colaborar. Como el Dedo, solo te hace daño por la espalda; la diferencia es que cuando se pone nervioso suelta Dedos que te rodean entre todos. Es un minijefe con un mensaje: si tienes más de 50 años (o más de 45 con antecedentes familiares), hablar de la próstata con tu médico no es de valientes ni de cobardes, es de gente que quiere ver crecer a sus nietos. La consulta es corta. El guante, desechable."
+text = "Una mano entera, con todos sus dedos y todos con ganas de colaborar. Como el Dedo, solo daña por la espalda; cuando se pone nervioso suelta Dedos que te rodean. Minijefe con mensaje: desde los 50 años (45 con antecedentes), la próstata se conversa con el médico. La consulta es corta. El guante, desechable."
 category = 3
 unlock_condition = {"type": 0, "target_id": "El Gran Urólogo", "count": 1}
 flavor_text = "Vence al Gran Urólogo."

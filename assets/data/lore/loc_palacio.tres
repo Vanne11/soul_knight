@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "loc_palacio"
 title = "El Palacio de la Censura"
-text = "Un palacio enorme, gris y perfectamente ordenado, donde todo está pixelado. Los cuadros tienen barras negras, las estatuas llevan albornoz y hasta las columnas están tapadas con una funda de ganchillo. Los guardias son píxeles de censura flotantes, barras negras con patas y sellos que estampan 'CENSURADO' en todo lo que tocan. En la sala del trono, sentada en un sillón de mimbre, te espera Su Pudorosidad, la Hoja de Parra. Lleva siglos tapando cosas y no piensa parar ahora. Huele a moralina, a cola de pegar y a tila. Si la derribas, todo quedará al descubierto. Para bien y para mal."
+text = "Enorme, gris y ordenadísimo, y todo pixelado. Los cuadros llevan barras negras, las estatuas albornoz y las columnas una funda de ganchillo. Lo guardan píxeles, barras con patas y sellos que estampan CENSURADO. Huele a moralina y a tila. En el trono, quien manda lleva siglos tapando cosas. Si cae, todo queda al descubierto. Para bien y para mal."
 category = 4
 unlock_condition = {"type": 2, "region": "palacio"}
 flavor_text = "Llega al Palacio de la Censura."

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "sinergias_lore"
 title = "Sinergias: Cuando Todo Encaja"
-text = "A veces un arma y una bendición se miran, se entienden y deciden que juntas rinden más. No es magia: es química. La Escopeta Pélvica con Calibre Grueso se pone ancha de hombros, la Chancleta Voladora con Orgullo Herido se acuerda de mamá, y el Bumerán de Silicona siempre vuelve con ganas de más. El juego te avisa una sola vez, con nombre y apellido, para que sientas que fue idea tuya. Si la combinación se rompe, el efecto se apaga sin dramas; si la recuperas, vuelve sin cobrarte otra ovación. Consejo del narrador: no se puede mezclar todo, pero se puede intentar. Casi siempre sale bien. Casi."
+text = "A veces un arma y una bendición se miran, se entienden y rinden más juntas. La Escopeta Pélvica con Calibre Grueso se pone ancha de hombros, la Chancleta Voladora con Orgullo Herido se acuerda de mamá y el Bumerán de Silicona vuelve con ganas de más. El juego avisa una sola vez, con nombre y apellido. Si se rompe la combinación, el efecto se apaga."
 category = 5
 unlock_condition = {"type": 10, "target_id": "sinergia", "count": 1}
 flavor_text = "Activa tu primera sinergia."

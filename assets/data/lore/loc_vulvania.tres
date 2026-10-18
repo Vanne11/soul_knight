@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "loc_vulvania"
 title = "Vulvania"
-text = "Vulvania es elegante, ordenada y funciona con un calendario que nadie de fuera entiende. Sus jardines florecen por ciclos, sus palacios tienen pétalos en las cornisas y sus habitantes tienen muy poca paciencia con los turistas que preguntan cosas evidentes. Desde la censura, los óvulos ruedan por los pasillos sin rumbo, los calambres saltan de rincón en rincón y las trompas escupen a cualquiera que no haya pedido cita. Su Majestad Ovaria II gobierna desde un trono de terciopelo y no recibe a nadie sin estrógeno en el cuerpo. Si eres de Penelandia, prepárate para estornudar y para hablar de tus sentimientos. Las dos cosas a la vez."
+text = "Elegante, ordenada y regida por un calendario que nadie de fuera entiende. Los jardines florecen por ciclos y a nadie le sobra paciencia con quien pregunta lo evidente. Desde la Gran Censura, los óvulos ruedan sin rumbo y las trompas escupen a quien no pidió cita. Se entra con estrógeno. Si vienes de Penelandia: estornudos y sentimientos, a la vez."
 category = 4
 unlock_condition = {"type": 2, "region": "vulvania"}
 flavor_text = "Llega a Vulvania."
