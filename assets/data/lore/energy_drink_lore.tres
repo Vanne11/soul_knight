@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "energy_drink_lore"
 title = "Te Da Alas... y Taquicardia"
-text = "Monster Energy (Marcablanca). Alas de cartón. +40 estamina. +15% velocidad 10s. +10 intoxicación (el azúcar es droga). Lo bebes. El corazón late en la garganta. Las manos tiemblan. Ves el código del juego. Ves la matriz. Eres rápido. Demasiado rápido. El mundo va lento. Tú vas rápido. Chocas contra paredes. Fallas dashs. Disparas a la nada. Las alas son de cartón. Se mojan. Se rompen. Caes. El azúcar baja. El crash sube. Taquicardia. Ansiedad. Arrepentimiento. 'Te da alas', dice la lata. No dice que las alas son de papel. Y el suelo es duro."
+text = "Monster Energy (Marcablanca): alas de cartón. +40 estamina, +15% velocidad 10 s, +10 intoxicación (el azúcar es droga). El corazón te late en la garganta y ves el código del juego. Vas tan rápido que chocas con las paredes. Las alas son de cartón: se mojan, se rompen y caes. La lata dice que te da alas. No dice que el suelo es duro."
 category = 2
 unlock_condition = {"type": 4, "target_id": "energy_drink", "count": 10}
 flavor_text = "Bebe 10 Monster Energy."

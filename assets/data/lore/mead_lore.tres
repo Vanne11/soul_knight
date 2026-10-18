@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "mead_lore"
 title = "La Hidromiel que No Olvida"
-text = "Bebes y recuerdas. No tus victorias. Tus fracasos. Cada run fallida. Cada vez que moriste en el piso 1. Cada vez que vendiste tu mejor item por 5 monedas. La hidromiel no te da fuerza. Te da memoria. Y la memoria duele más que cualquier enemigo. Pero duele bien. Duele como debe doler. +40 intoxicación. -10% precisión. +30% daño. +15% velocidad. Odín bebió esto. Odín también se cayó de su caballo. Tú no eres Odín. Eres un jugador en ropa interior a las 3AM. Pero por un momento... por un momento sientes el Valhalla. Luego vomitas. Y la hidromiel sabe mejor de vuelta que de ida."
+text = "Bebes y recuerdas. No tus victorias: tus fracasos. Cada run fallida, cada item vendido por 5 monedas. +40 intoxicación, -10% precisión, +30% daño, +15% velocidad. Odín bebía esto, y también se cayó de su caballo. Tú eres un jugador en ropa interior a las 3 a. m. Por un momento sientes el Valhalla. Luego vomitas. Y sabe mejor de vuelta que de ida."
 category = 2
 unlock_condition = {"type": 4, "target_id": "mead", "count": 5}
 flavor_text = "Bebe 5 hidromieles."

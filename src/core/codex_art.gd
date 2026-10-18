@@ -46,6 +46,15 @@ const CODEX_ART := {
 	"drunk_secret": "res://assets/sprites/items/whiskey.png",
 	"intoxication_mechanic": "res://assets/sprites/items/absinthe.png",
 	"boss_phases": "res://assets/sprites/intro/slide_03.png",
+	# H2b: entradas nuevas con lamina provisional (parecida) hasta tener arte propio
+	"loc_utero": "res://assets/sprites/intro/slide_00.png",
+	"loc_prostata": "res://assets/sprites/intro/slide_01.png",
+	"skene_glandulas": "res://assets/sprites/intro/slide_00.png",
+	"boss_regla": "res://assets/sprites/enemies/reina_ovaria_idle_00.png",
+	"boss_glandula": "res://assets/sprites/enemies/prostata_idle_00.png",
+	"ene_goteo_tardio": "res://assets/sprites/enemies/gonorrea_idle_00.png",
+	"ene_madrugador_nocturno": "res://assets/sprites/enemies/pelusa_perineal_idle_00.png",
+	"ene_psa_sospechoso": "res://assets/sprites/enemies/inspector_fluidos_idle_00.png",
 }
 
 ## Nombre visible del enemigo -> variante de sprite (rosters y jefes de cada piso).

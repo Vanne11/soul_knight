@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "menstrual_cup_lore"
 title = "Ecología Íntima"
-text = "La Copa Menstrual Reforzada es reutilizable, ecológica y, en este reino, también a prueba de golpes. Absorbe el siguiente impacto sin inmutarse, que es más de lo que puede decir tu armadura. En Vulvania la fabrican con silicona médica y orgullo; en Penelandia la consideran 'un accesorio femenino' hasta que se la prueban y descubren que funciona. Entonces piden dos. La sabiduría ancestral dice: lo útil no tiene género, solo talla."
+text = "La Copa Menstrual Reforzada es reutilizable, ecológica y, aquí, a prueba de golpes: absorbe el siguiente impacto sin inmutarse, más de lo que puede decir tu armadura. En Vulvania la fabrican con silicona médica y orgullo; en Penelandia la creen «un accesorio femenino» hasta que la prueban. Entonces piden dos. Lo útil no tiene género, solo talla."
 category = 2
 unlock_condition = {"type": 4, "target_id": "menstrual_cup", "count": 5}
 flavor_text = "Usa 5 copas menstruales."

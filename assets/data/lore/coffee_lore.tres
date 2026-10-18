@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "coffee_lore"
 title = "El Café: La Mentira Matutina"
-text = "El Café de Emergencia no despierta. Solo pospone el sueño. -40 intoxicación. +20 estamina. Sabe a tierra quemada y arrepentimiento matutino. Lo bebes temblando. Las manos sudan. El estómago ruge. Por un momento eres funcional. Productivo. Un miembro de la sociedad. Luego pasa. La cafeína se va. La realidad vuelve. Más cruda. Más brillante. Más dolorosa. El café no arregla la resaca. Solo te deja verla con más claridad. Y duele más. Pero oye, +20 estamina. Vale la pena. Siempre vale la pena. Hasta que no."
+text = "El Café de Emergencia no despierta: pospone el sueño. -40 intoxicación, +20 estamina. Sabe a tierra quemada y arrepentimiento. Lo bebes temblando y por un momento eres un miembro funcional de la sociedad. Luego pasa la cafeína y vuelve la realidad, más cruda y más brillante. El café no arregla la resaca: te deja verla con claridad."
 category = 2
 unlock_condition = {"type": 4, "target_id": "coffee", "count": 10}
 flavor_text = "Bebe 10 cafés de emergencia."
