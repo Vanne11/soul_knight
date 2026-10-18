@@ -2,6 +2,12 @@ class_name CodexArt
 
 ## Imagen de cada entrada del codice (menu y aviso de desbloqueo).
 
+## Lamina ilustrada (IA, tools/gen_codex_art.py) de la entrada, o null si no tiene:
+## entonces el detalle sigue usando image() (sprite del juego). Se guarda por id de entrada.
+static func illustration(e) -> Texture2D:
+	var path := "res://assets/sprites/codex/%s.png" % e.id
+	return load(path) if ResourceLoader.exists(path) else null
+
 ## Imagen de una entrada del codice, deducida de lo que la desbloquea.
 static func image(e) -> Texture2D:
 	if e.sprite:

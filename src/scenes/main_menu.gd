@@ -294,13 +294,20 @@ func _open_codex() -> void:
 		list.set_item_disabled(list.item_count - 1, not e.unlocked)
 	list.item_selected.connect(func(i):
 		var e = entries[i]
-		var img: Texture2D = CodexArt.image(e)
+		var art: Texture2D = CodexArt.illustration(e)  # lamina ilustrada; si no hay, el sprite de siempre
+		var img: Texture2D = art if art else CodexArt.image(e)
 		frame.visible = img != null
 		if img:
-			# escala entera (pixel art nitido): lo mas grande que quepa en ~560x250
-			var k := maxi(1, mini(int(560.0 / img.get_width()), int(250.0 / img.get_height())))
 			pic.texture = img
-			pic.custom_minimum_size = Vector2(img.get_width(), img.get_height()) * k
+			if art:
+				# ilustracion (no es pixel art): escala suave a un cuadrado de 280
+				pic.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+				pic.custom_minimum_size = Vector2(280, 280)
+			else:
+				# escala entera (pixel art nitido): lo mas grande que quepa en ~560x250
+				var k := maxi(1, mini(int(560.0 / img.get_width()), int(250.0 / img.get_height())))
+				pic.texture_filter = CanvasItem.TEXTURE_FILTER_PARENT_NODE
+				pic.custom_minimum_size = Vector2(img.get_width(), img.get_height()) * k
 		text.text = "[b]%s[/b]\n\n%s\n\n[i]%s[/i]" % [Loc.lore_title(e), Loc.lore_text(e), Loc.lore_flavor(e)] + _edu_source(e.id))
 
 
