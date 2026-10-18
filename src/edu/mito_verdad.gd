@@ -31,11 +31,11 @@ static func build(main: Node, room: Room) -> void:
 		for p in props:
 			if is_instance_valid(p):
 				p.finish()
-	props.append(_prop(main, room, c + Vector2(125, -40), _plaque_visual(),
+	props.append(_prop(main, room, c + Vector2(125, -40), Consultorio._sprite_visual(room, "placa", 50, false, 20.0, true),
 		func(): return Edu.t("EDU_MV_ASK") % q.pregunta, Callable()))
-	props.append(_prop(main, room, c + Vector2(90, 40), _stone_visual(Color("7fe0a0")),
+	props.append(_prop(main, room, c + Vector2(90, 40), Consultorio._sprite_visual(room, "piedra_verdad", 26, false, 8.0),
 		func(): return Edu.t("EDU_MV_TRUE"), func(_p, _it): answer.call(true)))
-	props.append(_prop(main, room, c + Vector2(160, 40), _stone_visual(Color("e0605a")),
+	props.append(_prop(main, room, c + Vector2(160, 40), Consultorio._sprite_visual(room, "piedra_mito", 26, false, 8.0),
 		func(): return Edu.t("EDU_MV_MYTH"), func(_p, _it): answer.call(false)))
 
 
@@ -44,24 +44,8 @@ static func _prop(main: Node, room: Room, pos: Vector2, visual: Node2D, prompt: 
 	it.position = pos
 	it.prompt_fn = prompt
 	it.add_child(visual)
-	main._prop_shadow(it, visual)
+	Consultorio.dress(room, it, visual)
 	if on_use.is_valid():
 		it.used.connect(on_use.bind(it))
 	room.props_node.add_child.call_deferred(it)
 	return it
-
-
-static func _plaque_visual() -> Node2D:
-	var n := Node2D.new()
-	n.set_meta("tall", true)
-	n.add_child(Consultorio.poly([Vector2(-16, 20), Vector2(-16, -20), Vector2(16, -20), Vector2(16, 20)], Color("5a5662")))
-	n.add_child(Consultorio.poly([Vector2(-12, 16), Vector2(-12, -16), Vector2(12, -16), Vector2(12, 16)], Color("8a8494")))
-	n.add_child(Consultorio.poly([Vector2(-6, -10), Vector2(6, -10), Vector2(6, -4), Vector2(0, 0), Vector2(0, 4), Vector2(-3, 4), Vector2(-3, -2), Vector2(3, -6), Vector2(-6, -6)], Color("ffd75a")))
-	return n
-
-
-static func _stone_visual(color: Color) -> Node2D:
-	var n := Node2D.new()
-	n.add_child(Consultorio.poly([Vector2(-12, 8), Vector2(-10, -6), Vector2(0, -10), Vector2(10, -6), Vector2(12, 8)], color.darkened(0.35)))
-	n.add_child(Consultorio.poly([Vector2(-8, 4), Vector2(-6, -4), Vector2(0, -6), Vector2(6, -4), Vector2(8, 4)], color))
-	return n
