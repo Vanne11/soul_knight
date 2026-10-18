@@ -14,7 +14,7 @@ ITEM_COFFEE_DESC,"Te despista de la resaca. -40 intoxicación, +20 estamina. Sab
 ITEM_COIN_NAME,Moneda Pudorosa,Bashful Coin
 ITEM_COIN_DESC,Moneda oficial del Reino. Lleva grabada una hoja de parra. Hasta el dinero tiene vergüenza.,Official currency of the Kingdom. Has a fig leaf engraved on it. Even the money is embarrassed.
 ITEM_DILDO_TASER_NAME,Dildo Eléctrico,Electric Dildo
-ITEM_DILDO_TASER_DESC,"Dispara chispas cuyo arco salta a otros 2 enemigos cercanos (50% del daño). Poco daño contra uno solo, mejor contra grupos. 'Descarga de 12.000 voltios. Garantía de 3 meses.'","Fires sparks whose arc jumps to 2 other nearby enemies (50% damage). Weak against a single target, better against groups. '12,000 volts. 3-month warranty.'"
+ITEM_DILDO_TASER_DESC,"Solo lo suelta el Dildo Eléctrico de Vulvania: nadie lo vende. Sus chispas saltan a otros 2 enemigos (50% del daño), brutal contra grupos. 'Garantía de 3 meses.'","Only dropped by Vulvania's Electric Dildo: nobody sells it. Its sparks jump to 2 other enemies (50% damage), brutal against groups. '3-month warranty.'"
 ITEM_ENERGY_DRINK_NAME,Monster Energy (Marcablanca),Monster Energy (Store Brand)
 ITEM_ENERGY_DRINK_DESC,"Alas de cartón. +40 estamina, +15% velocidad 10s, +10 intoxicación (azúcar es droga). 'Te da alas... y taquicardia.'","Cardboard wings. +40 stamina, +15% speed for 10s, +10 intoxication (sugar is a drug). 'It gives you wings... and tachycardia.'"
 ITEM_GRENADE_FLASHBANG_NAME,Flashbang Sensorial,Sensory Flashbang
