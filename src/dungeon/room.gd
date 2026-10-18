@@ -67,7 +67,10 @@ func _physics_process(delta: float) -> void:
 		if e.get("current_health") != null and float(e.current_health) <= 0.0:
 			continue
 		var p: Vector2 = e.global_position - global_position
-		if rect.grow(6.0).has_point(p):
+		# dentro del rectangulo pero metido en un muro macizo o fuera de las celdas (esquinas cortadas, 3 px
+		# por encima del suelo): tampoco puede salir solo
+		var kind := cell_kind(Vector2i(floori(p.x / 64.0), floori(p.y / 64.0)))
+		if rect.grow(6.0).has_point(p) and kind != -1 and kind != 1:
 			continue
 		var back := Vector2(clampf(p.x, rect.position.x + 40.0, rect.end.x - 40.0), clampf(p.y, rect.position.y + 40.0, rect.end.y - 40.0))
 		e.global_position = snap_global(global_position + back, 24.0)
