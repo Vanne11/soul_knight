@@ -12,4 +12,4 @@ tags = ["arma", "defensivo", "área"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
 base_value = 440
-custom_data = {"affinity": "neutral", "special": "catcher", "base_damage": 6, "fire_rate": 1.3, "projectile_speed": 150, "range": 230, "catch_radius": 44, "catch_max": 14}
+custom_data = {"dmg_type": "latex", "affinity": "neutral", "special": "catcher", "base_damage": 6, "fire_rate": 1.3, "projectile_speed": 150, "range": 230, "catch_radius": 44, "catch_max": 14}

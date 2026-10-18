@@ -32,6 +32,7 @@ func _physics_process(delta: float) -> void:
 		return
 	_t = 0.0
 	ticks -= 1
+	BossDamage.tag("", 1.0, "veneno")
 	e.take_damage(damage, source if is_instance_valid(source) else null, Vector2.ZERO)
 	if ticks <= 0:
 		queue_free()

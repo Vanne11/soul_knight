@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://drju8ay8abn2s"
+
+[deps]
+
+files=["res://locale/jefes_cera_dano.es.translation", "res://locale/jefes_cera_dano.en.translation"]
+
+source_file="res://locale/jefes_cera_dano.csv"
+dest_files=["res://locale/jefes_cera_dano.es.translation", "res://locale/jefes_cera_dano.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

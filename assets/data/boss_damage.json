@@ -1,0 +1,15 @@
+{
+	"_nota": "Debilidades y resistencias por jefe (clave = nombre del script sin boss_). weak/resist: tipo de dano -> multiplicador. match: heroe -> tipos que, ademas de las armas de su reino, dan golpe MATCH. Solo los jefes con entrada aqui reciben el tratamiento (ver BossDamage.ONLY_TABLE_BOSSES).",
+	"cera": {
+		"weak": {"agua": 1.9, "contundente": 1.5},
+		"resist": {"calor": 0.35},
+		"match": {
+			"pitocles": ["contundente"],
+			"vulvalquiria": ["agua"],
+			"ornitorrinco": ["agua", "contundente"]
+		},
+		"line_weak": "BOSSDMG_CERA_WEAK",
+		"line_resist": "BOSSDMG_CERA_RESIST",
+		"hint_weapon": "globos_agua"
+	}
+}

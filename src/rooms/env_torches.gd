@@ -108,7 +108,7 @@ class _Fall extends Node2D:
 		var d: float = dyn.depth()
 		for e in RoomUtil.enemies_in(dyn.room):
 			if e.global_position.distance_to(global_position) <= 38.0:
-				RoomUtil.hurt_enemy(e, 18.0 + 4.0 * d, global_position, 260.0)
+				RoomUtil.hurt_enemy(e, 18.0 + 4.0 * d, global_position, 260.0, "calor")
 		var pl: Node2D = dyn.player()
 		if pl != null and pl.global_position.distance_to(global_position) <= 38.0:
 			RoomUtil.hurt_player(pl, 0.6 * RoomUtil.std_hit(d))
@@ -140,7 +140,7 @@ class _Fall extends Node2D:
 			_hit_e = 0.5
 			for e in RoomUtil.enemies_in(dyn.room):
 				if e.global_position.distance_to(global_position) <= dyn.FIRE_R:
-					RoomUtil.hurt_enemy(e, 4.0 + d, global_position, 0.0)
+					RoomUtil.hurt_enemy(e, 4.0 + d, global_position, 0.0, "calor")
 		var pl: Node2D = dyn.player()
 		if _hit_p <= 0.0 and pl != null and pl.global_position.distance_to(global_position) <= dyn.FIRE_R:
 			_hit_p = 0.8

@@ -11,6 +11,9 @@ var pierce: int = 0
 var knockback: float = 120.0
 ## Solo presentacion: critico o golpe fuerte dispara la pausa breve al impactar.
 var crit := false
+## Para BossDamage: arma que la disparo y factor de critico aplicado (1.0 = sin critico).
+var weapon_id := ""
+var crit_mult := 1.0
 const STRONG_HIT := 20.0
 var _t: float = 0.0
 var _dist: float = 0.0
@@ -86,6 +89,7 @@ func _explode() -> void:
 		# 100% en el centro, 60% en el borde
 		var dmg := damage * lerpf(1.0, 0.6, clampf(d / explosion_radius, 0.0, 1.0))
 		var away: Vector2 = (e.global_position - global_position).normalized()
+		BossDamage.tag(weapon_id, crit_mult)
 		e.take_damage(dmg, player, away * knockback * 1.6)
 		if ps.lifesteal > 0.0:
 			ps.heal(dmg * ps.lifesteal)
@@ -131,6 +135,7 @@ func _chain_from(first: Node) -> void:
 		if best == null:
 			break
 		hit.append(best)
+		BossDamage.tag(weapon_id, crit_mult)
 		best.take_damage(damage * chain_mult, player, Vector2.ZERO)
 		ArcFx.zap(get_parent(), from + Vector2(0, -8), best.global_position + Vector2(0, -8))
 		from = best.global_position
@@ -145,6 +150,7 @@ func _on_body_entered(body: Node) -> void:
 		return
 	if body.is_in_group("enemy") and body.has_method("take_damage"):
 		var dmg := damage * _falloff()
+		BossDamage.tag(weapon_id, crit_mult)
 		body.take_damage(dmg, get_tree().get_first_node_in_group("player"), Vector2.RIGHT.rotated(rotation) * knockback)
 		if crit or dmg >= STRONG_HIT:
 			HitFx.hitstop()

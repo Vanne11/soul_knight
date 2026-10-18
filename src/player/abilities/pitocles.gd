@@ -154,6 +154,7 @@ func on_dash_tick(dir: Vector2) -> void:
 		if e in _rammed:
 			continue
 		_rammed.append(e)
+		BossDamage.tag("", 1.0, "contundente")
 		e.take_damage(RAM_DAMAGE * stats.damage_modifier, player, dir * 320.0)
 		if is_instance_valid(e) and float(e.get("current_health")) > 0.0:
 			stun(e, RAM_STUN, dir * 380.0)

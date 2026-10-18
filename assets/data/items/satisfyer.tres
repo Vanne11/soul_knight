@@ -12,4 +12,4 @@ tags = ["arma"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
 base_value = 400
-custom_data = {"base_damage": 3, "fire_rate": 1.6, "vortex": true, "vortex_radius": 125.0, "vortex_duration": 1.6, "vortex_pull": 300.0}
+custom_data = {"dmg_type": "vortice", "base_damage": 3, "fire_rate": 1.6, "vortex": true, "vortex_radius": 125.0, "vortex_duration": 1.6, "vortex_pull": 300.0}

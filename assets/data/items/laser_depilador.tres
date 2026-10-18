@@ -12,4 +12,4 @@ tags = ["arma", "rayo"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
 base_value = 460
-custom_data = {"affinity": "vulva", "special": "beam", "base_damage": 3.0, "fire_rate": 0.08, "range": 300, "beam_width": 12, "heat_per_shot": 2.0, "bullet_color": "ff5a4a"}
+custom_data = {"dmg_type": "calor", "affinity": "vulva", "special": "beam", "base_damage": 3.0, "fire_rate": 0.08, "range": 300, "beam_width": 12, "heat_per_shot": 2.0, "bullet_color": "ff5a4a"}

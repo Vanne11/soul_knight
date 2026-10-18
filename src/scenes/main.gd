@@ -514,6 +514,7 @@ func _build_shop(room: Room) -> void:
 	room.set_meta("shop_built", true)
 	var stock := [_random_weapon_id(), _random_loot_id(), _random_loot_id()]
 	stock = Utero.shop_stock(self, stock)  # tienda de Vulvania: el Turno de la Consulta
+	stock[0] = BossDamage.shop_hint(_run_manager.floor_data(), stock[0])  # pista: arma que es debilidad del jefe del piso
 	if _missing_hormones().size() > 0:
 		stock[2] = "hormone_" + _missing_hormones()[0]  # la tienda tambien vende la hormona que te falta
 	# Mejoras permanentes: siempre la de vida y otra al azar.
