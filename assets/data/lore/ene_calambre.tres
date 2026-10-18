@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_calambre"
 title = "Calambre"
-text = "Un rayo en zigzag, pequeño, eléctrico y con un enfado de mil demonios. Viene en grupo, siempre en el peor momento y sin avisar a nadie de su calendario. En realidad sí avisa: brilla justo antes de lanzarse. Pero como todo calambre, aparece cuando menos te lo esperas y se va dejándote dolorido y con ganas de sofá y manta."
+text = "Un rayo en zigzag, pequeño y con un enfado enorme. Viene en grupo, en el peor momento y sin consultar tu calendario. Bueno, sí avisa: brilla antes de lanzarse. Aun así, como todo calambre, se va dejándote dolorido y con ganas de sofá y manta."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Calambre", "count": 20}
 flavor_text = "Mata 20 calambres."

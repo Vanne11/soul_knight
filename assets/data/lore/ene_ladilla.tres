@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_ladilla"
 title = "Ladilla"
-text = "Pequeña, rápida y organizada. Las ladillas de la Selva Púbica tienen sindicato, convenio colectivo y derecho a huelga, pero nunca lo ejercen porque morder es su vocación. Atacan en grupo, te rodean y se lanzan en línea recta después de un brillo de aviso. Si te apartas de la línea, fallan. Si no te apartas, te pican. Ellas no lo hacen por maldad: es su trabajo, y están muy orgullosas de él."
+text = "Pequeña, rápida y organizada. Ataca en grupo, te rodea y se lanza en línea recta tras un brillo de aviso: si te apartas, falla; si no, pica. No es maldad, es su trabajo y está orgullosa. Dato: las ladillas pasan por contacto cercano (y a veces por ropa o toallas) y se tratan con lociones antiparasitarias."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Ladilla", "count": 15}
 flavor_text = "Mata 15 ladillas."

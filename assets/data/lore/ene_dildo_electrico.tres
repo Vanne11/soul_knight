@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_dildo_electrico"
 title = "Dildo Eléctrico"
-text = "Salió de fábrica con garantía de dos años y ninguna intención de cumplirla. Se enchufó a una instalación eléctrica que nadie revisó y desde entonces tiene opiniones muy intensas y la cabeza llena de chispas. Mantiene las distancias, que para eso lo diseñaron, pero cada tanto necesita cargar pilas: se pone a chisporrotear, se queda quieto y dispara tres descargas en abanico. Esa pausa es tu ventana. Y no lo toques mojado."
+text = "Salió de fábrica con dos años de garantía y ninguna intención de cumplirla. Conectado a una instalación que nadie revisó, tiene opiniones intensas y la cabeza llena de chispas. Mantiene distancia y cada tanto recarga: chisporrotea, se queda quieto y dispara tres descargas en abanico. Esa pausa es tu ventana. Y no lo toques mojado."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Dildo Eléctrico", "count": 15}
 flavor_text = "Mata 15 dildos eléctricos."

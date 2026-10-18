@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_espinilla"
 title = "Espinilla Reventona"
-text = "Brota en la Selva Púbica sin avisar y se queda ahí, muy quietecita, haciéndose la inocente. Pero se hincha, se pone colorada, tiembla, y cuando ya no aguanta más, pop: un anillo de gotitas de algo cremoso que prefieres no identificar. No te persigue. No hace falta: tiene paciencia y es la reina de la presión. Si le disparas a tiempo se desinfla sin escándalo; si no, sale charco. La censura la dejó pasar porque 'es un asunto dermatológico'. Los asuntos dermatológicos nunca son tan inocentes como parecen."
+text = "Brota en la Selva Púbica sin avisar, quietecita, haciéndose la inocente. Se hincha, se pone colorada, tiembla y, cuando no aguanta más, pop: un anillo de gotitas de algo cremoso que prefieres no identificar. Dispárale a tiempo y se desinfla sin escándalo. Dato: reventarlas con los dedos las infecta y deja marca."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Espinilla Reventona", "count": 10}
 flavor_text = "Revienta 10 espinillas (o deja que ellas lo hagan)."

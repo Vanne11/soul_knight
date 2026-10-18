@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_mito_himen"
 title = "Mito: Himen-Certificador"
-text = "El mito: 'el himen demuestra la virginidad'. Este funcionario con sello se protege con una membrana que se rompe al primer golpe, de cualquier cosa; y entonces queda en evidencia: eso no prueba nada. La verdad: el himen no es un sello ni una puerta; es un pliegue elástico de tejido alrededor de la entrada de la vagina, con formas muy distintas, que puede cambiar con el deporte, el uso de tampones o sin motivo alguno, y que muchas personas ni notan. No sirve para saber si alguien ha tenido sexo y que sangre o no, tampoco. (Dato a validar por Vanessa.)"
+text = "El mito: «el himen demuestra la virginidad». Este funcionario con sello se protege con una membrana que se rompe al primer golpe, y queda en evidencia: no prueba nada. La verdad: el himen es un pliegue elástico de tejido en la entrada de la vagina, de formas muy distintas, que cambia con el deporte o sin motivo. Que sangre o no, tampoco dice nada."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Himen-Certificador", "count": 1}
-flavor_text = "Vence al Himen-Certificador para romper el mito."
+flavor_text = "Vence al Himen-Certificador y rompe el mito."

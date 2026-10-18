@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_dedo"
 title = "Dedo del Urólogo"
-text = "Un dedo gigante con guante de látex que solo ataca por la espalda. Te rodea, paciente, buscando el ángulo; si lo mantienes al frente, no puede hacerte nada y se choca de vergüenza. Es la caricatura de un examen real: el tacto rectal, que dura unos segundos, incomoda más de lo que duele y permite al urólogo palpar la próstata. Junto con el análisis de sangre del PSA, es la forma de detectar a tiempo el cáncer de próstata, y se recomienda conversarlo con el médico desde los 50 años (desde los 45 si hay antecedentes en la familia). Un minuto de incomodidad contra años de ventaja. Y no, no es el fin de nadie."
+text = "Un dedo gigante con guante de látex que solo ataca por la espalda. Caricatura del tacto rectal: dura segundos y permite palpar la próstata. Junto al PSA (análisis de sangre; un PSA alto no es sentencia, a veces es solo una próstata inflamada), detecta a tiempo el cáncer de próstata. Se conversa con el médico desde los 50, o 45 con antecedentes."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Dedo del Urólogo", "count": 6}
-flavor_text = "Vence a 6 Dedos del Urólogo (y no les des la espalda)."
+flavor_text = "Vence a 6 Dedos del Urólogo."

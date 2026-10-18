@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_barra"
 title = "Barra Negra"
-text = "El guardia básico del Palacio de la Censura. Una barra negra con patitas y cara de estar harta de su trabajo. Se pasa el día tapando cosas que no le parecen escandalosas, por orden de una jefa que nunca da explicaciones. Embiste después de avisar, como todos. En el fondo sueña con dejar de tapar y ponerse a subrayar. Algo más alegre."
+text = "El guardia básico del Palacio: una barra negra con patitas y cara de harta. Tapa cosas que ni le parecen escandalosas, por orden de una jefa que no da explicaciones. Embiste después de avisar, como todos. En el fondo sueña con dejar de tapar y ponerse a subrayar."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Barra Negra", "count": 10}
 flavor_text = "Mata 10 barras negras."
