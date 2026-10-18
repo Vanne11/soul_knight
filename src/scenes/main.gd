@@ -650,6 +650,8 @@ func _on_room_cleared(room: Room) -> void:
 		Sound.play("room_clear")
 		RoomUtil.coins(self, room, maxi(1, roundi(COINS_PER_ROOM_CLEAR * _coin_mult)), room.get_center_position() + Vector2(0, 60))
 
+var _boss_fall_pos := Vector2.ZERO  # donde cayo el ultimo jefe (la notita de Vane aparece ahi)
+
 func _complete_floor() -> void:
 	if floor_completed:
 		return
@@ -664,10 +666,13 @@ func _complete_floor() -> void:
 		Narrator.say("victory")
 		get_node("/root/LoreDatabase").custom_event("victory")
 		_run_manager.end_run(true)
+		var end_wait := 4.0
+		if VaneWinks.drop_note(boss_room, _boss_fall_pos):  # guiño a Vanessa: la notita bajo el jefe final
+			end_wait = 10.0  # tiempo de encontrarla
 		if _run_manager.last_censura_unlocked > 0:  # Censura: ganar abre el nivel siguiente (ver RunManager.end_run)
 			Narrator.say("censura_up")
 			Narrator.toast(tr("CENSURA_UNLOCKED_TITLE"), tr("CENSURA_UNLOCKED_BODY") % _run_manager.last_censura_unlocked, "ff4f9a")
-		get_tree().create_timer(4.0).timeout.connect(func(): Transition.change_scene("res://src/scenes/game_over.tscn"))
+		get_tree().create_timer(end_wait).timeout.connect(func(): Transition.change_scene("res://src/scenes/game_over.tscn"))
 		return
 	get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position, tr("FX_FLOOR_DONE") % floor_n, Color.GOLD)
 	if boss_floor:
@@ -968,6 +973,7 @@ func _floor_card_line(layer: CanvasLayer, text: String, offset_top: int, size: i
 
 func _on_enemy_killed(enemy: Node, killer: Node) -> void:
 	if enemy.is_in_group("boss"):
+		_boss_fall_pos = (enemy as Node2D).global_position if enemy is Node2D else player.global_position
 		_complete_floor()
 	if killer == player:
 		var regen: int = _run_manager.blessing("regla")

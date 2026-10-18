@@ -37,6 +37,7 @@ static func build_floor(rooms: Dictionary, floor_n: int, seed_: int) -> void:
 		var room: Room = rooms[pos]
 		if room.get_node_or_null("Dressing") == null:
 			_dress(room, rooms, fl, floor_n, seed_)
+	_graffiti(rooms, floor_n, seed_)
 
 
 static func _tex(kingdom: String, name: String) -> Texture2D:
@@ -331,6 +332,71 @@ static func _variants(room: Room, root: Live, under: Node2D, face: Node2D, k: St
 					near_door = true
 			if not near_door:
 				_spr(under, loose, pos, MASK_FLOOR, side == 2 or (side == 0 and rng.randf() < 0.5))
+
+
+## Guiño a Vanessa (VaneWinks): "V. estuvo aquí" pintado en la cara del muro de arriba de UNA sala
+## por region (la de la 1.ª etapa), la que salga de la semilla; si ahi no cabe, la siguiente.
+## Cuelga de "Face", asi nace gris y se colorea al liberar la sala como el resto del muro.
+static func _graffiti(rooms: Dictionary, floor_n: int, seed_: int) -> void:
+	if RunManager.floor_stage(floor_n) != 1:
+		return
+	var tex := VaneWinks.graffiti_tex()
+	if tex == null:
+		return
+	for wide in [false, true]:  # plan B: si en las salas normales no cabe, en cualquiera
+		var list := VaneWinks.candidates(rooms.values(), wide)
+		var start := VaneWinks.pick_index(list.size(), floor_n, seed_, "graffiti")
+		for i in list.size():
+			if _graffiti_try(list[(start + i) % list.size()], tex, floor_n, seed_):
+				return
+
+
+static func _graffiti_try(room: Room, tex: Texture2D, floor_n: int, seed_: int) -> bool:
+	var face := room.get_node_or_null("Dressing/Face")
+	if face == null:
+		return false
+	var rng := _rng(seed_, floor_n, room, 5)
+	var w := float(tex.get_width())
+	var size := Vector2(room.floor_tilemap.get_used_rect().size) * TILE
+	var door_xs: Array[float] = []
+	for door: Door in room.doors.values():
+		if door.direction == 0:
+			door_xs.append(door.position.x)
+	var spots: Array[float] = []
+	var x := 48.0
+	while x + w < size.x - 48.0:
+		spots.append(x)
+		x += 16.0
+	for k in range(spots.size() - 1, 0, -1):
+		var j := rng.randi_range(0, k)
+		var t := spots[k]
+		spots[k] = spots[j]
+		spots[j] = t
+	for sx in spots:
+		# y: la franja de cara que no tapa el HUD (la camara pega arriba) y sobre el zocalo
+		if _graffiti_fits(room, face, Rect2(sx, -14.0, w, tex.get_height()), door_xs):
+			_spr(face, tex, Vector2(sx, -14.0), MASK_WALL)
+			return true
+	return false
+
+
+## El grafiti cabe si el suelo de arriba es pisable de punta a punta, no tapa una puerta ni
+## pisa ventanas, cuadros, estandartes o lianas del muro.
+static func _graffiti_fits(room: Room, face: Node2D, r: Rect2, door_xs: Array[float]) -> bool:
+	for cx in range(int(r.position.x / TILE), int(r.end.x / TILE) + 1):
+		if not room.is_cell_walkable(Vector2i(cx, 0)):
+			return false
+	for dx in door_xs:
+		if dx > r.position.x - 70.0 and dx < r.end.x + 70.0:
+			return false
+	for c in face.get_children():
+		if c is Sprite2D and c.texture != null:
+			var cr := Rect2(c.position, c.texture.get_size()).grow(4.0)
+			if c.region_enabled:
+				cr = Rect2(c.position, c.region_rect.size).grow(4.0)
+			if cr.intersects(r):
+				return false
+	return true
 
 
 ## Luz de color que entra por la ventana: PointLight suave + haz sobre el suelo (solo sala oscura).

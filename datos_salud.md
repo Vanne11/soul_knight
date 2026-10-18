@@ -1,0 +1,199 @@
+# datos_salud.md — Inventario de datos de salud y sexualidad de "La Gran Censura"
+
+Para: **Vanessa** (autora, área de salud). Hecho por: Nico y su agente, etapa S.
+Alcance: todo texto del juego que afirma un dato real (cifras, edades, frecuencias, eficacias, síntomas, recomendaciones, anatomía, mitos). Recorrido: `locale/lore.csv` (códice), `locale/edu.csv` y `assets/data/edu/*.json` (Mito o Verdad, "¿Sabías que...?", Dra. Preventina), `locale/items.csv`, `items_extra.csv`, `jefes_alt.csv`, `enemigos3a.csv`, todos los `locale/narrator*.csv`, `rooms.csv`, `ui.csv`, `world.csv`.
+No se tocó ningún texto del juego por este documento: **lo decide Vanessa**. Las columnas `afirmación` citan el texto en español tal como está en el juego (el inglés dice lo mismo; se verificó que las cifras coinciden en es/en).
+
+Cómo leerlo: cada fila tiene `id/clave`, dónde se ve, la afirmación exacta, fuente sugerida, estado y una casilla para marcar.
+
+- ✅ coincide con la fuente sugerida.
+- ⚠️ matiz, depende de la guía o no estoy seguro: la nota dice qué verificar.
+- ❌ incorrecto (ninguno en esta pasada; ver "Resultado").
+
+Advertencia de método: no tengo acceso a internet en este entorno. Las fuentes y cifras salen de mi conocimiento de las guías; donde no estoy seguro de la edición vigente lo marco ⚠️ y digo qué abrir. Conviene que Vanessa confirme cada cita contra el documento original antes de darla por buena.
+
+## Resumen: lo que más urge revisar
+
+1. **Glándulas de Skene = "próstata femenina"** (`LORE_SKENE_GLANDULAS_TEXT`, AN-01): el término existe en la Terminología Histológica oficial (2008), pero su función y la equivalencia son debatidas. El texto está bien cubierto ("se consideran"), falta que Vanessa decida si quiere mantener el nombre popular.
+2. **Autoexamen testicular "una vez al mes, tras la ducha"** (`LORE_BOSS_2_TEXT`, PT-01): las guías divergen (USPSTF desaconseja el tamizaje en asintomáticos; otras sociedades recomiendan conocer el propio cuerpo). Además el objeto "Kit de Autoexamen Testicular" lo refuerza.
+3. **PSA y tacto rectal "desde los 50, o 45 con antecedentes"** (PT-04 a PT-06): en el juego aparece en tres fichas. MINSAL no recomienda tamizaje poblacional: es decisión informada con el médico. El texto dice "se conversa con el médico" (correcto), pero el Dedo además dice que "detecta a tiempo el cáncer de próstata" (promesa excesiva).
+4. **`EDU_FACT_CLITORIS`: "La mayoría de las mujeres necesita estimulación del clítoris para llegar al orgasmo"** (AN-05): la fuente citada (Herbenick 2018) da ~37% "necesaria" y ~73% "necesaria o mejora"; lo que sí dice la mayoría (~82%) es que la penetración sola no basta. Propuesta de redacción en la fila.
+5. **Pastilla del día después "hasta 5 días"** (AC-14): vale para ulipristal y para la guía OMS, pero el levonorgestrel (la píldora más común en Chile) rinde mejor dentro de 72 h y decae hasta 120 h.
+6. **DIU de cobre "5 a 12 años según el modelo"** (AC-16): depende del modelo y del país (muchos modelos son de 10 años; 12 es evidencia OMS para TCu380A).
+7. **Talco para la entrepierna** (PV-06): el uso perineal de talco se asocia a un riesgo algo mayor de cáncer de ovario (IARC 2B). El objeto lo presenta como solución sin matiz.
+8. **Marcha atrás: líquido preseminal** (AC-07): "porque el líquido preseminal puede arrastrar espermatozoides" es matizable (la causa principal de falla es el error de tiempo; el preseminal solo a veces tiene espermatozoides).
+9. **Dra. Preventina: "La salud es gratis; los preservativos, no."** (AC-22): en Chile los preservativos se entregan gratis en la red pública (CESFAM); la frase es chiste de economía del juego, pero un lector chileno de salud la notará.
+10. **Papanicolau cada 3 años de 25 a 64** (CI-13): coincide con la norma MINSAL; verificar si el programa ya migró al test de VPH como tamizaje primario.
+11. **Vacuna VPH: "un pinchazo" y "ya no te saca ni una verruga"** (IT-03, IT-07, IT-08): la cantidad de dosis cambió (OMS acepta 1 dosis; verificar el esquema vigente en Chile) y no todas las vacunas cubren las verrugas.
+12. **Fuentes por confirmar**: varias entradas de `fuentes_codice.json` citan "OMS, hoja informativa sobre preservativos". No estoy seguro de que exista con ese título exacto. Alternativas sólidas: OMS, nota descriptiva "Planificación familiar / Métodos anticonceptivos" y el Manual mundial para proveedores. El respaldo de "masturbación" con UNESCO 2018 es débil (mejor NHS o Planned Parenthood).
+
+## Resultado
+
+Ver el conteo al final del documento (sección "Conteo").
+
+---
+
+## A. Anticoncepción y prevención
+
+| id / clave | dónde se ve | afirmación exacta (es) | fuente sugerida | estado y nota | Vanessa |
+|---|---|---|---|---|---|
+| AC-01 `LORE_CONDOM_LORE_TEXT` | Códice, objeto Preservativo de Titanio | “bien usado desde el inicio, el condón falla cerca del 2% al año; con uso típico, cerca del 13% (OMS)” | OMS, *Family Planning: A Global Handbook for Providers* (2022); CDC, tabla de eficacia anticonceptiva | ✅ 2% uso perfecto y 13% uso típico son las cifras OMS/CDC para el condón masculino. Son cifras de embarazo, no de ITS. | [ ] Vanessa |
+| AC-02 `EDU_FACT_CONDON_USO` | Pantalla de muerte (¿Sabías que...?) | “Bien puesto y en cada ocasión, el preservativo es lo mejor contra las ITS.” | OMS, nota descriptiva de ITS; CDC, *Condom Effectiveness* | ✅ OMS lo llama la tecnología más eficaz disponible contra ITS/VIH. Matiz: protege menos contra las que van piel con piel (herpes, VPH, sífilis, ladillas). | [ ] Vanessa |
+| AC-03 `EDU_FACT_CONDON_CADUCA` | Pantalla de muerte | “Los preservativos caducan, y en la billetera se cocinan. Mira la fecha y guárdalos al fresco.” | OMS/UNFPA/FHI 360, especificación del condón de látex (almacenamiento); CDC | ✅ Calor, fricción y tiempo degradan el látex; se desaconseja la billetera. | [ ] Vanessa |
+| AC-04 `EDU_MV_DOBLE_CONDON_A` | Placa Mito o Verdad (Mito) | “Mito. Se rozan entre sí y se rompen más. Uno solo, bien puesto.” | CDC / NHS: no usar dos condones a la vez | ✅ La fricción entre ambos aumenta la rotura. ⚠️ de fuente: `mito_verdad.json` cita la "hoja informativa de preservativos" de la OMS, que no sé si lo trata; cambiar por CDC o NHS. | [ ] Vanessa |
+| AC-05 `EDU_FACT_MARCHA_ATRAS` | Pantalla de muerte | “La marcha atrás falla en cerca de 1 de cada 5 parejas al año.” | OMS, Manual mundial para proveedores (coito interrumpido: 4% perfecto, 20% típico) | ✅ 20% con uso típico. El texto omite "con uso típico" (con uso perfecto es ~4%); aceptable por brevedad. | [ ] Vanessa |
+| AC-06 `EDU_MV_MARCHA_ATRAS_A` | Placa Mito o Verdad (Mito) | “Mito. Falla bastante, y a las ITS les encanta el pase libre.” | OMS (idem) | ✅ Cualitativo, coherente con AC-05. | [ ] Vanessa |
+| AC-07 `LORE_ENE_MITO_MARCHA_TEXT` | Códice, enemigo Mito de la Marcha Atrás | “el coito interrumpido falla en cerca de 1 de cada 5 parejas al año con uso típico, porque el líquido preseminal puede arrastrar espermatozoides. Tampoco protege de las ITS.” | OMS (cifra); Killick 2011 (*Fertil Steril*) y Zukerman 2003 sobre espermatozoides en preseminal | ⚠️ La cifra es ✅. La causa: la evidencia sobre espermatozoides en el preseminal es mixta (varía por hombre y por eyaculaciones previas); las fallas se explican sobre todo por error de tiempo y semen residual. Sugerencia: "puede contener espermatozoides". | [ ] Vanessa |
+| AC-08 `E3A_MITO_MARCHA_TRUTH` | Burbuja del enemigo al derrotarlo | “Falla en 1 de cada 5 al año. Usa preservativo.” | OMS | ✅ Igual que AC-05. | [ ] Vanessa |
+| AC-09 `EDU_FACT_PRIMERA_VEZ`, `EDU_MV_PRIMERA_VEZ_A` | Pantalla de muerte y Placa Mito o Verdad | “Sí, se puede quedar embarazada la primera vez.” / “Mito. El óvulo no lleva la cuenta de las veces.” | OMS, planificación familiar; ACOG | ✅ Cada relación con eyaculación en vagina en edad fértil puede producir embarazo. | [ ] Vanessa |
+| AC-10 `EDU_FACT_HORMONAL` | Pantalla de muerte | “Pastillas y otros métodos hormonales cuidan del embarazo, no de las ITS. Para eso, preservativo.” | OMS, Manual mundial para proveedores | ✅ | [ ] Vanessa |
+| AC-11 `EDU_FACT_REGLA` | Pantalla de muerte | “Con la regla es poco probable embarazarse, pero no imposible.” | ACOG; NHS | ✅ Ciclos cortos + espermatozoides que viven hasta 5 días lo hacen posible. | [ ] Vanessa |
+| AC-12 `EDU_FACT_PASTILLA` | Pantalla de muerte | “La píldora del día después funciona mejor cuanto antes se tome, y no interrumpe un embarazo ya existente.” | OMS, nota descriptiva "Anticoncepción de emergencia"; FSRH (2023) | ✅ | [ ] Vanessa |
+| AC-13 `EDU_MV_PASTILLA_ABORTA_A` | Placa Mito o Verdad (Mito) | “Mito. Retrasa la ovulación; si ya hay un embarazo, no lo interrumpe.” | OMS (idem); FSRH | ✅ El mecanismo principal es retrasar la ovulación. Matiz: no funciona si la ovulación ya ocurrió (por eso no es 100%). | [ ] Vanessa |
+| AC-14 `LORE_MORNING_AFTER_PILL_LORE_TEXT` | Códice, objeto Pastilla del Día Después | “la anticoncepción de emergencia funciona mejor cuanto antes (hasta 5 días), no es abortiva y no protege de ITS.” | OMS (hasta 120 h); FSRH 2023 (levonorgestrel: licencia 72 h, uso hasta 96 h; ulipristal: 120 h); MINSAL, Norma de Regulación de la Fertilidad | ⚠️ "Hasta 5 días" vale para ulipristal, DIU de cobre y la guía OMS; el levonorgestrel 1,5 mg es el de uso más común en Chile y su eficacia decae después de 72 h. Verificar qué dice la norma MINSAL vigente (probablemente 72 h, con eficacia menor hasta 120 h). También decae con IMC alto. "No es abortiva" y "no protege de ITS" ✅. | [ ] Vanessa |
+| AC-15 `LORE_BOSS_ALT_3_TEXT` (parte 1) | Códice, jefe El DIU Cósmico | “el DIU de cobre previene el embarazo más del 99% de las veces” | OMS, Manual mundial (0,6% uso perfecto; 0,8% típico) | ✅ 99,2–99,4%. | [ ] Vanessa |
+| AC-16 `LORE_BOSS_ALT_3_TEXT` (parte 2) | Códice, jefe El DIU Cósmico | “dura entre 5 y 12 años según el modelo y es reversible. No protege de las ITS: para eso, condón.” | OMS (TCu380A: 12 años); FDA (ParaGard: 10 años); MINSAL (fichas de modelos) | ⚠️ El rango existe pero varía: TCu380A 10–12 años según la guía; Multiload y otros de cobre, 5 años. Verificar qué modelos se usan en Chile. "Reversible" ✅; "no protege de ITS" ✅. | [ ] Vanessa |
+| AC-17 `NARR_JEFES_ALT__BOSSALT3_PHASE3_0`, `_DEATH_0` | Narrador, jefe El DIU Cósmico | “Prevengo embarazos y estrellas.” / “pero soy reversible” | OMS | ✅ Humor sin cifras. | [ ] Vanessa |
+| AC-18 `NARR_EDU__EDU_POBRE_0` | Narrador, Dra. Preventina sin monedas | “La salud es gratis; los preservativos, no. Vuelve con monedas.” | MINSAL, Programa Nacional de Prevención y Control del VIH/ITS (entrega gratuita de preservativos en la red pública) | ⚠️ En Chile los preservativos se entregan gratis en CESFAM y consultorios. La frase es mecánica del juego (el consultorio los vende), pero contradice la realidad. Opciones: dejarlo como chiste, o cambiar a "El de bolsillo, de farmacia, cuesta". | [ ] Vanessa |
+| AC-19 `consultorio.json` (`preservativo`), `EDU_CONDOM_PROMPT` | Consultorio de descanso | “Preservativos de bolsillo: inmunidad al contagio un rato” | OMS (el condón protege durante el acto y es de un solo uso) | ⚠️ Ficción de juego (150 s de inmunidad). La realidad: protección por uso, un condón por acto. Marcado "validar" en el JSON. | [ ] Vanessa |
+
+## B. Infecciones de transmisión sexual (ITS) y tamizajes
+
+| id / clave | dónde se ve | afirmación exacta (es) | fuente sugerida | estado y nota | Vanessa |
+|---|---|---|---|---|---|
+| IT-01 `EDU_FACT_ITS_SIN_SINTOMAS` | Pantalla de muerte | “Muchas ITS no dan síntomas. "No siento nada" no es "estoy sano". El test no muerde.” | OMS, nota descriptiva de ITS (2024) | ✅ | [ ] Vanessa |
+| IT-02 `EDU_MV_SIN_SINTOMAS_A` | Placa Mito o Verdad (Verdad) | “Verdad. Por eso existen los tests: para lo que no se ve ni pica.” | OMS (idem) | ✅ | [ ] Vanessa |
+| IT-03 `EDU_FACT_VPH_VACUNA` | Pantalla de muerte | “La vacuna contra el VPH previene varios tipos de cáncer. Un pinchazo contra un villano final.” | OMS, documento de posición sobre vacunas VPH (2022); MINSAL, Programa Nacional de Inmunizaciones | ⚠️ "Varios tipos de cáncer" ✅ (cuello uterino, ano, vulva, vagina, pene, orofaringe). "Un pinchazo": la OMS acepta esquema de 1 o 2 dosis; verificar el esquema chileno vigente (2 dosis en 4.º y 5.º básico, a revisar) antes de decir "un". | [ ] Vanessa |
+| IT-04 `EDU_MV_VACUNA_VPH_A` | Placa Mito o Verdad (Verdad) | “Verdad. Previene varios cánceres. Gloria eterna y un parche en el brazo.” | OMS; MINSAL | ✅ | [ ] Vanessa |
+| IT-05 `LORE_ENE_VPH_TEXT` (a) | Códice, enemigo VPH Verrugón | “El VPH es de los virus más comunes del mundo y casi siempre pasa sin que te enteres.” | OMS, nota descriptiva VPH y cáncer cervicouterino; CDC | ✅ La mayoría de las infecciones se resuelven solas en ~2 años. | [ ] Vanessa |
+| IT-06 `LORE_ENE_VPH_TEXT` (b) | Códice, enemigo VPH Verrugón | “existe vacuna contra el VPH, y el papanicolau o el test de VPH detectan a tiempo lo que importa. Vacunarse es de héroes.” | OMS; MINSAL | ✅ | [ ] Vanessa |
+| IT-07 `NARR_EDU__EDU_VACUNA_0` | Narrador, al comprar la vacuna | “¡Pinchacito! El VPH Verrugón ya no te saca ni una verruga.” | OMS; MINSAL (la vacuna tetravalente cubre tipos 6 y 11, causantes de verrugas) | ⚠️ ✅ si la vacuna usada es Gardasil (tetra/nona); la bivalente no previene verrugas. Además no cubre todos los tipos del virus. Verificar qué vacuna usa el programa chileno. | [ ] Vanessa |
+| IT-08 `consultorio.json` (`vacuna_vph`), `EDU_VAX_PROMPT` | Consultorio de descanso | “Vacuna VPH: inmune al VPH Verrugón esta partida” | OMS | ⚠️ Guiño de juego ("inmuniza durante la partida"), marcado "validar". En la realidad la protección es de larga duración, no total, y conviene antes del inicio sexual. | [ ] Vanessa |
+| IT-09 `LORE_ENE_CLAMIDIA_TEXT` | Códice, enemigo Clamidia Clandestina | “la clamidia suele ser asintomática, así que la única forma de saberlo son los chequeos. El condón la deja afuera de la fiesta y, si aparece, se cura con antibióticos.” | OMS, nota de ITS; CDC, *STI Treatment Guidelines* (2021) | ✅ Aprox. 70% de mujeres y 50% de hombres sin síntomas. Se cura con antibióticos (doxiciclina o azitromicina). | [ ] Vanessa |
+| IT-10 `LORE_ENE_GONORREA_TEXT` | Códice, enemigo Gonorrea Goteante | “la gonorrea real da ardor al orinar o flujo extraño, o nada, y se cura con antibióticos si se detecta a tiempo. Hay cepas resistentes (OMS), así que el tratamiento lo indica un médico.” | OMS, nota de ITS y vigilancia de resistencia (GASP); CDC 2021 | ✅ | [ ] Vanessa |
+| IT-11 `LORE_ENE_SIFILIS_TEXT` | Códice, enemigo Sífilis Imitadora | “se cura con penicilina si se detecta a tiempo, y un análisis de sangre la descubre aunque se haga la desentendida.” | OMS; CDC 2021; MINSAL | ⚠️ Penicilina ✅ y "gran imitadora" ✅. Matiz: las pruebas serológicas pueden ser negativas en la sífilis primaria muy temprana (período ventana); no "siempre la descubre". | [ ] Vanessa |
+| IT-12 `LORE_ENE_HERPES_TEXT` | Códice, enemigo Herpes Recurrente | “El herpes real queda latente y reaparece con estrés o cansancio. No se cura del todo, pero se controla muy bien con tratamiento, y el condón baja el riesgo de contagio.” | OMS, nota del herpes simple; CDC 2021 | ✅ Matiz: se transmite también sin lesiones visibles (excreción asintomática). | [ ] Vanessa |
+| IT-13 `LORE_ENE_LADILLA_TEXT` | Códice, enemigo Ladilla | “las ladillas pasan por contacto cercano (y a veces por ropa o toallas) y se tratan con lociones antiparasitarias.” | CDC, *Pubic "Crab" Lice* | ✅ Permetrina al 1% o piretrinas. | [ ] Vanessa |
+| IT-14 `EDU_FACT_INDETECTABLE`, `EDU_MV_INDETECTABLE_A` | Pantalla de muerte y Placa Mito o Verdad | “Con tratamiento y carga viral indetectable, el VIH no se transmite sexualmente. Indetectable es igual a intransmisible.” | OMS y ONUSIDA (U=U, 2023); Rodger 2019 (*Lancet*, PARTNER2) | ✅ Matiz: requiere carga indetectable sostenida (≥6 meses) y adherencia; no protege de otras ITS ni aplica a lactancia. | [ ] Vanessa |
+| IT-15 `EDU_FACT_TEST_VIH` | Pantalla de muerte | “En Chile el test de VIH es gratuito y confidencial en la red pública. Rápido y sin preguntas incómodas.” | MINSAL, Chile (Ley 19.779; examen en APS) | ✅ Gratuito y confidencial ✅. ⚠️ leve: "sin preguntas incómodas" es chiste; en la práctica hay consejería y consentimiento. | [ ] Vanessa |
+| IT-16 `NARR_ITS_CONTAGION_0` | Narrador, al contagiarse | “Te contagiaste algo. El látex tenía razón.” | OMS | ✅ Sin cifras; humor. | [ ] Vanessa |
+
+## C. Ciclo, menstruación y tamizaje cervicouterino
+
+| id / clave | dónde se ve | afirmación exacta (es) | fuente sugerida | estado y nota | Vanessa |
+|---|---|---|---|---|---|
+| CI-01 `LORE_BOSS_3_TEXT` | Códice, jefe Su Majestad Ovaria II | “los ovarios producen estrógeno y liberan un óvulo por ciclo, más o menos una vez al mes.” | ACOG; NHS | ✅ También producen progesterona (no se dice, pero no es error). | [ ] Vanessa |
+| CI-02 `LORE_BOSS_REGLA_TEXT` (a) | Códice, jefa Doña Regla | “el sangrado dura de 3 a 7 días.” | ACOG, *Menstruation in girls and adolescents* (CO 651); NHS | ✅ ACOG da 2 a 7 días; NHS ~5 días (3 a 8). Rango razonable. | [ ] Vanessa |
+| CI-03 `LORE_BOSS_REGLA_TEXT` (b) | Códice, jefa Doña Regla | “El tampón se cambia cada 4 a 8 horas como máximo (más tiempo sube el riesgo de síndrome de shock tóxico)” | FDA, *Tampon Safety*; NHS | ✅ FDA: cambiar cada 4–8 h. El SST es raro pero real. | [ ] Vanessa |
+| CI-04 `LORE_BOSS_REGLA_TEXT` (c) | Códice, jefa Doña Regla | “el dolor que no deja vivir se consulta.” | ACOG (dismenorrea, endometriosis) | ✅ | [ ] Vanessa |
+| CI-05 `NARR_BOSSUTERO_DEATH_0` | Narrador, muerte de Doña Regla | “Nos vemos... en 28 días...” | ACOG | ✅ 28 días es el promedio de manual; el rango normal es 21–35 (hasta 45 en adolescentes). Humor. | [ ] Vanessa |
+| CI-06 `LORE_LOC_UTERO_TEXT` (a) | Códice, región El Útero | “Un ciclo dura cerca de un mes.” | ACOG; NHS | ✅ | [ ] Vanessa |
+| CI-07 `LORE_LOC_UTERO_TEXT` (b) | Códice, región El Útero | “menstruación (marea roja y calambres), folicular (todo florece), ovulación (todos acelerados; hay que alcanzar el óvulo) y lútea (irritables y con antojos; el chocolate cura el doble)” | ACOG; Mayo Clinic (SPM) | ⚠️ Cuatro fases ✅. Matiz: la fase folicular técnicamente incluye la menstruación (empieza el día 1); aquí se separa por jugabilidad. Irritabilidad y antojos premenstruales ✅ (SPM), no todas los viven. "El chocolate cura el doble" es mecánica. | [ ] Vanessa |
+| CI-08 `LORE_ENE_OVULO_TEXT` | Códice, enemigo Óvulo | “tras liberarse, vive unas 24 horas.” | ACOG; NHS | ✅ 12–24 h. | [ ] Vanessa |
+| CI-09 `LORE_MENSTRUAL_CUP_LORE_TEXT` | Códice, objeto Copa Menstrual | “reutilizable, ecológica … la fabrican con silicona médica” | van Eijk 2019 (*Lancet Public Health*); OMS/UNICEF (salud menstrual) | ✅ Matiz: la copa se vacía cada 4–12 h y se hierve entre ciclos; no se dice. | [ ] Vanessa |
+| CI-10 `NARR_ITEMS_EXTRA__ITEM_GET_TAMPON_0` | Narrador, al tomar el Tampón | “Salvar el reino no exime del cambio.” | FDA | ✅ Refuerza CI-03 sin cifras. | [ ] Vanessa |
+| CI-11 `EDU_FACT_PAP` | Pantalla de muerte | “El Papanicolau detecta a tiempo lo que el VPH puede dejar. En Chile se recomienda cada 3 años entre los 25 y los 64.” | MINSAL, Programa Nacional de Cáncer Cervicouterino; OMS, guía de tamizaje (2021) | ✅ Coincide con la norma MINSAL del Pap trienal de 25 a 64. ⚠️ Verificar vigencia: la OMS prioriza el test de VPH cada 5–10 años y Chile estaba migrando; ortografía "Papanicolau" (también se escribe Papanicolaou). | [ ] Vanessa |
+| CI-12 `LORE_ENE_ESPECULO_TEXT` | Códice, enemigo Espéculo | “en el papanicolau se usa unos minutos; si algo duele, se avisa y se detiene.” | ACOG, FAQ Pap test | ✅ | [ ] Vanessa |
+
+## D. Próstata y testículos
+
+| id / clave | dónde se ve | afirmación exacta (es) | fuente sugerida | estado y nota | Vanessa |
+|---|---|---|---|---|---|
+| PT-01 `LORE_BOSS_2_TEXT` | Códice, jefe El Testículo Primordial | “una vez al mes, tras la ducha, toca y mira si hay bultos o cambios. Si encuentras algo, al médico sin miedo: detectado a tiempo, casi siempre se cura.” | USPSTF (2011, grado D en asintomáticos); EAU, guía de cáncer testicular; ACS; NHS | ⚠️ Las guías divergen: USPSTF desaconseja el tamizaje sistemático; ACS/NHS aconsejan conocer cómo se sienten y consultar ante cambios; EAU recomienda enseñar el autoexamen a quienes tienen mayor riesgo (criptorquidia, antecedentes). La periodicidad "mensual, tras la ducha" es la práctica común (escroto relajado). "Casi siempre se cura" ✅ (supervivencia a 5 años >95%; ~99% localizado). Decidir tono: "conoce tus testículos y consulta ante cambios". | [ ] Vanessa |
+| PT-02 `ITEM_TESTICLE_KIT_NAME` / `_DESC` (`items_extra.csv`) | Descripción del objeto | “Kit de Autoexamen Testicular … Manos tibias y cero vergüenza.” | Igual que PT-01 | ⚠️ No afirma cifras, pero respalda el autoexamen (depende de la decisión de PT-01). | [ ] Vanessa |
+| PT-03 `LORE_BOSS_GLANDULA_TEXT` | Códice, jefa La Glándula Callada | “el crecimiento benigno de la próstata es muy común después de los 50. No es cáncer, pero se maneja mejor si se consulta a tiempo.” | AUA, guía de HBP (2021); NIDDK; Berry 1984 (autopsias) | ✅ ~50% de los hombres en la década de los 50 tienen HBP histológica; ~80–90% a los 80. Los síntomas son menos frecuentes que la HBP. | [ ] Vanessa |
+| PT-04 `LORE_ENE_DEDO_TEXT` | Códice, enemigo Dedo | “Caricatura del tacto rectal: dura segundos y permite palpar la próstata. Junto al PSA (análisis de sangre; un PSA alto no es sentencia, a veces es solo una próstata inflamada), detecta a tiempo el cáncer de próstata. Se conversa con el médico desde los 50, o 45 con antecedentes.” | MINSAL (no recomienda tamizaje poblacional); USPSTF 2018 (55–69, decisión individual); ACS 2023 (45 en riesgo alto, 40 si es muy alto); EAU 2024 (estrategia por riesgo desde los 50; 45 con antecedentes); AUA 2023 | ⚠️ "Se conversa con el médico" ✅ y las edades 50/45 coinciden con ACS/EAU. Pero MINSAL no recomienda tamizaje masivo (decisión informada con el médico) y USPSTF fija 55–69. "Detecta a tiempo el cáncer" promete demasiado: puede dar falsos positivos y sobrediagnóstico. "Un PSA alto no es sentencia" ✅. Tacto "dura segundos" ✅. | [ ] Vanessa |
+| PT-05 `LORE_ENE_GRAN_UROLOGO_TEXT` | Códice, minijefe Gran Urólogo | “desde los 50 años (45 con antecedentes), la próstata se conversa con el médico. La consulta es corta.” | Igual que PT-04 | ⚠️ Mismo matiz. | [ ] Vanessa |
+| PT-06 `LORE_ENE_PSA_SOSPECHOSO_TEXT` | Códice, enemigo PSA Sospechoso | “el PSA es un análisis de sangre que se conversa con el médico desde los 50 años (45 con antecedentes familiares). Un PSA alto no es sentencia: a veces es solo una próstata inflamada.” | Igual que PT-04; AUA 2023 (causas de PSA alto: HBP, prostatitis, eyaculación, ciclismo) | ⚠️ Mismo matiz de edades. La segunda frase ✅. | [ ] Vanessa |
+| PT-07 `NARR_ITEMS_EXTRA__ITEM_GET_PSA_TEST_0` | Narrador, al tomar el Examen de PSA | “un análisis de sangre y listo. Cero ceremonia.” | AUA | ✅ | [ ] Vanessa |
+| PT-08 `LORE_ENE_GOTEO_TARDIO_TEXT` | Códice, enemigo Goteo Tardío | “chorro débil, goteo al final, ganas urgentes o dificultad para empezar son síntomas urinarios comunes con los años. Se consultan: tienen tratamiento.” | EAU, guía de STUI masculinos; AUA | ✅ | [ ] Vanessa |
+| PT-09 `LORE_ENE_MADRUGADOR_NOCTURNO_TEXT` | Códice, enemigo Madrugador Nocturno | “levantarse varias veces por noche a orinar (nocturia) es frecuente con los años y tiene muchas causas, la próstata entre ellas.” | EAU / ICS (nocturia) | ✅ | [ ] Vanessa |
+| PT-10 `LORE_LOC_PROSTATA_TEXT` | Códice, región La Próstata | “la próstata es una glándula del tamaño de una nuez que rodea la uretra y aporta parte del líquido del semen. Con los años crece, y es normal.” | AUA; NIDDK | ✅ Aporta ~20–30% del volumen del semen. | [ ] Vanessa |
+| PT-11 `LORE_ENE_SONDA_TEXT` | Códice, enemigo Sonda | “la sonda uretral es una herramienta médica que drena la vejiga cuando hace falta, siempre por profesionales, con material estéril y lubricante, y se tolera mejor de lo que cuenta la fama.” | EAU, guía de cateterismo; CDC (prevención de ITU asociada a catéter) | ⚠️ Definición ✅. "Se tolera mejor de lo que cuenta la fama" es opinión: el cateterismo es molesto y tiene riesgo de infección. Sugerir "incomoda pero es segura si la hace un profesional". | [ ] Vanessa |
+
+## E. Anatomía
+
+| id / clave | dónde se ve | afirmación exacta (es) | fuente sugerida | estado y nota | Vanessa |
+|---|---|---|---|---|---|
+| AN-01 `LORE_SKENE_GLANDULAS_TEXT` | Códice, glándulas de Skene (guiño de Vulvania/Próstata) | “las glándulas de Skene, junto a la uretra, se consideran el equivalente femenino de la próstata, y por eso se las llama «próstata femenina». Producen un poquito de líquido que lubrica la zona.” | FCAT, *Terminologia Histologica* (2008); Wimpissinger 2007 (*J Sex Med*); Zaviačič; Pastor 2013 | ⚠️ El término "próstata femenina" aparece en la nomenclatura oficial, y las glándulas parauretrales expresan PSA, igual que la próstata (apoya la homología). Matiz: su función exacta y su papel en la "eyaculación femenina" siguen en debate; no todos los textos de anatomía usan ese nombre. La redacción con "se consideran" es prudente. Verificar la referencia exacta de la nomenclatura. | [ ] Vanessa |
+| AN-02 `EDU_FACT_TAMANO` | Pantalla de muerte | “Promedio mundial erecto: unos 13 cm. Y el placer casi nunca se mide con regla.” | Veale et al., *BJU Int* 2015;115:978–986 | ✅ El meta-análisis da 13,12 cm erecto (DE ~1,66). ⚠️ leve: "mundial" excede la muestra (datos sobre todo de Europa, EE. UU. y Asia, medidos por profesionales); decir "en un meta-análisis" sería más exacto. | [ ] Vanessa |
+| AN-03 `LORE_ENE_EGO_TEXT` | Códice, enemigo Ego | “en erección, el promedio ronda los 13 cm (meta-análisis de 2015) y muchos creen que es más por culpa del porno.” | Veale 2015; Veale 2014 (*BJU Int*, percepción del tamaño) | ⚠️ Cifra ✅. La causa atribuida al porno es plausible pero es opinión (hay estudios de percepción distorsionada; no es un dato establecido). | [ ] Vanessa |
+| AN-04 `EDU_MV_TAMANO_A` | Placa Mito o Verdad (Mito) | “Mito. El placer depende de mil cosas y la regla no está entre ellas.” | Veale 2015; Prause 2015 (*Sex Med*, preferencias de tamaño) | ✅ | [ ] Vanessa |
+| AN-05 `EDU_FACT_CLITORIS` | Pantalla de muerte | “La mayoría de las mujeres necesita estimulación del clítoris para llegar al orgasmo. Es un mapa, no un misterio.” | Herbenick et al., *J Sex Marital Ther* 2018 (n=1055); Frederick 2018 (*Arch Sex Behav*); Lloyd 2005 | ⚠️ Herbenick 2018: ~36,6% dicen que es **necesaria**, ~36% que no es necesaria pero la prefieren, y solo ~18% llega con penetración sola. Por tanto "la mayoría necesita" no es lo que dice la fuente citada; sí es cierto que "la mayoría no llega al orgasmo solo con penetración". Propuesta: “La mayoría de las mujeres no llega al orgasmo solo con penetración; muchas necesitan estimulación del clítoris.” (sin tocar el juego todavía). | [ ] Vanessa |
+| AN-06 `LORE_LOC_PERINEO_TEXT` | Códice, región El Perineo | “La franja entre Penelandia y Vulvania. Anatómicamente, es real.” | Terminologia Anatomica | ✅ El periné es la región entre genitales y ano. | [ ] Vanessa |
+| AN-07 `LORE_ENE_ESPERMA_TEXT` | Códice, enemigo Esperma | “Millones de primos compiten cada día por llegar primero a algún sitio.” | OMS, *Laboratory manual for semen examination* (6.ª ed., 2021) | ⚠️ Es una licencia: son millones por eyaculación (límite inferior de referencia ~16 millones/mL), no "cada día" en competencia. Humor. | [ ] Vanessa |
+| AN-08 `LORE_ENE_VESICULA_TEXT` | Códice, enemigo Vesícula | “Una glándula con forma de pera llena de bilis” | Anatomía (vesícula biliar) | ⚠️ La vesícula biliar tiene forma de pera y guarda bilis, pero es un órgano reservorio, no una glándula. Ojo: si se quiere un guiño genital, la vesícula **seminal** sí es glándula. | [ ] Vanessa |
+
+## F. Mitos (placas Mito o Verdad y enemigos de mito)
+
+| id / clave | dónde se ve | afirmación exacta (es) | fuente sugerida | estado y nota | Vanessa |
+|---|---|---|---|---|---|
+| MI-01 `EDU_FACT_HIMEN`, `EDU_MV_HIMEN_A` | Pantalla de muerte y Placa Mito o Verdad | “El himen no certifica nada: no es un sello y cada cuerpo lo trae distinto.” / “Mito. No es un sello ni un certificado.” | OMS, ONU Mujeres y ACNUDH, declaración interinstitucional (2018); Mishori 2019 (*Reprod Health*) | ✅ Las "pruebas de virginidad" no tienen base científica. | [ ] Vanessa |
+| MI-02 `LORE_ENE_MITO_HIMEN_TEXT` | Códice, enemigo Himen-Certificador | “el himen es un pliegue elástico de tejido en la entrada de la vagina, de formas muy distintas, que cambia con el deporte o sin motivo. Que sangre o no, tampoco dice nada.” | Mishori 2019; ACOG | ⚠️ Definición y "sangrar o no no prueba nada" ✅ (muchas personas no sangran en la primera relación). "Cambia con el deporte" no tiene evidencia clara; el himen cambia con la edad y las hormonas. Sugerir "cambia con la edad y las hormonas". | [ ] Vanessa |
+| MI-03 `E3A_MITO_HIMEN_TRUTH` | Burbuja del enemigo al derrotarlo | “El himen no es un sello ni certifica nada.” | OMS 2018 | ✅ | [ ] Vanessa |
+| MI-04 `EDU_FACT_MASTURBACION`, `EDU_MV_PELOS_MANO_A` | Pantalla de muerte y Placa Mito o Verdad | “Masturbarse no deja ciego ni peludo de manos. Es normal y no hace daño.” | NHS; Planned Parenthood; UNESCO ITGSE 2018 | ✅ Sin riesgo para la salud. ⚠️ de fuente: UNESCO 2018 es tangencial; sugerir NHS ("Is masturbation normal?"). | [ ] Vanessa |
+| MI-05 `LORE_ENE_MITO_MANO_TEXT` | Códice, enemigo Mano Mito | “la palma no tiene folículos pilosos y la masturbación no causa ceguera ni acné. Es común y sin riesgo para la salud; solo conviene hacerla con manos limpias y sin culpa.” | AAD (piel glabra); NHS | ✅ La piel de palmas y plantas no tiene folículos. | [ ] Vanessa |
+| MI-06 `E3A_MITO_MANO_TRUTH` | Burbuja del enemigo al derrotarlo | “La palma no tiene pelos ni castigo.” | AAD | ✅ | [ ] Vanessa |
+
+## G. Piel, vello y cuerpo
+
+| id / clave | dónde se ve | afirmación exacta (es) | fuente sugerida | estado y nota | Vanessa |
+|---|---|---|---|---|---|
+| PV-01 `LORE_BOSS_ALT_1_TEXT` | Códice, jefa La Afeitadora Eléctrica | “afeitarse no hace que el vello crezca más grueso, oscuro ni rápido. Es ilusión óptica: la punta recién cortada es roma y se nota más. El folículo ni se entera.” | Lynfield y MacWilliams 1970; AAD; Mayo Clinic | ✅ Matiz: "ilusión óptica" es laxo (es sensación táctil y visual de la punta roma), pero el dato central es correcto. | [ ] Vanessa |
+| PV-02 `LORE_BOSS_1_TEXT` | Códice, jefa Doña Cera Caliente | “Dato: depilarse es estética, no higiene. El vello no es suciedad.” | ACOG; AAD; Osterberg 2017 (*Sex Transm Infect*, depilación púbica y lesiones cutáneas/ITS) | ✅ El vello púbico no es necesario por higiene. Matiz posible: la depilación frecuente se asocia a más microlesiones e infecciones cutáneas. | [ ] Vanessa |
+| PV-03 `LORE_ENE_PELO_TEXT` | Códice, enemigo Pelo Encarnado | “los encarnados se previenen exfoliando y evitando el rasurado al ras; si se infectan, se consulta.” | AAD (pseudofoliculitis) | ✅ | [ ] Vanessa |
+| PV-04 `LORE_ENE_ESPINILLA_TEXT` | Códice, enemigo Espinilla | “reventarlas con los dedos las infecta y deja marca.” | AAD (*pimple popping*) | ⚠️ El texto es absoluto; la fuente dice que puede infectar y dejar cicatriz. Sugerir "puede infectarlas y dejar marca". | [ ] Vanessa |
+| PV-05 `LORE_ENE_HEMORROIDE_TEXT` | Códice, enemigo Hemorroide | “sangre al evacuar se consulta; suele ser esto, pero conviene confirmarlo.” | NIDDK; ASCRS 2018 | ✅ La hemorroide es la causa benigna más común, pero el sangrado rectal siempre se evalúa (descartar otras causas, p. ej. cáncer colorrectal según edad). | [ ] Vanessa |
+| PV-06 `ITEM_TALC_DESC` (`items_extra.csv`) | Descripción del objeto Talco para la Entrepierna | “Quita la picazón y da inmunidad al contagio 25 s. Zona seca, zona feliz.” | IARC Monografía vol. 93 (2010); Penninkilampi y Eslick 2018 (*Epidemiology*); NCI | ⚠️ El talco aplicado en la zona genital/perineal femenina se ha asociado a un riesgo algo mayor de cáncer de ovario (IARC: posiblemente cancerígeno, 2B; la evidencia es limitada). El objeto lo presenta como solución sin matiz. Opción: cambiarlo por almidón o dejar el chiste sin dato. Los "25 s de inmunidad" son ficción. | [ ] Vanessa |
+| PV-07 `ITEM_IBUPROFEN_DESC` | Descripción del objeto Ibuprofeno de 600 | “Cura el dolor, la fiebre y las ganas de ir al médico.” | MINSAL; OMS | ⚠️ Chiste que desalienta consultar; 600 mg es dosis de prescripción en muchos países. No es un dato, pero choca con el mensaje del códice ("consulta a tiempo"). | [ ] Vanessa |
+
+## H. Otros (fármacos, prácticas consensuadas, biología, tecnología)
+
+| id / clave | dónde se ve | afirmación exacta (es) | fuente sugerida | estado y nota | Vanessa |
+|---|---|---|---|---|---|
+| OT-01 `LORE_BOSS_ALT_2_TEXT` (a) | Códice, jefe Don Viagra | “el sildenafilo se investigó para la angina de pecho; el efecto secundario fue mejor que el principal.” | Boolell 1996 (*Int J Impot Res*); historia de Pfizer | ✅ Se investigaba para angina e hipertensión; el efecto sobre la erección se observó en los ensayos. | [ ] Vanessa |
+| OT-02 `LORE_BOSS_ALT_2_TEXT` (b) | Códice, jefe Don Viagra | “Necesita estímulo y receta, y si algo dura más de cuatro horas, urgencias.” | AUA, guía de priapismo (2022); ISP Chile (condición de venta con receta) | ✅ Priapismo isquémico si pasa de 4 h = urgencia. Receta: verificar la condición de venta vigente en Chile. | [ ] Vanessa |
+| OT-03 `NARR_JEFES_ALT__BOSSALT2_PHASE2_0`, `_PHASE3_0` | Narrador, Don Viagra | “¡Consulte a su médico!” / “Si dura más de cuatro horas, acuda a un médico.” | AUA | ✅ | [ ] Vanessa |
+| OT-04 `LORE_ENE_ESPOSAS_TEXT` | Códice, enemigo Esposas | “las esposas reales pueden dañar los nervios de la muñeca; la llave va siempre a mano y, si hormiguea, se suelta.” | Stone y Laureno 1991 (*Neurology*, neuropatías por esposas) | ✅ | [ ] Vanessa |
+| OT-05 `LORE_ENE_SHIBARI_TEXT` | Códice, enemigo Shibari | “quien lo practica en serio estudia nudos que no cortan la circulación y tiene tijeras de emergencia a mano.” | Guías de seguridad de la comunidad BDSM/shibari | ✅ No es dato médico; es práctica de seguridad. Revisar tono con Vanessa. | [ ] Vanessa |
+| OT-06 `LORE_ENE_JAULA_TEXT`, `_CORREA_`, `_MORDAZA_`, `_VENDA_` | Códice, enemigos de prácticas consensuadas | “Lo que separa un juego de una agresión es el acuerdo, una palabra de seguridad y la llave a mano.” / “una señal de seguridad que no dependa de hablar, como soltar un objeto.” | Principios SSC/RACK; Kink Aware Professionals | ✅ Consentimiento y palabra de seguridad son práctica estándar. No es un dato médico. | [ ] Vanessa |
+| OT-07 `LORE_ENE_DILDO_ELECTRICO_TEXT` | Códice, enemigo Dildo Eléctrico | “Y no lo toques mojado.” | Seguridad eléctrica general | ✅ | [ ] Vanessa |
+| OT-08 `LORE_BOSS_ALT_5_TEXT` | Códice, jefe El Algoritmo Moderador | “los filtros automáticos suelen confundir educación sexual, lactancia o cáncer de mama con contenido adulto. Hace falta criterio humano.” | Oversight Board de Meta, caso 2020-004-IG-UA (publicación de concienciación sobre cáncer de mama retirada por un sistema automático) | ✅ Hay casos documentados. | [ ] Vanessa |
+| OT-09 `LORE_CHAR_ORNITORRINCO_TEXT` | Códice, personaje Ornitorrinco | “Pico de pato, cola de castor, pone huevos, es mamífero y tiene espolón venenoso. Los primeros naturalistas creyeron que era una broma armada con piezas de otros animales.” | Museo Australiano; Shaw 1799 (primera descripción) | ✅ Solo los machos tienen espolón venenoso (matiz zoológico). | [ ] Vanessa |
+| OT-10 `LORE_ENERGY_DRINK_LORE_TEXT` | Códice, objeto Monster Energy (Marcablanca) | “+10 intoxicación (el azúcar es droga)” | OMS, guía sobre ingesta de azúcares libres (2015) | ⚠️ Opinión de tono; "el azúcar es droga" no es una afirmación clínica aceptada. Revisar si se deja como chiste. | [ ] Vanessa |
+| OT-11 `LORE_ABSINTHE_LORE_TEXT`, `ITEM_ABSINTHE_DESC` | Códice y objeto Absenta Ilegal | “Prohibida en 12 países y 3 dimensiones.” | EFSA; FDA (legal en la UE y EE. UU. con límite de tuyona) | ⚠️ Chiste. La absenta no está prohibida en la mayoría de los países hoy; la cifra "12" no tiene respaldo. | [ ] Vanessa |
+| OT-12 `LORE_ALERGIA_HORMONAL_TEXT`, `LORE_ESTROGEN_LORE_TEXT`, `LORE_TESTOSTERONE_LORE_TEXT`, `LORE_CHAR_PITOCLES_TEXT`, `LORE_CHAR_VULVALQUIRIA_TEXT` | Códice (alergia hormonal y objetos) | “En Vulvania, alérgico al estrógeno, estornuda y le dan ganas de hablar de sus sentimientos.” / “quiere discutir de fútbol” / “te hace sentir que tienes razón en todas las discusiones” | Endocrine Society (efectos de las hormonas) | ⚠️ Es ficción explícita (la "alergia hormonal" no existe). Riesgo de tono: atribuye estereotipos de género (sentimientos/estrógeno, discusión/testosterona) a las hormonas. Los dichos son parte del chiste, pero Vanessa debería confirmar que no suena a dato. | [ ] Vanessa |
+
+---
+
+## Fuentes citadas en el juego (`assets/data/edu/fuentes_codice.json`, `mito_verdad.json`, `sabias_que.json`)
+
+Todas llevan `"validar": true`. Estado de cada cita:
+
+| Fuente en el juego | Usada en | Estado |
+|---|---|---|
+| OMS, nota descriptiva sobre VPH y cáncer cervicouterino; MINSAL, Programa Nacional de Inmunizaciones | ene_vph, vph_vacuna | ✅ existen; confirmar el esquema chileno. |
+| OMS, Planificación familiar: un manual mundial para proveedores | ene_mito_marcha, birth_control_lore, marcha_atras | ✅ existe (OMS/JHU; 4.ª ed. 2022). |
+| OMS, ONU Mujeres y ACNUDH, declaración interinstitucional contra las pruebas de virginidad (2018) | himen | ✅ existe. |
+| UNESCO, Orientaciones técnicas internacionales sobre educación en sexualidad (2018) | ene_mito_mano, masturbacion | ⚠️ existe, pero es débil para "la masturbación no hace daño"; reemplazar o complementar con NHS. |
+| OMS, hoja informativa sobre preservativos | condom_lore, doble_condon, condon_uso, condon_caduca | ⚠️ verificar el título exacto; alternativa: OMS, "Planificación familiar / métodos anticonceptivos". |
+| OMS, nota descriptiva sobre ITS; MINSAL, Chile | ene_clamidia, ene_gonorrea, ene_sifilis, sin_sintomas | ✅ |
+| OMS, nota descriptiva sobre el herpes simple | ene_herpes | ✅ |
+| CDC, información sobre piojos del pubis | ene_ladilla | ✅ |
+| OMS, anticoncepción de emergencia | morning_after_pill_lore, pastilla | ✅ existe; ver AC-14. |
+| Veale et al., BJU International, 2015 | tamano | ✅ (*BJU Int* 2015;115:978–986). |
+| Herbenick et al., Journal of Sex & Marital Therapy, 2018 | clitoris | ✅ existe; ver AN-05 (lo que dice no coincide del todo). |
+| OMS y ONUSIDA | indetectable | ✅ |
+| MINSAL, Chile | test_vih, pap | ✅ confirmar documento específico. |
+
+## Textos revisados que no afirman datos (para que Vanessa no los busque)
+
+Mecánicas y chistes sin afirmación real: Bolsa de Agua Caliente, Té de Manzanilla, Chocolate, Café, Vendas Sucias, Toallas (de tela, de malla, nocturna), Calzoncillos, Traje de Látex, Jaula de Castidad Maldita (como objeto), Lubricantes, Viagra Vudú y Viagra de Feria, Esteroides, Testosterona Pura, Estrógeno Concentrado, Satisfyer, Subfusil, Fusil, Pistola, bebidas alcohólicas, Dra. Preventina (resto de frases), Póster del consultorio, "Ruleta del preservativo", Ladilla Ladrona, Trompa, Barra, Pixel, Sello, Huincha, Inspector, Granito, Pelusa, Calambre, Candado, Testículo Errante, narrador de jefes (frases).
+
+## Conteo
+
+Total: **91 datos** inventariados: 63 ✅, 28 ⚠️, 0 ❌.
+
+Por tema: AC 19, IT 16, CI 12, PT 11, AN 8, MI 6, PV 7, OT 12.
+
+No se encontró ningún ❌ claro (error indiscutible) contra las fuentes, así que no se cambió ningún texto del juego por este inventario. Los ⚠️ quedan para decisión de Vanessa. Nota: una fila que empieza con ✅ puede traer un matiz menor en la nota; se cuenta por su primer símbolo.

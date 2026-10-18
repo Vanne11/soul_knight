@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://5w1edcew24js"
+
+[deps]
+
+files=["res://locale/guinos.es.translation", "res://locale/guinos.en.translation"]
+
+source_file="res://locale/guinos.csv"
+dest_files=["res://locale/guinos.es.translation", "res://locale/guinos.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
