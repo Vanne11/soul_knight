@@ -492,9 +492,13 @@ func buy_meta(id: String) -> bool:
 func huesos_for_run(victory: bool) -> int:
 	return (current_floor - 1) * 5 + total_enemies_killed / 3 + (50 if victory else 0)
 
+## Semilla fija para pruebas (la pone el bot tools/autoplay con --seed=N); 0 = al azar.
+static var test_seed := 0
+
+
 func start_new_run(seed: int = 0) -> void:
 	if seed == 0:
-		seed = Time.get_ticks_msec()
+		seed = test_seed if test_seed != 0 else Time.get_ticks_msec()
 	current_seed = seed
 	RNG.randomize(seed)
 	# Partida del dia (pedida desde el menu): misma semilla para todos, con la Censura elegida en el menu.
