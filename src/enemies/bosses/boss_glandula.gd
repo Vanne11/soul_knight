@@ -3,7 +3,7 @@ extends BossAltBase
 ## LA GLANDULA CALLADA (jefa UNICA de La Prostata). No dice nada. Nunca. Presentacion: el narrador
 ## la susurra en la pantalla de presentacion ("No dice nada. Nunca dice nada. Hasta que es tarde.").
 ## En la fase 3, y solo ahi, dice "Debiste venir antes.".
-## HIPERPLASIA: crece en cada fase (x1, x1.3, x1.62): mas cuerpo, mas alcance, mas sala ocupada.
+## HIPERPLASIA: crece en cada fase (x1, x1.22, x1.48): mas cuerpo, mas alcance, mas sala ocupada.
 ## Ataques (todos avisan antes de pegar):
 ## - GOTEO: espiral de gotas lentas que se corta y retoma (el ritmo es el aviso);
 ## - EMPUJE: el aviso es un circulo que se llena alrededor de ella; al activarse te empuja fuera
@@ -14,7 +14,7 @@ extends BossAltBase
 
 const NUT := Color(1.0, 0.72, 0.6)
 const DROP := Color(1.0, 0.92, 0.35)
-const SIZES := [1.0, 1.3, 1.62]
+const SIZES := [1.0, 1.22, 1.48]
 
 var _base_scale := Vector2.ONE
 var _grow_tween: Tween = null
@@ -27,6 +27,16 @@ func _ready() -> void:
 	keep_min = 240.0
 	keep_max = 380.0
 	_base_scale = animated_sprite.scale
+	_to_center()
+
+
+## Nace en el centro de la sala (el punto de aparicion de jefes queda pegado al muro de arriba y
+## la jefa, que crece, se saldria de pantalla).
+func _to_center() -> void:
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	if is_instance_valid(self) and state == State.INTRO:
+		global_position = arena().get_center() + Vector2(0, 95)
 
 
 func _attack_pool() -> Array:
