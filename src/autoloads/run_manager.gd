@@ -121,13 +121,13 @@ static func _as_list(v) -> Array:
 const CHARACTERS := {
 	"pitocles": {"name": "PITOCLES", "title": "Héroe de Penelandia", "kingdom": "pene", "hormone": "testosterona",
 		"perk": "Escudo (clic der./K): bloquea de frente y, con parry a tiempo, devuelve la bala. Su dash aturde. Más duro, más lento.",
-		"bio": "Hoplita veterano de la Guerra Fría Hormonal. Lleva casco griego porque leyó que daba autoridad. No la da."},
+		"bio": "Hoplita veterano de la Guerra Fría Hormonal. Lleva penacho rojo porque dijeron que da autoridad. No la da."},
 	"vulvalquiria": {"name": "VULVALQUIRIA", "title": "Heroína de Vulvania", "kingdom": "vulva", "hormone": "estrogeno",
-		"perk": "Más rápida, doble dash y alas (clic der./K): planea. Grito (F): los enemigos huyen. Menos vida, mejores esquivas.",
-		"bio": "Guerrera del norte de Vulvania. Ha visto cosas. Ha censurado cero. Viene a por la Hoja de Parra con trenzas y sin paciencia."},
+		"perk": "Más rápida, con doble dash y alas (clic der./K) que planean. Grito (F): los enemigos huyen. Menos vida, mejores esquivas.",
+		"bio": "Guerrera de los fiordos de Vulvania. Cero batallas perdidas, sin contar las que abandonó. Va por la Hoja con trenzas y sin paciencia."},
 	"ornitorrinco": {"name": "ORNITORRINCO", "title": "No especifica", "kingdom": "ninguno", "hormone": "",
 		"perk": "Electrorrecepción: ve lo invisible. Huevo-trampa (F) y espolón venenoso (clic der./K). Sin alergias, sin reino.",
-		"bio": "Pico de pato, cola de castor, pone huevos y es mamífero. La naturaleza tuvo un mal día. Él tuvo uno peor: le tocó salvar el mundo."},
+		"bio": "Pico de pato, cola de castor, pone huevos y es mamífero. Nadie sabe qué es. Salvar el mundo tampoco estaba en el formulario."},
 }
 
 ## Bendiciones de reino: se elige 1 de 3 al limpiar una sala que la ofrece.
