@@ -1,33 +1,78 @@
 {
-  "_info": "Frases de los jefes ALTERNATIVOS (etapa 6c, uno por reino; el original sigue en lines.json como boss<n>_*). Evento = bossalt<reino>_<intro|phase2|phase3|death|after>, el reino es 1..5 como en los originales. Las dice BossAltBase._say.",
-
-  "bossalt1_intro": ["LA AFEITADORA ELÉCTRICA: Bzzzzz. Cero margen de error. Tú y yo, al ras."],
-  "bossalt1_phase2": ["LA AFEITADORA ELÉCTRICA: ¡Cabezal oscilante! ¡Al cero, sin hidratante!"],
-  "bossalt1_phase3": ["LA AFEITADORA ELÉCTRICA: ¡Y a contrapelo, que es como mejor se ve el filo!"],
-  "bossalt1_death": ["LA AFEITADORA ELÉCTRICA: Se me acaba la batería... y el filo... y las ganas..."],
-  "bossalt1_after": ["Dato real: afeitarse no hace que el vello salga más fuerte ni más oscuro; solo se nota la punta recién cortada, que es roma. La selva, mientras tanto, vuelve a opinar lo suyo."],
-
-  "bossalt2_intro": ["DON VIAGRA: Caballero. Llevo cuatro horas de pie esperándole. Y no es lo que usted piensa. Bueno, un poco sí."],
-  "bossalt2_phase2": ["DON VIAGRA: ¡Efecto máximo! ¡Dosis doble! ¡Consulte a su médico!"],
-  "bossalt2_phase3": ["DON VIAGRA: ¡Sobredosis! ¡Si dura más de cuatro horas, acuda a un médico! ¡Y a un abogado!"],
-  "bossalt2_death": ["DON VIAGRA: Nací para el corazón... y mira cómo termino... sin receta..."],
-  "bossalt2_after": ["Dato real: el sildenafilo se investigó para la angina de pecho; el efecto secundario salió mejor que el principal. Y ojo: necesita estímulo y receta, no es magia."],
-
-  "bossalt3_intro": ["EL DIU CÓSMICO: Llevo años orbitando este útero sin pedir nada. Y tú vienes a moverme. Qué falta de respeto al espacio."],
-  "bossalt3_phase2": ["EL DIU CÓSMICO: ¡Hilos de nylon! ¡Cobre! ¡Y muchísimo carácter!"],
-  "bossalt3_phase3": ["EL DIU CÓSMICO: ¡Supernova! Prevengo embarazos y estrellas, no me hagas elegir."],
-  "bossalt3_death": ["EL DIU CÓSMICO: Me retiras... pero soy reversible... volveré a mi órbita..."],
-  "bossalt3_after": ["Dato real: el DIU de cobre es de los métodos más eficaces (más del 99%), dura años y es reversible: se retira y la fertilidad vuelve. Eso sí, no protege de las ITS; para eso, condón."],
-
-  "bossalt4_intro": ["LA PRÓSTATA BUROCRÁTICA: Número 37. Sí, usted. Pase a la ventanilla. Es un trámite sencillo. Y obligatorio. A partir de los 50."],
-  "bossalt4_phase2": ["LA PRÓSTATA BUROCRÁTICA: ¡Falta un papel! ¡Siempre falta un papel! ¡Vuelva mañana!"],
-  "bossalt4_phase3": ["LA PRÓSTATA BUROCRÁTICA: ¡HORA PUNTA! ¡Cuatro ventanillas cerradas y mil personas esperando!"],
-  "bossalt4_death": ["LA PRÓSTATA BUROCRÁTICA: Está bien... trámite resuelto... se recomienda... el chequeo anual..."],
-  "bossalt4_after": ["Dato real: la próstata es del tamaño de una nuez y da guerra con los años; revisarla a tiempo salva vidas. No es vergüenza: es mantenimiento."],
-
-  "bossalt5_intro": ["EL ALGORITMO MODERADOR: Analizando contenido... Infracción detectada: existir. Procedo a retirar."],
-  "bossalt5_phase2": ["EL ALGORITMO MODERADOR: ¡Falso positivo! ¡Los acepto todos! ¡Más pixelado!"],
-  "bossalt5_phase3": ["EL ALGORITMO MODERADOR: ¡Cuenta suspendida! No puede apelar. Ni hay a quién."],
-  "bossalt5_death": ["EL ALGORITMO MODERADOR: Error 404: criterio no encontrado... apelación... aceptada..."],
-  "bossalt5_after": ["Dato real: los filtros automáticos confunden a menudo la educación sexual, la lactancia o el cáncer de mama con contenido adulto. Por eso hace falta criterio humano. Y que alguien lea."]
+  "_info": "Frases de los jefes ALTERNATIVOS (uno por reino; el original esta en lines.json como boss<n>_*). Evento = bossalt<reino>_<intro|phase2|phase3|death|after>. Las dice BossAltBase._say.",
+  "bossalt1_intro": [
+    "LA AFEITADORA ELÉCTRICA: Bzzz. Cero margen de error. Tú y yo, al ras."
+  ],
+  "bossalt1_phase2": [
+    "LA AFEITADORA ELÉCTRICA: ¡Cabezal oscilante! ¡Al ras y sin hidratante!"
+  ],
+  "bossalt1_phase3": [
+    "LA AFEITADORA ELÉCTRICA: ¿Cinco hojas o seis? ¿Qué soy yo sin margen?"
+  ],
+  "bossalt1_death": [
+    "LA AFEITADORA ELÉCTRICA: Se acaba la batería... y el filo... y las ganas..."
+  ],
+  "bossalt1_after": [
+    "La Selva vuelve a opinar lo suyo."
+  ],
+  "bossalt2_intro": [
+    "DON VIAGRA: Caballero, llevo cuatro horas de pie. Y no es lo que piensa. Bueno, sí."
+  ],
+  "bossalt2_phase2": [
+    "DON VIAGRA: ¡Efecto máximo! ¡Dosis doble! ¡Consulte a su médico!"
+  ],
+  "bossalt2_phase3": [
+    "DON VIAGRA: ¡Sobredosis! Si dura más de cuatro horas, acuda a un médico. ¡Y a un abogado!"
+  ],
+  "bossalt2_death": [
+    "DON VIAGRA: Nací para el corazón... y mira cómo termino... sin receta..."
+  ],
+  "bossalt2_after": [
+    "Penelandia respira. Por fin, alguien se sienta."
+  ],
+  "bossalt3_intro": [
+    "EL DIU CÓSMICO: Llevo años orbitando sin molestar. Y vienes a moverme."
+  ],
+  "bossalt3_phase2": [
+    "EL DIU CÓSMICO: ¡Hilos de nylon! ¡Cobre! ¡Y muchísimo carácter!"
+  ],
+  "bossalt3_phase3": [
+    "EL DIU CÓSMICO: ¡Supernova! Prevengo embarazos y estrellas. No me hagas elegir."
+  ],
+  "bossalt3_death": [
+    "EL DIU CÓSMICO: Me retiras... pero soy reversible... volveré a mi órbita..."
+  ],
+  "bossalt3_after": [
+    "La órbita queda vacía. Vulvania vuelve a tener color."
+  ],
+  "bossalt4_intro": [
+    "LA VENTANILLA ÚNICA: Número 37. Pase. Falta un papel. Siempre falta uno."
+  ],
+  "bossalt4_phase2": [
+    "LA VENTANILLA ÚNICA: ¡Este trámite se hace en otra ventanilla! ¡Que no existe!"
+  ],
+  "bossalt4_phase3": [
+    "LA VENTANILLA ÚNICA: ¡Hora punta! Cuatro ventanillas cerradas y mil personas esperando."
+  ],
+  "bossalt4_death": [
+    "LA VENTANILLA ÚNICA: Trámite resuelto... cierro... por hoy..."
+  ],
+  "bossalt4_after": [
+    "Trámite resuelto. Por primera vez, nadie hizo cola."
+  ],
+  "bossalt5_intro": [
+    "EL ALGORITMO MODERADOR: Analizando contenido... Infracción detectada: existir. Procedo a retirar."
+  ],
+  "bossalt5_phase2": [
+    "EL ALGORITMO MODERADOR: ¡Falso positivo! ¡Los acepto todos! ¡Más píxeles!"
+  ],
+  "bossalt5_phase3": [
+    "EL ALGORITMO MODERADOR: ¡Cuenta suspendida! No puede apelar. Ni hay a quién."
+  ],
+  "bossalt5_death": [
+    "EL ALGORITMO MODERADOR: Error 404: criterio no encontrado... apelación aceptada..."
+  ],
+  "bossalt5_after": [
+    "Desde el fondo del servidor, una voz suspira: qué vergüenza."
+  ]
 }

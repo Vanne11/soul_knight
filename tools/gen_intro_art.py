@@ -61,9 +61,15 @@ SLIDES = [
     "A gloomy gray desaturated village where grumpy creatures from both kingdoms wander around with black censorship "
     "bars over their eyes and blurry pixelated censor squares on their bodies; they look irritated and ready to fight. "
     "Overcast sky. Also a small green crab-like louse creature with big eyes. " + CREATURES + PENE + VULVA,
-    "Three small heroes seen from behind on a hill: a pink hero with a golden Greek hoplite helmet and red crest, "
-    "a magenta valkyrie with a winged helmet, and a teal platypus with a straw hat. They look toward a distant gray palace "
-    "on a mountain, beyond a wild jungle, a blue kingdom and a pink kingdom. Epic adventure mood, sunset.",
+    "TRIPTYCH: one wide image split into three equal vertical panels separated by two thin dark vertical divider lines. "
+    "Each panel is a separate corner of a gray, desaturated, censored world, and in each one a different small hero wakes up alone, "
+    "yawning and stretching, with the hero as the only spot of color. "
+    "LEFT panel: a gray stone military barracks bunk; the pink hero with a golden Greek hoplite helmet (reference 1) sits up in bed "
+    "and a black censorship bar covers the red crest of his helmet. "
+    "MIDDLE panel: a gray Viking hall of trophies where every trophy is covered by a sheet and a big fig leaf; the magenta valkyrie "
+    "with winged helmet and braids (reference 2) wakes up on a bench with her arms crossed, impatient. "
+    "RIGHT panel: a gray wild jungle with tall leaves; the teal platypus with a straw hat (reference 3) wakes up curled in a "
+    "leafy nest on a low branch and a bored monkey watches. Morning light. Funny, tender, cinematic.",
     "A cute hero holding up a glowing potion vial with a gender symbol on it, sparkles around, while sneezing comically; "
     "a blue vial with the male symbol and a pink vial with the female symbol float nearby. Magical laboratory background.",
     "A smug old-fashioned radio microphone character with a mustache standing on a small theater stage under a spotlight, "
@@ -88,13 +94,13 @@ REFS = {
     2: ["sheet:pitocles", "sheet:vulvalquiria"],
     5: ["sheet:penelandia", "sheet:vulvania", "sheet:ladilla"],
     4: ["raw:3"],
-    6: PORTRAITS,
+    6: PORTRAITS,  # en 6 cada heroe despierta por separado (triptico)
     7: PORTRAITS[:1],
 }
 REF_NOTE = {
     4: "The fig leaf lady MUST be exactly the same green fig leaf character from the reference image "
        "(a leaf with a face, tiny round glasses and a pearl necklace), not a human. ",
-    6: "The three heroes MUST look like the three characters in the reference portraits: "
+    6: "The three heroes MUST look like the three characters in the reference portraits, in this order: "
        "1) pink hero with golden Greek helmet and red crest, 2) magenta valkyrie with winged helmet, 3) teal platypus with straw hat. ",
     7: "The hero MUST be the character from the reference portrait: a pink hero with a golden Greek hoplite helmet and red crest, round glasses-like eyes. ",
 }
@@ -166,7 +172,7 @@ def generate(n) -> Path:
         text = STYLE + REF_NOTE.get(n, "") + SLIDES[n]
     body = {
         "contents": [{"parts": [_ref_part(r) for r in refs] + [{"text": text}]}],
-        "generationConfig": {"responseModalities": ["IMAGE"], "imageConfig": {"aspectRatio": "16:9"}},
+        "generationConfig": {"responseModalities": ["IMAGE"], "imageConfig": {"aspectRatio": "16:9", "imageSize": "1K"}},
     }
     req = urllib.request.Request(
         f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent",
