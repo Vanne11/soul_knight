@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://c7fu3ik0wcupa"
+
+[deps]
+
+files=["res://locale/narrator_fosos.es.translation", "res://locale/narrator_fosos.en.translation"]
+
+source_file="res://locale/narrator_fosos.csv"
+dest_files=["res://locale/narrator_fosos.es.translation", "res://locale/narrator_fosos.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
