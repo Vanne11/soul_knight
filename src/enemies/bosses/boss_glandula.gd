@@ -46,25 +46,24 @@ func _channel_color() -> Color:
 	return NUT
 
 
-## Frases: no dice nada. El narrador solo habla al terminar (muerte y reaccion del heroe).
+## Frases del narrador: bossglandula_<evento> (lines.json); al final, ademas, la del heroe.
+## La jefa no habla: lo unico suyo es "Debiste venir antes." en la fase 3 (bossglandula_phase3).
 func _say(suffix: String) -> void:
-	match suffix:
-		"death":
-			if Narrator.has_lines("glandula_death"):
-				Narrator.say("glandula_death")
-		"after":
-			Prostata.say_hero("glandula_after")
+	var key := "bossglandula_" + suffix
+	if suffix == "after":
+		Narrator.say_hero(key)
+	elif Narrator.has_lines(key):
+		Narrator.say(key)
 
 
 func _on_phase(n: int) -> void:
 	move_speed = 55.0 + 10.0 * (n - 1)
 	_grow(SIZES[n - 1], 1.2)
-	if n == 3:
-		_float_text(tr("PRO_GLANDULA_P3"), Color("ff5a5a"), Vector2(0, -210))  # lo unico que dice
 
 
 func _on_death() -> void:
-	Prostata.codex("boss_glandula")
+	if Prostata.hero() == "vulvalquiria":
+		Prostata.codex("prostata_skene")  # las glandulas de Skene: la "prostata" de ella (codice)
 
 
 ## Crece (hiperplasia): sprite y formas de colision/golpe, con los pies en el mismo sitio.

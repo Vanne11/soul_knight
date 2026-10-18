@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://c3taf8mh6hp8t"
+
+[deps]
+
+files=["res://locale/narrator_prostata.es.translation", "res://locale/narrator_prostata.en.translation"]
+
+source_file="res://locale/narrator_prostata.csv"
+dest_files=["res://locale/narrator_prostata.es.translation", "res://locale/narrator_prostata.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

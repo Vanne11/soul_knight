@@ -137,7 +137,6 @@ func take_damage(amount: float, source: Node = null, kb: Vector2 = Vector2.ZERO)
 
 func die(killer: Node = null) -> void:
 	if state != State.DEAD:
-		Prostata.codex("psa_sospechoso")
 		Prostata.note("pro_psa")
 		if not _hot:
 			Prostata.floating(global_position + Vector2(0, -70), Loc.tr_or("PRO_PSA_LOW", "PSA BAJO"), Color("7fe0a0"))

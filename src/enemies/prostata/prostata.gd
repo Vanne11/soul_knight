@@ -5,10 +5,10 @@ extends RefCounted
 ## Sospechoso, y la jefa La Glandula Callada. Textos de burbuja en locale/prostata.csv (claves
 ## PRO_*) y frases del narrador en assets/data/narrator/prostata.json.
 ##
-## Eventos de codice (LoreDatabase.custom_event, tipo CUSTOM = 10; el agente del codice los usa
-## como target_id): loc_prostata (al entrar al reino), goteo_tardio, madrugador_nocturno,
-## psa_sospechoso (al caer uno de cada) y boss_glandula (al caer la jefa). Ademas valen los
-## contadores normales: KILL_ENEMY por nombre ("Goteo Tardío"...) y BOSS_KILL ("LA GLÁNDULA CALLADA").
+## Eventos de codice (LoreDatabase.custom_event, tipo CUSTOM = 10): enter_prostata (al entrar al
+## reino; abre loc_prostata) y prostata_skene (al caer la jefa con Vulvalquiria; abre skene_glandulas).
+## Los enemigos y la jefa se desbloquean solos por nombre: KILL_ENEMY ("Goteo Tardío", "Madrugador
+## Nocturno", "PSA Sospechoso") y BOSS_KILL ("LA GLÁNDULA CALLADA").
 
 const REGION := "prostata"
 static var _registered := false
@@ -103,7 +103,7 @@ static func on_enter_room(host: Node, room: Room) -> void:
 	var key := "%s:%s" % [rm.current_seed, rm.current_floor]
 	if _entered_key != key:
 		_entered_key = key
-		codex("loc_prostata")
+		codex("enter_prostata")
 	if _ambient_key != key and room.room_type in [Room.RoomType.SHOP, Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]:
 		_ambient_key = key
 		var nar = host.get_node_or_null("/root/Narrator")

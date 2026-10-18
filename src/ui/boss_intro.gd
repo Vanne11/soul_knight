@@ -31,16 +31,10 @@ static func on_enter_room(host: Node, room: Room) -> void:
 	layer.layer = 90
 	layer.process_mode = Node.PROCESS_MODE_ALWAYS
 	host.add_child(layer)
-	# Subtitulo opcional: las frases del evento "<variante>_intro" del narrador (p.ej. la Glandula
-	# Callada, que no habla: la presenta el narrador susurrando).
-	var sub := ""
-	var ls: Array = Narrator.get_lines(str(bv.variant) + "_intro")
-	if not ls.is_empty():
-		sub = str(ls[0])
-	layer._build(load(path), Loc.enemy_name(bv.name), sub)
+	layer._build(load(path), Loc.enemy_name(bv.name))
 
 
-func _build(tex: Texture2D, boss_name: String, subtitle := "") -> void:
+func _build(tex: Texture2D, boss_name: String) -> void:
 	_root = Control.new()
 	_root.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_root.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -67,23 +61,6 @@ func _build(tex: Texture2D, boss_name: String, subtitle := "") -> void:
 		t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		t.position += l[0]
 		name_box.add_child(t)
-	if subtitle != "":
-		var sub_box := Control.new()
-		sub_box.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-		sub_box.offset_top = -64
-		sub_box.offset_bottom = -16
-		sub_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_root.add_child(sub_box)
-		for l in [[Vector2(2, 2), Color("1a0b26")], [Vector2.ZERO, Color("e8dcd2")]]:
-			var st := HudStyle.pixel_label(subtitle, 17, l[1], true)
-			st.set_anchors_preset(Control.PRESET_FULL_RECT)
-			st.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-			st.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-			st.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-			st.offset_left = 80
-			st.offset_right = -80
-			st.position += l[0]
-			sub_box.add_child(st)
 	get_tree().paused = true
 	Sound.play("crack")
 

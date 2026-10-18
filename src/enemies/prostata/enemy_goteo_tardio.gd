@@ -62,6 +62,5 @@ func _drop(angle: float, speed: float, life: float) -> void:
 
 
 func die(killer: Node = null) -> void:
-	Prostata.codex("goteo_tardio")
 	Prostata.note("pro_goteo")
 	super.die(killer)

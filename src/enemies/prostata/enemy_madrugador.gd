@@ -26,7 +26,6 @@ func _setup() -> void:
 
 func die(killer: Node = null) -> void:
 	if state != State.DEAD:
-		Prostata.codex("madrugador_nocturno")
 		Prostata.note("pro_madrugador")
 		_call_next_wave()
 	super.die(killer)
