@@ -27,6 +27,24 @@ extends Node
 ## (prueba corta: agregar --max-secs=60 tras los flags del bot. Para mp4: ffmpeg -i partida.ogv -c:v libx264 -crf 23 partida.mp4)
 ## (XDG_DATA_HOME aparte: asi la grabacion no toca el progreso/codice/narrador reales de ~/.local/share/godot)
 ##
+## PELEA DIRECTA CONTRA UN JEFE (prototipo de balance, plan J0): salta al piso del jefe, equipa lo pedido y entra a
+## su sala sin recorrer el piso. Al terminar escribe "[J0] jefe=... heroe=... semilla=..." (una linea facil de parsear)
+## y el bot cierra Godot. Varias peleas en paralelo con --log= y XDG_DATA_HOME distintos; tools/autoplay/tabla_jefes.py
+## junta los registros (y las lineas "[boss-stats]"/"[boss-dmg]" del jefe, si se guarda la salida: > ruta.out).
+##   --boss=<variante>   cera | boss_cera | afeitadora ... (cualquiera de las dos variantes del piso: original o alternativo)
+##   --boss-alt=0|1      fuerza original (0) o alternativo (1) de ese piso (BossPicker); sin esto, el de la variante pedida
+##   --loadout=a,b,c     ids de objetos: el arma que sea (equip_slot de arma) se equipa y el resto va al inventario
+##                       (sin arma pedida, pistola basica). Ej: --loadout=boomerang_silicona
+##   --hp-bonus=N        +N de vida maxima al saltar al jefe (el salto se salta las mejoras de los pisos previos: con la vida base
+##                       25 los heroes caen en segundos; ~40 se parece a llegar con 2-3 recompensas de jefe y corazones)
+##   --manual=1          JUGARLO A MANO: mismo arranque pero el bot no toma el control (solo mide y anota). Sin modo dios
+##                       (salvo --god=1) y no cierra solo. Ej. ventana en la pantalla del notebook, sin sonido:
+##   godot --path . --screen 2 --audio-driver Dummy res://tools/autoplay/autoplay.tscn -- --boss=cera --manual=1
+##   (el bot aun pasa el menu y la intro y elige --hero; cambialo con --hero=pitocles|vulvalquiria|ornitorrinco)
+## Bot, sin sonido ni ventana, una pelea (varias en paralelo: --log= y XDG_DATA_HOME distintos):
+##   XDG_DATA_HOME=.claude_tmp/xdg1 godot --headless --audio-driver Dummy --fixed-fps 60 res://tools/autoplay/autoplay.tscn -- \
+##     --hero=pitocles --seed=1 --boss=cera --no-god=1 --log=.claude_tmp/cera_pitocles_1.log > .claude_tmp/cera_pitocles_1.out
+##
 ## Dinamicas de sala (src/rooms): --force-dyn=<escort|hold|thief|stealth|clock|challenge|celo|lubricado|
 ## aduanera|apagon|censurada|barriles|antorchas|trampas|pacto|ruleta|mercado> las fuerza en toda sala donde
 ## quepan; --force-utero=1 abre El Utero (nivel secreto de Vulvania) al pisar Trompas sin comprar el Turno; --no-god=1 juega sin modo dios (para medir los peligros de sala); --armed=1 empieza con pistola.
@@ -116,6 +134,12 @@ var _coins_gained := {}  # piso -> monedas recogidas
 var _coins_prev := -1
 var _codex0 := 0
 var _game_f0 := -1  # fotograma de fisica en que empezo la partida
+# pelea directa contra un jefe + medidor J0
+var _boss_arg := ""
+var _loadout: Array = []
+var _manual := false
+var _bm := {}  # medidor de la pelea (ver _boss_meter)
+var _bm_reported := false
 
 
 func _ready() -> void:
@@ -146,11 +170,17 @@ func _ready() -> void:
 		set_physics_process(false)
 		set_process(false)
 		return
+	_boss_arg = _arg("--boss=", "")
+	_manual = _arg("--manual=", "") not in ["", "0"]
+	for id in _arg("--loadout=", "").split(",", false):
+		_loadout.append(id.strip_edges())
 	DebugMenu.god_mode = _arg("--no-god=", "") == ""  # --no-god=1: sin modo dios (mide dificultad y peligros de sala)
 	Utero.force = _arg("--force-utero=", "") != ""  # prueba: El Utero se abre solo al pisar Trompas (sin comprar el Turno)
 	RoomDirector.force_kind = _arg("--force-dyn=", "")  # prueba: fuerza esa dinamica de sala en todas las salas donde quepa
 	# para alargar los jefes y ver todos sus desafios: --boss-hp=1,1,12,12,12 (multiplicador por piso)
 	EnemyBoss.test_hp_mults = Array(_arg("--boss-hp=", "1").split(",", false)).map(func(x): return float(x))
+	if _manual:
+		DebugMenu.god_mode = _arg("--god=", "") not in ["", "0"]  # a mano se juega en serio
 	_build_overlay()
 	_codex0 = get_node("/root/LoreDatabase").get_unlocked_entries().size()
 	if _max_secs > 0.0:
@@ -208,6 +238,8 @@ func _ready() -> void:
 	_say("Partida nueva: semilla=%d" % get_node("/root/RunManager").current_seed)
 	player.get_node("Hurtbox").area_entered.connect(func(a): if a.is_in_group("enemy_attack"): _hits += 1)
 	_say("Modo: %s%s, tiempo x%.1f" % ["RECOGER TODO" if _collect else "recorrido normal", "" if DebugMenu.god_mode else " SIN modo dios", Engine.time_scale])
+	if _boss_arg != "":
+		await _setup_boss_fight()
 
 
 ## Termina solo tras N s de juego (fotogramas de fisica / 60: sirve igual con el movie maker, que fija el paso).
@@ -218,6 +250,10 @@ func _watch_max_secs() -> void:
 	while (Engine.get_physics_frames() - f0) / float(Engine.physics_ticks_per_second) < _max_secs:
 		await get_tree().process_frame
 	_say("--max-secs=%d alcanzado: fin de la prueba" % int(_max_secs))
+	if _boss_arg != "":
+		_boss_report("tiempo")
+		if not _bm_reported:
+			_say("[J0] jefe=%s heroe=%s resultado=sin_pelea" % [_boss_arg, _hero])
 	_log_summary("RESUMEN PARCIAL")
 	get_tree().quit()
 
@@ -294,6 +330,9 @@ func _physics_process(delta: float) -> void:
 	if ifr > _iframes_prev + 0.3:
 		_hits_real += 1
 	_iframes_prev = ifr
+	_boss_meter(delta)
+	if _manual:
+		return  # a mano: el bot solo mide
 	_release_all()
 	var picker := get_tree().get_first_node_in_group("blessing_picker") as BlessingPicker
 	if picker:
@@ -469,6 +508,9 @@ func _on_room(room: Room) -> void:
 
 
 func _on_boss_killed(e: Node, _k: Node) -> void:
+	if not _bm.is_empty() and e == _bm.get("boss"):
+		_bm.victory = true
+		_boss_report("victoria")
 	if e.is_in_group("boss") and _boss_t0 >= 0.0:
 		var secs := Time.get_ticks_msec() / 1000.0 - _boss_t0
 		_say("JEFE %s derrotado en %.0f s (reloj real, --fast=1.6x), golpes recibidos en la pelea: %d" % [e.enemy_name, secs, _hits_real - _boss_hits0])
@@ -478,6 +520,7 @@ func _on_boss_killed(e: Node, _k: Node) -> void:
 func _finish(victory: bool) -> void:
 	_done = true
 	_release_all()
+	_boss_report("victoria" if victory else "derrota")
 	if not get_node("/root/RunManager").last_run_victory:
 		_say("MUERTE/FIN en el piso %d (%s), sala %s" % [_floor_n, get_node("/root/RunManager").floor_data().get("name", "?"), _room.grid_pos if _room else "?"])
 	_log_summary("RESUMEN FINAL")
@@ -488,6 +531,156 @@ func _finish(victory: bool) -> void:
 	_label.text = "BOT · FIN: %s · problemas: %d" % ["VICTORIA" if victory else "derrota", _issues.size()]
 	if "--quit-on-end" in OS.get_cmdline_user_args():
 		await _wait_s(12.0)  # que se vea la pantalla final
+		get_tree().quit()
+
+
+# ------------------------------------------------------------------ pelea directa contra un jefe (J0)
+## Busca el piso del jefe (cualquiera de sus dos variantes). Si su reino no esta en la ruta del heroe, lo agrega.
+func _find_boss_floor(arg: String) -> Dictionary:
+	var want := arg.trim_prefix("boss_")
+	for f in RunManager.FLOORS:
+		var b := str(f.get("boss", "")).trim_prefix("boss_")
+		var a := str(f.get("boss_alt", "")).trim_prefix("boss_")
+		if want != "" and (want == b or (a != "" and want == a)):
+			return f
+	return {}
+
+
+func _setup_boss_fight() -> void:
+	var rm := get_node("/root/RunManager")
+	var f := _find_boss_floor(_boss_arg)
+	if f.is_empty():
+		_issue("--boss=%s: no hay ningun piso con ese jefe" % _boss_arg)
+		return
+	if not RunManager.route_floors.has(f):
+		RunManager.set_route(RunManager.route_regions + [f.region])
+	var idx := RunManager.route_floors.find(f) + 1
+	var want := _boss_arg.trim_prefix("boss_")
+	var alt_flag := _arg("--boss-alt=", "")
+	if alt_flag != "":
+		BossPicker.force = "alt" if alt_flag != "0" else "main"
+	else:
+		var is_alt: bool = str(f.get("boss_alt", "")) != "" and want == str(f.boss_alt).trim_prefix("boss_") and want != str(f.boss).trim_prefix("boss_")
+		BossPicker.force = "alt" if is_alt else "main"
+	rm.current_floor = idx - 1
+	main._advance_to_next_floor()
+	await _wait_s(1.0)
+	var db := get_node("/root/ItemDatabase")
+	var has_weapon := false
+	for id in _loadout:
+		var it = db.get_item(id)
+		if it == null:
+			_issue("--loadout: no existe el objeto %s" % id)
+			continue
+		if it.equip_slot == Item.EquipSlot.WEAPON:
+			player.equip_weapon(it)
+			has_weapon = true
+		else:
+			player.add_item_to_inventory(id)
+	if not has_weapon:
+		player.equip_weapon(db.get_item("pistol_basic"))
+	var hp_bonus := float(_arg("--hp-bonus=", "0"))
+	if hp_bonus > 0.0:
+		get_node("/root/PlayerStats").apply_stat_mod("max_health_flat", hp_bonus)
+	_bm = {"variant": _boss_arg, "floor": idx, "alt": BossPicker.force == "alt"}
+	_say("PELEA DIRECTA: jefe=%s piso=%d (%s) %s equipo=%s%s" % [_boss_arg, idx, rm.floor_data().name, "ALTERNATIVO" if BossPicker.force == "alt" else "original", _loadout, " MANUAL" if _manual else ""])
+	_force_boss()
+	if _max_secs <= 0.0 and not _manual:
+		_max_secs = 600.0  # tope de la pelea del bot (tiempo de juego)
+		_watch_max_secs()
+
+
+## Medidor J0. Corre cada fotograma de fisica (tambien a mano). Empieza cuando el jefe sale de INTRO; todo en tiempo de juego.
+func _boss_meter(delta: float) -> void:
+	if _boss_arg == "" or get_tree().paused or _bm_reported:
+		return
+	var b = _bm.get("boss")
+	if b == null or not is_instance_valid(b):
+		var cand = get_tree().get_first_node_in_group("boss")
+		if cand == null or not is_instance_valid(cand) or cand.get("state") == null or int(cand.state) == 0 or float(cand.current_health) <= 0.0:
+			return
+		_bm.boss = cand
+		_bm.t = 0.0
+		_bm.atk = 0.0
+		_bm.tired = 0.0
+		_bm.chan = 0.0
+		_bm.idle = 0.0
+		_bm.dmg_taken = 0.0
+		_bm.hits0 = _hits_real
+		_bm.dealt = 0.0
+		_bm.max_hit = 0.0
+		_bm.max_hit_weapon = "-"
+		_bm.heals = 0
+		_bm.cuts = 0
+		_bm.was_chan = false
+		_bm.victory = false
+		_bm.hp_max = float(cand.max_health)
+		_bm.name = str(cand.get("enemy_name"))
+		var ge := get_node("/root/GlobalEvents")
+		_bm.pool = _pool_now()
+		ge.enemy_damaged.connect(_bm_on_enemy_damaged)
+		_say("MEDIDOR: pelea contra %s (vida %.0f)" % [_bm.name, _bm.hp_max])
+		return
+	if int(b.state) == 5:  # DEAD
+		return
+	_bm.t += delta
+	_bm.hp_last = float(b.current_health)
+	var pool_now := _pool_now()  # vida + escudo: lo que baja es dano recibido (el escudo que regenera solo sube)
+	if pool_now < _bm.pool:
+		_bm.dmg_taken += _bm.pool - pool_now
+	_bm.pool = pool_now
+	match int(b.state):
+		2: _bm.atk += delta     # ATTACK
+		3: _bm.tired += delta   # TIRED
+		1: _bm.idle += delta    # IDLE
+	var ch: bool = b.get("_channeling") == true
+	if ch:
+		_bm.chan += delta
+	if _bm.was_chan and not ch:
+		if b.get("_chan_ok") == true:
+			_bm.cuts += 1
+		_bm.heals += 1
+	_bm.was_chan = ch
+
+
+func _pool_now() -> float:
+	var st := get_node("/root/PlayerStats")
+	return float(st.current_health) + float(st.current_shields)
+
+
+func _bm_on_enemy_damaged(e: Node, amount: float, _src: Node) -> void:
+	if _bm_reported or not _bm.has("t") or e != _bm.boss:
+		return
+	_bm.dealt += amount
+	if amount > _bm.max_hit:
+		_bm.max_hit = amount
+		_bm.max_hit_weapon = str(player.current_weapon.id) if player and player.current_weapon else "puno"
+
+
+## Escribe el resumen de la pelea: lineas legibles y la linea final "[J0] ..." (una vez). En modo bot cierra Godot.
+func _boss_report(result: String) -> void:
+	if _bm_reported or not _bm.has("t"):
+		return
+	_bm_reported = true
+	var b = _bm.boss
+	var hp_left := 0.0
+	if not _bm.victory:
+		hp_left = maxf(0.0, float(b.current_health) if is_instance_valid(b) else float(_bm.get("hp_last", 0.0)))
+	var t: float = maxf(_bm.t, 0.001)
+	var rm := get_node("/root/RunManager")
+	var weapon := str(player.current_weapon.id) if player and is_instance_valid(player) and player.current_weapon else "-"
+	var hits: int = _hits_real - _bm.hits0
+	_say("RESUMEN JEFE %s: %s en %.1f s de juego; golpes recibidos %d, dano recibido %.0f; vida del jefe restante %.0f/%.0f (%.0f%%); dano al jefe %.0f (%.1f/s); ataque activo %.0f%% / agotado %.0f%% / reposo %.0f%% / curandose %.0f%%; curas %d (cortadas %d); golpe mas fuerte %.0f con %s" % [
+		_bm.name, result, t, hits, _bm.dmg_taken, hp_left, _bm.hp_max, 100.0 * hp_left / _bm.hp_max, _bm.dealt, _bm.dealt / t,
+		100.0 * _bm.atk / t, 100.0 * _bm.tired / t, 100.0 * _bm.idle / t, 100.0 * _bm.chan / t, _bm.heals, _bm.cuts, _bm.max_hit, _bm.max_hit_weapon])
+	_say("[J0] jefe=%s%s heroe=%s semilla=%d arma=%s resultado=%s dur=%.1f golpes=%d dano_rec=%.0f vida_restante=%.0f vida_max=%.0f dps=%.1f pct_ataque=%.0f pct_agotado=%.0f pct_reposo=%.0f pct_cura=%.0f curas=%d cortadas=%d golpe_max=%.0f arma_golpe_max=%s god=%d" % [
+		str(_bm.variant).trim_prefix("boss_"), "(alt)" if _bm.alt else "", _hero, rm.current_seed, weapon, result, t, hits, _bm.dmg_taken,
+		hp_left, _bm.hp_max, _bm.dealt / t, 100.0 * _bm.atk / t, 100.0 * _bm.tired / t, 100.0 * _bm.idle / t, 100.0 * _bm.chan / t,
+		_bm.heals, _bm.cuts, _bm.max_hit, _bm.max_hit_weapon, 1 if DebugMenu.god_mode else 0])
+	if not _manual:
+		_done = true
+		_release_all()
+		await get_tree().create_timer(0.3, true, false, true).timeout
 		get_tree().quit()
 
 

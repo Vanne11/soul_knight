@@ -17,7 +17,7 @@ var _t: float = 0.0
 var _mgr: Node = null
 
 
-func setup(mgr: Node, world_pos: Vector2, txt: String, color: Color, is_crit: bool, is_number: bool) -> void:
+func setup(mgr: Node, world_pos: Vector2, txt: String, color: Color, is_crit: bool, is_number: bool, font_size: int = 0) -> void:
 	_mgr = mgr
 	_world_pos = world_pos
 	_t = 0.0
@@ -35,7 +35,7 @@ func setup(mgr: Node, world_pos: Vector2, txt: String, color: Color, is_crit: bo
 		rise_px = 48.0
 		bounce_px = 0.0
 	text = txt
-	HudStyle.style_label(self, 24 if is_crit else 16, color, is_crit)
+	HudStyle.style_label(self, 24 if is_crit else (font_size if font_size > 0 else 16), color, is_crit or font_size > 16)
 	# Fuerza el tamano minimo con el texto nuevo para centrar bien.
 	reset_size()
 	size = get_minimum_size()

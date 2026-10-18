@@ -18,14 +18,14 @@ func _ready() -> void:
 
 
 ## `position` es de mundo. `is_number` distingue danos de avisos (ambos 16 px).
-func spawn(position: Vector2, text: String, color: Color = Color.WHITE, is_crit: bool = false) -> void:
+func spawn(position: Vector2, text: String, color: Color = Color.WHITE, is_crit: bool = false, font_size: int = 0) -> void:
 	if _active >= MAX_ACTIVE:
 		return
 	var ft := _get_from_pool()
 	if ft.get_parent() == null:
 		add_child(ft)
 	_active += 1
-	ft.setup(self, position, text, color, is_crit, true)
+	ft.setup(self, position, text, color, is_crit, true, font_size)
 
 
 func _get_from_pool() -> FloatingText:

@@ -75,6 +75,7 @@ func _ready() -> void:
 	_global_events.player_died.connect(_on_player_died)
 	_global_events.show_damage_number.connect(_on_show_damage_number)
 	_global_events.show_floating_text.connect(_on_show_floating_text)
+	_global_events.show_hero_number.connect(_on_show_hero_number)
 
 func _setup_camera() -> void:
 	camera.limit_left = 0
@@ -1002,6 +1003,9 @@ func _check_room_clear_for_enemy(killed_enemy: Node) -> void:
 
 func _on_show_damage_number(position: Vector2, amount: float, is_crit: bool) -> void:
 	floating_text_mgr.spawn(position, "%.0f" % amount, HudStyle.GOLD if is_crit else Color("ff3b4a"), is_crit)
+
+func _on_show_hero_number(position: Vector2, text: String, color: Color, big: bool) -> void:
+	floating_text_mgr.spawn(position, text, color, false, 24 if big else 18)
 
 func _on_show_floating_text(position: Vector2, text: String, color: Color) -> void:
 	floating_text_mgr.spawn(position, text, color)

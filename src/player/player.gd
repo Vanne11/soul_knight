@@ -924,6 +924,8 @@ func _on_hurtbox_entered(area: Area2D) -> void:
 ## (dash o invulnerabilidad tras un golpe).
 func receive_hit(dmg: float) -> bool:
 	if is_dashing or _iframes > 0.0 or _falling > 0.0:
+		if is_dashing and dmg > 0.0:
+			_show_dodge()
 		return false
 	_iframes = HIT_IFRAMES
 	_player_stats.take_damage(dmg)
@@ -934,6 +936,16 @@ func receive_hit(dmg: float) -> bool:
 	if pride > 0 and current_weapon and _player_stats.current_health > 0.0:
 		_ring(8, get_weapon_damage() * _player_stats.damage_modifier * pride)
 	return true
+
+## "¡Esquivado!" al evitar un golpe con el dash; con enfriamiento para no saturar.
+var _dodge_txt_t := -10.0
+
+func _show_dodge() -> void:
+	var now := Time.get_ticks_msec() / 1000.0
+	if now - _dodge_txt_t < 0.7 or not Settings.hero_numbers:
+		return
+	_dodge_txt_t = now
+	_global_events.show_hero_number.emit(global_position + Vector2(0, -34), tr("FX_DODGE"), Color("ffe08a"), false)
 
 ## El arma que sueltas al coger otra se queda en el suelo: puedes volver a por ella.
 func _drop_weapon(id: String) -> void:
