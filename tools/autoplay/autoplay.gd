@@ -332,6 +332,7 @@ func _physics_process(delta: float) -> void:
 		_floor_t = 0.0
 		_visited.clear()
 		_kq_lost = 0
+		_consulta_giveup = false
 		_skip_rooms.clear()
 		_rush = false
 		_stall_n = 0
@@ -637,8 +638,8 @@ func _explore(room: Room) -> void:
 			if _interact_t <= 0.0:
 				Input.action_press("interact")
 				_interact_t = 0.35
-				if target.get_script().resource_path.ends_with("interactable.gd"):
-					_used[target.get_instance_id()] = true  # inscripcion, fuente, escotilla: una vez
+				if target.get_script().resource_path.ends_with("interactable.gd") and not room.has_meta("consulta"):
+					_used[target.get_instance_id()] = true  # inscripcion, fuente, escotilla: una vez (la puerta del Utero se reintenta)
 				var it = target.get("_item")
 				if it != null and it.equip_slot == Item.EquipSlot.WEAPON:
 					_wpn_taken[it.id] = true  # recoger-todo: cada arma una vez (la que se suelta al cambiar no se vuelve a coger)
@@ -646,6 +647,8 @@ func _explore(room: Room) -> void:
 				target.set_meta("bot_tries", n)
 				if n > 6:
 					_used[target.get_instance_id()] = true
+					if room.has_meta("consulta"):
+						_consulta_giveup = true
 					_issue("No se pudo usar/recoger %s en sala %s" % [_thing_name(target), Room.RoomType.keys()[room.room_type]])
 		# hasta quedar encima: a 26 px el cuerpo todavia no toca el area del objeto
 		if player.global_position.distance_to(tp) > 4.0:
@@ -705,6 +708,7 @@ func _solve_puzzle(pz: Node2D) -> bool:
 var _quest_room: Room = null
 var _kq_state := ""
 var _kq_lost := 0
+var _consulta_giveup := false
 
 func _quest_step(room: Room) -> bool:
 	_quest_room = null
@@ -833,7 +837,7 @@ func _things(room: Room) -> Array:
 				out.append(c)
 		elif path.ends_with("interactable.gd"):
 			# La puerta del Utero (Consulta de la Doctora V.): solo vale la pena con el Turno en la mano.
-			if room.has_meta("consulta") and (not Utero.owns_turno(main) or RunManager.utero_inserted):
+			if room.has_meta("consulta") and (not Utero.owns_turno(main) or RunManager.utero_inserted or _consulta_giveup):
 				continue
 			generic.append(c)
 	out = out.filter(func(n): return n.get_parent() != null and not _used.has(n.get_instance_id()))
@@ -884,7 +888,7 @@ func _next_room(room: Room) -> Room:
 	if _quest_room != null and _quest_room != room and _quest_room.grid_pos in order:
 		goal = _quest_room.grid_pos  # mision de llave: ir a la sala de la llave / del cofre
 	# Con el Turno en la mano: a la Consulta de la Doctora V. (la puerta del Utero)
-	if goal == null and Utero.owns_turno(main) and not RunManager.utero_inserted:
+	if goal == null and Utero.owns_turno(main) and not RunManager.utero_inserted and not _consulta_giveup:
 		for pos in order:
 			if rooms[pos].has_meta("consulta") and pos != room.grid_pos:
 				goal = pos
