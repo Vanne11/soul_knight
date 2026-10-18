@@ -501,7 +501,7 @@ func _burst(at: Vector2, color: Color) -> void:
 func bot_goal(room: Room) -> Dictionary:
 	if not ready_ok or bot_gave_up or state == "done" or state == "none":
 		return {}
-	var now := Time.get_ticks_msec() / 1000.0
+	var now := Engine.get_physics_frames() / float(Engine.physics_ticks_per_second)  # tiempo de juego (el bot puede correr con --fixed-fps)
 	if _bot_t0 < 0.0:
 		_bot_t0 = now
 	elif now - _bot_t0 > 300.0:

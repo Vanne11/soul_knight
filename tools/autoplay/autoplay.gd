@@ -324,6 +324,7 @@ func _physics_process(delta: float) -> void:
 		_floor_n = rm.current_floor
 		_floor_t = 0.0
 		_visited.clear()
+		_kq_lost = 0
 		_skip_rooms.clear()
 		_rush = false
 		_stall_n = 0
@@ -673,6 +674,7 @@ func _solve_puzzle(pz: Node2D) -> bool:
 ## se ocupo de la sala este fotograma. `_quest_room` empuja a _next_room hacia otra sala.
 var _quest_room: Room = null
 var _kq_state := ""
+var _kq_lost := 0
 
 func _quest_step(room: Room) -> bool:
 	_quest_room = null
@@ -680,8 +682,19 @@ func _quest_step(room: Room) -> bool:
 	if kq == null or not kq.ready_ok or player.current_weapon == null:
 		return false  # sin arma no hay custodios que valgan: primero el arma
 	if kq.state != _kq_state:
+		if _kq_state == "carried" and kq.state == "home":
+			_kq_lost += 1
+			if _kq_lost >= 3 and not kq.bot_gave_up:
+				kq.bot_gave_up = true
+				_issue("Piso %d: la llave %s se perdio %d veces (la mision no se puede hacer con lo que lleva el bot): abandonada" % [_floor_n, kq.kind, _kq_lost])
 		_kq_state = kq.state
 		_say("Mision de llave %s: %s (llave en %s, cofre en %s)" % [kq.kind, kq.state, kq.home.grid_pos, kq.vault.grid_pos])
+	# llave borracha en la mano: la intoxicacion baja 2 por segundo y el camino al cofre es largo -> bebe lo que lleve
+	if kq.kind == "drunk" and kq.state == "carried" and get_node("/root/PlayerStats").intoxication_level < 45.0:
+		var slots := ItemSlots.find(player)
+		if slots != null and _slot_t <= 0.0 and slots.use_first_with_tag("intoxicante"):
+			_slot_t = 1.0
+			_say("  bebe un intoxicante de las ranuras para no soltar la llave borracha")
 	var g: Dictionary = kq.bot_goal(room)
 	if g.is_empty():
 		return false
@@ -1228,6 +1241,7 @@ func _scan_floor() -> void:
 		return
 	var f: Dictionary = _fl[_floor_n]
 	var rooms: Dictionary = main.dungeon_generator.rooms
+	_watch_outsiders()
 	f.rooms_total = rooms.size()
 	f.rooms_visited = _visited.size()
 	var un := []
@@ -1303,3 +1317,32 @@ func _log_summary(title: String) -> void:
 	_say("  CODICE: %d de %d entradas desbloqueadas (%d nuevas en esta partida)" % [now, lore.get_all_entries().size(), now - _codex0])
 	var rm := get_node("/root/RunManager")
 	_say("  Objetos totales recogidos: %d; monedas ahora: %d; bendiciones: %s" % [rm.items_collected.size(), rm.coins, rm.blessings])
+
+
+## Enemigos fuera de la sala (nacieron o fueron a parar fuera de los muros): inalcanzables, la sala no se limpia nunca.
+## Se anotan con todos los detalles (es un fallo del juego) y, pasados 20 s, se les baja la vida para seguir.
+var _outside := {}  # instance_id -> segundos fuera
+
+func _watch_outsiders() -> void:
+	var room: Room = main.current_room
+	if room == null:
+		return
+	var size := RoomUtil.size_of(room)
+	var alive := {}
+	for e in _alive_enemies(room):
+		var rel: Vector2 = e.global_position - room.global_position
+		if rel.x > -40.0 and rel.y > -40.0 and rel.x < size.x + 40.0 and rel.y < size.y + 40.0:
+			continue
+		var id: int = e.get_instance_id()
+		alive[id] = true
+		_outside[id] = float(_outside.get(id, 0.0)) + 1.0
+		if _outside[id] == 1.0:
+			_issue("Enemigo FUERA de la sala %s %s: %s en %s (sala de %s); script=%s estado=%s vel=%s meta=%s" % [
+				Room.RoomType.keys()[room.room_type], room.grid_pos, e.get("enemy_name"), rel, size, e.get_script().resource_path,
+				e.get("state"), e.get("velocity"), room.get_meta_list()])
+		if _outside[id] >= 20.0 and e.has_method("take_damage"):
+			_issue("Enemigo fuera de la sala %s %s sin poder alcanzarlo: se le baja la vida" % [Room.RoomType.keys()[room.room_type], room.grid_pos])
+			e.take_damage(1.0e9, player)
+	for id in _outside.keys():
+		if not alive.has(id):
+			_outside.erase(id)
