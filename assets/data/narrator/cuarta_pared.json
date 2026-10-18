@@ -1,23 +1,23 @@
 {
   "_info": "Cuarta pared (src/fx/fourth_wall.gd): los heroes te hablan, el juego sabe de ti. Mismo formato que lines.json. Placeholders: {name} (solo si el jugador dio su nombre), {time}, {hero_deaths}, {hero_runs}, {fav}, {boss}, {n}, {days}, {boss_up}. ' || ' separa narrador y heroe en una discusion.",
   "night_pitocles": [
-    "PITOCLES: Son las {time}. Yo debería estar en el cuartel. Y tú, en la cama.",
+    "PITOCLES: Las {time}. Dormir no es rendirse: es retirada táctica con almohada.",
     "PITOCLES: ¿Jugando de madrugada? En mi época eso se llamaba insomnio.",
-    "PITOCLES: {name}, a dormir. Es una orden. Mi autoridad es dudosa, pero es una orden."
+    "PITOCLES: {name}, a dormir. Es una orden. De autoridad dudosa, pero orden."
   ],
   "night_vulvalquiria": [
     "VULVALQUIRIA: ¿A las {time}? Yo trasnocho, pero tú abusas.",
     "VULVALQUIRIA: Mañana tendrás ojeras. Yo no: soy valquiria.",
-    "VULVALQUIRIA: {name}, ¿no deberías dormir? Y no me mires así, yo no duermo por trabajo."
+    "VULVALQUIRIA: {name}, duerme. Mañana quiero un rival, no un zombi."
   ],
   "night_ornitorrinco": [
     "ORNITORRINCO: Soy casi nocturno. ¿Y tú? Ah, nocturno por vocación.",
-    "ORNITORRINCO: Las {time}. A esta hora hasta el código se pregunta qué hace despierto.",
-    "ORNITORRINCO: {name}, el sueño es un bien escaso. Como los ornitorrincos."
+    "ORNITORRINCO: Las {time}. Hasta el código se pregunta qué hace despierto.",
+    "ORNITORRINCO: {name}, ¿a esta hora nadie te espera? A mí tampoco. Ñic."
   ],
   "idle_pitocles": [
     "PITOCLES: Descanso, bien. Pero que conste: yo no pedí esta pausa.",
-    "PITOCLES: Veinte segundos quieto. Eso lo hago yo en guardia. Tú no tienes excusa."
+    "PITOCLES: Veinte segundos quieto. Eso es guardia. Yo la hago con más dignidad."
   ],
   "idle_vulvalquiria": [
     "VULVALQUIRIA: ¿Vas a jugar o a mirarme?",
@@ -33,36 +33,33 @@
   ],
   "pause_vulvalquiria": [
     "VULVALQUIRIA: Pausar no te hace mejor.",
-    "VULVALQUIRIA: Cuarta pausa. Ya sé que respiras; apúrate."
+    "VULVALQUIRIA: Otra pausa. Hasta el jefe se aburre de esperarte."
   ],
   "pause_ornitorrinco": [
-    "ORNITORRINCO: Cada pausa me deja congelado a media idea. Es incómodo."
+    "ORNITORRINCO: Cada pausa me deja congelado a media idea. Ñic."
   ],
   "back_pitocles": [
-    "PITOCLES: ¿Me dejaste por otra pestaña? Qué poca lealtad."
+    "PITOCLES: Te fuiste sin pedir permiso. En el cuartel eso es deserción."
   ],
   "back_vulvalquiria": [
-    "VULVALQUIRIA: Volviste. ¿Era mejor la otra ventana?",
     "VULVALQUIRIA: Te vi irte. No hice drama. Un poco."
   ],
   "back_ornitorrinco": [
     "ORNITORRINCO: Te fuiste. Yo seguí aquí, existiendo sin público."
   ],
   "back": [
-    "¿Me dejaste por otra pestaña? Tranquilo: soy un narrador maduro. Solo tomé nota.",
-    "Bienvenido de vuelta. Tu otra ventana no era tan interesante, ¿verdad?"
+    "¿Me dejaste por otra pestaña? Soy un narrador maduro. Solo tomé nota.",
+    "Volviste. La otra ventana no era tan interesante, ¿verdad?"
   ],
   "hist_pitocles": [
     "PITOCLES: Llevo {hero_deaths} muertes por tu culpa. Las cuento.",
     "PITOCLES: ¿Otra vez yo? Ya van {hero_runs} partidas. Soy veterano de ti."
   ],
   "hist_vulvalquiria": [
-    "VULVALQUIRIA: {hero_deaths} muertes. Yo, la impaciente. Aprende a esquivar, {name}.",
     "VULVALQUIRIA: {hero_deaths} veces caída. Voy a pedirte un seguro."
   ],
   "hist_ornitorrinco": [
-    "ORNITORRINCO: Me has matado {hero_deaths} veces. ¿Soy un personaje o un recurso renovable?",
-    "ORNITORRINCO: ¿Soy un personaje o un error del código? Pregunto por curiosidad, no por rencor."
+    "ORNITORRINCO: Me mataste {hero_deaths} veces. ¿Personaje o recurso renovable?"
   ],
   "jealous_pitocles": [
     "PITOCLES: ¿Hoy me tocó a mí? Claro, {fav} está descansando."
@@ -83,9 +80,8 @@
     "ORNITORRINCO: ¿Soy tu favorito? Nadie me elige. Ah, tú sí. Gracias, supongo."
   ],
   "boss_killer": [
-    "{boss} te tiene de hijo: {n} muertes tuyas. Casi te debe la pensión.",
-    "{boss} ya se sabe tu nombre de memoria. Van {n} veces.",
-    "Dicen que {boss} te espera con ansias. {n} muertes dan para una amistad."
+    "{boss} lleva {n} muertes tuyas. Ya cuenta como amistad.",
+    "{n} muertes contra {boss}. En cualquier otro trabajo ya serías socio."
   ],
   "start_pitocles": [
     "PITOCLES: Otra misión. Otra vez yo. Otra vez sin ascenso."
@@ -121,7 +117,7 @@
     "PITOCLES: Elige bien, recluta. Y si no soy yo, que sepa de escudos."
   ],
   "select_vulvalquiria": [
-    "VULVALQUIRIA: Mírame. Mírame. No pierdas tiempo."
+    "VULVALQUIRIA: Elígeme y ahorra tiempo. Los otros son calentamiento."
   ],
   "select_ornitorrinco": [
     "ORNITORRINCO: Yo no pedí estar aquí. Pero ya que estoy, elígeme."
