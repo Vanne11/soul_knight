@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "psa_test"
 display_name = "Examen de PSA"
-description = "Durante 20 s ves la vida de todos los enemigos y se les caen los disfraces. Análisis de sangre: desde los 50 (45 con antecedentes) se conversa con el médico. Sin miedo, con datos."
+description = "20 s: ves la vida de todos los enemigos y se les caen los disfraces."
 rarity = 2
 tags = ["consumible", "utilidad", "salud"]
 effects = []

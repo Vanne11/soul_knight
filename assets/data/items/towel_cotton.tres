@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "towel_cotton"
 display_name = "Toalla de Tela"
-description = "Absorbe los próximos 2 golpes, sin roce, y la estamina se recarga un 30% más rápido durante 30 s. ¿Paseo tranquilo? Tela."
+description = "Absorbe 2 golpes, sin roce, y la estamina se recarga 30% más rápido 30 s."
 rarity = 1
 tags = ["consumible", "defensa", "utilidad", "toalla"]
 effects = []

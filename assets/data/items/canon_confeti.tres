@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "canon_confeti"
 display_name = "Cañón de Confeti"
-description = "Escopeta de fiesta: una nube de confeti de poco daño que ATURDE a lo que alcanza. Corto alcance. 'Felicidades: ahora no te pueden pegar. Por un rato.'"
+description = "Nube de confeti de poco daño que ATURDE, de corto alcance. Felicidades: no te pegan."
 rarity = 2
 tags = ["arma", "control"]
 equip_slot = 1

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "syringe_adrenaline"
 display_name = "Jeringa de Adrenalina"
-description = "Directa al corazón. Cura 50 vida, +100% estamina 5s, +20 intoxicación (el dolor embriaga). 'CLEAR!'"
+description = "Cura 50 de vida, +100% estamina 5 s, +20 intoxicación. ¡CLEAR!"
 rarity = 2
 tags = ["consumible", "curación", "buff", "intoxicante"]
 effects = [{"type": 2, "magnitude": 50.0}, {"type": 1, "intoxication_amount": 20.0}, {"type": 0, "stat": "stamina", "magnitude": 100.0}]

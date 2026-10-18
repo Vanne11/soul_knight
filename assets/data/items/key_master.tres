@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "key_master"
 display_name = "Llave Maestra Dorada"
-description = "Abre cualquier cerradura. Incluyendo las de tu corazón. Requiere intoxicación tier 3 (Blackout). Único uso."
+description = "Abre cualquier cerradura, hasta las del corazón. Tier 3 de intoxicación. Un uso."
 rarity = 4
 tags = ["llave", "especial", "único"]
 effects = [{"type": 5, "lore_entry_id": "master_key_secret"}, {"type": 0, "stat": "damage", "magnitude": 1.0}]

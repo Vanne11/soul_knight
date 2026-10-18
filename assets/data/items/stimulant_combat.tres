@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "stimulant_combat"
 display_name = "Estimulante de Combate"
-description = "+40% velocidad, +30% cadencia, +25% daño 15s. Luego crash: -50% stats 10s. 'Rendimiento a crédito.'"
+description = "+40% velocidad, +30% cadencia, +25% daño por 15 s; luego -50% por 10 s. A crédito."
 rarity = 2
 tags = ["consumible", "buff", "riesgo"]
 effects = [{"type": 7, "custom_data": {"type": "combat_stim", "duration": 15.0, "speed": 1.4, "fire_rate": 1.3, "damage": 1.25, "crash_duration": 10.0, "crash_penalty": 0.5}}]

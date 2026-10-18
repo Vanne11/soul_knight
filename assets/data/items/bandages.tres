@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "bandages"
 display_name = "Vendas Sucias"
-description = "Curan 30 vida. Probablemente usadas. 'Mejor no preguntar por qué huelen así.'"
+description = "Curan 30 de vida. Probablemente usadas. Mejor no preguntar por qué huelen así."
 rarity = 0
 tags = ["consumible", "curación"]
 effects = [{"type": 2, "magnitude": 30.0}]

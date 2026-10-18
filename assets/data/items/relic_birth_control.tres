@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "relic_birth_control"
 display_name = "Anticonceptivo Maldito"
-description = "Evita consecuencias. -50% intoxicación ganada, enemigos dejan 25% menos loot. 'Seguro, pero aburrido.'"
+description = "-50% intoxicación ganada, pero enemigos dejan 25% menos botín. Seguro, pero aburrido."
 rarity = 2
 tags = ["reliquia", "pasivo", "utilidad", "femenino"]
 equip_slot = 2

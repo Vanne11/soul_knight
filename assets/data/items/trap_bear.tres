@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "trap_bear"
 display_name = "Trampa de Oso (Tamaño Humano)"
-description = "Colócala. Enemigo pisa -> inmovilizado 3s, 60 daño, sangrado 10/s 5s. 'Click. Aaaaah. Click.'"
+description = "Colócala: quien pise queda inmóvil 3 s, 60 de daño y sangra. Click. Aaaaah."
 rarity = 1
 tags = ["consumible", "trampa", "cc", "daño"]
 effects = [{"type": 7, "custom_data": {"type": "place_trap", "damage": 60, "immobilize": 3.0, "bleed_dps": 10, "bleed_duration": 5, "trigger_radius": 40}}]

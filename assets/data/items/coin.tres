@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "coin"
 display_name = "Moneda Pudorosa"
-description = "Moneda oficial del Reino. Lleva grabada una hoja de parra. Hasta el dinero tiene vergüenza."
+description = "Moneda oficial del Reino, con una hoja de parra grabada. Hasta el dinero tiene vergüenza."
 tags = ["moneda"]
 consumable = true
 base_value = 1

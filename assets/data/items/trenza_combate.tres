@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "trenza_combate"
 display_name = "Trenza de Combate"
-description = "Tejida con paciencia, que a ella le falta. +8% de crítico y +8% de cadencia. Tirar de ella es mala idea."
+description = "+8% de crítico y +8% de cadencia. Tejida con la paciencia que a ella le falta."
 rarity = 1
 tags = ["reliquia", "pasivo", "especial", "ofensa"]
 equip_slot = 2

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "absinthe"
 display_name = "Absenta Ilegal"
-description = "La hada verde te susurra verdades. +50 intoxicación, -30% precisión, +40% daño, visión borrosa. Prohibida en 12 países y 3 dimensiones."
+description = "+50 intoxicación, -30% precisión, +40% daño, visión borrosa. Prohibida en 3 dimensiones."
 rarity = 2
 tags = ["consumible", "intoxicante", "especial"]
 effects = [{"type": 1, "intoxication_amount": 50.0}, {"type": 0, "stat": "accuracy", "magnitude": 0.7}, {"type": 0, "stat": "damage", "magnitude": 1.4}, {"type": 0, "stat": "speed", "magnitude": 1.15}]

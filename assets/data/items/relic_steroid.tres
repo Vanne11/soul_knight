@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "relic_steroid"
 display_name = "Esteroides Anabólicos"
-description = "Hinchado, rojo, furioso. +75% vida, +50% daño melee, -30% velocidad, -20% precisión. 'ROID RAGE ACTIVADO.'"
+description = "+75% vida, +50% daño melee, -30% velocidad, -20% precisión. Hinchado y furioso."
 rarity = 3
 tags = ["reliquia", "pasivo", "ofensa", "tanque", "masculino"]
 equip_slot = 2

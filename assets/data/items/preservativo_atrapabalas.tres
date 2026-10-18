@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "preservativo_atrapabalas"
 display_name = "Preservativo Atrapabalas"
-description = "Suelta un preservativo gigante y lento que se traga las balas enemigas que pasan por él; al reventar las devuelve en círculo. Defensa que ataca. 'Protección total. Hasta de los proyectiles.'"
+description = "Un preservativo gigante se traga las balas y las devuelve al reventar. Protección total."
 rarity = 3
 tags = ["arma", "defensivo", "área"]
 equip_slot = 1

@@ -59,9 +59,9 @@ EXTRA_UI = {
     "HUD_SET_ON": "Set %s: ACTIVO",
     "HUD_SET_PROGRESS": "Set %s: %d/%d",
     "SET_PENE_NAME": "Orgullo de Penelandia",
-    "SET_PENE_DESC": "3 objetos de Penelandia: +10% de daño y +5% de crítico. Si tu héroe es de allí, más.",
+    "SET_PENE_DESC": "3 objetos de Penelandia: +10% de daño y +5% de crítico. Si eres de allí, más.",
     "SET_VULVA_NAME": "Ciclo de Vulvania",
-    "SET_VULVA_DESC": "3 objetos de Vulvania: +10% de cadencia y estamina un 20% más rápida. Si tu héroe es de allí, más.",
+    "SET_VULVA_DESC": "3 objetos de Vulvania: +10% de cadencia y estamina 20% más rápida. Si eres de allí, más.",
 }
 
 

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "towel_night"
 display_name = "Toalla Nocturna"
-description = "Cobertura total: absorbe 3 golpes y recorta un 40% el daño durante 2 minutos. Aguanta toda la pelea del jefe. Rara, cara y larga como su nombre."
+description = "Absorbe 3 golpes y recorta 40% el daño por 2 min. Larga como su nombre."
 rarity = 2
 tags = ["consumible", "defensa", "utilidad", "toalla", "rara"]
 effects = []

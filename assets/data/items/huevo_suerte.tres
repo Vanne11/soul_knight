@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "huevo_suerte"
 display_name = "Huevo de la Suerte"
-description = "Puesto por él mismo, que es mamífero y no debería. +4 de vida máxima y +5% de crítico. Biología: 0, suerte: 1."
+description = "+4 de vida máxima y +5% de crítico. Lo puso un mamífero. Biología: 0, suerte: 1."
 rarity = 1
 tags = ["reliquia", "pasivo", "especial", "equilibrado"]
 equip_slot = 2

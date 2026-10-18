@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "latex_suit"
 display_name = "Traje de Látex"
-description = "+20 de escudo máximo, pero te mueves un 8% más lento y rechinas al caminar. Defensa total, sigilo nulo. Se pega a todo, hasta a tus decisiones."
+description = "+20 de escudo, pero 8% más lento y rechina. Se pega a todo, hasta a tus decisiones."
 rarity = 2
 tags = ["reliquia", "pasivo", "defensa", "tanque"]
 equip_slot = 2

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "cursed_cage"
 display_name = "Jaula de Castidad Maldita"
-description = "MALDITA. +35 de escudo máximo y absorbe 2 golpes, pero ocupa una ranura y no deja pasar hormonas. Se quita con una llave (se gasta). Mucha defensa y nada de diversión."
+description = "MALDITA. +35 de escudo, absorbe 2 golpes, sin hormonas. Se quita con llave. Cero diversión."
 rarity = 3
 tags = ["maldito", "único", "defensa"]
 effects = []

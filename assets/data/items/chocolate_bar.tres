@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "chocolate_bar"
 display_name = "Barra de Chocolate"
-description = "Antojo hormonal resuelto. +15 vida, -20 intoxicación y se te pasa la alergia. Nadie sabe de dónde salió y nadie pregunta."
+description = "+15 de vida, -20 intoxicación y se te pasa la alergia. Nadie sabe de dónde salió."
 rarity = 0
 tags = ["consumible", "curación", "desintoxicante", "dulce"]
 effects = [{"type": 2, "magnitude": 15.0}, {"type": 15, "intox": -20.0, "allergy": true}]

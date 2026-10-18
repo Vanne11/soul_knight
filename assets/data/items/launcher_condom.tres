@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "launcher_condom"
 display_name = "Lanzapreservativos Múltiple"
-description = "Lanza 3 preservativos lentos que explotan en área al chocar o al acabarse la mecha (parpadean antes). Daño en área, poca cadencia. 'Protección a distancia. Seguridad primero.'"
+description = "Lanza 3 preservativos lentos que explotan en área. Protección a distancia."
 rarity = 3
 tags = ["arma", "explosivo", "área"]
 equip_slot = 1

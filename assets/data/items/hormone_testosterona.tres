@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "hormone_testosterona"
 display_name = "Testosterona de Contrabando"
-description = "Hormona oficial de Penelandia. Abre sus Puertas Hormonales. A las vulvas les da alergia: estornudos, hinchazón y ganas de discutir de fútbol."
+description = "Hormona de Penelandia: abre sus Puertas. A las vulvas, alergia y debates de fútbol."
 tags = ["hormona", "masculino", "consumible"]
 rarity = 2
 consumable = true

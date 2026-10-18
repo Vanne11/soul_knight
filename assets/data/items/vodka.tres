@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "vodka"
 display_name = "Vodka de Patata"
-description = "Incoloro, inodoro, traicionero. +25 intoxicación, -15% precisión, +20% daño. 'Es agua, dice el ruso. Es mentira, dice tu hígado.'"
+description = "+25 intoxicación, -15% precisión, +20% daño. 'Es agua', dice el ruso. Tu hígado, no."
 rarity = 0
 tags = ["consumible", "intoxicante"]
 effects = [{"type": 1, "intoxication_amount": 25.0}, {"type": 0, "stat": "accuracy", "magnitude": 0.85}, {"type": 0, "stat": "damage", "magnitude": 1.2}]

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "tampon"
 display_name = "Tampón"
-description = "Tapa la siguiente herida y corta el ardor y el contagio por segundo durante 40 s. Pequeño, discreto y más útil que la mitad de tus armas."
+description = "Tapa la siguiente herida y corta ardor y contagio 40 s. Más útil que tus armas."
 rarity = 0
 tags = ["consumible", "defensa", "utilidad"]
 effects = []

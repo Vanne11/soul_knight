@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "key_bloody"
 display_name = "Llave Empapada en Sangre"
-description = "Abre puertas de habitaciones de desafío. Requiere haber matado 20+ enemigos en esta run. 'La llave está en la cerradura... y la cerradura está en ti.'"
+description = "Abre salas de desafío. Requiere 20+ enemigos matados. La cerradura está en ti."
 rarity = 3
 tags = ["llave", "especial", "desafío"]
 effects = [{"type": 5, "lore_entry_id": "bloody_key_lore"}]

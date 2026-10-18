@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "jockstrap"
 display_name = "Suspensorio Deportivo"
-description = "Absorbe por completo el próximo golpe que recibas y te da +20 de estamina. Protege lo que más importa. Ya sabes cuál es."
+description = "Absorbe por completo el próximo golpe y da +20 de estamina. Protege lo que ya sabes."
 rarity = 1
 tags = ["consumible", "defensa", "utilidad"]
 effects = [{"type": 13, "hits": 1}, {"type": 0, "stat": "stamina", "magnitude": 20.0}]

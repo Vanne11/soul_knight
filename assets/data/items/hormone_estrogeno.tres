@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "hormone_estrogeno"
 display_name = "Estrógeno de Estraperlo"
-description = "Hormona oficial de Vulvania. Abre sus Puertas Hormonales. A los penes les da alergia: estornudos, hinchazón y una repentina necesidad de hablar de sus sentimientos."
+description = "Hormona de Vulvania: abre sus Puertas. A los penes les da alergia y confesiones."
 tags = ["hormona", "femenino", "consumible"]
 rarity = 2
 consumable = true

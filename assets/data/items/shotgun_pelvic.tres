@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "shotgun_pelvic"
 display_name = "Escopeta Pélvica"
-description = "Brutal a quemarropa, casi inútil de lejos: el daño cae con la distancia y el alcance es corto. Empuja mucho. 'Para cuando necesitas abrir piernas... y cráneos.'"
+description = "Brutal a quemarropa, inútil de lejos, empuja mucho. Para abrir piernas... y cráneos."
 rarity = 2
 tags = ["arma"]
 equip_slot = 1

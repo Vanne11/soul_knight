@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "laser_depilador"
 display_name = "Depiladora Láser"
-description = "Rayo continuo: mantén el gatillo y atraviesa a todo el que esté en la línea. Se calienta: si abusas se sobrecalienta y se bloquea. 'Cero vello, cero piedad. Resultados permanentes (los suyos).'"
+description = "Rayo continuo que atraviesa la línea; se sobrecalienta. Cero vello, cero piedad."
 rarity = 3
 tags = ["arma", "rayo"]
 equip_slot = 1

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "grenade_flashbang"
 display_name = "Flashbang Sensorial"
-description = "Ciega enemigos 4s, reduce precisión 80%. No hace daño. '¡Luz! ¡Mi única debilidad... la luz!'"
+description = "Ciega enemigos 4 s y baja su precisión 80%. Sin daño. Mi única debilidad: la luz."
 rarity = 1
 tags = ["consumible", "granada", "utilidad", "cc"]
 effects = [{"type": 7, "custom_data": {"type": "throw_flashbang", "duration": 4.0, "accuracy_reduction": 0.8, "radius": 150}}]

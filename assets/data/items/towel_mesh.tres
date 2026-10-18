@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "towel_mesh"
 display_name = "Toalla de Malla"
-description = "Absorbe los próximos 3 golpes, pero roza: vas un 8% más lento mientras dure. ¿Sala larga y sin baño a la vista? Malla."
+description = "Absorbe 3 golpes, pero roza: 8% más lento mientras dure. Todo tiene su precio."
 rarity = 1
 tags = ["consumible", "defensa", "utilidad", "toalla"]
 effects = []

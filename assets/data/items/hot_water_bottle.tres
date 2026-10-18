@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "hot_water_bottle"
 display_name = "Bolsa de Agua Caliente"
-description = "Regeneras 2.5 de vida por segundo durante 12 s. Calorcito de hogar, cólicos incluidos. 'Mejor que cualquier pareja que has tenido.'"
+description = "Regenera 2.5 de vida por segundo durante 12 s. Calorcito de hogar, cólicos incluidos."
 rarity = 1
 tags = ["consumible", "curación", "buff"]
 effects = [{"type": 10, "rate": 2.5, "duration": 12.0}]

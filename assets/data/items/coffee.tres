@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "coffee"
 display_name = "Café de Emergencia"
-description = "Te despista de la resaca. -40 intoxicación, +20 estamina. Sabe a tierra quemada y arrepentimiento matutino."
+description = "-40 intoxicación, +20 estamina. Sabe a tierra quemada y a arrepentimiento."
 rarity = 1
 tags = ["consumible", "desintoxicante", "estamina"]
 effects = [{"type": 1, "intoxication_amount": -40.0}, {"type": 0, "stat": "stamina", "magnitude": 20.0}]

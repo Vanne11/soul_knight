@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "talc"
 display_name = "Talco para la Entrepierna"
-description = "Quita la picazón y da inmunidad al contagio durante 25 s. Zona seca, zona feliz."
+description = "Quita la picazón y da inmunidad al contagio 25 s. Zona seca, zona feliz."
 rarity = 0
 tags = ["consumible", "defensa", "utilidad", "desintoxicante"]
 effects = []

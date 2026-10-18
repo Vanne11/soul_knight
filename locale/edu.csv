@@ -11,7 +11,7 @@ EDU_VAX_POOR,"Vacuna VPH (%d $, te faltan monedas)","HPV vaccine (%d $, not enou
 EDU_VAX_DONE,Vacuna VPH: ya estás vacunado,HPV vaccine: you're already vaccinated
 EDU_VAX_TOAST,Vacunado contra el VPH,Vaccinated against HPV
 EDU_POSTER_PROMPT,Leer el póster del consultorio,Read the clinic poster
-EDU_POSTER_SAY,"Póster del consultorio: ""Promedio mundial erecto: unos 13 cm. El complejo, en cambio, mide como 40.""","Clinic poster: ""World average when erect: about 13 cm. The complex, on the other hand, is about 40."""
+EDU_POSTER_SAY,"Póster del consultorio: ""Aquí se mide la presión. Lo demás, no.""","Clinic poster: ""Blood pressure is measured here. Nothing else."""
 EDU_MV_PLAQUE,Placa: ¿MITO O VERDAD? (opcional),Plaque: MYTH OR TRUTH? (optional)
 EDU_MV_ASK,"¿MITO O VERDAD?
 ""%s""
@@ -20,17 +20,17 @@ Responde en las piedras, o ignóralo.","MYTH OR TRUTH?
 Answer at the stones, or ignore it."
 EDU_MV_TRUE,Piedra VERDAD (E para responder),TRUTH stone (E to answer)
 EDU_MV_MYTH,Piedra MITO (E para responder),MYTH stone (E to answer)
-EDU_FACT_CONDON_USO,"El preservativo, bien puesto y en cada ocasión, es de lo mejor contra las ITS. Y contra los sustos. Un héroe versátil.","Used correctly every time, the condom is one of the best defences against STIs. And against scares. A versatile hero."
-EDU_FACT_CONDON_CADUCA,"Los preservativos caducan, y en la billetera se cocinan. Mira la fecha y guárdalos en un lugar fresco.","Condoms expire, and in a wallet they slow-cook. Check the date and keep them somewhere cool."
-EDU_FACT_ITS_SIN_SINTOMAS,"Muchas ITS no dan síntomas. ""No siento nada"" no es lo mismo que ""estoy sano"". Hazte el test: no muerde.","Many STIs show no symptoms. ""I feel nothing"" is not the same as ""I'm healthy"". Get tested: it doesn't bite."
-EDU_FACT_VPH_VACUNA,La vacuna contra el VPH previene varios tipos de cáncer. Un pinchacito contra un villano de nivel final.,The HPV vaccine prevents several kinds of cancer. One tiny jab against an end-game villain.
-EDU_FACT_MARCHA_ATRAS,La marcha atrás falla en cerca de 1 de cada 5 parejas al año. Y a las ITS les da igual.,Pulling out fails for about 1 in 5 couples per year. And STIs couldn't care less.
-EDU_FACT_HIMEN,El himen no certifica nada: no es un sello de fábrica y cada cuerpo lo trae distinto. Nadie debería pedirte papeles.,The hymen certifies nothing: it's no factory seal and every body has its own version. Nobody should ask for papers.
+EDU_FACT_CONDON_USO,"Bien puesto y en cada ocasión, el preservativo es lo mejor contra las ITS. Y contra los sustos.","Used correctly and every time, the condom is the best defense against STIs. And against scares."
+EDU_FACT_CONDON_CADUCA,"Los preservativos caducan, y en la billetera se cocinan. Mira la fecha y guárdalos al fresco.","Condoms expire, and in a wallet they cook. Check the date and keep them cool."
+EDU_FACT_ITS_SIN_SINTOMAS,"Muchas ITS no dan síntomas. ""No siento nada"" no es ""estoy sano"". El test no muerde.","Many STIs have no symptoms. ""I feel nothing"" is not ""I'm healthy"". The test doesn't bite."
+EDU_FACT_VPH_VACUNA,La vacuna contra el VPH previene varios tipos de cáncer. Un pinchazo contra un villano final.,The HPV vaccine prevents several types of cancer. One jab against a final boss.
+EDU_FACT_MARCHA_ATRAS,La marcha atrás falla en cerca de 1 de cada 5 parejas al año. Las ITS ni se enteran.,Pulling out fails in about 1 in 5 couples a year. STIs don't even notice.
+EDU_FACT_HIMEN,El himen no certifica nada: no es un sello y cada cuerpo lo trae distinto. Nadie pide papeles.,The hymen certifies nothing: it's not a seal and every body has its own. Nobody asks for papers.
 EDU_FACT_TAMANO,Promedio mundial erecto: unos 13 cm. Y el placer casi nunca se mide con regla.,World average when erect: about 13 cm. And pleasure is almost never measured with a ruler.
-EDU_FACT_CLITORIS,La mayoría de las mujeres necesita estimulación del clítoris para llegar al orgasmo. No es un misterio: es un mapa del tesoro.,Most women need clitoral stimulation to reach orgasm. It's no mystery: it's a treasure map.
-EDU_FACT_INDETECTABLE,"Con tratamiento y carga viral indetectable, el VIH no se transmite por vía sexual. Indetectable es igual a intransmisible.","With treatment and an undetectable viral load, HIV is not sexually transmitted. Undetectable equals untransmittable."
-EDU_FACT_TEST_VIH,"En Chile el test de VIH es gratuito y confidencial en la red pública. Rápido, sin drama y sin preguntas incómodas.","In Chile the HIV test is free and confidential in the public system. Quick, no drama, no awkward questions."
-EDU_FACT_PASTILLA,"La píldora del día después funciona mejor cuanto antes la tomes, y no interrumpe un embarazo que ya existe.","The morning-after pill works better the sooner you take it, and it does not end an existing pregnancy."
+EDU_FACT_CLITORIS,"La mayoría de las mujeres necesita estimulación del clítoris para llegar al orgasmo. Es un mapa, no un misterio.","Most women need clitoral stimulation to reach orgasm. It's a map, not a mystery."
+EDU_FACT_INDETECTABLE,"Con tratamiento y carga viral indetectable, el VIH no se transmite sexualmente. Indetectable es igual a intransmisible.","With treatment and an undetectable viral load, HIV is not transmitted sexually. Undetectable equals untransmittable."
+EDU_FACT_TEST_VIH,En Chile el test de VIH es gratuito y confidencial en la red pública. Rápido y sin preguntas incómodas.,"In Chile the HIV test is free and confidential in the public network. Quick, no awkward questions."
+EDU_FACT_PASTILLA,"La píldora del día después funciona mejor cuanto antes se tome, y no interrumpe un embarazo ya existente.","The morning-after pill works best the sooner it's taken, and doesn't end an existing pregnancy."
 EDU_FACT_PRIMERA_VEZ,"Sí, se puede quedar embarazada la primera vez. La biología no lee los mitos.","Yes, you can get pregnant the first time. Biology doesn't read myths."
 EDU_FACT_MASTURBACION,Masturbarse no deja ciego ni peludo de manos. Es normal y no hace daño.,Masturbating doesn't make you blind or hairy-palmed. It's normal and harmless.
 EDU_FACT_PAP,El Papanicolau detecta a tiempo lo que el VPH puede dejar. En Chile se recomienda cada 3 años entre los 25 y los 64.,The Pap test catches in time what HPV can leave behind. In Chile it is recommended every 3 years between ages 25 and 64.
