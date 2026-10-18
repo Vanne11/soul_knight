@@ -244,9 +244,13 @@ func _tick(delta: float) -> void:
 	_leaf_angle += delta * (1.4 + 0.35 * current_phase)
 	var r := 112.0 + 8.0 * current_phase
 	var center := _muzzle()
+	var room := find_owning_room()
 	for i in alive.size():
 		var ang: float = _leaf_angle + i * TAU / alive.size()
-		alive[i].global_position = center + Vector2.RIGHT.rotated(ang) * r
+		var at := center + Vector2.RIGHT.rotated(ang) * r
+		if room != null:
+			at = room.clamp_global(at, 30.0)  # con la jefa junto a un muro las hojas salian del suelo
+		alive[i].global_position = at
 
 
 func _on_leaf_broken(_l: BossBreakable) -> void:

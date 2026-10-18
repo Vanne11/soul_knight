@@ -62,7 +62,12 @@ func take_damage(amount: float, source: Node = null, kb: Vector2 = Vector2.ZERO)
 		E3a.say(self, "candado_summon", 2.4)
 		for i in 2:
 			var a := Vector2.from_angle(PI * (0.5 + i)) * 90.0
-			E3a.spawn(self, "jaula", global_position + a, maxf(max_health * 0.05, 20.0), base_damage * 0.8)
+			var at := global_position + a
+			var room := find_owning_room()
+			if room != null:
+				at = room.clamp_global(at)  # junto a un muro la escolta nacia dentro de el
+			var j := E3a.spawn(self, "jaula", at, maxf(max_health * 0.05, 20.0), base_damage * 0.8)
+			j.enemy_name = "Jaula"
 	return dealt
 
 
