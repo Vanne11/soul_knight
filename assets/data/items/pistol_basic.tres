@@ -16,4 +16,4 @@ effects = [{
 "magnitude": 1.0
 }]
 base_value = 100
-custom_data = {"base_damage": 8, "fire_rate": 0.4, "projectile_speed": 500, "spread": 0.05}
+custom_data = {"dmg_type": "perforante", "base_damage": 8, "fire_rate": 0.4, "projectile_speed": 500, "spread": 0.05}

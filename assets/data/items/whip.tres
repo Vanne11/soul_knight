@@ -12,4 +12,4 @@ tags = ["arma", "cuerpo"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
 base_value = 260
-custom_data = {"base_damage": 8, "fire_rate": 0.55, "projectile_speed": 820, "spread": 0.2, "pellets": 3, "range": 215, "pierce": 2, "knockback_mult": 1.4, "bullet_color": "d9a066", "locale": "items_extra", "block": "3b"}
+custom_data = {"dmg_type": "cuerpo_a_cuerpo", "base_damage": 8, "fire_rate": 0.55, "projectile_speed": 820, "spread": 0.2, "pellets": 3, "range": 215, "pierce": 2, "knockback_mult": 1.4, "bullet_color": "d9a066", "locale": "items_extra", "block": "3b"}

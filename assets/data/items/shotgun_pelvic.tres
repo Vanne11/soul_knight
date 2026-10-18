@@ -12,4 +12,4 @@ tags = ["arma"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
 base_value = 250
-custom_data = {"base_damage": 18, "fire_rate": 1.1, "projectile_speed": 420, "spread": 0.12, "pellets": 6, "range": 300, "falloff_start": 80, "falloff_end": 280, "falloff_min": 0.2, "knockback_mult": 2.0}
+custom_data = {"dmg_type": "contundente", "base_damage": 18, "fire_rate": 1.1, "projectile_speed": 420, "spread": 0.12, "pellets": 6, "range": 300, "falloff_start": 80, "falloff_end": 280, "falloff_min": 0.2, "knockback_mult": 2.0}

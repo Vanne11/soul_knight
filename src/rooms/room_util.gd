@@ -257,12 +257,13 @@ static func hurt_player(pl: Node, dmg: float) -> bool:
 
 
 ## Dano a un enemigo con empujon (kb en px/s hacia fuera de `from_global`).
-static func hurt_enemy(e: Node, dmg: float, from_global: Vector2, kb := 0.0) -> void:
+static func hurt_enemy(e: Node, dmg: float, from_global: Vector2, kb := 0.0, dtype := "") -> void:
 	if not is_instance_valid(e) or not e.has_method("take_damage") or e.get("current_health") == null or e.current_health <= 0.0:
 		return
 	var away: Vector2 = e.global_position - from_global
 	away = away.normalized() if away.length() > 1.0 else Vector2.RIGHT.rotated(randf() * TAU)
 	# el jugador figura como autor: main solo comprueba si la sala se limpio con muertes suyas
+	BossDamage.tag("", 1.0, dtype)
 	e.take_damage(dmg, e.get_tree().get_first_node_in_group("player"), away * kb)
 
 

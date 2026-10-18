@@ -649,6 +649,7 @@ func _props_hit_enemies(d: Dictionary) -> void:
 			hit.append(e)
 			b.set_meta("rl_hit", hit)
 			var dmg := clampf(round(1.0 + speed * b.mass * 0.012), 1.0, 6.0)
+			BossDamage.tag("", 1.0, "contundente")
 			e.take_damage(dmg, _player, v.normalized() * minf(speed, 300.0) * 0.6)
 			b.linear_velocity = -v * 0.4  # rebota en el bicho
 			Sound.play("enemy_hit")

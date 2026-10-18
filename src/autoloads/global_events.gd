@@ -36,6 +36,8 @@ signal run_ended(victory: bool, floor: int, stats: Dictionary)
 # UI signals
 signal show_damage_number(position: Vector2, amount: float, is_crit: bool)
 signal show_floating_text(position: Vector2, text: String, color: Color)
+## Numeros sobre el heroe (vida perdida/curada, escudo): big = mas grande que el dano a enemigos.
+signal show_hero_number(position: Vector2, text: String, color: Color, big: bool)
 signal boss_health_changed(boss_name: String, current: float, max: float)
 signal boss_charges_changed(left: int, total: int)
 signal coins_changed(coins: int)

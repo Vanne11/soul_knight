@@ -640,7 +640,9 @@ func _shoot() -> void:
 	if cd.has("vortex"):
 		_attack_anim = 0.15
 		var v := SuctionVortex.new()
-		v.damage = dmg * (_player_stats.crit_damage_modifier if RNG.randf() < _player_stats.crit_chance_modifier else 1.0)
+		v.crit_mult = _player_stats.crit_damage_modifier if RNG.randf() < _player_stats.crit_chance_modifier else 1.0
+		v.weapon_id = current_weapon.id
+		v.damage = dmg * v.crit_mult
 		v.radius = float(cd.get("vortex_radius", v.radius))
 		v.duration = float(cd.get("vortex_duration", v.duration))
 		v.pull = float(cd.get("vortex_pull", v.pull))
@@ -683,6 +685,8 @@ func _shoot() -> void:
 		var crit := RNG.randf() < crit_chance
 		if crit:
 			b.damage *= _player_stats.crit_damage_modifier
+			b.crit_mult = _player_stats.crit_damage_modifier
+		b.weapon_id = current_weapon.id
 		b.speed = speed
 		b.crit = crit
 		b.rotation = ang
@@ -748,6 +752,7 @@ func _dash_cut() -> void:
 	for e in get_tree().get_nodes_in_group("enemy"):
 		if e not in _dash_hits and is_instance_valid(e) and e.global_position.distance_to(global_position) < 40.0:
 			_dash_hits.append(e)
+			BossDamage.tag("", 1.0, "cuerpo_a_cuerpo")
 			e.take_damage(get_weapon_damage() * _player_stats.damage_modifier * 1.5 * lvl * (1.8 if Synergies.has("corte_y_fuga") else 1.0), self, _dash_direction * 200.0)
 
 func _sneeze() -> void:
@@ -924,6 +929,8 @@ func _on_hurtbox_entered(area: Area2D) -> void:
 ## (dash o invulnerabilidad tras un golpe).
 func receive_hit(dmg: float) -> bool:
 	if is_dashing or _iframes > 0.0 or _falling > 0.0:
+		if is_dashing and dmg > 0.0:
+			_show_dodge()
 		return false
 	_iframes = HIT_IFRAMES
 	_player_stats.take_damage(dmg)
@@ -934,6 +941,16 @@ func receive_hit(dmg: float) -> bool:
 	if pride > 0 and current_weapon and _player_stats.current_health > 0.0:
 		_ring(8, get_weapon_damage() * _player_stats.damage_modifier * pride)
 	return true
+
+## "¡Esquivado!" al evitar un golpe con el dash; con enfriamiento para no saturar.
+var _dodge_txt_t := -10.0
+
+func _show_dodge() -> void:
+	var now := Time.get_ticks_msec() / 1000.0
+	if now - _dodge_txt_t < 0.7 or not Settings.hero_numbers:
+		return
+	_dodge_txt_t = now
+	_global_events.show_hero_number.emit(global_position + Vector2(0, -34), tr("FX_DODGE"), Color("ffe08a"), false)
 
 ## El arma que sueltas al coger otra se queda en el suelo: puedes volver a por ella.
 func _drop_weapon(id: String) -> void:

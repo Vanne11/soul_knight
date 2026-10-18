@@ -8,6 +8,7 @@ const TEX := preload("res://assets/sprites/projectiles/condom_bubble.png")
 const PLAYER_BULLET := preload("res://src/player/player_bullet.tscn")
 
 var damage := 6.0
+var weapon_id := ""  ## para BossDamage
 var speed := 150.0
 var life := 1.5
 var catch_radius := 44.0
@@ -73,6 +74,7 @@ func _pop() -> void:
 	for e in get_tree().get_nodes_in_group("enemy"):
 		if is_instance_valid(e) and e.has_method("take_damage") and float(e.get("current_health")) > 0.0 \
 				and e.global_position.distance_to(global_position) <= r + 14.0:
+			BossDamage.tag(weapon_id, 1.0)
 			e.take_damage(damage, player, (e.global_position - global_position).normalized() * 160.0)
 	var n := caught
 	for i in n:

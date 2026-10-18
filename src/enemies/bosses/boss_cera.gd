@@ -81,6 +81,7 @@ func _ready() -> void:
 	_last_pos = global_position
 	notebook.pattern_detected.connect(_on_pattern)
 	telegraph_started.connect(_on_telegraph)
+	BossAnimator.attach(self)  # cuadros nuevos + animacion por codigo (solo si el SpriteFrames los trae)
 
 
 func _attack_pool() -> Array:

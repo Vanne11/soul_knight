@@ -75,6 +75,7 @@ func _ready() -> void:
 	_global_events.player_died.connect(_on_player_died)
 	_global_events.show_damage_number.connect(_on_show_damage_number)
 	_global_events.show_floating_text.connect(_on_show_floating_text)
+	_global_events.show_hero_number.connect(_on_show_hero_number)
 
 func _setup_camera() -> void:
 	camera.limit_left = 0
@@ -513,6 +514,7 @@ func _build_shop(room: Room) -> void:
 	room.set_meta("shop_built", true)
 	var stock := [_random_weapon_id(), _random_loot_id(), _random_loot_id()]
 	stock = Utero.shop_stock(self, stock)  # tienda de Vulvania: el Turno de la Consulta
+	stock[0] = BossDamage.shop_hint(_run_manager.floor_data(), stock[0])  # pista: arma que es debilidad del jefe del piso
 	if _missing_hormones().size() > 0:
 		stock[2] = "hormone_" + _missing_hormones()[0]  # la tienda tambien vende la hormona que te falta
 	# Mejoras permanentes: siempre la de vida y otra al azar.
@@ -1002,6 +1004,9 @@ func _check_room_clear_for_enemy(killed_enemy: Node) -> void:
 
 func _on_show_damage_number(position: Vector2, amount: float, is_crit: bool) -> void:
 	floating_text_mgr.spawn(position, "%.0f" % amount, HudStyle.GOLD if is_crit else Color("ff3b4a"), is_crit)
+
+func _on_show_hero_number(position: Vector2, text: String, color: Color, big: bool) -> void:
+	floating_text_mgr.spawn(position, text, color, false, 24 if big else 18)
 
 func _on_show_floating_text(position: Vector2, text: String, color: Color) -> void:
 	floating_text_mgr.spawn(position, text, color)

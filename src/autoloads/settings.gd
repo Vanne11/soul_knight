@@ -24,6 +24,8 @@ var locale := "es"
 var screen_fx := 0
 ## Sacudida de camara y pausa breve al impactar.
 var screen_shake := true
+## Numeros sobre el heroe (vida perdida/curada, escudo, esquive).
+var hero_numbers := true
 ## --- Bloque movil/tactil (F4) ---
 ## Controles tactiles: 0 auto (pantalla tactil o primer toque), 1 siempre, 2 nunca.
 var touch_mode := 0
@@ -86,6 +88,7 @@ func load_settings() -> void:
 	fullscreen = bool(cfg.get_value("video", "fullscreen", false))
 	screen_fx = clampi(int(cfg.get_value("video", "screen_fx", 0)), 0, 2)
 	screen_shake = bool(cfg.get_value("video", "screen_shake", true))
+	hero_numbers = bool(cfg.get_value("game", "hero_numbers", true))
 	touch_mode = clampi(int(cfg.get_value("touch", "mode", 0)), 0, 2)
 	ui_size = clampi(int(cfg.get_value("touch", "ui_size", ui_size)), 0, 1)
 	quality_mode = clampi(int(cfg.get_value("video", "quality", default_quality())), 0, Quality.AUTO) as Quality
@@ -100,6 +103,7 @@ func save_settings() -> void:
 	cfg.set_value("video", "fullscreen", fullscreen)
 	cfg.set_value("video", "screen_fx", screen_fx)
 	cfg.set_value("video", "screen_shake", screen_shake)
+	cfg.set_value("game", "hero_numbers", hero_numbers)
 	cfg.set_value("touch", "mode", touch_mode)
 	cfg.set_value("touch", "ui_size", ui_size)
 	cfg.set_value("video", "quality", quality_mode)
@@ -140,6 +144,11 @@ func set_screen_fx(mode: int) -> void:
 
 func set_screen_shake(on: bool) -> void:
 	screen_shake = on
+	save_settings()
+
+
+func set_hero_numbers(on: bool) -> void:
+	hero_numbers = on
 	save_settings()
 
 

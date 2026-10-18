@@ -72,7 +72,7 @@ func explode_at(local_pos: Vector2, source: Node) -> void:
 	var d := depth()
 	for e in RoomUtil.enemies_in(room):
 		if e.global_position.distance_to(gpos) <= RADIUS + 14.0:
-			RoomUtil.hurt_enemy(e, 38.0 + 10.0 * d, gpos, 520.0)
+			RoomUtil.hurt_enemy(e, 38.0 + 10.0 * d, gpos, 520.0, "explosivo")
 	var pl := player()
 	if pl != null and pl.global_position.distance_to(gpos) <= RADIUS:
 		if RoomUtil.hurt_player(pl, 1.1 * RoomUtil.std_hit(d)):

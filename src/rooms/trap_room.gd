@@ -384,7 +384,7 @@ class _Spikes extends Node2D:
 			var id: int = e.get_instance_id()
 			if not _bit.has(id) and rg.has_point(e.global_position):
 				_bit[id] = true
-				RoomUtil.hurt_enemy(e, 14.0 + 6.0 * d, rg.get_center(), 180.0)
+				RoomUtil.hurt_enemy(e, 14.0 + 6.0 * d, rg.get_center(), 180.0, "perforante")
 
 	## Cinta de peligro (amarillo y negro) alrededor de la placa: se ve siempre, hasta en sala gris.
 	func _tape(r: Rect2) -> void:
@@ -481,7 +481,7 @@ class _Vent extends Node2D:
 				RoomUtil.popup(pl.global_position + Vector2(0, -34), "!", Color("ffb24a"))
 		for e in RoomUtil.enemies_in(dyn.room):
 			if e.global_position.distance_to(global_position) <= SPLASH_R:
-				RoomUtil.hurt_enemy(e, 14.0 + 4.0 * d, global_position, 320.0)
+				RoomUtil.hurt_enemy(e, 14.0 + 4.0 * d, global_position, 320.0, "calor")
 		dyn.add_puddle(position)
 
 	func _draw() -> void:
@@ -534,7 +534,7 @@ class _Puddle extends Node2D:
 			_burn_e = 0.8
 			for e in RoomUtil.enemies_in(dyn.room):
 				if e.global_position.distance_to(global_position) <= radius:
-					RoomUtil.hurt_enemy(e, 3.0 + d, global_position, 0.0)
+					RoomUtil.hurt_enemy(e, 3.0 + d, global_position, 0.0, "calor")
 		queue_redraw()
 
 	func _draw() -> void:

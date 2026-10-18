@@ -12,4 +12,4 @@ tags = ["arma", "arrojadizo"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
 base_value = 270
-custom_data = {"affinity": "pene", "special": "boomerang", "base_damage": 13, "fire_rate": 0.4, "range": 230, "projectile_speed": 540, "knockback_mult": 0.8}
+custom_data = {"dmg_type": "contundente", "affinity": "pene", "special": "boomerang", "base_damage": 13, "fire_rate": 0.4, "range": 230, "projectile_speed": 540, "knockback_mult": 0.8}

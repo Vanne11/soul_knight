@@ -12,4 +12,4 @@ tags = ["arma", "explosivo", "área"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}, {"type": 4, "status_effect": null, "custom_data": {"immunity": ["its"]}}]
 base_value = 450
-custom_data = {"base_damage": 14, "fire_rate": 1.3, "projectile_speed": 280, "spread": 0.15, "projectiles": 3, "explosion_radius": 75, "range": 260}
+custom_data = {"dmg_type": "explosivo", "base_damage": 14, "fire_rate": 1.3, "projectile_speed": 280, "spread": 0.15, "projectiles": 3, "explosion_radius": 75, "range": 260}

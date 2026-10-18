@@ -43,8 +43,9 @@ static func _aim_point(player: Node, dist: float) -> Vector2:
 	return player.global_position + aim.normalized() * dist
 
 
-static func _hurt(e: Node, dmg: float, player: Node, from: Vector2) -> void:
+static func _hurt(e: Node, dmg: float, player: Node, from: Vector2, dtype := "explosivo") -> void:
 	if e.has_method("take_damage"):
+		BossDamage.tag("", 1.0, dtype)
 		e.take_damage(dmg, player, (e.global_position - from).normalized() * 220.0)
 
 
@@ -240,7 +241,7 @@ class Trap extends Node2D:
 				return
 
 	func _snap(e: Node) -> void:
-		ItemActions._hurt(e, damage * ItemActions._stats().damage_modifier, player, global_position)
+		ItemActions._hurt(e, damage * ItemActions._stats().damage_modifier, player, global_position, "perforante")
 		if e.has_method("stun"):
 			e.stun(immobilize)
 		HitFx.shake(0.3)
@@ -249,7 +250,7 @@ class Trap extends Node2D:
 		for i in secs:
 			tree.create_timer(float(i + 1)).timeout.connect(func():
 				if is_instance_valid(e) and is_instance_valid(player):
-					ItemActions._hurt(e, bleed_dps, player, e.global_position))
+					ItemActions._hurt(e, bleed_dps, player, e.global_position, "sangrado"))
 		queue_free()
 
 	func _draw() -> void:
