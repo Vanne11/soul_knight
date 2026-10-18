@@ -361,6 +361,7 @@ func _physics_process(delta: float) -> void:
 		_scan_t = 1.0
 		_scan_floor()
 	_watch_progress(delta, room, enemies)
+	_track_exits(room, enemies)
 	if _evade_t > 0.0 and not enemies.is_empty():
 		_evade_t -= delta
 		_goal_text = "alejarse de %d enemigos y volver (sala sin limpiar)" % enemies.size()
@@ -396,6 +397,13 @@ func _physics_process(delta: float) -> void:
 			Room.RoomType.keys()[room.room_type], room.grid_pos, room.cleared, player.global_position - room.global_position,
 			en.size(), en.map(func(e): return e.global_position - room.global_position).slice(0, 3), _goal_text,
 			player.current_weapon != null, get_node("/root/PlayerStats").intoxication_tier, get_tree().paused])
+		if not en.is_empty() and _room_t > 60.0:
+			# la pelea se alarga: datos del primer enemigo para saber por que no cae
+			var e0: Node2D = en[0]
+			_say("    enemigo[0] %s: estado=%s vida=%s/%s dist=%.0f vista_libre=%s visible=%s invulnerable=%s abierto=%s capa=%d mask=%d" % [
+				e0.get("enemy_name"), e0.get("state"), e0.get("current_health"), e0.get("max_health"),
+				e0.global_position.distance_to(player.global_position), _line_clear(player.global_position, e0.global_position), e0.visible,
+				e0.get("invulnerable"), e0.get("open"), e0.get("collision_layer"), e0.get("collision_mask")])
 	_label.text = "BOT · piso %d · %s · %s\n%s · golpes recibidos: %d" % [
 		_floor_n, Room.RoomType.keys()[room.room_type], "limpia" if room.cleared else "sin limpiar",
 		_goal_text, _hits]
@@ -1346,3 +1354,25 @@ func _watch_outsiders() -> void:
 	for id in _outside.keys():
 		if not alive.has(id):
 			_outside.erase(id)
+
+
+## Diagnostico: el instante en que un enemigo cruza el limite de su sala (de donde viene, a que velocidad, en que estado).
+var _last_rel := {}  # instance_id -> posicion relativa del fotograma anterior
+var _exit_logged := {}
+
+func _track_exits(room: Room, enemies: Array) -> void:
+	var size := RoomUtil.size_of(room)
+	var now := {}
+	for e in enemies:
+		var id: int = e.get_instance_id()
+		var rel: Vector2 = e.global_position - room.global_position
+		now[id] = rel
+		var out := rel.x < -20.0 or rel.y < -20.0 or rel.x > size.x + 20.0 or rel.y > size.y + 20.0
+		if out and not _exit_logged.has(id):
+			_exit_logged[id] = true
+			var prev = _last_rel.get(id)
+			_say("  SALE %s de %s %s: antes=%s ahora=%s (salto %s px) vel=%s estado=%s mask=%d capa=%d sala=%s puertas=%s" % [
+				e.get("enemy_name"), Room.RoomType.keys()[room.room_type], room.grid_pos, prev, rel,
+				"%.0f" % prev.distance_to(rel) if prev != null else "primer fotograma", e.get("velocity"), e.get("state"),
+				e.collision_mask, e.collision_layer, size, room.doors.values().map(func(d): return "%s:%d" % [d.get_direction_name(), d.state])])
+	_last_rel = now
