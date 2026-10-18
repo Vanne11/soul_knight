@@ -575,6 +575,7 @@ func _make_prop(d: Dictionary, kind: String, pos: Vector2, rng: RandomNumberGene
 	circle.radius = radius
 	shape.shape = circle
 	body.add_child(shape)
+	body.set_meta("rl_radius", radius)
 	var own: PointLight2D = null
 	if kind == "farol":
 		vis.free()
@@ -615,6 +616,41 @@ func _kick_props(d: Dictionary, delta: float) -> void:
 		var power := speed * (0.9 if speed < 300.0 else 1.6)
 		b.apply_central_impulse(dir * power * b.mass * 0.6)
 		b.apply_torque_impulse(randf_range(-1.0, 1.0) * power * 2.0)
+
+
+## Lo que pateas y sale volando hace un poco de dano al enemigo que alcanza (mas si es pesado y
+## va rapido: una lata pica, una piedra lanzada con dash duele). Un golpe por objeto y enemigo
+## mientras siga en vuelo; el objeto rebota. El autor es el jugador (cuenta como suya la muerte).
+const PROP_HIT_SPEED := 80.0  # px/s minimos para que haga dano
+const PROP_HIT_RANGE := 18.0  # radio del enemigo que se suma al del objeto
+
+func _props_hit_enemies(d: Dictionary) -> void:
+	if d.props.is_empty() or current_room.enemies_spawned.is_empty():
+		return
+	var foes := RoomUtil.alive(current_room)
+	if foes.is_empty():
+		return
+	for b in d.props:
+		if not is_instance_valid(b):
+			continue
+		var v: Vector2 = b.linear_velocity
+		var speed := v.length()
+		if speed < PROP_HIT_SPEED:
+			if b.has_meta("rl_hit"):
+				b.remove_meta("rl_hit")  # quieto otra vez: puede volver a pegar
+			continue
+		var hit: Array = b.get_meta("rl_hit", [])
+		var reach: float = b.get_meta("rl_radius", 6.0) + PROP_HIT_RANGE
+		for e in foes:
+			if e in hit or b.global_position.distance_to(e.global_position + Vector2(0, -8)) > reach:
+				continue
+			hit.append(e)
+			b.set_meta("rl_hit", hit)
+			var dmg := clampf(round(1.0 + speed * b.mass * 0.012), 1.0, 6.0)
+			e.take_damage(dmg, _player, v.normalized() * minf(speed, 300.0) * 0.6)
+			b.linear_velocity = -v * 0.4  # rebota en el bicho
+			Sound.play("enemy_hit")
+			break
 
 
 func _on_node_added(n: Node) -> void:
@@ -659,6 +695,7 @@ func _process(delta: float) -> void:
 		_hero_light.energy = _hero_light.get_meta("base_energy") * (1.0 + _noise.get_noise_2d(_t * 0.5, 500.0) * 0.06)
 	_kick_props(d, delta)
 	_push_with_bullets(d)
+	_props_hit_enemies(d)
 	_player_prev = _player.global_position
 	_have_prev = true
 	if dark:
