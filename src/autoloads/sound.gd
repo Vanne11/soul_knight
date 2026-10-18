@@ -1,6 +1,6 @@
 extends Node
 
-## Efectos y musica. Los .wav salen de tools/gen_audio.py.
+## Efectos y musica. Los efectos (.wav) salen de tools/gen_audio.py; la musica va en .ogg (tools/gen_floor_music.py, gen_menu_music.py).
 ##   Sound.play("shoot")      efecto (ver assets/audio/sfx)
 ##   Sound.music("boss")      cambia de tema ("" para callar)
 ## Lo que ya tiene señal en GlobalEvents suena desde aqui; el resto lo llama
@@ -101,13 +101,12 @@ func music(track: String) -> void:
 
 
 func _start_track(track: String) -> void:
-	if track == "" or not ResourceLoader.exists(MUSIC_DIR + track + ".wav"):
+	if track == "" or not ResourceLoader.exists(MUSIC_DIR + track + ".ogg"):
 		_music.stop()
 		_music.volume_db = MUSIC_DB
 		return
-	var s: AudioStreamWAV = load(MUSIC_DIR + track + ".wav")
-	s.loop_mode = AudioStreamWAV.LOOP_FORWARD
-	s.loop_end = int(s.get_length() * s.mix_rate)
+	var s: AudioStreamOggVorbis = load(MUSIC_DIR + track + ".ogg")
+	s.loop = true
 	_music.stream = s
 	_music.volume_db = FADE_DB
 	_music.play()
