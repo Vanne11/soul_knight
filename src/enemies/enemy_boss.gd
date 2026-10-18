@@ -285,10 +285,12 @@ func _stun(seconds: float) -> void:
 	_gen += 1
 	_reset_fx()
 	_tire(seconds)
+	set_meta("stunned", true)  # lo lee BossAnimator: aturdida (mareo) != agotada (recupera el aliento)
 	HitFx.shake(0.35)
 
 
 func _tire(seconds: float) -> void:
+	set_meta("stunned", false)
 	state = State.TIRED
 	_timer = seconds
 	velocity = velocity * 0.3
@@ -350,6 +352,7 @@ func atk_charge() -> void:
 	HitFx.shake(0.3 if hit_wall else 0.1)
 	# Contra la pared se queda mas tiempo atontado: premio por esquivar bien.
 	_tire(1.7 if hit_wall else 1.0)
+	set_meta("stunned", hit_wall)  # choque contra la pared: aturdida de verdad
 
 
 # ---------------------------------------------------------------- recuperacion interrumpible

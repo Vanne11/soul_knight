@@ -72,6 +72,48 @@ def lag(im, dx):
     return out
 
 
+def blink(im, amount):
+    """Cierra los ojos (amount 0.5 = a medias, 1.0 = cerrados): rellena cada ojo con rosa y traza el parpado."""
+    im = im.copy()
+    px = im.load()
+    W, H = im.size
+    b = body_box(im)
+    seen = set()
+    comps = []
+    for y in range(b[1], b[1] + int((b[3] - b[1]) * 0.6)):
+        for x in range(b[0], b[2]):
+            p = px[x, y]
+            if p[3] and min(p[:3]) >= 235 and (x, y) not in seen:
+                st, cc = [(x, y)], []
+                seen.add((x, y))
+                while st:
+                    cx, cy = st.pop()
+                    cc.append((cx, cy))
+                    for nx, ny in ((cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)):
+                        if 0 <= nx < W and 0 <= ny < H and (nx, ny) not in seen:
+                            q = px[nx, ny]
+                            if q[3] and min(q[:3]) >= 235:
+                                seen.add((nx, ny))
+                                st.append((nx, ny))
+                if 60 <= len(cc) <= 2500:
+                    comps.append(cc)
+    for cc in comps:
+        xs, ys = [c[0] for c in cc], [c[1] for c in cc]
+        x0, x1, y0, y1 = min(xs) - 2, max(xs) + 2, min(ys) - 1, max(ys) + 1
+        ytop = y0 if amount >= 1.0 else y0 + (y1 - y0) // 2
+        for y in range(ytop, y1 + 1):
+            for x in range(x0, x1 + 1):
+                if 0 <= x < W and 0 <= y < H and px[x, y][3] and not is_gold(px[x, y]):
+                    px[x, y] = (255, 118, 186, 255) if y <= (ytop + y1) // 2 else (246, 75, 163, 255)
+        ly = (ytop + y1) // 2 + 2 if amount >= 1.0 else ytop
+        for x in range(x0, x1 + 1):
+            for t in (0, 1):
+                yy = ly + t + (1 if x in (x0, x1) else 0)
+                if 0 <= x < W and 0 <= yy < H:
+                    px[x, yy] = (104, 32, 98, 255)
+    return im
+
+
 def body_box(im):
     px = im.load()
     pts = [(x, y) for y in range(im.height) for x in range(im.width) if is_pink(px[x, y])]
@@ -257,7 +299,15 @@ def frame_sets(P, level):
         xf(pz("spit"), rot=-2, sy=1.04),
         xf(pz("spit")),
     ]
+    # cruz: carga (sin bucle, se estira al aviso) -> gira con las tiras (bucle) mientras duran
     A["attack_cruz"] = [
+        xf(pz("base"), sx=1.05, sy=0.93),
+        xf(pz("windup"), sy=0.95, rot=-4),
+        xf(pz("cross"), sx=0.96, sy=1.05, dy=-1),
+        xf(pz("cross"), sx=1.02, sy=1.0),
+        xf(pz("cross"), sx=1.0, sy=1.02),
+    ]
+    A["cross_spin"] = [
         xf(pz("cross"), sx=1 + 0.04 * S(i, 6), sy=1 - 0.03 * S(i, 6), rot=2.5 * S(i + 1, 6), dy=-abs(S(i, 6)) * 1.5) for i in range(6)
     ]
     A["attack_embestida"] = [
@@ -324,15 +374,60 @@ def frame_sets(P, level):
         sparkles(xf(pz("intro"), sx=1.01, sy=0.99), 0.7),
         steam(xf(pz("base")), 0.5),
     ]
+    # ---- agotada (recupera el aliento tras SU ataque: sin estrellas ni mareo) y aturdida (la aturde el jugador)
+    A["recover_in"] = [
+        xf(pz("base"), sx=1.06, sy=0.9, rot=2, dx=-1),
+        xf(pz("base"), sx=1.08, sy=0.86, rot=4, dx=-1),
+        rim_drips(xf(pz("base"), sx=1.04, sy=0.92, rot=5, dx=-1), 0.2, 4, 10),
+        sweat(rim_drips(xf(pz("base"), sx=1.03, sy=0.94, rot=5, dx=-1), 0.4, 4, 11), 0.1),
+    ]
+    A["recover"] = [
+        sweat(rim_drips(lag(xf(pz("base"), sx=1 + 0.03 * S(i, 8), sy=0.94 - 0.05 * S(i, 8), rot=5 + 1.5 * S(i, 8), dx=-1), 1.5 * S(i - 2, 8)), (i / 8.0), 4, 11), i / 8.0)
+        for i in range(8)
+    ]
+    A["stun_in"] = [
+        xf(pz("base"), sx=1.2, sy=0.8, rot=-8, dx=-2),
+        xf(pz("damaged"), sx=0.94, sy=1.08, rot=-14, dx=-3),
+        xf(pz("tired"), sx=1.04, sy=0.95, rot=8),
+        xf(pz("tired"), rot=-4),
+    ]
+    A["stuck"] = [  # la tira quedo pegada: forcejea
+        sweat(xf(pz("pull"), sx=1 + 0.03 * S(i, 6), sy=1 - 0.03 * S(i, 6), dx=2 + 1.5 * S(i * 2, 6), rot=-2 * S(i, 6)), i / 6.0)
+        for i in range(6)
+    ]
+    A["drag"] = [  # tira del otro lado de la tira, arrastrandote
+        xf(pz("pull"), sx=1 + 0.03 * S(i, 4), sy=1 - 0.04 * S(i, 4), dx=3 - 2.5 * (i % 2), rot=-3) for i in range(4)
+    ]
+    A["spitting"] = [  # escupe cera: cabeza hacia delante en cada escupitajo
+        xf(pz("spit"), sx=1 - 0.03 * (i % 2), sy=1 + 0.05 * (i % 2), dx=1.5 * (i % 2), rot=-3 + 4 * (i % 2)) for i in range(4)
+    ]
+    A["brake"] = [  # frenazo de la embestida
+        xf(pz("strike"), sx=0.92, sy=1.06, rot=-7, dx=-2),
+        xf(pz("base"), sx=1.14, sy=0.86, rot=-5, dx=-2),
+        xf(pz("base"), sx=1.06, sy=0.94, rot=-2),
+    ]
+    # ---- vida de reposo: parpadeo y gestos (se eligen al azar)
+    base_i = pz("idle")
+    A["blink"] = [xf(blink(base_i, 0.5)), xf(blink(base_i, 1.0)), xf(blink(base_i, 1.0)), xf(blink(base_i, 0.5))]
+    A["idle_stir"] = [  # revuelve la cera con la cuchara
+        steam(rim_drips(xf(pz("idle"), sx=1 + 0.02 * S(i, 8), sy=1 - 0.02 * S(i, 8), rot=-3 * S(i, 8) - 2, dx=-1 * S(i + 2, 8)), i / 8.0, 5, 9), i / 8.0)
+        for i in range(8)
+    ]
+    A["idle_impatient"] = [  # impaciente: golpea el piso con el pie y mira de lado
+        xf(pz("idle" if i % 4 < 2 else "base"), sx=1 + 0.05 * (i % 2), sy=1 - 0.06 * (i % 2), dy=-1.5 * (i % 2 == 0), rot=3 * S(i, 8)) for i in range(8)
+    ]
     return A
 
 
 # (fps, loop) por animacion
 ANIM_META = {
     "idle": (8, True), "walk": (10, True), "attack": (12, False), "attack_tiron": (8, False),
-    "attack_salpicadura": (10, False), "attack_cruz": (8, True), "attack_embestida": (10, False),
+    "attack_salpicadura": (10, False), "attack_cruz": (10, False), "attack_embestida": (10, False),
     "release": (14, False), "release_spit": (12, False), "charge": (14, True), "tired": (7, True),
     "channel": (9, True), "hurt": (12, False), "death": (9, False), "intro": (6, False),
+    "cross_spin": (10, True), "recover_in": (10, False), "recover": (7, True), "stun_in": (12, False),
+    "stuck": (9, True), "drag": (10, True), "spitting": (10, True), "brake": (12, False),
+    "blink": (14, False), "idle_stir": (8, False), "idle_impatient": (8, False),
 }
 SHEET_COLS = 12
 
