@@ -1174,6 +1174,9 @@ func _on_stall(room: Room, enemies: Array) -> void:
 	_prog_t = 0.0
 	var where := "%s %s" % [Room.RoomType.keys()[room.room_type], room.grid_pos]
 	_issue("Piso %d: sin progreso en %s (objetivo \"%s\", %s) -> nivel %d" % [_floor_n, where, _goal_text, _goal_kind, _stall_n])
+	if _stall_n == 1:
+		for e in enemies:
+			_say("    diag: " + _diag_enemy(room, e))
 	match _stall_n:
 		1:
 			_abandon_goal(room)
@@ -1210,6 +1213,20 @@ func _abandon_goal(room: Room) -> void:
 	_thing_cur = null
 	_path.clear()
 	_unstick_n = 0
+
+
+## Una linea con todo lo que puede explicar que un enemigo no muera (para el PROBLEMA de "sin progreso").
+func _diag_enemy(room: Room, e: Node) -> String:
+	var p: Vector2 = e.global_position - room.global_position
+	var ai = e.get("ai")
+	var cell := room.cell_kind(Vector2i(int(floor(p.x / 64.0)), int(floor(p.y / 64.0))))
+	var q := PhysicsRayQueryParameters2D.create(player.global_position, e.global_position, 1)
+	q.exclude = [player.get_rid()]
+	var blocked := not player.get_world_2d().direct_space_state.intersect_ray(q).is_empty()
+	return "%s (%s) pos_local=%s celda=%d hp=%.0f/%.0f invuln=%s estado=%s modo=%s vel=%s layer=%d mask=%d forma=%s linea_bloqueada=%s jugador_local=%s" % [
+		e.get("enemy_name"), e.get_script().resource_path.get_file(), p, cell, float(e.get("current_health")), float(e.get("max_health")),
+		e.get("invuln"), e.get("state"), ai.mode if ai != null else "-", e.get("velocity"), e.collision_layer, e.collision_mask,
+		room.shape_id, blocked, player.global_position - room.global_position]
 
 
 ## Ultimo recurso con enemigos que no mueren: les baja la vida (queda anotado como PROBLEMA).
