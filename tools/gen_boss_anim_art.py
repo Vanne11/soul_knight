@@ -5,8 +5,8 @@ Uso: python3 tools/gen_boss_anim_art.py gen [pose ...]    (llama a la API; sin a
 Los originales de Gemini quedan en .claude_tmp/cera_raw/ (fuera de git). La key sale de
 ~/.kaggle/gemini_key (misma que gen_intro_art.py). Cada pose se pide con el diseno base y el sprite
 actual como REFERENCIA para que no cambie de cara ni de colores, sobre fondo verde plano que se recorta.
-Pixelado: se reduce a 40x60 con paleta corta (la del sprite actual de Cera + pocos tonos) y se amplia x2
-con vecino mas cercano (80x120), igual que el resto de los jefes.
+Pixelado: se reduce a 156x180 (mismo grosor de pixel que el heroe) con paleta fija de ~36 colores
+sin ampliar: el sprite va a scale 1.0 (BossAnimator lo ajusta al ver cuadros de alta densidad).
 """
 import base64
 import io
@@ -25,7 +25,8 @@ RAW = ROOT / ".claude_tmp/cera_raw"
 OUT = ROOT / "assets/sprites/enemies"
 MODEL = os.environ.get("GEMINI_IMAGE_MODEL", "gemini-3.1-flash-lite-image")
 KEY_BG = (0, 255, 0)
-CW, CH = 52, 60  # lienzo a baja resolucion (x2 = 104x120): algo mas ancho que el 40x60 viejo, para brazos y tiras
+CW, CH = 156, 180  # lienzo final 156x180 a escala 1: 1 pixel de arte = 1 unidad de juego, como el heroe (32x48)
+K = 3  # factor respecto al lienzo viejo de 52x60 (las distancias de los efectos se dan en esas unidades)
 CUR = ROOT / "assets/sprites/enemies/boss_cera_idle_00.png"
 
 STYLE = (
@@ -166,7 +167,7 @@ def pixelate_set(poses: dict, colors: int = 28) -> dict:
     boxes = {n: im.getbbox() for n, im in poses.items()}
     bb = boxes["base"]
     # escala: el cuerpo de la base ocupa ~52 px de alto en 60 (como el sprite actual)
-    s = 50.0 / (bb[3] - bb[1])
+    s = 150.0 / (bb[3] - bb[1])
     res = {}
     for n, im in poses.items():
         b = boxes[n]
@@ -179,17 +180,9 @@ def pixelate_set(poses: dict, colors: int = 28) -> dict:
         # centrado en x, pegado abajo (pies en y=59)
         cv.alpha_composite(c, ((CW - c.width) // 2, CH - c.height))
         res[n] = cv
-    # paleta corta FIJA (la de la Cera de siempre + pocos tonos): cada pixel va al color mas cercano
-    pal = np.array(PALETTE, dtype=np.int32)
-    out = {}
-    for n, im in res.items():
-        a = np.array(im)
-        rgb = a[:, :, :3].astype(np.int32)
-        d = ((rgb[:, :, None, :] - pal[None, None, :, :]) ** 2 * np.array([2, 4, 3])).sum(-1)
-        q = pal[d.argmin(-1)].astype(np.uint8)
-        alpha = np.where(a[:, :, 3] >= 110, 255, 0).astype(np.uint8)
-        out[n] = Image.fromarray(np.dstack([q, alpha]), "RGBA")
-    return out
+    # paleta fija con rampas de matiz + limpieza + contorno selectivo + luz (gen_boss_anim_polish)
+    import gen_boss_anim_polish as pol
+    return {n: Image.fromarray(pol.finish(np.array(im)), "RGBA") for n, im in res.items()}
 
 
 PALETTE = [
@@ -197,6 +190,8 @@ PALETTE = [
     (255, 201, 60), (255, 232, 140), (221, 174, 56), (164, 129, 50), (255, 241, 214), (237, 190, 149),
     (63, 214, 232), (113, 220, 227), (49, 137, 153), (187, 112, 60), (139, 86, 56), (102, 60, 40),
     (219, 230, 224), (134, 138, 153), (255, 255, 255), (255, 72, 72), (255, 166, 68), (96, 20, 64),
+    (255, 168, 205), (232, 98, 160), (184, 60, 126), (255, 214, 96), (196, 150, 52), (140, 104, 44),
+    (255, 226, 190), (216, 160, 118), (90, 170, 190), (28, 24, 34), (70, 60, 80), (255, 140, 70),
 ]
 
 
