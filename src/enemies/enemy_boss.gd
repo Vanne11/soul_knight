@@ -734,12 +734,20 @@ func arena() -> Rect2:
 
 func arena_point(margin := 70.0) -> Vector2:
 	var a := arena().grow(-margin)
-	return Vector2(RNG.randf_range(a.position.x, a.end.x), RNG.randf_range(a.position.y, a.end.y))
+	return _on_floor(Vector2(RNG.randf_range(a.position.x, a.end.x), RNG.randf_range(a.position.y, a.end.y)))
 
 
 func clamp_to_arena(p: Vector2, margin := 70.0) -> Vector2:
 	var a := arena().grow(-margin)
-	return Vector2(clampf(p.x, a.position.x, a.end.x), clampf(p.y, a.position.y, a.end.y))
+	return _on_floor(Vector2(clampf(p.x, a.position.x, a.end.x), clampf(p.y, a.position.y, a.end.y)))
+
+
+## En una sala con forma (octogono, cruz...) el rectangulo de la arena incluye esquinas de muro: el punto
+## se lleva al suelo pisable (si no, huevos, clones y hojas aparecian dentro de la pared y el jefe se
+## teletransportaba a ella y salia por el otro lado).
+func _on_floor(p: Vector2) -> Vector2:
+	var room := find_owning_room()
+	return room.snap_global(p, 22.0) if room != null else p
 
 
 ## Invoca bichos hasta el tope. Devuelve cuantos salieron.
