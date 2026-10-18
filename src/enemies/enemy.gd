@@ -69,8 +69,10 @@ func find_owning_room() -> Room:
 
 func _ready() -> void:
 	ActorFx.setup_actor(self, animated_sprite)
+	max_health *= Censura.mult("enemy_health")  # Censura 0: menos vida
 	current_health = max_health
 	add_to_group("enemy")
+	EnemyHpBar.attach(self)  # barra sobre la cabeza al quitarle vida
 	ai = EnemyAI.attach(self)
 	
 	if hurtbox:

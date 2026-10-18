@@ -25,6 +25,11 @@ const LEVELS: Array[Dictionary] = [
 	{"id": "furia", "flags": ["jefe_furia"]},                # enemy_boss.gd: fase extra de furia
 ]
 const MAX_LEVEL := 10
+## Censura 0 (juego normal): mas amable que el resto. Solo se aplica con level == 0.
+const LEVEL0 := {"mult": {
+	"damage_taken": 1.0 / 3.0,  # player_stats.gd: take_damage()
+	"enemy_health": 0.5,        # enemy.gd, enemy_swarmer.gd, enemy_ranged.gd, enemy_tank.gd: _ready() (no jefes)
+}}
 
 ## Maldiciones de los PACTOS MAYORES de la Hoja de Parra (src/rooms/enc_pact.gd). Duran toda la
 ## partida y usan las MISMAS claves que los niveles: mult()/has() las combinan con ellos, asi el
@@ -48,7 +53,7 @@ static var pact_curses: Array = []
 
 
 static func mult(key: String) -> float:
-	var m := 1.0
+	var m := float(LEVEL0.mult.get(key, 1.0)) if level == 0 else 1.0
 	for i in mini(level, LEVELS.size()):
 		m *= float(LEVELS[i].get("mult", {}).get(key, 1.0))
 	for id in pact_curses:
