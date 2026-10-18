@@ -1,30 +1,27 @@
 {
   "_info": "Frases del narrador sobre las habilidades propias de cada heroe (src/player/abilities/). Mismo formato que lines.json.",
-
   "hero_block_pitocles": [
     "Bloqueado. El escudo funciona. La moral, ya veremos."
   ],
   "hero_parry_pitocles": [
-    "¡Parry! Pitocles devolvió una bala. Lleva toda la guerra esperando que alguien se lo note."
+    "Parry. Pitocles devolvió la bala y espera que alguien lo haya visto."
   ],
   "hero_ram_pitocles": [
-    "Embestida de falange. Una falange de un solo hombre, pero convencido."
+    "Falange de un solo hombre. Convencido, eso sí."
   ],
-
   "hero_glide_vulvalquiria": [
-    "Las alas del casco sirven para volar. Ella dice que siempre lo supo. Yo había apostado que no."
+    "Las alas del casco vuelan de verdad. Ella ya lo sabía. Yo perdí una apuesta."
   ],
   "hero_scream_vulvalquiria": [
-    "Grito de valquiria. Los enemigos huyen. Los vecinos de tres pisos más abajo, también."
+    "Grito de valquiria. Los enemigos huyen. Los vecinos de abajo, también."
   ],
-
   "hero_egg_ornitorrinco": [
-    "Puso un huevo. Es mamífero. No hagas preguntas, nadie en la naturaleza las contesta."
+    "Un huevo. De mamífero. El Ornitorrinco dice que es normal. Ñic."
   ],
   "hero_spur_ornitorrinco": [
-    "Espolón venenoso. Sí: el ornitorrinco es venenoso. La evolución no necesita explicarse."
+    "Espolón venenoso. Sí, existe. La naturaleza estaba aburrida."
   ],
   "hero_electro_ornitorrinco": [
-    "Electrorrecepción: el Ornitorrinco siente a los invisibles. Es lo único en este mundo que lo entiende a él."
+    "Electrorrecepción: siente a los invisibles. Y a ti, al otro lado de la pantalla."
   ]
 }

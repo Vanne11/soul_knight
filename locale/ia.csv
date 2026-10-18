@@ -8,20 +8,20 @@ IA_RAGE,¡¡GRRR!!,GRRR!!
 IA_ALLY_DIED,¡NOOO! ¡Mi compañero!,NOOO! My buddy!
 IA_DOUBT,Esto no era parte del plan...,This wasn't part of the plan...
 IA_LOST,¿Dónde se metió?,Where did it go?
-IA_PROVOKED,¡Me has pisado!,You stepped on me!
+IA_PROVOKED,¡Me pisaste!,You stepped on me!
 IA_STARTLE,¡AAAH! ¡Un héroe!,AAAH! A hero!
 IA_HERO_CONFUSED,¿Qué... ERES?,What... ARE you?
 IA_PELO_ENCARNADO_LOST,No pienso soltarte.,I won't let go of you.
 IA_GRANITO_GRUDGE,Te recordaré. Siempre.,I'll remember you. Forever.
-IA_LADILLA_PROVOKED,¡Te pillé! Ahora vives aquí.,Gotcha! Now you live here.
+IA_LADILLA_PROVOKED,¡Te agarré! Ahora vives aquí.,Gotcha! Now you live here.
 IA_TESTICULO_STARTLE,¡AAAH! ¡Me han visto!,AAAH! They saw me!
-IA_TESTICULO_HERO_FRIEND,¡Colega!,Buddy!
+IA_TESTICULO_HERO_FRIEND,¡Compadre!,Pal!
 IA_VESICULA_RESENT,¿Me estás ignorando?,Are you ignoring me?
 IA_ESPERMATOZOIDE_HERO_FRIEND,¡Es de los nuestros!,One of ours!
 IA_ESPERMATOZOIDE_RACE,¡YO PRIMERO!,ME FIRST!
 IA_OVULO_PROVOKED,¿Cómo osas tocar a la realeza?,How dare you touch royalty?
 IA_OVULO_HERO_FRIEND,"Saludos, hermana.","Greetings, sister."
-IA_TROMPA_ALARM,¡Cotilleo! ¡Está aquí!,Gossip! It's here!
+IA_TROMPA_ALARM,¡Chisme fresco! ¡Está aquí!,Fresh gossip! It is here!
 IA_ESPECULO_SHELL,*clac*,*clack*
 IA_HEMORROIDE_WAKE,"¡Déjame dormir, bruto!","Let me sleep, you brute!"
 IA_HEMORROIDE_RAGE,¡POR DETRÁS NO!,NOT FROM BEHIND!
