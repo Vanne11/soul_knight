@@ -8,6 +8,10 @@ class_name RoomDecor
 ## corazones, cortinas, jarrones), Perineo (garita, vallas, carteles) y Palacio (sellos de
 ## CENSURADO, barras negras, alfombras rojas, hojas de parra).
 ##
+## Etapa 7 (doble sentido de fondo, canon de fantasia): matas de rizos de vello y matorrales con rizos
+## en la Selva, flores-pliegue en Vulvania, hermas y columnas "de bellota" en Penelandia, un cartel
+## de dos lomas en Perineo y estatuas pixeladas por la censura en el Palacio.
+##
 ## Es puro adorno: NINGUN nodo de aqui tiene colision, asi que nada bloquea, daña ni frena.
 ## Lo unico que cambia lo que se ve de los actores son los matorrales/pelos de la Selva, que se
 ## dibujan por ENCIMA (z_index 2) y se vuelven semitransparentes cuando alguien (jugador,
@@ -51,6 +55,7 @@ const CATALOG := {
 		["pene_column_fallen", 2.0, "flat", false], ["pene_shield", 2.5, "prop", false],
 		["pene_helmet", 2.5, "prop", false], ["statue_pene_m", 1.4, "prop", true],
 		["statue_pene_f", 1.4, "prop", true],
+		["pene_herma", 1.6, "prop", true], ["pene_column_glans", 1.8, "prop", true],
 	],
 	"vulva": [
 		["vulva_flowers_pot", 3.0, "prop", false], ["vulva_flowers_bed", 3.0, "flat", false],
@@ -58,19 +63,22 @@ const CATALOG := {
 		["vulva_curtain", 2.5, "prop", false], ["vulva_vase_a", 3.0, "prop", false],
 		["vulva_vase_b", 3.0, "prop", false], ["statue_vulva_m", 1.0, "prop", true],
 		["statue_vulva_f", 1.0, "prop", true],
+		["vulva_orchid_pot", 2.5, "prop", false], ["vulva_orchid_bed", 2.5, "flat", false],
 	],
 	"mixto": [
 		["mixto_booth", 2.0, "prop", true], ["mixto_fence", 3.0, "prop", false],
 		["mixto_cone", 3.0, "prop", false], ["mixto_sign_stop", 2.0, "prop", true],
 		["mixto_sign_no", 3.0, "prop", false], ["mixto_sign_icon", 2.0, "prop", true],
 		["statue_mixto_m", 0.6, "prop", true], ["statue_mixto_f", 0.6, "prop", true],
+		["mixto_sign_hills", 2.0, "prop", true],
 	],
 	"censura": [
 		["censura_stamp", 3.0, "flat", false], ["censura_bar_a", 2.5, "flat", false],
 		["censura_bar_b", 2.5, "flat", false], ["censura_carpet_flat", 2.0, "flat", false],
 		["censura_carpet_roll", 2.0, "prop", false], ["censura_leaf_plant", 3.0, "prop", false],
-		["censura_leaf_pile", 2.0, "flat", false], ["statue_censura_m", 1.6, "prop", true],
-		["statue_censura_f", 1.6, "prop", true],
+		["censura_leaf_pile", 2.0, "flat", false], ["statue_censura_m", 1.2, "prop", true],
+		["statue_censura_f", 1.2, "prop", true], ["statue_censura_mosaic_m", 1.0, "prop", true],
+		["statue_censura_mosaic_f", 1.0, "prop", true],
 	],
 }
 ## Restos de heroes anteriores (todos los reinos). El sentado va de espaldas al muro de arriba.
@@ -428,8 +436,10 @@ func _step_crawlers(dt: float) -> void:
 
 # ------------------------------------------------------------------ matorrales y pelos (35)
 func _build_cover() -> void:
-	var names := ["neutral_bush_a", "neutral_bush_b", "neutral_hair_a", "neutral_hair_b"]
-	var weights := [0.3, 0.3, 0.2, 0.2]
+	# 4 matorrales frondosos (liso, con bayas, con flores, con rizos asomando) y 4 matas de vello rizado
+	var names := ["neutral_bush_a", "neutral_bush_b", "neutral_bush_c", "neutral_bush_d",
+		"neutral_hair_a", "neutral_hair_b", "neutral_hair_c", "neutral_hair_d"]
+	var weights := [0.15, 0.15, 0.14, 0.14, 0.11, 0.1, 0.1, 0.11]
 	var n := _rng.randi_range(2, 3) + (1 if _size.x * _size.y > 700.0 * 500.0 else 0)
 	var center := Rect2(_size * 0.5 - Vector2(100, 80), Vector2(200, 160))
 	var placed: Array[Rect2] = []
@@ -460,27 +470,34 @@ func _build_cover() -> void:
 			if bad:
 				continue
 			placed.append(r)
-			_add_cover(tex, r, Vector2(fx, fy))
+			_add_cover(tex, r, Vector2(fx, fy), _rng.randf() < 0.5)
 			break
 
 
-func _add_cover(tex: Texture2D, r: Rect2, feet: Vector2) -> void:
+func _add_cover(tex: Texture2D, r: Rect2, feet: Vector2, flip := false) -> void:
 	# sombra a ras de suelo (la copa va por encima de los actores)
 	var holder := Node2D.new()
 	holder.position = feet
 	holder.use_parent_material = true
 	_under.add_child(holder)
 	LightKit.add_contact_shadow(holder, r.size.x * 0.38, 0.0)
+	# la copa cuelga de un nodo en los pies: el viento la inclina (skew) sin mover la base
+	var sway := Node2D.new()
+	sway.position = feet
+	sway.use_parent_material = true
+	_over.add_child(sway)
 	var s := Sprite2D.new()
 	s.texture = tex
 	s.centered = false
-	s.position = r.position
+	s.flip_h = flip
+	s.position = Vector2(-r.size.x * 0.5, -r.size.y)
 	s.light_mask = MASK_FLOOR
 	s.use_parent_material = true
-	_over.add_child(s)
+	sway.add_child(s)
 	# zona que tapa: lo mas alto de la copa; quien este ahi dentro (o rozando) la vuelve transparente
 	var cover := Rect2(r.position + Vector2(4, 6), r.size - Vector2(8, 14)).grow(12.0)
-	_covers.append({"s": s, "rect": cover, "a": 1.0})
+	_covers.append({"s": s, "sway": sway, "rect": cover, "a": 1.0, "rustle": 0.0,
+		"sp": _rng.randf_range(0.7, 1.2), "ph": _rng.randf_range(0.0, 6.0), "amp": _rng.randf_range(0.012, 0.022)})
 
 
 func _step_covers(dt: float) -> void:
@@ -504,6 +521,9 @@ func _step_covers(dt: float) -> void:
 				break
 		c.a = move_toward(c.a, FADE_ALPHA if under else 1.0, dt * 4.0)
 		(c.s as Sprite2D).modulate.a = c.a
+		# vaiven: brisa suave siempre; si pasas por debajo se sacude un rato (y se calma solo)
+		c.rustle = 1.0 if under else move_toward(c.rustle, 0.0, dt * 1.2)
+		(c.sway as Node2D).skew = sin(_t * c.sp + c.ph) * c.amp + sin(_t * 11.0 + c.ph) * 0.045 * c.rustle
 
 
 # ------------------------------------------------------------------ animacion

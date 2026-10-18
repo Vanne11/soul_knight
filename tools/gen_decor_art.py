@@ -268,7 +268,7 @@ def hero(i):
 
 
 # ------------------------------------------------------------------ estatuas
-def statue(k, sex):
+def statue(k, sex, mosaic=False):
     L, M, D = STONE[k]
     im, d = new(36, 58)
     d.rectangle((3, 47, 32, 56), fill=M)
@@ -310,10 +310,19 @@ def statue(k, sex):
     cyl(im, 0.8)
     im.putpixel((16, 7), OL)
     im.putpixel((20, 7), OL)
-    d.polygon(leaf, fill=LEAF[1])
-    d.line((18, leaf[0][1], 18, leaf[-2][1] + 2), fill=LEAF[2])
-    d.line((14, leaf[0][1], 17, leaf[0][1] + 3), fill=LEAF[0])
-    im.putpixel((22, leaf[0][1] + 1), LEAF[0])
+    if mosaic:
+        # pixelado de censura de telediario: cuadritos grises 3x3 sobre la entrepierna
+        rr = random.Random(5)
+        y0 = leaf[0][1] - 1
+        for gy in range(3):
+            for gx in range(4):
+                g = rr.choice((C("e8e8f2"), C("b8b8c8"), C("8a8aa0"), C("d0d0de")))
+                d.rectangle((12 + gx * 3, y0 + gy * 3, 14 + gx * 3, y0 + gy * 3 + 2), fill=g)
+    else:
+        d.polygon(leaf, fill=LEAF[1])
+        d.line((18, leaf[0][1], 18, leaf[-2][1] + 2), fill=LEAF[2])
+        d.line((14, leaf[0][1], 17, leaf[0][1] + 3), fill=LEAF[0])
+        im.putpixel((22, leaf[0][1] + 1), LEAF[0])
     if k == "neutral":  # musgo
         for p in ((12, 20), (13, 21), (24, 40), (6, 50), (28, 50), (9, 48)):
             d.rectangle((p[0], p[1], p[0] + 2, p[1] + 1), fill=C("4a7a3a"))
@@ -321,57 +330,273 @@ def statue(k, sex):
 
 
 # ------------------------------------------------------------------ Selva
+# Matorrales y rizos (etapa 7): volumen por lobulos (luz arriba-izquierda, sombra abajo), hojas con
+# textura, silueta irregular y contorno de 1 px. Cada tipo tiene 4 variantes de tamaño distinto.
+LIGHT_DIR = (-0.55, -0.65, 0.52)
+_LN = math.sqrt(sum(v * v for v in LIGHT_DIR))
+LIGHT_DIR = tuple(v / _LN for v in LIGHT_DIR)
+
+GREENS = {
+    "a": (C("17402a"), C("27643a"), C("3c8a40"), C("62b04c"), C("9cd868")),
+    "b": (C("1a3a2c"), C("2a5a3a"), C("40803c"), C("66a84a"), C("a0d070")),
+    "c": (C("1c4a2a"), C("2c6e36"), C("48943c"), C("72ba4c"), C("aee070")),
+    "d": (C("1e3a1e"), C("30602a"), C("4a8432"), C("74ac42"), C("b0d860")),
+}
+CURLS = {
+    "a": (C("2a160c"), C("4a2a14"), C("6e421e"), C("94622c"), C("c08a42")),   # castaño
+    "b": (C("0e0a12"), C("1c1a2c"), C("302e50"), C("4c4e7c"), C("7c82b4")),   # negro azulado
+    "c": (C("4a1c0c"), C("7a3414"), C("a85420"), C("d07c34"), C("f0a850")),   # pelirrojo
+    "d": (C("3a2812"), C("684a24"), C("98702e"), C("c8a048"), C("f0d078")),   # rubio oscuro
+}
+
+
+def _level(pal, col):
+    for i, p in enumerate(pal):
+        if p[:3] == col[:3]:
+            return i
+    return -1
+
+
+def lobe_mound(w, h, lobes, pal, rng, rough=0.2):
+    """Monton de lobulos esfericos pintados de atras (arriba) hacia delante, cada uno iluminado
+    desde arriba a la izquierda. Devuelve RGBA sin contorno."""
+    im, _ = new(w, h)
+    px = im.load()
+    for (cx, cy, r) in sorted(lobes, key=lambda o: o[1]):
+        for y in range(max(0, int(cy - r) - 1), min(h, int(cy + r) + 2)):
+            for x in range(max(0, int(cx - r) - 1), min(w, int(cx + r) + 2)):
+                dx = (x + 0.5 - cx) / r
+                dy = (y + 0.5 - cy) / (r * 0.92)
+                q = dx * dx + dy * dy
+                if q > 1.0:
+                    continue
+                nz = math.sqrt(1.0 - q)
+                lam = dx * LIGHT_DIR[0] + dy * LIGHT_DIR[1] + nz * LIGHT_DIR[2]
+                v = lam * 0.85 + 0.30 - 0.40 * (y / h) + (rng.random() - 0.5) * rough
+                lv = max(0, min(4, int((v + 0.02) * 4.6)))
+                if q > 0.74 and dy > 0.15:
+                    lv = min(lv, 1)            # canto inferior del lobulo: separa de lo de atras
+                if q > 0.88 and dy > 0.35:
+                    lv = 0
+                px[x, y] = pal[lv]
+    return im
+
+
+def leaf_marks(im, pal, rng, n):
+    """Hojitas sueltas (guion claro + guion oscuro debajo) para que no sea un manchon plano."""
+    px = im.load()
+    w, h = im.size
+    for _ in range(n):
+        x, y = rng.randint(1, w - 4), rng.randint(1, h - 3)
+        if px[x, y][3] == 0 or px[x + 1, y][3] == 0:
+            continue
+        lv = _level(pal, px[x, y])
+        if lv < 1:
+            continue
+        up = pal[min(4, lv + 1)]
+        px[x, y] = up
+        px[x + 1, y] = up
+        if px[x + 1, y + 1][3]:
+            px[x + 1, y + 1] = pal[max(0, lv - 1)]
+        if px[x + 2, y][3] and lv >= 2 and rng.random() < 0.5:
+            px[x + 2, y] = pal[max(0, lv - 1)]
+    for _ in range(n // 2):                    # huecos oscuros entre las hojas (profundidad)
+        x, y = rng.randint(2, w - 4), rng.randint(2, h - 3)
+        if px[x, y][3] and px[x + 1, y][3] and _level(pal, px[x, y]) in (1, 2):
+            px[x, y] = pal[0]
+            px[x + 1, y] = pal[0]
+
+
+def leaf_tips(im, pal, rng, n, top_band):
+    """Puntas de hoja que sobresalen de la silueta por arriba (silueta irregular)."""
+    d = ImageDraw.Draw(im)
+    w, h = im.size
+    px = im.load()
+    for _ in range(n):
+        x = rng.randint(4, w - 5)
+        y = next((yy for yy in range(h) if px[x, yy][3]), None)
+        if y is None or y > top_band or y < 6:
+            continue
+        ln = rng.randint(3, 5)
+        lean = rng.choice((-2, -1, 1, 2))
+        d.polygon([(x - 2, y + 1), (x + 2, y + 1), (x + lean, y - ln)], fill=pal[2])
+        d.line((x - 1, y, x + lean, y - ln + 1), fill=pal[3])
+        px[x + lean, y - ln] = pal[4]
+
+
+def berries(im, rng, n, col, hi, area):
+    px = im.load()
+    for _ in range(n):
+        x, y = rng.randint(area[0], area[2]), rng.randint(area[1], area[3])
+        if not (px[x, y][3] and px[x + 1, y + 1][3]):
+            continue
+        for dx, dy in ((0, 0), (1, 0), (0, 1), (1, 1)):
+            px[x + dx, y + dy] = col
+        px[x, y] = hi
+        px[x + 1, y + 1] = dk(col, 0.6)
+
+
+def flowers(im, rng, n, cols, area):
+    px = im.load()
+    for _ in range(n):
+        x, y = rng.randint(area[0], area[2]), rng.randint(area[1], area[3])
+        if not all(px[x + dx, y + dy][3] for dx, dy in ((0, 0), (1, 0), (-1, 0), (0, 1), (0, -1))):
+            continue
+        c = rng.choice(cols)
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            px[x + dx, y + dy] = c
+        px[x, y] = C("ffd84a")
+
+
+def mound_lobes(w, h, rng, n_front, n_mid, n_top):
+    lobes = []
+    for i in range(n_front):
+        r = rng.uniform(h * 0.2, h * 0.28)
+        x = r + 1 + (w - 2 * r - 2) * (i + rng.uniform(-0.15, 0.15)) / max(1, n_front - 1)
+        lobes.append((max(r + 1, min(w - r - 1, x)), h - r * 0.92 - 2 - rng.uniform(0, 2), r))
+    for i in range(n_mid):
+        r = rng.uniform(h * 0.24, h * 0.33)
+        x = w * (0.2 + 0.6 * (i + rng.uniform(-0.1, 0.1)) / max(1, n_mid - 1))
+        lobes.append((x, h * 0.52 + rng.uniform(-3, 3), r))
+    for i in range(n_top):
+        r = rng.uniform(h * 0.2, h * 0.28)
+        x = w * (0.3 + 0.4 * (i + rng.uniform(-0.2, 0.2)) / (n_top - 1)) if n_top > 1 else w * rng.uniform(0.4, 0.6)
+        lobes.append((x, h * 0.3 + rng.uniform(-2, 2), r))
+    return [(cx, max(r + 2, cy), r) for cx, cy, r in lobes]
+
+
 def bush(variant):
-    rng = random.Random(40 + variant)
-    im, d = new(66, 62)
-    base = [(C("2f5430"), C("3f6e38"), C("5a8c40"), C("86b84e")), (C("33472a"), C("4a6a30"), C("6c8c3a"), C("98b84c"))][variant]
-    for layer, col in enumerate(base):
-        for _ in range(26 - layer * 4):
-            cx = rng.randint(14, 52)
-            cy = rng.randint(22 - layer * 4, 54 - layer * 8)
-            r = rng.randint(8, 13) - layer
-            blob(d, cx, cy, r, int(r * 0.9), col)
-    for _ in range(14):
-        x = rng.randint(10, 56)
-        y = rng.randint(14, 30)
-        d.polygon([(x, y), (x + rng.randint(-4, 4), y - rng.randint(8, 16)), (x + 3, y + 2)], fill=rng.choice(base[1:]))
-    for _ in range(9):
-        x = rng.randint(14, 52)
-        y = rng.randint(30, 52)
-        d.line((x, y, x + rng.randint(-3, 3), y - rng.randint(5, 10)), fill=C("5a3a1e"))
+    """Matorral frondoso. a: 60x46 liso; b: 68x52 con bayas; c: 52x42 con florecitas; d: 74x58 con rizos."""
+    spec = {0: (60, 46, 4, 3, 2, "a"), 1: (68, 52, 4, 3, 2, "b"), 2: (52, 42, 3, 2, 1, "c"), 3: (74, 58, 5, 3, 2, "d")}
+    w, h, nf, nm, nt, key = spec[variant]
+    rng = random.Random(400 + variant * 17)
+    pal = GREENS[key]
+    im = lobe_mound(w, h, mound_lobes(w, h, rng, nf, nm, nt), pal, rng, 0.22)
+    leaf_tips(im, pal, rng, 5 + variant, int(h * 0.5))
+    leaf_marks(im, pal, rng, 70 + variant * 16)
+    px = im.load()
+    for _ in range(5):                         # ramitas oscuras asomando abajo, entre las hojas
+        x = rng.randint(8, w - 9)
+        for y in range(h - 5, h - 2):
+            if px[x, y][3]:
+                px[x, y] = C("4a2e18")
     if variant == 1:
-        for _ in range(7):
-            blob(d, rng.randint(14, 52), rng.randint(26, 50), 2, 2, C("d8483c"))
-    d.ellipse((8, 52, 58, 60), fill=dk(base[0], 0.8))
+        berries(im, rng, 11, C("e0403c"), C("ffb0a0"), (8, int(h * 0.3), w - 10, h - 10))
+    if variant == 2:
+        flowers(im, rng, 9, [C("fff4f4"), C("ffa8c8"), C("ffe070")], (8, int(h * 0.25), w - 9, h - 9))
+    if variant == 3:
+        # guiño: rizos castaños asomando entre las hojas (cada uno con su tallito)
+        for cx, cy, r in ((13, h - 17, 4.2), (36, h - 25, 4.6), (58, h - 18, 4.0), (26, h - 9, 3.4), (49, h - 10, 3.6)):
+            fat_spiral(im, cx, cy, r, CURLS["a"], rng.uniform(0, 6.3), 1.6, rng.choice((1, -1)), 1)
     return outline(padded(im))
 
 
+def spiral(im, cx, cy, r_max, pal, rot=0.0, turns=1.6, flip=1):
+    """Rizo en espiral (1 px de grosor): lo claro arriba-izquierda, lo oscuro abajo-derecha."""
+    px = im.load()
+    n = int(turns * 2 * math.pi * max(r_max, 2) * 1.6)
+    for i in range(n + 1):
+        t = i / n
+        ang = rot + flip * t * turns * 2 * math.pi
+        r = r_max * (0.3 + 0.7 * (1.0 - t) ** 0.8)
+        x = int(round(cx + math.cos(ang) * r))
+        y = int(round(cy + math.sin(ang) * r))
+        if not (0 <= x < im.width and 0 <= y < im.height):
+            continue
+        sh = -(math.cos(ang) * LIGHT_DIR[0] + math.sin(ang) * LIGHT_DIR[1])
+        px[x, y] = pal[4] if sh < -0.75 else (pal[3] if sh < -0.3 else (pal[2] if sh < 0.4 else pal[1]))
+
+
+def fat_spiral(im, cx, cy, r_max, pal, rot=0.0, turns=1.6, flip=1, thick=1):
+    """Rizo gordo (trazo de 2 px) con sombra desplazada: se lee como un bucle de vello."""
+    px = im.load()
+    n = int(turns * 2 * math.pi * r_max * 2.2)
+    path = []
+    for i in range(n + 1):
+        t = i / n
+        ang = rot + flip * t * turns * 2 * math.pi
+        r = r_max * (0.12 + 0.88 * (1.0 - t))
+        path.append((cx + math.cos(ang) * r, cy + math.sin(ang) * r, ang))
+
+    def put(x, y, c):
+        for ox in range(thick):
+            for oy in range(thick):
+                xx, yy = int(round(x)) + ox, int(round(y)) + oy
+                if 0 <= xx < im.width and 0 <= yy < im.height:
+                    px[xx, yy] = c
+
+    for x, y, ang in path:
+        put(x + 1, y + 1, pal[0])
+    for x, y, ang in path:
+        sh = -(math.cos(ang) * LIGHT_DIR[0] + math.sin(ang) * LIGHT_DIR[1])
+        put(x, y, pal[4] if sh < -0.75 else (pal[3] if sh < -0.2 else (pal[2] if sh < 0.5 else pal[1])))
+
+
+def dome_lobes(w, h, rng):
+    """Silueta de cupula irregular: filas de lobulos que se estrechan hacia arriba."""
+    lobes = []
+    r = h * 0.21
+    for frac, wf in ((0.0, 1.0), (0.27, 0.9), (0.52, 0.7), (0.78, 0.4)):
+        y = h - r - 1 - frac * (h - 2 * r - 2)
+        ww = (w - 2 * r) * wf
+        n = max(1, int(ww / (r * 1.25)) + 1)
+        for i in range(n):
+            x = w / 2 - ww / 2 + (ww * i / (n - 1) if n > 1 else ww / 2) + rng.uniform(-2, 2)
+            lobes.append((x, y + rng.uniform(-2, 2), r * rng.uniform(0.85, 1.15)))
+    return lobes
+
+
+def coil_tuft(w, h, rng, pal, n, big=3.4, lobes=None):
+    """Mata de vello: monton de lobulos sombreado con rizos gordos encima (n rizos)."""
+    r2 = random.Random(rng.random())
+    nf = max(2, w // 14)
+    lb = lobes or mound_lobes(w, h, r2, nf, max(1, nf - 1), 1)
+    im = lobe_mound(w, h, lb, pal, r2, 0.12)
+    px = im.load()
+    for yy in range(h):                         # el cuerpo queda oscuro para que resalten los rizos
+        for xx in range(w):
+            if px[xx, yy][3]:
+                lv = _level(pal, px[xx, yy])
+                px[xx, yy] = pal[min(lv, 2) if lv < 3 else 2] if lv >= 0 else px[xx, yy]
+    px = im.load()
+    placed = []
+    tries = 0
+    while len(placed) < n and tries < 600:
+        tries += 1
+        x, y = r2.uniform(3, w - 4), r2.uniform(3, h - 3)
+        r = big * r2.uniform(0.8, 1.15)
+        if not px[int(x), int(y)][3] or any(math.hypot(x - a, y - b) < (r + rr) * 0.95 for a, b, rr, _, _ in placed):
+            continue
+        placed.append((x, y, r, r2.uniform(0, 6.3), r2.choice((1, -1))))
+    placed.sort(key=lambda o: o[1])
+    for x, y, r, rot, fl in placed:
+        fat_spiral(im, x, y, r, pal, rot, 1.6, fl, 1)
+    return im
+
+
 def hair(variant):
-    rng = random.Random(55 + variant)
-    im, d = new(46, 68)
-    cols = [C("4a2a14"), C("6a3c1c"), C("8a5224"), C("b07a3c")] if variant == 0 else [C("3a1c1c"), C("5a2a24"), C("7a3c30"), C("a0604c")]
-    blob(d, 23, 62, 18, 5, cols[0])
-    for s in range(9):
-        x0 = 10 + s * 3.2 + rng.uniform(-1, 1)
-        h = rng.randint(34, 62)
-        amp = rng.uniform(2.5, 6)
-        ph = rng.uniform(0, 6)
-        freq = rng.uniform(0.12, 0.2)
-        pts = []
-        for t in range(0, h, 1):
-            y = 62 - t
-            x = x0 + math.sin(t * freq + ph) * amp * (0.4 + t / h) + (t / h) * (x0 - 23) * 0.5
-            pts.append((x, y))
-        col = cols[1 + s % 3]
-        for (x, y) in pts:
-            d.rectangle((x - 1, y, x + 1, y), fill=col)
-        x, y = pts[-1]
-        for a in range(0, 300, 25):
-            rr = 4 - a / 90
-            px = x + math.cos(math.radians(a)) * rr
-            py = y + math.sin(math.radians(a)) * rr
-            d.rectangle((px - 1, py - 1, px, py), fill=col)
-        d.line([p for p in pts[::4]], fill=cols[3])
+    """Rizos de vello gigantes (guiño de la Selva Púbica): 4 matas distintas.
+    a: mata baja ancha castaña; b: alta y estrecha; c: pelirroja mediana; d: grande, negra azulada."""
+    spec = {0: (64, 40, "a", 40, 3.8), 1: (46, 54, "b", 34, 3.6), 2: (54, 44, "c", 36, 3.7), 3: (76, 60, "d", 60, 4.0)}
+    w, h, key, n, big = spec[variant]
+    rng = random.Random(900 + variant * 31)
+    pal = CURLS[key]
+    pad = 14
+    im, _ = new(w, h + pad)
+    body = coil_tuft(w, h, rng, pal, n, big, dome_lobes(w, h, rng))
+    im.alpha_composite(body, (0, pad))
+    px = im.load()
+    for k in range(3 + variant // 2):           # rizos que asoman por arriba: tallo + bucle
+        x = rng.randint(10, w - 11)
+        y = next((yy for yy in range(im.height) if px[x, yy][3]), None)
+        if y is None:
+            continue
+        stalk = rng.randint(1, 3)
+        for j in range(stalk):
+            xx = x + (1 if j % 3 == 0 else 0)
+            px[xx, y - j] = pal[2]
+            px[xx + 1, y - j] = pal[1]
+        fat_spiral(im, x + 1, max(6, y - stalk - 4), 4.4, pal, rng.uniform(0, 6.3), 1.6, rng.choice((1, -1)), 1)
     return outline(padded(im))
 
 
@@ -858,6 +1083,136 @@ def leaf_pile():
     return outline(padded(im))
 
 
+# ------------------------------------------------------------------ guiños (etapa 7)
+# Doble sentido de fondo, con humor de dibujo animado: nada protagonista, todo con excusa clasica
+# (herma griega, orquidea, cartel de carretera, mosaico de censura).
+PETAL = (C("b8386c"), C("e0689a"), C("f490b8"), C("ffc0d6"))
+
+
+def fold_flower(scale=1.0):
+    """Flor-pliegue (orquidea a lo O'Keeffe): dos petalos grandes que se cierran sobre un surco central
+    con un capullito arriba. Sin contorno, 22x22."""
+    im, d = new(22, 22)
+    d.ellipse((1, 4, 12, 21), fill=PETAL[1])          # petalo izquierdo
+    d.ellipse((9, 4, 20, 21), fill=PETAL[1])          # petalo derecho
+    d.ellipse((3, 6, 11, 19), fill=PETAL[2])          # cara interior clara
+    d.ellipse((10, 6, 18, 19), fill=PETAL[2])
+    d.ellipse((6, 9, 9, 17), fill=PETAL[3])            # brillo arriba-izquierda
+    d.rectangle((10, 8, 11, 20), fill=PETAL[0])        # el surco
+    d.line((10, 20, 11, 20), fill=dk(PETAL[0], 0.7))
+    d.line((9, 12, 9, 15), fill=PETAL[0])              # pliegues que bajan hacia el surco
+    d.line((12, 12, 12, 15), fill=PETAL[0])
+    d.line((1, 14, 2, 18), fill=PETAL[0])
+    d.line((20, 14, 19, 18), fill=PETAL[0])
+    d.ellipse((8, 1, 13, 7), fill=PETAL[2])            # capullito
+    d.rectangle((9, 2, 9, 3), fill=PETAL[3])
+    d.line((10, 7, 11, 7), fill=PETAL[0])
+    if scale != 1.0:
+        im = im.resize((int(22 * scale), int(22 * scale)), Image.NEAREST)
+    return im
+
+
+def orchid_pot():
+    """Maceta con una flor-pliegue grande y un capullo."""
+    im, d = new(30, 48)
+    d.polygon([(8, 34), (22, 34), (20, 46), (10, 46)], fill=C("e4829c"))
+    d.rectangle((6, 32, 24, 35), fill=C("f2a8bc"))
+    cyl(im, 0.9)
+    d.line((15, 22, 15, 33), fill=C("3a7a30"), width=2)
+    d.polygon([(15, 31), (5, 24), (11, 31)], fill=C("4a9a38"))
+    d.polygon([(16, 30), (26, 23), (20, 30)], fill=C("6aa66a"))
+    d.line((7, 26, 11, 30), fill=C("78c04a"))
+    im.alpha_composite(fold_flower(), (4, 8))
+    return outline(padded(im))
+
+
+def orchid_bed():
+    """Cama de hierba con tres flores-pliegue de distinto tamaño."""
+    rng = random.Random(77)
+    im, d = new(52, 28)
+    for x in range(2, 48, 4):
+        d.polygon([(x, 26), (x + 4, 15 + rng.randint(0, 4)), (x + 8, 26)], fill=rng.choice([C("4a9a38"), C("6aa66a"), C("3a7a30")]))
+    for x, y, sc in ((3, 3, 0.8), (17, 0, 1.0), (35, 5, 0.7)):
+        f = fold_flower(sc)
+        d.line((x + f.width // 2, y + f.height - 3, x + f.width // 2, 24), fill=C("3a7a30"), width=2)
+        im.alpha_composite(f, (x, y))
+    return outline(padded(im))
+
+
+def herma():
+    """Herma griega: pilar con cabeza barbada arriba y, como manda la tradicion, su atributo al frente."""
+    L, M, D = STONE["pene"]
+    im, d = new(30, 58)
+    d.rectangle((3, 52, 26, 57), fill=M)
+    d.rectangle((3, 52, 26, 53), fill=L)
+    d.rectangle((3, 56, 26, 57), fill=D)
+    d.polygon([(8, 22), (21, 22), (23, 52), (6, 52)], fill=M)
+    d.rectangle((4, 27, 8, 32), fill=M)                 # munones de los brazos
+    d.rectangle((21, 27, 25, 32), fill=M)
+    blob(d, 14, 11, 7, 9, M)                            # cabeza
+    d.polygon([(8, 14), (21, 14), (19, 24), (14, 27), (10, 24)], fill=D)  # barba rizada
+    d.rectangle((7, 3, 21, 6), fill=D)                  # cinta del pelo
+    cyl(im, 0.9)
+    d.line((9, 26, 9, 50), fill=D)                      # pliegues del pilar
+    d.line((20, 26, 21, 50), fill=D)
+    for p in ((11, 10), (17, 10)):
+        d.rectangle((p[0], p[1], p[0] + 1, p[1]), fill=OL)
+    d.line((14, 11, 14, 14), fill=D)
+    for x in (11, 13, 15, 17):                          # rizos de la barba
+        im.putpixel((x, 19), M)
+        im.putpixel((x + 1, 21), M)
+    # el atributo: fuste con glande, y los dos huevos clasicos en la base
+    d.ellipse((7, 42, 14, 50), fill=L, outline=D)         # los dos huevos clasicos
+    d.ellipse((15, 42, 22, 50), fill=L, outline=D)
+    d.rectangle((12, 35, 17, 46), fill=L, outline=D)      # fuste
+    d.ellipse((11, 29, 18, 37), fill=L, outline=D)        # glande
+    d.line((12, 37, 17, 37), fill=D)                      # corona
+    d.line((13, 31, 14, 30), fill=C("ffffff"))
+    d.rectangle((15, 38, 16, 45), fill=M)
+    return outline(padded(im))
+
+
+def column_glans():
+    """Columna jonica entera con capitel en forma de bellota (muy bien disimulado) y basa con dos bolas."""
+    L, M, D = STONE["pene"]
+    im, d = new(26, 60)
+    d.rectangle((6, 14, 19, 51), fill=M)
+    d.rectangle((3, 50, 22, 54), fill=M)                # basa
+    d.rectangle((4, 54, 21, 59), fill=D)
+    d.rectangle((3, 54, 22, 55), fill=M)
+    d.rectangle((5, 12, 20, 15), fill=D)                 # corona (reborde)
+    d.ellipse((4, 1, 21, 18), fill=L)                    # el capitel: cupula redondeada
+    d.rectangle((4, 12, 21, 14), fill=M)
+    cyl(im, 1.0)
+    d.rectangle((4, 13, 21, 14), fill=D)
+    d.line((12, 4, 12, 8), fill=D)                       # hendidura de la punta
+    d.line((13, 4, 13, 7), fill=D)
+    d.arc((4, 1, 21, 18), 200, 260, fill=C("ffffff"))
+    for x in (9, 12, 15):                                # estrias
+        d.line((x, 17, x, 49), fill=D)
+    for k in range(0, 30, 3):                            # hiedra que sube enroscada por el fuste
+        x = 12 + int(math.sin(k * 0.5) * 6)
+        d.rectangle((x, 46 - k, x + 1, 46 - k), fill=LEAF[1])
+        if k % 6 == 0:
+            d.polygon([(x, 46 - k), (x + 3, 44 - k), (x + 2, 47 - k)], fill=LEAF[0])
+    return outline(padded(im))
+
+
+def sign_hills():
+    """Cartel de carretera 'Dos colinas, camino estrecho': pictograma de dos lomas con una raya en medio."""
+    im, d = new(30, 48)
+    d.rectangle((14, 26, 16, 46), fill=C("7e869e"))
+    d.polygon([(15, 0), (29, 14), (15, 28), (1, 14)], fill=C("1c1c22"))
+    d.polygon([(15, 3), (26, 14), (15, 25), (4, 14)], fill=C("f0c830"))
+    d.pieslice((6, 9, 15, 27), 180, 360, fill=C("1c1c22"))   # dos lomas redondas
+    d.pieslice((15, 9, 24, 27), 180, 360, fill=C("1c1c22"))
+    d.rectangle((15, 10, 15, 17), fill=C("f0c830"))          # con su raya en medio
+    d.rectangle((6, 18, 24, 19), fill=C("f0c830"))
+    d.rectangle((9, 12, 10, 12), fill=C("8a7a30"))
+    d.rectangle((18, 12, 19, 12), fill=C("8a7a30"))
+    return outline(padded(im))
+
+
 # ------------------------------------------------------------------ salida
 def main():
     save(web(0), "web_a")
@@ -869,10 +1224,9 @@ def main():
     for k in STONE:
         for sx in ("m", "f"):
             save(statue(k, sx), f"statue_{k}_{sx}")
-    save(bush(0), "neutral_bush_a")
-    save(bush(1), "neutral_bush_b")
-    save(hair(0), "neutral_hair_a")
-    save(hair(1), "neutral_hair_b")
+    for i, k in enumerate("abcd"):
+        save(bush(i), f"neutral_bush_{k}")
+        save(hair(i), f"neutral_hair_{k}")
     save(liana(0), "neutral_liana_a")
     save(liana(1), "neutral_liana_b")
     save(mushrooms(0), "neutral_mushroom_a")
@@ -909,6 +1263,14 @@ def main():
     save(carpet_roll(), "censura_carpet_roll")
     save(leaf_plant(), "censura_leaf_plant")
     save(leaf_pile(), "censura_leaf_pile")
+    # guiños de la etapa 7
+    save(herma(), "pene_herma")
+    save(column_glans(), "pene_column_glans")
+    save(orchid_pot(), "vulva_orchid_pot")
+    save(orchid_bed(), "vulva_orchid_bed")
+    save(sign_hills(), "mixto_sign_hills")
+    save(statue("censura", "m", True), "statue_censura_mosaic_m")
+    save(statue("censura", "f", True), "statue_censura_mosaic_f")
 
 
 if __name__ == "__main__":
