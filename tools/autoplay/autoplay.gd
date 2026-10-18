@@ -18,10 +18,15 @@ extends Node
 ##   XDG_DATA_HOME=<carpeta> godot ...  (asi no hace falta respaldar ~/.local/share/godot/app_userdata/).
 ##
 ## GRABAR EL VIDEO FINAL (ventana en la pantalla del notebook, sin sonido, tiempo real a 30 fps, SIN --fast:
-## el movie maker fija el paso de tiempo, asi que el video sale a velocidad normal, no acelerado):
-##   XDG_DATA_HOME=/tmp/rr_video godot --audio-driver Dummy --screen 2 --path . --write-movie /ruta/partida.avi --fixed-fps 30 \
+## el movie maker fija el paso de tiempo, asi que el video sale a velocidad normal, no acelerado).
+## Formato .ogv (Theora, ~0,65 MB/s: una hora ~2,3 GB). NO usar .avi (MJPEG, ~3,5 MB/s) ni escribir en /tmp (tmpfs chico):
+##   mkdir -p /home/nick/Escritorio/Proyectos/soul_knight/.claude/video
+##   XDG_DATA_HOME=/home/nick/rr_video_userdata godot --audio-driver Dummy --screen 2 --path . \
+##     --write-movie /home/nick/Escritorio/Proyectos/soul_knight/.claude/video/partida.ogv --fixed-fps 30 \
 ##     res://tools/autoplay/autoplay.tscn -- --hero=pitocles --seed=21 --collect=all --overlay=0 --quit-on-end
-## (para una prueba corta: agregar --max-secs=60 tras los flags del bot. ffmpeg -i partida.avi -c:v libx264 -crf 20 partida.mp4)
+## (prueba corta: agregar --max-secs=60 tras los flags del bot. Para mp4: ffmpeg -i partida.ogv -c:v libx264 -crf 23 partida.mp4)
+## (XDG_DATA_HOME aparte: asi la grabacion no toca el progreso/codice/narrador reales de ~/.local/share/godot)
+##
 ## Dinamicas de sala (src/rooms): --force-dyn=<escort|hold|thief|stealth|clock|challenge|celo|lubricado|
 ## aduanera|apagon|censurada|barriles|antorchas|trampas|pacto|ruleta|mercado> las fuerza en toda sala donde
 ## quepan; --force-utero=1 abre El Utero (nivel secreto de Vulvania) al pisar Trompas sin comprar el Turno; --no-god=1 juega sin modo dios (para medir los peligros de sala); --armed=1 empieza con pistola.
