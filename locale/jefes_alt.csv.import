@@ -6,10 +6,10 @@ uid="uid://3wf3entjc47e"
 
 [deps]
 
-files=["res://locale/jefes_alt.es.translation", "res://locale/jefes_alt.en.translation"]
+files=["res://locale/jefes_alt.es.translation", "res://locale/jefes_alt.en.translation", "res://locale/jefes_alt.es_ES.translation", "res://locale/jefes_alt.fr.translation"]
 
 source_file="res://locale/jefes_alt.csv"
-dest_files=["res://locale/jefes_alt.es.translation", "res://locale/jefes_alt.en.translation"]
+dest_files=["res://locale/jefes_alt.es.translation", "res://locale/jefes_alt.en.translation", "res://locale/jefes_alt.es_ES.translation", "res://locale/jefes_alt.fr.translation"]
 
 [params]
 

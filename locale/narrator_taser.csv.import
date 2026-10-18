@@ -6,10 +6,10 @@ uid="uid://b66r0wlx6v35i"
 
 [deps]
 
-files=["res://locale/narrator_taser.es.translation", "res://locale/narrator_taser.en.translation"]
+files=["res://locale/narrator_taser.es.translation", "res://locale/narrator_taser.en.translation", "res://locale/narrator_taser.fr.translation"]
 
 source_file="res://locale/narrator_taser.csv"
-dest_files=["res://locale/narrator_taser.es.translation", "res://locale/narrator_taser.en.translation"]
+dest_files=["res://locale/narrator_taser.es.translation", "res://locale/narrator_taser.en.translation", "res://locale/narrator_taser.fr.translation"]
 
 [params]
 

@@ -6,10 +6,10 @@ uid="uid://dh6fqie86npgm"
 
 [deps]
 
-files=["res://locale/narrator_etapas.es.translation", "res://locale/narrator_etapas.en.translation"]
+files=["res://locale/narrator_etapas.es.translation", "res://locale/narrator_etapas.en.translation", "res://locale/narrator_etapas.es_ES.translation", "res://locale/narrator_etapas.fr.translation"]
 
 source_file="res://locale/narrator_etapas.csv"
-dest_files=["res://locale/narrator_etapas.es.translation", "res://locale/narrator_etapas.en.translation"]
+dest_files=["res://locale/narrator_etapas.es.translation", "res://locale/narrator_etapas.en.translation", "res://locale/narrator_etapas.es_ES.translation", "res://locale/narrator_etapas.fr.translation"]
 
 [params]
 

@@ -6,10 +6,10 @@ uid="uid://cfyewwayrrnxs"
 
 [deps]
 
-files=["res://locale/narrator_jefes_alt.es.translation", "res://locale/narrator_jefes_alt.en.translation"]
+files=["res://locale/narrator_jefes_alt.es.translation", "res://locale/narrator_jefes_alt.en.translation", "res://locale/narrator_jefes_alt.fr.translation"]
 
 source_file="res://locale/narrator_jefes_alt.csv"
-dest_files=["res://locale/narrator_jefes_alt.es.translation", "res://locale/narrator_jefes_alt.en.translation"]
+dest_files=["res://locale/narrator_jefes_alt.es.translation", "res://locale/narrator_jefes_alt.en.translation", "res://locale/narrator_jefes_alt.fr.translation"]
 
 [params]
 

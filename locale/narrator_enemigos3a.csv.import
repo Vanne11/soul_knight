@@ -6,10 +6,10 @@ uid="uid://wdobsrh1nq27"
 
 [deps]
 
-files=["res://locale/narrator_enemigos3a.es.translation", "res://locale/narrator_enemigos3a.en.translation"]
+files=["res://locale/narrator_enemigos3a.es.translation", "res://locale/narrator_enemigos3a.en.translation", "res://locale/narrator_enemigos3a.es_ES.translation", "res://locale/narrator_enemigos3a.fr.translation"]
 
 source_file="res://locale/narrator_enemigos3a.csv"
-dest_files=["res://locale/narrator_enemigos3a.es.translation", "res://locale/narrator_enemigos3a.en.translation"]
+dest_files=["res://locale/narrator_enemigos3a.es.translation", "res://locale/narrator_enemigos3a.en.translation", "res://locale/narrator_enemigos3a.es_ES.translation", "res://locale/narrator_enemigos3a.fr.translation"]
 
 [params]
 

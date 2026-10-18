@@ -6,10 +6,10 @@ uid="uid://bvxcf3rw8jeed"
 
 [deps]
 
-files=["res://locale/narrator_cuarta_pared.es.translation", "res://locale/narrator_cuarta_pared.en.translation"]
+files=["res://locale/narrator_cuarta_pared.es.translation", "res://locale/narrator_cuarta_pared.en.translation", "res://locale/narrator_cuarta_pared.es_ES.translation", "res://locale/narrator_cuarta_pared.fr.translation"]
 
 source_file="res://locale/narrator_cuarta_pared.csv"
-dest_files=["res://locale/narrator_cuarta_pared.es.translation", "res://locale/narrator_cuarta_pared.en.translation"]
+dest_files=["res://locale/narrator_cuarta_pared.es.translation", "res://locale/narrator_cuarta_pared.en.translation", "res://locale/narrator_cuarta_pared.es_ES.translation", "res://locale/narrator_cuarta_pared.fr.translation"]
 
 [params]
 

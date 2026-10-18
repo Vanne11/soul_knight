@@ -6,10 +6,10 @@ uid="uid://j6mcmybt3cul"
 
 [deps]
 
-files=["res://locale/rooms.es.translation", "res://locale/rooms.en.translation"]
+files=["res://locale/rooms.es.translation", "res://locale/rooms.en.translation", "res://locale/rooms.es_ES.translation", "res://locale/rooms.fr.translation"]
 
 source_file="res://locale/rooms.csv"
-dest_files=["res://locale/rooms.es.translation", "res://locale/rooms.en.translation"]
+dest_files=["res://locale/rooms.es.translation", "res://locale/rooms.en.translation", "res://locale/rooms.es_ES.translation", "res://locale/rooms.fr.translation"]
 
 [params]
 
