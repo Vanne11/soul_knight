@@ -1406,6 +1406,7 @@ func _watch_outsiders() -> void:
 var _last_rel := {}  # instance_id -> posicion relativa del fotograma anterior
 var _exit_logged := {}
 
+var _last_pf := 0  # paso de fisica del ultimo _track_exits
 var _launch_ms := {}  # instance_id -> ultimo aviso de lanzamiento
 var _hist := {}  # instance_id -> ultimas posiciones relativas (una cada 6 fotogramas)
 
@@ -1416,9 +1417,9 @@ func _track_exits(room: Room, enemies: Array) -> void:
 		var id: int = e.get_instance_id()
 		var rel: Vector2 = e.global_position - room.global_position
 		now[id] = rel
-		# lanzamiento: mas de 16 px en un fotograma (~1000 px/s) sin ser un dash conocido; anota el contexto
+		# lanzamiento: mas de 16 px por paso de fisica (~1000 px/s) sin ser un dash conocido; anota el contexto
 		var pv = _last_rel.get(id)
-		if pv != null and pv.distance_to(rel) > 16.0 and Time.get_ticks_msec() - int(_launch_ms.get(id, -9999)) > 1500:
+		if pv != null and pv.distance_to(rel) / float(maxi(1, Engine.get_physics_frames() - _last_pf)) > 16.0 and Time.get_ticks_msec() - int(_launch_ms.get(id, -9999)) > 1500:
 			_launch_ms[id] = Time.get_ticks_msec()
 			var ai = e.get("ai")
 			_say("  LANZADO %s (%s) en %s %s: salto %.0f px en 1 fotograma, de %s a %s; vel=%s estado=%s modo=%s empujado_hace=%d ms capa64_mask=%s sala_forma=%s" % [
@@ -1451,3 +1452,4 @@ func _track_exits(room: Room, enemies: Array) -> void:
 			var wc: Vector2i = room.walls_tilemap.local_to_map(room.walls_tilemap.to_local(e.global_position))
 			_say("    muro: celda %s source=%d | sala shape=%s rect_suelo=%s pos_sala=%s" % [wc, room.walls_tilemap.get_cell_source_id(0, wc), room.shape_id, room.floor_tilemap.get_used_rect(), room.global_position])
 	_last_rel = now
+	_last_pf = Engine.get_physics_frames()
