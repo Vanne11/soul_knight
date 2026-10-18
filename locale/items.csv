@@ -15,7 +15,7 @@ ITEM_COIN_NAME,Moneda Pudorosa,Bashful Coin,,Pièce Pudique
 ITEM_COIN_DESC,"Moneda oficial del Reino, con una hoja de parra grabada. Hasta el dinero tiene vergüenza.","Official coin of the Realm, with a fig leaf engraved. Even money is ashamed.",,"Monnaie officielle du Royaume, ornée d'une feuille de vigne. Même l'argent a honte."
 ITEM_DILDO_TASER_NAME,Dildo Eléctrico,Electric Dildo,,Godemichet Électrique
 ITEM_DILDO_TASER_DESC,"Solo lo suelta el Dildo Eléctrico de Vulvania: nadie lo vende. Sus chispas saltan a otros 2 enemigos (50% del daño), brutal contra grupos. 'Garantía de 3 meses.'","Only dropped by Vulvania's Electric Dildo: nobody sells it. Its sparks jump to 2 other enemies (50% damage), brutal against groups. '3-month warranty.'",,"Lâché uniquement par le Godemichet Électrique de Vulvanie : personne n'en vend. Ses étincelles sautent sur 2 autres ennemis (50% des dégâts), brutal contre les groupes. « Garantie 3 mois. »"
-ITEM_ENERGY_DRINK_NAME,Monster Energy (Marcablanca),Monster Energy (Store Brand),,Monster Energy (Marque Distributeur)
+ITEM_ENERGY_DRINK_NAME,Monster Energy (Marcablanca),Monster Energy (Store Brand),,Monster Energy (marque blanche)
 ITEM_ENERGY_DRINK_DESC,"+40 estamina, +15% velocidad 10 s, +10 intoxicación. Te da alas... y taquicardia.","+40 stamina, +15% speed for 10 s, +10 intoxication. Gives you wings... and tachycardia.",,"+40 endurance, +15% vitesse 10 s, +10 intox. Ça donne des ailes... et la tachycardie."
 ITEM_GRENADE_FLASHBANG_NAME,Flashbang Sensorial,Sensory Flashbang,,Flashbang Sensoriel
 ITEM_GRENADE_FLASHBANG_DESC,Ciega enemigos 4 s y baja su precisión 80%. Sin daño. Mi única debilidad: la luz.,Blinds enemies for 4 s and cuts their accuracy 80%. No damage. My only weakness: light.,,"Aveugle les ennemis 4 s, précision -80%. Aucun dégât. Ma seule faiblesse : la lumière."
@@ -37,13 +37,13 @@ ITEM_IBUPROFEN_NAME,Ibuprofeno de 600,Ibuprofen 600,,Ibuprofène 600
 ITEM_IBUPROFEN_DESC,"Recibes 30% menos de daño por 25 s. Cura el dolor, la fiebre y las ganas de ir al médico.","Take 30% less damage for 25 s. Cures pain, fever and the urge to see a doctor.",,"-30% de dégâts subis pendant 25 s. Guérit douleur, fièvre et envie d'aller chez le médecin."
 ITEM_JOCKSTRAP_NAME,Suspensorio Deportivo,Athletic Jockstrap,,Coquille de Sport
 ITEM_JOCKSTRAP_DESC,Absorbe por completo el próximo golpe y da +20 de estamina. Protege lo que ya sabes.,Fully absorbs the next hit and gives +20 stamina. Protects what you already know.,,Absorbe totalement le prochain coup et donne +20 d'endurance. Protège ce que tu sais.
-ITEM_KEY_BLOODY_NAME,Llave Empapada en Sangre,Blood-Soaked Key,,Clé Trempée de Sang
+ITEM_KEY_BLOODY_NAME,Llave Empapada en Sangre,Blood-Soaked Key,,Clé Imbibée de Sang
 ITEM_KEY_BLOODY_DESC,Abre salas de desafío. Requiere 20+ enemigos matados. La cerradura está en ti.,Opens challenge rooms. Needs 20+ kills. The lock is inside you.,,Ouvre les salles de défi. Exige 20+ ennemis tués. La serrure est en toi.
-ITEM_KEY_CRYSTAL_NAME,Llave de Cristal Líquido,Liquid Crystal Key,,Clé en Cristal Liquide
+ITEM_KEY_CRYSTAL_NAME,Llave de Cristal Líquido,Liquid Crystal Key,,Clé de Cristal
 ITEM_KEY_CRYSTAL_DESC,Abre la cámara del jefe secreto si completas el piso sin daño. Perfección frágil.,Opens the secret boss chamber if you clear the floor without damage. Fragile perfection.,,Ouvre la chambre du boss secret si tu finis l'étage sans dégât. Perfection fragile.
 ITEM_KEY_DRUNK_NAME,Llave Oxidada (¿?),Rusty Key (?),,Clé Rouillée (?)
 ITEM_KEY_DRUNK_DESC,Solo funciona borracho (intoxicación tier 2+). La cerradura tiene forma de copa.,Only works drunk (intoxication tier 2+). The lock is shaped like a glass.,,Ne marche que bourré (intox palier 2+). La serrure a la forme d'un verre.
-ITEM_KEY_MASTER_NAME,Llave Maestra Dorada,Golden Master Key,,Clé Maîtresse Dorée
+ITEM_KEY_MASTER_NAME,Llave Maestra Dorada,Golden Master Key,,Clé Maîtresse
 ITEM_KEY_MASTER_DESC,"Abre cualquier cerradura, hasta las del corazón. Tier 3 de intoxicación. Un uso.","Opens any lock, even the heart's. Intoxication tier 3. One use.",,"Ouvre toutes les serrures, même celles du cœur. Intox palier 3. Un usage."
 ITEM_LAUNCHER_CONDOM_NAME,Lanzapreservativos Múltiple,Multi-Condom Launcher,,Lance-Capotes Multiple
 ITEM_LAUNCHER_CONDOM_DESC,Lanza 3 preservativos lentos que explotan en área. Protección a distancia.,Launches 3 slow condoms that explode in an area. Protection at a distance.,,Lance 3 préservatifs lents qui explosent en zone. Protection à distance.
@@ -57,11 +57,11 @@ ITEM_MENSTRUAL_CUP_NAME,Copa Menstrual Reforzada,Reinforced Menstrual Cup,,Coupe
 ITEM_MENSTRUAL_CUP_DESC,Absorbe el próximo golpe por completo y -20 intoxicación. Más resistente que tu armadura.,Fully absorbs the next hit and -20 intoxication. Tougher than your armor.,,Absorbe totalement le prochain coup et -20 intox. Plus solide que ton armure.
 ITEM_MORNING_AFTER_PILL_NAME,Pastilla del Día Después,Morning-After Pill,,Pilule du Lendemain
 ITEM_MORNING_AFTER_PILL_DESC,"Si mueres, revives con 40% de vida y 2 s de invulnerabilidad. Efectos: lecciones de vida.","If you die, you revive with 40% health and 2 s of invulnerability. Side effects: life lessons.",,"Si tu meurs, tu reviens avec 40% de PV et 2 s d'invulnérabilité. Effets : leçons de vie."
-ITEM_MYSTERY_FLUID_NAME,Fluido Misterioso (?),Mystery Fluid (?),,Fluide Mystère (?)
+ITEM_MYSTERY_FLUID_NAME,Fluido Misterioso (?),Mystery Fluid (?),,Fluide Mystérieux (?)
 ITEM_MYSTERY_FLUID_DESC,"Efecto aleatorio: cura, daña, emborracha, revela o invoca. ¿Orina? ¿Agua? Mejor no saber.","Random effect: heals, hurts, intoxicates, reveals or summons. Urine? Water? Better not know.",,"Effet aléatoire : soigne, blesse, saoule, révèle ou invoque. Urine ? Eau ? Mieux vaut ne pas savoir."
 ITEM_PISTOL_BASIC_NAME,Pistola de Plástico,Plastic Pistol,,Pistolet en Plastique
 ITEM_PISTOL_BASIC_DESC,"Fiable y precisa, sin trucos ni costes. Dice 'juguete' en la caja. Duele igual.","Reliable and accurate, no tricks or costs. The box says 'toy'. It hurts all the same.",,"Fiable et précis, sans astuce ni coût. La boîte dit « jouet ». Ça fait mal quand même."
-ITEM_PISTOL_GOLDEN_NAME,Pistola Dorada (Compensación),Golden Pistol (Compensation),,Pistolet Doré (Compensation)
+ITEM_PISTOL_GOLDEN_NAME,Pistola Dorada (Compensación),Golden Pistol (Compensation),,Pistolet Doré
 ITEM_PISTOL_GOLDEN_DESC,"Precisa, +20% de crítico y balas que atraviesan. Cañón grande, compensación mayor.","Accurate, +20% crit and piercing bullets. Big barrel, bigger compensation.",,"Précis, +20% de critique et balles perforantes. Gros canon, grosse compensation."
 ITEM_PROTEIN_SHAKE_NAME,Batido de Proteínas Sospechoso,Suspicious Protein Shake,,Shaker de Protéines Louche
 ITEM_PROTEIN_SHAKE_DESC,"+25% cadencia 15 s y +10 de vida. El tarro dice 'natural'. La etiqueta, no tanto.","+25% fire rate for 15 s and +10 health. The tub says 'natural'. The label, not so much.","+25% cadencia 15 s y +10 de vida. El bote dice 'natural'. La etiqueta, no tanto.","+25% cadence 15 s et +10 PV. Le pot dit « naturel ». L'étiquette, moins."
@@ -131,5 +131,5 @@ ITEM_CANON_CONFETI_NAME,Cañón de Confeti,Confetti Cannon,,Canon à Confettis
 ITEM_CANON_CONFETI_DESC,"Nube de confeti de poco daño que ATURDE, de corto alcance. Felicidades: no te pegan.","Low-damage confetti cloud that STUNS, short range. Congrats: nobody hits you.",,"Nuage de confettis peu létal qui ÉTOURDIT, courte portée. Bravo : personne ne te frappe."
 ITEM_PRESERVATIVO_ATRAPABALAS_NAME,Preservativo Atrapabalas,Bullet-Catching Condom,,Capote Attrape-Balles
 ITEM_PRESERVATIVO_ATRAPABALAS_DESC,Un preservativo gigante se traga las balas y las devuelve al reventar. Protección total.,A giant condom swallows bullets and returns them when it bursts. Total protection.,,Un préservatif géant avale les balles et les renvoie en éclatant. Protection totale.
-ITEM_CHANCLETA_VOLADORA_NAME,Chancleta Voladora,Flying Flip-Flop,,Tong Volante
+ITEM_CHANCLETA_VOLADORA_NAME,Chancleta Voladora,Flying Flip-Flop,,Tong Volant
 ITEM_CHANCLETA_VOLADORA_DESC,Combo cuerpo a cuerpo: dos chancletazos y un tercero devastador. Puntería heredada de mamá.,Melee combo: two quick flip-flop smacks and a devastating third. Aim inherited from mom.,,Combo mêlée : deux claques de tong et une troisième dévastatrice. Visée héritée de maman.
