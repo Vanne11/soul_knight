@@ -575,28 +575,72 @@ def coil_tuft(w, h, rng, pal, n, big=3.4, lobes=None):
 
 
 def hair(variant):
-    """Rizos de vello gigantes (guiño de la Selva Púbica): 4 matas distintas.
-    a: mata baja ancha castaña; b: alta y estrecha; c: pelirroja mediana; d: grande, negra azulada."""
-    spec = {0: (64, 40, "a", 40, 3.8), 1: (46, 54, "b", 34, 3.6), 2: (54, 44, "c", 36, 3.7), 3: (76, 60, "d", 60, 4.0)}
-    w, h, key, n, big = spec[variant]
-    rng = random.Random(900 + variant * 31)
+    """Matas de vello pubico gigante (guiño de la Selva Pubica): pelos individuales gruesos que brotan
+    de un monticulo de piel, suben en zigzag rizado y rematan en punta curva. 4 colores."""
+    spec = {0: (60, 72, "a", 7), 1: (52, 86, "b", 6), 2: (64, 76, "c", 8), 3: (74, 92, "d", 10)}
+    w, h, key, n = spec[variant]
+    rng = random.Random(1300 + variant * 17)
     pal = CURLS[key]
-    pad = 14
-    im, _ = new(w, h + pad)
-    body = coil_tuft(w, h, rng, pal, n, big, dome_lobes(w, h, rng))
-    im.alpha_composite(body, (0, pad))
+    skin = (C("e8b49a"), C("c98a74"), C("9a5c50"))
+    im, d = new(w, h)
     px = im.load()
-    for k in range(3 + variant // 2):           # rizos que asoman por arriba: tallo + bucle
-        x = rng.randint(10, w - 11)
-        y = next((yy for yy in range(im.height) if px[x, yy][3]), None)
-        if y is None:
-            continue
-        stalk = rng.randint(1, 3)
-        for j in range(stalk):
-            xx = x + (1 if j % 3 == 0 else 0)
-            px[xx, y - j] = pal[2]
-            px[xx + 1, y - j] = pal[1]
-        fat_spiral(im, x + 1, max(6, y - stalk - 4), 4.4, pal, rng.uniform(0, 6.3), 1.6, rng.choice((1, -1)), 1)
+    cx = w // 2
+    base_y = h - 7
+    def stroke(path, pal3):
+        body, shade, hi = pal3
+        for (x, y) in path:
+            xi, yi = int(round(x)), int(round(y))
+            for ox in (0, 1, 2):
+                for oy in (0, 1):
+                    xx, yy = xi + ox, yi + oy
+                    if 0 <= xx < w and 0 <= yy < h:
+                        px[xx, yy] = shade if ox == 2 else body
+        for (x, y) in path:                                  # brillo: 1 px a lo largo de la hebra
+            xx, yy = int(round(x)), int(round(y))
+            if 0 <= xx < w and 0 <= yy < h:
+                px[xx, yy] = hi
+
+    strands = []
+    for i in range(n):
+        t = i / (n - 1)
+        x0 = cx - 9 + 18 * t + rng.uniform(-1.5, 1.5)
+        ang0 = (t - 0.5) * 2.0 * rng.uniform(0.4, 0.7)    # abanico (rad desde la vertical)
+        length = rng.uniform(0.5, 0.95) * (base_y - 5)
+        if i == n // 2:
+            length = base_y - 3
+        strands.append((x0, ang0, length, rng.uniform(2.6, 3.6), rng.uniform(7.0, 9.5),
+                        rng.uniform(0, 6.28), rng.choice((1, -1)), rng.uniform(0.3, 0.8)))
+    strands.sort(key=lambda s: -abs(s[1]))                   # los laterales al fondo
+    for k, (x0, ang0, length, amp, period, ph, curl, bend) in enumerate(strands):
+        back = k < n // 2
+        pal3 = (dk(pal[1], 0.8), pal[0], pal[2]) if back else (pal[1], pal[0], pal[3])
+        path = []
+        steps = int(length * 3)
+        x, y = x0, base_y
+        for s_ in range(steps + 1):
+            u = s_ / steps
+            ang = max(-1.0, min(1.0, ang0 * (1 + 0.5 * u) + bend * 0.5 * u * u * (1 if ang0 >= 0 else -1)))
+            x += math.sin(ang) * length / steps
+            y -= math.cos(ang) * length / steps
+            a = amp * min(1.0, 0.3 + u * 2.5)
+            off = a * math.sin(u * length / period * 6.283 + ph)
+            xx, yy = x + off * math.cos(ang), y + off * math.sin(ang) * 0.6
+            if u > 0.84:                                      # punta: se enrosca en un gancho
+                v = (u - 0.84) / 0.16
+                th = v * 4.4 * curl
+                r = 3.6 * (1 - v * 0.5)
+                xx -= curl * r * (1 - math.cos(th))
+                yy += -r * math.sin(th) * 0.8 + v * 3
+            path.append((xx, yy))
+        stroke(path, pal3)
+    # monticulo de piel encima de las raices: los pelos brotan de el
+    d = ImageDraw.Draw(im)
+    d.ellipse((cx - 11, base_y - 1, cx + 11, base_y + 6), fill=skin[1])
+    d.ellipse((cx - 10, base_y - 2, cx + 9, base_y + 3), fill=skin[0])
+    d.arc((cx - 9, base_y - 2, cx + 7, base_y + 2), 200, 290, fill=lt(skin[0], 0.5))
+    d.line((cx - 10, base_y + 5, cx + 10, base_y + 5), fill=skin[2])
+    for fx in range(cx - 7, cx + 8, 4):                     # foliculos
+        d.point((fx, base_y + (fx % 2)), fill=skin[2])
     return outline(padded(im))
 
 
