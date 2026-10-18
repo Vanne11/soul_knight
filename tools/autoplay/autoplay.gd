@@ -1,10 +1,33 @@
 extends Node
 
-## Bot de pruebas: juega una partida completa (5 pisos) para ver si el juego es jugable.
+## Bot de pruebas: juega una partida completa (11 pisos, 12 con El Utero) para ver si el juego es jugable.
 ## Uso: godot --path . res://tools/autoplay/autoplay.tscn  [-- --hero=pitocles --seed=123 --fast --floor=9]
+##   --hero=pitocles|vulvalquiria|ornitorrinco   --seed=N (fija la semilla; RunManager.test_seed)
+##   --fast / --fast=2.5   Engine.time_scale (1.6x por defecto). OJO: HitFx lo devuelve a 1.0 en cada golpe, casi no acelera.
+##       Para correr una partida entera en minutos (headless): godot --headless --audio-driver Dummy --fixed-fps 60 ...
+##       (sin esperar al reloj: unas 10 veces mas rapido que el tiempo real; los tiempos del registro son de JUEGO).
+##   --collect=all   modo "recoger todo" (para el video final): recorre TODAS las salas, abre todos los cofres
+##       (tambien los de llave y los secretos: acertijos y misiones de llave), recoge objetos y monedas, compra en la
+##       tienda lo que pueda (primero el Turno de Vulvania para entrar al Utero), toma bendiciones y solo despues va
+##       al jefe. Al final de cada piso y de la partida registra un RESUMEN (objetos, cofres, salas, codice).
+##   --log=<ruta>   registro propio (varias partidas en paralelo; por defecto .claude/autoplay.log)
+##   --overlay=0    oculta el rotulo verde del bot (para grabar)
+##   --max-secs=N   termina solo tras N s de juego (tiempo de juego, no de reloj; para grabaciones de prueba)
+##   --quit-on-end  cierra Godot al terminar la partida
+## VARIAS PARTIDAS A LA VEZ: el juego guarda progreso, codice y narrador en user://; aislalas con
+##   XDG_DATA_HOME=<carpeta> godot ...  (asi no hace falta respaldar ~/.local/share/godot/app_userdata/).
+##
+## GRABAR EL VIDEO FINAL (ventana en la pantalla del notebook, sin sonido, tiempo real a 30 fps, SIN --fast:
+## el movie maker fija el paso de tiempo, asi que el video sale a velocidad normal, no acelerado):
+##   XDG_DATA_HOME=/tmp/rr_video godot --audio-driver Dummy --screen 2 --path . --write-movie /ruta/partida.avi --fixed-fps 30 \
+##     res://tools/autoplay/autoplay.tscn -- --hero=pitocles --seed=21 --collect=all --overlay=0 --quit-on-end
+## (para una prueba corta: agregar --max-secs=60 tras los flags del bot. ffmpeg -i partida.avi -c:v libx264 -crf 20 partida.mp4)
 ## Dinamicas de sala (src/rooms): --force-dyn=<escort|hold|thief|stealth|clock|challenge|celo|lubricado|
 ## aduanera|apagon|censurada|barriles|antorchas|trampas|pacto|ruleta|mercado> las fuerza en toda sala donde
 ## quepan; --force-utero=1 abre El Utero (nivel secreto de Vulvania) al pisar Trompas sin comprar el Turno; --no-god=1 juega sin modo dios (para medir los peligros de sala); --armed=1 empieza con pistola.
+## PERRO GUARDIAN: si no hay progreso (nada muere ni se recoge, ni salas nuevas, ni dano) durante 90 s abandona el
+## objetivo y lo anota como PROBLEMA; si una sala no se limpia en 3 min se aleja y vuelve; si el piso pasa de 10 min va
+## directo al jefe; y como ultimo recurso fuerza la salida (siempre termina). Los PROBLEMA: del registro son cosas a arreglar.
 ## Se mueve con las acciones reales (move_*, attack, dash, interact), apunta con
 ## Player.aim_override, navega cada sala con una grilla sobre las colisiones reales y
 ## recorre el piso sala por sala hasta el jefe. Lo que lo traba queda en el registro
@@ -18,6 +41,10 @@ const KEEP_NEAR := 130.0
 const KEEP_FAR := 230.0
 const STUCK_S := 25.0
 const FLOOR_LIMIT_S := 600.0
+const COLLECT_FLOOR_LIMIT_S := 1500.0
+const STALL_S := 90.0  # sin progreso tanto tiempo: abandona el objetivo
+const BOSS_STALL_S := 240.0
+const ROOM_LIMIT_S := 180.0  # sala sin limpiar: se aleja y vuelve
 
 var main: Node
 var player: CharacterBody2D
@@ -51,15 +78,52 @@ var _done := false
 var _floor_n := 0
 var _issues: Array[String] = []
 var _t0 := 0.0
+var _collect := false
+var _max_secs := 0.0
+var _hero := ""
+# perro guardian
+var _prog_sig := ""
+var _prog_t := 0.0
+var _sig_t := 0.0
+var _stall_n := 0
+var _goal_kind := ""  # thing | quest | puzzle | room | fight | ""
+var _goal_ref = null
+var _skip_rooms := {}  # grid_pos -> true (salas abandonadas como destino)
+var _rush := false  # piso demasiado largo: directo al jefe
+var _evade_t := 0.0
+var _evade_n := 0
+var _flee_goal := Vector2.INF
+var _flee_t := 0.0
+var _pause_t := 0.0
+var _win_pos := Vector2.ZERO
+var _win_t := 0.0
+var _moved := false  # este fotograma se pidio un movimiento
+var _move_dir := Vector2.DOWN
+var _face := Vector2.DOWN
+# resumen del modo recoger-todo
+var _fl := {}  # piso -> {name, rooms_total, rooms_visited, unvisited, seen, chests, t}
+var _wpn_taken := {}  # id de arma -> true (recoger-todo: cada arma una vez, sin intercambiarlas sin fin)
+var _scan_t := 0.0
+var _codex0 := 0
+var _game_f0 := -1  # fotograma de fisica en que empezo la partida
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	process_physics_priority = -100
-	_log = FileAccess.open(LOG_PATH, FileAccess.WRITE)
+	var log_path := _arg("--log=", ProjectSettings.globalize_path(LOG_PATH))  # --log=<ruta>: registro propio (partidas en paralelo)
+	DirAccess.make_dir_recursive_absolute(log_path.get_base_dir())
+	_log = FileAccess.open(log_path, FileAccess.WRITE)
 	_t0 = Time.get_ticks_msec() / 1000.0
 	var hero := _arg("--hero=", "vulvalquiria")
-	if _arg("--fast", "") != "" or "--fast" in OS.get_cmdline_user_args():
+	_hero = hero
+	RunManager.test_seed = int(_arg("--seed=", "0"))
+	_collect = _arg("--collect=", "") == "all"
+	_max_secs = float(_arg("--max-secs=", "0"))
+	var fast := _arg("--fast=", "")
+	if fast != "":
+		Engine.time_scale = clampf(float(fast), 1.0, 6.0)
+	elif "--fast" in OS.get_cmdline_user_args():
 		Engine.time_scale = 1.6
 	# La escena tools/autoplay solo lanza: el bot de verdad cuelga de la raiz (asi
 	# sobrevive a los cambios de escena) y la escena pasa al menu principal.
@@ -78,23 +142,26 @@ func _ready() -> void:
 	# para alargar los jefes y ver todos sus desafios: --boss-hp=1,1,12,12,12 (multiplicador por piso)
 	EnemyBoss.test_hp_mults = Array(_arg("--boss-hp=", "1").split(",", false)).map(func(x): return float(x))
 	_build_overlay()
-	await _wait_s(2.5)
+	_codex0 = get_node("/root/LoreDatabase").get_unlocked_entries().size()
+	if _max_secs > 0.0:
+		_watch_max_secs()
+	await _wait_real(2.5)
 	# Menu principal: "Nueva partida", como lo haria una persona.
 	_label.text = "BOT · menu: Nueva partida"
 	var menu := get_tree().current_scene
 	_say("Menu principal -> Nueva partida")
 	menu.start_btn.pressed.emit()
 	# Intro: leer cada lamina y seguir con una tecla hasta llegar a elegir heroe.
-	await _wait_s(1.5)
+	await _wait_real(1.5)
 	var intro := get_tree().current_scene
 	var slides := 0
 	while intro and is_instance_valid(intro) and not intro._select.visible:
 		_label.text = "BOT · intro: lamina %d" % (slides + 1)
-		await _wait_s(1.6)
+		await _wait_real(1.6)
 		if intro._select.visible:
 			break
 		_tap_key(KEY_SPACE)  # termina de escribir
-		await _wait_s(1.4)
+		await _wait_real(1.4)
 		# ojo: con la eleccion ya visible, Espacio pulsaria el boton enfocado (Pitocles)
 		if intro._select.visible:
 			break
@@ -105,7 +172,7 @@ func _ready() -> void:
 			break
 	_say("Intro vista (%d laminas) -> eleccion de heroe" % slides)
 	_label.text = "BOT · eligiendo heroe: %s" % hero
-	await _wait_s(2.5)
+	await _wait_real(2.5)
 	var btn: Button = intro.find_child("Choose_" + hero, true, false)
 	if btn == null:
 		_issue("No encuentro el boton de elegir a " + hero)
@@ -127,12 +194,34 @@ func _ready() -> void:
 		_say("Salto al piso %d (%s)" % [jump, rm0.floor_data().id])
 	if _arg("--armed=", "") != "":
 		player.equip_weapon(get_node("/root/ItemDatabase").get_item("pistol_basic"))  # prueba: sin la busqueda inicial del arma
+	_game_f0 = Engine.get_physics_frames()
 	_say("Partida nueva: semilla=%d" % get_node("/root/RunManager").current_seed)
 	player.get_node("Hurtbox").area_entered.connect(func(a): if a.is_in_group("enemy_attack"): _hits += 1)
+	_say("Modo: %s%s, tiempo x%.1f" % ["RECOGER TODO" if _collect else "recorrido normal", "" if DebugMenu.god_mode else " SIN modo dios", Engine.time_scale])
+
+
+## Termina solo tras N s de juego (fotogramas de fisica / 60: sirve igual con el movie maker, que fija el paso).
+func _watch_max_secs() -> void:
+	while player == null:  # el reloj arranca con la partida (no con el menu ni la intro)
+		await get_tree().process_frame
+	var f0 := Engine.get_physics_frames()
+	while (Engine.get_physics_frames() - f0) / float(Engine.physics_ticks_per_second) < _max_secs:
+		await get_tree().process_frame
+	_say("--max-secs=%d alcanzado: fin de la prueba" % int(_max_secs))
+	_log_summary("RESUMEN PARCIAL")
+	get_tree().quit()
 
 
 func _wait_s(t: float) -> void:
 	await get_tree().create_timer(t, true, false, true).timeout
+
+
+## Espera de RELOJ real (la maquina de escribir de la intro va por reloj, no por fotogramas: con --fixed-fps los
+## temporizadores del motor correrian mucho mas rapido que ella).
+func _wait_real(t: float) -> void:
+	var end := Time.get_ticks_msec() + int(t * 1000.0)
+	while Time.get_ticks_msec() < end:
+		await get_tree().process_frame
 
 
 func _tap_key(code: Key) -> void:
@@ -154,7 +243,8 @@ func _arg(prefix: String, def: String) -> String:
 
 
 func _say(msg: String) -> void:
-	var t := Time.get_ticks_msec() / 1000.0 - _t0
+	# tiempo de JUEGO desde que empieza la partida (con --fixed-fps pasa mas rapido que el reloj)
+	var t := 0.0 if _game_f0 < 0 else (Engine.get_physics_frames() - _game_f0) / float(Engine.physics_ticks_per_second)
 	var line := "[%6.1fs] %s" % [t, msg]
 	print("[bot] ", line)
 	if _log:
@@ -174,6 +264,7 @@ func _build_overlay() -> void:
 	layer.layer = 90
 	add_child(layer)
 	_label = Label.new()
+	layer.visible = _arg("--overlay=", "1") != "0"
 	_label.position = Vector2(12, 600)
 	_label.add_theme_color_override("font_color", Color(0.6, 1.0, 0.6))
 	_label.add_theme_color_override("font_outline_color", Color.BLACK)
@@ -204,24 +295,43 @@ func _physics_process(delta: float) -> void:
 		Narrator._pick_choice(0)
 		return
 	if get_tree().paused:
+		_pause_t += delta
+		if _pause_t > 45.0 and fmod(_pause_t, 15.0) < delta:
+			_issue("Juego en pausa %d s (prompt=%s): se intenta cerrar con Espacio/Esc" % [int(_pause_t), Narrator.prompt_owner])
+			_tap_key(KEY_SPACE if int(_pause_t / 15.0) % 2 == 1 else KEY_ESCAPE)
 		_heartbeat_t -= delta
 		if _heartbeat_t <= 0.0:
 			_heartbeat_t = 10.0
 			_say("  latido: juego en PAUSA (narrador/menu); prompt=%s eleccion=%s" % [Narrator.prompt_owner, Narrator._choice.visible])
 		return
+	_pause_t = 0.0
 	var rm := get_node("/root/RunManager")
 	if not rm.run_active:
 		_finish(rm.last_run_victory)
 		return
 	if rm.current_floor != _floor_n:
+		if _floor_n > 0:
+			_log_floor_summary(_floor_n)
 		_floor_n = rm.current_floor
 		_floor_t = 0.0
 		_visited.clear()
+		_skip_rooms.clear()
+		_rush = false
+		_stall_n = 0
+		_prog_t = 0.0
+		_evade_t = 0.0
+		_evade_n = 0
+		_fl[_floor_n] = {"name": str(rm.floor_data().name), "rooms_total": 0, "rooms_visited": 0, "unvisited": [], "seen": {}, "chests": {}, "t0": Time.get_ticks_msec() / 1000.0 - _t0}
 		_say("=== PISO %d: %s ===" % [_floor_n, rm.floor_data().name])
 	_floor_t += delta
-	if _floor_t > FLOOR_LIMIT_S:
-		_issue("Piso %d sin terminar tras %d s" % [_floor_n, FLOOR_LIMIT_S])
-		_floor_t = -1e9
+	var floor_limit := COLLECT_FLOOR_LIMIT_S if _collect else FLOOR_LIMIT_S
+	if _floor_t > floor_limit and not _rush:
+		_issue("Piso %d pasa de %d min: va directo al jefe" % [_floor_n, int(floor_limit / 60.0)])
+		_rush = true
+	if _floor_t > floor_limit * 2.0:
+		_issue("Piso %d pasa de %d min: se fuerza la entrada al jefe" % [_floor_n, int(floor_limit / 30.0)])
+		_floor_t = 0.0
+		_force_boss()
 	var room: Room = main.current_room
 	if room == null:
 		return
@@ -235,7 +345,20 @@ func _physics_process(delta: float) -> void:
 		_build_grid(room)
 	var enemies := _alive_enemies(room)
 	_use_slots(not enemies.is_empty(), delta)
-	if not enemies.is_empty():
+	_moved = false
+	_scan_t -= delta
+	if _scan_t <= 0.0:
+		_scan_t = 1.0
+		_scan_floor()
+	_watch_progress(delta, room, enemies)
+	if _evade_t > 0.0 and not enemies.is_empty():
+		_evade_t -= delta
+		_goal_text = "alejarse de %d enemigos y volver (sala sin limpiar)" % enemies.size()
+		_goal_kind = "fight"
+		player.aim_override = Vector2.ZERO
+		_flee(enemies, delta)
+	elif not enemies.is_empty():
+		_goal_kind = "fight"
 		_fight(enemies, delta)
 	elif _unstick_t > 0.0:
 		# Desatascar: si el jugador lleva 3 s sin moverse (encajado contra algo que la
@@ -249,7 +372,12 @@ func _physics_process(delta: float) -> void:
 	else:
 		player.aim_override = Vector2.ZERO
 		_explore(room)
-	_watch_stuck(delta, room)
+	_watch_stuck(delta, room, enemies)
+	# mira hacia donde va (sin enemigos): el arma y el cuerpo siguen el rumbo, nada de apuntar al raton
+	if enemies.is_empty() and _moved:
+		_face = _face.lerp(_move_dir, 0.25).normalized() if _face.dot(_move_dir) > -0.9 else _move_dir
+	if enemies.is_empty() and _unstick_t <= 0.0:
+		player.aim_override = _face
 	_heartbeat_t -= delta
 	if _heartbeat_t <= 0.0:
 		_heartbeat_t = 10.0
@@ -308,6 +436,9 @@ func _on_boss_killed(e: Node, _k: Node) -> void:
 func _finish(victory: bool) -> void:
 	_done = true
 	_release_all()
+	if not get_node("/root/RunManager").last_run_victory:
+		_say("MUERTE/FIN en el piso %d (%s), sala %s" % [_floor_n, get_node("/root/RunManager").floor_data().get("name", "?"), _room.grid_pos if _room else "?"])
+	_log_summary("RESUMEN FINAL")
 	_say("FIN: %s. Pisos liberados: %s. Golpes recibidos: %d. Problemas: %d" % [
 		"VICTORIA" if victory else "derrota", get_node("/root/RunManager").liberated, _hits, _issues.size()])
 	for i in _issues:
@@ -441,9 +572,11 @@ func _line_clear(a: Vector2, b: Vector2) -> bool:
 
 # ------------------------------------------------------------------ explorar
 func _explore(room: Room) -> void:
-	if room.room_type == Room.RoomType.PUZZLE and room.has_meta("puzzle") and _solve_puzzle(room.get_meta("puzzle")):
+	if room.room_type == Room.RoomType.PUZZLE and room.has_meta("puzzle") and not room.has_meta("bot_skip_puzzle") and _solve_puzzle(room.get_meta("puzzle")):
+		_goal_kind = "puzzle"
 		return
 	if _quest_step(room):
+		_goal_kind = "quest"
 		return
 	# 1) cosas para recoger o usar en esta sala
 	var target := _next_thing(room)
@@ -451,6 +584,8 @@ func _explore(room: Room) -> void:
 		_thing_cur = target
 		_thing_t = 0.0
 	if target:
+		_goal_kind = "thing"
+		_goal_ref = target
 		_thing_t += get_physics_process_delta_time()
 		if _thing_t > 12.0:
 			_used[target.get_instance_id()] = true
@@ -464,6 +599,9 @@ func _explore(room: Room) -> void:
 				_interact_t = 0.35
 				if target.get_script().resource_path.ends_with("interactable.gd"):
 					_used[target.get_instance_id()] = true  # inscripcion, fuente, escotilla: una vez
+				var it = target.get("_item")
+				if it != null and it.equip_slot == Item.EquipSlot.WEAPON:
+					_wpn_taken[it.id] = true  # recoger-todo: cada arma una vez (la que se suelta al cambiar no se vuelve a coger)
 				var n := int(target.get_meta("bot_tries", 0)) + 1
 				target.set_meta("bot_tries", n)
 				if n > 6:
@@ -477,11 +615,14 @@ func _explore(room: Room) -> void:
 	var next := _next_room(room)
 	if next == null:
 		_goal_text = "sin destino"
+		_goal_kind = ""
 		return
 	var door: Door = room.door_to(next.grid_pos)
 	if door == null:
 		_goal_text = "sin puerta hacia %s" % next.grid_pos
 		return
+	_goal_kind = "room"
+	_goal_ref = _room_goal
 	_goal_text = "ir a %s %s" % [Room.RoomType.keys()[next.room_type], next.grid_pos]
 	var dp := door.global_position
 	if player.global_position.distance_to(dp) < 70.0:
@@ -556,15 +697,39 @@ func _thing_name(n: Node) -> String:
 	return n.name
 
 
+## Lo mas urgente primero (solo cuenta en la tienda: el Turno del Utero, la hormona que falta, objetos nuevos...).
+func _thing_prio(n: Node2D) -> float:
+	var path: String = n.get_script().resource_path
+	if not path.ends_with("shop_item.gd"):
+		return 0.0
+	var it = n.get("_item")
+	if it == null:
+		return 0.0
+	if it.id == Utero.TURNO:
+		return 100.0
+	var h: String = str(it.custom_data.get("hormone", ""))
+	if h != "" and h in main._missing_hormones():
+		return 90.0
+	var base := 20.0 if it.consumable else (30.0 if "mejora" in it.tags else 40.0)
+	var rm := get_node("/root/RunManager")
+	for c in rm.items_collected:
+		if c.id == it.id:
+			return base  # ya lo tuve: no es novedad
+	return base + 10.0
+
+
 func _next_thing(room: Room) -> Node2D:
 	var best: Node2D = null
 	var bd := INF
+	var bp := -1.0
 	var pp := player.global_position
 	for n in _things(room):
 		if _used.has(n.get_instance_id()):
 			continue
 		var d: float = n.global_position.distance_to(pp)
-		if d < bd:
+		var pr := _thing_prio(n)
+		if pr > bp or (pr == bp and d < bd):
+			bp = pr
 			bd = d
 			best = n
 	return best
@@ -575,7 +740,17 @@ func _things(room: Room) -> Array:
 	var generic := []
 	var rm := get_node("/root/RunManager")
 	var missing: Array = main._missing_hormones()
-	for c in room.pickups_node.get_children() + room.props_node.get_children() + room.get_children():
+	var armed: bool = player.current_weapon != null
+	if armed:
+		_wpn_taken[player.current_weapon.id] = true
+	var nodes: Array = room.pickups_node.get_children() + room.props_node.get_children() + room.get_children()
+	# el Turno hay que poder pagarlo: las demas compras dejan esa reserva
+	var reserve := 0
+	if _collect and Utero.turno_obtainable(main):
+		for c in nodes:
+			if c is Node2D and is_instance_valid(c) and c.get_script() != null and c.get_script().resource_path.ends_with("shop_item.gd") and c.get("item_id") == Utero.TURNO and c.visible:
+				reserve = int(c.price)
+	for c in nodes:
 		if not (c is Node2D) or not is_instance_valid(c) or not c.is_visible_in_tree():
 			continue
 		if c.get_script() == null:
@@ -583,9 +758,9 @@ func _things(room: Room) -> Array:
 		var path: String = c.get_script().resource_path
 		if path.ends_with("item_pickup.gd"):
 			# Con arma ya en la mano no recoge otra: el juego suelta la vieja al cambiarla
-			# y el bot se quedaba intercambiandolas sin fin.
+			# y el bot se quedaba intercambiandolas sin fin. (Recoger-todo: cada arma nueva una vez.)
 			var it = c.get("_item")
-			if it != null and it.equip_slot == Item.EquipSlot.WEAPON and player.current_weapon != null:
+			if it != null and it.equip_slot == Item.EquipSlot.WEAPON and armed and (not _collect or _wpn_taken.has(it.id)):
 				continue
 			if it != null and "maldito" in it.tags:
 				continue  # la jaula maldita no deja pasar hormonas: el bot no la coge
@@ -593,14 +768,21 @@ func _things(room: Room) -> Array:
 		elif path.ends_with("chest.gd") and not c.get("_opened"):
 			out.append(c)
 		elif path.ends_with("shop_item.gd"):
-			# solo lo que hace falta para pasar la Puerta Hormonal (o un arma si no hay)
 			var it = c.get("_item")
-			if it == null or c.get("price") == null or rm.coins < c.price:
+			if it == null or c.get("price") == null:
 				continue
 			var h: String = str(it.custom_data.get("hormone", ""))
-			if (h != "" and h in missing) or (player.current_weapon == null and it.type == 0):
+			var need: bool = (h != "" and h in missing) or (not armed and it.equip_slot == Item.EquipSlot.WEAPON)
+			if need and rm.coins >= c.price:
+				out.append(c)
+			elif _collect and not need and it.id != Utero.TURNO and rm.coins - reserve >= c.price and not (it.equip_slot == Item.EquipSlot.WEAPON and armed) and "maldito" not in it.tags:
+				out.append(c)
+			elif _collect and it.id == Utero.TURNO and rm.coins >= c.price:
 				out.append(c)
 		elif path.ends_with("interactable.gd"):
+			# La puerta del Utero (Consulta de la Doctora V.): solo vale la pena con el Turno en la mano.
+			if room.has_meta("consulta") and (not Utero.owns_turno(main) or RunManager.utero_inserted):
+				continue
 			generic.append(c)
 	out = out.filter(func(n): return n.get_parent() != null and not _used.has(n.get_instance_id()))
 	if out.is_empty():
@@ -609,6 +791,19 @@ func _things(room: Room) -> Array:
 
 
 ## Plan de piso: la sala sin visitar mas cercana (por el grafo); despues el jefe.
+## Recoger-todo: todas las salas (la tienda al final, con el dinero reunido), las secretas y de puerta con candado
+## que se puedan abrir; el jefe solo cuando no queda nada. `_room_goal` = la sala destino final del camino.
+var _room_goal := Vector2i.ZERO
+
+func _door_passable(d: Door) -> bool:
+	if d.state != Door.State.LOCKED:
+		return true
+	if not _collect:
+		return false
+	return (d.required_key != "" and player.has_item(d.required_key)) or player.has_item("key_master") \
+		or (d.required_intoxication_tier > 0 and get_node("/root/PlayerStats").intoxication_tier >= d.required_intoxication_tier)
+
+
 func _next_room(room: Room) -> Room:
 	var gen = main.dungeon_generator
 	var rooms: Dictionary = gen.rooms
@@ -626,7 +821,7 @@ func _next_room(room: Room) -> Room:
 			if prev.has(nb):
 				continue
 			var d: Door = cr.door_to(nb)
-			if d == null or d.state == Door.State.LOCKED:
+			if d == null or not _door_passable(d):
 				continue
 			var nr: Room = rooms[nb]
 			if nr.room_type == Room.RoomType.BOSS and not can_boss:
@@ -636,17 +831,30 @@ func _next_room(room: Room) -> Room:
 	var goal = null
 	if _quest_room != null and _quest_room != room and _quest_room.grid_pos in order:
 		goal = _quest_room.grid_pos  # mision de llave: ir a la sala de la llave / del cofre
+	# Con el Turno en la mano: a la Consulta de la Doctora V. (la puerta del Utero)
+	if goal == null and Utero.owns_turno(main) and not RunManager.utero_inserted:
+		for pos in order:
+			if rooms[pos].has_meta("consulta") and pos != room.grid_pos:
+				goal = pos
+				break
 	# Sin arma: primero la sala del cofre con el arma (el juego la esconde lejos).
 	var wr = main.get("_weapon_room")
 	if goal == null and player.current_weapon == null and wr != null and is_instance_valid(wr) and wr.grid_pos in order and wr.grid_pos != room.grid_pos:
 		goal = wr.grid_pos
-	for pos in order:
-		if goal != null:
-			break
-		var r: Room = rooms[pos]
-		if pos != room.grid_pos and not _visited.has(pos) and r.room_type != Room.RoomType.BOSS:
+	if goal == null and not (_rush and can_boss):
+		var shop = null
+		for pos in order:
+			var r: Room = rooms[pos]
+			if pos == room.grid_pos or _visited.has(pos) or _skip_rooms.has(pos) or r.room_type == Room.RoomType.BOSS:
+				continue
+			if _collect and r.room_type == Room.RoomType.SHOP:
+				if shop == null:
+					shop = pos
+				continue
 			goal = pos
 			break
+		if goal == null and shop != null:
+			goal = shop
 	if goal == null:
 		for pos in order:
 			if rooms[pos].room_type == Room.RoomType.BOSS:
@@ -659,6 +867,7 @@ func _next_room(room: Room) -> Room:
 		return null
 	if goal == room.grid_pos:
 		return null
+	_room_goal = goal
 	var step = goal
 	while prev[step] != room.grid_pos:
 		step = prev[step]
@@ -788,6 +997,9 @@ func _avoid_walls(dir: Vector2) -> Vector2:
 
 # ------------------------------------------------------------------ entrada
 func _press_move(dir: Vector2) -> void:
+	if dir.length() > 0.1:
+		_moved = true
+		_move_dir = dir.normalized()
 	if dir.x > 0.15:
 		Input.action_press("move_right", minf(1.0, dir.x * 1.4))
 	elif dir.x < -0.15:
@@ -820,7 +1032,20 @@ var _unstick_t := 0.0
 var _unstick_dir := Vector2.RIGHT
 var _unstick_n := 0
 
-func _watch_stuck(delta: float, room: Room) -> void:
+var _win_intent := false
+
+func _watch_stuck(delta: float, room: Room, enemies: Array) -> void:
+	# Clavado por enemigos pegados (o empujando una puerta sin que ceda): 1,2 s queriendo avanzar sin moverse
+	# 24 px -> dash en esa direccion (con dash se cruza la puerta y se sale de entre los enemigos).
+	_win_t += delta
+	_win_intent = _win_intent or _moved
+	if _win_t >= 1.2:
+		if _win_intent and not enemies.is_empty() and player.global_position.distance_to(_win_pos) < 24.0 and _dash_cd <= 0.0:
+			Input.action_press("dash")
+			_dash_cd = 1.0
+		_win_t = 0.0
+		_win_pos = player.global_position
+		_win_intent = false
 	if player.global_position.distance_to(_last_pos) > 2.0:
 		_last_pos = player.global_position
 		_still_t = 0.0
@@ -848,6 +1073,224 @@ func _watch_stuck(delta: float, room: Room) -> void:
 			Narrator._choice.visible, get_tree().paused])
 		_still_t = -STUCK_S
 		_path.clear()
-	if _room_t > 120.0 and not room.cleared and room.room_type not in [Room.RoomType.PUZZLE, Room.RoomType.START, Room.RoomType.SHOP]:
-		_issue("Sala %s %s sin limpiar tras 2 min" % [Room.RoomType.keys()[room.room_type], room.grid_pos])
-		_room_t = -1e9
+
+
+# ------------------------------------------------------------------ perro guardian
+## Firma de "algo avanza": cosas recogidas, monedas, muertes, salas nuevas, vida total de los enemigos de la
+## sala (el dano cuenta), mision de llave... Si no cambia en STALL_S el objetivo se abandona.
+func _watch_progress(delta: float, room: Room, enemies: Array) -> void:
+	_prog_t += delta
+	_sig_t -= delta
+	if _sig_t > 0.0:
+		return
+	_sig_t = 1.0
+	var rm := get_node("/root/RunManager")
+	var hp := 0.0
+	for e in enemies:
+		var h = e.get("current_health")
+		hp += float(h) if h != null else 0.0
+	var kq = main.get_node_or_null("KeyQuests")
+	var sig := "%d|%d|%d|%d|%d|%s|%d|%s|%d|%d" % [rm.items_collected.size(), rm.coins, rm.total_enemies_killed, _visited.size(),
+		int(hp / 12.0), room.cleared, player.collected_items.size(), kq.state if kq else "", rm.blessings.size(), enemies.size()]
+	var puz = room.get_meta("puzzle") if room.has_meta("puzzle") else null
+	if puz != null:
+		sig += "|%s|%s" % [puz.get("done"), puz.get("fails")]
+	if sig != _prog_sig:
+		_prog_sig = sig
+		_prog_t = 0.0
+		_stall_n = 0
+		return
+	var limit := BOSS_STALL_S if room.room_type == Room.RoomType.BOSS else STALL_S
+	if _prog_t > limit:
+		_on_stall(room, enemies)
+	# sala sin limpiar tras 3 min: se aleja y vuelve (una vez cada 3 min)
+	if not room.cleared and not enemies.is_empty() and room.room_type != Room.RoomType.BOSS and _room_t > ROOM_LIMIT_S:
+		_evade_n += 1
+		_evade_t = 10.0
+		_room_t = 0.0
+		_flee_goal = Vector2.INF
+		_issue("Sala %s %s sin limpiar tras %d min (%d enemigos): se aleja y vuelve (vez %d)" % [
+			Room.RoomType.keys()[room.room_type], room.grid_pos, int(ROOM_LIMIT_S / 60.0), enemies.size(), _evade_n])
+
+
+func _on_stall(room: Room, enemies: Array) -> void:
+	_stall_n += 1
+	_prog_t = 0.0
+	var where := "%s %s" % [Room.RoomType.keys()[room.room_type], room.grid_pos]
+	_issue("Piso %d: sin progreso en %s (objetivo \"%s\", %s) -> nivel %d" % [_floor_n, where, _goal_text, _goal_kind, _stall_n])
+	match _stall_n:
+		1:
+			_abandon_goal(room)
+		2:
+			_rush = true
+			_abandon_goal(room)
+			if not enemies.is_empty():
+				_evade_t = 10.0
+				_flee_goal = Vector2.INF
+		3:
+			if not enemies.is_empty():
+				_force_clear(room, enemies)
+			else:
+				_force_boss()
+		_:
+			_force_boss()
+
+
+## Suelta lo que se estaba intentando para que el bot siga con otra cosa.
+func _abandon_goal(room: Room) -> void:
+	match _goal_kind:
+		"thing":
+			if _goal_ref != null and is_instance_valid(_goal_ref):
+				_used[_goal_ref.get_instance_id()] = true
+		"quest":
+			var kq = main.get_node_or_null("KeyQuests")
+			if kq:
+				kq.bot_gave_up = true
+		"puzzle":
+			room.set_meta("bot_skip_puzzle", true)
+		"room":
+			if _goal_ref is Vector2i:
+				_skip_rooms[_goal_ref] = true
+	_thing_cur = null
+	_path.clear()
+	_unstick_n = 0
+
+
+## Ultimo recurso con enemigos que no mueren: les baja la vida (queda anotado como PROBLEMA).
+func _force_clear(room: Room, enemies: Array) -> void:
+	_issue("Piso %d: se fuerza la muerte de %d enemigos de %s %s (no avanzaba)" % [_floor_n, enemies.size(), Room.RoomType.keys()[room.room_type], room.grid_pos])
+	for e in enemies:
+		if is_instance_valid(e) and e.has_method("take_damage"):
+			e.take_damage(1.0e9, player)
+
+
+## Ultimo recurso: arma y hormonas si faltan (anotado) y entra al jefe saltandose el camino.
+func _force_boss() -> void:
+	var boss: Room = null
+	for r in main.dungeon_generator.rooms.values():
+		if r.room_type == Room.RoomType.BOSS:
+			boss = r
+	if boss == null or main.current_room == boss:
+		return
+	if not main._has_real_weapon():
+		_issue("Piso %d: sin arma al forzar el jefe; se equipa una pistola" % _floor_n)
+		player.equip_weapon(get_node("/root/ItemDatabase").get_item("pistol_basic"))
+	var rm := get_node("/root/RunManager")
+	for h in main._missing_hormones():
+		_issue("Piso %d: falta la hormona %s al forzar el jefe; se da" % [_floor_n, h])
+		rm.hormones[h] = true
+	_say("  FUERZA la entrada a la sala del jefe %s" % boss.grid_pos)
+	main.call_deferred("_enter_room", boss, null)
+
+
+## Aleja al jugador de los enemigos dentro de la sala (el punto mas lejano de todos), para que se les reinicie la IA.
+func _flee(enemies: Array, delta: float) -> void:
+	_flee_t -= delta
+	if _flee_goal == Vector2.INF or _flee_t <= 0.0 or player.global_position.distance_to(_flee_goal) < 20.0:
+		_flee_t = 2.0
+		var best := Vector2.INF
+		var bs := -1.0e9
+		var keys := _grid.keys()
+		for i in 60:
+			if keys.is_empty():
+				break
+			var c: Vector2i = keys[randi() % keys.size()]
+			var p := _center(c)
+			var d := INF
+			for e in enemies:
+				d = minf(d, e.global_position.distance_to(p))
+			# lejos de ellos pero no demasiado lejos de mi (ruta corta)
+			var sc := d - 0.25 * p.distance_to(player.global_position)
+			if sc > bs:
+				bs = sc
+				best = p
+		_flee_goal = best
+	if _flee_goal != Vector2.INF:
+		_steer_to(_flee_goal)
+		if _dash_cd <= 0.0 and enemies.any(func(e): return e.global_position.distance_to(player.global_position) < 60.0):
+			Input.action_press("dash")
+			_dash_cd = 1.2
+
+
+# ------------------------------------------------------------------ resumen (recoger todo)
+## Una vez por segundo: anota cofres y objetos vistos de los pisos que va recorriendo.
+func _scan_floor() -> void:
+	if not is_instance_valid(main) or main.dungeon_generator == null or not _fl.has(_floor_n):
+		return
+	var f: Dictionary = _fl[_floor_n]
+	var rooms: Dictionary = main.dungeon_generator.rooms
+	f.rooms_total = rooms.size()
+	f.rooms_visited = _visited.size()
+	var un := []
+	for pos in rooms:
+		if not _visited.has(pos):
+			un.append("%s%s" % [Room.RoomType.keys()[rooms[pos].room_type], pos])
+	f.unvisited = un
+	for pos in rooms:
+		var r: Room = rooms[pos]
+		var seen_room: bool = _visited.has(pos)
+		for c in r.pickups_node.get_children() + r.props_node.get_children():
+			if not is_instance_valid(c) or c.get_script() == null:
+				continue
+			var path: String = c.get_script().resource_path
+			if path.ends_with("chest.gd") or path.ends_with("chest_locked.gd"):
+				var id := c.get_instance_id()
+				var opened: bool = c.get("_opened") == true or c.get("opened") == true
+				if not f.chests.has(id):
+					f.chests[id] = {"kind": "normal" if path.ends_with("/chest.gd") else "llave:" + str(c.get("kind")), "opened": false, "room": "%s%s" % [Room.RoomType.keys()[r.room_type], pos]}
+				if opened:
+					f.chests[id].opened = true
+			elif seen_room and (path.ends_with("item_pickup.gd") or path.ends_with("shop_item.gd")):
+				var iid = c.get("item_id")
+				if iid != null and str(iid) != "" and str(iid) != "coin":
+					f.seen[str(iid)] = true
+
+
+func _floor_items(n: int) -> Array:
+	var out := []
+	for it in get_node("/root/RunManager").items_collected:
+		if int(it.floor) == n and str(it.id) != "coin" and str(it.id) not in out:
+			out.append(str(it.id))
+	return out
+
+
+func _log_floor_summary(n: int) -> void:
+	if not _fl.has(n):
+		return
+	var f: Dictionary = _fl[n]
+	var taken := _floor_items(n)
+	var coins := 0
+	for it in get_node("/root/RunManager").items_collected:
+		if int(it.floor) == n and str(it.id) == "coin":
+			coins += 1
+	var opened := 0
+	var closed := []
+	for id in f.chests:
+		if f.chests[id].opened:
+			opened += 1
+		else:
+			closed.append("%s en %s" % [f.chests[id].kind, f.chests[id].room])
+	var not_taken := []
+	for id in f.seen:
+		if id not in taken:
+			not_taken.append(id)
+	_say("  RESUMEN piso %d (%s): salas %d/%d visitadas; cofres abiertos %d/%d; objetos recogidos %d (%s) + %d monedas; vistos y NO recogidos %d (%s)" % [
+		n, f.name, f.rooms_visited, f.rooms_total, opened, f.chests.size(), taken.size(), ", ".join(taken), coins, not_taken.size(), ", ".join(not_taken)])
+	if not f.unvisited.is_empty():
+		_say("    salas sin visitar: %s" % ", ".join(f.unvisited))
+	if not closed.is_empty():
+		_say("    cofres sin abrir: %s" % "; ".join(closed))
+
+
+func _log_summary(title: String) -> void:
+	_scan_floor()
+	_say("=== %s ===" % title)
+	var keys := _fl.keys()
+	keys.sort()
+	for n in keys:
+		_log_floor_summary(n)
+	var lore = get_node("/root/LoreDatabase")
+	var now: int = lore.get_unlocked_entries().size()
+	_say("  CODICE: %d de %d entradas desbloqueadas (%d nuevas en esta partida)" % [now, lore.get_all_entries().size(), now - _codex0])
+	var rm := get_node("/root/RunManager")
+	_say("  Objetos totales recogidos: %d; monedas ahora: %d; bendiciones: %s" % [rm.items_collected.size(), rm.coins, rm.blessings])
