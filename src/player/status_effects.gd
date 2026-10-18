@@ -282,7 +282,8 @@ func _draw_cage() -> void:
 
 
 func _draw_cuffs() -> void:
-	var src: Node = _src.get("esposado", null)
+	var src_v = _src.get("esposado", null)
+	var src: Node = src_v if is_instance_valid(src_v) else null
 	var gold := Color("ff7ac0")
 	draw_circle(Vector2(-14, 4), 5.0, Color("23202c"))
 	draw_circle(Vector2(14, 4), 5.0, Color("23202c"))
@@ -308,7 +309,8 @@ func _draw_gag() -> void:
 
 
 func _draw_leash() -> void:
-	var src: Node = _src.get("enganchado", null)
+	var src_v = _src.get("enganchado", null)
+	var src: Node = src_v if is_instance_valid(src_v) else null
 	if src == null or not is_instance_valid(src):
 		return
 	var to := to_local(src.global_position + Vector2(0, -8))
