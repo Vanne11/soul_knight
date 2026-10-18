@@ -16,7 +16,12 @@ const ACT_ICONS := {
 	"GLYPH_ABILITY_VULVALQUIRIA": "scream", "GLYPH_ABILITY_ORNITORRINCO": "egg",
 }
 const DIM := Color(0.42, 0.4, 0.48)
-const NAME_W := 118.0  # ancho de la columna del nombre del arma
+const NAME_W := 96.0  # ancho de la columna del nombre del arma
+const TXT := 8  # tamano de texto del panel (compacto; multiplo de 8, sin difuminar)
+const BAR_W := 44.0  # ancho de las barritas de calor/recarga
+const FADE_ALPHA := 0.25  # transparencia cuando el heroe pasa por debajo (como las cajas del narrador)
+const FADE_MARGIN := 12.0
+const BASE_ALPHA := 0.92
 const MARGIN := 8.0  # separacion con el borde de la pantalla
 const LIFT_GAP := 6.0  # aire entre el panel y la caja del narrador cuando lo deja encima
 const LIFT_SPEED := 10.0  # suavizado de la subida/bajada (mayor = mas rapido)
@@ -43,15 +48,15 @@ func _init() -> void:
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_theme_stylebox_override("panel", HudStyle.panel_box(8))
-	modulate.a = 0.92
+	add_theme_stylebox_override("panel", HudStyle.panel_box(5))
+	modulate.a = BASE_ALPHA
 	var v := VBoxContainer.new()
-	v.add_theme_constant_override("separation", 3)
+	v.add_theme_constant_override("separation", 1)
 	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(v)
 	_build_right(v)
 	_build_left(v)
-	var pause := InputGlyphs.labeled("pause", "GLYPH_PAUSE", Color(0.7, 0.66, 0.76), 14)
+	var pause := InputGlyphs.labeled("pause", "GLYPH_PAUSE", Color(0.7, 0.66, 0.76), TXT)
 	v.add_child(pause)
 	_help = KeyHelp.new()
 	get_parent().add_child.call_deferred(_help)
@@ -74,7 +79,7 @@ func _icon(size: float) -> TextureRect:
 
 func _row() -> HBoxContainer:
 	var r := HBoxContainer.new()
-	r.add_theme_constant_override("separation", 6)
+	r.add_theme_constant_override("separation", 4)
 	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return r
 
@@ -82,7 +87,7 @@ func _row() -> HBoxContainer:
 func _build_right(v: Control) -> void:
 	_title(v, "GLYPH_HAND_R")
 	var r := _row()
-	_w_icon = _icon(32)
+	_w_icon = _icon(24)
 	r.add_child(_w_icon)
 	var g := InputGlyph.new()
 	g.action = "attack"
@@ -90,15 +95,15 @@ func _build_right(v: Control) -> void:
 	var t := VBoxContainer.new()
 	t.add_theme_constant_override("separation", 0)
 	t.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_w_name = HudStyle.pixel_label("", 16, HudStyle.CREAM)
+	_w_name = HudStyle.pixel_label("", TXT, HudStyle.CREAM)
 	_w_name.custom_minimum_size.x = NAME_W
-	# nombres largos: ver _fit_name (16 en una linea o 8 en dos, nunca recortado a medias)
+	# nombres largos: hasta dos lineas, nunca recortado a medias
 	_w_name.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_w_name.max_lines_visible = 2
 	_w_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	_w_ammo = HudStyle.pixel_label("", 16, HudStyle.GOLD)
+	_w_ammo = HudStyle.pixel_label("", TXT, HudStyle.GOLD)
 	_w_heat = ColorRect.new()
-	_w_heat.custom_minimum_size = Vector2(60, 4)
+	_w_heat.custom_minimum_size = Vector2(BAR_W, 3)
 	_w_heat.color = Color("ff7a3a")
 	_w_heat.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_w_heat.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
@@ -118,7 +123,7 @@ func _build_left(v: Control) -> void:
 	var main_action := AbilityGauge.main_action(rm.character)
 	for h in hints:
 		var r := _row()
-		var ic := _icon(28)
+		var ic := _icon(20)
 		ic.texture = load(ICON_DIR + "act_%s.png" % ACT_ICONS.get(h[1], "shield"))
 		r.add_child(ic)
 		var g := InputGlyph.new()
@@ -128,9 +133,9 @@ func _build_left(v: Control) -> void:
 		col.add_theme_constant_override("separation", 2)
 		col.alignment = BoxContainer.ALIGNMENT_CENTER
 		col.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		col.add_child(HudStyle.pixel_label(h[1], 16, HudStyle.CREAM))
+		col.add_child(HudStyle.pixel_label(h[1], TXT, HudStyle.CREAM))
 		var bar := ColorRect.new()
-		bar.custom_minimum_size = Vector2(60, 4)
+		bar.custom_minimum_size = Vector2(BAR_W, 3)
 		bar.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		bar.color = Color("ffd75a")
 		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -143,6 +148,7 @@ func _build_left(v: Control) -> void:
 
 func _process(delta: float) -> void:
 	_avoid_narrator(delta)
+	_fade_near_player(delta)
 	if _player == null or not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group("player") as Player
 		if _player == null:
@@ -169,12 +175,22 @@ func _avoid_narrator(delta: float) -> void:
 	offset_bottom = -MARGIN - _lift
 
 
-## Nombre del arma sin recortes: tamano 16 si cabe en una linea; si no, 8 (multiplo del pixel
-## de la fuente, nunca difuminado) en hasta dos lineas; lo que aun sobre se corta con "...".
+## Como las cajas del narrador: si el heroe pasa por debajo del panel, se vuelve transparente
+## para no taparlo (ni a lo que tenga cerca).
+func _fade_near_player(delta: float) -> void:
+	var target := BASE_ALPHA
+	var pl := _player if _player != null and is_instance_valid(_player) else null
+	if pl:
+		# rectangulo del heroe en pantalla (cuerpo de ~32x48 por el zoom de la camara)
+		var xf := pl.get_global_transform_with_canvas()
+		var half := Vector2(16, 24) * xf.get_scale()
+		if get_global_rect().grow(FADE_MARGIN).intersects(Rect2(xf.origin - half, half * 2.0)):
+			target = FADE_ALPHA
+	modulate.a = move_toward(modulate.a, target, delta * 4.0)
+
+
+## Nombre del arma en hasta dos lineas; lo que aun sobre se corta con "...".
 func _fit_name(text: String) -> void:
-	var f: Font = _w_name.get_theme_font("font")
-	var big := f.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x <= NAME_W
-	_w_name.add_theme_font_size_override("font_size", 16 if big else 8)
 	_w_name.text = text
 
 
@@ -194,7 +210,7 @@ func _update_weapon() -> void:
 		_fit_name(Loc.item_name(w))
 		_w_ammo.text = "%d/%d" % [ammo, mag] if mag > 0 else ""
 		_w_heat.visible = mag <= 0 and cd.has("heat_per_shot") or heat > 0.02
-		_w_heat.custom_minimum_size.x = maxf(2.0, 60.0 * clampf(heat, 0.0, 1.0))
+		_w_heat.custom_minimum_size.x = maxf(2.0, BAR_W * clampf(heat, 0.0, 1.0))
 		_w_heat.color = Color("ff3a2a") if _player._overheated else Color("ff9a3a")
 		_w_ammo.add_theme_color_override("font_color", Color("ff5a5a") if mag > 0 and ammo <= 0 else HudStyle.GOLD)
 		if first and is_instance_valid(_help):
@@ -212,7 +228,7 @@ func _update_left() -> void:
 		var cooling := false
 		if a.main and ab != null and ab.gauge_visible and ab.gauge_value < 1.0:
 			cooling = true
-			a.bar.custom_minimum_size.x = maxf(2.0, 60.0 * ab.gauge_value)
+			a.bar.custom_minimum_size.x = maxf(2.0, BAR_W * ab.gauge_value)
 			a.bar.color = ab.gauge_color
 		a.bar.visible = cooling
 		a.icon.modulate = DIM if cooling else Color.WHITE
