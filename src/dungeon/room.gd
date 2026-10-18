@@ -47,6 +47,33 @@ func _ready() -> void:
 	_setup_doors()
 	_setup_spawn_points()
 
+
+## Red de seguridad: un enemigo apretado contra una esquina por otros (enjambres), o nacido en un punto de
+## aparicion desfasado, puede acabar dentro del muro o fuera de la sala. Fuera nadie lo alcanza y la sala
+## no se limpia nunca (las puertas siguen selladas). Cada medio segundo, el que quede fuera del suelo de
+## la sala vuelve al suelo pisable mas cercano.
+var _rescue_t := 0.0
+
+func _physics_process(delta: float) -> void:
+	_rescue_t -= delta
+	if _rescue_t > 0.0 or enemies_spawned.is_empty():
+		return
+	_rescue_t = 0.5
+	var used := floor_tilemap.get_used_rect()
+	var rect := Rect2(Vector2(used.position) * 64.0, Vector2(used.size) * 64.0)
+	for e in enemies_spawned:
+		if not is_instance_valid(e) or e.is_queued_for_deletion() or not (e is CharacterBody2D) or not e.is_inside_tree():
+			continue
+		if e.get("current_health") != null and float(e.current_health) <= 0.0:
+			continue
+		var p: Vector2 = e.global_position - global_position
+		if rect.grow(6.0).has_point(p):
+			continue
+		var back := Vector2(clampf(p.x, rect.position.x + 40.0, rect.end.x - 40.0), clampf(p.y, rect.position.y + 40.0, rect.end.y - 40.0))
+		e.global_position = snap_global(global_position + back, 24.0)
+		e.velocity = Vector2.ZERO
+		print("[sala] enemigo fuera de %s %s en %s: vuelve a %s" % [RoomType.keys()[room_type], grid_pos, p, back])
+
 # ------------------------------------------------------------------ forma de la sala (API de suelo pisable)
 ## Todo en coordenadas LOCALES de la sala (pixeles, baldosas de 64) salvo snap_global.
 func set_shape(id: String, size: Vector2i, cells: PackedByteArray, anchor: Vector2i) -> void:

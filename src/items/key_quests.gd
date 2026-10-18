@@ -47,6 +47,7 @@ var _dry_t := 0.0
 var _bot_t0 := -1.0
 var _last_hp := 0.0
 var _last_sh := 0.0
+var _bottle_t := 0.0
 
 
 ## PlayerStats por ruta (como en door.gd): nombrar el autoload aqui crea un ciclo de compilacion.
@@ -207,6 +208,18 @@ func _place_bottle(room: Room, near: Vector2) -> void:
 	bottles.append(b)
 
 
+## Las botellas se acaban (se beben al pisarlas, a veces de paso) y la llave borracha solo se coge y se gira
+## con intoxicacion: sin botellas y sobrio la mision quedaba imposible. Si la sala de la llave o la del cofre
+## se quedan sin botellas y el jugador esta sobrio, vuelve una en su sitio de siempre.
+func _restock_bottle(room: Room) -> void:
+	if _ps().intoxication_tier >= 1:
+		return
+	for b in bottles:
+		if is_instance_valid(b) and not b.is_queued_for_deletion() and room.is_ancestor_of(b):
+			return
+	_place_bottle(room, _key_spot + Vector2(-56, 24) if room == home else chest.position + Vector2(0, 54))
+
+
 func _ensure_key_node(at_local := Vector2.INF, locked := true) -> void:
 	if key_node != null and is_instance_valid(key_node):
 		return
@@ -229,6 +242,11 @@ func _process(delta: float) -> void:
 			_enter_home()
 	if state == "home" and key_node != null and is_instance_valid(key_node) and key_node.locked and _home_ready():
 		key_node.set_locked(false)
+	if kind == "drunk" and state != "done" and (room == home or room == vault):
+		_bottle_t -= delta
+		if _bottle_t <= 0.0:
+			_bottle_t = 1.0
+			_restock_bottle(room)
 	if state == "carried":
 		if kind == "drunk":
 			if _ps().intoxication_tier < 1:
@@ -483,7 +501,7 @@ func _burst(at: Vector2, color: Color) -> void:
 func bot_goal(room: Room) -> Dictionary:
 	if not ready_ok or bot_gave_up or state == "done" or state == "none":
 		return {}
-	var now := Time.get_ticks_msec() / 1000.0
+	var now := Engine.get_physics_frames() / float(Engine.physics_ticks_per_second)  # tiempo de juego (el bot puede correr con --fixed-fps)
 	if _bot_t0 < 0.0:
 		_bot_t0 = now
 	elif now - _bot_t0 > 300.0:
