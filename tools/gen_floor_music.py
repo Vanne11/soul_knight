@@ -1,5 +1,5 @@
-"""Musica por reino -> assets/audio/music/explore_<reino>.wav y boss_<reino>.wav
-Chiptune sintetizado (mono, 16 bits, 22050 Hz: igual que explore.wav), mismo
+"""Musica por reino -> assets/audio/music/explore_<reino>.ogg y boss_<reino>.ogg (escribe el wav y to_ogg.py lo convierte)
+Chiptune sintetizado (mono, 16 bits, 22050 Hz: igual que explore.ogg), mismo
 estilo que tools/gen_menu_music.py. Cada tema es un bucle limpio: las colas de
 las notas dan la vuelta al principio (empalme sin clic).
 
@@ -18,11 +18,12 @@ mas oscura, mas rapido y con mas capas.
 Uso (desde la raiz del proyecto): python3 tools/gen_floor_music.py [reino ...]"""
 import sys
 import wave
+from to_ogg import to_ogg
 import numpy as np
 
 SR = 22050
-TARGET_RMS = 0.234   # explore.wav = 0.234
-PEAK = 0.70          # como el resto de wav de musica
+TARGET_RMS = 0.234   # explore.ogg = 0.234
+PEAK = 0.70          # como el resto de la musica
 
 SCALES = {
     "mixolidio": [0, 2, 4, 5, 7, 9, 10],
@@ -491,6 +492,7 @@ def main():
                 f.setsampwidth(2)
                 f.setframerate(SR)
                 f.writeframes(pcm.tobytes())
+            path = to_ogg(path)
             print(path, "%.1f s" % (len(pcm) / SR), "rms %.3f" % np.sqrt((out ** 2).mean()),
                   "pico %.3f" % np.abs(out).max())
 

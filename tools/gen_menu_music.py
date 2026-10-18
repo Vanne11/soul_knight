@@ -1,10 +1,11 @@
-"""Tema del menu principal -> assets/audio/music/menu.wav
-Chiptune sintetizado (mono, 16 bits, 22050 Hz: igual que explore.wav).
+"""Tema del menu principal -> assets/audio/music/menu.ogg (se escribe el wav y to_ogg.py lo convierte)
+Chiptune sintetizado (mono, 16 bits, 22050 Hz: igual que explore.ogg).
 Re menor natural, 96 BPM, progresion i-VI-III-VII (Dm-Bb-F-C), 16 compases
 = 40 s. Melodia: cuadrada 50%; arpegio: pulso 25%; bajo: triangular;
 percusion: bombo (seno que cae) + caja/hat de ruido.
 Uso (desde la raiz del proyecto): python3 tools/gen_menu_music.py"""
 import wave
+from to_ogg import to_ogg
 import numpy as np
 
 SR = 22050
@@ -105,13 +106,8 @@ for bar in range(BARS):
         put(t0 + k * E8, rng.uniform(-1, 1, n) * np.exp(-tt * 140) * (0.10 if k % 2 else 0.05))
 
 out = out[:N]
-# Mismo RMS que explore.wav, y si el pico pasa de 0.7 se baja todo (sin saturar)
-try:
-    w = wave.open("assets/audio/music/explore.wav")
-    ref = np.frombuffer(w.readframes(w.getnframes()), "<i2") / 32768.0
-    target_rms = float(np.sqrt((ref ** 2).mean()))
-except Exception:
-    target_rms = 0.234
+# Mismo RMS que el resto de la musica (explore = 0.234), y si el pico pasa de 0.7 se baja todo (sin saturar)
+target_rms = 0.234
 out *= target_rms / np.sqrt((out ** 2).mean())
 peak = float(np.abs(out).max())
 if peak > 0.7:
@@ -122,4 +118,5 @@ with wave.open("assets/audio/music/menu.wav", "wb") as f:
     f.setsampwidth(2)
     f.setframerate(SR)
     f.writeframes(pcm.tobytes())
-print("menu.wav", len(pcm) / SR, "s  rms", float(np.sqrt((out ** 2).mean())), "pico", float(np.abs(out).max()))
+to_ogg("assets/audio/music/menu.wav")  # el juego usa menu.ogg
+print("menu.ogg", len(pcm) / SR, "s  rms", float(np.sqrt((out ** 2).mean())), "pico", float(np.abs(out).max()))

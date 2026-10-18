@@ -114,6 +114,15 @@ ENTRIES = {
     "loc_selva": ([], "A landscape plate of the Pubic Jungle: a dense, damp, curly jungle of tangled dark curly vines and wiry fronds, a tiny green louse creature peeking out, nobody has trimmed it since the censorship. Humorous, nothing explicit. " + CRE),
     "loc_perineo": ([], "A landscape plate of the Perineum: a narrow bleak border strip of land between a blue Greek-column kingdom on the left and a pink flowery kingdom on the right, hazard stripes, a lone guard post and dust bunnies, nobody lives here. " + CRE),
     "loc_palacio": ([], "A landscape plate of the Palace of Censorship: a huge grey perfectly tidy palace where every painting has black bars, statues wear bathrobes, mosaic pixel squares float around, a giant fig leaf banner above. " + CRE),
+    # --- H2b: Utero, Prostata y las nuevas entradas
+    "loc_utero": ([], "A landscape plate of the Uterus, a secret warm region of Vulvania: a cozy rounded cavern of soft pink-and-crimson walls, four luminous zones in sequence (red tide pools, blooming flower meadow, a golden glowing egg-shaped sun, a cranky chocolate-brown corner), a small cute doctor's office door at the entrance. Humorous, nothing explicit. " + CRE),
+    "boss_regla": E("regla", "The boss Dona Regla: a very tall two-meter ruler creature with measuring marks (no numbers), extremely punctual with a wristwatch, sweeping a tape like a whip, little cramp lightning bolts and a red tide wave around her feet. Nothing gory.", CRE),
+    "loc_prostata": ([], "A landscape plate of a hidden underground service area: a grey-green walnut-shaped basement with an old elevator, a waiting room with plastic chairs and an unread magazine, walnut-shaped gland statues, fluorescent light, a sign-less service door. Nobody talks here. Absolutely no writing anywhere, not even on signs or the plate. Humorous, nothing explicit. " + CRE),
+    "boss_glandula": E("glandula", "The boss Silent Gland: a big walnut-shaped gland creature that never speaks, mouth zipped, swelling bigger in three stages beside its smaller selves, calm stubborn expression, blocking the way.", CRE),
+    "ene_goteo_tardio": E("goteo_tardio", "A slow patient droplet creature that stands still concentrating, then releases a thin weak trickle of tiny drops that fall short, a tired waiting expression.", CRE),
+    "ene_madrugador_nocturno": E("madrugador", "A sleepy night-owl creature in a nightcap and pajamas with a small flashlight, wide awake at 3 a.m. with an urgent expression and a bedside clock with no numbers, three identical copies lined up behind it.", CRE),
+    "ene_psa_sospechoso": E("psa", "A floating number-like gauge creature shaped as a blood-test readout bubble that glows redder as it rises, chasing shyly without showing its face, a bit scary but actually harmless, a tiny test tube beside it. No digits or text on it, only a bar meter.", CRE),
+    "skene_glandulas": ([], "A scientific bestiary plate of two tiny discreet glands shaped like small friendly pink almonds beside a gentle urethra-like tube, wearing little reading glasses and holding a tiny newspaper they never appeared in, modest and proud, soft pink floral backdrop. Cartoon, nothing explicit, no realistic anatomy. " + CRE),
     # --- codice 2: objetos, tragos, reliquias, armas y lore sin lamina
     "absinthe_lore": I("items/absinthe", "A cartoon bottle of green absinthe with a tiny glowing green fairy floating out of the neck whispering secrets into the viewer's ear, swirly hypnotic eyes, wisps of green mist. "),
     "bandages_lore": I("items/bandages", "A roll of slightly suspicious used bandages with a worried face, faint stink lines and a few tiny flies circling, sheepish 'better not ask' expression. "),
@@ -175,7 +184,7 @@ def generate(i):
     refs = ENTRIES[i][0]
     body = {
         "contents": [{"parts": [ref_part(r) for r in refs] + [{"text": prompt_of(i)}]}],
-        "generationConfig": {"responseModalities": ["IMAGE"], "imageConfig": {"aspectRatio": "1:1"}},
+        "generationConfig": {"responseModalities": ["IMAGE"], "imageConfig": {"aspectRatio": "1:1", "imageSize": "1K"}},
     }
     req = urllib.request.Request(
         f"https://generativelanguage.googleapis.com/v1beta/models/{g.MODEL}:generateContent",

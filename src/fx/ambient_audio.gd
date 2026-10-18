@@ -13,7 +13,7 @@ extends Node
 ##   - Pasos: segun el suelo del reino; chapoteo en charcos; nada durante el dash
 ##     (el propio dash ya suena con Sound.play("dash")).
 ## Sin el RNG autoload: usa su propio RandomNumberGenerator (el sonido no afecta al juego).
-## Los .wav salen de tools/gen_ambient_audio.py.
+## Los .wav y .ogg salen de tools/gen_ambient_audio.py.
 
 const DIR := "res://assets/audio/ambient/"
 const BUS := "SFX"
@@ -91,7 +91,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS  # para parar y reanudar con la pausa
 	_rng.randomize()
 	for file in ResourceLoader.list_directory(DIR):
-		if file.ends_with(".wav"):
+		if file.ends_with(".wav") or file.ends_with(".ogg"):
 			var key := file.get_basename()
 			_sounds[key] = load(DIR + file)
 			var prefix := key.substr(0, key.rfind("_")) if key.ends_with("_0") or key.ends_with("_1") or key.ends_with("_2") else key
@@ -130,7 +130,11 @@ func _new_player() -> AudioStreamPlayer:
 
 
 func _make_loop(key: String) -> void:
-	var s := _sounds.get(key) as AudioStreamWAV
+	var o := _sounds.get(key) as AudioStreamOggVorbis  # camas largas: .ogg
+	if o != null:
+		o.loop = true
+		return
+	var s := _sounds.get(key) as AudioStreamWAV  # torch_loop: .wav
 	if s == null:
 		return
 	s.loop_mode = AudioStreamWAV.LOOP_FORWARD

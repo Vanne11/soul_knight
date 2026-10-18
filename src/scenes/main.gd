@@ -162,7 +162,7 @@ func _room_track(room: Room) -> String:
 		base = "explore"  # el guardian de la 1a etapa no es jefe: sin musica de jefe
 	var kingdom: String = str(_run_manager.floor_data().get("kingdom", ""))
 	var themed := base + "_" + kingdom
-	if kingdom != "" and ResourceLoader.exists(Sound.MUSIC_DIR + themed + ".wav"):
+	if kingdom != "" and ResourceLoader.exists(Sound.MUSIC_DIR + themed + ".ogg"):
 		return themed
 	return base
 

@@ -1,4 +1,4 @@
-"""Audio de ambiente, antorchas y pasos -> assets/audio/ambient/*.wav
+"""Audio de ambiente, antorchas y pasos -> assets/audio/ambient/*.wav (las camas bed_*.wav salen en .ogg)
 Mono, 16 bits, 22050 Hz (igual que el resto). Todo sintetizado y reproducible
 (semillas fijas). Los bucles se construyen con filtros por FFT (periodicos) o con
 eventos que dan la vuelta al final: el empalme no tiene clic.
@@ -7,6 +7,7 @@ con una pizca de reduccion de bits para que suene "del juego".
 Uso (desde la raiz del proyecto): python3 tools/gen_ambient_audio.py"""
 import os
 import wave
+from to_ogg import to_ogg
 import numpy as np
 
 SR = 22050
@@ -70,6 +71,8 @@ def save(name, x, loop=False, peak=0.8):
         f.setsampwidth(2)
         f.setframerate(SR)
         f.writeframes(pcm.tobytes())
+    if name.startswith("bed_"):  # las camas largas van en OGG; los efectos cortos se quedan en WAV
+        to_ogg(OUT + name + ".wav")
     rms = float(np.sqrt((x ** 2).mean()))
     # salto en el empalme comparado con el salto tipico entre muestras
     seam = abs(float(x[0] - x[-1]))
