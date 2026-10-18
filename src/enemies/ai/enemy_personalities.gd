@@ -46,6 +46,8 @@ extends RefCounted
 ##   hide/guard    se esconde tras aliados / cubre a los de distancia
 ##   flank         te rodea por los lados                patrol/patrol_sight  ruta fija
 ##   split_time    se multiplica si no lo matas rapido
+##   hazard_caution  >1 = cobarde ante las trampas (mas margen y avisa antes)   reckless  0..1 prob.
+##                 de lanzarse sin mirar a un peligro de sala (los enfurecidos: min. 0,7)
 
 const DEFAULTS := {
 	"detect_mult": 1.0, "speed_mult": 1.0, "courage": 0.55, "search": 2.5,
@@ -69,6 +71,7 @@ const DEFAULTS := {
 	"patrol": false, "patrol_sight": 260.0,
 	"split_time": 0.0,
 	"wake_rage": false,
+	"hazard_caution": 1.0, "reckless": 0.0,
 }
 
 const P := {
@@ -79,12 +82,12 @@ const P := {
 	# --- Selva Publica ---
 	# Pelo Encarnado: terco. Te ve de lejos, no se rinde y si te pierde te busca mucho rato.
 	"terco": {
-		"detect_mult": 2.0, "courage": 1.0, "search": 5.0,
+		"detect_mult": 2.0, "courage": 1.0, "search": 5.0, "reckless": 0.2,
 		"hero": {"vulvalquiria": {"speed_mult": 1.12}, "ornitorrinco": {"confuse": true}},
 	},
 	# Granito Rencoroso: si le pegas, te recuerda para siempre; y se enfurece si cae un colega.
 	"rencoroso": {
-		"grudge": true, "rage_ally": true, "rage_time": 10.0,
+		"grudge": true, "rage_ally": true, "rage_time": 10.0, "reckless": 0.2,
 		"hero": {"vulvalquiria": {"rage_speed": 1.45}, "ornitorrinco": {"detect_mult": 1.3}},
 	},
 	# Ladilla: pasta tranquila hasta que te acercas o le pegas; entonces todas se te pegan.
@@ -96,7 +99,7 @@ const P := {
 	# --- Penelandia ---
 	# Testiculo Errante: despistado. Deambula; si lo sorprendes de cerca, arranca (y luego se arma de valor).
 	"despistado": {
-		"passive": true, "startle_range": 150.0, "flee_time": 2.6, "flee_heal": 0.0,
+		"passive": true, "startle_range": 150.0, "flee_time": 2.6, "flee_heal": 0.0, "hazard_caution": 1.3,
 		"hero": {
 			"pitocles": {"startle_range": 0.0, "friend": true},
 			"vulvalquiria": {"startle_range": 230.0},
@@ -153,12 +156,12 @@ const P := {
 	# Inspector de Fluidos: burocrata. Si te quedas quieto te inspecciona en vez de disparar.
 	# Si lo dejas en las últimas se jubila (se rinde y suelta el botin).
 	"burocrata": {
-		"inspect_wait": 1.1, "surrender_hp": 0.18, "courage": 0.7,
+		"inspect_wait": 1.1, "surrender_hp": 0.18, "courage": 0.7, "hazard_caution": 1.3,
 		"hero": {"ornitorrinco": {"inspect_wait": 0.0, "confuse": true}},
 	},
 	# Pelusa Perineal: timida. Se esconde detras de los demas.
 	"timida": {
-		"hide": true, "courage": 0.2, "flee_hp": 0.3, "flee_heal": 0.6,
+		"hide": true, "courage": 0.2, "flee_hp": 0.3, "flee_heal": 0.6, "hazard_caution": 1.5,
 		"hero": {"ornitorrinco": {"hide": false}},
 	},
 	# Dildo Electrico: hiperactivo. Se descarga y debe recargarse (ventana para pegarle).
@@ -249,6 +252,9 @@ const SAY := {
 	"IA_BARRA_NEGRA_ALERT": "[CENSURADO]",
 	"IA_SELLO_ALERT": "ALTO. Esta ruta es mía.",
 	"IA_PIXEL_CENSURA_SPLIT": "¡Me multipliqué!",
+	"IA_HAZARD_WARY": "Eso pincha. No, gracias.",
+	"IA_HAZARD_DIVE": "¿Qué podría salir mal?",
+	"IA_HAZARD_OUCH": "Ay. Eso podía salir mal.",
 }
 
 static var _custom: Dictionary = {}

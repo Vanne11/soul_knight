@@ -9,6 +9,11 @@ extends RoomDynamic
 ##  CERA CALIENTE (desde el piso 1, 1-3 respiraderos): el respiradero borbotea y marca con un
 ##    anillo donde va a salpicar (~1,1 s), escupe un chorro (dano) y deja un CHARCO de cera
 ##    7-9 s que ralentiza un 40% y quema a ratos, a ti y a los enemigos.
+##  JAULAS QUE CAEN (Palacio de la Censura siempre; en otros reinos solo en ~1 de cada 3 salas
+##    trampa): una sombra crece 0,8 s en el suelo y cae una jaula. Al jugador lo deja ENJAULADO
+##    (el estado de status_effects.gd: machaca ataque/dash/interactuar para salir; el dash la esquiva)
+##    y a los enemigos los atrapa unos segundos sin poder moverse ni atacar. Nace gris y se
+##    colorea al liberar la sala (Censor). Idea de Vanessa.
 ##  VENTILADORES (desde el piso 3, 1-2): se ponen en marcha ~1,2 s (aspas cada vez mas rapidas,
 ##    rayas de viento) y soplan 2,6 s empujando al jugador, a los enemigos, a los proyectiles
 ##    y a los objetos con fisica. Se colocan para barrer pinchos o cera: empuja a los enemigos ahi.
@@ -17,32 +22,44 @@ extends RoomDynamic
 ## salva, a ellos no), asi que atraerlos, disparar para empujarlos (el retroceso de las balas)
 ## o dejar que el viento los lleve es una estrategia. Los pinchos y el fuego dan la muerte
 ## a nombre del jugador (cuenta para limpiar la sala).
-## Bot: todos estan en el grupo "rooms_hazard" (hazard_zones()); el bot esquiva los peligros
-## activos o por activarse y, con modo dios, ni lo nota.
+## Bot y enemigos: todos estan en el grupo "rooms_hazard" (hazard_zones(), ver RoomUtil.hazard_zones);
+## el bot esquiva los peligros y los enemigos los rodean segun su personalidad (enemy_ai.gd).
 
 const PUSH_PLAYER := 150.0
 const PUSH_ENEMY := 210.0
 const PUSH_PROJ := 150.0
 const SLOW := 0.4
+const CAGE_TEX := "res://assets/sprites/environment/trap_cage.png"
 
 var spikes: Array[Node2D] = []
 var vents: Array[Node2D] = []
 var fans: Array[Node2D] = []
 var puddles: Array[Node2D] = []
+var cages: Array[Node2D] = []
 var warn_mult := 1.0
+var cages_on := false
+var _cage_next := 4.5
 
 
 func hazard_zones() -> Array:
 	var out: Array = []
 	for sp in spikes:
 		if is_instance_valid(sp):
-			out.append({"c": sp.global_position + sp.rect.size * 0.5 - sp.position, "r": sp.rect.size.length() * 0.5 + 18.0})
+			var half: float = sp.rect.size.length() * 0.5
+			out.append({"c": sp.global_position + sp.rect.size * 0.5, "r": half + 18.0, "ar": half + 6.0,
+					"kind": "spike", "active": sp._state != "idle", "soon": sp.hz_soon()})
 	for v in vents:
 		if is_instance_valid(v):
-			out.append({"c": v.global_position, "r": 62.0})
+			out.append({"c": v.global_position, "r": 62.0, "ar": _Vent.SPLASH_R + 8.0,
+					"kind": "vent", "active": v._state != "idle", "soon": v.hz_soon()})
 	for p in puddles:
 		if is_instance_valid(p):
-			out.append({"c": p.global_position, "r": p.radius + 12.0})
+			out.append({"c": p.global_position, "r": p.radius + 12.0, "ar": p.radius,
+					"kind": "puddle", "active": true, "soon": 0.0})
+	for c in cages:
+		if is_instance_valid(c) and c.warning():
+			out.append({"c": c.global_position, "r": _Cage.R + 22.0, "ar": _Cage.R + 8.0,
+					"kind": "cage", "active": true, "soon": 0.0})
 	return out
 
 
@@ -61,8 +78,13 @@ func start() -> void:
 	_build_vents(d)
 	if d >= 2.0:
 		_build_fans(d)
+	cages_on = _cages_here()
+	var desc := tr("RM_TRAPS_D")
+	if cages_on:
+		desc += " " + tr("TI_CAGE_D")
+		say_intro("ti_cages")
 	say_intro("rm_traps")
-	toast(tr("RM_TRAPS_T"), tr("RM_TRAPS_D"), "ffa64a")
+	toast(tr("RM_TRAPS_T"), desc, "ffa64a")
 
 
 # ------------------------------------------------------------------ pinchos
@@ -206,6 +228,11 @@ func _physics_process(delta: float) -> void:
 		return
 	var pl := player() as CharacterBody2D
 	var enemies := RoomUtil.enemies_in(room)
+	if cages_on:
+		_cage_next -= delta
+		if _cage_next <= 0.0 and cages.size() < (2 if depth() >= 3.0 else 1):
+			_cage_next = randf_range(4.5, 7.0) - minf(1.5, depth() * 0.3)
+			_drop_cage(pl, enemies)
 	# cera: ralentiza (y las llamas de _Puddle queman)
 	for pd in puddles:
 		if not is_instance_valid(pd):
@@ -228,6 +255,7 @@ func _physics_process(delta: float) -> void:
 			pl.move_and_collide(push * PUSH_PLAYER * delta)
 		for e in enemies:
 			if e is CharacterBody2D and not e.is_in_group("boss") and zone.has_point(e.global_position):
+				e.set_meta("pushed_ms", Time.get_ticks_msec())  # la IA no frena un empujon ajeno
 				(e as CharacterBody2D).move_and_collide(push * PUSH_ENEMY * delta)
 		# proyectiles: los del jugador cuelgan de main (clase PlayerBullet); los enemigos, del grupo enemy_attack
 		var shots: Array = []
@@ -243,6 +271,42 @@ func _physics_process(delta: float) -> void:
 		for rb in _bodies():
 			if zone.has_point(rb.global_position):
 				rb.apply_central_impulse(push * 120.0 * delta)
+
+
+# ------------------------------------------------------------------ jaulas
+## Palacio: siempre. Otros reinos: ~1 de cada 3 salas trampa (determinista por sala).
+func _cages_here() -> bool:
+	if str(rm().floor_data().get("kingdom", "")) == "censura":
+		return true
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([room.grid_pos.x, room.grid_pos.y, rm().current_floor, "cages"])
+	return rng.randf() < 0.3
+
+
+func _drop_cage(pl: Node2D, enemies: Array) -> void:
+	var s := rsize()
+	var pos := Vector2.INF
+	for attempt in 6:
+		var base: Vector2
+		if not enemies.is_empty() and randf() < 0.4:
+			base = enemies[randi() % enemies.size()].global_position - room.global_position
+		elif pl != null:
+			base = pl.global_position - room.global_position + Vector2(randf_range(-60, 60), randf_range(-60, 60))
+		else:
+			base = center()
+		base = base.clamp(Vector2(120, 110), s - Vector2(120, 110))
+		var q := RoomUtil.free_spot(main, room, base, _Cage.R * 0.6, false)
+		if q != Vector2.INF and q.distance_to(base) < 50.0:
+			pos = q
+			break
+	if pos == Vector2.INF:
+		return
+	var c := _Cage.new()
+	c.dyn = self
+	c.position = pos
+	c.warn_time = 0.8 * (1.25 if depth() < 2.0 else 1.0)
+	cages.append(c)
+	room.add_child(c)
 
 
 ## Objetos con fisica de la sala (escombro suelto de RoomLighting).
@@ -271,6 +335,12 @@ class _Spikes extends Node2D:
 
 	func warn_time() -> float:
 		return WARN * dyn.warn_mult
+
+	## Segundos hasta que empiece el aviso (0 si ya avisa o esta arriba).
+	func hz_soon() -> float:
+		if _state != "idle":
+			return 0.0
+		return maxf(period - warn_time() - UP - t, 0.0)
 
 	func _process(delta: float) -> void:
 		t = fmod(t + delta, period)
@@ -375,6 +445,11 @@ class _Vent extends Node2D:
 	const WARN := 1.1
 	const JET := 0.35
 	const SPLASH_R := 40.0
+
+	func hz_soon() -> float:
+		if _state != "idle":
+			return 0.0
+		return maxf(period - WARN * dyn.warn_mult - JET - t, 0.0)
 
 	func _process(delta: float) -> void:
 		t = fmod(t + delta, period)
@@ -562,3 +637,92 @@ class _Fan extends Node2D:
 			else:
 				rect = Rect2(Vector2(-w * 0.5, 0.0 if dir.y > 0.0 else -length), Vector2(w, length))
 			draw_rect(rect, Color(0.8, 0.95, 1.0, 0.07 if _state == "warn" else 0.10))
+
+
+## Jaula que cae: sombra de aviso creciente -> golpe -> atrapa (jugador: "enjaulado"; enemigos:
+## quietos y sin atacar) -> se levanta. Nace gris y se colorea al liberar la sala (Censor).
+class _Cage extends Node2D:
+	const R := 36.0
+	const HOLD := 3.0
+	const LIFT := 0.45
+	var dyn
+	var warn_time := 0.8
+	var _t := 0.0
+	var _landed := false
+	var _spr: Sprite2D
+	var _trapped: Array = []
+	var _caught_player := false
+
+	func warning() -> bool:
+		return not _landed
+
+	func _ready() -> void:
+		z_index = 2
+		material = LightKit.unshaded_material()
+		Sound.play("poor", 0.0)
+		var tex: Texture2D = load(CAGE_TEX)
+		_spr = Sprite2D.new()
+		_spr.texture = tex
+		_spr.centered = false
+		_spr.position = Vector2(-tex.get_width() * 0.5, -tex.get_height() + 10.0)
+		_spr.visible = false
+		Censor.apply(dyn.room, _spr)
+		add_child(_spr)
+
+	func _process(delta: float) -> void:
+		_t += delta
+		if not _landed:
+			if _t >= warn_time:
+				_land()
+			else:
+				var fall := clampf((_t - (warn_time - 0.2)) / 0.2, 0.0, 1.0)
+				if fall > 0.0:
+					_spr.visible = true
+					_spr.position.y = -_spr.texture.get_height() + 10.0 - 170.0 * (1.0 - fall * fall)
+		else:
+			var held := _t - warn_time
+			if held >= HOLD:
+				var k := clampf((held - HOLD) / LIFT, 0.0, 1.0)
+				_spr.position.y = -_spr.texture.get_height() + 10.0 - 170.0 * k * k
+				_spr.modulate.a = 1.0 - k
+				if k >= 1.0:
+					dyn.cages.erase(self)
+					queue_free()
+		queue_redraw()
+
+	func _land() -> void:
+		_landed = true
+		_spr.visible = true
+		_spr.position.y = -_spr.texture.get_height() + 10.0
+		Sound.play("crack", 0.1)
+		HitFx.shake(0.3)
+		RoomUtil.burst(dyn.room, global_position, Color("b8b8c8"), 10)
+		var pl: Node2D = dyn.player()
+		if pl != null and pl.global_position.distance_to(global_position) <= R:
+			var st := StatusEffects.of(pl)
+			var secs := 2.4 if str(dyn.rm().get("character")) == "pitocles" else 3.0
+			if st != null and st.apply("enjaulado", secs, self):
+				_caught_player = true
+				RoomUtil.popup(pl.global_position + Vector2(0, -34), "CLANG", Color("c8c8d8"))
+		for e in RoomUtil.enemies_in(dyn.room):
+			if e.is_in_group("boss") or e.global_position.distance_to(global_position) > R + 6.0:
+				continue
+			var ai = e.get("ai")
+			if ai is EnemyAI:
+				ai.cage(HOLD)
+				_trapped.append(e)
+				RoomUtil.popup(e.global_position + Vector2(0, -34), "CLANG", Color("c8c8d8"))
+		# si solo cazo al jugador, la jaula que se ve es la del status (no duplicarla)
+		_spr.visible = not (_caught_player and _trapped.is_empty())
+
+	func _draw() -> void:
+		if _landed:
+			return
+		var k := clampf(_t / warn_time, 0.0, 1.0)
+		# sombra que crece + borde que parpadea cada vez mas rapido (se lee hasta en sala gris)
+		draw_circle(Vector2.ZERO, R * k, Color(0.05, 0.04, 0.08, 0.3 + 0.3 * k))
+		var blink := int(_t * (6.0 + 14.0 * k)) % 2 == 0
+		draw_arc(Vector2.ZERO, R, 0.0, TAU, 36, Color(0.85, 0.85, 1.0, 0.95 if blink else 0.45), 2.0)
+		for i in 4:
+			var a := TAU * i / 4.0 + PI * 0.25
+			draw_line(Vector2.from_angle(a) * R * 0.5 * k, Vector2.from_angle(a) * R * k, Color(0.1, 0.08, 0.14, 0.6), 2.0)

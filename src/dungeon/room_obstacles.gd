@@ -8,8 +8,9 @@ extends Node2D
 ##  33  columnas de cobertura, solo en salas grandes.
 ##  34  barriles y cajas que se rompen a balazos y, a veces (COIN_CHANCE), sueltan una moneda
 ##      con el mismo pickup "coin" de siempre. Poco: no toca la economia.
-##  37  salas trampa: pinchos visibles con huesos. Es SOLO decoracion (hoy las salas trampa
-##      son combates sin mecanica propia): no hacen dano, estan lejos de los caminos.
+##  37  salas trampa: pinchos con huesos, lejos de los caminos. Aqui solo se colocan y se dibujan;
+##      la dinamica de la sala (src/rooms/trap_room.gd) los vuelve placas VIVAS (aviso, suben y
+##      danan a ti y a los enemigos) y oculta este dibujo. Si la dinamica no corre, quedan de adorno.
 ##
 ## Fisica: StaticBody2D en la capa 1 (la de los muros). Asi, sin tocar nada mas, frenan al
 ## jugador y a los enemigos (mascara 3), paran las balas del jugador (mascara 3) y las de los

@@ -9,7 +9,13 @@ extends Node
 ##
 ## Eventos de burbuja (EnemyPersonalities.SAY): alert, lost, flee, back, surrender, wake,
 ## alarm, rage, ally_died, doubt, provoked, startle, hero_confused, hero_friend, shell,
-## inspect, stamp, abort, discharge, recharged, resent, grudge, split, hide, race.
+## inspect, stamp, abort, discharge, recharged, resent, grudge, split, hide, race,
+## hazard_wary, hazard_dive, hazard_ouch.
+##
+## PELIGROS DE SALA (trampas, fuego, barriles): ver _physics_process / _hazard_gate. La IA se ejecuta
+## DESPUES del movimiento del enemigo y le impide ENTRAR en una zona peligrosa (RoomUtil.hazard_zones):
+## lo desliza por el borde (rodea), espera a que se desarmen los pinchos y si estaba dentro lo saca.
+## Los rabiosos a veces se lanzan sin mirar, los tanques pisan la cera, los cobardes dan mas margen.
 
 enum Mode { CALM, SLEEP, GRAZE, FLEE, SURRENDER, SEARCH, SHELL, DISCHARGE, INSPECT, BURST,
 		RETURN, PATROL, COVER, PAUSE }
@@ -84,6 +90,17 @@ var _first_sight_done := false
 var _tint_phase := 0.0
 var _speed_applied := -1.0
 var _dmg_applied := 1.0
+# peligros de sala
+const HZ_PIN_MAX := 1.6   ## s pegado al borde de una zona antes de perder la paciencia y cruzar
+var _hz_prev := Vector2.INF
+var _hz_pinned := 0.0
+var _hz_ignore := 0.0
+var _hz_dive_t := -1.0   ## s desde que se lanzo a un peligro sin mirar (-1 = no)
+var _hz_roll: Dictionary = {}
+var _hz_side := 1.0
+var _hz_say_cd := 0.0
+var _caged_t := 0.0
+static var hazard_avoid := true  ## interruptor de pruebas: false = ignora los peligros como antes
 
 
 ## Punto de entrada: lo llaman los enemigos desde su _ready. Devuelve null si el enemigo no
@@ -125,6 +142,8 @@ func _ready() -> void:
 	if "detection_range" in enemy:
 		enemy.detection_range = float(enemy.detection_range) * float(p.detect_mult)
 	_flank_side = 1.0 if RNG.randf() < 0.5 else -1.0
+	_hz_side = _flank_side
+	process_physics_priority = 90  # despues de que el enemigo se mueva
 	_burst_cd = RNG.randf_range(0.6, 2.0)
 	_is_clone = bool(enemy.get_meta("ai_clone", false))
 	_split_done = _is_clone
@@ -181,6 +200,12 @@ func control(delta: float) -> bool:
 	if not _inited:
 		_inited = true
 		_home = enemy.global_position
+	if _caged_t > 0.0:  # jaula caida encima: quieto y sin atacar
+		_caged_t -= delta
+		enemy.velocity = Vector2.ZERO
+		if _caged_t <= 0.0:
+			_clear_commit()
+		return true
 	_acquire_target()
 	_dist = enemy.global_position.distance_to(target.global_position) if target != null else INF
 	_mode_t += delta
@@ -201,6 +226,10 @@ func on_damage(amount: float, source: Node = null) -> float:
 	if _dead:
 		return amount
 	_ignored_t = 0.0
+	if _hz_dive_t >= 0.0 and _hz_dive_t < 3.0:  # se lanzo sin mirar y se lo comio
+		_hz_dive_t = -1.0
+		_say("hazard_ouch")
+		_note("ti_dive")
 	if _resentful:
 		_resentful = false
 	var src_pos := _source_pos(source)
@@ -283,6 +312,15 @@ func on_ally_death(dead: EnemyAI) -> void:
 	else:
 		_pause(0.9, "question")
 		_say("doubt")
+
+
+## Atrapado bajo una jaula (trap_room.gd): ni se mueve ni ataca durante `seconds`.
+func cage(seconds: float) -> void:
+	if _dead or mode == Mode.SURRENDER:
+		return
+	_clear_commit()
+	_caged_t = maxf(_caged_t, seconds)
+	_emote_icon("dots", seconds)
 
 
 ## Susto (grito de Vulvalquiria): huye del punto `from`. Los valientes (courage 1) lo resisten a medias.
@@ -609,6 +647,110 @@ func _cover_buddy() -> Node2D:
 			bd = d
 			best = a.enemy
 	return best
+
+
+# ======================================================================= peligros de sala
+
+func _physics_process(delta: float) -> void:
+	if _dead or enemy == null or not is_instance_valid(enemy) or not (enemy is CharacterBody2D):
+		return
+	if _hz_dive_t >= 0.0:
+		_hz_dive_t += delta
+		if _hz_dive_t > 3.0:
+			_hz_dive_t = -1.0
+	_hz_say_cd = maxf(0.0, _hz_say_cd - delta)
+	var cur := enemy.global_position
+	var prev := _hz_prev
+	_hz_prev = cur
+	if not hazard_avoid or prev == Vector2.INF or mode == Mode.SLEEP or mode == Mode.SURRENDER or _caged_t > 0.0:
+		return
+	var zones := RoomUtil.hazard_zones(get_tree())
+	if zones.is_empty():
+		_hz_pinned = 0.0
+		return
+	if _hz_ignore > 0.0:
+		_hz_ignore -= delta
+		return
+	var fixed := _hazard_gate(zones, prev, cur, delta)
+	if fixed != cur:
+		(enemy as CharacterBody2D).move_and_collide(fixed - cur)
+		_hz_pinned += delta
+		if _hz_pinned > HZ_PIN_MAX:  # paciencia agotada: cruza (los pinchos y el fuego quedan a su cuenta)
+			_hz_pinned = 0.0
+			_hz_ignore = 1.2
+	else:
+		_hz_pinned = maxf(0.0, _hz_pinned - delta * 2.0)
+
+
+## Posicion corregida: no entra en zonas peligrosas desde fuera (se desliza por el borde hacia el lado
+## del objetivo) y, si ya estaba dentro de una activa, deshace su paso y sale en linea recta.
+func _hazard_gate(zones: Array, prev: Vector2, cur: Vector2, delta: float) -> Vector2:
+	var pos := cur
+	var coward: bool = float(p.hazard_caution) > 1.0
+	var horizon := 1.1 if coward else 0.45
+	var margin_k: float = float(p.hazard_caution)
+	for z in zones:
+		var c: Vector2 = z.c
+		var ar: float = float(z.get("ar", z.r)) * margin_k
+		if pos.distance_to(c) > ar + 60.0 and prev.distance_to(c) > ar + 60.0:
+			continue
+		if not z.active and float(z.soon) > horizon:
+			continue
+		var kind: String = z.kind
+		if kind == "puddle" and (enemy is EnemyTank or personality == "gigante"):
+			continue  # los tanques pisan la cera sin miedo
+		if Time.get_ticks_msec() - int(enemy.get_meta("pushed_ms", -1000)) < 220:
+			continue  # lo empuja un ventilador: el entorno manda
+		if _committed():
+			continue  # embistiendo / en retroceso: no se frena a mitad de ataque
+		var key := "%s_%d_%d" % [kind, int(c.x / 8.0), int(c.y / 8.0)]
+		var d_cur := pos.distance_to(c)
+		var now := Time.get_ticks_msec()
+		if not _hz_roll.has(key) or now - int(_hz_roll[key][1]) > 4000:
+			if _hz_roll.size() > 12:
+				_hz_roll.clear()
+			var reckless := _hz_is_reckless(kind)
+			_hz_roll[key] = [reckless, now]
+			if reckless:
+				_hz_dive_t = 0.0
+				_emote_icon("vein")
+				_say("hazard_dive")
+			elif coward and _hz_say_cd <= 0.0 and RNG.randf() < 0.35:
+				_hz_say_cd = 8.0
+				_emote_icon("sweat")
+				_say("hazard_wary")
+				_note("ti_avoid")
+		if _hz_roll[key][0]:
+			continue  # imprudente: se lanza igual
+		var d_prev := prev.distance_to(c)
+		if d_prev >= ar and d_cur < ar:
+			# entra desde fuera: queda en el borde y resbala por el lado del objetivo
+			var radial := (pos - c).normalized() if d_cur > 0.5 else (prev - c).normalized()
+			var tang := radial.orthogonal()
+			var side := _hz_side
+			if target != null:
+				var want := target.global_position - pos
+				var dot := tang.dot(want)
+				if absf(dot) > 12.0:
+					side = signf(dot)
+					_hz_side = side
+			pos = c + radial * (ar + 0.5) + tang * side * float(enemy.move_speed) * 0.85 * delta
+		elif d_prev < ar and z.active:
+			# ya estaba dentro: deshace el paso y sale por el camino mas corto
+			var out := (prev - c).normalized() if prev.distance_to(c) > 0.5 else Vector2.RIGHT.rotated(RNG.randf() * TAU)
+			pos = prev + out * float(enemy.move_speed) * 1.1 * delta
+	return pos
+
+
+## Se lanza sin mirar? Rabiosos y enfurecidos a veces; el resto no. Los barriles y las jaulas
+## (avisos de menos de 1 s) no se desafian por gusto.
+func _hz_is_reckless(kind: String) -> bool:
+	var chance: float = float(p.reckless)
+	if _enraged or p.rage_permanent:
+		chance = maxf(chance, 0.7)
+	if kind == "barrel":
+		chance *= 0.3
+	return chance > 0.0 and RNG.randf() < chance
 
 
 # ======================================================================= actuar
