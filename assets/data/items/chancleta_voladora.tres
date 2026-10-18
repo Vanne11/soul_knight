@@ -12,4 +12,4 @@ tags = ["arma", "cuerpo"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
 base_value = 220
-custom_data = {"affinity": "neutral", "special": "combo", "base_damage": 9, "fire_rate": 0.3, "reach": 66, "arc": 2.0, "combo_steps": 3, "combo_window": 0.7, "finisher_mult": 2.5, "finisher_rate": 0.55, "knockback_mult": 1.0}
+custom_data = {"dmg_type": "contundente", "affinity": "neutral", "special": "combo", "base_damage": 9, "fire_rate": 0.3, "reach": 66, "arc": 2.0, "combo_steps": 3, "combo_window": 0.7, "finisher_mult": 2.5, "finisher_rate": 0.55, "knockback_mult": 1.0}

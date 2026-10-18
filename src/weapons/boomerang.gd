@@ -16,6 +16,7 @@ var speed := 540.0
 var reach := 230.0
 var knockback := 120.0
 var crit_mult := 1.0
+var weapon_id := ""  ## para BossDamage
 var pierce_all := true
 var direction := Vector2.RIGHT
 var return_mult := 1.0  ## dano de la pasada de vuelta (sinergia Siempre Vuelve)
@@ -81,7 +82,11 @@ func _strike() -> void:
 			continue
 		_hit.append(e)
 		var dmg := damage * crit_mult * (return_mult if returning else 1.0)
+		# contra jefes la vuelta pega mucho menos (no es un segundo golpe completo)
+		if returning and e.is_in_group("boss") and BossDamage.applies(e):
+			dmg *= BossDamage.BOOMERANG_RETURN_MULT
 		var kb := direction * knockback * (1.6 if returning and return_mult > 1.0 else 1.0)
+		BossDamage.tag(weapon_id, crit_mult)
 		e.take_damage(dmg, player, kb)
 		if ps.lifesteal > 0.0:
 			ps.heal(dmg * ps.lifesteal)

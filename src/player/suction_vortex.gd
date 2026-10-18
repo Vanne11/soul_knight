@@ -7,6 +7,8 @@ class_name SuctionVortex
 ## rematarlos con otra arma (o con el mismo vortice).
 
 var damage: float = 5.0  ## por tic
+var weapon_id := ""  ## para BossDamage
+var crit_mult := 1.0
 var speed: float = 380.0
 var travel_time: float = 0.3
 var duration: float = 1.5
@@ -59,6 +61,7 @@ func _suck(delta: float) -> void:
 			e.move_and_collide(to_c / d * minf(strength * delta, d))
 		if hit and e.has_method("take_damage"):
 			# el empujoncito hacia el centro aturde un instante a cada tic (los jefes no lo notan)
+			BossDamage.tag(weapon_id, crit_mult)
 			e.take_damage(damage, player, to_c.normalized() * 50.0 if d > 4.0 else Vector2.ZERO)
 			if ps.lifesteal > 0.0:
 				ps.heal(damage * ps.lifesteal)

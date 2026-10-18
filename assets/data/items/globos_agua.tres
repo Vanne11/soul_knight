@@ -12,4 +12,4 @@ tags = ["arma", "explosivo", "área"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
 base_value = 290
-custom_data = {"affinity": "neutral", "special": "balloon", "base_damage": 14, "fire_rate": 0.85, "projectile_speed": 310, "range": 270, "explosion_radius": 55, "puddle_radius": 62, "puddle_time": 4.0, "puddle_slow": 0.5}
+custom_data = {"dmg_type": "agua", "affinity": "neutral", "special": "balloon", "base_damage": 14, "fire_rate": 0.85, "projectile_speed": 310, "range": 270, "explosion_radius": 55, "puddle_radius": 62, "puddle_time": 4.0, "puddle_slow": 0.5}

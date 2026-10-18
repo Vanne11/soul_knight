@@ -10,6 +10,9 @@ extends Node
 ##       (tambien los de llave y los secretos: acertijos y misiones de llave), recoge objetos y monedas, compra en la
 ##       tienda lo que pueda (primero el Turno de Vulvania para entrar al Utero), toma bendiciones y solo despues va
 ##       al jefe. Al final de cada piso y de la partida registra un RESUMEN (objetos, cofres, salas, codice).
+##   --boss-dmg=1   imprime cada golpe a jefes (crudo -> final) y el resumen "[boss-dmg]" al morir
+##   --boss=main|alt   fuerza el jefe original o el alternativo del reino (main = Dona Cera en el piso 4 de la ruta)
+##   --weapon=<id> --dmg-mult=N --crit=1   pruebas de dano: arma inicial, multiplicador de dano, critico siempre
 ##   --log=<ruta>   registro propio (varias partidas en paralelo; por defecto .claude/autoplay.log)
 ##   --overlay=0    oculta el rotulo verde del bot (para grabar)
 ##   --max-secs=N   termina solo tras N s de juego (tiempo de juego, no de reloj; para grabaciones de prueba)
@@ -110,6 +113,7 @@ var _move_dir := Vector2.DOWN
 var _face := Vector2.DOWN
 # resumen del modo recoger-todo
 var _fl := {}  # piso -> {name, rooms_total, rooms_visited, unvisited, seen, chests, t}
+var _weapon_test := ""  # --weapon=<id>: arma fija para pruebas de dano
 var _wpn_taken := {}  # id de arma -> true (recoger-todo: cada arma una vez, sin intercambiarlas sin fin)
 var _scan_t := 0.0
 var _coins_gained := {}  # piso -> monedas recogidas
@@ -147,6 +151,8 @@ func _ready() -> void:
 		set_process(false)
 		return
 	DebugMenu.god_mode = _arg("--no-god=", "") == ""  # --no-god=1: sin modo dios (mide dificultad y peligros de sala)
+	BossPicker.force = _arg("--boss=", "")  # prueba: main = jefe original (p.ej. Dona Cera), alt = alternativo
+	BossDamage.debug = _arg("--boss-dmg=", "") != ""  # imprime cada golpe a jefes y el resumen al morir (src/enemies/boss_damage.gd)
 	Utero.force = _arg("--force-utero=", "") != ""  # prueba: El Utero se abre solo al pisar Trompas (sin comprar el Turno)
 	RoomDirector.force_kind = _arg("--force-dyn=", "")  # prueba: fuerza esa dinamica de sala en todas las salas donde quepa
 	# para alargar los jefes y ver todos sus desafios: --boss-hp=1,1,12,12,12 (multiplicador por piso)
@@ -204,6 +210,14 @@ func _ready() -> void:
 		_say("Salto al piso %d (%s)" % [jump, rm0.floor_data().id])
 	if _arg("--armed=", "") != "":
 		player.equip_weapon(get_node("/root/ItemDatabase").get_item("pistol_basic"))  # prueba: sin la busqueda inicial del arma
+	# pruebas de dano a jefes: --weapon=<id> arma inicial, --dmg-mult=N multiplica el dano, --crit=1 critico siempre
+	_weapon_test = _arg("--weapon=", "")
+	if _weapon_test != "":
+		player.equip_weapon(get_node("/root/ItemDatabase").get_item(_weapon_test))
+	if _arg("--dmg-mult=", "") != "":
+		get_node("/root/PlayerStats").damage_modifier *= float(_arg("--dmg-mult=", "1"))
+	if _arg("--crit=", "") != "":
+		get_node("/root/PlayerStats").crit_chance_modifier = 1.0
 	_game_f0 = Engine.get_physics_frames()
 	_say("Partida nueva: semilla=%d" % get_node("/root/RunManager").current_seed)
 	player.get_node("Hurtbox").area_entered.connect(func(a): if a.is_in_group("enemy_attack"): _hits += 1)
@@ -290,6 +304,8 @@ func _physics_process(delta: float) -> void:
 	if main == null or not is_instance_valid(main):
 		_finish(get_node("/root/RunManager").last_run_victory)
 		return
+	if _weapon_test != "" and (player.current_weapon == null or player.current_weapon.id != _weapon_test):
+		player.equip_weapon(get_node("/root/ItemDatabase").get_item(_weapon_test))  # --weapon: se queda con esa arma
 	var ifr: float = float(player.get("_iframes"))
 	if ifr > _iframes_prev + 0.3:
 		_hits_real += 1

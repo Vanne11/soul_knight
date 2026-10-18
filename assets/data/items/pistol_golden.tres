@@ -12,4 +12,4 @@ tags = ["arma"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}, {"type": 0, "stat": "accuracy", "magnitude": 1.5}]
 base_value = 500
-custom_data = {"base_damage": 11, "fire_rate": 0.34, "projectile_speed": 650, "spread": 0.01, "crit_bonus": 0.2, "pierce": 1}
+custom_data = {"dmg_type": "perforante", "base_damage": 11, "fire_rate": 0.34, "projectile_speed": 650, "spread": 0.01, "crit_bonus": 0.2, "pierce": 1}

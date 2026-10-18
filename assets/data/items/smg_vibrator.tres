@@ -12,4 +12,4 @@ tags = ["arma"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
 base_value = 300
-custom_data = {"base_damage": 4.5, "fire_rate": 0.09, "projectile_speed": 450, "spread": 0.14, "heat_per_shot": 3.5}
+custom_data = {"dmg_type": "vibracion", "base_damage": 4.5, "fire_rate": 0.09, "projectile_speed": 450, "spread": 0.14, "heat_per_shot": 3.5}

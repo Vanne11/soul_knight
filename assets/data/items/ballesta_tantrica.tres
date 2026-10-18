@@ -12,4 +12,4 @@ tags = ["arma", "carga"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
 base_value = 420
-custom_data = {"affinity": "pene", "special": "charge", "base_damage": 12, "fire_rate": 0.25, "projectile_speed": 950, "range": 560, "charge_time": 1.1, "charge_mult": 3.5, "charge_pierce": 3, "charge_hold": 0.8, "spread": 0.0, "bullet_color": "ffd27a"}
+custom_data = {"dmg_type": "perforante", "affinity": "pene", "special": "charge", "base_damage": 12, "fire_rate": 0.25, "projectile_speed": 950, "range": 560, "charge_time": 1.1, "charge_mult": 3.5, "charge_pierce": 3, "charge_hold": 0.8, "spread": 0.0, "bullet_color": "ffd27a"}

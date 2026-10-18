@@ -789,6 +789,7 @@ func take_damage(amount: float, source: Node = null, _kb: Vector2 = Vector2.ZERO
 			_shield_msg_cd = 0.9
 			_float_text(tr("BOSS_SHIELD"), Color("9fd8ff"))
 		return 0.0
+	amount = BossDamage.adjust(self, amount, source)  # sin criticos, topes y tipos (boss_damage.gd)
 	# Agotado recibe mas dano: aprende a esperar el momento.
 	if state == State.TIRED:
 		amount *= TIRED_MULT
@@ -797,7 +798,7 @@ func take_damage(amount: float, source: Node = null, _kb: Vector2 = Vector2.ZERO
 	HitFx.flash(animated_sprite)
 	HitFx.shake(0.18)  # golpe al jefe: sacudida corta
 	_ge.enemy_damaged.emit(self, amount, source)
-	_ge.show_damage_number.emit(global_position + Vector2(0, -150), amount, state == State.TIRED)
+	BossDamage.popup(self, amount, state == State.TIRED)
 	if current_health <= 0.0:
 		die(source)
 	elif current_phase == 1 and current_health <= max_health * PHASE2_AT:
@@ -853,6 +854,7 @@ func die(killer: Node = null) -> void:
 		return
 	_cancel_attack()
 	state = State.DEAD
+	BossDamage.on_death(self)
 	current_health = 0.0
 	invuln = false
 	_emit_health()

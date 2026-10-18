@@ -68,6 +68,7 @@ static func _beam(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: Vec
 	var length := _wall_dist(p, origin, aim, reach)
 	var mult := _crit(p, cd)
 	var per := dmg * mult
+	var wid := BossDamage.weapon_of(p)
 	for e in _enemies():
 		var rel: Vector2 = e.global_position - origin
 		var t := rel.dot(aim)
@@ -75,6 +76,7 @@ static func _beam(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: Vec
 			continue
 		if absf(rel.cross(aim)) > width * 0.5 + 12.0:
 			continue
+		BossDamage.tag(wid, mult)
 		e.take_damage(per, p, aim * 25.0)
 		_heal(p, per)
 	var fx := BeamFx.new()
@@ -95,6 +97,7 @@ static func _boomerang(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin
 	b.reach = float(cd.get("range", 230.0))
 	b.knockback = 120.0 * float(cd.get("knockback_mult", 1.0)) * (1.0 + 1.5 * p._rm().blessing("embestida"))
 	b.crit_mult = _crit(p, cd)
+	b.weapon_id = BossDamage.weapon_of(p)
 	b.pierce_all = true
 	b.direction = aim
 	b.return_mult = 1.5 if Synergies.has("siempre_vuelve") else 1.0
@@ -106,7 +109,9 @@ static func _boomerang(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin
 # ---------------------------------------------------------------- globos de agua
 static func _balloon(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: Vector2) -> void:
 	var b: PlayerBullet = PLAYER_BULLET.instantiate()
-	b.damage = dmg * _crit(p, cd)
+	b.crit_mult = _crit(p, cd)
+	b.weapon_id = BossDamage.weapon_of(p)
+	b.damage = dmg * b.crit_mult
 	b.speed = float(cd.get("projectile_speed", 310.0)) * p.get_node("/root/PlayerStats").projectile_speed_modifier
 	b.lifetime = float(cd.get("range", 270.0)) / b.speed
 	b.explosion_radius = float(cd.get("explosion_radius", 55.0))
@@ -127,6 +132,7 @@ static func _balloon(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: 
 static func _catcher(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: Vector2) -> void:
 	var c := CatcherBubble.new()
 	c.damage = dmg
+	c.weapon_id = BossDamage.weapon_of(p)
 	c.speed = float(cd.get("projectile_speed", 150.0))
 	c.life = float(cd.get("range", 230.0)) / c.speed
 	c.catch_radius = float(cd.get("catch_radius", 44.0))
@@ -162,7 +168,9 @@ static func _combo(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: Ve
 			continue
 		if rel.length() > 14.0 and absf(angle_diff(rel.angle(), aim.angle())) > arc * 0.5:
 			continue
-		var per := dmg * mult * _crit(p, cd)
+		var cm := _crit(p, cd)
+		var per := dmg * mult * cm
+		BossDamage.tag(BossDamage.weapon_of(p), cm)
 		e.take_damage(per, player, rel.normalized() * kb)
 		_heal(p, per)
 		hits += 1

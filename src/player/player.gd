@@ -640,7 +640,9 @@ func _shoot() -> void:
 	if cd.has("vortex"):
 		_attack_anim = 0.15
 		var v := SuctionVortex.new()
-		v.damage = dmg * (_player_stats.crit_damage_modifier if RNG.randf() < _player_stats.crit_chance_modifier else 1.0)
+		v.crit_mult = _player_stats.crit_damage_modifier if RNG.randf() < _player_stats.crit_chance_modifier else 1.0
+		v.weapon_id = current_weapon.id
+		v.damage = dmg * v.crit_mult
 		v.radius = float(cd.get("vortex_radius", v.radius))
 		v.duration = float(cd.get("vortex_duration", v.duration))
 		v.pull = float(cd.get("vortex_pull", v.pull))
@@ -683,6 +685,8 @@ func _shoot() -> void:
 		var crit := RNG.randf() < crit_chance
 		if crit:
 			b.damage *= _player_stats.crit_damage_modifier
+			b.crit_mult = _player_stats.crit_damage_modifier
+		b.weapon_id = current_weapon.id
 		b.speed = speed
 		b.crit = crit
 		b.rotation = ang
@@ -748,6 +752,7 @@ func _dash_cut() -> void:
 	for e in get_tree().get_nodes_in_group("enemy"):
 		if e not in _dash_hits and is_instance_valid(e) and e.global_position.distance_to(global_position) < 40.0:
 			_dash_hits.append(e)
+			BossDamage.tag("", 1.0, "cuerpo_a_cuerpo")
 			e.take_damage(get_weapon_damage() * _player_stats.damage_modifier * 1.5 * lvl * (1.8 if Synergies.has("corte_y_fuga") else 1.0), self, _dash_direction * 200.0)
 
 func _sneeze() -> void:
