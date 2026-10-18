@@ -60,6 +60,7 @@ func _call_next_wave() -> void:
 				break
 		var m := E3a.spawn(self, "madrugador", at, maxf(max_health * 0.7, 20.0), base_damage * 0.9,
 				"", 1.0)
+		m.enemy_name = "Madrugador Nocturno"  # sin esto las tandas quedaban como "Enemy" (y no abrian el codice)
 		m.add_to_group("madrugador_tanda")
 		Prostata.say(m, "madrugador_wake", 2.0)
 		Prostata.icon(m, "alert", 1.2)
