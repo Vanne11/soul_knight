@@ -250,6 +250,7 @@ func _go_latent(amount: float) -> void:
 	animated_sprite.modulate = Color.WHITE
 	set_collision_layer_value(2, false)
 	set_collision_mask_value(1, false)
+	set_collision_mask_value(7, false)  # huecos (capa 64): el cuerpo sigue la misma regla que con los muros
 	hurtbox.set_deferred("monitoring", false)
 	animated_sprite.play("death")
 	await get_tree().create_timer(0.5).timeout
@@ -293,6 +294,7 @@ func _rebrote() -> void:
 	animated_sprite.visible = true
 	set_collision_layer_value(2, true)
 	set_collision_mask_value(1, true)
+	set_collision_mask_value(7, true)  # huecos (capa 64): el cuerpo sigue la misma regla que con los muros
 	hurtbox.set_deferred("monitoring", true)
 	state = State.CHASE
 	animated_sprite.play("idle")

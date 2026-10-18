@@ -64,10 +64,6 @@
     "Vale, cambia de sala a mitad de frase. Yo lo apunto todo. TODO.",
     "Te recuerdo que soy el único aquí que sabe cómo se resuelven las cosas. Léeme."
   ],
-  "puzzle_hint": [
-    "Te ayudo, porque me lees. El orden es: {seq}. De nada.",
-    "Mira que es fácil: {seq}. Pisa despacito, que te veo nervioso."
-  ],
   "puzzle_hint_refused": [
     "¿Ahora quieres ayuda? Me has dejado con la palabra en la boca {n} veces. Sufre un poco. Falla otras dos y ya veremos."
   ],
@@ -138,8 +134,8 @@
   "blessing_foreign": ["Bendición del reino contrario. Pega el doble, sí. Y te da alergia, también. Nadie dijo que la integración fuera gratis."],
   "liberated_floor": ["Esta región ya la liberaste en otra vida. Se acuerda de ti. Más que yo de tus aciertos, desde luego."],
   "run_start_progress": [
-    "Llevas {n} regiones liberadas para siempre. Quedan {left}. La Hoja de Parra ya no duerme tranquila.",
-    "{n} regiones a color. {left} todavía en gris. Lo tuyo no es talento: es cabezonería. Funciona."
+    "Regiones liberadas para siempre: {n}. Por liberar: {left}. La Hoja de Parra ya no duerme tranquila.",
+    "Regiones a color: {n}. Todavía en gris: {left}. Lo tuyo no es talento: es cabezonería. Funciona."
   ],
   "death_boss": [
     "{boss} te ha mandado a casa. La próxima vez que entres ya sabes cómo ataca. Eso, o vuelves a morir igual.",

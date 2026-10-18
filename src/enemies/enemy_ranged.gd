@@ -246,6 +246,7 @@ func die(killer: Node = null) -> void:
 	state = State.DEAD
 	set_collision_layer_value(1, false)
 	set_collision_mask_value(1, false)
+	set_collision_mask_value(7, false)  # huecos (capa 64): el cuerpo sigue la misma regla que con los muros
 	
 	if animated_sprite:
 		animated_sprite.play("death")

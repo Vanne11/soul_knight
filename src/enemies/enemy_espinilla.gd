@@ -101,6 +101,7 @@ func die(killer: Node = null) -> void:
 	animated_sprite.modulate = Color.WHITE
 	set_collision_layer_value(1, false)
 	set_collision_mask_value(1, false)
+	set_collision_mask_value(7, false)  # huecos (capa 64): el cuerpo sigue la misma regla que con los muros
 	_make_puddle()
 	if not _burst_by_time:
 		get_node("/root/GlobalEvents").show_floating_text.emit(global_position + Vector2(0, -34), tr("FX_POP_SAFE"), Color("ffd0dc"))

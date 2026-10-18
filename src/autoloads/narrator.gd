@@ -252,15 +252,6 @@ func _left_unread() -> void:
 	_complaining = true
 
 
-## Pistas del puzzle (seq: nombres de colores en orden). Si le has ignorado
-## mucho, la primera vez se niega.
-func hint_puzzle(seq: Array) -> void:
-	if ignored_count >= 2 and not _seen.has("puzzle_hint_refused"):
-		say_first("puzzle_hint_refused", {"n": ignored_count})
-	else:
-		say("puzzle_hint", {"seq": " → ".join(seq)})
-
-
 ## true si la pulsacion de este frame se uso para pasar dialogo.
 func ate_input() -> bool:
 	return Time.get_ticks_msec() - _ate_input_ms < 150
