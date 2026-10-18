@@ -194,30 +194,10 @@ func _distances_from(start: Room) -> Dictionary:
 
 ## Sitio libre (sin muros ni obstaculos) cerca de `prefer`, en coordenadas locales de la sala.
 func _free_spot(room: Room, prefer: Vector2) -> Vector2:
-	var space: PhysicsDirectSpaceState2D = main.get_world_2d().direct_space_state
-	var shape := CircleShape2D.new()
-	shape.radius = 22.0
-	var q := PhysicsShapeQueryParameters2D.new()
-	q.shape = shape
-	q.collision_mask = 65  # muros + huecos
-	var size := Vector2(room.floor_tilemap.get_used_rect().size) * 64.0
-	# lo que ya ocupa el centro (fuente, inscripcion, cofre del arma, monedas del tesoro) y lo puesto
-	var taken: Array[Vector2] = [room.get_center_position(), room.get_center_position() + Vector2(0, -40)]
-	for holder in [room.pickups_node, room.props_node]:
-		for c in holder.get_children():
-			if c is Node2D:
-				taken.append(c.position)
-	for r in [0.0, 48.0, 96.0, 144.0]:
-		for i in 12:
-			var p: Vector2 = prefer + Vector2(r, 0).rotated(TAU * i / 12.0)
-			if p.x < 110.0 or p.y < 110.0 or p.x > size.x - 110.0 or p.y > size.y - 110.0:
-				continue
-			if taken.any(func(t): return t.distance_to(p) < 64.0):
-				continue
-			q.transform = Transform2D(0.0, room.global_position + p)
-			if space.intersect_shape(q, 1).is_empty():
-				return p
-	return prefer
+	# lo que ya ocupa el centro (fuente, inscripcion, cofre del arma, monedas del tesoro)
+	var taken: Array = [room.get_center_position(), room.get_center_position() + Vector2(0, -40)]
+	var spot := RoomUtil.free_spot(main, room, prefer, 22.0, false, taken)
+	return prefer if spot == Vector2.INF else spot
 
 
 func _place_bottle(room: Room, near: Vector2) -> void:
@@ -452,8 +432,7 @@ func _reward(c: LockedChest) -> void:
 	for i in ids.size():
 		main._spawn_pickup(room, ids[i], base + Vector2((i - (ids.size() - 1) * 0.5) * 36.0, 46))
 	var coins := 5 + depth * 2 + (6 if kind == "blood" else 0)
-	for i in coins:
-		main._spawn_pickup(room, "coin", base + Vector2(rng.randf_range(-70, 70), rng.randf_range(54, 96)))
+	RoomUtil.coins(main, room, coins, base + Vector2(0, 75))
 	Narrator.say("pz_chest_open_%s" % kind)
 	if kind == "blood":
 		# riesgo grande: la sangre llama a los que huelen (emboscada)

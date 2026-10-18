@@ -10,6 +10,7 @@ var _opened := false
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
+	RoomUtil.settle(self)
 	if ResourceLoader.exists("res://assets/sprites/environment/chest_closed.png"):
 		sprite.texture = load("res://assets/sprites/environment/chest_closed.png")
 	ActorFx.setup_object(self, sprite)
@@ -31,6 +32,9 @@ func _on_body_entered(body: Node) -> void:
 	var p := ITEM_PICKUP_SCENE.instantiate()
 	p.item_id = id
 	p.position = position + Vector2(0, 40)
+	var room := RoomUtil.room_of(self)
+	if room != null:
+		p.position = RoomUtil.loot_spot(room, p.position)  # que no caiga en un muro o un hueco
 	get_parent().add_child.call_deferred(p)
 	Sound.play("chest")
 

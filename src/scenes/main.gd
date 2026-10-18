@@ -493,13 +493,13 @@ func _random_item_id(filter: Callable) -> String:
 func _spawn_pickup(room: Room, item_id: String, local_pos: Vector2) -> void:
 	var p := ITEM_PICKUP_SCENE.instantiate()
 	p.item_id = item_id
-	p.position = local_pos
+	p.position = local_pos  # _add_pickup_deferred lo lleva a suelo pisable
 	room._add_pickup_deferred(p)
 
 func _spawn_chest(room: Room, contents: String, offset := Vector2(0, -40)) -> void:
 	var c := CHEST_SCENE.instantiate()
 	c.contents = contents
-	c.position = room.get_center_position() + offset
+	c.position = RoomUtil.loot_spot(room, room.get_center_position() + offset, [], null, 48.0)
 	room.pickups_node.add_child.call_deferred(c)
 
 func _build_shop(room: Room) -> void:
@@ -636,14 +636,12 @@ func _on_room_cleared(room: Room) -> void:
 	if room.room_type == Room.RoomType.BOSS:
 		_spawn_chest(room, "weapon")
 		var n := BOSS_COINS_BASE + RunManager.depth_i(_run_manager.current_floor)
-		for i in n:
-			_spawn_pickup(room, "coin", room.get_center_position() + Vector2((i - (n - 1) / 2.0) * 30, 40))
+		RoomUtil.coins(self, room, n, room.get_center_position() + Vector2(0, 40))
 		if not RunManager.floor_has_boss(_run_manager.current_floor):
 			_complete_floor()  # 1a etapa: vencer al guardian abre la salida (sin jefe, sin liberar)
 	else:
 		Sound.play("room_clear")
-		for i in maxi(1, roundi(COINS_PER_ROOM_CLEAR * _coin_mult)):
-			_spawn_pickup(room, "coin", room.get_center_position() + Vector2(-20 + i * 40, 60))
+		RoomUtil.coins(self, room, maxi(1, roundi(COINS_PER_ROOM_CLEAR * _coin_mult)), room.get_center_position() + Vector2(0, 60))
 
 func _complete_floor() -> void:
 	if floor_completed:
@@ -776,16 +774,14 @@ func _give_reward(room: Room) -> void:
 	match room.reward:
 		"monedas":
 			var n := maxi(2, roundi((4 + RunManager.depth_i(_run_manager.current_floor)) * _coin_mult))
-			for i in n:
-				_spawn_pickup(room, "coin", center + Vector2((i - (n - 1) / 2.0) * 28, -30))
+			RoomUtil.coins(self, room, n, center + Vector2(0, -30))
 		"elite":
 			# Sala elite: cofre de arma y botin grande (premio por el riesgo, fuera del camino).
 			Narrator.toast(tr("ELITE_CLEAR_TITLE"), tr("ELITE_CLEAR_BODY"), "ff7a4a")
 			Narrator.say("elite_clear")
 			_spawn_chest(room, "weapon", Vector2(0, -40))
 			var ne := 8 + 2 * RunManager.depth_i(_run_manager.current_floor)
-			for i in ne:
-				_spawn_pickup(room, "coin", center + Vector2((i - (ne - 1) / 2.0) * 24, 70))
+			RoomUtil.coins(self, room, ne, center + Vector2(0, 70))
 			_spawn_pickup(room, "health_large", center + Vector2(-90, 20))
 		"vida":
 			_spawn_pickup(room, "health_large", center + Vector2(0, -30))
@@ -825,8 +821,7 @@ func _build_calm_room(room: Room) -> void:
 	match room.room_type:
 		Room.RoomType.TREASURE:
 			_spawn_chest(room, "")
-			for i in 3:
-				_spawn_pickup(room, "coin", center + Vector2(-40 + i * 40, 30))
+			RoomUtil.coins(self, room, 3, center + Vector2(0, 30))
 		Room.RoomType.REST:
 			var water := _disc(20, Color("4aa3df"))
 			var fountain := Node2D.new()
