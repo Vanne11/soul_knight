@@ -843,9 +843,6 @@ func _things(room: Room) -> Array:
 	out = out.filter(func(n): return n.get_parent() != null and not _used.has(n.get_instance_id()))
 	if out.is_empty():
 		out = generic  # inscripciones, fuente y la escotilla al piso siguiente: al final
-		# recoger-todo: tras el jefe todavia pueden quedar salas (las secretas cuelgan de la sala del jefe): primero esas
-		if _collect and room.room_type == Room.RoomType.BOSS and main.floor_completed and _next_room(room) != null:
-			out = []
 	return out
 
 
