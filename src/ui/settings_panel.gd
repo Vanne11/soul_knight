@@ -68,6 +68,12 @@ func _build() -> void:
 	sh.mouse_entered.connect(sh.grab_focus)
 	box.add_child(_row(tr("SETTINGS_SHAKE"), sh))
 
+	var hn := CheckButton.new()
+	hn.button_pressed = Settings.hero_numbers
+	hn.toggled.connect(func(on: bool): Settings.set_hero_numbers(on))
+	hn.mouse_entered.connect(hn.grab_focus)
+	box.add_child(_row(tr("SETTINGS_HERO_NUMBERS"), hn))
+
 	_lang_option = OptionButton.new()
 	_lang_option.custom_minimum_size = Vector2(220, 40)
 	var sel := 0

@@ -175,11 +175,14 @@ func apply_item_effect(e: Dictionary) -> void:
 	status_changed.emit()
 
 func _handle_timed_effects(delta: float) -> void:
+	_flush_hero_numbers(delta)
 	if _regen_left > 0.0:
 		_regen_left -= delta
 		if current_health > 0.0 and current_health < max_health:
+			var before_r := current_health
 			current_health = minf(max_health, current_health + _regen_rate * delta)
 			health_changed.emit(current_health, max_health)
+			_heal_acc += current_health - before_r
 		if _regen_left <= 0.0:
 			status_changed.emit()
 	if _dr_left > 0.0:
@@ -232,16 +235,21 @@ func take_damage(amount: float) -> float:
 		return 0.0
 	var actual_damage = amount * (_dr_mult if _dr_left > 0.0 else 1.0) * Censura.mult("damage_taken")  # Censura 0: dano a 1/3
 	
+	var shield_lost := 0.0
 	if current_shields > 0.0:
 		var shield_damage = min(current_shields, actual_damage)
 		current_shields -= shield_damage
 		actual_damage -= shield_damage
+		shield_lost = shield_damage
 		shields_changed.emit(current_shields, max_shields)
 	
 	if actual_damage > 0.0:
 		current_health = max(0.0, current_health - actual_damage)
 		health_changed.emit(current_health, max_health)
+		hero_number("-%d" % maxi(1, roundi(actual_damage)), HERO_NUM_DAMAGE, true)
 		_ge.player_damaged.emit(actual_damage, null)
+	elif shield_lost >= 1.0:
+		hero_number("-%d" % roundi(shield_lost), HERO_NUM_SHIELD, false)  # el escudo se comio el golpe
 	
 	_last_damage_time = Time.get_ticks_msec() / 1000.0
 	
@@ -257,14 +265,45 @@ func take_damage(amount: float) -> float:
 	
 	return actual_damage
 
+## --- Numeros sobre el heroe (J0b): vida perdida en rojo, curada en verde, escudo en azul. ---
+## Se apagan en Ajustes (Settings.hero_numbers). Las curas chicas y seguidas (robo de vida,
+## regeneracion) se juntan y salen cada HEAL_FLUSH_S para no llenar la pantalla.
+const HERO_NUM_DAMAGE := Color("ff3b3b")
+const HERO_NUM_HEAL := Color("5df07a")
+const HERO_NUM_SHIELD := Color("6ec8ff")
+const HEAL_FLUSH_S := 0.5
+var _heal_acc := 0.0
+var _heal_t := 0.0
+
+
+func hero_number(text: String, color: Color, big: bool) -> void:
+	if not Settings.hero_numbers:
+		return
+	_ge.show_hero_number.emit(_player_pos(), text, color, big)
+
+
+func _flush_hero_numbers(delta: float) -> void:
+	_heal_t -= delta
+	if _heal_t > 0.0:
+		return
+	if _heal_acc >= 1.0:
+		hero_number("+%d" % roundi(_heal_acc), HERO_NUM_HEAL, false)
+		_heal_acc = 0.0
+		_heal_t = HEAL_FLUSH_S
+	elif _heal_acc <= 0.0:
+		_heal_acc = 0.0
+
+
 func _player_pos() -> Vector2:
 	var p := get_tree().get_first_node_in_group("player") as Node2D
 	return p.global_position + Vector2(0, -30) if p else Vector2.ZERO
 
 func heal(amount: float) -> void:
 	amount *= Censura.mult("heal")  # Censura: curacion escasa (orbes, fuente, robo de vida...)
+	var before := current_health
 	current_health = min(max_health, current_health + amount)
 	health_changed.emit(current_health, max_health)
+	_heal_acc += current_health - before
 	_ge.player_healed.emit(amount)
 
 func restore_shields_full() -> void:
@@ -351,6 +390,8 @@ func apply_stat_mod(stat: String, value: float) -> void:
 			max_shields += sv
 			current_shields += sv
 			shields_changed.emit(current_shields, max_shields)
+			if sv >= 1.0:
+				hero_number("+%d" % roundi(sv), HERO_NUM_SHIELD, false)
 		"max_stamina_flat":
 			max_stamina += value
 			current_stamina += value
