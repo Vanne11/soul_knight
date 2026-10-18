@@ -621,6 +621,9 @@ func _explore(room: Room) -> void:
 		return
 	# 1) cosas para recoger o usar en esta sala
 	var target := _next_thing(room)
+	if target and _quest_room != null and _kq_state == "carried" \
+			and main.get_node_or_null("KeyQuests") != null and main.get_node("KeyQuests").kind == "drunk":
+		target = null  # la llave borracha se suelta a los segundos de estar sobrio: sin detenerse a recoger nada, a la sala del cofre
 	if target and target != _thing_cur:
 		_thing_cur = target
 		_thing_t = 0.0
@@ -718,6 +721,7 @@ func _quest_step(room: Room) -> bool:
 	if kq.state != _kq_state:
 		if _kq_state == "carried" and kq.state == "home":
 			_kq_lost += 1
+			_say("  llave %s perdida: intoxicacion %.0f (nivel %d), sala %s, ranuras %s" % [kq.kind, get_node("/root/PlayerStats").intoxication_level, get_node("/root/PlayerStats").intoxication_tier, room.grid_pos, str(ItemSlots.find(player).slots) if ItemSlots.find(player) != null else "-"])
 			if _kq_lost >= 3 and not kq.bot_gave_up:
 				kq.bot_gave_up = true
 				_issue("Piso %d: la llave %s se perdio %d veces (la mision no se puede hacer con lo que lleva el bot): abandonada" % [_floor_n, kq.kind, _kq_lost])
