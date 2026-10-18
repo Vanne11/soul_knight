@@ -1051,8 +1051,11 @@ func _split() -> void:
 		clone.queue_free()
 		return
 	parent.add_child(clone)
-	clone.global_position = enemy.global_position + Vector2(RNG.randf_range(-26, 26), RNG.randf_range(-20, 20))
 	var room = enemy.call("find_owning_room") if enemy.has_method("find_owning_room") else null
+	var at: Vector2 = enemy.global_position + Vector2(RNG.randf_range(-26, 26), RNG.randf_range(-20, 20))
+	if room != null:
+		at = room.clamp_global(at, 18.0)  # pegado a un muro el clon nacia dentro de la pared y quedaba inalcanzable
+	clone.global_position = at
 	if room != null and "enemies_spawned" in room:
 		room.enemies_spawned.append(clone)
 	_emote_icon("alert", 0.9)
