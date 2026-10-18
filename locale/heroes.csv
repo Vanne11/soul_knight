@@ -1,19 +1,19 @@
 keys,es,en,es_ES,fr
-HERO_BLOCK,¡BLOQUEO!,BLOCKED!,,
-HERO_PARRY,¡PARRY!,PARRY!,,
-HERO_GUARD_BREAK,¡Escudo roto!,Shield broken!,,
-HERO_RAM,¡FALANGE!,PHALANX!,,
-HERO_GLIDE,¡Alas!,Wings!,,
-HERO_SCREAM,¡AAAAAAAH!,AAAAAAAH!,,
-HERO_EGG,¡Huevo!,Egg!,,
-HERO_SPUR,¡Espolón!,Spur!,,
-HERO_ELECTRO,Te siento...,I can feel you...,,
-HERO_QUIP_PITOCLES_1,Brilla más que mi futuro.,Shinier than my future.,,
-HERO_QUIP_PITOCLES_2,Pulir. Siempre pulir.,Polish. Always polish.,,
-HERO_QUIP_PITOCLES_3,Esto no lo pagan.,Nobody pays for this.,,
-HERO_QUIP_VULVALQUIRIA_1,¿Ya? ¿Ya?,Now? Now?,,
-HERO_QUIP_VULVALQUIRIA_2,Esta trenza tiene vida propia.,This braid has a life of its own.,,
-HERO_QUIP_VULVALQUIRIA_3,"Cero paciencia, ¿lo dije?","Zero patience, did I say?",,
-HERO_QUIP_ORNITORRINCO_1,¿Cuac? No. ¿Guau? Tampoco.,Quack? No. Woof? Also no.,,
-HERO_QUIP_ORNITORRINCO_2,"Ñic. Es una opinión, no una especie.","Ñic. That was an opinion, not a species.",,
-HERO_QUIP_ORNITORRINCO_3,Otra vez me confundieron.,Mistaken for something else. Again.,,
+HERO_BLOCK,¡BLOQUEO!,BLOCKED!,,BLOCAGE !
+HERO_PARRY,¡PARRY!,PARRY!,,PARADE !
+HERO_GUARD_BREAK,¡Escudo roto!,Shield broken!,,Bouclier brisé !
+HERO_RAM,¡FALANGE!,PHALANX!,,PHALANGE !
+HERO_GLIDE,¡Alas!,Wings!,,Ailes !
+HERO_SCREAM,¡AAAAAAAH!,AAAAAAAH!,,AAAAAAAH !
+HERO_EGG,¡Huevo!,Egg!,,Œuf !
+HERO_SPUR,¡Espolón!,Spur!,,Éperon !
+HERO_ELECTRO,Te siento...,I can feel you...,,Je te sens...
+HERO_QUIP_PITOCLES_1,Brilla más que mi futuro.,Shinier than my future.,,Ça brille plus que mon avenir.
+HERO_QUIP_PITOCLES_2,Pulir. Siempre pulir.,Polish. Always polish.,,Astiquer. Toujours astiquer.
+HERO_QUIP_PITOCLES_3,Esto no lo pagan.,Nobody pays for this.,,"Ça, c'est pas payé."
+HERO_QUIP_VULVALQUIRIA_1,¿Ya? ¿Ya?,Now? Now?,,Déjà ? Déjà ?
+HERO_QUIP_VULVALQUIRIA_2,Esta trenza tiene vida propia.,This braid has a life of its own.,,Cette tresse a sa vie propre.
+HERO_QUIP_VULVALQUIRIA_3,"Cero paciencia, ¿lo dije?","Zero patience, did I say?",,"Zéro patience, je l'ai dit ?"
+HERO_QUIP_ORNITORRINCO_1,¿Cuac? No. ¿Guau? Tampoco.,Quack? No. Woof? Also no.,,Coin ? Non. Ouaf ? Non plus.
+HERO_QUIP_ORNITORRINCO_2,"Ñic. Es una opinión, no una especie.","Ñic. That was an opinion, not a species.",,"Couic. C'est une opinion, pas une espèce."
+HERO_QUIP_ORNITORRINCO_3,Otra vez me confundieron.,Mistaken for something else. Again.,,On m'a encore confondu.

@@ -1,31 +1,32 @@
 keys,es,en,es_ES,fr
 DOOR_HINT_ELITE,"SALA ÉLITE
 RIESGO Y BOTÍN","ELITE ROOM
-RISK AND LOOT",,
-MAP_ROOM_ELITE,Sala élite,Elite room,,
-MAP_CENSORED,[ MAPA CENSURADO ],[ MAP CENSORED ],,
-ELITE_CLEAR_TITLE,Sala élite despejada,Elite room cleared,,
-ELITE_CLEAR_BODY,"Botín grande: cofre de arma, monedas y vida.","Big loot: weapon chest, coins and health.",,
-EVT_TAG,EVENTO: %s,EVENT: %s,,
-EVT_INSPECCION_NAME,INSPECCIÓN GENERAL,GENERAL INSPECTION,,
-EVT_INSPECCION_PHRASE,Hoy hay revisión en todas las salas.,Every room gets checked today.,,
-EVT_CALOR_NAME,OLA DE CALOR,HEAT WAVE,,
-EVT_CALOR_PHRASE,Todo el mundo va más acelerado de lo normal.,Everybody is moving faster than usual.,,
-EVT_CENSURA_NAME,CENSURA TOTAL,TOTAL CENSORSHIP,,
-EVT_CENSURA_PHRASE,El mapa ha sido retirado por indecente.,The map was removed for indecency.,,
-EVT_ESPUMA_NAME,FIESTA DE ESPUMA,FOAM PARTY,,
-EVT_ESPUMA_PHRASE,Suelo resbaladizo. Camina como si fuera un lunes.,Slippery floor. Walk like it's Monday.,,
-EVT_LUZ_NAME,CORTE DE LUZ,POWER OUTAGE,,
-EVT_LUZ_PHRASE,Alguien no pagó la cuenta. Todo en penumbra.,Somebody skipped the bill. Everything in the dark.,,
-EVT_REBAJAS_NAME,DÍA DE REBAJAS,SALE DAY,,
-EVT_REBAJAS_PHRASE,Tienda a mitad de precio. Pero hay cola.,Shop at half price. But there's a crowd.,,
-TT_PROMPT,Reloj de pared: contrarreloj (%s),Wall clock: time trial (%s),,
-TT_OFFER_TITLE,Contrarreloj opcional,Optional time trial,,
-TT_OFFER_BODY,Llega a la sala final en %s y habrá premio. Toca el reloj de pared para aceptar.,Reach the final room in %s for a prize. Touch the wall clock to accept.,,
-TT_ACCEPT_TITLE,Contrarreloj aceptada,Time trial accepted,,
-TT_ACCEPT_BODY,Te quedan %s. Sin presión.,%s left. No pressure.,,
-TT_HUD,CONTRARRELOJ  %s,TIME TRIAL  %s,,
-TT_WIN_TITLE,¡A tiempo!,On time!,,
-TT_WIN_BODY,Premio de puntualidad: %d monedas.,Punctuality prize: %d coins.,,
-TT_LATE_TITLE,Llega la Censura,The Censorship arrives,,
-TT_LATE_BODY,Te pasaste del tiempo: el mundo palidece y cada sala trae un enemigo más.,You ran out of time: the world fades and every room brings one more enemy.,,
+RISK AND LOOT",,"SALLE D'ÉLITE
+RISQUE ET BUTIN"
+MAP_ROOM_ELITE,Sala élite,Elite room,,Salle d'élite
+MAP_CENSORED,[ MAPA CENSURADO ],[ MAP CENSORED ],,[ CARTE CENSURÉE ]
+ELITE_CLEAR_TITLE,Sala élite despejada,Elite room cleared,,Salle d'élite nettoyée
+ELITE_CLEAR_BODY,"Botín grande: cofre de arma, monedas y vida.","Big loot: weapon chest, coins and health.",,"Gros butin : coffre d'arme, pièces et vie."
+EVT_TAG,EVENTO: %s,EVENT: %s,,ÉVÉNEMENT : %s
+EVT_INSPECCION_NAME,INSPECCIÓN GENERAL,GENERAL INSPECTION,,INSPECTION GÉNÉRALE
+EVT_INSPECCION_PHRASE,Hoy hay revisión en todas las salas.,Every room gets checked today.,,"Aujourd'hui, contrôle dans toutes les salles."
+EVT_CALOR_NAME,OLA DE CALOR,HEAT WAVE,,VAGUE DE CHALEUR
+EVT_CALOR_PHRASE,Todo el mundo va más acelerado de lo normal.,Everybody is moving faster than usual.,,Tout le monde est plus speed que d'habitude.
+EVT_CENSURA_NAME,CENSURA TOTAL,TOTAL CENSORSHIP,,CENSURE TOTALE
+EVT_CENSURA_PHRASE,El mapa ha sido retirado por indecente.,The map was removed for indecency.,,La carte a été retirée pour indécence.
+EVT_ESPUMA_NAME,FIESTA DE ESPUMA,FOAM PARTY,,FÊTE À LA MOUSSE
+EVT_ESPUMA_PHRASE,Suelo resbaladizo. Camina como si fuera un lunes.,Slippery floor. Walk like it's Monday.,,Sol glissant. Marche comme si c'était lundi.
+EVT_LUZ_NAME,CORTE DE LUZ,POWER OUTAGE,,COUPURE DE COURANT
+EVT_LUZ_PHRASE,Alguien no pagó la cuenta. Todo en penumbra.,Somebody skipped the bill. Everything in the dark.,,Quelqu'un n'a pas payé la facture. Tout est dans la pénombre.
+EVT_REBAJAS_NAME,DÍA DE REBAJAS,SALE DAY,,JOUR DE SOLDES
+EVT_REBAJAS_PHRASE,Tienda a mitad de precio. Pero hay cola.,Shop at half price. But there's a crowd.,,Boutique à moitié prix. Mais il y a la queue.
+TT_PROMPT,Reloj de pared: contrarreloj (%s),Wall clock: time trial (%s),,Horloge murale : contre-la-montre (%s)
+TT_OFFER_TITLE,Contrarreloj opcional,Optional time trial,,Contre-la-montre facultatif
+TT_OFFER_BODY,Llega a la sala final en %s y habrá premio. Toca el reloj de pared para aceptar.,Reach the final room in %s for a prize. Touch the wall clock to accept.,,Atteins la salle finale en %s et il y aura une récompense. Touche l'horloge murale pour accepter.
+TT_ACCEPT_TITLE,Contrarreloj aceptada,Time trial accepted,,Contre-la-montre accepté
+TT_ACCEPT_BODY,Te quedan %s. Sin presión.,%s left. No pressure.,,Il te reste %s. Aucune pression.
+TT_HUD,CONTRARRELOJ  %s,TIME TRIAL  %s,,CONTRE-LA-MONTRE  %s
+TT_WIN_TITLE,¡A tiempo!,On time!,,À l'heure !
+TT_WIN_BODY,Premio de puntualidad: %d monedas.,Punctuality prize: %d coins.,,Prime de ponctualité : %d pièces.
+TT_LATE_TITLE,Llega la Censura,The Censorship arrives,,La Censure arrive
+TT_LATE_BODY,Te pasaste del tiempo: el mundo palidece y cada sala trae un enemigo más.,You ran out of time: the world fades and every room brings one more enemy.,,Tu as dépassé le temps : le monde pâlit et chaque salle amène un ennemi de plus.

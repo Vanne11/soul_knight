@@ -1,50 +1,50 @@
 keys,es,en,es_ES,fr
-PZ_ROTATE,Girar,Turn,,
-PZ_REJECTED,RECHAZADO,REJECTED,,
-PZ_MUSH_0,roja,red,,
-PZ_MUSH_1,azul,blue,,
-PZ_MUSH_2,amarilla,yellow,,
-PZ_MUSH_3,verde,green,,
-PZ_KEY_CRYSTAL_NAME,Llave de Cristal,Crystal Key,,
-PZ_KEY_CRYSTAL_DESC,Cristal líquido. Brilla como si le diera miedo algo.,Liquid crystal. It glimmers as if it were afraid of something.,,
-PZ_KEY_CRYSTAL_TAKEN,La llevas contigo. Con cuidado.,You carry it with you. Carefully.,,
-PZ_KEY_DRUNK_NAME,Llave Borracha,Drunken Key,,
-PZ_KEY_DRUNK_DESC,Oxidada y con olor a taberna. Se resbala sola.,"Rusty, smells of tavern. It keeps slipping away.",,
-PZ_KEY_DRUNK_TAKEN,Agarrada con la firmeza de un borracho.,Held with a drunkard's firm grip.,,
-PZ_KEY_BLOOD_NAME,Llave de Sangre,Blood Key,,
-PZ_KEY_BLOOD_DESC,Todavía está tibia.,It is still warm.,,
-PZ_KEY_BLOOD_TAKEN,Pagada con tu propia sangre.,Paid for with your own blood.,,
-PZ_KEY_MASTER_NAME,Llave Maestra,Master Key,,
-PZ_KEY_MASTER_DESC,"Pesada, dorada, con aire de saberlo todo.","Heavy, golden, with the air of knowing everything.",,
-PZ_KEY_MASTER_TAKEN,Abre cualquier cosa.,It opens anything.,,
-PZ_KEY_BELT_NAME,Llave del Cinturón,Belt Key,,
-PZ_KEY_BELT_DESC,"Pequeña, fría, con un candadito grabado.","Small, cold, with a tiny padlock engraved on it.",,
-PZ_KEY_BELT_TAKEN,La llave de un cinturón que prefieres no imaginar.,The key to a belt you would rather not imagine.,,
-PZ_KEY_SLIP_SOBER,¡Se te escurre!,It slips away!,,
-PZ_KEY_LOST_SLIP,¡Se te cayó!,You dropped it!,,
-PZ_KEY_LOST_SHATTER,¡Se rompió!,It shattered!,,
-PZ_KEY_LOST_DRY,Se secó,It dried up,,
-PZ_KEY_BACK,"La llave vuelve a su sitio, custodiada.","The key returns to its place, guarded.",,
-PZ_CHEST_CRYSTAL,Cofre de cristal,Crystal chest,,
-PZ_CHEST_CRYSTAL_LOCKED,El candado brilla igual que cierta llave.,The padlock glimmers like a certain key.,,
-PZ_CHEST_DRUNK,Cofre de la copa,Goblet chest,,
-PZ_CHEST_DRUNK_LOCKED,La cerradura tiene forma de copa.,The lock is shaped like a goblet.,,
-PZ_CHEST_BLOOD,Cofre rojo,Red chest,,
-PZ_CHEST_BLOOD_LOCKED,La cerradura está húmeda.,The lock is damp.,,
-PZ_CHEST_MASTER,Cofre dorado,Golden chest,,
-PZ_CHEST_MASTER_LOCKED,"Un candado grande y dorado, con complejo de importante.",A big golden padlock with an inflated sense of self-importance.,,
-PZ_CHEST_BELT,Cinturón de castidad,Chastity belt,,
-PZ_CHEST_BELT_LOCKED,"Cadenas, candado y mala fama. Su llave estará en otra sala.","Chains, padlock and a bad reputation. Its key must be in another room.",,
-PZ_CHEST_OPEN,Abrir,Open,,
-PZ_CHEST_DRUNK_NEED,La llave no gira. Faltan copas.,The key won't turn. Needs more drinks.,,
-PZ_CHEST_NEED_KEY,Necesita su llave,Needs its key,,
-PZ_ALTAR_NAME,Altar de sangre,Blood altar,,
-PZ_ALTAR_COST,Pide %d de vida.,It asks for %d health.,,
-PZ_ALTAR_GIVE,Dejar sangre,Leave blood,,
-PZ_ALTAR_WEAK,Demasiado débil para sangrar más,Too weak to bleed any more,,
-PZ_ALTAR_DRY,El altar espera más sangre,The altar waits for more blood,,
-PZ_BOTTLE_DRUNK,Glu glu,Glug glug,,
-PZ_THIEF,Ladrón de llaves,Key thief,,
-PZ_THIEF_ESCAPED,El ladrón se esfumó con la llave.,The thief vanished with the key.,,
-PZ_THIEF_DROPPED,¡Soltó la llave!,He dropped the key!,,
-DOOR_MASTER_OPENS,LLAVE MAESTRA,MASTER KEY,,
+PZ_ROTATE,Girar,Turn,,Tourner
+PZ_REJECTED,RECHAZADO,REJECTED,,REFUSÉ
+PZ_MUSH_0,roja,red,,rouge
+PZ_MUSH_1,azul,blue,,bleu
+PZ_MUSH_2,amarilla,yellow,,jaune
+PZ_MUSH_3,verde,green,,vert
+PZ_KEY_CRYSTAL_NAME,Llave de Cristal,Crystal Key,,Clé de Cristal
+PZ_KEY_CRYSTAL_DESC,Cristal líquido. Brilla como si le diera miedo algo.,Liquid crystal. It glimmers as if it were afraid of something.,,Cristal liquide. Elle brille comme si quelque chose lui faisait peur.
+PZ_KEY_CRYSTAL_TAKEN,La llevas contigo. Con cuidado.,You carry it with you. Carefully.,,Tu l'emportes. Avec précaution.
+PZ_KEY_DRUNK_NAME,Llave Borracha,Drunken Key,,Clé Bourrée
+PZ_KEY_DRUNK_DESC,Oxidada y con olor a taberna. Se resbala sola.,"Rusty, smells of tavern. It keeps slipping away.",,Rouillée et sentant la taverne. Elle glisse toute seule.
+PZ_KEY_DRUNK_TAKEN,Agarrada con la firmeza de un borracho.,Held with a drunkard's firm grip.,Cogida con la firmeza de un borracho.,Tenue avec la fermeté d'un ivrogne.
+PZ_KEY_BLOOD_NAME,Llave de Sangre,Blood Key,,Clé de Sang
+PZ_KEY_BLOOD_DESC,Todavía está tibia.,It is still warm.,,Elle est encore tiède.
+PZ_KEY_BLOOD_TAKEN,Pagada con tu propia sangre.,Paid for with your own blood.,,Payée de ton propre sang.
+PZ_KEY_MASTER_NAME,Llave Maestra,Master Key,,Clé Maîtresse
+PZ_KEY_MASTER_DESC,"Pesada, dorada, con aire de saberlo todo.","Heavy, golden, with the air of knowing everything.",,"Lourde, dorée, l'air de tout savoir."
+PZ_KEY_MASTER_TAKEN,Abre cualquier cosa.,It opens anything.,,Ouvre n'importe quoi.
+PZ_KEY_BELT_NAME,Llave del Cinturón,Belt Key,,Clé de la Ceinture
+PZ_KEY_BELT_DESC,"Pequeña, fría, con un candadito grabado.","Small, cold, with a tiny padlock engraved on it.",,"Petite, froide, un petit cadenas gravé dessus."
+PZ_KEY_BELT_TAKEN,La llave de un cinturón que prefieres no imaginar.,The key to a belt you would rather not imagine.,,La clé d'une ceinture que tu préfères ne pas imaginer.
+PZ_KEY_SLIP_SOBER,¡Se te escurre!,It slips away!,,Elle t'échappe !
+PZ_KEY_LOST_SLIP,¡Se te cayó!,You dropped it!,,Tu l'as laissée tomber !
+PZ_KEY_LOST_SHATTER,¡Se rompió!,It shattered!,,Elle s'est brisée !
+PZ_KEY_LOST_DRY,Se secó,It dried up,,Elle s'est asséchée
+PZ_KEY_BACK,"La llave vuelve a su sitio, custodiada.","The key returns to its place, guarded.",,"La clé retourne à sa place, sous bonne garde."
+PZ_CHEST_CRYSTAL,Cofre de cristal,Crystal chest,,Coffre de cristal
+PZ_CHEST_CRYSTAL_LOCKED,El candado brilla igual que cierta llave.,The padlock glimmers like a certain key.,,Le cadenas brille exactement comme une certaine clé.
+PZ_CHEST_DRUNK,Cofre de la copa,Goblet chest,,Coffre du verre
+PZ_CHEST_DRUNK_LOCKED,La cerradura tiene forma de copa.,The lock is shaped like a goblet.,,La serrure a la forme d'un verre.
+PZ_CHEST_BLOOD,Cofre rojo,Red chest,,Coffre rouge
+PZ_CHEST_BLOOD_LOCKED,La cerradura está húmeda.,The lock is damp.,,La serrure est humide.
+PZ_CHEST_MASTER,Cofre dorado,Golden chest,,Coffre doré
+PZ_CHEST_MASTER_LOCKED,"Un candado grande y dorado, con complejo de importante.",A big golden padlock with an inflated sense of self-importance.,,"Un gros cadenas doré, avec un complexe de supériorité."
+PZ_CHEST_BELT,Cinturón de castidad,Chastity belt,,Ceinture de chasteté
+PZ_CHEST_BELT_LOCKED,"Cadenas, candado y mala fama. Su llave estará en otra sala.","Chains, padlock and a bad reputation. Its key must be in another room.",,"Chaînes, cadenas et mauvaise réputation. Sa clé doit être dans une autre salle."
+PZ_CHEST_OPEN,Abrir,Open,,Ouvrir
+PZ_CHEST_DRUNK_NEED,La llave no gira. Faltan copas.,The key won't turn. Needs more drinks.,,La clé ne tourne pas. Il manque des verres.
+PZ_CHEST_NEED_KEY,Necesita su llave,Needs its key,,Il lui faut sa clé
+PZ_ALTAR_NAME,Altar de sangre,Blood altar,,Autel de sang
+PZ_ALTAR_COST,Pide %d de vida.,It asks for %d health.,,Réclame %d de vie.
+PZ_ALTAR_GIVE,Dejar sangre,Leave blood,,Verser du sang
+PZ_ALTAR_WEAK,Demasiado débil para sangrar más,Too weak to bleed any more,,Trop faible pour saigner davantage
+PZ_ALTAR_DRY,El altar espera más sangre,The altar waits for more blood,,L'autel attend plus de sang
+PZ_BOTTLE_DRUNK,Glu glu,Glug glug,,Glou glou
+PZ_THIEF,Ladrón de llaves,Key thief,,Voleur de clés
+PZ_THIEF_ESCAPED,El ladrón se esfumó con la llave.,The thief vanished with the key.,,Le voleur s'est volatilisé avec la clé.
+PZ_THIEF_DROPPED,¡Soltó la llave!,He dropped the key!,,Il a lâché la clé !
+DOOR_MASTER_OPENS,LLAVE MAESTRA,MASTER KEY,,CLÉ MAÎTRESSE

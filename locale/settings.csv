@@ -1,18 +1,18 @@
 keys,es,en,es_ES,fr
-PAUSE_TITLE,PAUSA,PAUSED,,
-PAUSE_RESUME,CONTINUAR,RESUME,,
-PAUSE_SETTINGS,AJUSTES,SETTINGS,,
-PAUSE_MENU,VOLVER AL MENÚ,BACK TO MENU,,
-PAUSE_QUIT,SALIR DEL JUEGO,QUIT GAME,,
-PAUSE_NOTE,"Si vuelves al menú, esta partida se abandona y no da huesos.","If you go back to the menu, this run is abandoned and gives no bones.",,
-SETTINGS_TITLE,AJUSTES,SETTINGS,,
-SETTINGS_MUSIC,Música,Music,,
-SETTINGS_SFX,Efectos,Effects,,
-SETTINGS_FULLSCREEN,Pantalla completa,Fullscreen,,
-SETTINGS_FX,Efectos de pantalla,Screen effects,,
-SETTINGS_FX_0,Completos,Full,,
-SETTINGS_FX_1,Reducidos,Reduced,,
-SETTINGS_FX_2,Desactivados,Off,,
-SETTINGS_SHAKE,Sacudida de pantalla,Screen shake,,
-SETTINGS_LANGUAGE,Idioma,Language,,
-SETTINGS_BACK,VOLVER,BACK,,
+PAUSE_TITLE,PAUSA,PAUSED,,PAUSE
+PAUSE_RESUME,CONTINUAR,RESUME,,CONTINUER
+PAUSE_SETTINGS,AJUSTES,SETTINGS,,RÉGLAGES
+PAUSE_MENU,VOLVER AL MENÚ,BACK TO MENU,,RETOUR AU MENU
+PAUSE_QUIT,SALIR DEL JUEGO,QUIT GAME,,QUITTER LE JEU
+PAUSE_NOTE,"Si vuelves al menú, esta partida se abandona y no da huesos.","If you go back to the menu, this run is abandoned and gives no bones.",,"Si tu retournes au menu, cette partie est abandonnée et ne rapporte pas d'os."
+SETTINGS_TITLE,AJUSTES,SETTINGS,,RÉGLAGES
+SETTINGS_MUSIC,Música,Music,,Musique
+SETTINGS_SFX,Efectos,Effects,,Effets
+SETTINGS_FULLSCREEN,Pantalla completa,Fullscreen,,Plein écran
+SETTINGS_FX,Efectos de pantalla,Screen effects,,Effets d'écran
+SETTINGS_FX_0,Completos,Full,,Complets
+SETTINGS_FX_1,Reducidos,Reduced,,Réduits
+SETTINGS_FX_2,Desactivados,Off,,Désactivés
+SETTINGS_SHAKE,Sacudida de pantalla,Screen shake,,Secousses d'écran
+SETTINGS_LANGUAGE,Idioma,Language,,Langue
+SETTINGS_BACK,VOLVER,BACK,,RETOUR

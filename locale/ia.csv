@@ -1,37 +1,37 @@
 keys,es,en,es_ES,fr
-IA_FLEE,¡MAMÁÁ!,MOMMYYY!,,
-IA_BACK,¡Ya estoy curado!,I'm all healed up!,,
-IA_SURRENDER,¡Me rindo! ¡Toma mi botín!,I give up! Take my loot!,,
-IA_WAKE,¿Eh? ¿Quién anda ahí?,Huh? Who's there?,,
-IA_ALARM,¡AQUÍ ESTÁ! ¡AQUÍ ESTÁ!,HERE IT IS! HERE IT IS!,,
-IA_RAGE,¡¡GRRR!!,GRRR!!,,
-IA_ALLY_DIED,¡NOOO! ¡Mi compañero!,NOOO! My buddy!,,
-IA_DOUBT,Esto no era parte del plan...,This wasn't part of the plan...,,
-IA_LOST,¿Dónde se metió?,Where did it go?,,
-IA_PROVOKED,¡Me pisaste!,You stepped on me!,,
-IA_STARTLE,¡AAAH! ¡Un héroe!,AAAH! A hero!,,
-IA_HERO_CONFUSED,¿Qué... ERES?,What... ARE you?,,
-IA_PELO_ENCARNADO_LOST,No pienso soltarte.,I won't let go of you.,,
-IA_GRANITO_GRUDGE,Te recordaré. Siempre.,I'll remember you. Forever.,,
-IA_LADILLA_PROVOKED,¡Te agarré! Ahora vives aquí.,Gotcha! Now you live here.,,
-IA_TESTICULO_STARTLE,¡AAAH! ¡Me han visto!,AAAH! They saw me!,,
-IA_TESTICULO_HERO_FRIEND,¡Compadre!,Pal!,,
-IA_VESICULA_RESENT,¿Me estás ignorando?,Are you ignoring me?,,
-IA_ESPERMATOZOIDE_HERO_FRIEND,¡Es de los nuestros!,One of ours!,,
-IA_ESPERMATOZOIDE_RACE,¡YO PRIMERO!,ME FIRST!,,
-IA_OVULO_PROVOKED,¿Cómo osas tocar a la realeza?,How dare you touch royalty?,,
-IA_OVULO_HERO_FRIEND,"Saludos, hermana.","Greetings, sister.",,
-IA_TROMPA_ALARM,¡Chisme fresco! ¡Está aquí!,Fresh gossip! It is here!,,
-IA_ESPECULO_SHELL,*clac*,*clack*,,
-IA_HEMORROIDE_WAKE,"¡Déjame dormir, bruto!","Let me sleep, you brute!",,
-IA_HEMORROIDE_RAGE,¡POR DETRÁS NO!,NOT FROM BEHIND!,,
-IA_INSPECTOR_FLUIDOS_INSPECT,¿Documentos?,Documents?,,
-IA_INSPECTOR_FLUIDOS_STAMP,SELLADO. Sin papeles.,STAMPED. No papers.,,
-IA_INSPECTOR_FLUIDOS_ABORT,Se mueve. Irregular.,It moves. Irregular.,,
-IA_INSPECTOR_FLUIDOS_SURRENDER,Solicito jubilación anticipada.,I request early retirement.,,
-IA_PELUSA_PERINEAL_HIDE,Yo... mejor me escondo.,I... think I'll hide.,,
-IA_DILDO_ELECTRICO_DISCHARGE,Sin batería...,Out of battery...,,
-IA_DILDO_ELECTRICO_RECHARGED,¡LISTO! ¡OTRA VEZ!,READY! AGAIN!,,
-IA_BARRA_NEGRA_ALERT,[CENSURADO],[CENSORED],,
-IA_SELLO_ALERT,ALTO. Esta ruta es mía.,HALT. This route is mine.,,
-IA_PIXEL_CENSURA_SPLIT,¡Me multipliqué!,I multiplied!,,
+IA_FLEE,¡MAMÁÁ!,MOMMYYY!,,MAMAAAN !
+IA_BACK,¡Ya estoy curado!,I'm all healed up!,,Je suis guéri !
+IA_SURRENDER,¡Me rindo! ¡Toma mi botín!,I give up! Take my loot!,,Je me rends ! Prends mon butin !
+IA_WAKE,¿Eh? ¿Quién anda ahí?,Huh? Who's there?,,Hein ? Qui est là ?
+IA_ALARM,¡AQUÍ ESTÁ! ¡AQUÍ ESTÁ!,HERE IT IS! HERE IT IS!,,LE VOILÀ ! LE VOILÀ !
+IA_RAGE,¡¡GRRR!!,GRRR!!,,GRRR !!
+IA_ALLY_DIED,¡NOOO! ¡Mi compañero!,NOOO! My buddy!,,NOOON ! Mon camarade !
+IA_DOUBT,Esto no era parte del plan...,This wasn't part of the plan...,,Ça ne faisait pas partie du plan...
+IA_LOST,¿Dónde se metió?,Where did it go?,,Où est-il passé ?
+IA_PROVOKED,¡Me pisaste!,You stepped on me!,,Tu m'as marché dessus !
+IA_STARTLE,¡AAAH! ¡Un héroe!,AAAH! A hero!,,AAAH ! Un héros !
+IA_HERO_CONFUSED,¿Qué... ERES?,What... ARE you?,,Tu es... QUOI ?
+IA_PELO_ENCARNADO_LOST,No pienso soltarte.,I won't let go of you.,,Je ne te lâcherai pas.
+IA_GRANITO_GRUDGE,Te recordaré. Siempre.,I'll remember you. Forever.,,Je me souviendrai de toi. Toujours.
+IA_LADILLA_PROVOKED,¡Te agarré! Ahora vives aquí.,Gotcha! Now you live here.,¡Te pillé! Ahora vives aquí.,Je t'ai eu ! Maintenant tu habites ici.
+IA_TESTICULO_STARTLE,¡AAAH! ¡Me han visto!,AAAH! They saw me!,,AAAH ! On m'a vu !
+IA_TESTICULO_HERO_FRIEND,¡Compadre!,Pal!,¡Colega!,Mon pote !
+IA_VESICULA_RESENT,¿Me estás ignorando?,Are you ignoring me?,,Tu m'ignores ?
+IA_ESPERMATOZOIDE_HERO_FRIEND,¡Es de los nuestros!,One of ours!,,Il est des nôtres !
+IA_ESPERMATOZOIDE_RACE,¡YO PRIMERO!,ME FIRST!,,MOI D'ABORD !
+IA_OVULO_PROVOKED,¿Cómo osas tocar a la realeza?,How dare you touch royalty?,,Comment oses-tu toucher la royauté ?
+IA_OVULO_HERO_FRIEND,"Saludos, hermana.","Greetings, sister.",,"Salutations, sœur."
+IA_TROMPA_ALARM,¡Chisme fresco! ¡Está aquí!,Fresh gossip! It is here!,¡Cotilleo fresco! ¡Está aquí!,Ragot tout frais ! Il est ici !
+IA_ESPECULO_SHELL,*clac*,*clack*,,*clac*
+IA_HEMORROIDE_WAKE,"¡Déjame dormir, bruto!","Let me sleep, you brute!",,"Laisse-moi dormir, brute !"
+IA_HEMORROIDE_RAGE,¡POR DETRÁS NO!,NOT FROM BEHIND!,,PAS PAR DERRIÈRE !
+IA_INSPECTOR_FLUIDOS_INSPECT,¿Documentos?,Documents?,,Vos papiers ?
+IA_INSPECTOR_FLUIDOS_STAMP,SELLADO. Sin papeles.,STAMPED. No papers.,,TAMPONNÉ. Sans papiers.
+IA_INSPECTOR_FLUIDOS_ABORT,Se mueve. Irregular.,It moves. Irregular.,,Ça bouge. Irrégulier.
+IA_INSPECTOR_FLUIDOS_SURRENDER,Solicito jubilación anticipada.,I request early retirement.,,Je demande ma retraite anticipée.
+IA_PELUSA_PERINEAL_HIDE,Yo... mejor me escondo.,I... think I'll hide.,,Moi... je vais plutôt me cacher.
+IA_DILDO_ELECTRICO_DISCHARGE,Sin batería...,Out of battery...,,Plus de batterie...
+IA_DILDO_ELECTRICO_RECHARGED,¡LISTO! ¡OTRA VEZ!,READY! AGAIN!,,PRÊT ! ENCORE !
+IA_BARRA_NEGRA_ALERT,[CENSURADO],[CENSORED],,[CENSURÉ]
+IA_SELLO_ALERT,ALTO. Esta ruta es mía.,HALT. This route is mine.,,HALTE. Cette route est à moi.
+IA_PIXEL_CENSURA_SPLIT,¡Me multipliqué!,I multiplied!,,Je me suis multiplié !

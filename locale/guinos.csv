@@ -1,7 +1,7 @@
 keys,es,en,es_ES,fr
-GUINO_NOTA_PROMPT,[color=#b08d4a][E] Leer la notita[/color],[color=#b08d4a][E] Read the note[/color],,
-GUINO_NOTA_TITLE,Una notita en el suelo,A little note on the floor,,
-GUINO_NOTA_TEXT,"Si lees esto, ganaste. Un abrazo, Vane.","If you're reading this, you won. Hugs, Vane.",,
-GUINO_TOMO_PROMPT,[color=#b08d4a][E] Hojear el tomo sin tachar[/color],[color=#b08d4a][E] Browse the uncensored volume[/color],,
-GUINO_TOMO_TITLE,"Manual de Educación Sexual, 2.ª ed. (V.)","Sex Education Manual, 2nd ed. (V.)",,
-GUINO_TOMO_SAY,El único sin tachar. Margen anotado: «léase en voz alta».,The only one not crossed out. Margin note: «read aloud».,,
+GUINO_NOTA_PROMPT,[color=#b08d4a][E] Leer la notita[/color],[color=#b08d4a][E] Read the note[/color],,[color=#b08d4a][E] Lire le petit mot[/color]
+GUINO_NOTA_TITLE,Una notita en el suelo,A little note on the floor,,Un petit mot par terre
+GUINO_NOTA_TEXT,"Si lees esto, ganaste. Un abrazo, Vane.","If you're reading this, you won. Hugs, Vane.",,"Si tu lis ça, tu as gagné. Gros câlin, Vane."
+GUINO_TOMO_PROMPT,[color=#b08d4a][E] Hojear el tomo sin tachar[/color],[color=#b08d4a][E] Browse the uncensored volume[/color],,[color=#b08d4a][E] Feuilleter le tome non raturé[/color]
+GUINO_TOMO_TITLE,"Manual de Educación Sexual, 2.ª ed. (V.)","Sex Education Manual, 2nd ed. (V.)",,"Manuel d'Éducation Sexuelle, 2e éd. (V.)"
+GUINO_TOMO_SAY,El único sin tachar. Margen anotado: «léase en voz alta».,The only one not crossed out. Margin note: «read aloud».,,Le seul sans ratures. Annotation en marge : « à lire à voix haute ».
