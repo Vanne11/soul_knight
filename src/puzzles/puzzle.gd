@@ -165,3 +165,46 @@ func make_label(text: String, size := 8, color := Color("f2ead6")) -> Label:
 	l.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	l.material = LightKit.unshaded_material()
 	return l
+
+
+## Sala (Room) donde vive el acertijo: su padre es room.props_node.
+func room_node() -> Room:
+	var p := get_parent()
+	return p.get_parent() as Room if p else null
+
+
+## Todo detalle nace gris mientras la sala esta censurada (la liberacion lo colorea).
+func gray(node: CanvasItem) -> void:
+	var r := room_node()
+	if r:
+		Censor.apply(r, node)
+
+
+## Sprite pixel art de puzzles/<name>.png en pos (local), gris hasta liberar la sala.
+func make_sprite(name: String, pos := Vector2.ZERO, z := 0) -> Sprite2D:
+	var s := Sprite2D.new()
+	s.texture = PuzzlePlate.load_tex(name)
+	s.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	s.position = pos
+	s.z_index = z
+	gray(s)
+	add_child(s)
+	return s
+
+
+## Pista por aburrimiento: si pasa un buen rato sin avanzar, cuenta como un fallo (el narrador
+## se compadece cada dos). idle_reset() cuando el jugador haga algo util.
+var _idle_t := 0.0
+
+
+func idle_hint(delta: float, secs := 22.0) -> void:
+	if done:
+		return
+	_idle_t += delta
+	if _idle_t >= secs:
+		_idle_t = 0.0
+		note_fail()
+
+
+func idle_reset() -> void:
+	_idle_t = 0.0
