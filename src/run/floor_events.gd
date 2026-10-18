@@ -44,7 +44,10 @@ var trial_limit := 0.0
 var trial_time := 0.0
 var _clock_placed := false
 var _slip_vel := Vector2.ZERO
+var _timer_box: PanelContainer
 var _timer_label: Label
+var _timer_bar: ColorRect
+var _clock: WallClock
 var _tag_label: Label
 var _grey_layer: CanvasLayer
 
@@ -190,12 +193,14 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	if trial_state in ["offered", "accepted"] and main != null and not main.floor_completed:
 		trial_time += delta
+		if is_instance_valid(_clock):
+			_clock.set_progress(trial_time / maxf(trial_limit, 1.0))
 		if trial_state == "accepted":
 			_update_timer()
 			if trial_time >= trial_limit:
 				_trial_late()
-	elif _timer_label != null:
-		_timer_label.visible = false
+	elif _timer_box != null:
+		_timer_box.visible = false
 
 
 # ------------------------------------------------------------------ anuncio
@@ -249,20 +254,10 @@ func _room_entered(room: Room) -> void:
 
 
 func _place_clock(room: Room) -> void:
-	var visual := Node2D.new()
-	visual.set_meta("flat", true)
-	var face := Polygon2D.new()
-	var pts := PackedVector2Array()
-	for i in 24:
-		pts.append(Vector2.RIGHT.rotated(TAU * i / 24) * 22.0)
-	face.polygon = pts
-	face.color = Color("e8e0cc")
-	visual.add_child(face)
-	for hand in [PackedVector2Array([Vector2(-2, 0), Vector2(0, -16), Vector2(2, 0)]), PackedVector2Array([Vector2(0, -2), Vector2(11, 3), Vector2(0, 2)])]:
-		var h := Polygon2D.new()
-		h.polygon = hand
-		h.color = Color("2a1f1f")
-		visual.add_child(h)
+	# reloj de pie animado (src/fx/wall_clock.gd): pixel art, pulso mientras se ofrece
+	var visual := WallClock.new()
+	visual.dress(room)
+	_clock = visual
 	var spot: Vector2 = RoomUtil.free_spot(main, room, room.get_center_position() + Vector2(-150, -70))
 	if spot == Vector2.INF:
 		spot = room.get_center_position() + Vector2(-150, -70)
@@ -278,23 +273,69 @@ func _accept_trial(_p, it) -> void:
 	Sound.play("buy")
 	it.finish()
 	Narrator.toast(tr("TT_ACCEPT_TITLE"), tr("TT_ACCEPT_BODY") % _fmt(maxf(trial_limit - trial_time, 0.0)), "ffd75a")
-	if _timer_label == null:
-		var layer := CanvasLayer.new()
-		layer.layer = 39
-		_timer_label = HudStyle.pixel_label("", 18, Color("ffd75a"), true)
-		_timer_label.position = Vector2(14, HUD.BAND + 30)
-		layer.add_child(_timer_label)
-		add_child(layer)
+	if is_instance_valid(_clock):
+		_clock.offered = false
+	if _timer_box == null:
+		_build_timer()
 	_update_timer()
 
 
+## Contador con el estilo del HUD: panel dorado, icono de reloj, tiempo en fuente pixel y una
+## barra fina de lo que queda. Nodo propio (no toca hud.gd).
+func _build_timer() -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 39
+	_timer_box = PanelContainer.new()
+	_timer_box.add_theme_stylebox_override("panel", HudStyle.panel_box(6.0))
+	_timer_box.position = Vector2(10, HUD.BAND + 34)
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 4)
+	_timer_box.add_child(col)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	col.add_child(row)
+	var ico := HudStyle.icon("clock")
+	ico.custom_minimum_size = Vector2(26, 26)
+	row.add_child(ico)
+	_timer_label = HudStyle.pixel_label("", 24, Color("ffd75a"), true)
+	row.add_child(_timer_label)
+	_timer_bar = ColorRect.new()
+	_timer_bar.custom_minimum_size = Vector2(0, 6)
+	_timer_bar.color = Color("ffd75a")
+	var back := Control.new()
+	back.custom_minimum_size = Vector2(0, 6)
+	var bg := ColorRect.new()
+	bg.color = Color(0.05, 0.04, 0.07, 0.9)
+	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+	back.add_child(bg)
+	back.add_child(_timer_bar)
+	col.add_child(back)
+	layer.add_child(_timer_box)
+	add_child(layer)
+
+
 func _update_timer() -> void:
-	if _timer_label == null:
+	if _timer_box == null:
 		return
-	_timer_label.visible = true
+	_timer_box.visible = true
 	var left := maxf(trial_limit - trial_time, 0.0)
-	_timer_label.text = tr("TT_HUD") % _fmt(left)
-	_timer_label.modulate = Color(1, 0.45, 0.4) if left < 30.0 else Color.WHITE
+	_timer_label.text = _fmt(left)
+	var frac := clampf(left / maxf(trial_limit, 1.0), 0.0, 1.0)
+	var back_w := _timer_box.size.x - 20.0
+	_timer_bar.size = Vector2(maxf(back_w * frac, 0.0), 6.0)
+	var col := Color("ffd75a")
+	if left <= 12.0:
+		# ultimos segundos: parpadeo en rojo, mas rapido cuanto menos queda
+		var blink := fposmod(left, 1.0) > 0.5
+		col = Color("ff4a4a") if blink else Color("ffb0a0")
+		_timer_box.scale = Vector2.ONE * (1.0 + (0.06 if blink else 0.0))
+	elif left < 30.0:
+		col = Color("ff9a5a")
+		_timer_box.scale = Vector2.ONE
+	else:
+		_timer_box.scale = Vector2.ONE
+	_timer_label.add_theme_color_override("font_color", col)
+	_timer_bar.color = col
 
 
 func _fmt(sec: float) -> String:
@@ -304,6 +345,8 @@ func _fmt(sec: float) -> String:
 func _trial_won(room: Room) -> void:
 	var accepted := trial_state == "accepted"
 	trial_state = "won"
+	if is_instance_valid(_clock):
+		_clock.offered = false
 	var d: int = RunManager.depth_i(get_node("/root/RunManager").current_floor)
 	var n: int = 6 + 2 * d if accepted else 4 + d
 	var pl := _player()
@@ -329,5 +372,5 @@ func _trial_late() -> void:
 	_grey_layer.add_child(rect)
 	add_child(_grey_layer)
 	rect.create_tween().tween_property(rect, "color:a", 0.14, 3.0)
-	if _timer_label != null:
-		_timer_label.visible = false
+	if _timer_box != null:
+		_timer_box.visible = false
