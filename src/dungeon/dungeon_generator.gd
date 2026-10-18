@@ -207,6 +207,9 @@ func _connect_rooms(edges: Array) -> void:
 
 # ------------------------------------------------------------------ trazado
 func target_room_count(floor_n: int) -> int:
+	var fixed = RunManager.floor_at(floor_n).get("room_count", null)  # pisos con rango propio (El Utero)
+	if fixed is Array and fixed.size() == 2:
+		return RNG.randi_range(int(fixed[0]), int(fixed[1]))
 	var lo := mini(MIN_ROOMS + (floor_n - 1) / 3, MAX_ROOMS)
 	var hi := mini(9 + (floor_n - 1) / 3, MAX_ROOMS)
 	# Con menos salas no caben el minimo de combates (3 / 4) mas tienda, secretas y respiro.

@@ -1,0 +1,22 @@
+{
+	"_nota": "EL UTERO: nivel secreto de Vulvania. NO esta en floors/ a proposito: RunManager.insert_utero() lo mete en la ruta (justo despues de Trompas de Falopio) solo si abriste la puerta de la Consulta con un Turno. region = vulvania: escala como el piso del que sales y no cuenta como region nueva. Ver src/utero/utero.gd.",
+	"name": "EL ÚTERO",
+	"name_key": "FLOOR_UTERO_NAME",
+	"region": "vulvania",
+	"stage": 2,
+	"secret": true,
+	"room_count": [8, 9],
+	"elite_chance": 0.2,
+	"kingdom": "vulva",
+	"tint": "e0485a",
+	"roster": ["ovulo", "trompa", "calambre"],
+	"names": ["Óvulo Rodante", "Trompa Escupidora", "Calambre"],
+	"extra": [
+		{"variant": "especulo", "name": "Espéculo Mordedor", "type": "melee", "weight": 0.15},
+		{"variant": "clamidia", "name": "Clamidia Clandestina", "type": "its", "weight": 0.04, "its": "clamidia"}
+	],
+	"weights": [0.3, 0.25, 0.45],
+	"boss": "regla",
+	"boss_name": "DOÑA REGLA",
+	"needs": []
+}

@@ -157,6 +157,7 @@ static func route_for(hero: String, seed_: int) -> Array:
 ## Fija la ruta activa (lista de ids de region): sus pisos, por reino y etapa.
 static func set_route(region_ids: Array) -> void:
 	route_regions = region_ids.duplicate()
+	utero_inserted = false  # la ruta se rehace sin el Utero (ver insert_utero)
 	route_floors = []
 	for r in region_ids:
 		for f in FLOORS:
@@ -166,6 +167,54 @@ static func set_route(region_ids: Array) -> void:
 
 static func set_route_for(hero: String, seed_: int) -> void:
 	set_route(route_for(hero, seed_))
+
+
+## --- EL UTERO (nivel secreto de Vulvania, src/utero/utero.gd) ---
+## Su JSON vive APARTE (assets/data/floors_secret/) para que set_route no lo meta en la ruta de
+## todos: solo entra si abres la puerta de la Consulta con un Turno. Su region es "vulvania" (la
+## de Trompas de Falopio, el piso del que sales): la dificultad (region_index/depth) es la de
+## ese piso y no cuenta como reino nuevo ni como region a liberar.
+const SECRET_FLOORS_DIR := "res://assets/data/floors_secret/"
+static var SECRET_FLOORS: Dictionary = _load_secret_floors()
+## Piso tras el que se inserta el Utero.
+const UTERO_AFTER := "trompas_falopio"
+## El Utero esta en la ruta activa / ya se uso en esta partida (una vez por partida).
+static var utero_inserted := false
+static var utero_used := false
+
+
+static func _load_secret_floors() -> Dictionary:
+	var out := {}
+	for file in _json_files(SECRET_FLOORS_DIR):
+		var f = _read_json(SECRET_FLOORS_DIR + file)
+		if not f is Dictionary:
+			continue
+		f.tint = Color(str(f.get("tint", "ffffff")))
+		f.id = _floor_id(file)
+		f.stage = int(f.get("stage", 2))
+		f.elite_chance = float(f.get("elite_chance", 0.0))
+		out[f.id] = f
+	return out
+
+
+## Mete el Utero justo despues de Trompas de Falopio en la ruta activa. true si lo inserto.
+## Una vez por partida (utero_used); seguro con la partida empezada: el indice de
+## current_floor (Trompas o antes) no cambia.
+static func insert_utero() -> bool:
+	if utero_inserted or not SECRET_FLOORS.has("utero"):
+		return false
+	if route_floors.is_empty():
+		set_route(regions())
+	var at := -1
+	for i in route_floors.size():
+		if route_floors[i].id == UTERO_AFTER:
+			at = i
+	if at < 0:
+		return false
+	route_floors.insert(at + 1, SECRET_FLOORS["utero"])
+	utero_inserted = true
+	utero_used = true
+	return true
 
 
 ## Cantidad de pisos de la ruta activa (el ultimo trae el jefe final).
@@ -455,6 +504,7 @@ func start_new_run(seed: int = 0) -> void:
 	Censura.clear_curses()  # las maldiciones de pactos mayores no pasan de una partida a otra
 	last_censura_unlocked = 0
 	
+	utero_used = false  # el Utero se abre una vez por partida
 	set_route_for(character, seed)  # el orden de los reinos depende del heroe (y la semilla)
 	current_floor = starting_floor
 	current_room_index = 0

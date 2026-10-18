@@ -92,6 +92,7 @@ func _generate_dungeon() -> void:
 	RoomDressing.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # muros 3/4, zocalo, puertas
 	RoomObstacles.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # rocas, columnas, barriles, pinchos
 	_lock_secret_rooms()
+	Utero.setup_floor(self)  # El Utero (src/utero): Consulta en Trompas / fases en el Utero
 	
 	# Start player in start room
 	var start_room = _find_start_room()
@@ -204,6 +205,7 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	RoomDecor.build(room, _run_manager.floor_data().kingdom, _run_manager.current_seed, _run_manager.current_floor)  # decoracion junto a los muros (una vez por sala)
 	_paint_room(room, room.cleared or room.room_type in CALM_ROOMS)
 	_label_doors(room)
+	Utero.on_enter(self, room, entry_door)  # fase del ciclo (src/utero), antes de las dinamicas de sala
 	RoomDirector.on_enter(self, room, entry_door)  # dinamicas de sala (src/rooms/room_director.gd)
 	if room.room_type in [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]:
 		_build_calm_room(room)
@@ -375,7 +377,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 			names = fd.alt_names
 		# id de EnemyRegistry por puesto del roster
 		var types: Array = ["melee", "ranged", "swarmer"]
-		var weights: Array = fd.weights
+		var weights: Array = Utero.weights(room, fd.weights)  # El Utero: la menstruacion saca Calambres
 		var its_kinds: Array = ["", "", ""]
 		# bichos extra del piso (aparte del trio fijo): {variant, name, type, weight}
 		for x in fd.get("extra", []):
@@ -464,6 +466,8 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 					info.elite = true
 					info.affixes = Affixes.roll(types[t], floor_n)  # 1-2 afijos (src/enemies/affixes)
 					info.drops.append({"item_id": "coin", "chance": ELITE_COIN_CHANCE})
+					Utero.elite_drop(self, info)  # elites de Vulvania: a veces el Turno
+		Utero.data_tweak(room, info)  # El Utero (lutea): enemigos irritables
 		data.append(info)
 	return data
 
@@ -508,6 +512,7 @@ func _build_shop(room: Room) -> void:
 		return
 	room.set_meta("shop_built", true)
 	var stock := [_random_weapon_id(), _random_loot_id(), _random_loot_id()]
+	stock = Utero.shop_stock(self, stock)  # tienda de Vulvania: el Turno de la Consulta
 	if _missing_hormones().size() > 0:
 		stock[2] = "hormone_" + _missing_hormones()[0]  # la tienda tambien vende la hormona que te falta
 	# Mejoras permanentes: siempre la de vida y otra al azar.
@@ -624,6 +629,7 @@ func _on_room_cleared(room: Room) -> void:
 		room.reward = "bendicion"  # ya la compraste en la tienda: algo a cambio
 		room.reward_kingdom = _floor_kingdom()
 	_paint_room(room, true, true)
+	Utero.on_room_cleared(self, room)  # premios de cada fase del Utero
 	if room == _hormone_room:
 		# Garantia: en cada piso hay al menos un arma antes del jefe.
 		if not _has_real_weapon():
@@ -668,12 +674,14 @@ func _complete_floor() -> void:
 		# Vencer al jefe libera el reino entero (sus dos etapas); el toast usa el nombre del reino.
 		if _run_manager.liberate(floor_n):
 			Narrator.toast(tr("FLOOR_LIBERATED_TITLE"), tr("FLOOR_LIBERATED_BODY") % Loc.region_name(floor_n), "ffd75a")
+		Utero.on_boss_dead(self)  # Dona Regla: bendicion de ciclo + codice
 		# Recompensa: una mejora a elegir. Luego, sin prisa: recoges el botin y bajas por la escotilla.
 		await get_tree().create_timer(1.5).timeout
 		Narrator.choose(tr("FLOOR_BOSS_DEFEATED"), BOSS_REWARDS.map(func(r): return tr(r[0])))
 		var pick: Array = BOSS_REWARDS[await Narrator.chosen]
 		_game_controller.get_player_stats().apply_stat_mod(pick[1], pick[2])
 		Sound.play("puzzle_solve")
+		Utero.cycle_blessing(self)  # Dona Regla: ademas, una bendicion de ciclo
 	else:
 		await get_tree().create_timer(1.5).timeout  # guardian vencido: sin mejora, solo la salida
 	var portal := _hatch_visual()
@@ -745,6 +753,8 @@ func _label_doors(room: Room) -> void:
 		door.set_hint(hint[0], hint[1])
 
 func _room_hint(room: Room) -> Array:
+	if room.has_meta("consulta"):
+		return [tr("UTERO_DOOR_HINT"), Color("ff8fb0")]
 	if room.has_meta("elite_room") and not room.cleared:
 		return [tr("DOOR_HINT_ELITE"), Color("ff6a3a")]
 	if room == _weapon_room and not _has_real_weapon():
@@ -815,6 +825,9 @@ func _take_blessing(id: String) -> void:
 
 # ---------------------------------------------------------------- salas tranquilas
 func _build_calm_room(room: Room) -> void:
+	if room.has_meta("consulta"):
+		Utero.build_consulta(self, room)  # Consulta de la Doctora V. (puerta del Cuello Uterino)
+		return
 	if room.has_meta("calm_built"):
 		return
 	room.set_meta("calm_built", true)

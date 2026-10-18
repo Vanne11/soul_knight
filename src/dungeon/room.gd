@@ -245,6 +245,7 @@ func spawn_enemies(enemy_data: Array[Dictionary], seal := true, positions: Array
 			if data.has("speed"): enemy.move_speed = data.speed
 			if data.get("enemy_type", "") != "boss": enemy.move_speed *= Censura.mult("enemy_speed")  # Censura: enemigos mas rapidos
 			if data.has("its") and "its_kind" in enemy: enemy.its_kind = data.its
+			if data.has("personality") and "personality" in enemy: enemy.personality = data.personality  # El Utero (lutea): irritables
 			if data.has("drops"): enemy.drop_table = _as_drop_list(data.drops if g == 0 else [])
 			if data.has("frames") and ResourceLoader.exists(data.frames):
 				enemy.get_node("AnimatedSprite2D").sprite_frames = load(data.frames)
