@@ -13,6 +13,7 @@ size = Vector2(24, 36)
 size = Vector2(34, 38)
 
 [node name="EnemyShibari" type="CharacterBody2D"]
+motion_mode = 1
 collision_layer = 2
 collision_mask = 67
 script = ExtResource("1")

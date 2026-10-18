@@ -13,6 +13,7 @@ size = Vector2(100, 150)
 size = Vector2(104, 120)
 
 [node name="EnemyBoss" type="CharacterBody2D"]
+motion_mode = 1
 collision_layer = 2
 collision_mask = 67
 script = ExtResource("1")

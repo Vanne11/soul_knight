@@ -67,7 +67,10 @@ func _physics_process(delta: float) -> void:
 		if e.get("current_health") != null and float(e.current_health) <= 0.0:
 			continue
 		var p: Vector2 = e.global_position - global_position
-		if rect.grow(6.0).has_point(p):
+		# dentro del rectangulo pero metido en un muro macizo o fuera de las celdas (esquinas cortadas, 3 px
+		# por encima del suelo): tampoco puede salir solo
+		var kind := cell_kind(Vector2i(floori(p.x / 64.0), floori(p.y / 64.0)))
+		if rect.grow(6.0).has_point(p) and kind != -1 and kind != 1:
 			continue
 		var back := Vector2(clampf(p.x, rect.position.x + 40.0, rect.end.x - 40.0), clampf(p.y, rect.position.y + 40.0, rect.end.y - 40.0))
 		e.global_position = snap_global(global_position + back, 24.0)
@@ -189,6 +192,16 @@ func nearest_walkable(pos: Vector2, margin := 18.0) -> Vector2:
 	return best
 
 
+## Punto global dentro del rectangulo del suelo (a `margin` de los muros) y, si la sala tiene forma, en suelo pisable.
+## Para lo que se genera con un desplazamiento (escoltas, hojas orbitando) y puede caer dentro de un muro.
+func clamp_global(pos: Vector2, margin := 40.0) -> Vector2:
+	var used := floor_tilemap.get_used_rect()
+	var rect := Rect2(Vector2(used.position) * 64.0, Vector2(used.size) * 64.0)
+	var p := pos - global_position
+	p = Vector2(clampf(p.x, rect.position.x + margin, rect.end.x - margin), clampf(p.y, rect.position.y + margin, rect.end.y - margin))
+	return snap_global(global_position + p, margin)
+
+
 ## Igual que nearest_walkable pero con posiciones globales.
 func snap_global(pos: Vector2, margin := 18.0) -> Vector2:
 	if shape_cells.is_empty():
@@ -254,6 +267,10 @@ func spawn_enemies(enemy_data: Array[Dictionary], seal := true, positions: Array
 		return
 
 	var use_pos := not positions.is_empty()
+	var used_spots: Array[Vector2] = []
+	for e in enemies_spawned:  # oleadas: tampoco encima de los que ya estan en la sala
+		if is_instance_valid(e) and e is Node2D and e.is_inside_tree() and float(e.get("current_health")) > 0.0:
+			used_spots.append((e as Node2D).global_position)
 	if not use_pos:
 		RNG.shuffle(spawn_points)  # Array.shuffle() usa el azar global: misma semilla, mazmorra distinta
 
@@ -283,10 +300,37 @@ func spawn_enemies(enemy_data: Array[Dictionary], seal := true, positions: Array
 			Affixes.attach(enemy, data.get("affixes", []))  # afijos de elite (src/enemies/affixes)
 			
 			enemies_spawned.append(enemy)
-			_add_enemy_deferred(enemy, snap_global((positions[i] if use_pos else spawn_points[i]) + Vector2(g * 28, (g % 2) * 24), 22.0))
+			var at := _free_spawn_spot(snap_global((positions[i] if use_pos else spawn_points[i]) + Vector2(g * 28, (g % 2) * 24), 22.0), used_spots)
+			used_spots.append(at)
+			_add_enemy_deferred(enemy, at)
 	
 	if enemies_spawned.size() > 0 and seal:
 		seal_doors()
+
+const SPAWN_GAP := 34.0
+
+
+## Punto de aparicion libre: si otro enemigo ya nacio ahi (varios puntos caian en el mismo borde de
+## suelo al ajustarlos a una sala con forma) busca en anillos crecientes un sitio pisable a SPAWN_GAP.
+## Dos cuerpos que nacen encimados se separan a patadas de fisica y salen disparados a traves de los muros.
+func _free_spawn_spot(at: Vector2, used: Array[Vector2]) -> Vector2:
+	if not _spot_taken(at, used):
+		return at
+	for ring in range(1, 9):
+		var r := SPAWN_GAP * ring
+		for k in 8 * ring:
+			var cand := snap_global(at + Vector2.from_angle(TAU * k / (8.0 * ring)) * r, 22.0)
+			if not _spot_taken(cand, used):
+				return cand
+	return at
+
+
+func _spot_taken(at: Vector2, used: Array[Vector2]) -> bool:
+	for u in used:
+		if u.distance_to(at) < SPAWN_GAP:
+			return true
+	return false
+
 
 ## Walks up the tree to the owning Room, so spawned nodes end up inside the
 ## room they belong to instead of relying on get_tree().current_scene.

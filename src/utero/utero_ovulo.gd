@@ -26,6 +26,7 @@ var _hud: DynHud
 
 func start() -> void:
 	egg = CharacterBody2D.new()
+	egg.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	egg.collision_layer = 0
 	egg.collision_mask = 1
 	var cs := CollisionShape2D.new()

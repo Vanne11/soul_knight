@@ -62,7 +62,8 @@ func take_damage(amount: float, source: Node = null, kb: Vector2 = Vector2.ZERO)
 		E3a.say(self, "candado_summon", 2.4)
 		for i in 2:
 			var a := Vector2.from_angle(PI * (0.5 + i)) * 90.0
-			E3a.spawn(self, "jaula", global_position + a, maxf(max_health * 0.05, 20.0), base_damage * 0.8)
+			var j := E3a.spawn(self, "jaula", global_position + a, maxf(max_health * 0.05, 20.0), base_damage * 0.8)
+			j.enemy_name = "Jaula"
 	return dealt
 
 

@@ -64,6 +64,8 @@ var _thing_cur: Node = null
 var _thing_t := 0.0  # instance_id -> true (interactuables ya usados)
 var _grid := {}  # Vector2i -> true si se puede pisar
 var _grid_t := 0.0
+var _in_fallback := false
+var _grid_open := {}  # la rejilla sin las zonas de peligro: si ellas parten la sala, se cruza igual (el bot juega en modo dios)
 var _path: Array[Vector2] = []
 var _path_goal := Vector2.INF
 var _path_t := 0.0
@@ -422,11 +424,21 @@ func _physics_process(delta: float) -> void:
 
 
 var _slot_t := 0.0
+var _drink_t := 0.0
 
 
 ## Ranuras 1-4: el bot cura con lo que lleve cuando le queda poca vida y se protege (toallas,
 ## calzoncillos...) al entrar en pelea. Asi tambien se prueba el uso real de las ranuras.
 func _use_slots(fighting: bool, delta: float) -> void:
+	_drink_t -= delta
+	# llave borracha en la mano: la intoxicacion baja 2 por segundo y el camino al cofre es largo -> bebe lo que lleve
+	# (tambien peleando: antes solo bebia al explorar y la llave se escurria en medio de una pelea)
+	var kq = main.get_node_or_null("KeyQuests")
+	if _drink_t <= 0.0 and kq != null and kq.kind == "drunk" and kq.state == "carried" and get_node("/root/PlayerStats").intoxication_level < 55.0:
+		var dslots := ItemSlots.find(player)
+		if dslots != null and dslots.use_first_with_tag("intoxicante"):
+			_drink_t = 0.6
+			_say("  bebe un intoxicante de las ranuras para no soltar la llave borracha")
 	_slot_t -= delta
 	if _slot_t > 0.0:
 		return
@@ -621,6 +633,9 @@ func _explore(room: Room) -> void:
 		return
 	# 1) cosas para recoger o usar en esta sala
 	var target := _next_thing(room)
+	if target and _quest_room != null and _kq_state == "carried" \
+			and main.get_node_or_null("KeyQuests") != null and main.get_node("KeyQuests").kind == "drunk":
+		target = null  # la llave borracha se suelta a los segundos de estar sobrio: sin detenerse a recoger nada, a la sala del cofre
 	if target and target != _thing_cur:
 		_thing_cur = target
 		_thing_t = 0.0
@@ -718,17 +733,12 @@ func _quest_step(room: Room) -> bool:
 	if kq.state != _kq_state:
 		if _kq_state == "carried" and kq.state == "home":
 			_kq_lost += 1
+			_say("  llave %s perdida: intoxicacion %.0f (nivel %d), sala %s, ranuras %s" % [kq.kind, get_node("/root/PlayerStats").intoxication_level, get_node("/root/PlayerStats").intoxication_tier, room.grid_pos, str(ItemSlots.find(player).slots) if ItemSlots.find(player) != null else "-"])
 			if _kq_lost >= 3 and not kq.bot_gave_up:
 				kq.bot_gave_up = true
 				_issue("Piso %d: la llave %s se perdio %d veces (la mision no se puede hacer con lo que lleva el bot): abandonada" % [_floor_n, kq.kind, _kq_lost])
 		_kq_state = kq.state
 		_say("Mision de llave %s: %s (llave en %s, cofre en %s)" % [kq.kind, kq.state, kq.home.grid_pos, kq.vault.grid_pos])
-	# llave borracha en la mano: la intoxicacion baja 2 por segundo y el camino al cofre es largo -> bebe lo que lleve
-	if kq.kind == "drunk" and kq.state == "carried" and get_node("/root/PlayerStats").intoxication_level < 45.0:
-		var slots := ItemSlots.find(player)
-		if slots != null and _slot_t <= 0.0 and slots.use_first_with_tag("intoxicante"):
-			_slot_t = 1.0
-			_say("  bebe un intoxicante de las ranuras para no soltar la llave borracha")
 	var g: Dictionary = kq.bot_goal(room)
 	if g.is_empty():
 		return false
@@ -951,6 +961,7 @@ func _build_grid(room: Room) -> void:
 			q.transform = Transform2D(0, p)
 			if space.intersect_shape(q, 1).is_empty():
 				_grid[Vector2i(x, y)] = true
+	_grid_open = _grid.duplicate()
 	_avoid_hazards(room)
 
 
@@ -1030,6 +1041,15 @@ func _find_path(from: Vector2, to: Vector2) -> Array[Vector2]:
 			queue.append(n)
 	var out: Array[Vector2] = []
 	if not prev.has(b):
+		if not _grid_open.is_empty() and _grid_open.size() != _grid.size() and not _in_fallback:
+			# los peligros (fuego, pinchos...) cortan la sala en dos: el camino cruza por encima, como haria un jugador
+			var keep := _grid
+			_grid = _grid_open
+			_in_fallback = true
+			var alt := _find_path(from, to)
+			_in_fallback = false
+			_grid = keep
+			return alt
 		out.append(to)
 		return out
 	var k := b
@@ -1109,7 +1129,10 @@ func _watch_stuck(delta: float, room: Room, enemies: Array) -> void:
 			_unstick_n = 0
 		return
 	_still_t += delta
-	if _still_t > 3.0 and _unstick_t <= 0.0 and _unstick_n < 8 and _alive_enemies(room).is_empty():
+	# con enemigos vivos tambien: quieto 5 s empujando una pared no es esquivar (el Granito Rencoroso de una sala en L
+	# se quedo atras de una esquina y el bot, pegado a la otra pared, 3 min sin moverse)
+	var free_to_move := _alive_enemies(room).is_empty() or (_still_t > 5.0 and room.room_type != Room.RoomType.BOSS)
+	if _still_t > 3.0 and _unstick_t <= 0.0 and _unstick_n < 8 and free_to_move:
 		_unstick_n += 1
 		_unstick_t = 1.6
 		_unstick_dir = Vector2.RIGHT.rotated(randf() * TAU)
@@ -1174,6 +1197,17 @@ func _on_stall(room: Room, enemies: Array) -> void:
 	_prog_t = 0.0
 	var where := "%s %s" % [Room.RoomType.keys()[room.room_type], room.grid_pos]
 	_issue("Piso %d: sin progreso en %s (objetivo \"%s\", %s) -> nivel %d" % [_floor_n, where, _goal_text, _goal_kind, _stall_n])
+	if _stall_n == 1 and _goal_kind == "thing" and _goal_ref != null and is_instance_valid(_goal_ref) and _goal_ref is Node2D:
+		var gp: Vector2 = (_goal_ref as Node2D).global_position
+		var zs: Array = RoomUtil.hazard_zones(get_tree())
+		_say("    diag: objeto %s en %s (local %s) celda_libre=%s distancia=%.0f zonas_peligro=%d clase=%s monitorable=%s jugador=%s" % [
+			_thing_name(_goal_ref), gp, gp - room.global_position, _grid.has(_cell(gp)), gp.distance_to(player.global_position), zs.size(),
+			_goal_ref.get_class(), _goal_ref.get("monitorable"), player.global_position])
+	if _stall_n == 1 and not enemies.is_empty():
+		_say("    diag: sala dinamica=%s zonas_peligro=%d celdas=%d (sin peligros %d) camino_al_enemigo=%d puntos sendero_actual=%s meta=%s inmovil=%.0f s" % [room.get_meta("dynamic") if room.has_meta("dynamic") else "-", RoomUtil.hazard_zones(get_tree()).size(), _grid.size(), _grid_open.size(), _find_path(player.global_position, enemies[0].global_position).size(), _path.slice(0, 3), _path_goal, _still_t])
+	if _stall_n == 1:
+		for e in enemies:
+			_say("    diag: " + _diag_enemy(room, e))
 	match _stall_n:
 		1:
 			_abandon_goal(room)
@@ -1210,6 +1244,20 @@ func _abandon_goal(room: Room) -> void:
 	_thing_cur = null
 	_path.clear()
 	_unstick_n = 0
+
+
+## Una linea con todo lo que puede explicar que un enemigo no muera (para el PROBLEMA de "sin progreso").
+func _diag_enemy(room: Room, e: Node) -> String:
+	var p: Vector2 = e.global_position - room.global_position
+	var ai = e.get("ai")
+	var cell := room.cell_kind(Vector2i(int(floor(p.x / 64.0)), int(floor(p.y / 64.0))))
+	var q := PhysicsRayQueryParameters2D.create(player.global_position, e.global_position, 1)
+	q.exclude = [player.get_rid()]
+	var blocked := not player.get_world_2d().direct_space_state.intersect_ray(q).is_empty()
+	return "%s (%s) pos_local=%s celda=%d hp=%.0f/%.0f invuln=%s estado=%s modo=%s vel=%s layer=%d mask=%d forma=%s linea_bloqueada=%s jugador_local=%s" % [
+		e.get("enemy_name"), e.get_script().resource_path.get_file(), p, cell, float(e.get("current_health")), float(e.get("max_health")),
+		e.get("invuln"), e.get("state"), ai.mode if ai != null else "-", e.get("velocity"), e.collision_layer, e.collision_mask,
+		room.shape_id, blocked, player.global_position - room.global_position]
 
 
 ## Ultimo recurso con enemigos que no mueren: les baja la vida (queda anotado como PROBLEMA).
@@ -1389,6 +1437,8 @@ func _watch_outsiders() -> void:
 var _last_rel := {}  # instance_id -> posicion relativa del fotograma anterior
 var _exit_logged := {}
 
+var _last_pf := 0  # paso de fisica del ultimo _track_exits
+var _launch_ms := {}  # instance_id -> ultimo aviso de lanzamiento
 var _hist := {}  # instance_id -> ultimas posiciones relativas (una cada 6 fotogramas)
 
 func _track_exits(room: Room, enemies: Array) -> void:
@@ -1398,6 +1448,15 @@ func _track_exits(room: Room, enemies: Array) -> void:
 		var id: int = e.get_instance_id()
 		var rel: Vector2 = e.global_position - room.global_position
 		now[id] = rel
+		# lanzamiento: mas de 16 px por paso de fisica (~1000 px/s) sin ser un dash conocido; anota el contexto
+		var pv = _last_rel.get(id)
+		if pv != null and pv.distance_to(rel) / float(maxi(1, Engine.get_physics_frames() - _last_pf)) > 16.0 and Time.get_ticks_msec() - int(_launch_ms.get(id, -9999)) > 1500:
+			_launch_ms[id] = Time.get_ticks_msec()
+			var ai = e.get("ai")
+			_say("  LANZADO %s (%s) en %s %s: salto %.0f px en 1 fotograma, de %s a %s; vel=%s estado=%s modo=%s empujado_hace=%d ms capa64_mask=%s sala_forma=%s" % [
+				e.get("enemy_name"), e.get_script().resource_path.get_file(), Room.RoomType.keys()[room.room_type], room.grid_pos, pv.distance_to(rel), pv.round(), rel.round(),
+				e.get("velocity"), e.get("state"), ai.mode if ai != null else "-", Time.get_ticks_msec() - int(e.get_meta("pushed_ms", -99999)),
+				e.get_collision_mask_value(7) if e is CollisionObject2D else "-", room.shape_id])
 		if Engine.get_physics_frames() % 6 == 0:
 			var h: Array = _hist.get(id, [])
 			h.append(rel.round())
@@ -1424,3 +1483,4 @@ func _track_exits(room: Room, enemies: Array) -> void:
 			var wc: Vector2i = room.walls_tilemap.local_to_map(room.walls_tilemap.to_local(e.global_position))
 			_say("    muro: celda %s source=%d | sala shape=%s rect_suelo=%s pos_sala=%s" % [wc, room.walls_tilemap.get_cell_source_id(0, wc), room.shape_id, room.floor_tilemap.get_used_rect(), room.global_position])
 	_last_rel = now
+	_last_pf = Engine.get_physics_frames()

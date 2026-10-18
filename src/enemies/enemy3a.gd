@@ -118,8 +118,10 @@ static func spawn(parent_enemy: Enemy, id: String, at: Vector2, health: float, d
 		e.set_meta("e3a_spawned", true)
 	var cont: Node = parent_enemy._spawn_container()
 	cont.add_child(e)
-	e.global_position = at
 	var room = parent_enemy.find_owning_room()
+	if room != null:
+		at = room.clamp_global(at, 18.0)  # junto a un muro o en una esquina cortada nacian dentro de la pared y no salian
+	e.global_position = at
 	if room != null and "enemies_spawned" in room:
 		room.enemies_spawned.append(e)
 	return e
