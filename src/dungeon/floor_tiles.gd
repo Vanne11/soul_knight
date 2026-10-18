@@ -23,10 +23,9 @@ static var _cache: Dictionary = {}
 
 
 static func kingdom_for_floor(floor_num: int) -> String:
-	var floors: Array = RM.FLOORS
-	if floors.is_empty():
+	if RM.FLOORS.is_empty():
 		return ""
-	return String(floors[clampi(floor_num - 1, 0, floors.size() - 1)].get("kingdom", ""))
+	return String(RM.floor_at(floor_num).get("kingdom", ""))
 
 
 ## TileSet del reino, o null si no existe (entonces la sala conserva el suelo antiguo).

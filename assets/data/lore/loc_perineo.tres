@@ -8,5 +8,5 @@ id = "loc_perineo"
 title = "El Perineo"
 text = "La franja de tierra que separa Penelandia de Vulvania. Anatómicamente, es real. Políticamente, es un desastre. Nadie vive aquí porque ninguno de los dos reinos lo reclama, así que se ha convertido en el territorio de la burocracia pura: ventanillas, colas, formularios por triplicado y un aduanero que sella todo lo que se mueve. Los enemigos de ambos reinos se cruzan aquí sin saludarse. Para pasar necesitas las dos hormonas en el cuerpo, la tuya y la contraria. Es el único sitio del mundo donde para avanzar tienes que aceptar al otro. Y sí, estornudarás. El progreso siempre da un poco de alergia."
 category = 4
-unlock_condition = {"type": 2, "floor": 4}
+unlock_condition = {"type": 2, "region": "perineo"}
 flavor_text = "Llega al Perineo."

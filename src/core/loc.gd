@@ -102,31 +102,25 @@ static func narr_line(key: String, fallback: String) -> String:
 ## Piso: numero 1..N o el diccionario de RunManager.FLOORS. short = version del mapa.
 ## Claves: 1a etapa FLOOR_<reino 1..5>_NAME/SHORT (las de siempre); 2a etapa FLOOR_<reino>B_NAME/SHORT.
 static func floor_name(floor_or_fd, short := false) -> String:
-	var floors: Array = RunManager.FLOORS
-	var n := 0
-	var fb := ""
-	if floor_or_fd is Dictionary:
-		n = floors.find(floor_or_fd) + 1
-		fb = floor_or_fd.get("name", "")
-	else:
-		n = int(floor_or_fd)
-		if n >= 1 and n <= floors.size():
-			fb = floors[n - 1].name
+	# El nombre depende del reino y la etapa, no del lugar en la ruta del heroe: indice FIJO del reino.
+	var fd: Dictionary = floor_or_fd if floor_or_fd is Dictionary else RunManager.floor_at(int(floor_or_fd))
+	var fb: String = fd.get("name", "")
 	if short:
 		fb = fb.replace("EL PALACIO DE LA ", "PALACIO ")
-	if n < 1:
+	var canon := RunManager.regions().find(fd.get("region", ""))
+	if canon < 0:
 		return fb
-	var suffix := "B" if RunManager.floor_stage(n) > 1 else ""
-	return tr_or("FLOOR_%d%s_%s" % [RunManager.region_index(n) + 1, suffix, "SHORT" if short else "NAME"], fb)
+	var suffix := "B" if int(fd.get("stage", 1)) > 1 else ""
+	return tr_or("FLOOR_%d%s_%s" % [canon + 1, suffix, "SHORT" if short else "NAME"], fb)
 
 
 ## Nombre del reino al que pertenece el piso (el de su 1a etapa): "LA SELVA PÚBICA" para el
 ## Folículo Profundo. Para textos de liberacion, que valen para las dos etapas.
 static func region_name(floor_n: int, short := false) -> String:
 	var r := RunManager.floor_region(floor_n)
-	for i in RunManager.FLOORS.size():
-		if RunManager.FLOORS[i].region == r:
-			return floor_name(i + 1, short)
+	for f in RunManager.FLOORS:
+		if f.region == r:
+			return floor_name(f, short)
 	return floor_name(floor_n, short)
 
 

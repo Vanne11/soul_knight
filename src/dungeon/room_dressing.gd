@@ -32,8 +32,7 @@ static var _cache: Dictionary = {}
 
 
 static func build_floor(rooms: Dictionary, floor_n: int, seed_: int) -> void:
-	var floors: Array = RunManager.FLOORS
-	var fl: Dictionary = floors[clampi(floor_n - 1, 0, floors.size() - 1)]
+	var fl: Dictionary = RunManager.floor_at(floor_n)
 	for pos in rooms:
 		var room: Room = rooms[pos]
 		if room.get_node_or_null("Dressing") == null:

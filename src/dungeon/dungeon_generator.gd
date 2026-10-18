@@ -166,8 +166,7 @@ func _setup_room_tilemap(room: Room, size: Vector2) -> void:
 
 ## Asigna assets/tilesets/walls_<reino>.tres al TileMap de muros. false si no existe.
 func _apply_wall_tileset(walls_map: TileMap) -> bool:
-	var floors: Array = RunManager.FLOORS
-	var kingdom: String = floors[clampi(current_floor - 1, 0, floors.size() - 1)].kingdom
+	var kingdom: String = RunManager.floor_at(current_floor).kingdom
 	var path := "res://assets/tilesets/walls_%s.tres" % kingdom
 	if not ResourceLoader.exists(path):
 		return false

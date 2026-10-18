@@ -78,8 +78,7 @@ var _colored := false
 
 
 static func build_floor(rooms: Dictionary, floor_n: int, seed_: int) -> void:
-	var floors: Array = RunManager.FLOORS
-	var k: String = floors[clampi(floor_n - 1, 0, floors.size() - 1)].kingdom
+	var k: String = RunManager.floor_at(floor_n).kingdom
 	for pos in rooms:
 		build(rooms[pos], k, seed_, floor_n)
 
