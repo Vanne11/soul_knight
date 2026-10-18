@@ -12,9 +12,23 @@ const SIGNATURE := {
 	"mixto": preload("res://src/puzzles/puzzle_stamps.gd"),        # Perineo: papeleo de sellos
 	"censura": preload("res://src/puzzles/puzzle_uncensor.gd"),    # Palacio: descensurar
 }
-const CREATIVE := [preload("res://src/puzzles/puzzle_mirrors.gd")]
+const CREATIVE := [
+	preload("res://src/puzzles/puzzle_mirrors.gd"),   # luz y espejos
+	preload("res://src/puzzles/puzzle_shadows.gd"),   # tapar una placa con tu sombra
+	preload("res://src/puzzles/puzzle_golf.gd"),      # minigolf con un testiculo
+	preload("res://src/puzzles/puzzle_tracks.gd"),    # huellas en el barro
+	preload("res://src/puzzles/puzzle_diary.gd"),     # diario intimo (numeros en otras salas)
+]
+## Creativos que ademas salen con mas ganas en un reino concreto (se suman a CREATIVE).
+const EXTRA := {
+	"pene": [preload("res://src/puzzles/puzzle_sphinx.gd"), preload("res://src/puzzles/puzzle_sphinx.gd")],  # Esfinge de Penelandia
+	"neutral": [preload("res://src/puzzles/puzzle_tracks.gd")],
+	"vulva": [preload("res://src/puzzles/puzzle_diary.gd")],
+	"mixto": [preload("res://src/puzzles/puzzle_shadows.gd")],
+	"censura": [preload("res://src/puzzles/puzzle_golf.gd")],
+}
 ## Probabilidad de que la sala sea un acertijo creativo en vez del del reino.
-const CREATIVE_CHANCE := 0.3
+const CREATIVE_CHANCE := 0.45
 ## Margen que se deja libre desde el borde de la sala (muro, puerta y por donde se entra).
 const MARGIN := Vector2(128.0, 112.0)
 
@@ -38,7 +52,8 @@ static func create(room: Room, seed_value: int, kingdom_id := "", depth_n := -1)
 	rng.seed = seed_value
 	var script: GDScript = SIGNATURE.get(k, SIGNATURE.neutral)
 	if rng.randf() < CREATIVE_CHANCE:
-		script = CREATIVE[rng.randi_range(0, CREATIVE.size() - 1)]
+		var pool: Array = CREATIVE + EXTRA.get(k, [])
+		script = pool[rng.randi_range(0, pool.size() - 1)]
 	return create_of(script, room, rng, k, d)
 
 
