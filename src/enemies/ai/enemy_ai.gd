@@ -78,6 +78,7 @@ var _burst_dir := Vector2.ZERO
 var _burst_speed := 1.0
 var _next_burst_cd := 1.0
 var _wp := 0
+var _wp_t := 0.0
 var _graze_dir := Vector2.ZERO
 var _graze_t := 0.0
 var _alive_t := 0.0
@@ -792,8 +793,10 @@ func _act(delta: float) -> bool:
 			return true
 		Mode.PATROL:
 			var route := _route()
-			if _arrive(route[_wp % 4], 0.5) < 12.0:
+			_wp_t += delta
+			if _arrive(route[_wp % 4], 0.5) < 12.0 or _wp_t > 4.0:  # 4 s sin llegar: pasa a la siguiente esquina
 				_wp += 1
+				_wp_t = 0.0
 			return true
 		Mode.COVER:
 			var buddy := _cover_buddy()
@@ -850,7 +853,13 @@ func _flee_move(_delta: float) -> void:
 
 
 func _route() -> Array[Vector2]:
-	return [_home + Vector2(-110, -80), _home + Vector2(110, -80), _home + Vector2(110, 80), _home + Vector2(-110, 80)]
+	var pts: Array[Vector2] = [_home + Vector2(-110, -80), _home + Vector2(110, -80), _home + Vector2(110, 80), _home + Vector2(-110, 80)]
+	# junto a un muro (o en una sala con forma) las esquinas caian dentro de la pared y la patrulla se quedaba pegada
+	var room = enemy.find_owning_room() if enemy.has_method("find_owning_room") else null
+	if room != null:
+		for i in pts.size():
+			pts[i] = room.clamp_global(pts[i], 30.0)
+	return pts
 
 
 ## Camina hacia pos; devuelve la distancia restante.
