@@ -1,219 +1,219 @@
 keys,es,en,es_ES,fr
-INTOX_TIER_0,SOBRIO,SOBER,,
-INTOX_TIER_1,ACHISPADO,TIPSY,,
-INTOX_TIER_2,BORRACHO,DRUNK,,
-INTOX_TIER_3,BLACKOUT,BLACKOUT,,
-GAMEOVER_VICTORY_TITLE,SE ACABÓ EL PUDOR,THE PRUDERY IS OVER,,
-GAMEOVER_INSULT_1,FIN DEL TRÁMITE. SIGUIENTE.,END OF PROCEDURE. NEXT.,,
-GAMEOVER_INSULT_2,SE TE CAYÓ EL PENACHO,YOUR CREST FELL OFF,,
-GAMEOVER_INSULT_3,VUELVE AL ÚTERO,GET BACK IN THE WOMB,,
-GAMEOVER_INSULT_4,HASTA MI ABUELA LO HACE MEJOR,EVEN MY GRANDMA DOES IT BETTER,,
-GAMEOVER_INSULT_5,EL HÍGADO TE LLORA,YOUR LIVER IS WEEPING,,
-GAMEOVER_INSULT_6,LECHE DERRAMADA. A LLORAR,SPILLED MILK. GO CRY,,
-GAMEOVER_INSULT_7,ERROR 404: DASH NO ENCONTRADO,ERROR 404: DASH NOT FOUND,,
-GAMEOVER_RUN,LA PARTIDA,THE RUN,,
-GAMEOVER_FLOOR,PISO,FLOOR,,
-GAMEOVER_ENEMIES,ENEMIGOS,ENEMIES,,
-GAMEOVER_TIME,TIEMPO,TIME,,
-GAMEOVER_BONES,HUESOS,BONES,,
-GAMEOVER_BONES_TOTAL,"Total: %d huesos. Gástalos en Mejoras, en el menú.","Total: %d bones. Spend them on Upgrades, in the menu.",,
-GAMEOVER_RETRY,OTRA VEZ,AGAIN,,
-GAMEOVER_MENU,MENÚ,MENU,,
-GAMEOVER_QUIT,RENDIRSE,GIVE UP,,
-MENU_NEW_GAME,NUEVA RUN,NEW RUN,,
-MENU_UPGRADES,MEJORAS,UPGRADES,,
-MENU_CODEX,CÓDICE,CODEX,,
-MENU_QUIT,SALIR,QUIT,,
-MENU_WORLD,EL MUNDO,THE WORLD,,
-MENU_TITLE,ROGUE REPRODUCTIVE,ROGUE REPRODUCTIVE,,
-MENU_SUBTITLE,"LA GRAN CENSURA · ÓRGANOS, HORMONAS Y MALAS DECISIONES","THE GREAT CENSORSHIP · ORGANS, HORMONES AND BAD DECISIONS",,
-MENU_WORLD_GRAY,El mundo sigue gris. Libera una región venciendo a quien manda en ella: queda a color para siempre.,The world is still gray. Free a region by beating whoever runs it: it stays in color forever.,,
-MENU_WORLD_FREED,%d de %d regiones liberadas. Cada una te recibe con una bendición.,%d of %d regions freed. Each one welcomes you with a blessing.,,
-MENU_BONES,%d HUESOS,%d BONES,,
-MENU_BEST_FLOOR,MEJOR PISO %d,BEST FLOOR %d,,
-MENU_CODEX_PCT,CÓDICE %.0f%%,CODEX %.0f%%,,
-MENU_BACK,VOLVER,BACK,,
-MENU_UPGRADES_TITLE,MEJORAS PERMANENTES,PERMANENT UPGRADES,,
-MENU_UPGRADES_INFO,"Huesos: %d   (se ganan al terminar cada partida: 10 por piso, 1 cada 3 enemigos)","Bones: %d   (earned when each run ends: 10 per floor, 1 per 3 enemies)",,
-MENU_UPGRADE_MAX,%s — %s   [%d/%d] MÁXIMO,%s — %s   [%d/%d] MAXED,,
-MENU_UPGRADE_BUY,%s — %s   [%d/%d]   %d huesos,%s — %s   [%d/%d]   %d bones,,
-CODEX_TITLE,CÓDICE  (%.0f%% descubierto),CODEX  (%.0f%% discovered),,
-CODEX_HINT,"Elige una entrada. Las que faltan se descubren jugando: inscripciones, objetos, enemigos y jefes.","Pick an entry. The missing ones are discovered by playing: inscriptions, items, enemies and bosses.",,
-CODEX_LOCKED,Todavía sin descubrir. Sigue jugando: algo por ahí te la debe.,Not discovered yet. Keep playing: something out there owes you this one.,,
-INTRO_HINT,[cualquier tecla] seguir      [ESC] saltar la historia,[any key] continue      [ESC] skip the story,,
-INTRO_CHOOSE_TITLE,ELIGE A TU HÉROE,CHOOSE YOUR HERO,,
-INTRO_REPLAY,Ver la historia otra vez,Watch the story again,,
-INTRO_CHOOSE_BTN,ELEGIR,CHOOSE,,
-HUD_FLOOR,PISO %d · %s,FLOOR %d · %s,,
-HUD_FLOOR_ONE,PISO 1,FLOOR 1,,
-HUD_HORMONE_TESTOSTERONA,testosterona,testosterone,,
-HUD_HORMONE_ESTROGENO,estrogeno,estrogen,,
-MAP_ROOM_COMBAT,Combate,Combat,,
-MAP_ROOM_SHOP,Tienda,Shop,,
-MAP_ROOM_LORE,Inscripción,Inscription,,
-MAP_ROOM_TREASURE,Tesoro,Treasure,,
-MAP_ROOM_REST,Descanso,Rest,,
-MAP_ROOM_TRAP,Trampa,Trap,,
-MAP_ROOM_PUZZLE,Acertijo,Riddle,,
-MAP_ROOM_SECRET,Secreta,Secret,,
-MAP_ROOM_BOSS,Jefe,Boss,,
-MAP_ROOM_INTOXICATION,Antro,Dive bar,,
-MAP_ROOM_MINIBOSS,Minijefe,Miniboss,,
-MAP_ROOM_START,Inicio,Start,,
-MAP_LABEL,%s · [M] mapa,%s · [M] map,,
-MAP_ICON_BOSS,J,B,,
-MAP_ICON_START,I,S,,
-DOOR_REQ_KEY,Llave: %s,Key: %s,,
-DOOR_REQ_INTOX,Intoxicación: %s,Intoxication: %s,,
-DOOR_REQ_PUZZLE,resolver el puzzle del piso,solve the floor's puzzle,,
-DOOR_INTOX_OPENS,La intoxicación abre la cerradura...,The intoxication opens the lock...,,
-DOOR_LOCKED,CERRADO. Requiere: %s,LOCKED. Requires: %s,,
-DOOR_SEALED,SELLADO. Limpia la habitación.,SEALED. Clear the room.,,
-DOOR_HINT_WEAPON,ARMA,WEAPON,,
-DOOR_HINT_BOSS,JEFE,BOSS,,
-DOOR_HINT_SHOP,TIENDA,SHOP,,
-DOOR_HINT_REST,DESCANSO,REST,,
-DOOR_HINT_TREASURE,TESORO,TREASURE,,
-DOOR_HINT_LORE,INSCRIPCIÓN,INSCRIPTION,,
-DOOR_HINT_PUZZLE,ACERTIJO,RIDDLE,,
-DOOR_HINT_MINIBOSS,MINIJEFE · ,MINIBOSS · ,,
-DOOR_HINT_BLESSING,BENDICIÓN,BLESSING,,
-DOOR_HINT_ALLERGY,(te da alergia),(gives you an allergy),,
-DOOR_HINT_COINS,MONEDAS,COINS,,
-DOOR_HINT_LIFE,VIDA,LIFE,,
-DOOR_HINT_HORMONE,HORMONA,HORMONE,,
-DOOR_HINT_FIGHT,SOLO PELEA,JUST A FIGHT,,
-KINGDOM_PENE,PENELANDIA,PENELAND,,
-KINGDOM_VULVA,VULVANIA,VULVANIA,,
-KINGDOM_MIXED,MIXTA,MIXED,,
-FX_NO_STAMINA,Sin estamina!,Out of stamina!,,
-FX_DASH,DASH!,DASH!,,
-FX_PUNCH,¡CRAC! (tu mano),CRACK! (your hand),,
-FX_SNEEZE,¡ACHÍS!,ACHOO!,,
-FX_INTOX,Intoxicación: %s,Intoxication: %s,,
-FX_CHARGE,¡CARGA!,CHARGE!,,
-FX_NO_WEAPON,SIN ARMA NO PASAS,"NO WEAPON, NO ENTRY",,
-FX_HORMONE_DOOR,PUERTA HORMONAL: falta %s,HORMONE DOOR: missing %s,,
-FX_FLOOR_DONE,¡PISO %d COMPLETADO!,FLOOR %d COMPLETE!,,
-FLOOR_CARD,PISO %d\n%s,FLOOR %d\n%s,,
-FLOOR_REMEMBERS,[b]%s te recuerda.[/b] Ya la liberaste una vez. Elige una bendición de regalo:,[b]%s remembers you.[/b] You already freed it once. Pick a free blessing:,,
-FLOOR_LIBERATED_TITLE,REGIÓN LIBERADA PARA SIEMPRE,REGION FREED FOREVER,,
-FLOOR_LIBERATED_BODY,%s recuperó el color y no piensa volver al gris. Próximas partidas: bendición de bienvenida.,%s got its color back and isn't going gray again. Next runs: a welcome blessing.,,
-FLOOR_BOSS_DEFEATED,[b]Jefe derrotado.[/b] Elige una mejora para el resto de la partida:,[b]Boss defeated.[/b] Pick an upgrade for the rest of the run:,,
-FLOOR_HATCH,[b]Escotilla al piso %d[/b]\n[font_size=13]Recoge lo que quieras antes: no se vuelve.[/font_size]\n[color=#b08d4a][E] Bajar[/color],[b]Hatch to floor %d[/b]\n[font_size=13]Grab whatever you want first: there's no coming back.[/font_size]\n[color=#b08d4a][E] Go down[/color],,
-BOSS_REWARD_HEALTH,+10 vida máxima,+10 max health,,
-BOSS_REWARD_STAMINA,+15 estamina máxima,+15 max stamina,,
-BOSS_REWARD_SHIELD,+10 escudo máximo,+10 max shield,,
-BLESSING_PICK,[b]Bendición de %s.[/b] Elige una:,[b]Blessing of %s.[/b] Pick one:,,
-BLESSING_LEVEL,  [nivel %d],  [level %d],,
-BLESSING_FOREIGN,  [AJENA: doble efecto + ALERGIA],  [FOREIGN: double effect + ALLERGY],,
-ENEMY_GIANT,%s Gigante,Giant %s,,
-PROP_FOUNTAIN,[color=#6aa8ff][b]Fuente de Lubricante Bendito[/b][/color]\n[font_size=13]Cura toda la vida y la estamina. Un trago por fuente.[/font_size]\n[color=#b08d4a][E] Beber[/color],[color=#6aa8ff][b]Fountain of Blessed Lube[/b][/color]\n[font_size=13]Fully heals health and stamina. One sip per fountain.[/font_size]\n[color=#b08d4a][E] Drink[/color],,
-PROP_FOUNTAIN_TOAST_TITLE,Fuente,Fountain,,
-PROP_FOUNTAIN_TOAST_BODY,Vida y estamina al máximo.,Health and stamina maxed out.,,
-PROP_INSCRIPTION,[color=#c08cff][b]Inscripción antigua[/b][/color]\n[font_size=13]Alguien grabó algo aquí antes de la censura.[/font_size]\n[color=#b08d4a][E] Leer[/color],[color=#c08cff][b]Ancient inscription[/b][/color]\n[font_size=13]Someone carved something here before the censorship.[/font_size]\n[color=#b08d4a][E] Read[/color],,
-PROP_INSCRIPTION_SAY,INSCRIPCIÓN: [b]%s.[/b] %s,INSCRIPTION: [b]%s.[/b] %s,,
-NARRATOR_NAME,NARRADOR,NARRATOR,,
-NARRATOR_HINT,▶ Enter,▶ Enter,,
-NARRATOR_LORE_UNLOCKED,Lore desbloqueado: %s,Lore unlocked: %s,,
-SHOP_BUY,[E] Comprar por %d monedas,[E] Buy for %d coins,,
-SHOP_POOR,Cuesta %d monedas. Tienes %d.,Costs %d coins. You have %d.,,
-PICKUP_TAKE,[E] Recoger,[E] Pick up,,
-PICKUP_SWAP,[E] Cambiar por tu %s (la dejas aquí),[E] Swap for your %s (you leave it here),,
-PICKUP_WIELD,[E] Empuñar,[E] Wield,,
-DEBUG_TITLE,MODO DESARROLLADOR  (F1 cierra)\nPiso %d · semilla %d · sala %s %s,DEVELOPER MODE  (F1 closes)\nFloor %d · seed %d · room %s %s,,
-DEBUG_PLAYER_HEAD,— Jugador —,— Player —,,
-DEBUG_GOD,Modo dios (no recibes daño),God mode (you take no damage),,
-DEBUG_HEAL,Curar todo,Heal all,,
-DEBUG_COINS,+50 monedas,+50 coins,,
-DEBUG_BONES,+100 huesos,+100 bones,,
-DEBUG_HORMONES,Todas las hormonas,All hormones,,
-DEBUG_INTOX,Intox %d,Intox %d,,
-DEBUG_ITEMS_HEAD,— Objetos y armas —,— Items and weapons —,,
-DEBUG_WEAPON_TAG,[ARMA] ,[WEAPON] ,,
-DEBUG_GIVE,Dar objeto,Give item,,
-DEBUG_ROOM_HEAD,— Sala actual —,— Current room —,,
-DEBUG_KILL,Matar enemigos,Kill enemies,,
-DEBUG_SECRETS,Abrir secretas,Open secrets,,
-DEBUG_MAP,Revelar mapa,Reveal map,,
-DEBUG_GOTO_HEAD,— Ir a sala —,— Go to room —,,
-DEBUG_GO,Ir,Go,,
-DEBUG_FLOOR_HEAD,— Piso —,— Floor —,,
-DEBUG_FLOOR,Piso %d,Floor %d,,
-DEBUG_CHAR_HEAD,— Personaje (reinicia el piso) —,— Character (restarts the floor) —,,
-FX_RELOAD,Recargando...,Reloading...,,
-FX_OVERHEAT,¡SOBRECALENTADA!,OVERHEATED!,,
-FX_PROTECTED,¡Protegido!,Protected!,,
-FX_CONTAGION_PICAZON,¡Picazón!,Itchy!,,
-FX_CONTAGION_ARDOR,¡Ardor!,Burning!,,
-HUD_CONTAGION_PICAZON,PICAZÓN,ITCH,,
-HUD_CONTAGION_ARDOR,ARDOR,BURN,,
-FX_VERRUGAS,¡VERRUGAS!,WARTS!,,
-FX_SIFILIS,¡Sífilis!,Syphilis!,,
-FX_REMATE,¡REMATE!,FINISHED!,,
-FX_REBROTA,¡REBROTA!,FLARE-UP!,,
-FX_GUARD,¡ABSORBIDO!,BLOCKED!,,
-FX_REVIVED,¡NO TOCABA MORIR!,NOT YOUR TIME!,,
-FX_AFFINITY_FIT,¡TE SIENTA BIEN! +50%,PERFECT FIT! +50%,,
-AFFINITY_PENE,Afinidad: Penelandia,Affinity: Penelandia,,
-AFFINITY_VULVA,Afinidad: Vulvania,Affinity: Vulvania,,
-AFFINITY_NEUTRAL,Afinidad: neutral (todos los héroes),Affinity: neutral (every hero),,
-AFFINITY_FIT,(¡te sienta bien! +50%),(it suits you! +50%),,
-STATUS_REGEN,Regeneración,Regeneration,,
-STATUS_DEFENSE,Menos daño,Less damage,,
-STATUS_MOD_SPEED,Velocidad,Speed,,
-STATUS_MOD_DAMAGE,Daño,Damage,,
-STATUS_MOD_FIRE_RATE,Cadencia,Fire rate,,
-STATUS_MOD_STAMINA_REGEN,Estamina rápida,Fast stamina,,
-STATUS_GUARD,Golpe absorbido,Hit absorbed,,
-STATUS_REVIVE,Revives una vez,Revive once,,
-FX_POP_SAFE,¡Pop!,Pop!,,
-BOSS_SHIELD,¡ESCUDO!,SHIELDED!,,
-BOSS_OVA_CYCLE,¡ESCUDO DEL CICLO!,CYCLE SHIELD!,,
-BOSS_OVA_STUN,¡OVULACIÓN INTERRUMPIDA!,OVULATION INTERRUPTED!,,
-BOSS_ADU_STOP,¡QUIETO!,FREEZE!,,
-BOSS_ADU_GO,¡CIRCULE!,KEEP MOVING!,,
-BOSS_ADU_CLOSED,VENTANILLA CERRADA,WINDOW CLOSED,,
-BOSS_HOJA_BLUSH,*se ruboriza*,*blushes*,,
-BOSS_HOJA_SHIELD,¡ESCUDO DE HOJAS!,LEAF SHIELD!,,
-BOSS_HOJA_BARE,¡AL DESCUBIERTO!,EXPOSED!,,
-BOSS_CHAN_CERA,¡SE RECALIENTA!,SHE'S REHEATING!,,
-BOSS_CHAN_TEST,¡SE RECARGA!,RECHARGING!,,
-BOSS_CHAN_OVA,¡SE REGENERA!,REGENERATING!,,
-BOSS_CHAN_ADU,¡SELLANDO PAPELES!,STAMPING PAPERS!,,
-BOSS_CHAN_HOJA,¡SE CUBRE DE HOJAS!,COVERING UP WITH LEAVES!,,
-BOSS_CHAN_BREAK,¡INTERRUMPIDO!,INTERRUPTED!,,
-BOSS_CHAN_DONE,¡RECUPERADO!,RECOVERED!,,
-BOSS_CHAN_BAR,¡INTERRÚMPELO!,INTERRUPT IT!,,
-BOSS_CHARGES,CURAS,HEALS,,
-BOSS_CH_TIRA_T,¡ATRAPA LA TIRA!,CATCH THE STRIP!,,
-BOSS_CH_TIRA_D,Tócala (o hazle dash) antes de que se recaliente.,Touch it (or dash into it) before she reheats.,,
-BOSS_CH_GUARDAESPALDAS_T,¡GUARDAESPALDAS!,BODYGUARDS!,,
-BOSS_CH_GUARDAESPALDAS_D,Ábrete paso con dash y pégale de cerca.,Dash through and hit him up close.,,
-BOSS_CH_CARRERA_T,¡CARRERA AL ÓVULO!,RACE TO THE EGG!,,
-BOSS_CH_CARRERA_D,Llega al óvulo antes que la manada.,Reach the egg before the pack does.,,
-BOSS_CH_GUARDIAN_T,¡EL ÓVULO REAL!,THE ROYAL EGG!,,
-BOSS_CH_GUARDIAN_D,Destruye a su guardián.,Destroy her guardian.,,
-BOSS_CH_CLONES_T,¡TRES REINAS!,THREE QUEENS!,,
-BOSS_CH_CLONES_D,Pega a la real: solo ella tiene sombra.,Hit the real one: only she casts a shadow.,,
-BOSS_CH_VELAS_T,¡ENCIENDE LOS BRASEROS!,LIGHT THE BRAZIERS!,,
-BOSS_CH_VELAS_D,Quédate sobre cada uno hasta que prenda.,Stand on each one until it lights.,,
-BOSS_CH_VENTANILLAS_T,¡TRÁMITE!,PAPERWORK!,,
-BOSS_CH_VENTANILLAS_D,Pisa las ventanillas en orden:,Step on the windows in order:,,
-BOSS_CH_APAGON_T,¡APAGÓN DE OFICINA!,OFFICE BLACKOUT!,,
-BOSS_CH_APAGON_D,Encuéntralo en la oscuridad y pégale.,Find him in the dark and hit him.,,
-BOSS_CH_LINTERNA_T,¡INSPECCIÓN!,INSPECTION!,,
-BOSS_CH_LINTERNA_D,Llega al interruptor sin que el haz te toque.,Reach the switch without the beam touching you.,,
-BOSS_CH_LINTERNA_HIT,¡Visto! Vuelves al inicio,Spotted! Back to the start,,
-BOSS_CH_SELLO_T,¡DEVUELVE EL SELLO!,RETURN TO SENDER!,,
-BOSS_CH_SELLO_D,Haz dash contra el sello cuando llegue.,Dash into the stamp as it arrives.,,
-BOSS_CH_BURBUJA_T,¡BURBUJA DE HOJAS!,LEAF BUBBLE!,,
-BOSS_CH_BURBUJA_D,Mete balas por la abertura.,Shoot through the gap.,,
-BOSS_CH_APAGON_CENSURADO_T,¡APAGÓN CENSURADO!,CENSORED BLACKOUT!,,
-BOSS_CH_APAGON_CENSURADO_D,Encuéntrala en la oscuridad y pégale.,Find her in the dark and hit her.,,
-BOSS_CH_ACHICA_T,¡SE CIERRA LA SALA!,THE ROOM IS CLOSING!,,
-BOSS_CH_ACHICA_D,Llega al botón antes de quedar encerrado.,Reach the button before you're sealed in.,,
-BOSS_CH_CLONES_HOJAS_T,¡CUATRO HOJAS!,FOUR LEAVES!,,
-BOSS_CH_CLONES_HOJAS_D,Pega a la real: solo ella tiene sombra.,Hit the real one: only she casts a shadow.,,
-BOSS_CH_SECUENCIA_T,¡COPIA EL BAILE!,COPY THE DANCE!,,
-BOSS_CH_SECUENCIA_D,Repite la secuencia con dashes.,Repeat the sequence with dashes.,,
+INTOX_TIER_0,SOBRIO,SOBER,,SOBRE
+INTOX_TIER_1,ACHISPADO,TIPSY,,BEURRÉ
+INTOX_TIER_2,BORRACHO,DRUNK,,SAOUL
+INTOX_TIER_3,BLACKOUT,BLACKOUT,,BLACKOUT
+GAMEOVER_VICTORY_TITLE,SE ACABÓ EL PUDOR,THE PRUDERY IS OVER,,"FINI, LA PUDEUR"
+GAMEOVER_INSULT_1,FIN DEL TRÁMITE. SIGUIENTE.,END OF PROCEDURE. NEXT.,,FIN DE LA DÉMARCHE. SUIVANT.
+GAMEOVER_INSULT_2,SE TE CAYÓ EL PENACHO,YOUR CREST FELL OFF,,TON PANACHE EST TOMBÉ
+GAMEOVER_INSULT_3,VUELVE AL ÚTERO,GET BACK IN THE WOMB,,RETOURNE DANS L'UTÉRUS
+GAMEOVER_INSULT_4,HASTA MI ABUELA LO HACE MEJOR,EVEN MY GRANDMA DOES IT BETTER,,MÊME MAMIE FAIT MIEUX
+GAMEOVER_INSULT_5,EL HÍGADO TE LLORA,YOUR LIVER IS WEEPING,,TON FOIE PLEURE
+GAMEOVER_INSULT_6,LECHE DERRAMADA. A LLORAR,SPILLED MILK. GO CRY,,LAIT RENVERSÉ. VA PLEURER
+GAMEOVER_INSULT_7,ERROR 404: DASH NO ENCONTRADO,ERROR 404: DASH NOT FOUND,,ERREUR 404 : DASH INTROUVABLE
+GAMEOVER_RUN,LA PARTIDA,THE RUN,,LA PARTIE
+GAMEOVER_FLOOR,PISO,FLOOR,,ÉTAGE
+GAMEOVER_ENEMIES,ENEMIGOS,ENEMIES,,ENNEMIS
+GAMEOVER_TIME,TIEMPO,TIME,,TEMPS
+GAMEOVER_BONES,HUESOS,BONES,,OS
+GAMEOVER_BONES_TOTAL,"Total: %d huesos. Gástalos en Mejoras, en el menú.","Total: %d bones. Spend them on Upgrades, in the menu.",,"Total : %d os. Dépense-les dans Améliorations, au menu."
+GAMEOVER_RETRY,OTRA VEZ,AGAIN,,ENCORE
+GAMEOVER_MENU,MENÚ,MENU,,MENU
+GAMEOVER_QUIT,RENDIRSE,GIVE UP,,ABANDONNER
+MENU_NEW_GAME,NUEVA RUN,NEW RUN,,NOUVELLE RUN
+MENU_UPGRADES,MEJORAS,UPGRADES,,AMÉLIORATIONS
+MENU_CODEX,CÓDICE,CODEX,,CODEX
+MENU_QUIT,SALIR,QUIT,,QUITTER
+MENU_WORLD,EL MUNDO,THE WORLD,,LE MONDE
+MENU_TITLE,ROGUE REPRODUCTIVE,ROGUE REPRODUCTIVE,,ROGUE REPRODUCTIVE
+MENU_SUBTITLE,"LA GRAN CENSURA · ÓRGANOS, HORMONAS Y MALAS DECISIONES","THE GREAT CENSORSHIP · ORGANS, HORMONES AND BAD DECISIONS",,"LA GRANDE CENSURE · ORGANES, HORMONES ET MAUVAISES DÉCISIONS"
+MENU_WORLD_GRAY,El mundo sigue gris. Libera una región venciendo a quien manda en ella: queda a color para siempre.,The world is still gray. Free a region by beating whoever runs it: it stays in color forever.,,Le monde est toujours gris. Libère une région en battant qui la dirige : elle reste en couleur pour toujours.
+MENU_WORLD_FREED,%d de %d regiones liberadas. Cada una te recibe con una bendición.,%d of %d regions freed. Each one welcomes you with a blessing.,,%d régions libérées sur %d. Chacune t'accueille avec une bénédiction.
+MENU_BONES,%d HUESOS,%d BONES,,%d OS
+MENU_BEST_FLOOR,MEJOR PISO %d,BEST FLOOR %d,,MEILLEUR ÉTAGE %d
+MENU_CODEX_PCT,CÓDICE %.0f%%,CODEX %.0f%%,,CODEX %.0f%%
+MENU_BACK,VOLVER,BACK,,RETOUR
+MENU_UPGRADES_TITLE,MEJORAS PERMANENTES,PERMANENT UPGRADES,,AMÉLIORATIONS PERMANENTES
+MENU_UPGRADES_INFO,"Huesos: %d   (se ganan al terminar cada partida: 10 por piso, 1 cada 3 enemigos)","Bones: %d   (earned when each run ends: 10 per floor, 1 per 3 enemies)",,"Os : %d   (gagnés à la fin de chaque partie : 10 par étage, 1 pour 3 ennemis)"
+MENU_UPGRADE_MAX,%s — %s   [%d/%d] MÁXIMO,%s — %s   [%d/%d] MAXED,,%s — %s   [%d/%d] MAX
+MENU_UPGRADE_BUY,%s — %s   [%d/%d]   %d huesos,%s — %s   [%d/%d]   %d bones,,%s — %s   [%d/%d]   %d os
+CODEX_TITLE,CÓDICE  (%.0f%% descubierto),CODEX  (%.0f%% discovered),,CODEX  (%.0f%% découvert)
+CODEX_HINT,"Elige una entrada. Las que faltan se descubren jugando: inscripciones, objetos, enemigos y jefes.","Pick an entry. The missing ones are discovered by playing: inscriptions, items, enemies and bosses.",,"Choisis une entrée. Les manquantes se découvrent en jouant : inscriptions, objets, ennemis et boss."
+CODEX_LOCKED,Todavía sin descubrir. Sigue jugando: algo por ahí te la debe.,Not discovered yet. Keep playing: something out there owes you this one.,,Pas encore découvert. Continue de jouer : quelque chose par là te la doit.
+INTRO_HINT,[cualquier tecla] seguir      [ESC] saltar la historia,[any key] continue      [ESC] skip the story,,[une touche] continuer      [ÉCHAP] passer l'histoire
+INTRO_CHOOSE_TITLE,ELIGE A TU HÉROE,CHOOSE YOUR HERO,,CHOISIS TON HÉROS
+INTRO_REPLAY,Ver la historia otra vez,Watch the story again,,Revoir l'histoire
+INTRO_CHOOSE_BTN,ELEGIR,CHOOSE,,CHOISIR
+HUD_FLOOR,PISO %d · %s,FLOOR %d · %s,,ÉTAGE %d · %s
+HUD_FLOOR_ONE,PISO 1,FLOOR 1,,ÉTAGE 1
+HUD_HORMONE_TESTOSTERONA,testosterona,testosterone,,testostérone
+HUD_HORMONE_ESTROGENO,estrogeno,estrogen,,œstrogène
+MAP_ROOM_COMBAT,Combate,Combat,,Combat
+MAP_ROOM_SHOP,Tienda,Shop,,Boutique
+MAP_ROOM_LORE,Inscripción,Inscription,,Inscription
+MAP_ROOM_TREASURE,Tesoro,Treasure,,Trésor
+MAP_ROOM_REST,Descanso,Rest,,Repos
+MAP_ROOM_TRAP,Trampa,Trap,,Piège
+MAP_ROOM_PUZZLE,Acertijo,Riddle,,Énigme
+MAP_ROOM_SECRET,Secreta,Secret,,Secrète
+MAP_ROOM_BOSS,Jefe,Boss,,Boss
+MAP_ROOM_INTOXICATION,Antro,Dive bar,,Bouge
+MAP_ROOM_MINIBOSS,Minijefe,Miniboss,,Mini-boss
+MAP_ROOM_START,Inicio,Start,,Départ
+MAP_LABEL,%s · [M] mapa,%s · [M] map,,%s · [M] carte
+MAP_ICON_BOSS,J,B,,B
+MAP_ICON_START,I,S,,D
+DOOR_REQ_KEY,Llave: %s,Key: %s,,Clé : %s
+DOOR_REQ_INTOX,Intoxicación: %s,Intoxication: %s,,Intoxication : %s
+DOOR_REQ_PUZZLE,resolver el puzzle del piso,solve the floor's puzzle,,résoudre l'énigme de l'étage
+DOOR_INTOX_OPENS,La intoxicación abre la cerradura...,The intoxication opens the lock...,,L'intoxication ouvre la serrure...
+DOOR_LOCKED,CERRADO. Requiere: %s,LOCKED. Requires: %s,,FERMÉ. Exige : %s
+DOOR_SEALED,SELLADO. Limpia la habitación.,SEALED. Clear the room.,,SCELLÉ. Nettoie la salle.
+DOOR_HINT_WEAPON,ARMA,WEAPON,,ARME
+DOOR_HINT_BOSS,JEFE,BOSS,,BOSS
+DOOR_HINT_SHOP,TIENDA,SHOP,,BOUTIQUE
+DOOR_HINT_REST,DESCANSO,REST,,REPOS
+DOOR_HINT_TREASURE,TESORO,TREASURE,,TRÉSOR
+DOOR_HINT_LORE,INSCRIPCIÓN,INSCRIPTION,,INSCRIPTION
+DOOR_HINT_PUZZLE,ACERTIJO,RIDDLE,,ÉNIGME
+DOOR_HINT_MINIBOSS,MINIJEFE · ,MINIBOSS · ,,MINI-BOSS · 
+DOOR_HINT_BLESSING,BENDICIÓN,BLESSING,,BÉNÉDICTION
+DOOR_HINT_ALLERGY,(te da alergia),(gives you an allergy),,(donne une allergie)
+DOOR_HINT_COINS,MONEDAS,COINS,,PIÈCES
+DOOR_HINT_LIFE,VIDA,LIFE,,VIE
+DOOR_HINT_HORMONE,HORMONA,HORMONE,,HORMONE
+DOOR_HINT_FIGHT,SOLO PELEA,JUST A FIGHT,,JUSTE UN COMBAT
+KINGDOM_PENE,PENELANDIA,PENELAND,,PÉNISLANDIE
+KINGDOM_VULVA,VULVANIA,VULVANIA,,VULVANIE
+KINGDOM_MIXED,MIXTA,MIXED,,MIXTE
+FX_NO_STAMINA,Sin estamina!,Out of stamina!,,Plus d'endurance !
+FX_DASH,DASH!,DASH!,,DASH !
+FX_PUNCH,¡CRAC! (tu mano),CRACK! (your hand),,CRAC ! (ta main)
+FX_SNEEZE,¡ACHÍS!,ACHOO!,,ATCHOUM !
+FX_INTOX,Intoxicación: %s,Intoxication: %s,,Intoxication : %s
+FX_CHARGE,¡CARGA!,CHARGE!,,CHARGE !
+FX_NO_WEAPON,SIN ARMA NO PASAS,"NO WEAPON, NO ENTRY",,"PAS D'ARME, PAS D'ENTRÉE"
+FX_HORMONE_DOOR,PUERTA HORMONAL: falta %s,HORMONE DOOR: missing %s,,PORTE HORMONALE : il manque %s
+FX_FLOOR_DONE,¡PISO %d COMPLETADO!,FLOOR %d COMPLETE!,,ÉTAGE %d TERMINÉ !
+FLOOR_CARD,PISO %d\n%s,FLOOR %d\n%s,,ÉTAGE %d\n%s
+FLOOR_REMEMBERS,[b]%s te recuerda.[/b] Ya la liberaste una vez. Elige una bendición de regalo:,[b]%s remembers you.[/b] You already freed it once. Pick a free blessing:,,[b]%s se souvient de toi.[/b] Tu l'as déjà libérée une fois. Choisis une bénédiction offerte :
+FLOOR_LIBERATED_TITLE,REGIÓN LIBERADA PARA SIEMPRE,REGION FREED FOREVER,,RÉGION LIBÉRÉE POUR TOUJOURS
+FLOOR_LIBERATED_BODY,%s recuperó el color y no piensa volver al gris. Próximas partidas: bendición de bienvenida.,%s got its color back and isn't going gray again. Next runs: a welcome blessing.,,%s a retrouvé sa couleur et ne retournera pas au gris. Prochaines parties : bénédiction de bienvenue.
+FLOOR_BOSS_DEFEATED,[b]Jefe derrotado.[/b] Elige una mejora para el resto de la partida:,[b]Boss defeated.[/b] Pick an upgrade for the rest of the run:,,[b]Boss vaincu.[/b] Choisis une amélioration pour le reste de la partie :
+FLOOR_HATCH,[b]Escotilla al piso %d[/b]\n[font_size=13]Recoge lo que quieras antes: no se vuelve.[/font_size]\n[color=#b08d4a][E] Bajar[/color],[b]Hatch to floor %d[/b]\n[font_size=13]Grab whatever you want first: there's no coming back.[/font_size]\n[color=#b08d4a][E] Go down[/color],,[b]Trappe vers l'étage %d[/b]\n[font_size=13]Ramasse ce que tu veux avant : pas de retour.[/font_size]\n[color=#b08d4a][E] Descendre[/color]
+BOSS_REWARD_HEALTH,+10 vida máxima,+10 max health,,+10 PV max
+BOSS_REWARD_STAMINA,+15 estamina máxima,+15 max stamina,,+15 endurance max
+BOSS_REWARD_SHIELD,+10 escudo máximo,+10 max shield,,+10 bouclier max
+BLESSING_PICK,[b]Bendición de %s.[/b] Elige una:,[b]Blessing of %s.[/b] Pick one:,,[b]Bénédiction de %s.[/b] Choisis-en une :
+BLESSING_LEVEL,  [nivel %d],  [level %d],,  [niveau %d]
+BLESSING_FOREIGN,  [AJENA: doble efecto + ALERGIA],  [FOREIGN: double effect + ALLERGY],,  [ÉTRANGÈRE : double effet + ALLERGIE]
+ENEMY_GIANT,%s Gigante,Giant %s,,%s Géant
+PROP_FOUNTAIN,[color=#6aa8ff][b]Fuente de Lubricante Bendito[/b][/color]\n[font_size=13]Cura toda la vida y la estamina. Un trago por fuente.[/font_size]\n[color=#b08d4a][E] Beber[/color],[color=#6aa8ff][b]Fountain of Blessed Lube[/b][/color]\n[font_size=13]Fully heals health and stamina. One sip per fountain.[/font_size]\n[color=#b08d4a][E] Drink[/color],,[color=#6aa8ff][b]Fontaine de Lubrifiant Béni[/b][/color]\n[font_size=13]Soigne toute la vie et l'endurance. Une gorgée par fontaine.[/font_size]\n[color=#b08d4a][E] Boire[/color]
+PROP_FOUNTAIN_TOAST_TITLE,Fuente,Fountain,,Fontaine
+PROP_FOUNTAIN_TOAST_BODY,Vida y estamina al máximo.,Health and stamina maxed out.,,Vie et endurance au max.
+PROP_INSCRIPTION,[color=#c08cff][b]Inscripción antigua[/b][/color]\n[font_size=13]Alguien grabó algo aquí antes de la censura.[/font_size]\n[color=#b08d4a][E] Leer[/color],[color=#c08cff][b]Ancient inscription[/b][/color]\n[font_size=13]Someone carved something here before the censorship.[/font_size]\n[color=#b08d4a][E] Read[/color],,[color=#c08cff][b]Inscription ancienne[/b][/color]\n[font_size=13]Quelqu'un a gravé quelque chose ici avant la censure.[/font_size]\n[color=#b08d4a][E] Lire[/color]
+PROP_INSCRIPTION_SAY,INSCRIPCIÓN: [b]%s.[/b] %s,INSCRIPTION: [b]%s.[/b] %s,,INSCRIPTION : [b]%s.[/b] %s
+NARRATOR_NAME,NARRADOR,NARRATOR,,NARRATEUR
+NARRATOR_HINT,▶ Enter,▶ Enter,,▶ Entrée
+NARRATOR_LORE_UNLOCKED,Lore desbloqueado: %s,Lore unlocked: %s,,Lore débloqué : %s
+SHOP_BUY,[E] Comprar por %d monedas,[E] Buy for %d coins,,[E] Acheter pour %d pièces
+SHOP_POOR,Cuesta %d monedas. Tienes %d.,Costs %d coins. You have %d.,,Coûte %d pièces. Tu en as %d.
+PICKUP_TAKE,[E] Recoger,[E] Pick up,,[E] Ramasser
+PICKUP_SWAP,[E] Cambiar por tu %s (la dejas aquí),[E] Swap for your %s (you leave it here),,[E] Échanger contre ton %s (tu le laisses ici)
+PICKUP_WIELD,[E] Empuñar,[E] Wield,,[E] Empoigner
+DEBUG_TITLE,MODO DESARROLLADOR  (F1 cierra)\nPiso %d · semilla %d · sala %s %s,DEVELOPER MODE  (F1 closes)\nFloor %d · seed %d · room %s %s,,MODE DÉVELOPPEUR  (F1 ferme)\nÉtage %d · graine %d · salle %s %s
+DEBUG_PLAYER_HEAD,— Jugador —,— Player —,,— Joueur —
+DEBUG_GOD,Modo dios (no recibes daño),God mode (you take no damage),,Mode dieu (aucun dégât)
+DEBUG_HEAL,Curar todo,Heal all,,Tout soigner
+DEBUG_COINS,+50 monedas,+50 coins,,+50 pièces
+DEBUG_BONES,+100 huesos,+100 bones,,+100 os
+DEBUG_HORMONES,Todas las hormonas,All hormones,,Toutes les hormones
+DEBUG_INTOX,Intox %d,Intox %d,,Intox %d
+DEBUG_ITEMS_HEAD,— Objetos y armas —,— Items and weapons —,,— Objets et armes —
+DEBUG_WEAPON_TAG,[ARMA] ,[WEAPON] ,,[ARME] 
+DEBUG_GIVE,Dar objeto,Give item,,Donner l'objet
+DEBUG_ROOM_HEAD,— Sala actual —,— Current room —,,— Salle actuelle —
+DEBUG_KILL,Matar enemigos,Kill enemies,,Tuer les ennemis
+DEBUG_SECRETS,Abrir secretas,Open secrets,,Ouvrir les secrètes
+DEBUG_MAP,Revelar mapa,Reveal map,,Révéler la carte
+DEBUG_GOTO_HEAD,— Ir a sala —,— Go to room —,,— Aller à la salle —
+DEBUG_GO,Ir,Go,,Aller
+DEBUG_FLOOR_HEAD,— Piso —,— Floor —,,— Étage —
+DEBUG_FLOOR,Piso %d,Floor %d,,Étage %d
+DEBUG_CHAR_HEAD,— Personaje (reinicia el piso) —,— Character (restarts the floor) —,,— Personnage (relance l'étage) —
+FX_RELOAD,Recargando...,Reloading...,,Rechargement...
+FX_OVERHEAT,¡SOBRECALENTADA!,OVERHEATED!,,SURCHAUFFE !
+FX_PROTECTED,¡Protegido!,Protected!,,Protégé !
+FX_CONTAGION_PICAZON,¡Picazón!,Itchy!,,Ça gratte !
+FX_CONTAGION_ARDOR,¡Ardor!,Burning!,,Ça brûle !
+HUD_CONTAGION_PICAZON,PICAZÓN,ITCH,,DÉMANG.
+HUD_CONTAGION_ARDOR,ARDOR,BURN,,BRÛLURE
+FX_VERRUGAS,¡VERRUGAS!,WARTS!,,VERRUES !
+FX_SIFILIS,¡Sífilis!,Syphilis!,,Syphilis !
+FX_REMATE,¡REMATE!,FINISHED!,,ACHEVÉ !
+FX_REBROTA,¡REBROTA!,FLARE-UP!,,ÇA REPOUSSE !
+FX_GUARD,¡ABSORBIDO!,BLOCKED!,,ABSORBÉ !
+FX_REVIVED,¡NO TOCABA MORIR!,NOT YOUR TIME!,,PAS ENCORE L'HEURE !
+FX_AFFINITY_FIT,¡TE SIENTA BIEN! +50%,PERFECT FIT! +50%,,TAILLE PARFAITE ! +50%
+AFFINITY_PENE,Afinidad: Penelandia,Affinity: Penelandia,,Affinité : Pénislandie
+AFFINITY_VULVA,Afinidad: Vulvania,Affinity: Vulvania,,Affinité : Vulvanie
+AFFINITY_NEUTRAL,Afinidad: neutral (todos los héroes),Affinity: neutral (every hero),,Affinité : neutre (tous les héros)
+AFFINITY_FIT,(¡te sienta bien! +50%),(it suits you! +50%),,(ça te va bien ! +50%)
+STATUS_REGEN,Regeneración,Regeneration,,Régénération
+STATUS_DEFENSE,Menos daño,Less damage,,Moins de dégâts
+STATUS_MOD_SPEED,Velocidad,Speed,,Vitesse
+STATUS_MOD_DAMAGE,Daño,Damage,,Dégâts
+STATUS_MOD_FIRE_RATE,Cadencia,Fire rate,,Cadence
+STATUS_MOD_STAMINA_REGEN,Estamina rápida,Fast stamina,,Endurance rapide
+STATUS_GUARD,Golpe absorbido,Hit absorbed,,Coup absorbé
+STATUS_REVIVE,Revives una vez,Revive once,,Tu revis une fois
+FX_POP_SAFE,¡Pop!,Pop!,,Pop !
+BOSS_SHIELD,¡ESCUDO!,SHIELDED!,,BOUCLIER !
+BOSS_OVA_CYCLE,¡ESCUDO DEL CICLO!,CYCLE SHIELD!,,BOUCLIER DU CYCLE !
+BOSS_OVA_STUN,¡OVULACIÓN INTERRUMPIDA!,OVULATION INTERRUPTED!,,OVULATION INTERROMPUE !
+BOSS_ADU_STOP,¡QUIETO!,FREEZE!,,ARRÊTEZ-VOUS !
+BOSS_ADU_GO,¡CIRCULE!,KEEP MOVING!,,CIRCULEZ !
+BOSS_ADU_CLOSED,VENTANILLA CERRADA,WINDOW CLOSED,,GUICHET FERMÉ
+BOSS_HOJA_BLUSH,*se ruboriza*,*blushes*,,*rougit*
+BOSS_HOJA_SHIELD,¡ESCUDO DE HOJAS!,LEAF SHIELD!,,BOUCLIER DE FEUILLES !
+BOSS_HOJA_BARE,¡AL DESCUBIERTO!,EXPOSED!,,À DÉCOUVERT !
+BOSS_CHAN_CERA,¡SE RECALIENTA!,SHE'S REHEATING!,,ELLE RÉCHAUFFE !
+BOSS_CHAN_TEST,¡SE RECARGA!,RECHARGING!,,ELLE RECHARGE !
+BOSS_CHAN_OVA,¡SE REGENERA!,REGENERATING!,,ELLE SE RÉGÉNÈRE !
+BOSS_CHAN_ADU,¡SELLANDO PAPELES!,STAMPING PAPERS!,,TAMPONNE DES PAPIERS !
+BOSS_CHAN_HOJA,¡SE CUBRE DE HOJAS!,COVERING UP WITH LEAVES!,,ELLE SE COUVRE DE FEUILLES !
+BOSS_CHAN_BREAK,¡INTERRUMPIDO!,INTERRUPTED!,,INTERROMPU !
+BOSS_CHAN_DONE,¡RECUPERADO!,RECOVERED!,,RÉCUPÉRÉ !
+BOSS_CHAN_BAR,¡INTERRÚMPELO!,INTERRUPT IT!,,INTERROMPS-LE !
+BOSS_CHARGES,CURAS,HEALS,,SOINS
+BOSS_CH_TIRA_T,¡ATRAPA LA TIRA!,CATCH THE STRIP!,,ATTRAPE LA BANDE !
+BOSS_CH_TIRA_D,Tócala (o hazle dash) antes de que se recaliente.,Touch it (or dash into it) before she reheats.,,Touche-la (ou dashe dessus) avant qu'elle ne se réchauffe.
+BOSS_CH_GUARDAESPALDAS_T,¡GUARDAESPALDAS!,BODYGUARDS!,,GARDES DU CORPS !
+BOSS_CH_GUARDAESPALDAS_D,Ábrete paso con dash y pégale de cerca.,Dash through and hit him up close.,,Fraie-toi un chemin au dash et frappe-le de près.
+BOSS_CH_CARRERA_T,¡CARRERA AL ÓVULO!,RACE TO THE EGG!,,COURSE À L'OVULE !
+BOSS_CH_CARRERA_D,Llega al óvulo antes que la manada.,Reach the egg before the pack does.,,Atteins l'ovule avant la meute.
+BOSS_CH_GUARDIAN_T,¡EL ÓVULO REAL!,THE ROYAL EGG!,,L'OVULE ROYAL !
+BOSS_CH_GUARDIAN_D,Destruye a su guardián.,Destroy her guardian.,,Détruis son gardien.
+BOSS_CH_CLONES_T,¡TRES REINAS!,THREE QUEENS!,,TROIS REINES !
+BOSS_CH_CLONES_D,Pega a la real: solo ella tiene sombra.,Hit the real one: only she casts a shadow.,,Frappe la vraie : elle seule a une ombre.
+BOSS_CH_VELAS_T,¡ENCIENDE LOS BRASEROS!,LIGHT THE BRAZIERS!,,ALLUME LES BRASEROS !
+BOSS_CH_VELAS_D,Quédate sobre cada uno hasta que prenda.,Stand on each one until it lights.,,Reste sur chacun jusqu'à ce qu'il s'allume.
+BOSS_CH_VENTANILLAS_T,¡TRÁMITE!,PAPERWORK!,,DÉMARCHES !
+BOSS_CH_VENTANILLAS_D,Pisa las ventanillas en orden:,Step on the windows in order:,,Marche sur les guichets dans l'ordre :
+BOSS_CH_APAGON_T,¡APAGÓN DE OFICINA!,OFFICE BLACKOUT!,,PANNE DE BUREAU !
+BOSS_CH_APAGON_D,Encuéntralo en la oscuridad y pégale.,Find him in the dark and hit him.,,Trouve-le dans le noir et frappe-le.
+BOSS_CH_LINTERNA_T,¡INSPECCIÓN!,INSPECTION!,,INSPECTION !
+BOSS_CH_LINTERNA_D,Llega al interruptor sin que el haz te toque.,Reach the switch without the beam touching you.,,Atteins l'interrupteur sans que le faisceau te touche.
+BOSS_CH_LINTERNA_HIT,¡Visto! Vuelves al inicio,Spotted! Back to the start,,Repéré ! Retour au départ
+BOSS_CH_SELLO_T,¡DEVUELVE EL SELLO!,RETURN TO SENDER!,,RENVOI À L'ENVOYEUR !
+BOSS_CH_SELLO_D,Haz dash contra el sello cuando llegue.,Dash into the stamp as it arrives.,,Dashe sur le tampon quand il arrive.
+BOSS_CH_BURBUJA_T,¡BURBUJA DE HOJAS!,LEAF BUBBLE!,,BULLE DE FEUILLES !
+BOSS_CH_BURBUJA_D,Mete balas por la abertura.,Shoot through the gap.,,Fais passer les balles par l'ouverture.
+BOSS_CH_APAGON_CENSURADO_T,¡APAGÓN CENSURADO!,CENSORED BLACKOUT!,,PANNE CENSURÉE !
+BOSS_CH_APAGON_CENSURADO_D,Encuéntrala en la oscuridad y pégale.,Find her in the dark and hit her.,,Trouve-la dans le noir et frappe-la.
+BOSS_CH_ACHICA_T,¡SE CIERRA LA SALA!,THE ROOM IS CLOSING!,,LA SALLE SE RÉTRÉCIT !
+BOSS_CH_ACHICA_D,Llega al botón antes de quedar encerrado.,Reach the button before you're sealed in.,,Atteins le bouton avant d'être enfermé.
+BOSS_CH_CLONES_HOJAS_T,¡CUATRO HOJAS!,FOUR LEAVES!,,QUATRE FEUILLES !
+BOSS_CH_CLONES_HOJAS_D,Pega a la real: solo ella tiene sombra.,Hit the real one: only she casts a shadow.,,Frappe la vraie : elle seule a une ombre.
+BOSS_CH_SECUENCIA_T,¡COPIA EL BAILE!,COPY THE DANCE!,,COPIE LA DANSE !
+BOSS_CH_SECUENCIA_D,Repite la secuencia con dashes.,Repeat the sequence with dashes.,,Répète la séquence avec des dashs.

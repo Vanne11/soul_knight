@@ -1,58 +1,60 @@
 keys,es,en,es_ES,fr
-EDU_FACT_LABEL,¿SABÍAS QUE...?,DID YOU KNOW...?,,
-EDU_SOURCE_LABEL,Fuente: %s,Source: %s,,
-EDU_DOC_NAME,DRA. PREVENTINA,DR. PREVENTINA,,
-EDU_DOC_PROMPT_SICK,Consultorio: curar el contagio (gratis),Clinic: cure the infection (free),,
-EDU_DOC_PROMPT_OK,Consultorio: consulta rápida (un dato),Clinic: quick check-up (a tip),,
-EDU_CONDOM_PROMPT,Preservativos de bolsillo: inmunidad al contagio un rato (%d $),Pocket condoms: infection immunity for a while (%d $),,
-EDU_CONDOM_POOR,"Preservativos de bolsillo (%d $, te faltan monedas)","Pocket condoms (%d $, not enough coins)",,
-EDU_VAX_PROMPT,Vacuna VPH: inmune al VPH Verrugón esta partida (%d $),HPV vaccine: immune to HPV Verruga this run (%d $),,
-EDU_VAX_POOR,"Vacuna VPH (%d $, te faltan monedas)","HPV vaccine (%d $, not enough coins)",,
-EDU_VAX_DONE,Vacuna VPH: ya estás vacunado,HPV vaccine: you're already vaccinated,,
-EDU_VAX_TOAST,Vacunado contra el VPH,Vaccinated against HPV,,
-EDU_POSTER_PROMPT,Leer el póster del consultorio,Read the clinic poster,,
-EDU_POSTER_SAY,"Póster del consultorio: ""Aquí se mide la presión. Lo demás, no.""","Clinic poster: ""Blood pressure is measured here. Nothing else.""",,
-EDU_MV_PLAQUE,Placa: ¿MITO O VERDAD? (opcional),Plaque: MYTH OR TRUTH? (optional),,
+EDU_FACT_LABEL,¿SABÍAS QUE...?,DID YOU KNOW...?,,TU SAVAIS QUE... ?
+EDU_SOURCE_LABEL,Fuente: %s,Source: %s,,Source : %s
+EDU_DOC_NAME,DRA. PREVENTINA,DR. PREVENTINA,,DRE PRÉVENTINE
+EDU_DOC_PROMPT_SICK,Consultorio: curar el contagio (gratis),Clinic: cure the infection (free),Centro de salud: curar el contagio (gratis),Cabinet : soigner l'infection (gratuit)
+EDU_DOC_PROMPT_OK,Consultorio: consulta rápida (un dato),Clinic: quick check-up (a tip),Centro de salud: consulta rápida (un dato),Cabinet : consultation express (un conseil)
+EDU_CONDOM_PROMPT,Preservativos de bolsillo: inmunidad al contagio un rato (%d $),Pocket condoms: infection immunity for a while (%d $),,Capotes de poche : immunité à l'infection un moment (%d $)
+EDU_CONDOM_POOR,"Preservativos de bolsillo (%d $, te faltan monedas)","Pocket condoms (%d $, not enough coins)",,"Capotes de poche (%d $, pas assez de pièces)"
+EDU_VAX_PROMPT,Vacuna VPH: inmune al VPH Verrugón esta partida (%d $),HPV vaccine: immune to HPV Verruga this run (%d $),,Vaccin HPV : immunisé contre le HPV Verruga cette partie (%d $)
+EDU_VAX_POOR,"Vacuna VPH (%d $, te faltan monedas)","HPV vaccine (%d $, not enough coins)",,"Vaccin HPV (%d $, pas assez de pièces)"
+EDU_VAX_DONE,Vacuna VPH: ya estás vacunado,HPV vaccine: you're already vaccinated,,Vaccin HPV : tu es déjà vacciné
+EDU_VAX_TOAST,Vacunado contra el VPH,Vaccinated against HPV,,Vacciné contre le HPV
+EDU_POSTER_PROMPT,Leer el póster del consultorio,Read the clinic poster,Leer el póster del centro de salud,Lire l'affiche du cabinet
+EDU_POSTER_SAY,"Póster del consultorio: ""Aquí se mide la presión. Lo demás, no.""","Clinic poster: ""Blood pressure is measured here. Nothing else.""","Póster del centro de salud: ""Aquí se mide la tensión. Lo demás, no.""","Affiche du cabinet : « Ici, on prend la tension. Le reste, non. »"
+EDU_MV_PLAQUE,Placa: ¿MITO O VERDAD? (opcional),Plaque: MYTH OR TRUTH? (optional),,Plaque : MYTHE OU VÉRITÉ ? (facultatif)
 EDU_MV_ASK,"¿MITO O VERDAD?
 ""%s""
 Responde en las piedras, o ignóralo.","MYTH OR TRUTH?
 ""%s""
-Answer at the stones, or ignore it.",,
-EDU_MV_TRUE,Piedra VERDAD (E para responder),TRUTH stone (E to answer),,
-EDU_MV_MYTH,Piedra MITO (E para responder),MYTH stone (E to answer),,
-EDU_FACT_CONDON_USO,"Bien puesto y en cada ocasión, el preservativo es lo mejor contra las ITS. Y contra los sustos.","Used correctly and every time, the condom is the best defense against STIs. And against scares.",,
-EDU_FACT_CONDON_CADUCA,"Los preservativos caducan, y en la billetera se cocinan. Mira la fecha y guárdalos al fresco.","Condoms expire, and in a wallet they cook. Check the date and keep them cool.",,
-EDU_FACT_ITS_SIN_SINTOMAS,"Muchas ITS no dan síntomas. ""No siento nada"" no es ""estoy sano"". El test no muerde.","Many STIs have no symptoms. ""I feel nothing"" is not ""I'm healthy"". The test doesn't bite.",,
-EDU_FACT_VPH_VACUNA,La vacuna contra el VPH previene varios tipos de cáncer. Un pinchazo contra un villano final.,The HPV vaccine prevents several types of cancer. One jab against a final boss.,,
-EDU_FACT_MARCHA_ATRAS,La marcha atrás falla en cerca de 1 de cada 5 parejas al año. Las ITS ni se enteran.,Pulling out fails in about 1 in 5 couples a year. STIs don't even notice.,,
-EDU_FACT_HIMEN,El himen no certifica nada: no es un sello y cada cuerpo lo trae distinto. Nadie pide papeles.,The hymen certifies nothing: it's not a seal and every body has its own. Nobody asks for papers.,,
-EDU_FACT_TAMANO,Promedio mundial erecto: unos 13 cm. Y el placer casi nunca se mide con regla.,World average when erect: about 13 cm. And pleasure is almost never measured with a ruler.,,
-EDU_FACT_CLITORIS,"La mayoría de las mujeres necesita estimulación del clítoris para llegar al orgasmo. Es un mapa, no un misterio.","Most women need clitoral stimulation to reach orgasm. It's a map, not a mystery.",,
-EDU_FACT_INDETECTABLE,"Con tratamiento y carga viral indetectable, el VIH no se transmite sexualmente. Indetectable es igual a intransmisible.","With treatment and an undetectable viral load, HIV is not transmitted sexually. Undetectable equals untransmittable.",,
-EDU_FACT_TEST_VIH,En Chile el test de VIH es gratuito y confidencial en la red pública. Rápido y sin preguntas incómodas.,"In Chile the HIV test is free and confidential in the public network. Quick, no awkward questions.",,
-EDU_FACT_PASTILLA,"La píldora del día después funciona mejor cuanto antes se tome, y no interrumpe un embarazo ya existente.","The morning-after pill works best the sooner it's taken, and doesn't end an existing pregnancy.",,
-EDU_FACT_PRIMERA_VEZ,"Sí, se puede quedar embarazada la primera vez. La biología no lee los mitos.","Yes, you can get pregnant the first time. Biology doesn't read myths.",,
-EDU_FACT_MASTURBACION,Masturbarse no deja ciego ni peludo de manos. Es normal y no hace daño.,Masturbating doesn't make you blind or hairy-palmed. It's normal and harmless.,,
-EDU_FACT_PAP,El Papanicolau detecta a tiempo lo que el VPH puede dejar. En Chile se recomienda cada 3 años entre los 25 y los 64.,The Pap test catches in time what HPV can leave behind. In Chile it is recommended every 3 years between ages 25 and 64.,,
-EDU_FACT_HORMONAL,"Pastillas y otros métodos hormonales cuidan del embarazo, no de las ITS. Para eso, preservativo.","Pills and other hormonal methods guard against pregnancy, not STIs. For that, condoms.",,
-EDU_FACT_REGLA,"Con la regla es poco probable embarazarse, pero no imposible. ""Poco probable"" no es un método.","Pregnancy during a period is unlikely, not impossible. ""Unlikely"" is not a method.",,
-EDU_MV_MARCHA_ATRAS_Q,"Si te retiras a tiempo, no pasa nada.","If you pull out in time, nothing happens.",,
-EDU_MV_MARCHA_ATRAS_A,"Mito. Falla bastante, y a las ITS les encanta el pase libre.","Myth. It fails quite often, and STIs love a free pass.",,
-EDU_MV_PRIMERA_VEZ_Q,La primera vez no te puedes embarazar.,You can't get pregnant the first time.,,
-EDU_MV_PRIMERA_VEZ_A,Mito. El óvulo no lleva la cuenta de las veces.,Myth. The egg doesn't count how many times.,,
-EDU_MV_VACUNA_VPH_Q,Existe una vacuna contra el VPH.,There is a vaccine against HPV.,,
-EDU_MV_VACUNA_VPH_A,Verdad. Previene varios cánceres. Gloria eterna y un parche en el brazo.,True. It prevents several cancers. Eternal glory and a plaster on your arm.,,
-EDU_MV_HIMEN_Q,El himen demuestra si alguien ha tenido sexo.,The hymen proves whether someone has had sex.,,
-EDU_MV_HIMEN_A,Mito. No es un sello ni un certificado. Cada cuerpo viene a su manera.,Myth. It's no seal or certificate. Every body comes its own way.,,
-EDU_MV_PELOS_MANO_Q,Masturbarse te deja ciego o con pelos en la mano.,Masturbating makes you blind or gives you hairy palms.,,
-EDU_MV_PELOS_MANO_A,"Mito. Si fuera cierto, medio planeta andaría con bastón y guantes.","Myth. If it were true, half the planet would carry a cane and gloves.",,
-EDU_MV_SIN_SINTOMAS_Q,Puedes tener una ITS y no notar nada.,You can have an STI and notice nothing.,,
-EDU_MV_SIN_SINTOMAS_A,Verdad. Por eso existen los tests: para lo que no se ve ni pica.,True. That's why tests exist: for what neither shows nor itches.,,
-EDU_MV_DOBLE_CONDON_Q,Dos preservativos juntos protegen el doble.,Two condoms at once protect twice as much.,,
-EDU_MV_DOBLE_CONDON_A,"Mito. Se rozan entre sí y se rompen más. Uno solo, bien puesto.","Myth. They rub together and tear more. Just one, put on right.",,
-EDU_MV_TAMANO_Q,Más grande es mejor.,Bigger is better.,,
-EDU_MV_TAMANO_A,Mito. El placer depende de mil cosas y la regla no está entre ellas.,Myth. Pleasure depends on a thousand things and a ruler isn't one.,,
-EDU_MV_INDETECTABLE_Q,"Con tratamiento, una persona con VIH puede dejar de transmitirlo por vía sexual.","With treatment, a person with HIV can stop transmitting it sexually.",,
-EDU_MV_INDETECTABLE_A,"Verdad. Indetectable es igual a intransmisible. La ciencia, de pie.","True. Undetectable equals untransmittable. Science, standing ovation.",,
-EDU_MV_PASTILLA_ABORTA_Q,La píldora del día después es abortiva.,The morning-after pill is abortifacient.,,
-EDU_MV_PASTILLA_ABORTA_A,"Mito. Retrasa la ovulación; si ya hay un embarazo, no lo interrumpe.","Myth. It delays ovulation; if a pregnancy already exists, it doesn't end it.",,
+Answer at the stones, or ignore it.",,"MYTHE OU VÉRITÉ ?
+""%s""
+Réponds sur les pierres, ou ignore."
+EDU_MV_TRUE,Piedra VERDAD (E para responder),TRUTH stone (E to answer),,Pierre VÉRITÉ (E pour répondre)
+EDU_MV_MYTH,Piedra MITO (E para responder),MYTH stone (E to answer),,Pierre MYTHE (E pour répondre)
+EDU_FACT_CONDON_USO,"Bien puesto y en cada ocasión, el preservativo es lo mejor contra las ITS. Y contra los sustos.","Used correctly and every time, the condom is the best defense against STIs. And against scares.",,"Bien mis et à chaque fois, le préservatif est la meilleure défense contre les IST. Et contre les frayeurs."
+EDU_FACT_CONDON_CADUCA,"Los preservativos caducan, y en la billetera se cocinan. Mira la fecha y guárdalos al fresco.","Condoms expire, and in a wallet they cook. Check the date and keep them cool.","Los preservativos caducan, y en la cartera se cocinan. Mira la fecha y guárdalos al fresco.","Les préservatifs périment, et dans un portefeuille ils cuisent. Vérifie la date et garde-les au frais."
+EDU_FACT_ITS_SIN_SINTOMAS,"Muchas ITS no dan síntomas. ""No siento nada"" no es ""estoy sano"". El test no muerde.","Many STIs have no symptoms. ""I feel nothing"" is not ""I'm healthy"". The test doesn't bite.",,Beaucoup d'IST n'ont aucun symptôme. « Je ne sens rien » ne veut pas dire « je suis en bonne santé ». Le test ne mord pas.
+EDU_FACT_VPH_VACUNA,La vacuna contra el VPH previene varios tipos de cáncer. Un pinchazo contra un villano final.,The HPV vaccine prevents several types of cancer. One jab against a final boss.,,Le vaccin contre le HPV prévient plusieurs types de cancer. Une piqûre contre un boss final.
+EDU_FACT_MARCHA_ATRAS,La marcha atrás falla en cerca de 1 de cada 5 parejas al año. Las ITS ni se enteran.,Pulling out fails in about 1 in 5 couples a year. STIs don't even notice.,,"Le retrait échoue chez environ 1 couple sur 5 par an. Les IST, elles, ne remarquent même pas."
+EDU_FACT_HIMEN,El himen no certifica nada: no es un sello y cada cuerpo lo trae distinto. Nadie pide papeles.,The hymen certifies nothing: it's not a seal and every body has its own. Nobody asks for papers.,,L'hymen ne certifie rien : ce n'est pas un sceau et chaque corps a le sien. Personne ne demande de papiers.
+EDU_FACT_TAMANO,Promedio mundial erecto: unos 13 cm. Y el placer casi nunca se mide con regla.,World average when erect: about 13 cm. And pleasure is almost never measured with a ruler.,,Moyenne mondiale en érection : environ 13 cm. Et le plaisir se mesure rarement à la règle.
+EDU_FACT_CLITORIS,"La mayoría de las mujeres necesita estimulación del clítoris para llegar al orgasmo. Es un mapa, no un misterio.","Most women need clitoral stimulation to reach orgasm. It's a map, not a mystery.",,"La plupart des femmes ont besoin d'une stimulation du clitoris pour atteindre l'orgasme. C'est une carte, pas un mystère."
+EDU_FACT_INDETECTABLE,"Con tratamiento y carga viral indetectable, el VIH no se transmite sexualmente. Indetectable es igual a intransmisible.","With treatment and an undetectable viral load, HIV is not transmitted sexually. Undetectable equals untransmittable.",,"Sous traitement et avec une charge virale indétectable, le VIH ne se transmet pas sexuellement. Indétectable égale intransmissible."
+EDU_FACT_TEST_VIH,En Chile el test de VIH es gratuito y confidencial en la red pública. Rápido y sin preguntas incómodas.,"In Chile the HIV test is free and confidential in the public network. Quick, no awkward questions.",En España el test de VIH es gratuito y confidencial en la sanidad pública. Rápido y sin preguntas incómodas.,"Au Chili, le test du VIH est gratuit et confidentiel dans le réseau public. Rapide, sans questions gênantes."
+EDU_FACT_PASTILLA,"La píldora del día después funciona mejor cuanto antes se tome, y no interrumpe un embarazo ya existente.","The morning-after pill works best the sooner it's taken, and doesn't end an existing pregnancy.",,"La pilule du lendemain marche d'autant mieux qu'on la prend tôt, et elle n'interrompt pas une grossesse déjà en cours."
+EDU_FACT_PRIMERA_VEZ,"Sí, se puede quedar embarazada la primera vez. La biología no lee los mitos.","Yes, you can get pregnant the first time. Biology doesn't read myths.",,"Oui, on peut tomber enceinte dès la première fois. La biologie ne lit pas les mythes."
+EDU_FACT_MASTURBACION,Masturbarse no deja ciego ni peludo de manos. Es normal y no hace daño.,Masturbating doesn't make you blind or hairy-palmed. It's normal and harmless.,,Se masturber ne rend ni aveugle ni poilu des mains. C'est normal et sans danger.
+EDU_FACT_PAP,El Papanicolau detecta a tiempo lo que el VPH puede dejar. En Chile se recomienda cada 3 años entre los 25 y los 64.,The Pap test catches in time what HPV can leave behind. In Chile it is recommended every 3 years between ages 25 and 64.,La citología detecta a tiempo lo que el VPH puede dejar. Pregunta en tu centro de salud cada cuánto te toca.,"Le frottis détecte à temps ce que le HPV peut laisser. Au Chili, il est recommandé tous les 3 ans entre 25 et 64 ans."
+EDU_FACT_HORMONAL,"Pastillas y otros métodos hormonales cuidan del embarazo, no de las ITS. Para eso, preservativo.","Pills and other hormonal methods guard against pregnancy, not STIs. For that, condoms.",,"La pilule et les autres méthodes hormonales protègent de la grossesse, pas des IST. Pour ça, le préservatif."
+EDU_FACT_REGLA,"Con la regla es poco probable embarazarse, pero no imposible. ""Poco probable"" no es un método.","Pregnancy during a period is unlikely, not impossible. ""Unlikely"" is not a method.",,"Pendant les règles, une grossesse est peu probable, mais pas impossible. « Peu probable » n'est pas une méthode."
+EDU_MV_MARCHA_ATRAS_Q,"Si te retiras a tiempo, no pasa nada.","If you pull out in time, nothing happens.",,"Si tu te retires à temps, il ne se passe rien."
+EDU_MV_MARCHA_ATRAS_A,"Mito. Falla bastante, y a las ITS les encanta el pase libre.","Myth. It fails quite often, and STIs love a free pass.",,"Mythe. Ça rate souvent, et les IST adorent le laissez-passer."
+EDU_MV_PRIMERA_VEZ_Q,La primera vez no te puedes embarazar.,You can't get pregnant the first time.,La primera vez no te puedes quedar embarazada.,"La première fois, on ne peut pas tomber enceinte."
+EDU_MV_PRIMERA_VEZ_A,Mito. El óvulo no lleva la cuenta de las veces.,Myth. The egg doesn't count how many times.,,Mythe. L'ovule ne compte pas les fois.
+EDU_MV_VACUNA_VPH_Q,Existe una vacuna contra el VPH.,There is a vaccine against HPV.,,Il existe un vaccin contre le HPV.
+EDU_MV_VACUNA_VPH_A,Verdad. Previene varios cánceres. Gloria eterna y un parche en el brazo.,True. It prevents several cancers. Eternal glory and a plaster on your arm.,Verdad. Previene varios cánceres. Gloria eterna y una tirita en el brazo.,Vérité. Il prévient plusieurs cancers. Gloire éternelle et un pansement sur le bras.
+EDU_MV_HIMEN_Q,El himen demuestra si alguien ha tenido sexo.,The hymen proves whether someone has had sex.,,L'hymen prouve si quelqu'un a déjà eu des rapports.
+EDU_MV_HIMEN_A,Mito. No es un sello ni un certificado. Cada cuerpo viene a su manera.,Myth. It's no seal or certificate. Every body comes its own way.,,Mythe. Ni sceau ni certificat. Chaque corps vient à sa manière.
+EDU_MV_PELOS_MANO_Q,Masturbarse te deja ciego o con pelos en la mano.,Masturbating makes you blind or gives you hairy palms.,,Se masturber rend aveugle ou poilu des mains.
+EDU_MV_PELOS_MANO_A,"Mito. Si fuera cierto, medio planeta andaría con bastón y guantes.","Myth. If it were true, half the planet would carry a cane and gloves.",,"Mythe. Si c'était vrai, la moitié de la planète marcherait avec une canne et des gants."
+EDU_MV_SIN_SINTOMAS_Q,Puedes tener una ITS y no notar nada.,You can have an STI and notice nothing.,,Tu peux avoir une IST sans rien remarquer.
+EDU_MV_SIN_SINTOMAS_A,Verdad. Por eso existen los tests: para lo que no se ve ni pica.,True. That's why tests exist: for what neither shows nor itches.,,Vérité. C'est pour ça que les tests existent : pour ce qui ne se voit ni ne gratte.
+EDU_MV_DOBLE_CONDON_Q,Dos preservativos juntos protegen el doble.,Two condoms at once protect twice as much.,,Deux préservatifs en même temps protègent deux fois mieux.
+EDU_MV_DOBLE_CONDON_A,"Mito. Se rozan entre sí y se rompen más. Uno solo, bien puesto.","Myth. They rub together and tear more. Just one, put on right.",,"Mythe. Ils frottent l'un sur l'autre et craquent plus. Un seul, bien mis."
+EDU_MV_TAMANO_Q,Más grande es mejor.,Bigger is better.,,"Plus gros, c'est mieux."
+EDU_MV_TAMANO_A,Mito. El placer depende de mil cosas y la regla no está entre ellas.,Myth. Pleasure depends on a thousand things and a ruler isn't one.,,Mythe. Le plaisir dépend de mille choses et la règle n'en fait pas partie.
+EDU_MV_INDETECTABLE_Q,"Con tratamiento, una persona con VIH puede dejar de transmitirlo por vía sexual.","With treatment, a person with HIV can stop transmitting it sexually.",,"Sous traitement, une personne séropositive peut cesser de transmettre le VIH par voie sexuelle."
+EDU_MV_INDETECTABLE_A,"Verdad. Indetectable es igual a intransmisible. La ciencia, de pie.","True. Undetectable equals untransmittable. Science, standing ovation.",,"Vérité. Indétectable égale intransmissible. La science, ovation debout."
+EDU_MV_PASTILLA_ABORTA_Q,La píldora del día después es abortiva.,The morning-after pill is abortifacient.,,La pilule du lendemain est abortive.
+EDU_MV_PASTILLA_ABORTA_A,"Mito. Retrasa la ovulación; si ya hay un embarazo, no lo interrumpe.","Myth. It delays ovulation; if a pregnancy already exists, it doesn't end it.",,"Mythe. Elle retarde l'ovulation ; si une grossesse existe déjà, elle ne l'interrompt pas."
