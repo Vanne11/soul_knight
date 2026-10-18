@@ -1,0 +1,36 @@
+{
+  "_info": "Frases de LA PROSTATA (etapa R): presentacion y cierre de La Glandula Callada, enemigos (Goteo Tardio, Madrugador Nocturno, PSA Sospechoso) y ambiente. Las frases de ENTRADA al reino (floor_prostata y por heroe) las escribe el agente del narrador. El dato de salud va solo al codice. glandula_intro sale como subtitulo de la presentacion del jefe (src/ui/boss_intro.gd); las de enemigos (pro_*) al limpiar la sala (Prostata.note); glandula_after_<heroe> al caer la jefa (el narrador calla en pleno combate).",
+  "glandula_intro": [
+    "No dice nada. Nunca dice nada. Hasta que es tarde."
+  ],
+  "glandula_death": [
+    "Cayó sin decir nada. Fiel a su estilo.",
+    "Se calló del todo. Ya estaba callada, pero ahora en serio."
+  ],
+  "glandula_after_pitocles": [
+    "Pitocles se anota algo en la palma: \"pedir hora\". La tinta no lo convence."
+  ],
+  "glandula_after_vulvalquiria": [
+    "Vulvalquiria sale sin mirar atrás. Una sala de espera menos. Por fin."
+  ],
+  "glandula_after_ornitorrinco": [
+    "El Ornitorrinco no preguntó qué era. Ni qué le pasaba. Ñic."
+  ],
+  "pro_goteo": [
+    "Gota, gota, gota... y nada. Ya no llega como antes.",
+    "El Goteo se cortó a la mitad. Sin drama. Sin prisa. Sin presión."
+  ],
+  "pro_madrugador": [
+    "Tres veces a las tres de la mañana. El baño ya los conoce por nombre.",
+    "Se despierta, se levanta, vuelve. Se despierta, se levanta, vuelve."
+  ],
+  "pro_psa": [
+    "La cifra subió y bajó. Nadie quiso mirarla de frente.",
+    "Un número que nadie quiere abrir. Ahora flota. Qué incómodo."
+  ],
+  "prostata_ambient": [
+    "Revistas de 2009 sobre la mesa. Nadie las toca. Nadie sale.",
+    "Un dispensador de números. Va por el 4. Hace años.",
+    "Silla vacía, silla vacía, abrigo. Silencio incómodo, de los buenos."
+  ]
+}

@@ -219,6 +219,7 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	
 	get_node("/root/RunManager").current_room_index = _get_room_index(room)
 	BossIntro.on_enter_room(self, room)  # presentacion del jefe (primera vez)
+	Prostata.on_enter_room(self, room)  # codice y comentario ambiente de La Prostata (src/enemies/prostata/)
 	FloorEvents.on_room_enter(room)  # reloj de la contrarreloj / llegada al jefe
 	print("Entered room: %s at %s" % [room.room_type, room.grid_pos])
 

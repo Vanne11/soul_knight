@@ -1,0 +1,22 @@
+{
+	"name": "LA PRÓSTATA",
+	"region": "prostata",
+	"stage": 1,
+	"elite_chance": 0.12,
+	"kingdom": "prostata",
+	"tint": "d8b890",
+	"roster": ["testiculo", "trompa", "calambre"],
+	"names": ["Testículo Errante", "Trompa Escupidora", "Calambre"],
+	"extra": [
+		{"variant": "goteo_tardio", "name": "Goteo Tardío", "type": "goteo_tardio", "weight": 0.34},
+		{"variant": "madrugador", "name": "Madrugador Nocturno", "type": "madrugador", "weight": 0.3},
+		{"variant": "psa", "name": "PSA Sospechoso", "type": "psa", "weight": 0.3},
+		{"variant": "inspector_fluidos", "name": "Inspector de Fluidos", "type": "inspector", "weight": 0.06},
+		{"variant": "hemorroide", "name": "Hemorroide Fronteriza", "type": "tank", "weight": 0.04}
+	],
+	"weights": [0.04, 0.04, 0.04],
+	"boss": "glandula",
+	"boss_name": "LA GLÁNDULA CALLADA",
+	"needs": [],
+	"miniboss": {"type": "gran_urologo", "variant": "gran_urologo", "name": "El Gran Urólogo"}
+}
