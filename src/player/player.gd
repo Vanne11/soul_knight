@@ -701,6 +701,10 @@ func stop_allergy() -> void:
 ## Afinidad del objeto con el heroe: >1 si es del mismo reino (Pitocles=pene, Vulvalquiria=vulva).
 ## El resto (otro reino, neutral u ornitorrinco) funciona normal: no castiga.
 func affinity_boost(item: Item) -> float:
+	return _affinity_base(item) * Utero.item_mult(item)  # El Utero: toallas/tampon/copa rinden mas, el chocolate x2
+
+
+func _affinity_base(item: Item) -> float:
 	var aff: String = item.custom_data.get("affinity", "neutral")
 	if aff != "neutral" and _rm().character == "ornitorrinco":
 		return PLATYPUS_BOOST  # usa objetos de ambos reinos, sin alergia y con algo de provecho
