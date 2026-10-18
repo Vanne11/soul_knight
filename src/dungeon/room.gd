@@ -189,7 +189,6 @@ func nearest_walkable(pos: Vector2, margin := 18.0) -> Vector2:
 	return best
 
 
-## Igual que nearest_walkable pero con posiciones globales.
 ## Punto global dentro del rectangulo del suelo (a `margin` de los muros) y, si la sala tiene forma, en suelo pisable.
 ## Para lo que se genera con un desplazamiento (escoltas, hojas orbitando) y puede caer dentro de un muro.
 func clamp_global(pos: Vector2, margin := 40.0) -> Vector2:
@@ -200,6 +199,7 @@ func clamp_global(pos: Vector2, margin := 40.0) -> Vector2:
 	return snap_global(global_position + p, margin)
 
 
+## Igual que nearest_walkable pero con posiciones globales.
 func snap_global(pos: Vector2, margin := 18.0) -> Vector2:
 	if shape_cells.is_empty():
 		return pos  # rectangulo completo: nada que corregir

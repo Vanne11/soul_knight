@@ -1406,6 +1406,7 @@ func _watch_outsiders() -> void:
 var _last_rel := {}  # instance_id -> posicion relativa del fotograma anterior
 var _exit_logged := {}
 
+var _launch_ms := {}  # instance_id -> ultimo aviso de lanzamiento
 var _hist := {}  # instance_id -> ultimas posiciones relativas (una cada 6 fotogramas)
 
 func _track_exits(room: Room, enemies: Array) -> void:
@@ -1415,6 +1416,15 @@ func _track_exits(room: Room, enemies: Array) -> void:
 		var id: int = e.get_instance_id()
 		var rel: Vector2 = e.global_position - room.global_position
 		now[id] = rel
+		# lanzamiento: mas de 16 px en un fotograma (~1000 px/s) sin ser un dash conocido; anota el contexto
+		var pv = _last_rel.get(id)
+		if pv != null and pv.distance_to(rel) > 16.0 and Time.get_ticks_msec() - int(_launch_ms.get(id, -9999)) > 1500:
+			_launch_ms[id] = Time.get_ticks_msec()
+			var ai = e.get("ai")
+			_say("  LANZADO %s (%s) en %s %s: salto %.0f px en 1 fotograma, de %s a %s; vel=%s estado=%s modo=%s empujado_hace=%d ms capa64_mask=%s sala_forma=%s" % [
+				e.get("enemy_name"), e.get_script().resource_path.get_file(), Room.RoomType.keys()[room.room_type], room.grid_pos, pv.distance_to(rel), pv.round(), rel.round(),
+				e.get("velocity"), e.get("state"), ai.mode if ai != null else "-", Time.get_ticks_msec() - int(e.get_meta("pushed_ms", -99999)),
+				e.get_collision_mask_value(7) if e is CollisionObject2D else "-", room.shape_id])
 		if Engine.get_physics_frames() % 6 == 0:
 			var h: Array = _hist.get(id, [])
 			h.append(rel.round())
