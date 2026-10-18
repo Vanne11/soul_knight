@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = "boss_alt_5"
-title = "Algoritmo Moderador"
-text = "Un ojo sin parpadeo que revisa todo y entiende poco. Señala, reporta, pixela, bloquea y manda notificaciones en círculo. Su criterio es una lista de palabras prohibidas y un error de lectura. Dato real: los filtros automáticos de las plataformas confunden a menudo la educación sexual, la lactancia o el cáncer de mama con contenido adulto, y retiran justo lo que más falta hace. Por eso sigue haciendo falta criterio humano y una vía de apelación que no sea gritarle a un formulario. Su apelación, por cierto, está aceptada. Por fin."
+title = "El Algoritmo Moderador"
+text = "Un ojo sin párpado que revisa todo y entiende poco: es la Hoja en versión nube, porque se llenó de trabajo y contrató automatización. Señala, reporta, pixela y manda notificaciones en círculo. Dato: los filtros automáticos suelen confundir educación sexual, lactancia o cáncer de mama con contenido adulto. Hace falta criterio humano."
 category = 3
 unlock_condition = {"type": 9, "target_id": "EL ALGORITMO MODERADOR"}
 flavor_text = "Derrota al Algoritmo Moderador."

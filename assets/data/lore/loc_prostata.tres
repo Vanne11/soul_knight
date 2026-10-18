@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "loc_prostata"
+title = "La Próstata"
+text = "La zona de la que nadie habla, bajo el Perineo. El Palacio está encima y la entrada de servicio pasa por aquí: la Hoja la usaba para no mirar. Suena a ascensor y huele a sala de espera. Dato: la próstata es una glándula del tamaño de una nuez que rodea la uretra y aporta parte del líquido del semen. Con los años crece, y es normal."
+category = 4
+unlock_condition = {"type": 10, "target_id": "enter_prostata"}
+flavor_text = "Llega a la Próstata."

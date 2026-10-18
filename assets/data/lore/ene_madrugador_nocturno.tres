@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_madrugador_nocturno"
+title = "Madrugador Nocturno"
+text = "Llega en oleadas, siempre de noche y siempre tres veces, a las 3 a. m. con la misma urgencia. Apenas crees que volviste a dormir, aparece otro. Dato: levantarse varias veces por noche a orinar (nocturia) es frecuente con los años y tiene muchas causas, la próstata entre ellas. Si pasa seguido, se le cuenta al médico."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Madrugador Nocturno", "count": 10}
+flavor_text = "Mata 10 Madrugadores Nocturnos."
