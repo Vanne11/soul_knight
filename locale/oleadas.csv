@@ -1,4 +1,4 @@
 keys,es,en,es_ES,fr
-WAVE_INCOMING,¡Oleada %d de %d!,Wave %d of %d!,,
-WAVE_AMBUSH,¡Por la espalda! (%d de %d),From behind! (%d of %d),,
-WAVE_PINCER,¡Pinza! (%d de %d),Pincer! (%d of %d),,
+WAVE_INCOMING,¡Oleada %d de %d!,Wave %d of %d!,,Vague %d sur %d !
+WAVE_AMBUSH,¡Por la espalda! (%d de %d),From behind! (%d of %d),,Par derrière ! (%d sur %d)
+WAVE_PINCER,¡Pinza! (%d de %d),Pincer! (%d of %d),,En tenaille ! (%d sur %d)

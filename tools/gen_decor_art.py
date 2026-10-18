@@ -117,6 +117,7 @@ _G = {
     "Y": ["#.#", "#.#", ".#.", ".#.", ".#."], " ": ["...", "...", "...", "...", "..."],
     "L": ["#..", "#..", "#..", "#..", "###"], "G": [".##", "#..", "#.#", "#.#", ".##"],
     "K": ["#.#", "#.#", "##.", "#.#", "#.#"],
+    "\u00c9": ["###", "#..", "##.", "#..", "###"], "\u00c0": [".#.", "#.#", "###", "#.#", "#.#"],
 }
 
 
@@ -127,6 +128,10 @@ def text_w(s):
 def text(im, x, y, s, c):
     for ch in s:
         g = _G[ch]
+        if ch == "\u00c9" and y > 0:
+            im.putpixel((x + 2, y - 1), c)
+        if ch == "\u00c0" and y > 0:
+            im.putpixel((x, y - 1), c)
         for gy in range(5):
             for gx in range(3):
                 if g[gy][gx] == "#":
@@ -1039,7 +1044,7 @@ def sign_stop():
 
 def sign_no(lang):
     im, d = new(44, 40)
-    a, b = ("PROHIBIDO", "PASAR") if lang == "es" else ("NO", "ENTRY")
+    a, b = {"es": ("PROHIBIDO", "PASAR"), "fr": ("PASSAGE", "INTERDIT")}.get(lang, ("NO", "ENTRY"))
     for x in (6, 36):
         d.rectangle((x, 24, x + 2, 38), fill=C("7e869e"))
     d.rectangle((1, 1, 42, 26), fill=C("f4c42c"))
@@ -1064,7 +1069,7 @@ def sign_icon():
 
 # ------------------------------------------------------------------ Palacio
 def stamp(lang):
-    word = "CENSURADO" if lang == "es" else "CENSORED"
+    word = {"es": "CENSURADO", "fr": "CENSUR\u00c9"}.get(lang, "CENSORED")
     w = text_w(word) + 10
     im, d = new(w, 18)
     red = C("c8283c", 215)
@@ -1335,7 +1340,7 @@ def number_dispenser():
 
 
 def urologo_poster(lang):
-    a, b = ("HABLE CON", "SU UROLOGO") if lang == "es" else ("ASK YOUR", "UROLOGIST")
+    a, b = {"es": ("HABLE CON", "SU UROLOGO"), "fr": ("PARLE \u00c0", "TON URO")}.get(lang, ("ASK YOUR", "UROLOGIST"))
     im, d = new(46, 52)
     for x in (9, 35):
         d.rectangle((x, 36, x + 2, 50), fill=C("5a5658"))
@@ -1382,6 +1387,7 @@ def main():
         save(number_dispenser(), "prostata_dispenser")
         save(urologo_poster("es"), "prostata_poster_es")
         save(urologo_poster("en"), "prostata_poster_en")
+        save(urologo_poster("fr"), "prostata_poster_fr")
         save(plastic_plant(), "prostata_plant")
         save(water_cooler(), "prostata_cooler")
         return
@@ -1425,9 +1431,11 @@ def main():
     save(sign_stop(), "mixto_sign_stop")
     save(sign_no("es"), "mixto_sign_no_es")
     save(sign_no("en"), "mixto_sign_no_en")
+    save(sign_no("fr"), "mixto_sign_no_fr")
     save(sign_icon(), "mixto_sign_icon")
     save(stamp("es"), "censura_stamp_es")
     save(stamp("en"), "censura_stamp_en")
+    save(stamp("fr"), "censura_stamp_fr")
     save(bar(52, 0), "censura_bar_a")
     save(bar(34, 1), "censura_bar_b")
     save(carpet_flat(), "censura_carpet_flat")

@@ -6,10 +6,10 @@ uid="uid://jutc6owqqquo"
 
 [deps]
 
-files=["res://locale/oleadas.es.translation", "res://locale/oleadas.en.translation"]
+files=["res://locale/oleadas.es.translation", "res://locale/oleadas.en.translation", "res://locale/oleadas.fr.translation"]
 
 source_file="res://locale/oleadas.csv"
-dest_files=["res://locale/oleadas.es.translation", "res://locale/oleadas.en.translation"]
+dest_files=["res://locale/oleadas.es.translation", "res://locale/oleadas.en.translation", "res://locale/oleadas.fr.translation"]
 
 [params]
 

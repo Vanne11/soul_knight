@@ -6,10 +6,10 @@ uid="uid://bd7ikucmoc08p"
 
 [deps]
 
-files=["res://locale/calidad.es.translation", "res://locale/calidad.en.translation"]
+files=["res://locale/calidad.es.translation", "res://locale/calidad.en.translation", "res://locale/calidad.fr.translation"]
 
 source_file="res://locale/calidad.csv"
-dest_files=["res://locale/calidad.es.translation", "res://locale/calidad.en.translation"]
+dest_files=["res://locale/calidad.es.translation", "res://locale/calidad.en.translation", "res://locale/calidad.fr.translation"]
 
 [params]
 

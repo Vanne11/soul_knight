@@ -6,10 +6,10 @@ uid="uid://do6y68a03pq47"
 
 [deps]
 
-files=["res://locale/pactos.es.translation", "res://locale/pactos.en.translation"]
+files=["res://locale/pactos.es.translation", "res://locale/pactos.en.translation", "res://locale/pactos.fr.translation"]
 
 source_file="res://locale/pactos.csv"
-dest_files=["res://locale/pactos.es.translation", "res://locale/pactos.en.translation"]
+dest_files=["res://locale/pactos.es.translation", "res://locale/pactos.en.translation", "res://locale/pactos.fr.translation"]
 
 [params]
 

@@ -6,10 +6,10 @@ uid="uid://dbll8xcg36u8f"
 
 [deps]
 
-files=["res://locale/cuarta_pared.es.translation", "res://locale/cuarta_pared.en.translation"]
+files=["res://locale/cuarta_pared.es.translation", "res://locale/cuarta_pared.en.translation", "res://locale/cuarta_pared.fr.translation"]
 
 source_file="res://locale/cuarta_pared.csv"
-dest_files=["res://locale/cuarta_pared.es.translation", "res://locale/cuarta_pared.en.translation"]
+dest_files=["res://locale/cuarta_pared.es.translation", "res://locale/cuarta_pared.en.translation", "res://locale/cuarta_pared.fr.translation"]
 
 [params]
 

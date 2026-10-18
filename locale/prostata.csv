@@ -1,16 +1,16 @@
 keys,es,en,es_ES,fr
-PRO_GOTEO_CUT,Ya no llega como antes.,It doesn't reach like it used to.,,
-PRO_MADRUGADOR_WAKE,¡Las 3! ¡A levantarse!,3 a.m.! Up we get!,,
-PRO_PSA_HOT,¡Estoy subiendo!,I'm going up!,,
-PRO_PSA_DOWN,Bajó... uf.,It went down... phew.,,
-PRO_PSA_LOW,PSA BAJO,PSA LOW,,
-BOSS_CH_TURNO_T,¡ESPERA TU TURNO!,WAIT YOUR TURN!,,
-BOSS_CH_TURNO_D,Toca las fichas en orden numérico antes de que se acabe el tiempo.,Touch the tickets in numerical order before time runs out.,,
-BOSS_CH_REVISTAS_T,¡ROMPE LAS REVISTAS!,TEAR UP THE MAGAZINES!,,
-BOSS_CH_REVISTAS_D,Dispara a las cinco revistas de 2009 antes de que las lea.,Shoot all five 2009 magazines before she reads them.,,
-BOSS_CH_SALA_T,¡SALA DE ESPERA!,WAITING ROOM!,,
-BOSS_CH_SALA_D,Quédate dentro del círculo mientras se mueve hasta que te llamen.,Stay inside the circle as it moves until they call you.,,
-BOSS_CH_PUNTO_T,¡PUNTO DÉBIL!,WEAK SPOT!,,
-BOSS_CH_PUNTO_D,"Dispara por el hueco del escudo, que gira.","Shoot through the gap in the rotating shield.",,
-BOSS_CH_MAQUINA_T,¡EL CAFÉ DE LA MÁQUINA!,THE VENDING MACHINE COFFEE!,,
-BOSS_CH_MAQUINA_D,Alcanza la taza antes de que se enfríe (vale con un dash).,Catch the cup before it gets cold (a dash works).,,
+PRO_GOTEO_CUT,Ya no llega como antes.,It doesn't reach like it used to.,,Ça n'arrive plus comme avant.
+PRO_MADRUGADOR_WAKE,¡Las 3! ¡A levantarse!,3 a.m.! Up we get!,,3 h du mat' ! Debout !
+PRO_PSA_HOT,¡Estoy subiendo!,I'm going up!,,Je monte !
+PRO_PSA_DOWN,Bajó... uf.,It went down... phew.,,Retombé... ouf.
+PRO_PSA_LOW,PSA BAJO,PSA LOW,,PSA BAS
+BOSS_CH_TURNO_T,¡ESPERA TU TURNO!,WAIT YOUR TURN!,,ATTENDS TON TICKET !
+BOSS_CH_TURNO_D,Toca las fichas en orden numérico antes de que se acabe el tiempo.,Touch the tickets in numerical order before time runs out.,,Touche les jetons dans l'ordre numérique avant la fin du temps.
+BOSS_CH_REVISTAS_T,¡ROMPE LAS REVISTAS!,TEAR UP THE MAGAZINES!,,DÉCHIRE LES MAGAZINES !
+BOSS_CH_REVISTAS_D,Dispara a las cinco revistas de 2009 antes de que las lea.,Shoot all five 2009 magazines before she reads them.,,Tire sur les cinq magazines de 2009 avant qu'il les lise.
+BOSS_CH_SALA_T,¡SALA DE ESPERA!,WAITING ROOM!,,SALLE D'ATTENTE !
+BOSS_CH_SALA_D,Quédate dentro del círculo mientras se mueve hasta que te llamen.,Stay inside the circle as it moves until they call you.,,"Reste dans le cercle pendant qu'il bouge, jusqu'à ce qu'on t'appelle."
+BOSS_CH_PUNTO_T,¡PUNTO DÉBIL!,WEAK SPOT!,,POINT FAIBLE !
+BOSS_CH_PUNTO_D,"Dispara por el hueco del escudo, que gira.",Shoot through the gap in the rotating shield.,,"Tire par le trou du bouclier, qui tourne."
+BOSS_CH_MAQUINA_T,¡EL CAFÉ DE LA MÁQUINA!,THE VENDING MACHINE COFFEE!,,LE CAFÉ DU DISTRIBUTEUR !
+BOSS_CH_MAQUINA_D,Alcanza la taza antes de que se enfríe (vale con un dash).,Catch the cup before it gets cold (a dash works).,,Attrape la tasse avant qu'il refroidisse (un dash suffit).
