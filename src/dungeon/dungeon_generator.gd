@@ -209,6 +209,8 @@ func _connect_rooms(edges: Array) -> void:
 func target_room_count(floor_n: int) -> int:
 	var lo := mini(MIN_ROOMS + (floor_n - 1) / 3, MAX_ROOMS)
 	var hi := mini(9 + (floor_n - 1) / 3, MAX_ROOMS)
+	if RunManager.floor_stage(floor_n) > 1:
+		lo = maxi(lo, MIN_ROOMS + 1)  # la 2a etapa pide 4 combates: con 7 salas no salen
 	return RNG.randi_range(lo, hi)
 
 ## Elige rects de sala y aristas. Devuelve {rects, edges}. Repite hasta que el grafo tenga
@@ -522,6 +524,11 @@ func _assign_room_types() -> void:
 	var secret_count := 1 if room_list.size() < 10 else RNG.randi_range(1, 2)
 	if room_list.size() <= 8 and RNG.randf() < 0.4:
 		secret_count = 0
+	# Minimo de combates por piso (1a etapa 3, 2a etapa 4; antro/trampa/elite cuentan): las salas
+	# opcionales (secreta + su puzzle, respiro) solo se crean si despues de la tienda sobran salas.
+	var min_fights := 3 if RunManager.floor_stage(current_floor) == 1 else 4
+	var spare := room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT).size() - 1 - min_fights
+	secret_count = clampi(secret_count, 0, maxi(spare - 1, 0))  # k secretas cuestan k + 1 (el puzzle)
 	var candidates = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT and room_graph[r.grid_pos].size() == 1)
 	RNG.shuffle(candidates)
 	for i in range(min(secret_count, candidates.size())):
@@ -552,7 +559,7 @@ func _assign_room_types() -> void:
 	RNG.shuffle(candidates)
 	var calm := [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]
 	RNG.shuffle(calm)  # con 1-2 salas tranquilas por piso, que no salga siempre la misma
-	var n_calm := 1 if candidates.size() >= 3 else 0
+	var n_calm := 1 if candidates.size() >= 3 and candidates.size() + elite_rooms.size() - 1 >= min_fights else 0
 	for i in n_calm:
 		candidates[i].room_type = calm[i % calm.size()]
 	# Del combate que queda: un antro (enemigos que sueltan alcohol) y alguna trampa.
