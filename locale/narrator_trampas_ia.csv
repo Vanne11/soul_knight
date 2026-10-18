@@ -1,7 +1,7 @@
-keys,es,en
-NARR_TRAMPAS_IA__TI_CAGES_0,Jaulas del techo. Alguien en Recursos Humanos ya las pidió para ti.,Ceiling cages. Somebody in HR already ordered one for you.
-NARR_TRAMPAS_IA__TI_CAGES_1,"Si oyes un tintineo, no mires arriba: muévete.","If you hear a jingle, don't look up: move."
-NARR_TRAMPAS_IA__TI_AVOID_0,"Los enemigos esquivan los pinchos. Cobardes con sentido común, qué horror.","Enemies dodge the spikes. Cowards with common sense, how horrible."
-NARR_TRAMPAS_IA__TI_AVOID_1,Rodearon la trampa. Hasta la mazmorra tiene gente prudente.,They walked around the trap. Even the dungeon has sensible people.
-NARR_TRAMPAS_IA__TI_DIVE_0,Uno se tiró a los pinchos por rabia. Tu seguro no cubre eso.,One dove into the spikes out of rage. Your insurance won't cover that.
-NARR_TRAMPAS_IA__TI_DIVE_1,"La ira vence a la prudencia. A los pinchos, la ira.",Rage beats prudence. Spikes beat rage.
+keys,es,en,es_ES,fr
+NARR_TRAMPAS_IA__TI_CAGES_0,Jaulas del techo. Alguien en Recursos Humanos ya las pidió para ti.,Ceiling cages. Somebody in HR already ordered one for you.,,
+NARR_TRAMPAS_IA__TI_CAGES_1,"Si oyes un tintineo, no mires arriba: muévete.","If you hear a jingle, don't look up: move.",,
+NARR_TRAMPAS_IA__TI_AVOID_0,"Los enemigos esquivan los pinchos. Cobardes con sentido común, qué horror.","Enemies dodge the spikes. Cowards with common sense, how horrible.",,
+NARR_TRAMPAS_IA__TI_AVOID_1,Rodearon la trampa. Hasta la mazmorra tiene gente prudente.,They walked around the trap. Even the dungeon has sensible people.,,
+NARR_TRAMPAS_IA__TI_DIVE_0,Uno se tiró a los pinchos por rabia. Tu seguro no cubre eso.,One dove into the spikes out of rage. Your insurance won't cover that.,,
+NARR_TRAMPAS_IA__TI_DIVE_1,"La ira vence a la prudencia. A los pinchos, la ira.",Rage beats prudence. Spikes beat rage.,,

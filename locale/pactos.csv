@@ -1,20 +1,20 @@
-keys,es,en
-RM_PACT_MAJOR,"PACTO MAYOR – %s. Maldición (toda la partida): %s. Premio: %s","MAJOR PACT – %s. Curse (whole run): %s. Prize: %s"
-RM_PACT_MAJOR_T,PACTO MAYOR SELLADO,MAJOR PACT SEALED
-RM_PACT_MAJOR_D,"%s: la maldición te acompaña hasta el final de la partida.","%s: the curse stays with you until the end of the run."
-PAUSE_PACTS,PACTOS MAYORES,MAJOR PACTS
-PACTO_AVARICIA_NAME,Avaricia Pudorosa,Modest Greed
-PACTO_AVARICIA_CURSE,"la tienda cobra +50% (hasta el pudor tiene comisión)","shops charge +50% (even modesty takes a cut)"
-PACTO_AVARICIA_PRIZE,+60% de monedas de los bichos,+60% coins from enemies
-PACTO_AYUNO_NAME,Ayuno de Caricias,Fast of Caresses
-PACTO_AYUNO_CURSE,"curas a la mitad (la abstinencia no cura nada)","healing halved (abstinence heals nothing)"
-PACTO_AYUNO_PRIZE,"+35% de monedas y un cofre de arma regalado","+35% coins and a free weapon chest"
-PACTO_CLAUSURA_NAME,Clausura de Mala Muerte,Seedy Shutdown
-PACTO_CLAUSURA_CURSE,"oleadas +30% más gordas y bichos algo más rápidos","waves +30% bigger and enemies a bit faster"
-PACTO_CLAUSURA_PRIZE,"+30% de monedas y un cofre de arma regalado","+30% coins and a free weapon chest"
-PACTO_INQUISICION_NAME,Inquisición del Decoro,Inquisition of Decorum
-PACTO_INQUISICION_CURSE,"el doble de élites y jefes que se enfurecen al 15%","double the elites and bosses that enrage at 15%"
-PACTO_INQUISICION_PRIZE,+50% de monedas de los bichos,+50% coins from enemies
-PACTO_CONTAGIO_NAME,Contagio de Vergüenza,Contagion of Shame
-PACTO_CONTAGIO_CURSE,"las infecciones duran el doble y los bichos corren un poco más","infections last twice as long and enemies run a bit faster"
-PACTO_CONTAGIO_PRIZE,"+45% de monedas y un cofre de arma regalado","+45% coins and a free weapon chest"
+keys,es,en,es_ES,fr
+RM_PACT_MAJOR,"PACTO MAYOR – %s. Maldición (toda la partida): %s. Premio: %s","MAJOR PACT – %s. Curse (whole run): %s. Prize: %s",,
+RM_PACT_MAJOR_T,PACTO MAYOR SELLADO,MAJOR PACT SEALED,,
+RM_PACT_MAJOR_D,"%s: la maldición te acompaña hasta el final de la partida.","%s: the curse stays with you until the end of the run.",,
+PAUSE_PACTS,PACTOS MAYORES,MAJOR PACTS,,
+PACTO_AVARICIA_NAME,Avaricia Pudorosa,Modest Greed,,
+PACTO_AVARICIA_CURSE,"la tienda cobra +50% (hasta el pudor tiene comisión)","shops charge +50% (even modesty takes a cut)",,
+PACTO_AVARICIA_PRIZE,+60% de monedas de los bichos,+60% coins from enemies,,
+PACTO_AYUNO_NAME,Ayuno de Caricias,Fast of Caresses,,
+PACTO_AYUNO_CURSE,"curas a la mitad (la abstinencia no cura nada)","healing halved (abstinence heals nothing)",,
+PACTO_AYUNO_PRIZE,"+35% de monedas y un cofre de arma regalado","+35% coins and a free weapon chest",,
+PACTO_CLAUSURA_NAME,Clausura de Mala Muerte,Seedy Shutdown,,
+PACTO_CLAUSURA_CURSE,"oleadas +30% más gordas y bichos algo más rápidos","waves +30% bigger and enemies a bit faster",,
+PACTO_CLAUSURA_PRIZE,"+30% de monedas y un cofre de arma regalado","+30% coins and a free weapon chest",,
+PACTO_INQUISICION_NAME,Inquisición del Decoro,Inquisition of Decorum,,
+PACTO_INQUISICION_CURSE,"el doble de élites y jefes que se enfurecen al 15%","double the elites and bosses that enrage at 15%",,
+PACTO_INQUISICION_PRIZE,+50% de monedas de los bichos,+50% coins from enemies,,
+PACTO_CONTAGIO_NAME,Contagio de Vergüenza,Contagion of Shame,,
+PACTO_CONTAGIO_CURSE,"las infecciones duran el doble y los bichos corren un poco más","infections last twice as long and enemies run a bit faster",,
+PACTO_CONTAGIO_PRIZE,"+45% de monedas y un cofre de arma regalado","+45% coins and a free weapon chest",,

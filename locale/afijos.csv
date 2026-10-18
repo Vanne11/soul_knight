@@ -1,28 +1,28 @@
-keys,es,en
-AFFIX_FMT,%s [%s],%s [%s]
-AFFIX_AND, y , and 
-AFFIX_RAPIDO,Veloz,Fast
-AFFIX_BLINDADO,Blindado,Armored
-AFFIX_VAMPIRO,Vampiro,Vampire
-AFFIX_EXPLOSIVO,Explosivo,Explosive
-AFFIX_INVOCADOR,Invocador,Summoner
-AFFIX_SALTARIN,Saltarín,Blinker
-AFFIX_REFLECTOR,Espejado,Mirrored
-AFFIX_VENENOSO,Venenoso,Venomous
-AFFIX_VENGATIVO,Vengativo,Vengeful
-AFFIX_PEGAJOSO,Pegajoso,Sticky
-AFFIX_RAPIDO_DESC,Corre un 30% más. Su aviso de ataque sigue igual.,Runs 30% faster. Its attack warning is unchanged.
-AFFIX_BLINDADO_DESC,Escudo azul: hay que romperlo antes de tocarle la vida.,Blue shield: break it before you can touch its health.
-AFFIX_VAMPIRO_DESC,Se cura cuando te hace daño.,Heals whenever it hurts you.
-AFFIX_EXPLOSIVO_DESC,Al morir deja un círculo que revienta: sal del área o esquiva.,Leaves a circle on death that goes off: leave the area or dash.
-AFFIX_INVOCADOR_DESC,Cada pocos segundos suelta crías (máximo 3).,Every few seconds it spawns minions (max 3).
-AFFIX_SALTARIN_DESC,Se reposiciona cerca de ti; un aro cian avisa dónde.,Repositions near you; a cyan ring warns where.
-AFFIX_REFLECTOR_DESC,"Algunas balas rebotan hacia ti, más lentas.","Some bullets bounce back at you, slower."
-AFFIX_VENENOSO_DESC,Va dejando charcos verdes que escuecen.,Leaves stinging green puddles behind.
-AFFIX_VENGATIVO_DESC,"Si matas a un compañero, se enfurece unos segundos.","If you kill a teammate, it rages for a few seconds."
-AFFIX_PEGAJOSO_DESC,"Si lo tocas, te ralentiza un rato.",Touch it and it slows you down for a while.
-AFFIX_SHIELD_BREAK,¡Escudo roto!,Shield broken!
-AFFIX_SUMMON,¡Refuerzos!,Backup!
-AFFIX_REFLECT,¡Rebote!,Bounce!
-AFFIX_VENGE,¡Venganza!,Revenge!
-AFFIX_STICK,¡Pegajoso!,Sticky!
+keys,es,en,es_ES,fr
+AFFIX_FMT,%s [%s],%s [%s],,
+AFFIX_AND, y , and ,,
+AFFIX_RAPIDO,Veloz,Fast,,
+AFFIX_BLINDADO,Blindado,Armored,,
+AFFIX_VAMPIRO,Vampiro,Vampire,,
+AFFIX_EXPLOSIVO,Explosivo,Explosive,,
+AFFIX_INVOCADOR,Invocador,Summoner,,
+AFFIX_SALTARIN,Saltarín,Blinker,,
+AFFIX_REFLECTOR,Espejado,Mirrored,,
+AFFIX_VENENOSO,Venenoso,Venomous,,
+AFFIX_VENGATIVO,Vengativo,Vengeful,,
+AFFIX_PEGAJOSO,Pegajoso,Sticky,,
+AFFIX_RAPIDO_DESC,Corre un 30% más. Su aviso de ataque sigue igual.,Runs 30% faster. Its attack warning is unchanged.,,
+AFFIX_BLINDADO_DESC,Escudo azul: hay que romperlo antes de tocarle la vida.,Blue shield: break it before you can touch its health.,,
+AFFIX_VAMPIRO_DESC,Se cura cuando te hace daño.,Heals whenever it hurts you.,,
+AFFIX_EXPLOSIVO_DESC,Al morir deja un círculo que revienta: sal del área o esquiva.,Leaves a circle on death that goes off: leave the area or dash.,,
+AFFIX_INVOCADOR_DESC,Cada pocos segundos suelta crías (máximo 3).,Every few seconds it spawns minions (max 3).,,
+AFFIX_SALTARIN_DESC,Se reposiciona cerca de ti; un aro cian avisa dónde.,Repositions near you; a cyan ring warns where.,,
+AFFIX_REFLECTOR_DESC,"Algunas balas rebotan hacia ti, más lentas.","Some bullets bounce back at you, slower.",,
+AFFIX_VENENOSO_DESC,Va dejando charcos verdes que escuecen.,Leaves stinging green puddles behind.,,
+AFFIX_VENGATIVO_DESC,"Si matas a un compañero, se enfurece unos segundos.","If you kill a teammate, it rages for a few seconds.",,
+AFFIX_PEGAJOSO_DESC,"Si lo tocas, te ralentiza un rato.",Touch it and it slows you down for a while.,,
+AFFIX_SHIELD_BREAK,¡Escudo roto!,Shield broken!,,
+AFFIX_SUMMON,¡Refuerzos!,Backup!,,
+AFFIX_REFLECT,¡Rebote!,Bounce!,,
+AFFIX_VENGE,¡Venganza!,Revenge!,,
+AFFIX_STICK,¡Pegajoso!,Sticky!,,

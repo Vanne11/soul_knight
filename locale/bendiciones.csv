@@ -1,20 +1,20 @@
-keys,es,en
-BPICK_LEVEL,NIVEL %d,LEVEL %d
-BPICK_LEVEL_UP,NIVEL %d > %d,LEVEL %d > %d
-BPICK_ALLERGY,AJENA: efecto doble y ALERGIA,FOREIGN: double effect and ALLERGY
-BPICK_HINT,"1-3 / flechas + ENTER, o clic","1-3 / arrows + ENTER, or click"
-BTREE_TAB,BENDICIONES,BLESSINGS
-BTREE_TITLE,Árbol de bendiciones,Blessing tree
-BTREE_BALANCE_PROGRESS,Equilibrio: Penelandia %d/2 · Vulvania %d/2,Balance: Peneland %d/2 · Vulvania %d/2
-BTREE_BALANCE_READY,Equilibrio Hormonal desbloqueado,Hormonal Balance unlocked
-BTREE_BALANCE_TAKEN,Equilibrio Hormonal conseguido,Hormonal Balance obtained
-BTREE_LOCKED,sin conseguir,not obtained
-BTREE_BACK,VOLVER,BACK
-BSTAT_TITLE,Tus estadísticas,Your stats
-BSTAT_DAMAGE,Daño,Damage
-BSTAT_FIRE_RATE,Cadencia,Fire rate
-BSTAT_CRIT,Crítico,Crit chance
-BSTAT_SPEED,Velocidad,Speed
-BSTAT_HEALTH,Vida máx.,Max health
-BSTAT_SHIELD,Escudo máx.,Max shield
-BSTAT_STAMINA,Estamina máx.,Max stamina
+keys,es,en,es_ES,fr
+BPICK_LEVEL,NIVEL %d,LEVEL %d,,
+BPICK_LEVEL_UP,NIVEL %d > %d,LEVEL %d > %d,,
+BPICK_ALLERGY,AJENA: efecto doble y ALERGIA,FOREIGN: double effect and ALLERGY,,
+BPICK_HINT,"1-3 / flechas + ENTER, o clic","1-3 / arrows + ENTER, or click",,
+BTREE_TAB,BENDICIONES,BLESSINGS,,
+BTREE_TITLE,Árbol de bendiciones,Blessing tree,,
+BTREE_BALANCE_PROGRESS,Equilibrio: Penelandia %d/2 · Vulvania %d/2,Balance: Peneland %d/2 · Vulvania %d/2,,
+BTREE_BALANCE_READY,Equilibrio Hormonal desbloqueado,Hormonal Balance unlocked,,
+BTREE_BALANCE_TAKEN,Equilibrio Hormonal conseguido,Hormonal Balance obtained,,
+BTREE_LOCKED,sin conseguir,not obtained,,
+BTREE_BACK,VOLVER,BACK,,
+BSTAT_TITLE,Tus estadísticas,Your stats,,
+BSTAT_DAMAGE,Daño,Damage,,
+BSTAT_FIRE_RATE,Cadencia,Fire rate,,
+BSTAT_CRIT,Crítico,Crit chance,,
+BSTAT_SPEED,Velocidad,Speed,,
+BSTAT_HEALTH,Vida máx.,Max health,,
+BSTAT_SHIELD,Escudo máx.,Max shield,,
+BSTAT_STAMINA,Estamina máx.,Max stamina,,

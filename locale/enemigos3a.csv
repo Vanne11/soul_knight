@@ -1,38 +1,38 @@
-keys,es,en
-E3A_STATE_ENROLLADO,¡ENROLLADO!,WRAPPED!
-E3A_STATE_ENJAULADO,¡ENJAULADO! (machaca),CAGED! (mash)
-E3A_STATE_ESPOSADO,¡ESPOSADO! (machaca),CUFFED! (mash)
-E3A_STATE_AMORDAZADO,¡AMORDAZADO!,GAGGED!
-E3A_STATE_VENDADO,¡A CIEGAS!,BLINDFOLDED!
-E3A_STATE_ENGANCHADO,¡ENGANCHADO! (dash),HOOKED! (dash)
-E3A_MITO_BROKEN,MITO ROTO,MYTH BUSTED
-E3A_ROPE_CUT,¡Zas!,Snap!
-E3A_FX_PFFT,¡PFFFFFT!,PFFFFFT!
-E3A_FX_POP,*pop*,*pop*
-E3A_HUINCHA_PANIC,¡¡NO SÉ QUÉ MEDIR!!,I DON'T KNOW WHAT TO MEASURE!!
-E3A_HUINCHA_CONFUSED,¿Y esto cuánto mide? ¿Pico? ¿Cola?,How long is this? Bill? Tail?
-E3A_HUINCHA_MEASURE,%s cm. Anotado. Qué pena.,%s cm. Noted. How sad.
-E3A_DEDO_FRONT,¡De frente no! Perdón.,Not from the front! Sorry.
-E3A_GRAN_UROLOGO_INTRO,Relájese. Esto durará un segundo.,Relax. This will only take a second.
-E3A_GRAN_UROLOGO_SUMMON,¡Dedos! ¡A mi consulta!,Fingers! To my office!
-E3A_JAULA_CAUGHT,¡Dentro! ¡Y sin llave!,In you go! And no key!
-E3A_CANDADO_INTRO,Aquí no pasa nadie.,Nobody gets past here.
-E3A_CANDADO_OPEN,*clic* ¡Se me soltó el arco!,*click* My shackle came loose!
-E3A_CANDADO_SUMMON,¡Refuerzos con barrotes!,"Reinforcements, with bars!"
-E3A_MORDAZA_SHOOT,¡Silencio!,Silence!
-E3A_VENDA_SHOOT,¡No mires!,Don't look!
-E3A_ESPOSAS_CAUGHT,¡Clic! Ahora eres mío. Suave.,Click! You're mine now. Softly.
-E3A_CORREA_CAST,¡Ven aquí!,Come here!
-E3A_CORREA_HOOKED,¡Al paseo!,Walkies!
-E3A_SHIBARI_CAST,Un nudo para ti.,A knot for you.
-E3A_SONDA_LUNGE,¡Directa al conducto!,Straight to the duct!
-E3A_EGO_BOAST1,Yo mido... bastante.,I measure... quite a lot.
-E3A_EGO_BOAST2,¡SOY EL MÁS GRANDE!,I'M THE BIGGEST!
-E3A_EGO_TRUTH,Ay. La verdad duele.,Ouch. The truth hurts.
-E3A_EGO_POP,Soy... un poco menos grande.,I'm... a little less big.
-E3A_MARCHA_BACK,¡Marcha atrás! ¡Tranquilo!,Reverse! Relax!
-E3A_MITO_MARCHA_TRUTH,Falla en 1 de cada 5 al año. Usa preservativo.,It fails in 1 out of 5 a year. Use a condom.
-E3A_HIMEN_POP,¡Se rompió! Y no prueba NADA.,It broke! And it proves NOTHING.
-E3A_MITO_HIMEN_TRUTH,El himen no es un sello ni certifica nada.,The hymen is no seal and certifies nothing.
-E3A_MANO_HAIR,"¡Me salen pelos! ¡Ah no, era mentira!","I'm growing hair! Oh wait, it was a lie!"
-E3A_MITO_MANO_TRUTH,La palma no tiene pelos ni castigo.,"Palms have no hair, and no punishment."
+keys,es,en,es_ES,fr
+E3A_STATE_ENROLLADO,¡ENROLLADO!,WRAPPED!,,
+E3A_STATE_ENJAULADO,¡ENJAULADO! (machaca),CAGED! (mash),,
+E3A_STATE_ESPOSADO,¡ESPOSADO! (machaca),CUFFED! (mash),,
+E3A_STATE_AMORDAZADO,¡AMORDAZADO!,GAGGED!,,
+E3A_STATE_VENDADO,¡A CIEGAS!,BLINDFOLDED!,,
+E3A_STATE_ENGANCHADO,¡ENGANCHADO! (dash),HOOKED! (dash),,
+E3A_MITO_BROKEN,MITO ROTO,MYTH BUSTED,,
+E3A_ROPE_CUT,¡Zas!,Snap!,,
+E3A_FX_PFFT,¡PFFFFFT!,PFFFFFT!,,
+E3A_FX_POP,*pop*,*pop*,,
+E3A_HUINCHA_PANIC,¡¡NO SÉ QUÉ MEDIR!!,I DON'T KNOW WHAT TO MEASURE!!,,
+E3A_HUINCHA_CONFUSED,¿Y esto cuánto mide? ¿Pico? ¿Cola?,How long is this? Bill? Tail?,,
+E3A_HUINCHA_MEASURE,%s cm. Anotado. Qué pena.,%s cm. Noted. How sad.,,
+E3A_DEDO_FRONT,¡De frente no! Perdón.,Not from the front! Sorry.,,
+E3A_GRAN_UROLOGO_INTRO,Relájese. Esto durará un segundo.,Relax. This will only take a second.,,
+E3A_GRAN_UROLOGO_SUMMON,¡Dedos! ¡A mi consulta!,Fingers! To my office!,,
+E3A_JAULA_CAUGHT,¡Dentro! ¡Y sin llave!,In you go! And no key!,,
+E3A_CANDADO_INTRO,Aquí no pasa nadie.,Nobody gets past here.,,
+E3A_CANDADO_OPEN,*clic* ¡Se me soltó el arco!,*click* My shackle came loose!,,
+E3A_CANDADO_SUMMON,¡Refuerzos con barrotes!,"Reinforcements, with bars!",,
+E3A_MORDAZA_SHOOT,¡Silencio!,Silence!,,
+E3A_VENDA_SHOOT,¡No mires!,Don't look!,,
+E3A_ESPOSAS_CAUGHT,¡Clic! Ahora eres mío. Suave.,Click! You're mine now. Softly.,,
+E3A_CORREA_CAST,¡Ven aquí!,Come here!,,
+E3A_CORREA_HOOKED,¡Al paseo!,Walkies!,,
+E3A_SHIBARI_CAST,Un nudo para ti.,A knot for you.,,
+E3A_SONDA_LUNGE,¡Directa al conducto!,Straight to the duct!,,
+E3A_EGO_BOAST1,Yo mido... bastante.,I measure... quite a lot.,,
+E3A_EGO_BOAST2,¡SOY EL MÁS GRANDE!,I'M THE BIGGEST!,,
+E3A_EGO_TRUTH,Ay. La verdad duele.,Ouch. The truth hurts.,,
+E3A_EGO_POP,Soy... un poco menos grande.,I'm... a little less big.,,
+E3A_MARCHA_BACK,¡Marcha atrás! ¡Tranquilo!,Reverse! Relax!,,
+E3A_MITO_MARCHA_TRUTH,Falla en 1 de cada 5 al año. Usa preservativo.,It fails in 1 out of 5 a year. Use a condom.,,
+E3A_HIMEN_POP,¡Se rompió! Y no prueba NADA.,It broke! And it proves NOTHING.,,
+E3A_MITO_HIMEN_TRUTH,El himen no es un sello ni certifica nada.,The hymen is no seal and certifies nothing.,,
+E3A_MANO_HAIR,"¡Me salen pelos! ¡Ah no, era mentira!","I'm growing hair! Oh wait, it was a lie!",,
+E3A_MITO_MANO_TRUTH,La palma no tiene pelos ni castigo.,"Palms have no hair, and no punishment.",,

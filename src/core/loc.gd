@@ -7,7 +7,7 @@ extends RefCounted
 ## enemy_name se compara asi). Por eso NUNCA se traduce el dato en origen: solo aqui,
 ## justo antes de pintarlo. Si no hay traduccion (TranslationServer devuelve la clave)
 ## se cae al texto original en espanol.
-## Claves (locale/items|lore|narrator|world.csv) las genera tools/extract_locale_data.py.
+## Claves (locale/items|lore|narrator|world.csv; los textos sueltos en locale/sueltos.csv) las genera tools/extract_locale_data.py.
 
 static var _enemy_keys: Dictionary = {}  # nombre en espanol -> clave
 static var _extra_loaded := false
@@ -126,7 +126,17 @@ static func region_name(floor_n: int, short := false) -> String:
 	return floor_name(floor_n, short)
 
 
+## Nombres de invocaciones de jefes y minijefes (se asignan por codigo, no estan en floors/*.json):
+## nombre en espanol -> clave en locale/sueltos.csv.
+const SUMMON_NAME_KEYS := {
+	"Verruguita": "ENEMY_SUMMON_VERRUGUITA_NAME", "Falsa": "ENEMY_SUMMON_FALSA_NAME",
+	"Hoja": "ENEMY_SUMMON_HOJA_NAME", "Huevo": "ENEMY_SUMMON_HUEVO_NAME",
+	"Cría": "ENEMY_SUMMON_CRIA_NAME", "Óvulo Real": "ENEMY_SUMMON_OVULO_REAL_NAME",
+}
+
+
 static func _build_enemy_keys() -> void:
+	_enemy_keys.merge(SUMMON_NAME_KEYS)
 	for f in RunManager.FLOORS + RunManager.SECRET_FLOORS.values():  # (El Utero: floors_secret/)
 		for pair in [["roster", "names"], ["alt_roster", "alt_names"]]:
 			if f.has(pair[0]):
