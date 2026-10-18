@@ -513,7 +513,7 @@ func _fight(enemies: Array, delta: float) -> void:
 		_steer_to(t.global_position)
 		return
 	_press_move(_avoid_walls(move.normalized()))
-	_dodge()
+	_dodge(enemies)
 
 
 ## Desafio de canalizacion de un jefe. El jefe publica ayudas para el bot (bot_goal_pos: a donde
@@ -565,9 +565,20 @@ func _boss_challenge(b: Node2D, _delta: float) -> void:
 	_press_move(_avoid_walls(mv.normalized()))
 
 
-func _dodge() -> void:
+func _dodge(enemies: Array) -> void:
 	if _dash_cd > 0.0:
 		return
+	# embestidas de cuerpo a cuerpo (estado 3 = LUNGE en la base de los enemigos): dash de costado cuando ya vienen
+	# (el Gran Candado, por ejemplo, enjaula si lo comes y su ventana de ataque dura menos que la jaula)
+	for e in enemies:
+		if e.get("state") == 3 and e is CharacterBody2D:
+			var rel: Vector2 = player.global_position - e.global_position
+			if rel.length() < 150.0 and e.velocity.length() > 80.0 and e.velocity.normalized().dot(rel.normalized()) > 0.6:
+				var side: Vector2 = e.velocity.normalized().orthogonal() * _strafe
+				_press_move(_avoid_walls(side))
+				Input.action_press("dash")
+				_dash_cd = 1.2
+				return
 	for b in get_tree().get_nodes_in_group("enemy_attack"):
 		if not (b is Node2D) or not is_instance_valid(b):
 			continue
@@ -1360,6 +1371,8 @@ func _watch_outsiders() -> void:
 var _last_rel := {}  # instance_id -> posicion relativa del fotograma anterior
 var _exit_logged := {}
 
+var _hist := {}  # instance_id -> ultimas posiciones relativas (una cada 6 fotogramas)
+
 func _track_exits(room: Room, enemies: Array) -> void:
 	var size := RoomUtil.size_of(room)
 	var now := {}
@@ -1367,6 +1380,12 @@ func _track_exits(room: Room, enemies: Array) -> void:
 		var id: int = e.get_instance_id()
 		var rel: Vector2 = e.global_position - room.global_position
 		now[id] = rel
+		if Engine.get_physics_frames() % 6 == 0:
+			var h: Array = _hist.get(id, [])
+			h.append(rel.round())
+			if h.size() > 14:
+				h.pop_front()
+			_hist[id] = h
 		var out := rel.x < -20.0 or rel.y < -20.0 or rel.x > size.x + 20.0 or rel.y > size.y + 20.0
 		if out and not _exit_logged.has(id):
 			_exit_logged[id] = true
@@ -1375,4 +1394,15 @@ func _track_exits(room: Room, enemies: Array) -> void:
 				e.get("enemy_name"), Room.RoomType.keys()[room.room_type], room.grid_pos, prev, rel,
 				"%.0f" % prev.distance_to(rel) if prev != null else "primer fotograma", e.get("velocity"), e.get("state"),
 				e.collision_mask, e.collision_layer, size, room.doors.values().map(func(d): return "%s:%d" % [d.get_direction_name(), d.state])])
+			_say("    trayectoria (cada 0,1 s): %s" % [_hist.get(id, [])])
+			# que hay bajo el enemigo y en el muro por donde salio
+			var q := PhysicsPointQueryParameters2D.new()
+			q.collide_with_areas = true
+			q.collision_mask = 0xFFFFF
+			for pt in [e.global_position, e.global_position - Vector2(rel.x, 0).normalized() * 0.0]:
+				q.position = pt
+				var hits := player.get_world_2d().direct_space_state.intersect_point(q, 8)
+				_say("    colisionadores en %s: %s" % [pt - room.global_position, hits.map(func(h): return "%s(capa %d)" % [h.collider.name, h.collider.get("collision_layer") if h.collider.get("collision_layer") != null else -1])])
+			var wc: Vector2i = room.walls_tilemap.local_to_map(room.walls_tilemap.to_local(e.global_position))
+			_say("    muro: celda %s source=%d | sala shape=%s rect_suelo=%s pos_sala=%s" % [wc, room.walls_tilemap.get_cell_source_id(0, wc), room.shape_id, room.floor_tilemap.get_used_rect(), room.global_position])
 	_last_rel = now
