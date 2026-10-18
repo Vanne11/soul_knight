@@ -1,12 +1,20 @@
 keys,es,en
 ITEM_ABSINTHE_NAME,Absenta Ilegal,Illegal Absinthe
 ITEM_ABSINTHE_DESC,"La hada verde te susurra verdades. +50 intoxicación, -30% precisión, +40% daño, visión borrosa. Prohibida en 12 países y 3 dimensiones.","The green fairy whispers truths to you. +50 intoxication, -30% accuracy, +40% damage, blurry vision. Banned in 12 countries and 3 dimensions."
+ITEM_BALLESTA_TANTRICA_NAME,Ballesta Tántrica,Tantric Crossbow
+ITEM_BALLESTA_TANTRICA_DESC,"Mantén el gatillo para tensar la cuerda: más carga, más daño y más enemigos atravesados. Soltar antes es un chasquido flojo; aguantar de más, sale sola. 'Lo bueno se hace esperar.'","Hold the trigger to draw the string: more charge, more damage and more enemies pierced. Releasing early is a weak twang; holding too long fires it on its own. 'Good things come to those who wait.'"
 ITEM_BANDAGES_NAME,Vendas Sucias,Dirty Bandages
 ITEM_BANDAGES_DESC,Curan 30 vida. Probablemente usadas. 'Mejor no preguntar por qué huelen así.',Heal 30 health. Probably used. 'Better not ask why they smell like that.'
+ITEM_BOOMERANG_SILICONA_NAME,Bumerán de Silicona,Silicone Boomerang
+ITEM_BOOMERANG_SILICONA_DESC,"Lo lanzas, atraviesa todo, da la vuelta y pega otra vez al volver. Hasta que no lo atrapas no puedes lanzar otro. 'Siempre vuelve. Como el ex.'","Throw it: it pierces everything, turns around and hits again on the way back. You can't throw another until you catch it. 'It always comes back. Like the ex.'"
+ITEM_CANON_CONFETI_NAME,Cañón de Confeti,Confetti Cannon
+ITEM_CANON_CONFETI_DESC,Escopeta de fiesta: una nube de confeti de poco daño que ATURDE a lo que alcanza. Corto alcance. 'Felicidades: ahora no te pueden pegar. Por un rato.',Party shotgun: a cloud of low-damage confetti that STUNS whatever it hits. Short range. 'Congratulations: they can't hit you now. For a while.'
 ITEM_CASCO_PULIDO_NAME,Casco Pulido,Polished Helmet
 ITEM_CASCO_PULIDO_DESC,Pulido cada noche con un trapo y rencor. Absorbe el primer golpe y cansa menos. Nadie sabe por qué brilla tanto; Pitocles tampoco.,Polished every night with a rag and resentment. Absorbs the first hit and tires you less. Nobody knows why it shines so much; neither does Pitocles.
 ITEM_CHAMOMILE_TEA_NAME,Té de Manzanilla,Chamomile Tea
 ITEM_CHAMOMILE_TEA_DESC,Calma los nervios: +30 estamina y la estamina se recarga el doble de rápido durante 20 s. -10 intoxicación. Aprobado por la abuela.,Calms the nerves: +30 stamina and stamina recharges twice as fast for 20 s. -10 intoxication. Grandma approved.
+ITEM_CHANCLETA_VOLADORA_NAME,Chancleta Voladora,Flying Flip-Flop
+ITEM_CHANCLETA_VOLADORA_DESC,Cuerpo a cuerpo en combo: dos chancletazos rápidos y un tercero devastador que lanza lejos a todo el abanico. Sin munición ni calor. 'Aprendida de mamá. Puntería heredada.',Melee combo: two quick flip-flop swats and a devastating third that launches the whole fan away. No ammo or heat. 'Learned from mom. Inherited aim.'
 ITEM_CHOCOLATE_BAR_NAME,Barra de Chocolate,Chocolate Bar
 ITEM_CHOCOLATE_BAR_DESC,"Antojo hormonal resuelto. +15 vida, -20 intoxicación y se te pasa la alergia. Nadie sabe de dónde salió y nadie pregunta.","Hormonal craving solved. +15 health, -20 intoxication and your allergy goes away. Nobody knows where it came from and nobody asks."
 ITEM_COFFEE_NAME,Café de Emergencia,Emergency Coffee
@@ -14,9 +22,11 @@ ITEM_COFFEE_DESC,"Te despista de la resaca. -40 intoxicación, +20 estamina. Sab
 ITEM_COIN_NAME,Moneda Pudorosa,Bashful Coin
 ITEM_COIN_DESC,Moneda oficial del Reino. Lleva grabada una hoja de parra. Hasta el dinero tiene vergüenza.,Official currency of the Kingdom. Has a fig leaf engraved on it. Even the money is embarrassed.
 ITEM_DILDO_TASER_NAME,Dildo Eléctrico,Electric Dildo
-ITEM_DILDO_TASER_DESC,"Dispara chispas cuyo arco salta a otros 2 enemigos cercanos (50% del daño). Poco daño contra uno solo, mejor contra grupos. 'Descarga de 12.000 voltios. Garantía de 3 meses.'","Fires sparks whose arc jumps to 2 other nearby enemies (50% damage). Weak against a single target, better against groups. '12,000 volts. 3-month warranty.'"
+ITEM_DILDO_TASER_DESC,"Solo lo suelta el Dildo Eléctrico de Vulvania: nadie lo vende. Sus chispas saltan a otros 2 enemigos (50% del daño), brutal contra grupos. 'Garantía de 3 meses.'","Only dropped by Vulvania's Electric Dildo: nobody sells it. Its sparks jump to 2 other enemies (50% damage), brutal against groups. '3-month warranty.'"
 ITEM_ENERGY_DRINK_NAME,Monster Energy (Marcablanca),Monster Energy (Store Brand)
 ITEM_ENERGY_DRINK_DESC,"Alas de cartón. +40 estamina, +15% velocidad 10s, +10 intoxicación (azúcar es droga). 'Te da alas... y taquicardia.'","Cardboard wings. +40 stamina, +15% speed for 10s, +10 intoxication (sugar is a drug). 'It gives you wings... and tachycardia.'"
+ITEM_GLOBOS_AGUA_NAME,Lanzador de Globos de Agua,Water Balloon Launcher
+ITEM_GLOBOS_AGUA_DESC,"Globos que revientan en área y dejan un charco 4 s que frena a los enemigos a la mitad. Poco daño, mucho control. 'Está tibia. Tranquilos, es agua.'","Balloons that burst in an area and leave a 4 s puddle that halves enemy speed. Low damage, lots of control. 'It's lukewarm. Relax, it's water.'"
 ITEM_GRENADE_FLASHBANG_NAME,Flashbang Sensorial,Sensory Flashbang
 ITEM_GRENADE_FLASHBANG_DESC,"Ciega enemigos 4s, reduce precisión 80%. No hace daño. '¡Luz! ¡Mi única debilidad... la luz!'","Blinds enemies for 4s, reduces their accuracy by 80%. Does no damage. 'Light! My only weakness... light!'"
 ITEM_GRENADE_FRAG_NAME,Granada de Fragmentación,Fragmentation Grenade
@@ -45,6 +55,8 @@ ITEM_KEY_DRUNK_NAME,Llave Oxidada (¿?),Rusty Key (?)
 ITEM_KEY_DRUNK_DESC,Solo funciona si estás borracho. La cerradura tiene forma de copa. Requiere tier 2+ intoxicación.,Only works if you're drunk. The lock is shaped like a glass. Requires intoxication tier 2+.
 ITEM_KEY_MASTER_NAME,Llave Maestra Dorada,Golden Master Key
 ITEM_KEY_MASTER_DESC,Abre cualquier cerradura. Incluyendo las de tu corazón. Requiere intoxicación tier 3 (Blackout). Único uso.,Opens any lock. Including the ones around your heart. Requires intoxication tier 3 (Blackout). Single use.
+ITEM_LASER_DEPILADOR_NAME,Depiladora Láser,Laser Hair Remover
+ITEM_LASER_DEPILADOR_DESC,"Rayo continuo: mantén el gatillo y atraviesa a todo el que esté en la línea. Se calienta: si abusas se sobrecalienta y se bloquea. 'Cero vello, cero piedad. Resultados permanentes (los suyos).'","Continuous beam: hold the trigger and pierce everything in the line. It heats up: abuse it and it overheats and locks. 'Zero hair, zero mercy. Permanent results (theirs).'"
 ITEM_LAUNCHER_CONDOM_NAME,Lanzapreservativos Múltiple,Multi-Condom Launcher
 ITEM_LAUNCHER_CONDOM_DESC,"Lanza 3 preservativos lentos que explotan en área al chocar o al acabarse la mecha (parpadean antes). Daño en área, poca cadencia. 'Protección a distancia. Seguridad primero.'","Fires 3 slow condoms that explode in an area on impact or when the fuse runs out (they blink first). Area damage, low fire rate. 'Protection from a distance. Safety first.'"
 ITEM_LUBE_GEL_NAME,Gel Lubricante de Farmacia,Drugstore Lube Gel
@@ -63,6 +75,8 @@ ITEM_PISTOL_BASIC_NAME,Pistola de Plástico,Plastic Pistol
 ITEM_PISTOL_BASIC_DESC,"Fiable y precisa, sin trucos ni costes. 'Es un juguete', dice la caja. Duele igual.","Reliable and accurate, no tricks and no downsides. 'It's a toy,' says the box. It hurts just the same."
 ITEM_PISTOL_GOLDEN_NAME,Pistola Dorada (Compensación),Golden Pistol (Compensation)
 ITEM_PISTOL_GOLDEN_DESC,Precisa y con crítico alto (+20%); las balas atraviesan a un enemigo. Cadencia media. 'Tamaño del cañón inversamente proporcional a otra cosa.',Accurate with a high crit chance (+20%); bullets pierce one enemy. Medium fire rate. 'Barrel size inversely proportional to something else.'
+ITEM_PRESERVATIVO_ATRAPABALAS_NAME,Preservativo Atrapabalas,Bullet-Catching Condom
+ITEM_PRESERVATIVO_ATRAPABALAS_DESC,Suelta un preservativo gigante y lento que se traga las balas enemigas que pasan por él; al reventar las devuelve en círculo. Defensa que ataca. 'Protección total. Hasta de los proyectiles.',Releases a giant slow condom that swallows enemy bullets passing through; when it bursts it fires them back in a circle. Defense that attacks. 'Total protection. Even from projectiles.'
 ITEM_PROTEIN_SHAKE_NAME,Batido de Proteínas Sospechoso,Suspicious Protein Shake
 ITEM_PROTEIN_SHAKE_DESC,"+25% de cadencia de disparo durante 15 s y +10 de vida. Sabe a tiza con vainilla. El tarro dice 'testosterona natural'. La etiqueta, no tanto.","+25% fire rate for 15 s and +10 health. Tastes like chalk with vanilla. The tub says 'natural testosterone'. The label, not so much."
 ITEM_RELIC_BIRTH_CONTROL_NAME,Anticonceptivo Maldito,Cursed Contraceptive
@@ -119,17 +133,3 @@ ITEM_WET_WIPE_NAME,Toallita Húmeda,Wet Wipe
 ITEM_WET_WIPE_DESC,"Quita -50 de intoxicación, te limpia la alergia y te deja 45 s inmune a las alergias. 'Elimina el 99% de las hormonas ajenas. El 1% restante tiene abogado.'","Removes 50 intoxication, clears your allergy and makes you immune to allergies for 45 s. 'Removes 99% of foreign hormones. The remaining 1% has a lawyer.'"
 ITEM_WHISKEY_NAME,Whiskey Barato,Cheap Whiskey
 ITEM_WHISKEY_DESC,"Te emborracha un poco. +15 intoxicación, -10% precisión, +15% daño. 'Para el dolor', te dices.","Gets you a little drunk. +15 intoxication, -10% accuracy, +15% damage. 'For the pain,' you tell yourself."
-ITEM_LASER_DEPILADOR_NAME,Depiladora Láser,Laser Hair Remover
-ITEM_LASER_DEPILADOR_DESC,"Rayo continuo: mantén el gatillo y atraviesa a todo el que esté en la línea. Se calienta: si abusas se sobrecalienta y se bloquea. 'Cero vello, cero piedad. Resultados permanentes (los suyos).'","Continuous beam: hold the trigger and pierce everything in the line. It heats up: abuse it and it overheats and locks. 'Zero hair, zero mercy. Permanent results (theirs).'"
-ITEM_BOOMERANG_SILICONA_NAME,Bumerán de Silicona,Silicone Boomerang
-ITEM_BOOMERANG_SILICONA_DESC,"Lo lanzas, atraviesa todo, da la vuelta y pega otra vez al volver. Hasta que no lo atrapas no puedes lanzar otro. 'Siempre vuelve. Como el ex.'","Throw it: it pierces everything, turns around and hits again on the way back. You can't throw another until you catch it. 'It always comes back. Like the ex.'"
-ITEM_GLOBOS_AGUA_NAME,Lanzador de Globos de Agua,Water Balloon Launcher
-ITEM_GLOBOS_AGUA_DESC,"Globos que revientan en área y dejan un charco 4 s que frena a los enemigos a la mitad. Poco daño, mucho control. 'Está tibia. Tranquilos, es agua.'","Balloons that burst in an area and leave a 4 s puddle that halves enemy speed. Low damage, lots of control. 'It's lukewarm. Relax, it's water.'"
-ITEM_BALLESTA_TANTRICA_NAME,Ballesta Tántrica,Tantric Crossbow
-ITEM_BALLESTA_TANTRICA_DESC,"Mantén el gatillo para tensar la cuerda: más carga, más daño y más enemigos atravesados. Soltar antes es un chasquido flojo; aguantar de más, sale sola. 'Lo bueno se hace esperar.'","Hold the trigger to draw the string: more charge, more damage and more enemies pierced. Releasing early is a weak twang; holding too long fires it on its own. 'Good things come to those who wait.'"
-ITEM_CANON_CONFETI_NAME,Cañón de Confeti,Confetti Cannon
-ITEM_CANON_CONFETI_DESC,Escopeta de fiesta: una nube de confeti de poco daño que ATURDE a lo que alcanza. Corto alcance. 'Felicidades: ahora no te pueden pegar. Por un rato.',Party shotgun: a cloud of low-damage confetti that STUNS whatever it hits. Short range. 'Congratulations: they can't hit you now. For a while.'
-ITEM_PRESERVATIVO_ATRAPABALAS_NAME,Preservativo Atrapabalas,Bullet-Catching Condom
-ITEM_PRESERVATIVO_ATRAPABALAS_DESC,Suelta un preservativo gigante y lento que se traga las balas enemigas que pasan por él; al reventar las devuelve en círculo. Defensa que ataca. 'Protección total. Hasta de los proyectiles.',Releases a giant slow condom that swallows enemy bullets passing through; when it bursts it fires them back in a circle. Defense that attacks. 'Total protection. Even from projectiles.'
-ITEM_CHANCLETA_VOLADORA_NAME,Chancleta Voladora,Flying Flip-Flop
-ITEM_CHANCLETA_VOLADORA_DESC,Cuerpo a cuerpo en combo: dos chancletazos rápidos y un tercero devastador que lanza lejos a todo el abanico. Sin munición ni calor. 'Aprendida de mamá. Puntería heredada.',Melee combo: two quick flip-flop swats and a devastating third that launches the whole fan away. No ammo or heat. 'Learned from mom. Inherited aim.'

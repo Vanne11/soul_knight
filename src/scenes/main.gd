@@ -428,6 +428,7 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 					if types[t] != "espinilla":
 						break
 					t = _weighted_index(weights)
+				t = TaserSpecial.pick_index(t, types, _run_manager.current_floor)  # Vulvania 1: garantiza un Dildo Electrico
 				info.enemy_type = types[t]
 				info.name = names[t]
 				info.frames = _frames_path(roster[t])

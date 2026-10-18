@@ -63,6 +63,8 @@ func _normalize_slot_item(item: Item) -> void:
 func get_item(item_id: String) -> Variant:
 	return _items[item_id] if _items.has(item_id) else null
 
+## Los objetos con tag "exclusivo" (p.ej. el Dildo Electrico, que solo suelta el enemigo de
+## Vulvania) nunca salen de un sorteo: solo se consiguen por su via propia.
 func get_random_item(rarity: int = -1, tags: Array[String] = []) -> Variant:
 	var pool = []
 	if rarity >= 0 and _items_by_rarity.has(rarity):
@@ -75,6 +77,7 @@ func get_random_item(rarity: int = -1, tags: Array[String] = []) -> Variant:
 		for arr in _items_by_rarity.values():
 			pool.append_array(arr)
 	
+	pool = pool.filter(func(it): return not ("exclusivo" in it.tags))
 	if pool.is_empty():
 		return null
 	

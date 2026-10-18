@@ -6,10 +6,10 @@
 script = ExtResource("1")
 id = "dildo_taser"
 display_name = "Dildo Eléctrico"
-description = "Dispara chispas cuyo arco salta a otros 2 enemigos cercanos (50% del daño). Poco daño contra uno solo, mejor contra grupos. 'Descarga de 12.000 voltios. Garantía de 3 meses.'"
-rarity = 1
-tags = ["arma", "eléctrico"]
+description = "Solo lo suelta el Dildo Eléctrico de Vulvania: nadie lo vende. Sus chispas saltan a otros 2 enemigos (50% del daño), brutal contra grupos. 'Garantía de 3 meses.'"
+rarity = 2
+tags = ["arma", "eléctrico", "exclusivo"]
 equip_slot = 1
 effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
 base_value = 280
-custom_data = {"base_damage": 8, "fire_rate": 0.36, "projectile_speed": 650, "spread": 0.04, "chain": 2, "chain_radius": 120, "chain_mult": 0.5, "range": 380, "bullet_color": "7fe3ff"}
+custom_data = {"base_damage": 12, "fire_rate": 0.36, "projectile_speed": 650, "spread": 0.04, "chain": 2, "chain_radius": 120, "chain_mult": 0.5, "range": 380, "bullet_color": "7fe3ff"}

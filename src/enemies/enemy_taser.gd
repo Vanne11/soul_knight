@@ -20,6 +20,24 @@ func _attack() -> void:
 		_crackle()
 
 
+## El primer Dildo Electrico de Vulvania (etapa 1) suelta el arma "dildo_taser" (TaserSpecial).
+func _drop_loot() -> void:
+	super._drop_loot()
+	if not TaserSpecial.claim_drop(get_node("/root/RunManager").current_floor):
+		return
+	var pickup = ITEM_PICKUP_SCENE.instantiate()
+	pickup.item_id = TaserSpecial.ITEM_ID
+	pickup.position = _drop_container().to_local(global_position)
+	_drop_container().add_child.call_deferred(pickup)
+	var flash := ActorFx.add_glow(get_parent(), ProjectileSpark.SPARK_CYAN, 2.5, 1.6)
+	flash.global_position = global_position
+	var tw := flash.create_tween()
+	tw.tween_property(flash, "energy", 0.0, 0.6)
+	tw.tween_callback(flash.queue_free)
+	Narrator.toast(tr("TASER_DROP_T"), tr("TASER_DROP_D"), "7fe3ff")
+	Narrator.say("taser_drop")
+
+
 ## Chisporroteo en la punta mientras carga: el aviso, ademas del parpadeo.
 func _crackle() -> void:
 	var p := CPUParticles2D.new()
