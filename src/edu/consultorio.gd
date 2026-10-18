@@ -6,12 +6,13 @@ extends RefCounted
 ## usa con E y solo si quieres; nada se impone. Lo construye Main._build_calm_room (REST).
 
 const PROP := preload("res://src/edu/edu_prop.gd")
+const ART := "res://assets/sprites/edu/"  # arte de tools/gen_edu_art.py
 
 
 static func build(main: Node, room: Room) -> void:
 	var c := room.get_center_position()
 	var cfg := Edu.consultorio_cfg()
-	_prop(main, room, c + Vector2(-140, -30), _doctor_visual(),
+	_prop(main, room, c + Vector2(-140, -30), _doctor_visual(room),
 		func(): return Edu.t("EDU_DOC_PROMPT_SICK" if Edu.ps().contagion_time > 0.0 else "EDU_DOC_PROMPT_OK"),
 		func(_p, it):
 			if Edu.ps().contagion_time > 0.0:
@@ -23,14 +24,14 @@ static func build(main: Node, room: Room) -> void:
 				if fact != "":
 					Narrator.say_raw("%s: %s" % [Edu.t("EDU_DOC_NAME"), fact])
 			it.finish())
-	_prop(main, room, c + Vector2(-140, -110), _poster_visual(),
+	_prop(main, room, c + Vector2(-140, -110), _sprite_visual(room, "poster", 40, true, 20.0),
 		func(): return Edu.t("EDU_POSTER_PROMPT"),
 		func(_p, it):
 			Narrator.say_raw(Edu.t("EDU_POSTER_SAY"))
 			it.finish())
 	var cp: int = Edu.price(int(cfg.get("preservativo", {}).get("precio", 6)))
 	var secs: float = float(cfg.get("preservativo", {}).get("inmunidad_seg", 150.0))
-	_prop(main, room, c + Vector2(-210, 30), _box_visual(Color("e87fa8")),
+	_prop(main, room, c + Vector2(-210, 30), _sprite_visual(room, "box_condon", 34, false, 10.0),
 		func(): return Edu.t("EDU_CONDOM_PROMPT" if Edu.rm().coins >= cp else "EDU_CONDOM_POOR") % cp,
 		func(p, it):
 			if not _pay(cp, p):
@@ -39,7 +40,7 @@ static func build(main: Node, room: Room) -> void:
 			Narrator.say("edu_condon")
 			it.finish())
 	var vp: int = Edu.price(int(cfg.get("vacuna_vph", {}).get("precio", 15)))
-	_prop(main, room, c + Vector2(-140, 50), _syringe_visual(),
+	_prop(main, room, c + Vector2(-140, 50), _sprite_visual(room, "vacuna", 30, false, 10.0),
 		func():
 			if Edu.ps().vph_vaccinated:
 				return Edu.t("EDU_VAX_DONE")
@@ -73,51 +74,61 @@ static func _prop(main: Node, room: Room, pos: Vector2, visual: Node2D, prompt: 
 	it.position = pos
 	it.prompt_fn = prompt
 	it.add_child(visual)
-	main._prop_shadow(it, visual)
+	dress(room, it, visual)
 	it.used.connect(on_use.bind(it))
 	room.props_node.add_child.call_deferred(it)
 
 
-static func poly(pts: Array, color: Color) -> Polygon2D:
-	var p := Polygon2D.new()
-	p.polygon = PackedVector2Array(pts)
-	p.color = color
-	return p
+## Sombra de contacto (y proyectada si es alto) segun el pie y el ancho que marca el visual
+## (metas "foot" y "half_w"), y el shader de censura de la sala: gris hasta liberarla.
+## Los visuales son Sprite2D (no Polygon2D), asi que Main._prop_shadow no los mide.
+static func dress(room: Room, it: Node2D, visual: Node2D) -> void:
+	for c in [visual] + visual.get_children():
+		if c is CanvasItem:
+			Censor.apply(room, c)
+	if visual.has_meta("flat"):
+		return
+	var foot: float = visual.get_meta("foot", 10.0)
+	var r: float = visual.get_meta("half_w", 16.0)
+	LightKit.add_contact_shadow(it, r + 2.0, foot + 2.0)
+	if visual.has_meta("tall"):
+		LightKit.mark_caster(it, r, foot + 2.0)
 
 
-static func _doctor_visual() -> Node2D:
-	var n := Node2D.new()
-	n.set_meta("tall", true)
-	n.add_child(poly([Vector2(-14, 24), Vector2(-16, -6), Vector2(-8, -14), Vector2(8, -14), Vector2(16, -6), Vector2(14, 24)], Color("f2f0ea")))  # bata
-	n.add_child(poly([Vector2(-4, -10), Vector2(4, -10), Vector2(0, 8)], Color("8fd0c0")))  # escote
-	n.add_child(poly([Vector2(-9, -26), Vector2(9, -26), Vector2(10, -14), Vector2(-10, -14)], Color("e0b090")))  # cabeza
-	n.add_child(poly([Vector2(-11, -28), Vector2(11, -28), Vector2(11, -22), Vector2(-11, -22)], Color("5a3a2a")))  # pelo
-	n.add_child(poly([Vector2(-2, 0), Vector2(2, 0), Vector2(2, 4), Vector2(6, 4), Vector2(6, 8), Vector2(2, 8), Vector2(2, 12), Vector2(-2, 12), Vector2(-2, 8), Vector2(-6, 8), Vector2(-6, 4), Vector2(-2, 4)], Color("d84a4a")))  # cruz
-	return n
+static func tex(file: String) -> Texture2D:
+	return load(ART + file + ".png")
 
 
-static func _box_visual(color: Color) -> Node2D:
-	var n := Node2D.new()
-	n.add_child(poly([Vector2(-14, 10), Vector2(-14, -8), Vector2(14, -8), Vector2(14, 10)], color))
-	n.add_child(poly([Vector2(-14, -8), Vector2(-10, -14), Vector2(10, -14), Vector2(14, -8)], color.lightened(0.25)))
-	n.add_child(poly([Vector2(-6, -2), Vector2(6, -2), Vector2(6, 2), Vector2(-6, 2)], Color("fff4e0")))
-	return n
+## Sprite2D centrado en x con los pies (borde inferior) a `foot` px bajo el origen del prop.
+## `flat`: cartel/suelo, sin sombra. `tall`: proyecta sombra larga con las luces.
+static func _sprite_visual(_room: Room, file: String, _height: int, flat: bool, foot: float, tall := false) -> Node2D:
+	var s := Sprite2D.new()
+	s.texture = tex(file)
+	s.centered = false
+	s.offset = Vector2(-s.texture.get_width() / 2.0, foot - s.texture.get_height())
+	s.set_meta("foot", foot)
+	s.set_meta("half_w", s.texture.get_width() / 2.0 - 3.0)
+	if flat:
+		s.set_meta("flat", true)
+	if tall:
+		s.set_meta("tall", true)
+	return s
 
 
-static func _syringe_visual() -> Node2D:
-	var n := Node2D.new()
-	n.add_child(poly([Vector2(-16, 6), Vector2(-16, -2), Vector2(10, -2), Vector2(10, 6)], Color("cfe8f0")))
-	n.add_child(poly([Vector2(-12, 4), Vector2(-12, 0), Vector2(2, 0), Vector2(2, 4)], Color("7fe0a0")))
-	n.add_child(poly([Vector2(10, 1), Vector2(22, 2), Vector2(10, 3)], Color("c9c2b0")))
-	n.add_child(poly([Vector2(-20, -5), Vector2(-16, -5), Vector2(-16, 9), Vector2(-20, 9)], Color("c9c2b0")))
-	return n
-
-
-static func _poster_visual() -> Node2D:
-	var n := Node2D.new()
-	n.set_meta("flat", true)
-	n.add_child(poly([Vector2(-14, 14), Vector2(-14, -16), Vector2(14, -16), Vector2(14, 14)], Color("efe3b8")))
-	n.add_child(poly([Vector2(-10, -12), Vector2(10, -12), Vector2(10, -8), Vector2(-10, -8)], Color("b08d4a")))
-	for i in 4:
-		n.add_child(poly([Vector2(-10, -3 + i * 5), Vector2(10 - i * 4, -3 + i * 5), Vector2(10 - i * 4, -1 + i * 5), Vector2(-10, -1 + i * 5)], Color("8a8494")))
-	return n
+## La doctora: idle de 4 cuadros (respira, brilla el espejo, parpadea) con tiempos desiguales.
+static func _doctor_visual(_room: Room) -> Node2D:
+	var sf := SpriteFrames.new()
+	sf.add_animation("idle")
+	sf.set_animation_loop("idle", true)
+	sf.set_animation_speed("idle", 1.0)
+	for e in [[0, 3.2], [1, 1.0], [0, 2.4], [2, 0.8], [0, 3.6], [3, 0.3]]:
+		sf.add_frame("idle", tex("doctora_idle_%d" % e[0]), e[1])
+	var a := AnimatedSprite2D.new()
+	a.sprite_frames = sf
+	a.centered = false
+	a.offset = Vector2(-22, 24 - 62)
+	a.set_meta("foot", 24.0)
+	a.set_meta("half_w", 16.0)
+	a.set_meta("tall", true)
+	a.play("idle")
+	return a
