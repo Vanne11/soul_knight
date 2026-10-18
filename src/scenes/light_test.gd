@@ -551,14 +551,14 @@ func _process(delta: float) -> void:
 
 
 # ------------------------------------------------------------------ estados
-## kingdom_idx recorre los 10 pisos (2 etapas por reino); la penumbra va por reino y sube en la 2a etapa.
+## kingdom_idx recorre los pisos de la ruta (RunManager.route_size(); 2 etapas por reino, la Prostata 1); la penumbra va por reino y sube en la 2a etapa.
 func _dark_chance() -> float:
 	var f := kingdom_idx + 1
-	return DARK_CHANCE[RunManager.region_index(f)] + (RoomLighting.DEEP_DARK_BONUS if RunManager.floor_stage(f) > 1 else 0.0)
+	return DARK_CHANCE[clampi(RunManager.region_index(f), 0, DARK_CHANCE.size() - 1)] + (RoomLighting.DEEP_DARK_BONUS if RunManager.floor_stage(f) > 1 else 0.0)
 
 
 func _kingdom() -> Dictionary:
-	return RunManager.FLOORS[kingdom_idx]
+	return RunManager.floor_at(kingdom_idx + 1)
 
 
 func _apply_all(animate: bool) -> void:
@@ -635,7 +635,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	match event.physical_keycode:
 		KEY_1: lights_on = not lights_on
-		KEY_2: kingdom_idx = (kingdom_idx + 1) % RunManager.FLOORS.size()
+		KEY_2: kingdom_idx = (kingdom_idx + 1) % RunManager.route_size()
 		KEY_3:
 			if colored:
 				colored = false
