@@ -160,6 +160,7 @@ var settings_btn: Button
 var quit_btn: Button
 var _meta_box: VBoxContainer
 var _root: Control
+var _close_popup := Callable()  # cierra la ventana emergente abierta (codice, mejoras, ajustes): ESC
 var _logo: Control
 
 func _update_meta_info() -> void:
@@ -194,10 +195,13 @@ func _window(title_text: String) -> VBoxContainer:
 	box.add_child(HudStyle.pixel_label(title_text, 24, Color("ff4f9a"), true))
 	var back := Button.new()
 	back.text = tr("MENU_BACK")
-	back.pressed.connect(func():
+	var close := func():
+		_close_popup = Callable()
 		dim.queue_free()
 		_update_meta_info()
-		start_btn.grab_focus())
+		start_btn.grab_focus()
+	back.pressed.connect(close)
+	_close_popup = close
 	HudStyle.juice_button(back)
 	box.add_child(back)
 	back.grab_focus.call_deferred()
@@ -217,11 +221,13 @@ func _open_settings() -> void:
 	center.add_child(sp)
 	var locale_at_open: String = Settings.locale
 	sp.closed.connect(func():
+		_close_popup = Callable()
 		dim.queue_free()
 		if Settings.locale != locale_at_open:
 			Transition.reload()
 		else:
 			settings_btn.grab_focus())
+	_close_popup = func(): sp.closed.emit()
 	sp.focus_first.call_deferred()
 
 
@@ -431,3 +437,10 @@ func _on_continue() -> void:
 func _on_quit() -> void:
 	await FourthWall.farewell()  # despedida corta (~2 s, se salta con una tecla)
 	get_tree().quit()
+
+
+## ESC (accion "pause") cierra la ventana emergente abierta, como su boton VOLVER.
+func _unhandled_input(event: InputEvent) -> void:
+	if _close_popup.is_valid() and event.is_action_pressed("pause") and not event.is_echo():
+		get_viewport().set_input_as_handled()
+		_close_popup.call()
