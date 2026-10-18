@@ -676,9 +676,14 @@ func _complete_floor() -> void:
 		Sound.play("puzzle_solve")
 	else:
 		await get_tree().create_timer(1.5).timeout  # guardian vencido: sin mejora, solo la salida
-	_add_prop(boss_room, boss_room.get_center_position() + Vector2(0, 150), _hatch_visual(),
+	var portal := _hatch_visual()
+	_add_prop(boss_room, boss_room.get_center_position() + Vector2(0, 150), portal,
 		tr("FLOOR_HATCH") % (floor_n + 1),
-		func(_p, it): it.finish(); _advance_to_next_floor())
+		func(p, it):
+			it.finish()
+			await portal.absorb(p)  # el heroe se encoge y gira hacia el centro antes de bajar
+			_advance_to_next_floor()
+			FloorPortal.restore(p))
 
 ## [texto, stat, cantidad] (apply_stat_mod, valores fijos que se suman).
 const BOSS_REWARDS := [
@@ -897,12 +902,10 @@ func _disc(radius: float, color: Color) -> Polygon2D:
 	p.color = color
 	return p
 
-func _hatch_visual() -> Node2D:
-	var n := Node2D.new()
-	n.set_meta("flat", true)  # agujero en el suelo: sin sombra
-	n.add_child(_disc(30, Color("b08d4a")))
-	n.add_child(_disc(24, Color("0d0b0f")))
-	return n
+## Portal de salida (src/fx/floor_portal.gd): arte y luz del reino; gris si el reino sigue censurado.
+func _hatch_visual() -> FloorPortal:
+	var floor_n: int = _run_manager.current_floor
+	return FloorPortal.create(RunManager.floor_region(floor_n), _run_manager.is_liberated(floor_n))
 
 func _advance_to_next_floor() -> void:
 	# Antes llamaba a RunManager.next_floor(), que no existe: el juego reventaba aqui.
