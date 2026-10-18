@@ -903,6 +903,8 @@ func _say(suffix: String) -> void:
 
 # ---------------------------------------------------------------- utilidades
 func _update_animation() -> void:
+	if has_node(BossAnimator.NAME):
+		return  # los jefes con animador (src/enemies/boss_animator.gd) eligen sus cuadros ahi
 	var anim := "walk" if velocity.length() > 10.0 else "idle"
 	if animated_sprite.animation != anim:
 		animated_sprite.play(anim)

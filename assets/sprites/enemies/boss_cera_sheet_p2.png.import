@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d38t6xwaensnm"
-path="res://.godot/imported/boss_cera_death_03.png-ca941964a75170b0f7703ffd2a535883.ctex"
+uid="uid://5bafo4oiq4t5"
+path="res://.godot/imported/boss_cera_sheet_p2.png-aafcf9d98cee8fc1637d63cbb98e7231.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/boss_cera_death_03.png"
-dest_files=["res://.godot/imported/boss_cera_death_03.png-ca941964a75170b0f7703ffd2a535883.ctex"]
+source_file="res://assets/sprites/enemies/boss_cera_sheet_p2.png"
+dest_files=["res://.godot/imported/boss_cera_sheet_p2.png-aafcf9d98cee8fc1637d63cbb98e7231.ctex"]
 
 [params]
 
