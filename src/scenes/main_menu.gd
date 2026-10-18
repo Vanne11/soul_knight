@@ -336,9 +336,8 @@ func _edu_source(lore_id: String) -> String:
 
 
 ## Selector de Censura (nivel 0 = juego normal): flechas hasta el maximo desbloqueado y la
-## lista de reglas activas. Solo aparece cuando hay algo que elegir (tras la primera victoria).
+## lista de reglas activas. Siempre visible: vale para la partida normal y para la del dia.
 func _build_censura_selector(root: Control) -> void:
-	var rm = _game_controller.get_run_manager()
 	var panel := PanelContainer.new()
 	panel.position = Vector2(36, 548)
 	panel.custom_minimum_size = Vector2(300, 0)
@@ -374,8 +373,6 @@ func _build_censura_selector(root: Control) -> void:
 	_cens_rules.add_theme_constant_override("h_separation", 10)
 	_cens_rules.add_theme_constant_override("v_separation", 3)
 	rpanel.add_child(_cens_rules)
-	panel.visible = rm.censura_unlocked > 0
-	rpanel.visible = panel.visible
 	_refresh_censura()
 
 

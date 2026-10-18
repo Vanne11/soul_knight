@@ -371,10 +371,10 @@ func start_new_run(seed: int = 0) -> void:
 		seed = Time.get_ticks_msec()
 	current_seed = seed
 	RNG.randomize(seed)
-	# Partida del dia (pedida desde el menu): siempre Censura 0, para que todos jueguen lo mismo.
+	# Partida del dia (pedida desde el menu): misma semilla para todos, con la Censura elegida en el menu.
 	daily_mode = daily_requested
 	daily_requested = false
-	Censura.level = 0 if daily_mode else clampi(censura_selected, 0, censura_unlocked)
+	Censura.level = clampi(censura_selected, 0, censura_unlocked)
 	Censura.clear_curses()  # las maldiciones de pactos mayores no pasan de una partida a otra
 	last_censura_unlocked = 0
 	

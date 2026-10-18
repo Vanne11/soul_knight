@@ -7,7 +7,7 @@ CENSURA_UNLOCKED_TITLE,Censura desbloqueada,Censorship unlocked
 CENSURA_UNLOCKED_BODY,Ya puedes jugar en Censura %d. Tiene más tijeras.,You can now play on Censorship %d. More scissors.
 CENSURA_DAILY_BTN,PARTIDA DEL DÍA,DAILY RUN
 CENSURA_DAILY_BTN_REC,DEL DÍA: %s,DAILY: %s
-CENSURA_DAILY_TIP,"La misma mazmorra para todos hoy (semilla de la fecha, Censura 0). Guarda tu mejor resultado.","The same dungeon for everyone today (date seed, Censorship 0). Keeps your best result."
+CENSURA_DAILY_TIP,"La misma mazmorra para todos hoy (semilla de la fecha, con la Censura elegida). Guarda tu mejor resultado.","The same dungeon for everyone today (date seed, with the chosen Censorship). Keeps your best result."
 CENSURA_DAILY_WIN,¡VICTORIA %d:%02d!,WIN %d:%02d!
 CENSURA_DAILY_FLOOR,piso %d,floor %d
 CENSURA_DAILY_NOTICE,PARTIDA DEL DÍA · %s · misma mazmorra para todos,DAILY RUN · %s · same dungeon for everyone
