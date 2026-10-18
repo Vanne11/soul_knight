@@ -624,6 +624,7 @@ func _boss_meter(delta: float) -> void:
 	if int(b.state) == 5:  # DEAD
 		return
 	_bm.t += delta
+	_bm.hp_last = float(b.current_health)
 	var pool_now := _pool_now()  # vida + escudo: lo que baja es dano recibido (el escudo que regenera solo sube)
 	if pool_now < _bm.pool:
 		_bm.dmg_taken += _bm.pool - pool_now
@@ -663,8 +664,8 @@ func _boss_report(result: String) -> void:
 	_bm_reported = true
 	var b = _bm.boss
 	var hp_left := 0.0
-	if is_instance_valid(b) and not _bm.victory:
-		hp_left = maxf(0.0, float(b.current_health))
+	if not _bm.victory:
+		hp_left = maxf(0.0, float(b.current_health) if is_instance_valid(b) else float(_bm.get("hp_last", 0.0)))
 	var t: float = maxf(_bm.t, 0.001)
 	var rm := get_node("/root/RunManager")
 	var weapon := str(player.current_weapon.id) if player and is_instance_valid(player) and player.current_weapon else "-"
