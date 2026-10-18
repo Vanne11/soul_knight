@@ -48,9 +48,10 @@ static func make_light(color: Color, energy: float, scale_: float, shadows := tr
 	l.energy = energy
 	l.range_item_cull_mask = MASK_FLOOR | MASK_WALL
 	l.shadow_item_cull_mask = MASK_FLOOR
-	l.shadow_enabled = shadows
+	l.shadow_enabled = shadows and Settings.Q_SHADOW_LIGHTS[Settings.quality] > 0
 	l.shadow_filter = Light2D.SHADOW_FILTER_PCF13
 	l.shadow_filter_smooth = 6.0
+	l.set_meta("base_shadow", shadows)
 	l.set_meta("base_energy", energy)
 	l.set_meta("base_scale", scale_)
 	l.set_meta("base_color", color)

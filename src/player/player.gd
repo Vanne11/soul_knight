@@ -548,7 +548,7 @@ func _update_weapon_state(delta: float) -> void:
 func _steam_puff() -> void:
 	var p := CPUParticles2D.new()
 	p.position = Vector2(_weapon_base_x + (weapon_sprite.texture.get_width() * weapon_sprite.scale.x * 0.5 if weapon_sprite.texture else 8.0), 0)
-	p.amount = 14
+	p.amount = Settings.fx_amount(14)
 	p.lifetime = 0.7
 	p.one_shot = true
 	p.explosiveness = 0.8

@@ -33,7 +33,7 @@ func _physics_process(delta: float) -> void:
 ## Estela: chispitas que se quedan en el mundo (no siguen al proyectil) y se apagan.
 func _add_trail() -> void:
 	var p := CPUParticles2D.new()
-	p.amount = 14
+	p.amount = Settings.fx_amount(14)
 	p.lifetime = 0.28
 	p.local_coords = false
 	p.direction = Vector2.LEFT

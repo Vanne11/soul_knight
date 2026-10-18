@@ -53,6 +53,8 @@ var _player_prev := Vector2.ZERO
 var _have_prev := false
 var _vert_tex: GradientTexture2D
 var _horiz_tex: GradientTexture2D
+var _budget_t := 0.0
+var _casts_shown := true
 
 
 func _ready() -> void:
@@ -693,13 +695,21 @@ func _process(delta: float) -> void:
 		if d.boss_light:
 			_pulse_boss(d.boss_light)
 		_hero_light.energy = _hero_light.get_meta("base_energy") * (1.0 + _noise.get_noise_2d(_t * 0.5, 500.0) * 0.06)
+	_budget_t -= delta
+	if _budget_t <= 0.0:
+		_budget_t = 0.2
+		_apply_light_budget()
 	_kick_props(d, delta)
 	_push_with_bullets(d)
 	_props_hit_enemies(d)
 	_player_prev = _player.global_position
 	_have_prev = true
-	if dark:
+	if dark and Settings.Q_CAST_SHADOWS[Settings.quality]:
 		_update_cast_shadows(d)
+		_casts_shown = true
+	elif dark and _casts_shown:
+		_hide_all_casts()
+		_casts_shown = false
 
 
 ## Parpadeo suave: capas de ruido lento + una rapida muy leve, filtradas; la luz se mece unos pixeles.
@@ -732,6 +742,44 @@ func _pulse_boss(l: PointLight2D) -> void:
 	var jitter := _noise.get_noise_2d(_t * 5.0, 900.0) * 0.08
 	l.energy = (0.45 + 0.75 * beat + jitter) * l.get_meta("base_energy")
 	l.texture_scale = l.get_meta("base_scale") * (0.92 + 0.12 * beat)
+
+
+# ------------------------------------------------------------------ calidad (Ajustes > Calidad)
+## Limita las luces encendidas a las N mas cercanas al jugador (la del heroe siempre) y deja
+## que solo las M primeras proyecten sombra. Se repite unas veces por segundo: sirve igual
+## al cambiar la calidad en caliente. Las luces de salas ocultas no cuestan y no se tocan.
+func _apply_light_budget() -> void:
+	var q: int = Settings.quality
+	var max_lights: int = Settings.Q_MAX_LIGHTS[q]
+	var max_shadows: int = Settings.Q_SHADOW_LIGHTS[q]
+	var hero_shadow: bool = max_shadows > 0 and _hero_light != null and _hero_light.get_meta("base_shadow", false)
+	if _hero_light and _hero_light.shadow_enabled != hero_shadow:
+		_hero_light.shadow_enabled = hero_shadow
+	var ppos := _player.global_position
+	var cands: Array = []
+	for n in get_tree().get_nodes_in_group(LightKit.GROUP_DARK):
+		if n is PointLight2D and n != _hero_light and n.is_visible_in_tree():
+			cands.append(n)
+	if cands.is_empty():
+		return
+	# cercania ponderada por alcance: una antorcha grande gana a un brillo chico a igual distancia
+	var rank := func(l: PointLight2D) -> float: return l.global_position.distance_to(ppos) / maxf(l.texture_scale, 0.2)
+	cands.sort_custom(func(a, b): return rank.call(a) < rank.call(b))
+	var shadows := 1 if hero_shadow else 0
+	for i in cands.size():
+		var l: PointLight2D = cands[i]
+		if i >= max_lights:
+			if l.enabled:
+				l.enabled = false
+				l.set_meta("cap_off", true)
+		elif l.has_meta("cap_off"):
+			l.remove_meta("cap_off")
+			l.enabled = LightKit.dark
+		var want: bool = l.enabled and l.get_meta("base_shadow", false) and shadows < max_shadows
+		if want:
+			shadows += 1
+		if l.shadow_enabled != want:
+			l.shadow_enabled = want
 
 
 # ------------------------------------------------------------------ sombras proyectadas

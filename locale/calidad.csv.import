@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bd7ikucmoc08p"
+
+[deps]
+
+files=["res://locale/calidad.es.translation", "res://locale/calidad.en.translation"]
+
+source_file="res://locale/calidad.csv"
+dest_files=["res://locale/calidad.es.translation", "res://locale/calidad.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
