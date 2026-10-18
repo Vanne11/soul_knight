@@ -39,6 +39,10 @@ CRE = ("IMPORTANT: no humans and no animals; the subject is a cute abstract crea
 ITS = "This is a friendly, charming cartoon microbe mascot (a cute germ character), never disgusting, without any stigma. "
 
 
+def I(ref, text, extra=""):
+    return ([ref], text + " " + extra)
+
+
 def E(variant, text, extra=""):
     return ([f"enemies/{variant}_idle_00"], text + " " + extra)
 
@@ -110,6 +114,43 @@ ENTRIES = {
     "loc_selva": ([], "A landscape plate of the Pubic Jungle: a dense, damp, curly jungle of tangled dark curly vines and wiry fronds, a tiny green louse creature peeking out, nobody has trimmed it since the censorship. Humorous, nothing explicit. " + CRE),
     "loc_perineo": ([], "A landscape plate of the Perineum: a narrow bleak border strip of land between a blue Greek-column kingdom on the left and a pink flowery kingdom on the right, hazard stripes, a lone guard post and dust bunnies, nobody lives here. " + CRE),
     "loc_palacio": ([], "A landscape plate of the Palace of Censorship: a huge grey perfectly tidy palace where every painting has black bars, statues wear bathrobes, mosaic pixel squares float around, a giant fig leaf banner above. " + CRE),
+    # --- codice 2: objetos, tragos, reliquias, armas y lore sin lamina
+    "absinthe_lore": I("items/absinthe", "A cartoon bottle of green absinthe with a tiny glowing green fairy floating out of the neck whispering secrets into the viewer's ear, swirly hypnotic eyes, wisps of green mist. "),
+    "bandages_lore": I("items/bandages", "A roll of slightly suspicious used bandages with a worried face, faint stink lines and a few tiny flies circling, sheepish 'better not ask' expression. "),
+    "birth_control_lore": I("items/relic_birth_control", "A round blister pack of contraceptive pills as a sensible, prim and slightly boring relic wearing tiny reading glasses, pills lined up neatly like obedient soldiers, a calendar-like pattern. Wholesome. "),
+    "bloody_key_lore": I("items/key_bloody", "An ornate old key dripping glossy ruby-red paint-like drops, with a faintly worried face, as if cursed and a bit dramatic. "),
+    "chocolate_bar_lore": I("items/chocolate_bar", "A chocolate bar half unwrapped with a dreamy hormonal-craving face, hearts floating around, a small crumb trail, irresistible and smug. "),
+    "coffee_lore": I("items/coffee", "A steaming cup of coffee with a smug morning-liar face, jittery shaking lines, wide caffeinated eyes, steam forming a fake smile. "),
+    "coin_lore": I("items/coin", "A bashful golden coin stamped with a fig leaf on its face, blushing, covering itself shyly with a tiny hand. "),
+    "crystal_key_lore": I("items/key_crystal", "A beautiful crystal key with a crack running through it, sparkling prisms, a sad perfectionist expression, tiny shards falling off. "),
+    "drunk_secret": I("items/whiskey", "A shameful small wooden door slightly ajar with a glowing keyhole, a bottle of whiskey leaning against it, a blushing hungover face on the door, a mirror glint inside, 'door of shame' mood. "),
+    "elites": ([], "An ordinary little creature that got a swollen ego: wearing a big golden crown, a glowing red ring aura around it and floating colored affix orbs (a speed swirl, a blue shield bubble, a spiky ring) orbiting it, smug proud pose. " + CRE),
+    "energy_drink_lore": I("items/energy_drink", "A can of energy drink with tiny feathered angel wings flapping frantically, bulging eyes, a racing heart pulsing out of the can and lightning sparks. "),
+    "estrogen_lore": I("items/relic_estrogen", "A pink glowing relic of estrogen from the kingdom of Vulvania: a regal vial with a heart-shaped crystal, flowers and petals swirling around, elegant and radiant. Nothing explicit. "),
+    "flashbang_lore": I("items/grenade_flashbang", "A flashbang grenade bursting with a blinding white flash, wearing little sunglasses and a gleeful grin, radial light rays, a cowering vampire-like shadow in the corner shielding eyes. "),
+    "golden_pistol_lore": I("items/pistol_golden", "A shiny golden pistol on a velvet cushion looking vain and pompous, glittering, next to a modest humble lead bullet that is the true hero with a tiny cape. "),
+    "grenade_lore": I("items/grenade_frag", "A frag grenade with a pin ring dangling and a cheeky wink, colorful fireworks exploding in the background, a tiny lit fuse, 'don't stay to watch the fireworks' mood. "),
+    "hormonas_contrabando": I("items/hormone_testosterona", "A shady smuggler's suitcase opened to reveal glass vials of hormones, one blue and one pink, with handwritten tags (blank, no text), a trench coat flap and a flashlight beam, black market feel. Nothing explicit. "),
+    "intoxication_mechanic": I("items/absinthe", "A toxicity gauge shaped like a tall glass thermometer filled with swirling green liquid rising in three stages, a wobbly cartoon face, dizzy spiral eyes and floating bubbles, tipsy stars. No text. "),
+    "liver_lore": I("items/relic_liver", "A big brown cartoon liver organ relic with a weary traumatized face, bags under its eyes, a tiny bottle in one hand, a faint halo of trauma lines, 'has seen terrible things'. Cute and non-gory. "),
+    "master_key_secret": I("items/key_master", "A grand mysterious door covered with dozens of different locks and chains, a single glowing golden master key in front of it turning in one keyhole, light seeping through the cracks, ominous and funny. "),
+    "mead_lore": I("items/mead", "A rustic wooden mug and a clay jug of honey mead with golden honey dripping, a bee wearing a tiny elephant-like memory ribbon on its leg and an expression of never forgetting. "),
+    "medkit_lore": I("items/medkit", "A sturdy first-aid medkit box with a red cross on it, open with neatly packed supplies, a determined heroic face, ready to save the day. "),
+    "morning_after_pill_lore": I("items/morning_after_pill", "A single small pill on a pedestal with a gentle halo and a relieved 'second chance' smile, a rewinding clock with no numbers behind it, soft golden light. Wholesome. "),
+    "mystery_fluid_lore": I("items/mystery_fluid", "A mysterious flask of swirling multicolored fluid with a big question mark made of bubbles inside, a dubious cork, wobbling nervously, rolling die-like sparkles around it, russian-roulette mood. "),
+    "prostate_lore": I("items/relic_prostate", "A walnut-shaped prostate gland relic glowing with forbidden enlightenment, a third eye of light on its forehead, lotus meditation pose, golden rays and swirling cosmic wisdom. Nothing explicit. "),
+    "rifle_lore": I("items/rifle_reproductive", "A quirky long rifle with a pink baby-bottle-like barrel and a bullet-and-heart emblem, one tiny cute baby bean peeking out of the muzzle among confetti, cheeky, a bestiary specimen. "),
+    "rum_lore": I("items/rum", "A pirate rum bottle wearing a tiny tricorn hat and an eyepatch, with a parrot on top, a treasure-map swirl and a tear of regret rolling down, swashbuckling. "),
+    "shotgun_lore": I("items/shotgun_pelvic", "A burly pelvic shotgun with a wide pink-bone-shaped stock, cheeky confident face, a cloud of pellets and cartoon smoke from the barrel, heroic stance. Nothing explicit. "),
+    "sinergias_lore": I("items/shotgun_pelvic", "Three colorful glowing jigsaw puzzle pieces fitting together perfectly in the center: one shaped like a weapon, one like a small item, one like a blessing with a halo, radiant sparkles where they lock, a happy 'click' star. No text. "),
+    "steroid_lore": I("items/relic_steroid", "A comically over-muscled red vial relic with huge cartoon biceps and an angry vein-popping face, steam from the ears, tiny dumbbell, 'roid rage' mood. Nothing explicit. "),
+    "stimulant_lore": I("items/stimulant_combat", "A combat stimulant injector pen with a lightning-bolt emblem, jittery speed lines, a smug credit card tied to it by a string and a tiny bill collector clock waiting behind. "),
+    "syringe_lore": I("items/syringe_adrenaline", "An adrenaline syringe plunging toward a cute beating heart with lightning, defibrillator-like electric sparks, a heroic hospital-drama pose. Non-gory. "),
+    "tequila_lore": I("items/tequila", "A tequila bottle with a sombrero, a tiny shot glass called a caballito beside it with a lime wedge and a salt rim, a smug lying face saying 'just one', a cartoon worm winking. "),
+    "testosterone_lore": I("items/relic_testosterone", "A blue glowing relic of testosterone from the kingdom of Penelandia: a mighty vial with a Greek column shape and a lightning emblem, heroic and a bit exaggerated, golden laurel leaves around. Nothing explicit. "),
+    "trap_lore": I("items/trap_bear", "A big steel bear trap with jagged teeth snapping shut, a surprised and apologetic face, a small yellow impact starburst with no lettering, tiny bandage on its jaw, hazard vibe. Non-gory. "),
+    "vodka_lore": I("items/vodka", "A crystal-clear vodka bottle posing as innocent water with a halo and a very obvious fake innocent smile, a sneaky devil tail behind it, ice crystals. "),
+    "whiskey_lore": I("items/whiskey", "A whiskey bottle in disguise wearing a fake mustache and glasses, with a suspicious label shape (no text), amber glow, a sly grin, a barrel in the background. "),
 }
 
 
