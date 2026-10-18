@@ -135,7 +135,7 @@ func _open() -> void:
 
 	_label(box, tr("DEBUG_FLOOR_HEAD"))
 	var floors := {}
-	for n in range(1, RunManager.FLOORS.size() + 1):
+	for n in range(1, RunManager.route_size() + 1):
 		floors[tr("DEBUG_FLOOR") % n] = func():
 			_close()
 			rm.current_floor = n - 1
@@ -148,6 +148,7 @@ func _open() -> void:
 		chars[RunManager.CHARACTERS[c].name] = func():
 			_close()
 			rm.character = c
+			RunManager.set_route_for(c, rm.current_seed)  # cada heroe, su ruta
 			Transition.change_scene("res://src/scenes/main.tscn")
 	_row(box, chars)
 

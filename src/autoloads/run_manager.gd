@@ -6,6 +6,10 @@ class_name RunManager
 ## Historia "La Gran Censura": cruzas los dos reinos hasta el palacio de la
 ## Hoja de Parra. Ganar = matar al jefe del ultimo piso.
 ##
+## El ORDEN en que cada heroe recorre los reinos vive en assets/data/routes.json (ver "RUTAS"
+## mas abajo): los pisos se cargan una sola vez, la ruta solo los reordena. "Piso n" =
+## n-esimo piso de LA RUTA del heroe (current_floor), y la dificultad depende de esa posicion.
+##
 ## Los pisos viven en datos: assets/data/floors/<NN>_<id>.json, uno por piso, en el
 ## orden de su prefijo numerico (10, 20, 30... deja huecos para intercalar pisos).
 ## El <id> (nombre del archivo sin prefijo ni .json) sirve para referirse al piso.
@@ -110,6 +114,65 @@ static func _load_extra_files(floors: Array, ids: Array) -> void:
 				push_warning("RunManager: %s: '%s' no cae en ningun piso" % [file, entry.get("name", "?")])
 
 
+## --- RUTAS: orden de los reinos por heroe (assets/data/routes.json) ---
+## {"<heroe>": [<reino>, ...]} donde cada <reino> es un id de region ("selva", "penelandia"...) o
+## una lista de ids que se juegan en orden AL AZAR segun la semilla de la partida (la del dia
+## incluida). Cada reino aporta sus pisos (etapas) seguidos. Meter un reino nuevo = su JSON en
+## floors/ + su id aqui. "default" se usa con heroes sin ruta propia.
+const ROUTES_FILE := "res://assets/data/routes.json"
+static var ROUTES: Dictionary = _load_routes()
+## Pisos (Dictionary de FLOORS) de la ruta activa, en orden; vacia = orden de los archivos.
+static var route_floors: Array = []
+## Ids de region de la ruta activa, en orden (para dificultad por posicion).
+static var route_regions: Array = []
+
+
+static func _load_routes() -> Dictionary:
+	var r = _read_json(ROUTES_FILE)
+	return r if r is Dictionary else {}
+
+
+## Ids de region de la ruta de un heroe para una semilla. Los que no existen en FLOORS se ignoran.
+static func route_for(hero: String, seed_: int) -> Array:
+	var spec: Array = ROUTES.get(hero, ROUTES.get("default", regions()))
+	var all := regions()
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed_ * 2654435761 + 97  # propio: no gasta tiradas del RNG de la partida
+	var out: Array = []
+	for step in spec:
+		var group: Array = step.duplicate() if step is Array else [str(step)]
+		for i in range(group.size() - 1, 0, -1):  # Fisher-Yates
+			var j := rng.randi_range(0, i)
+			var t = group[i]
+			group[i] = group[j]
+			group[j] = t
+		for id in group:
+			if id not in all:
+				push_warning("RunManager: la ruta de '%s' nombra un reino sin JSON: %s" % [hero, id])
+			elif id not in out:
+				out.append(id)
+	return out
+
+
+## Fija la ruta activa (lista de ids de region): sus pisos, por reino y etapa.
+static func set_route(region_ids: Array) -> void:
+	route_regions = region_ids.duplicate()
+	route_floors = []
+	for r in region_ids:
+		for f in FLOORS:
+			if f.region == r:
+				route_floors.append(f)
+
+
+static func set_route_for(hero: String, seed_: int) -> void:
+	set_route(route_for(hero, seed_))
+
+
+## Cantidad de pisos de la ruta activa (el ultimo trae el jefe final).
+static func route_size() -> int:
+	return route_floors.size() if not route_floors.is_empty() else FLOORS.size()
+
+
 static func _as_list(v) -> Array:
 	if v is Array:
 		return v
@@ -201,15 +264,29 @@ static func regions() -> Array:
 			out.append(f.region)
 	return out
 
+## Piso n (1..route_size) de la ruta activa.
 static func _floor_at(floor_n: int) -> Dictionary:
-	return FLOORS[clampi(floor_n - 1, 0, FLOORS.size() - 1)]
+	var floors: Array = route_floors if not route_floors.is_empty() else FLOORS
+	return floors[clampi(floor_n - 1, 0, floors.size() - 1)]
+
+## Datos del piso n de la ruta (para quien antes indexaba FLOORS con el numero de piso).
+static func floor_at(floor_n: int) -> Dictionary:
+	return _floor_at(floor_n)
 
 ## Id de la region del piso n (1..FLOORS.size()).
 static func floor_region(floor_n: int) -> String:
 	return _floor_at(floor_n).region
 
-## Indice de reino 0..N-1 del piso n (el "piso" de antes del cambio a 2 etapas).
+## POSICION del reino en la ruta 0..N-1 (el "piso" de antes del cambio a 2 etapas). Es lo que
+## escala la dificultad: el 1er reino que juegas es el 0 sea cual sea. Para nombres/arte/textos
+## por reino usa canon_region_index (no depende del heroe).
 static func region_index(floor_n: int) -> int:
+	var r := floor_region(floor_n)
+	var i: int = route_regions.find(r) if not route_floors.is_empty() else regions().find(r)
+	return maxi(i, 0)
+
+## Indice fijo del reino entre todos (orden de los archivos), igual para todos los heroes.
+static func canon_region_index(floor_n: int) -> int:
 	return maxi(regions().find(floor_region(floor_n)), 0)
 
 ## 1 o 2.
@@ -267,7 +344,7 @@ static func migrate_liberated(raw: Array) -> Array:
 	return out
 
 func floor_data() -> Dictionary:
-	return FLOORS[clampi(current_floor - 1, 0, FLOORS.size() - 1)]
+	return _floor_at(current_floor)
 
 func character_data() -> Dictionary:
 	return CHARACTERS.get(character, CHARACTERS["pitocles"])
@@ -378,6 +455,7 @@ func start_new_run(seed: int = 0) -> void:
 	Censura.clear_curses()  # las maldiciones de pactos mayores no pasan de una partida a otra
 	last_censura_unlocked = 0
 	
+	set_route_for(character, seed)  # el orden de los reinos depende del heroe (y la semilla)
 	current_floor = starting_floor
 	current_room_index = 0
 	rooms_cleared_this_floor = 0

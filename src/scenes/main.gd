@@ -653,7 +653,7 @@ func _complete_floor() -> void:
 	var boss_room := current_room
 	var floor_n: int = _run_manager.current_floor
 	var boss_floor: bool = RunManager.floor_has_boss(floor_n)
-	if floor_n >= RunManager.FLOORS.size():
+	if floor_n >= RunManager.route_size():
 		_run_manager.liberate(floor_n)
 		Narrator.say("victory")
 		get_node("/root/LoreDatabase").custom_event("victory")

@@ -9,6 +9,8 @@ var _unlocked_ids: Array[String] = []
 ## (con "*" = cualquiera). Piso y toxicidad son de la run actual.
 var _counters: Dictionary = {}
 var _floor_reached := 0
+## Ids de region (reino) pisados esta partida: las entradas de lugar se abren al ENTRAR al reino, en el orden que toque.
+var _regions_visited: Array = []
 var _intox_tier := 0
 
 var _lore_entry_class: Script = null
@@ -88,6 +90,7 @@ func custom_event(event_id: String) -> void:
 
 func _on_run_started(_seed: int) -> void:
 	_floor_reached = 1
+	_regions_visited = [RunManager.floor_region(1)]
 	_intox_tier = 0
 	custom_event("play_" + get_node("/root/RunManager").character)
 
@@ -101,7 +104,10 @@ func _on_item_picked_up(item: Variant, qty: int) -> void:
 	_check_all()
 
 func _on_floor_completed(floor: int) -> void:
-	_floor_reached = maxi(_floor_reached, RunManager.region_index(floor) + 1)  # REACH_FLOOR cuenta reinos (1..5), no pisos 1..10
+	_floor_reached = maxi(_floor_reached, RunManager.region_index(floor) + 1)  # REACH_FLOOR cuenta reinos jugados (posicion en la ruta 1..5), no pisos 1..10
+	var region := RunManager.floor_region(floor)
+	if region not in _regions_visited:
+		_regions_visited.append(region)
 	_check_all()
 
 func _on_player_intoxication_changed(_level: float, tier: int) -> void:
@@ -128,7 +134,8 @@ func _check_all() -> void:
 		match int(c.get("type", -1)):
 			0: met = int(_counters.get("kill:" + target, 0)) >= need
 			1, 4: met = int(_counters.get("item:" + target, 0)) >= need
-			2: met = _floor_reached >= int(c.get("floor", 1))
+			# "region": id del reino (entrada de lugar, sirve para cualquier ruta); "floor": n-esimo reino jugado
+			2: met = (str(c.region) in _regions_visited) if c.has("region") else _floor_reached >= int(c.get("floor", 1))
 			3: met = _intox_tier >= int(c.get("intoxication_tier", 1))
 			9: met = int(_counters.get("boss:" + target, 0)) >= need
 			10: met = int(_counters.get("custom:" + target, 0)) >= need

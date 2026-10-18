@@ -134,7 +134,7 @@ func _world_strip() -> Control:
 		dot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		dot.color = f.tint if free else Color(0.4, 0.4, 0.44)
 		row.add_child(dot)
-		row.add_child(HudStyle.pixel_label("%d %s" % [i + 1, Loc.floor_name(first, true)], 16,
+		row.add_child(HudStyle.pixel_label("%d %s" % [i + 1, Loc.floor_name(f, true)], 16,
 			f.tint.lightened(0.2) if free else Color(0.55, 0.55, 0.6)))
 		col.add_child(row)
 	var n: int = rm.liberated.size()
