@@ -932,20 +932,29 @@ func _show_floor_card() -> void:
 	label.add_theme_constant_override("shadow_offset_x", 4)
 	label.add_theme_constant_override("shadow_offset_y", 4)
 	layer.add_child(label)
-	if Censura.level > 0:  # indicador discreto del nivel de Censura bajo el nombre del piso
-		var cl := Label.new()
-		cl.text = tr("CENSURA_BADGE") % Censura.level
-		cl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		cl.set_anchors_preset(Control.PRESET_FULL_RECT)
-		cl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		cl.offset_top = 190
-		HudStyle.style_label(cl, 20, Color("ff4f9a"), true)
-		layer.add_child(cl)
+	# Indicador discreto bajo el nombre del piso: nivel de Censura y maldiciones de pactos mayores.
+	var below := 190
+	if Censura.level > 0:
+		_floor_card_line(layer, tr("CENSURA_BADGE") % Censura.level, below, 20)
+		below += 52
+	if not Censura.pact_curses.is_empty():
+		var names: Array = Censura.pact_curses.map(func(id): return Censura.curse_name(id))
+		_floor_card_line(layer, "%s: %s" % [tr("PAUSE_PACTS"), " · ".join(names)], below, 16)
 	add_child(layer)
 	var tw := label.create_tween()
 	tw.tween_interval(1.6)
 	tw.tween_property(label, "modulate:a", 0.0, 0.8)
 	tw.tween_callback(layer.queue_free)
+
+func _floor_card_line(layer: CanvasLayer, text: String, offset_top: int, size: int) -> void:
+	var cl := Label.new()
+	cl.text = text
+	cl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	cl.set_anchors_preset(Control.PRESET_FULL_RECT)
+	cl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	cl.offset_top = offset_top
+	HudStyle.style_label(cl, size, Color("ff4f9a"), true)
+	layer.add_child(cl)
 
 func _on_enemy_killed(enemy: Node, killer: Node) -> void:
 	if enemy.is_in_group("boss"):
