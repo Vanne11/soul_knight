@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "hormonas_contrabando"
 title = "Hormonas de Contrabando"
-text = "Desde la Guerra Fría Hormonal, cruzar hormonas de un reino a otro es ilegal en los dos. Por eso existe el mercado negro: viales de testosterona y estrógeno que se venden en la tienda a precio de oro o aparecen tirados en alguna sala, como quien no quiere la cosa. Abren las Puertas Hormonales. Dan alergia si son del reino contrario. Y llevan una etiqueta escrita a mano que dice 'no apto para ornitorrincos', que nadie respeta, y menos el ornitorrinco."
+text = "Desde la Guerra Fría Hormonal, pasar hormonas de un reino a otro es ilegal en los dos. De ahí el mercado negro: viales de testosterona y estrógeno a precio de oro. Abren las Puertas Hormonales y dan alergia si son del reino contrario. La etiqueta dice «no apto para ornitorrincos». Nadie la respeta, menos que nadie el Ornitorrinco."
 category = 2
 unlock_condition = {"type": 1, "target_id": "hormone_testosterona"}
 flavor_text = "Consigue tu primera hormona de contrabando."

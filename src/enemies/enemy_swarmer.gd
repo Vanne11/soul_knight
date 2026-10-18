@@ -178,6 +178,7 @@ func take_damage(amount: float, source: Node = null, kb: Vector2 = Vector2.ZERO)
 	
 	if kb != Vector2.ZERO and state != State.DART:
 		velocity = kb * 1.5
+		PitFall.push(self, velocity)  # empujado hacia un foso: puede caer
 		state = State.STUNNED
 		_state_timer = 0.2
 	

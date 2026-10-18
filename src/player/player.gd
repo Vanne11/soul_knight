@@ -58,6 +58,17 @@ var _using_pad := false
 const DASH_LIFT := 9.0
 const ENEMY_LAYER := 2  # capa fisica de los enemigos (collision_layer = 2)
 var _shadow_scale := Vector2.ZERO
+## Fosos (src/dungeon/pit.gd): pisar un foso = caer (se encoge y oscurece), reaparecer en el ultimo
+## suelo firme, destello rojo, 10% de la vida maxima (min. 1) e i-frames. El dash y el planeo de
+## Vulvalquiria los sobrevuelan. Los enemigos no los pisan (capa 64 fuera de la mascara del jugador).
+const PIT_DAMAGE_PCT := 0.10
+const PIT_IFRAMES := 1.2
+const PIT_SAFE_MARGIN := 22.0  # el "ultimo suelo firme" no esta pegado al foso ni a un muro
+var _falling := 0.0
+var _safe_pos := Vector2.ZERO
+var _safe_room: Room = null
+var _fall_mod := Color.WHITE
+var _fall_scale := Vector2.ONE
 ## Retroceso visual del arma al disparar (px): solo mueve el sprite, nunca el origen de las balas.
 const RECOIL_KICK := 4.0
 const RECOIL_MAX := 6.0
@@ -157,6 +168,9 @@ func look_at_camera(seconds := 2.5) -> void:
 	_gesture_left = 0.0
 
 func _physics_process(delta: float) -> void:
+	if _falling > 0.0:
+		_fall_step(delta)
+		return
 	_handle_timers(delta)
 	_handle_movement(delta)
 	_handle_dash(delta)
@@ -166,6 +180,62 @@ func _physics_process(delta: float) -> void:
 	_handle_attack(delta)
 	_handle_interaction()
 	move_and_slide()
+	_pit_check()
+
+# ------------------------------------------------------------------ fosos
+func _gliding() -> bool:
+	return ability != null and ability.get("gliding") == true
+
+
+## Tras moverse: guarda el ultimo suelo firme o, si el centro esta sobre un foso, empieza a caer.
+func _pit_check() -> void:
+	var main := get_tree().get_first_node_in_group("main")
+	var room: Room = main.current_room if main != null else null
+	if room == null or not Pit.has_holes(room):
+		return
+	if _safe_room != room:  # sala nueva: el punto de partida es donde apareces
+		_safe_room = room
+		_safe_pos = global_position
+	if is_dashing or _gliding():
+		return
+	if Pit.kind_at(room, global_position) == RoomShapes.PIT:
+		_falling = Pit.FALL_TIME
+		velocity = Vector2.ZERO
+		_fall_mod = animated_sprite.modulate
+		_fall_scale = animated_sprite.scale
+		weapon_pivot.visible = false
+		Sound.play("dash", 0.2)
+	elif room.is_walkable(global_position - room.global_position, PIT_SAFE_MARGIN):
+		_safe_pos = global_position
+
+
+func _fall_step(delta: float) -> void:
+	_falling = maxf(0.0, _falling - delta)
+	velocity = Vector2.ZERO
+	var k := 1.0 - _falling / Pit.FALL_TIME
+	animated_sprite.scale = _fall_scale * lerpf(1.0, 0.15, k)
+	animated_sprite.modulate = _fall_mod.lerp(Color(0.08, 0.06, 0.1), k)
+	animated_sprite.rotation = k * 1.1
+	if _falling <= 0.0:
+		_land_after_fall()
+
+
+## Reaparece en el borde seguro con destello rojo, danio por el sistema normal (escudo, Censura...) e i-frames.
+func _land_after_fall() -> void:
+	global_position = _safe_pos
+	animated_sprite.scale = _fall_scale
+	animated_sprite.rotation = 0.0
+	animated_sprite.modulate = Color(2.4, 0.3, 0.3)
+	create_tween().tween_property(animated_sprite, "modulate", _fall_mod, 0.5)
+	weapon_pivot.visible = true
+	_iframes = PIT_IFRAMES
+	_player_stats.take_damage(maxf(1.0, _player_stats.max_health * PIT_DAMAGE_PCT))
+	Pit.flash_screen(self)
+	Sound.play("hurt")
+	HitFx.shake(0.4)
+	_global_events.show_floating_text.emit(global_position + Vector2(0, -30), tr("FX_PIT_FALL"), Color("ff6a6a"))
+	if RNG.randf() < 0.3:
+		Narrator.say("pit_fall")
 
 ## Solo visual: en el dash el sprite sube en arco; la sombra se queda en el suelo y se achica.
 func _update_dash_lift() -> void:
@@ -853,7 +923,7 @@ func _on_hurtbox_entered(area: Area2D) -> void:
 ## Unico punto de entrada del daño al jugador. Devuelve false si lo esquivo
 ## (dash o invulnerabilidad tras un golpe).
 func receive_hit(dmg: float) -> bool:
-	if is_dashing or _iframes > 0.0:
+	if is_dashing or _iframes > 0.0 or _falling > 0.0:
 		return false
 	_iframes = HIT_IFRAMES
 	_player_stats.take_damage(dmg)

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_clamidia"
 title = "Clamidia Clandestina"
-text = "La más educada de las ITS: no avisa, no duele, no se nota. Se pasea casi invisible y solo la ves cuando ya la tienes encima, con cara de «yo no hice nada». Dato real: la clamidia suele ser asintomática, así que la única forma de saber que está ahí es hacerse chequeos. El preservativo la deja afuera de la fiesta, y si aparece, se cura con antibióticos."
+text = "La más educada de las ITS: no avisa, no duele, no se nota. Se pasea casi invisible y la ves cuando ya la tienes encima, con cara de «yo no hice nada». Dato: la clamidia suele ser asintomática, así que la única forma de saberlo son los chequeos. El condón la deja afuera de la fiesta y, si aparece, se cura con antibióticos."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Clamidia Clandestina", "count": 10}
 flavor_text = "Mata 10 clamidias clandestinas."

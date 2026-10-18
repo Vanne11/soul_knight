@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "medkit_lore"
 title = "Para Cuando las Vendas Sucias No Bastan"
-text = "El Botiquín Completo. 100 vida. Limpia efectos. Restaura escudos. Es la red de seguridad. El 'te lo dije' de tu madre hecho item. Lo guardas. 'Para emergencias'. 'Para el boss final'. 'Para cuando de verdad lo necesite'. Llegas al boss. Te golpea. Bajas a 20 vida. 'Ahora'. Dudas. 'Y si lo necesito más tarde?' No hay más tarde. Solo ahora. Lo usas. Vuelves a 100. Escudos llenos. Efectos limpios. Ganas. O pierdes igual. Pero al menos lo intentaste con todo. El botiquín no te juzga por guardarlo. Solo está ahí. Silencioso. Esperando. Como tu potencial. Sin usar. Hasta que es tarde."
+text = "El Botiquín Completo: 100 de vida, limpia efectos, restaura escudos. Es el «te lo dije» de tu madre hecho item. Lo guardas «para el jefe final». Llegas al jefe, bajas a 20 de vida y dudas: «¿y si lo necesito después?». No hay después. Lo usas y lo intentaste con todo. El botiquín no te juzga. Solo espera, como tu potencial."
 category = 2
 unlock_condition = {"type": 4, "target_id": "medkit", "count": 2}
 flavor_text = "Usa 2 botiquines."

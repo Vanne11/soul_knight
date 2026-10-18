@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_vph"
 title = "VPH Verrugón"
-text = "Una coliflor con patitas y complejo de jefe de familia: cada tanto suelta verruguitas que corren a morderte los tobillos. El virus del papiloma humano es de los más comunes del mundo y casi siempre pasa sin que te enteres. Lo importante: existe una vacuna contra el VPH, y el papanicolau o el test de VPH detectan a tiempo lo que de verdad importa. Vacunarse es de héroes."
+text = "Una coliflor con patitas y complejo de jefe de familia: cada tanto suelta verruguitas que corren a morderte los tobillos. El VPH es de los virus más comunes del mundo y casi siempre pasa sin que te enteres. Dato: existe vacuna contra el VPH, y el papanicolau o el test de VPH detectan a tiempo lo que importa. Vacunarse es de héroes."
 category = 3
 unlock_condition = {"type": 0, "target_id": "VPH Verrugón", "count": 10}
 flavor_text = "Mata 10 VPH verrugones."

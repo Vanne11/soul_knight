@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = "boss_alt_1"
-title = "Afeitadora Eléctrica"
-text = "Nació para dejar cada cara lisa en tres pasadas y se tomó el trabajo demasiado en serio. Desde que llegó la censura patrulla la Selva Púbica con su cabezal oscilante, su cable al enchufe y cero tolerancia a lo que crece. Rapa en franjas, persigue con sus cuchillas y te escupe pelusa a presión. Dato real: afeitarse no hace que el vello crezca más fuerte, más oscuro ni más rápido. Es una ilusión óptica: la punta recién cortada es roma y se nota más. Ni la cera ni la cuchilla cambian el folículo: cada uno lleva su jardín como quiera."
+title = "La Afeitadora Eléctrica"
+text = "Nació para dejar cada cara lisa en tres pasadas y se tomó el trabajo muy en serio. Patrulla la Selva Púbica con cabezal oscilante, cable al enchufe y cero tolerancia a lo que crece. Dato: afeitarse no hace que el vello crezca más grueso, oscuro ni rápido. Es ilusión óptica: la punta recién cortada es roma y se nota más. El folículo ni se entera."
 category = 3
 unlock_condition = {"type": 9, "target_id": "LA AFEITADORA ELÉCTRICA"}
 flavor_text = "Derrota a la Afeitadora Eléctrica."

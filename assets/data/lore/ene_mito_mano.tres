@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_mito_mano"
 title = "Mito: Mano Peluda"
-text = "El mito: 'si te tocas, te salen pelos en la mano'. Esta mano trepadora se llena de pelos cuando le pegas, pero ya ves: no pica más fuerte, no cambia nada, es pura fachada, como el mito. La verdad: la palma de la mano no tiene folículos pilosos, así que no puede salirle pelo a nadie por nada; y la masturbación no causa ceguera, acné ni ningún otro castigo de abuela. Es una práctica muy común, normal y sin riesgo para la salud; lo único que conviene es hacerlo con manos limpias, en privado y sin culpa. (Dato a validar por Vanessa.)"
+text = "El mito: «si te tocas, te salen pelos en la mano». Esta mano trepadora se llena de pelos al golpearla, pero no pica más ni cambia nada: pura fachada, como el mito. La verdad: la palma no tiene folículos pilosos y la masturbación no causa ceguera ni acné. Es común y sin riesgo para la salud; solo conviene hacerla con manos limpias y sin culpa."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Mano Peluda", "count": 1}
 flavor_text = "Vence a la Mano Peluda para romper el mito."

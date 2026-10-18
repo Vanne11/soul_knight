@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "grenade_lore"
 title = "No Te Quedes a Ver los Fuegos Artificiales"
-text = "La Granada de Fragmentación es simple. La lanzas. Cuentas. Uno. Dos. BOOM. 80 de daño en 120 de radio. Todo muere. Los enemigos. Los items. Los secretos. A veces tú. El radio es generoso. La mecha es corta. 2 segundos. La vida de una granada es más intensa que la tuya. Nace, vuela, estalla, muere. Con propósito. Con impacto. Tú solo naces, te arrastras, y mueres. Sin estruendo. Sin gloria. Solo un 'MORISTE, CABRÓN' en pantalla. Lanza la granada. Corre. No mires atrás. Los fuegos artificiales son para los que quedan. Tú no quedas."
+text = "La Granada de Fragmentación es simple: la lanzas, cuentas uno, dos, BOOM. 80 de daño en 120 de radio. Muere todo: enemigos, items, secretos, a veces tú. La mecha dura 2 segundos y la vida de una granada es más intensa que la tuya: nace, vuela, estalla y muere con propósito. Lánzala, corre y no mires atrás."
 category = 2
 unlock_condition = {"type": 4, "target_id": "grenade_frag", "count": 10}
 flavor_text = "Usa 10 granadas de fragmentación."

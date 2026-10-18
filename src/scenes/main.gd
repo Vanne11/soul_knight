@@ -96,7 +96,7 @@ func _generate_dungeon() -> void:
 	
 	# Start player in start room
 	var start_room = _find_start_room()
-	Narrator.say("floor_" + str(_run_manager.floor_data().id))  # antes que la pista del arma (frases en narrator/etapas.json)
+	Narrator.say_hero("floor_" + str(_run_manager.floor_data().id))  # entrada a region, por heroe (narrator/etapas.json); antes que la pista del arma
 	_weapon_room = null
 	if start_room and not _has_real_weapon():
 		_hide_weapon_chest(start_room)

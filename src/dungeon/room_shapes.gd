@@ -8,11 +8,15 @@ extends RefCounted
 ## Cada celda de la sala es de un tipo:
 ##   FLOOR  suelo normal (lo unico que se pisa)
 ##   WALL   muro macizo: baldosa en el TileMap Walls (L, cruz, octogono, circulo, pilar, centro elevado)
-##   PIT    abismo: no se pisa (cuerpo en la capa 1 + dibujo ShapeFx)
-##   WATER  agua profunda: igual que el abismo pero azul y con olas
+##   PIT    FOSO: el jugador lo pisa y CAE (src/player/player.gd, src/dungeon/pit.gd); los enemigos lo
+##          ven como pared al caminar, pero si los empujan caen y mueren (src/enemies/pit_fall.gd)
+##   WATER  agua profunda: laguna sin caida; bloquea al jugador y a los enemigos (los empujados se ahogan)
 ##   LOW    muro bajo: baldosa "cara" en el TileMap Walls (para que las balas tampoco pasen)
-## Todo lo no pisable choca en la capa fisica 1 (la de los muros): asi el jugador, los enemigos,
-## las balas, los rayos de luz y las consultas de src/rooms y del bot lo ven sin cambiar nada.
+## Los muros chocan en la capa fisica 1: el jugador, los enemigos, las balas, los rayos de luz y las
+## consultas de src/rooms y del bot lo ven sin cambiar nada. Los huecos NO usan la capa 1 (las balas
+## los sobrevuelan): abismo = capa 64 ("huecos", solo cuerpos que no vuelan: enemigos); agua = capa 64
+## + 256 ("agua"); el jugador solo mira la 256, asi el foso no le estorba para caer.
+## Ademas de las formas, algunas salas de combate rectangulares llevan 1-3 fosos sueltos ("fosos").
 ##
 ## Se guarda en la sala (Room.set_shape) y se consulta con la API de Room:
 ## is_walkable(pos, margen), rect_walkable(rect), walkable_rect_list(), nearest_walkable(pos).
@@ -31,6 +35,11 @@ const WALL := 1
 const PIT := 2
 const WATER := 3
 const LOW := 4
+const WATER_LAYER := 256  # capa 9 "agua": el jugador la tiene en su mascara, los fosos (capa 64) no
+## Fosos sueltos en salas de combate rectangulares (id de forma "fosos").
+const LOOSE_CHANCE := 0.22
+const LOOSE_FIRST_FLOOR := 2
+const LOOSE_MIN := Vector2i(7, 6)
 
 ## id -> {min: tamano minimo (lado corto, largo) o (x, y), tier: piso desde el que sale, w: peso}
 const DEFS := {
@@ -51,6 +60,8 @@ const FIGHT_ROOMS := [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION, Room.Roo
 const WATER_CHANCE := {"neutral": 0.6, "pene": 0.3, "vulva": 0.6, "mixto": 0.2, "censura": 0.0}
 ## Prueba/capturas: fuerza esta forma en toda sala de combate donde quepa ("" = sorteo normal).
 static var force_id := ""
+## Prueba/capturas: fuerza los fosos sueltos en toda sala de combate rectangular donde quepan.
+static var force_pits := false
 const MIN_RATIO := 0.5
 const MIN_RATIO_ARENA := 0.72
 
@@ -74,8 +85,64 @@ static func assign(room: Room, size: Vector2i, floor_n: int, run_seed: int) -> S
 			room.set_shape(id, size, cells, anchor)
 			_build(room, size.x, size.y, cells, floor_n)
 			return id
+	if _loose_pits(room, size, floor_n, run_seed):
+		return "fosos"
 	room.set_shape("rect", size, PackedByteArray(), Vector2i(size.x / 2, size.y / 2))
 	return "rect"
+
+
+## Fosos sueltos (1-3 celdas) en una sala de combate sin forma. Lejos de las puertas, del centro
+## (recompensas) y de los bordes; _finalize comprueba que sigue habiendo camino entre las puertas.
+static func _loose_pits(room: Room, size: Vector2i, floor_n: int, run_seed: int) -> bool:
+	if room.room_type not in FIGHT_ROOMS or size.x < LOOSE_MIN.x or size.y < LOOSE_MIN.y:
+		return false
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([run_seed, floor_n, room.grid_pos.x, room.grid_pos.y, "fosos"])
+	if not force_pits and (floor_n < LOOSE_FIRST_FLOOR or rng.randf() >= LOOSE_CHANCE):
+		return false
+	var w := size.x
+	var h := size.y
+	var cells := PackedByteArray()
+	cells.resize(w * h)
+	var near_door := {}
+	for door: Door in room.doors.values():
+		for c in door_cells(door, w, h):
+			for dx in range(-2, 3):
+				for dy in range(-2, 3):
+					near_door[c + Vector2i(dx, dy)] = true
+	var spawns: Array[Vector2i] = []
+	for sp in room.get_node("SpawnPoints").get_children():
+		if sp is Node2D:
+			spawns.append(Vector2i(floori((sp as Node2D).position.x / TILE), floori((sp as Node2D).position.y / TILE)))
+	var ok_cell := func(c: Vector2i) -> bool:
+		if c.x < 2 or c.y < 2 or c.x > w - 3 or c.y > h - 3 or near_door.has(c) or c in spawns:
+			return false
+		return absf(float(c.x) + 0.5 - float(w) * 0.5) > 1.6 or absf(float(c.y) + 0.5 - float(h) * 0.5) > 1.6
+	var want := rng.randi_range(1, 3)
+	var made := 0
+	for attempt in 24:
+		var c0 := Vector2i(rng.randi_range(2, w - 3), rng.randi_range(2, h - 3))
+		if not ok_cell.call(c0):
+			continue
+		var group: Array[Vector2i] = [c0]
+		while group.size() < want:
+			var base: Vector2i = group[rng.randi_range(0, group.size() - 1)]
+			var step: Vector2i = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)][rng.randi_range(0, 3)]
+			var nxt := base + step
+			if nxt in group or not ok_cell.call(nxt):
+				if rng.randf() < 0.4:
+					break
+				continue
+			group.append(nxt)
+		for c in group:
+			cells[_idx(c.x, c.y, w)] = PIT
+		made = group.size()
+		break
+	if made == 0 or not _finalize(room, w, h, cells, WALL, false):
+		return false
+	room.set_shape("fosos", size, cells, _anchor(cells, w, h))
+	_build(room, w, h, cells, floor_n)
+	return true
 
 
 static func _rng(room: Room, run_seed: int, floor_n: int) -> RandomNumberGenerator:
@@ -392,30 +459,36 @@ static func _build(room: Room, w: int, h: int, cells: PackedByteArray, floor_n: 
 					var v := hash(Vector3i(room.grid_pos.x * 131 + x, room.grid_pos.y * 137 + y, floor_n)) & 1
 					coords = Vector2i((1 if front else 0) + v * 2, 0)
 				walls_map.set_cell(0, Vector2i(x, y), WALL_SOURCE, coords)
-	# huecos: cuerpo fisico por tramos horizontales (capa 1, como los muros)
-	var body := StaticBody2D.new()
-	body.name = "ShapeBlockers"
-	body.collision_layer = 64  # capa 7 "huecos": bloquea cuerpos, no proyectiles
-	body.collision_mask = 0
-	var any_hole := false
-	for y in h:
-		var x := 0
-		while x < w:
-			var k := cells[_idx(x, y, w)]
-			if k != PIT and k != WATER:
-				x += 1
-				continue
-			var x1 := x
-			while x1 + 1 < w and cells[_idx(x1 + 1, y, w)] in [PIT, WATER]:
-				x1 += 1
-			var cs := CollisionShape2D.new()
-			var rs := RectangleShape2D.new()
-			rs.size = Vector2((x1 - x + 1) * TILE, TILE)
-			cs.shape = rs
-			cs.position = Vector2((x + x1 + 1) * 0.5 * TILE, (y + 0.5) * TILE)
-			body.add_child(cs)
-			any_hole = true
-			x = x1 + 1
+	# huecos: cuerpos fisicos por tramos horizontales. Abismo en la capa 64 (los enemigos lo ven como
+	# pared); agua en la 64 + 256 (tambien bloquea al jugador). Ninguno toca la capa 1: las balas pasan.
+	var bodies: Array[StaticBody2D] = []
+	for kind in [PIT, WATER]:
+		var body := StaticBody2D.new()
+		body.name = "PitBlockers" if kind == PIT else "ShapeBlockers"
+		body.collision_layer = 64 if kind == PIT else 64 | WATER_LAYER
+		body.collision_mask = 0
+		var any_hole := false
+		for y in h:
+			var x := 0
+			while x < w:
+				if cells[_idx(x, y, w)] != kind:
+					x += 1
+					continue
+				var x1 := x
+				while x1 + 1 < w and cells[_idx(x1 + 1, y, w)] == kind:
+					x1 += 1
+				var cs := CollisionShape2D.new()
+				var rs := RectangleShape2D.new()
+				rs.size = Vector2((x1 - x + 1) * TILE, TILE)
+				cs.shape = rs
+				cs.position = Vector2((x + x1 + 1) * 0.5 * TILE, (y + 0.5) * TILE)
+				body.add_child(cs)
+				any_hole = true
+				x = x1 + 1
+		if any_hole:
+			bodies.append(body)
+		else:
+			body.free()
 	var fx := ShapeFx.new()
 	fx.name = "ShapeFx"
 	fx.w = w
@@ -426,10 +499,8 @@ static func _build(room: Room, w: int, h: int, cells: PackedByteArray, floor_n: 
 	var floor_map := room.get_node_or_null("Floor")
 	if floor_map != null:
 		room.move_child(fx, floor_map.get_index() + 1)
-	if any_hole:
+	for body in bodies:
 		room.add_child(body)
-	else:
-		body.free()
 	Censor.apply(room, fx)
 
 
@@ -469,12 +540,7 @@ class ShapeFx extends Node2D:
 				var k := cells[y * w + x]
 				var r := Rect2(Vector2(x, y) * T, Vector2(T, T))
 				if k == RoomShapes.PIT:
-					draw_rect(r, Color(0.035, 0.025, 0.045))
-					# pared del fondo que se ve al norte del hueco
-					if _k(x, y - 1) != RoomShapes.PIT and _k(x, y - 1) != RoomShapes.WATER:
-						draw_rect(Rect2(r.position, Vector2(T, 26.0)), Color(0.16, 0.13, 0.15))
-						draw_rect(Rect2(r.position + Vector2(0, 26.0), Vector2(T, 10.0)), Color(0.08, 0.06, 0.08))
-					_rim(x, y, r, Color(0.5, 0.46, 0.42, 0.9))
+					_draw_pit(x, y, r)
 				elif k == RoomShapes.WATER:
 					draw_rect(r, water_col.darkened(0.25))
 					draw_rect(r.grow(-3.0), water_col)
@@ -486,6 +552,58 @@ class ShapeFx extends Node2D:
 					_rim(x, y, r, water_col.lightened(0.55) * Color(1, 1, 1, 0.9))
 				elif k == RoomShapes.FLOOR:
 					_contact_shadow(x, y, r)
+
+	## Foso: fondo casi negro con degradado hacia el centro, pared del fondo al norte y labio de
+	## piedra (con una arista clara y una sombra) en cada lado que toca suelo o muro.
+	func _draw_pit(x: int, y: int, r: Rect2) -> void:
+		var T := float(RoomShapes.TILE)
+		draw_rect(r, Color(0.02, 0.014, 0.03))
+		var n_open := not _is_hole(x, y - 1)
+		var s_open := not _is_hole(x, y + 1)
+		var w_open := not _is_hole(x - 1, y)
+		var e_open := not _is_hole(x + 1, y)
+		# penumbra: el fondo se aclara un poco junto a los bordes (se ve que hay profundidad)
+		for i in 4:
+			var a := 0.16 - 0.04 * float(i)
+			var m := float(i) * 4.0 + 8.0
+			var col := Color(0.2, 0.15, 0.2, a)
+			if w_open:
+				draw_rect(Rect2(r.position + Vector2(0, 0), Vector2(m, T)), col)
+			if e_open:
+				draw_rect(Rect2(r.position + Vector2(T - m, 0), Vector2(m, T)), col)
+			if s_open:
+				draw_rect(Rect2(r.position + Vector2(0, T - m), Vector2(T, m)), col)
+		if n_open:  # pared del fondo, con sus piedras
+			draw_rect(Rect2(r.position, Vector2(T, 28.0)), Color(0.19, 0.15, 0.17))
+			draw_rect(Rect2(r.position + Vector2(0, 28.0), Vector2(T, 10.0)), Color(0.09, 0.07, 0.09))
+			draw_rect(Rect2(r.position + Vector2(0, 38.0), Vector2(T, 6.0)), Color(0.045, 0.035, 0.05))
+			var hsh := (x * 7 + y * 13) % 5
+			for i in 3:
+				var bx := r.position.x + 4.0 + float((hsh + i * 3) % 5) * 11.0
+				draw_rect(Rect2(Vector2(bx, r.position.y + 6.0 + float(i % 2) * 11.0), Vector2(14, 1)), Color(0.07, 0.055, 0.07))
+			draw_rect(Rect2(r.position, Vector2(T, 3.0)), Color(0.62, 0.57, 0.5))  # arista de piedra del suelo
+		var lip := Color(0.5, 0.46, 0.42)
+		var lit := Color(0.72, 0.67, 0.6)
+		var dark := Color(0.08, 0.06, 0.07)
+		if s_open:
+			draw_rect(Rect2(r.position + Vector2(0, T - 8.0), Vector2(T, 8.0)), lip)
+			draw_rect(Rect2(r.position + Vector2(0, T - 8.0), Vector2(T, 2.0)), dark)
+			draw_rect(Rect2(r.position + Vector2(0, T - 3.0), Vector2(T, 2.0)), lit)
+		if w_open:
+			draw_rect(Rect2(r.position, Vector2(7.0, T)), lip)
+			draw_rect(Rect2(r.position + Vector2(7.0, 0), Vector2(2.0, T)), dark)
+			draw_rect(Rect2(r.position, Vector2(2.0, T)), lit)
+		if e_open:
+			draw_rect(Rect2(r.position + Vector2(T - 7.0, 0), Vector2(7.0, T)), lip)
+			draw_rect(Rect2(r.position + Vector2(T - 9.0, 0), Vector2(2.0, T)), dark)
+			draw_rect(Rect2(r.position + Vector2(T - 2.0, 0), Vector2(2.0, T)), lit)
+		# piedras sueltas del borde (una por celda, siempre la misma)
+		if s_open and (x + y) % 2 == 0:
+			draw_rect(Rect2(r.position + Vector2(10.0 + float((x * 11) % 30), T - 11.0), Vector2(6, 4)), lit.darkened(0.25))
+
+	func _is_hole(x: int, y: int) -> bool:
+		var k := _k(x, y)
+		return k == RoomShapes.PIT or k == RoomShapes.WATER
 
 	## Borde claro del lado donde el hueco toca suelo o muro.
 	func _rim(x: int, y: int, r: Rect2, col: Color) -> void:

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_hemorroide"
 title = "Hemorroide Fronteriza"
-text = "Nadie sabe en qué reino nació, pero lleva años plantada en mitad del paso con su gorra de guardia y su franja de peligro, y nadie ha conseguido que se aparte. Es lenta, aguanta una barbaridad y, cuando se harta de mirarte, se agacha y embiste con todo el cuerpo: se pone amarilla, se hincha y sale disparada. No intentes pasar por el medio. Rodéala, y que se canse ella."
+text = "Nadie sabe en qué reino nació, pero lleva años plantada en mitad del paso con su gorra de guardia y su franja de peligro. Es lenta y aguanta una barbaridad; cuando se harta de mirarte, se agacha y embiste con todo el cuerpo. Rodéala y que se canse ella. Dato: sangre al evacuar se consulta; suele ser esto, pero conviene confirmarlo."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Hemorroide Fronteriza", "count": 10}
 flavor_text = "Mata 10 hemorroides fronterizas."

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_mito_marcha"
 title = "Mito: Marcha Atrás"
-text = "El mito: 'si te retiras a tiempo no pasa nada'. Este enemigo embiste y justo antes de terminar da marcha atrás... dejando atrás un par de espermatozoides de sorpresa. La verdad: el coito interrumpido es un método poco fiable; con uso típico falla en cerca de 1 de cada 5 parejas al año, porque el líquido preseminal puede arrastrar espermatozoides y porque nadie tiene reflejos perfectos. Tampoco protege de las ITS. Si no se busca un embarazo, funcionan mucho mejor el preservativo y los métodos hormonales o de larga duración. (Dato a validar por Vanessa.)"
+text = "El mito: «si te retiras a tiempo no pasa nada». Este enemigo embiste y justo antes de terminar da marcha atrás... dejando un par de espermatozoides de sorpresa. La verdad: el coito interrumpido falla en cerca de 1 de cada 5 parejas al año con uso típico, porque el líquido preseminal puede arrastrar espermatozoides. Tampoco protege de las ITS."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Marcha Atrás", "count": 1}
 flavor_text = "Vence a la Marcha Atrás para romper el mito."

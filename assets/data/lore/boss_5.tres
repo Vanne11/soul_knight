@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "boss_5"
 title = "Su Pudorosidad, la Hoja de Parra"
-text = "La villana de esta historia. Una hoja de higuera gigante, verde, con gafitas de lectura, collar de perlas y una opinión sobre absolutamente todo. Lleva siglos tapando cosas: primero las estatuas, luego los cuadros, luego a la gente, y al final el mundo entero. No odia a nadie. Simplemente cree que todo está mejor tapado, calladito y en gris. Te llamará sinvergüenza, te lanzará píxeles de censura y, cuando esté a punto de caer, te advertirá de que si ella cae todo quedará al descubierto. Hasta lo de tu tía. Tiene razón. Ese es precisamente el plan."
+text = "La villana: una hoja de higuera gigante con lentes de leer, collar de perlas y opinión sobre todo. Tapó estatuas, cuadros, gente y, al final, el mundo. No odia a nadie: cree que todo está mejor tapado, calladito y en gris. Lanza píxeles de censura. Su drama secreto: nadie la invitó nunca a mirar. Sin nada que tapar, es solo una hoja."
 category = 3
 unlock_condition = {"type": 9, "target_id": "SU PUDOROSIDAD, LA HOJA DE PARRA"}
 flavor_text = "Derrota a la Hoja de Parra."

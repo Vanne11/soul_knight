@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "condom_lore"
 title = "El Preservativo que Cambió la Historia"
-text = "Lo encontraste en un cofre. Brillaba. Lo equipaste. De repente, nada te hacía daño. Los fluidos enemigos resbalaban. El fuego no quemaba. El veneno no envenenaba. La lujuria... la lujuria rebotaba. Te sentiste invencible. Por fin, protección real en un mundo de fluidos letales. Corriste 3 pisos sin un rasguño. Te creíste inmortal. Luego, en el piso 4, un boss te golpeó tan fuerte que el preservativo se rompió. El daño se duplicó. El juego no te avisó. Ningún juego avisa. Los preservativos se rompen. Y cuando se rompen, duele el doble."
+text = "Lo encontraste en un cofre y te creíste inmortal: los fluidos resbalaban, el fuego no quemaba. Corriste tres regiones sin un rasguño. Entonces un jefe te pegó tan fuerte que se rompió y el daño se duplicó. Dato: bien usado desde el inicio, el condón falla cerca del 2% al año; con uso típico, cerca del 13% (OMS)."
 category = 2
 unlock_condition = {"type": 1, "target_id": "relic_condom", "count": 1}
 flavor_text = "Equipa el Preservativo de Titanio."

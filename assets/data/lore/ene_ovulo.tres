@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_ovulo"
 title = "Óvulo Rodante"
-text = "Lleva una corona diminuta porque en Vulvania todo el mundo es un poco realeza. Es redondo, es orgulloso y espera una vez al mes a que algo interesante ocurra. Como nunca ocurre, se pasa el resto del tiempo rodando hacia los intrusos. Avisa antes de embestir y se queda mareado después. No le hables de citas. Es un tema sensible."
+text = "Lleva una corona diminuta porque en Vulvania todos son un poco realeza. Redondo y orgulloso, espera una vez al mes que algo ocurra y, como nunca ocurre, rueda hacia los intrusos. Avisa antes de embestir y queda mareado. Dato: tras liberarse, vive unas 24 horas. No le hables de citas. Es un tema sensible."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Óvulo Rodante", "count": 10}
 flavor_text = "Mata 10 óvulos rodantes."

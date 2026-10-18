@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_esperma"
 title = "Espermatozoide"
-text = "Nunca viene solo. Llega en grupos de tres, nada en círculos a tu alrededor meneando la cola y, cuando le toca, se para, brilla y sale disparado en línea recta. Tiene una única meta en la vida y no sabe muy bien cuál es, así que eres tú. Millones de sus primos compiten cada día por llegar los primeros a algún sitio. Estos han decidido que ese sitio es tu cara."
+text = "Nunca viene solo: llega en grupos de tres, nada en círculos meneando la cola y, cuando le toca, se para, brilla y sale disparado. Tiene una meta en la vida y no sabe bien cuál, así que eres tú. Millones de primos compiten cada día por llegar primero a algún sitio. Estos decidieron que ese sitio es tu cara."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Espermatozoide", "count": 20}
 flavor_text = "Mata 20 espermatozoides."

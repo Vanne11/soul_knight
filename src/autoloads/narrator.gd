@@ -6,11 +6,23 @@ extends CanvasLayer
 ## (las de siempre) y un archivo por bloque (p.ej. tienda.json), fusionados al arrancar
 ## (ver _load_lines). Asi cada bloque agrega sus frases sin tocar lines.json.
 ##   Narrator.say("evento")         se encola; hay que pasarla con clic/espacio
-##   Narrator.say_first("evento")   solo la primera vez en la run
+##   Narrator.say_first("evento")   solo la primera vez en la run (cuenta como importante)
+##   Narrator.say_hero("evento")    "<evento>_<heroe>" si existe; si no, "<evento>"
+##   Narrator.get_line("evento")    la frase ya formateada, sin encolarla (pantallas de final)
 ##   Narrator.toast(titulo, texto)  aviso breve con el mismo estilo; se va solo
 ##   Narrator.prompt(dueño, texto)  cuadro de "[E] hacer algo" mientras estes cerca
 ##   Narrator.choose(titulo, opciones) + await Narrator.chosen   eleccion (pausa)
 ## Todas las cajas se apilan abajo al centro, sin pisarse.
+##
+## Frecuencia (historia.md, seccion 3). Hay dos prioridades:
+##  - IMPORTANTE: jefes, muerte, victoria, entrada a region, eleccion de heroe y la primera vez de
+##    cada mecanica (say_first). Salen siempre, tambien con combate (los de jefe/muerte/victoria se
+##    ven en plena pelea y se cierran solos; el resto espera a que acabe).
+##  - MENOR (todo lo demas, incluidos los eventos de otros bloques): en combate callan; entre una
+##    frase y la siguiente pasan al menos MIN_GAP_MS; maximo una por sala; y solo salen el
+##    MINOR_CHANCE de las veces.
+## Ninguna frase se repite en la misma partida (_said). Para marcar un evento como importante:
+## anadir su prefijo a MAJOR_PREFIXES, o pasar major = true en say().
 
 signal chosen(index: int)
 
@@ -25,20 +37,35 @@ const VOICE_PITCH := 0.8
 const VOICE_DB := -4.0
 const TOAST_SECONDS := 4.0
 const TOAST_SECONDS_SHORT := 1.8
+## Frecuencia: milisegundos minimos entre dos frases y probabilidad de un evento menor.
+const MIN_GAP_MS := 45000
+const MINOR_CHANCE := 0.3
+## Eventos que empiezan asi son importantes (ver arriba).
+const MAJOR_PREFIXES := ["boss", "death", "victory", "floor_", "chosen_", "first_run", "run_start", "censura_up", "pz_", "taser_drop"]
+## Subconjunto que se muestra aunque haya combate: se cierran solos pasados unos segundos.
+const URGENT_PREFIXES := ["boss", "death", "victory"]
+const COMBAT_LINGER := 3.5
+const NAME_SMALL_WORDS := ["de", "la", "el", "del", "los", "las", "y", "of", "the", "and"]
+const NAME_KEEP_UPPER := ["II", "DIU"]
 const RARITY_COLORS := ["f2ead6", "7ad67a", "6aa8ff", "c08cff", "ffa64a", "9a9a9a"]
 
 ## evento -> frases en espanol (todas las de todos los archivos, en orden de carga)
 var _lines: Dictionary = {}
 ## evento -> claves de traduccion, paralelas a _lines (ver Loc.narr_key)
 var _keys: Dictionary = {}
-## evento -> indices de frase pendientes de la bolsa (se traduce al elegir, no al barajar)
-var _bags: Dictionary = {}
 var _memory := {"runs": 0, "deaths": 0, "deaths_by_floor": {}}
 var _queue: Array[String] = []
 var _showing := false
 ## cuando una pulsacion paso la frase: el jugador no debe dashear/atacar con ella
 var _ate_input_ms := -1000
 var _seen: Dictionary = {}  # eventos ya dichos esta run
+var _said: Dictionary = {}  # claves de frase ya dichas esta run (jamas se repiten)
+var _urgent: Dictionary = {}  # frases (texto encolado) que salen aunque haya combate
+var _showing_urgent := false
+var _auto_close := 0.0
+var _last_say_ms := -MIN_GAP_MS
+var _last_say_room: Object = null
+var _streak := 0  # muertes seguidas sin que te toquen
 ## Frase en pantalla tal cual se encolo, y la sala donde salio: si te vas sin
 ## leerla, el narrador se queja y la vuelve a poner.
 var _line_raw := ""
@@ -113,6 +140,8 @@ func _ready() -> void:
 	ge.item_picked_up.connect(_on_item_picked_up)
 	ge.player_intoxication_changed.connect(_on_intox)
 	ge.lore_unlocked.connect(_on_lore_unlocked)
+	ge.player_damaged.connect(_on_player_damaged)
+	ge.enemy_killed.connect(_on_enemy_killed)
 
 
 ## Caja con el estilo del narrador, apilada en orden de creacion; ancho 2*half_width.
@@ -139,18 +168,118 @@ func _make_box(half_width: int) -> PanelContainer:
 	return panel
 
 
-func say(event: String, args: Dictionary = {}) -> void:
-	if _in_combat():
-		return  # en pelea el panel tapa la vision
+func say(event: String, args: Dictionary = {}, major := false) -> void:
+	major = major or is_major(event)
+	var urgent := _has_prefix(event, URGENT_PREFIXES)
+	if not major:
+		if _in_combat() or not _minor_allowed():
+			return
 	var line := _pick(event)
 	if line == "":
 		return
+	_last_say_ms = Time.get_ticks_msec()
+	_last_say_room = _current_room()
+	_enqueue(_format(line, args), urgent)
+
+
+## Frase de "<evento>_<heroe>" y, si ese heroe no tiene, la general "<evento>".
+func say_hero(event: String, args: Dictionary = {}) -> void:
+	var ev := "%s_%s" % [event, get_node("/root/RunManager").character]
+	say(ev if has_lines(ev) else event, args)
+
+
+## La frase ya formateada (con {boss}, {hero}...), sin encolarla ni gastarla: pantallas de final.
+func get_line(event: String, args: Dictionary = {}) -> String:
+	var lines := get_lines(event)
+	return _format(lines[0], args) if not lines.is_empty() else ""
+
+
+static func _has_prefix(event: String, prefixes: Array) -> bool:
+	for p in prefixes:
+		if event.begins_with(p):
+			return true
+	return false
+
+
+static func is_major(event: String) -> bool:
+	return _has_prefix(event, MAJOR_PREFIXES)
+
+
+## Un evento menor puede salir ahora: pasaron 45 s, no hubo otra frase en esta sala y sale el 30%.
+func _minor_allowed() -> bool:
+	if Time.get_ticks_msec() - _last_say_ms < MIN_GAP_MS:
+		return false
+	var room := _current_room()
+	if room != null and room == _last_say_room:
+		return false
+	return randf() < MINOR_CHANCE
+
+
+func _format(line: String, args: Dictionary) -> String:
+	args = args.duplicate()
 	args.merge({"deaths": _memory.deaths, "runs": _memory.runs}, false)
 	var rm := get_node("/root/RunManager")
 	args.merge({"hero": Loc.char_field(rm.character, "name")}, false)
-	_queue.append(line.format(args))
-	if _queue.size() > 3:
-		_queue.pop_front()
+	if "{boss" in line:
+		args.merge({"boss": _boss_name(false), "boss_final": _boss_name(true)}, false)
+	return line.format(args)
+
+
+## Nombre del jefe de la region actual (o del ultimo piso) tal como sale en esta partida
+## (original o alternativo), con mayusculas normales: "Doña Cera Caliente".
+func _boss_name(final: bool) -> String:
+	var rm := get_node("/root/RunManager")
+	var floors: Array = RunManager.FLOORS
+	var n: int = rm.current_floor
+	var fd: Dictionary = rm.floor_data()
+	if final:
+		n = floors.size()
+		fd = floors[n - 1]
+	elif not RunManager.floor_has_boss(n):
+		# 1a etapa: el jefe del reino es el del piso siguiente de la misma region
+		for i in range(n, floors.size()):
+			if floors[i].region == fd.region and str(floors[i].boss) != "":
+				fd = floors[i]
+				n = i + 1
+				break
+	if str(fd.get("boss", "")) == "":
+		return ""
+	return _nice_name(Loc.enemy_name(BossPicker.pick(fd, rm.current_seed, n).name))
+
+
+## "SU PUDOROSIDAD, LA HOJA DE PARRA" -> "Su Pudorosidad, la Hoja de Parra".
+static func _nice_name(boss_name: String) -> String:
+	var out: PackedStringArray = []
+	for w in boss_name.split(" "):
+		var bare := w.trim_suffix(",")
+		var tail := w.substr(bare.length())
+		if bare in NAME_KEEP_UPPER:
+			out.append(w)
+		elif out.size() > 0 and bare.to_lower() in NAME_SMALL_WORDS:
+			out.append(bare.to_lower() + tail)
+		else:
+			out.append(bare.substr(0, 1).to_upper() + bare.substr(1).to_lower() + tail)
+	return " ".join(out)
+
+
+## Mete la frase en la cola (maximo 3). Las de combate van delante de las demas y cortan la que
+## este en pantalla si esa no lo es.
+func _enqueue(text: String, urgent := false) -> void:
+	if urgent:
+		_urgent[text] = true
+		var at := 0
+		while at < _queue.size() and _urgent.has(_queue[at]):
+			at += 1
+		_queue.insert(at, text)
+		if _showing and not _showing_urgent:
+			_showing = false
+	else:
+		_queue.append(text)
+	while _queue.size() > 3:
+		var drop := 0
+		while drop < _queue.size() - 1 and _urgent.has(_queue[drop]):
+			drop += 1
+		_queue.remove_at(drop)
 
 
 ## Texto ya escrito (inscripciones de lore). "HABLANTE: texto" pone el nombre.
@@ -159,10 +288,10 @@ func say_raw(line: String) -> void:
 		_queue.append(line)
 
 
-func say_first(event: String, args: Dictionary = {}) -> void:
+func say_first(event: String, args: Dictionary = {}, major := true) -> void:
 	if not _seen.has(event):
 		_seen[event] = true
-		say(event, args)
+		say(event, args, major)
 
 
 func toast(title: String, text: String = "", color := "b08d4a") -> void:
@@ -246,9 +375,13 @@ func _left_unread() -> void:
 	if _complaining:
 		_showing = false
 		return
+	var complaint := _pick("ignored")
+	if complaint == "":
+		_showing = false
+		return
 	ignored_count += 1
 	_queue.push_front(_line_raw)
-	_show(_pick("ignored"))
+	_show(complaint)
 	_complaining = true
 
 
@@ -268,25 +401,31 @@ func _advance() -> void:
 	_panel.visible = false
 
 
+## Frase al azar del evento que no haya salido ya esta partida ("" si no queda ninguna).
 func _pick(event: String) -> String:
 	if not _lines.has(event):
 		push_warning("Narrator: no hay frases para '%s'" % event)
 		return ""
-	var bag: Array = _bags.get(event, [])
-	if bag.is_empty():
-		for i in _lines[event].size():
-			bag.append(i)
-		bag.shuffle()
-		_bags[event] = bag
-	var idx: int = bag.pop_back()
+	var free: Array = []
+	for i in _lines[event].size():
+		if not _said.has(_keys[event][i]):
+			free.append(i)
+	if free.is_empty():
+		return ""
+	var idx: int = free[randi() % free.size()]
+	_said[_keys[event][idx]] = true
 	return Loc.narr_line(_keys[event][idx], _lines[event][idx])
 
 
-func _show(line: String) -> void:
+func _show(line: String, urgent := false) -> void:
+	_showing_urgent = urgent
+	_auto_close = 0.0
+	if urgent and _in_combat():
+		_auto_close = line.length() / CHARS_PER_SEC + COMBAT_LINGER
 	var speaker := "NARRADOR"
 	var color := "b08d4a"
 	var colon := line.find(": ")
-	if colon > 0 and colon < 30 and line.substr(0, colon) == line.substr(0, colon).to_upper():
+	if colon > 0 and colon < 36 and line.substr(0, colon) == line.substr(0, colon).to_upper():
 		speaker = line.substr(0, colon)
 		line = line.substr(colon + 2)
 		color = "c84a4a"
@@ -348,9 +487,16 @@ func _process(delta: float) -> void:
 		_left_unread()
 	# En combate no se ve ni avanza nada; lo pendiente espera a que acabe.
 	var combat := _in_combat()
-	_panel.visible = _showing and not combat
-	if not combat and not _showing and not _queue.is_empty():
-		_show(_queue.pop_front())
+	_panel.visible = _showing and (not combat or _showing_urgent)
+	if _showing and _auto_close > 0.0:
+		_auto_close -= delta
+		if _auto_close <= 0.0:
+			_showing = false
+			_panel.visible = false
+	if not _showing and not _queue.is_empty() and (not combat or _urgent.has(_queue[0])):
+		var text: String = _queue.pop_front()
+		_show(text, _urgent.has(text))
+		_urgent.erase(text)
 	if prompt_owner != null and not is_instance_valid(prompt_owner):
 		clear_prompt(prompt_owner)
 	_toast_time -= delta
@@ -421,12 +567,29 @@ func _on_run_started(_seed: int) -> void:
 	_memory.runs += 1
 	_save_memory()
 	_seen.clear()
+	_said.clear()
+	_urgent.clear()
+	_streak = 0
 	ignored_count = 0
 	var freed: int = get_node("/root/RunManager").liberated.size()
 	if _memory.runs == 1:
 		say("first_run")  # despues basta con la presentacion del piso
 	elif freed > 0 and freed < RunManager.regions().size():
 		say("run_start_progress", {"n": freed, "left": RunManager.regions().size() - freed})
+
+
+## Poca vida: la primera vez de la run. Y se corta la racha de muertes sin que te toquen.
+func _on_player_damaged(_amount: float, _source: Node) -> void:
+	_streak = 0
+	var ps := get_node("/root/PlayerStats")
+	if ps.current_health > 0.0 and ps.current_health <= ps.max_health * 0.25:
+		say_first("low_health", {}, false)
+
+
+func _on_enemy_killed(_enemy: Node, _killer: Node) -> void:
+	_streak += 1
+	if _streak == 5:
+		say("kill_streak")
 
 
 func _on_player_died() -> void:
@@ -436,12 +599,13 @@ func _on_player_died() -> void:
 	_memory.deaths_by_floor[key] = int(_memory.deaths_by_floor.get(key, 0)) + 1
 	_save_memory()
 	_queue.clear()
+	_urgent.clear()
 	_showing = false  # la frase de muerte no espera a que pases la anterior
 	var n: int = _memory.deaths_by_floor[key]
 	var main := get_tree().get_first_node_in_group("main")
 	if main and main.current_room and main.current_room.room_type == Room.RoomType.BOSS \
 			and RunManager.floor_has_boss(get_node("/root/RunManager").current_floor):
-		say("death_boss", {"boss": Loc.enemy_name(BossPicker.pick(get_node("/root/RunManager").floor_data(), get_node("/root/RunManager").current_seed, get_node("/root/RunManager").current_floor).name)})
+		say("death_boss")  # {boss} lo pone _format
 	elif n >= 3 and randf() < 0.5:
 		say("death_same_floor", {"floor": floor_n, "n": n})
 	else:

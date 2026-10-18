@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = "boss_alt_3"
-title = "DIU Cósmico"
-text = "Una T de cobre que flota en Vulvania desde hace años sin pedir nada. Si lo mueves, se ofende: cruza barras de cobre en sentidos opuestos, tensa hilos de nylon, lanza meteoros y, cuando se enfada de verdad, hace supernova. Dato real: el DIU de cobre previene el embarazo más del 99% de las veces, dura entre cinco y diez años según el modelo y es reversible: se retira y la fertilidad vuelve. No protege de las infecciones de transmisión sexual; para eso sigue estando el condón. Como casi todo en esta historia: una herramienta, no una moral."
+title = "El DIU Cósmico"
+text = "Flota en Vulvania sin pedir nada, una T de cobre. Si lo mueves, se ofende: cruza barras de cobre, tensa hilos de nylon, lanza meteoros y, ya enfadado, hace supernova. Dato: el DIU de cobre previene el embarazo más del 99% de las veces, dura entre 5 y 12 años según el modelo y es reversible. No protege de las ITS: para eso, condón."
 category = 3
 unlock_condition = {"type": 9, "target_id": "EL DIU CÓSMICO"}
 flavor_text = "Derrota al DIU Cósmico."

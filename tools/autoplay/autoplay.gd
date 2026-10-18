@@ -681,26 +681,25 @@ func _build_grid(room: Room) -> void:
 	_avoid_hazards(room)
 
 
-## Peligros de las dinamicas de sala (src/rooms, grupo "rooms_hazard"): pinchos, cera, fuego de
+## Peligros de las dinamicas de sala (RoomUtil.hazard_zones, grupo "rooms_hazard"): pinchos, cera, fuego de
 ## antorchas... Sus zonas (hazard_zones(): [{c: centro global, r: radio}]) salen de la rejilla
 ## para que el bot las rodee; el viento de los ventiladores no mata, se ignora. La rejilla se
 ## rehace cada 0,4 s mientras haya peligros (los fuegos y charcos aparecen y se van).
 func _avoid_hazards(room: Room) -> void:
 	var any := false
-	for n in get_tree().get_nodes_in_group("rooms_hazard"):
-		if not is_instance_valid(n) or not n.has_method("hazard_zones") or not room.is_ancestor_of(n):
+	for z in RoomUtil.hazard_zones(get_tree()):
+		if not Rect2(room.global_position, RoomUtil.size_of(room)).has_point(z.c):
 			continue
 		any = true
-		for z in n.hazard_zones():
-			var c: Vector2 = z.c
-			var r: float = z.r
-			var c0 := _cell(c)
-			var span := int(r / CELL) + 1
-			for dx in range(-span, span + 1):
-				for dy in range(-span, span + 1):
-					var k := c0 + Vector2i(dx, dy)
-					if _center(k).distance_to(c) <= r:
-						_grid.erase(k)
+		var c: Vector2 = z.c
+		var r: float = z.r
+		var c0 := _cell(c)
+		var span := int(r / CELL) + 1
+		for dx in range(-span, span + 1):
+			for dy in range(-span, span + 1):
+				var k := c0 + Vector2i(dx, dy)
+				if _center(k).distance_to(c) <= r:
+					_grid.erase(k)
 	if any:
 		_grid_t = 0.4
 

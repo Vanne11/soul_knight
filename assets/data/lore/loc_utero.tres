@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "loc_utero"
+title = "El Útero"
+text = "La región secreta de Vulvania: se entra por la Consulta de la Doctora V., con un Turno. Cuatro tramos, cuatro fases del ciclo: menstruación (marea roja y calambres), folicular (todo florece), ovulación (todos acelerados; hay que alcanzar el óvulo) y lútea (irritables y con antojos; el chocolate cura el doble). Un ciclo dura cerca de un mes."
+category = 4
+unlock_condition = {"type": 10, "target_id": "enter_utero"}
+flavor_text = "Entra al Útero con un Turno."

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_huincha"
 title = "Huincha de Medir"
-text = "Una cinta métrica con complejo de inspectora. Mide todo: puertas, pasillos, héroes. Con Pitocles te persigue para medirte y se te enrolla con una sonrisa; con Vulvalquiria te pica con el gancho de metal como un estoque, porque ella ya sabe lo que vale; y con el Ornitorrinco se queda a cuadros: no hay norma para medir un pico de pato y una cola de castor, así que huye, hasta que le arrinconas y embiste de puro pánico. Lo único que no sabe medir es lo que importa: el valor de nadie cabe en una cinta. Y el que se mide con la de otro, nunca sale bien."
+text = "Una cinta métrica con complejo de inspectora: mide puertas, pasillos y héroes. Con Pitocles te persigue para medirte; con Vulvalquiria te pica con el gancho como un estoque; con el Ornitorrinco se queda a cuadros, porque no hay norma para un pico de pato con cola de castor. Lo único que no sabe medir es lo que importa."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Huincha de Medir", "count": 8}
-flavor_text = "Vence 8 huinchas con cada héroe que puedas (cada uno la ve distinta)."
+flavor_text = "Vence 8 huinchas con cada héroe que puedas."

@@ -63,7 +63,8 @@ func hazard_zones() -> Array:
 	var out: Array = []
 	for c in room.get_children():
 		if c is _Fall and is_instance_valid(c):
-			out.append({"c": c.global_position, "r": FIRE_R + 24.0})
+			out.append({"c": c.global_position, "r": FIRE_R + 24.0, "ar": FIRE_R + 8.0,
+					"kind": "fire", "active": true, "soon": 0.0})
 	return out
 
 

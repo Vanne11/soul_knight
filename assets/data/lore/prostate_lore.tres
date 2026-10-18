@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "prostate_lore"
 title = "La Iluminación Prohibida"
-text = "Lo encontraste. Lo equipaste. El universo se abrió ante ti. Cada crítico es una revelación. Cada explosión en cadena, un mantra. La próstata no es una glándula. Es un tercer ojo. Un chakra anal. Cuando criticas, el cosmos eyacula estrellas. Iluminación. Éxtasis. Y luego... el período refractario. El enfriamiento. El vacío post-orgasmo cósmico. Vale la pena. Siempre vale la pena. Hasta que te das cuenta de que la iluminación anal no te paga el alquiler."
+text = "Lo encontraste, lo equipaste y el universo se abrió: cada crítico es una revelación, cada explosión en cadena un mantra. Aquí la próstata ascendió de glándula a chakra, y cuando criticas el cosmos lanza estrellas. Luego viene el enfriamiento, el vacío posterior. Vale la pena, hasta que notas que la iluminación no paga el arriendo."
 category = 2
 unlock_condition = {"type": 1, "target_id": "relic_prostate", "count": 1}
 flavor_text = "Equipa la Próstata Iluminada."

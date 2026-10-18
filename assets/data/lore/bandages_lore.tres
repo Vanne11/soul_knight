@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "bandages_lore"
 title = "Mejor No Preguntar Por Qué Huelen Así"
-text = "Vendas Sucias. 30 vida. Probablemente usadas. 'Mejor no preguntar por qué huelen así.' Las usas. La vida sube. El olor se te queda en los dedos. En la nariz. En la mente. ¿De quién eran? ¿Para qué? ¿En qué herida? Da igual. 30 vida son 30 vida. En este juego, la higiene es un lujo. La dignidad, otro. Te vendas con trapos que vieron más sangre que un cirujano de guerra. Y curan. Porque la carne no pregunta. Solo cierra. Y tú sigues. Con el olor ajeno en la piel. Y tu propia sangre debajo. Capa tras capa. Venda tras venda. Run tras run."
+text = "Vendas Sucias: +30 de vida. Probablemente usadas. El cartel dice «mejor no preguntar por qué huelen así», y por una vez el cartel tiene razón. ¿De quién eran? ¿En qué herida? Da igual: la carne no pregunta, solo cierra. Higiene y dignidad son lujos; treinta de vida son treinta de vida."
 category = 2
 unlock_condition = {"type": 4, "target_id": "bandages", "count": 20}
 flavor_text = "Usa 20 vendas sucias."

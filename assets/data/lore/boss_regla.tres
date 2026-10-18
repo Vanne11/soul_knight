@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boss_regla"
+title = "Doña Regla"
+text = "Regla de medir de dos metros y puntualidad envidiable: llega justo cuando nadie la espera. Barre con su cinta, invoca calambres y deja marea roja en el tramo. Dato: el sangrado dura de 3 a 7 días. El tampón se cambia cada 4 a 8 horas como máximo (más tiempo sube el riesgo de síndrome de shock tóxico), y el dolor que no deja vivir se consulta."
+category = 3
+unlock_condition = {"type": 9, "target_id": "DOÑA REGLA"}
+flavor_text = "Derrota a Doña Regla."

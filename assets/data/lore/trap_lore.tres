@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "trap_lore"
 title = "Click. Aaaaah. Click."
-text = "La Trampa de Oso (Tamaño Humano) no discrimina. Enemigo pisa -> click. 60 daño. Inmovilizado 3 segundos. Sangrado 10/s por 5 segundos. Tú pisas -> click. 60 daño. Inmovilizado 3 segundos. Sangrado 10/s por 5 segundos. La trampa no sabe de bandos. Solo sabe de peso. Y dolor. La colocas estratégicamente. En el pasillo. Detrás de la puerta. En el spawn. Esperas. Escuchas. CLICK. AAAAAH. Satisfacción. Luego olvidas dónde la pusiste. Corres. CLICK. AAAAAH. Ironía. La trampa siempre gana. Porque la trampa eres tú. Poniendo trampas para otros. Cayendo en las tuyas. Siempre."
+text = "La Trampa de Oso (Tamaño Humano) no discrimina. Pisa el enemigo: click, 60 de daño, inmovilizado 3 segundos. Pisas tú: exactamente lo mismo. La trampa no sabe de bandos, solo de peso y dolor. La colocas con estrategia: CLICK, satisfacción. Luego olvidas dónde, corres: CLICK, ironía. La trampa siempre gana porque la trampa eres tú."
 category = 2
 unlock_condition = {"type": 4, "target_id": "trap_bear", "count": 3}
 flavor_text = "Activa 3 trampas de oso."

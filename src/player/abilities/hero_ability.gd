@@ -82,6 +82,7 @@ func stun(e: Node, seconds: float, away: Vector2 = Vector2.ZERO) -> void:
 		e._state_timer = seconds
 		if away != Vector2.ZERO:
 			e.velocity = away
+			PitFall.push(e, away)  # empujado hacia un foso: puede caer
 		var spr = e.get("animated_sprite")
 		if spr:
 			spr.modulate = Color(0.7, 0.8, 1.3)

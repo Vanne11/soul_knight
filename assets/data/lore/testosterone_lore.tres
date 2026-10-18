@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "testosterone_lore"
 title = "Testosterona de Penelandia"
-text = "El orgullo nacional de Penelandia, embotellado. Duplica tu vida máxima, dispara tu estamina y te hace regenerar con cada golpe que das. También te hace sentir que tienes razón en todas las discusiones, lo cual es falso. Para la gente de Penelandia es un buen día. Para la gente de Vulvania es una alergia de campeonato: estornudos, hinchazón y ganas de discutir de fútbol con desconocidos. El Ornitorrinco se la bebe como si fuera zumo. Nadie sabe cómo."
+text = "El orgullo nacional de Penelandia, embotellado. Duplica tu vida máxima, dispara tu estamina y te regenera con cada golpe. También te hace sentir que tienes razón en todas las discusiones, lo cual es falso. Para Vulvania es una alergia de campeonato: estornudos, hinchazón y ganas de discutir de fútbol. El Ornitorrinco la toma como jugo."
 category = 2
 unlock_condition = {"type": 1, "target_id": "relic_testosterone"}
 flavor_text = "Consigue la Testosterona Pura."

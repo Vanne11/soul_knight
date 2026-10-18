@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_testiculo"
 title = "Testículo Errante"
-text = "No te ataca: te juzga. Camina por Penelandia con un único ojo entornado, mirando a todo el mundo con una decepción profunda y antigua. Antes de embestir parpadea y tiembla, como quien se arma de valor para decirte algo incómodo. Después de embestir se queda agotado y gris. Ese es tu momento. No le hagas caso cuando te mire así. Mira así a todo el mundo, incluso a su propia familia."
+text = "No te ataca: te juzga. Camina por Penelandia con un ojo entornado, mirando a todos con una decepción antigua. Antes de embestir parpadea y tiembla, como quien junta valor para decir algo incómodo; después queda agotado y gris. Ese es tu momento. No le hagas caso cuando te mire así: mira así a todo el mundo, incluso a su familia."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Testículo Errante", "count": 10}
 flavor_text = "Mata 10 testículos errantes."

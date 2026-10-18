@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ene_jaula"
 title = "Jaula Carcelera"
-text = "Salta encima de ti y te encierra unos segundos: sin disparar, sin dash, sin poder moverte con soltura. Hay que machacar los botones para salir, que es lo más parecido a pedir ayuda que tiene este género. Una jaula de castidad es un objeto que algunas personas adultas eligen usar por gusto; lo que la hace una pesadilla aquí es la parte que falta: nadie la eligió. En la vida real, lo que separa un juego de una agresión es el acuerdo, una palabra de seguridad y la llave siempre a mano. La Jaula Carcelera no tiene ninguna de las tres."
+text = "Salta encima de ti y te encierra unos segundos: sin disparar, sin dash. Hay que machacar botones para salir. Una jaula de castidad es un objeto que algunas personas adultas eligen usar; lo que la vuelve pesadilla aquí es que nadie la eligió. Lo que separa un juego de una agresión es el acuerdo, una palabra de seguridad y la llave a mano."
 category = 3
 unlock_condition = {"type": 0, "target_id": "Jaula Carcelera", "count": 8}
-flavor_text = "Vence a 8 jaulas carceleras (aprende a esquivar el salto)."
+flavor_text = "Vence a 8 jaulas carceleras."

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "boss_1"
 title = "Doña Cera Caliente"
-text = "Esteticista de profesión, verdugo por vocación. Cuando llegó la censura, Doña Cera vio la oportunidad de su vida: dejar el mundo entero liso como un azulejo. Montó su salón en el corazón de la Selva Púbica y desde entonces arranca todo lo que crece. Te dirá que no duele. Miente. Lanza abanicos de cera hirviendo, embiste con su espátula y, cuando se pone seria, promete ingles brillantes para todos. Al final se quema con su propia cera, que es la forma más poética de perder. La selva vuelve a crecer libre después. Cada uno con su jardín como quiera."
+text = "Esteticista de profesión, verdugo por vocación: mira el mundo y ve azulejos. Lanza abanicos de cera hirviendo, embiste con la espátula y promete ingles brillantes para todos. Acaba quemándose con su propia cera, y la selva vuelve a crecer: cada uno con su jardín como quiera. Dato: depilarse es estética, no higiene. El vello no es suciedad."
 category = 3
 unlock_condition = {"type": 9, "target_id": "DOÑA CERA CALIENTE"}
 flavor_text = "Derrota a la jefa de la Selva Púbica."

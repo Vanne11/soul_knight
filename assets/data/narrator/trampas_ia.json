@@ -1,0 +1,15 @@
+{
+  "_info": "Trampas y enemigos con dos dedos de frente (src/rooms/trap_room.gd, src/enemies/ai/). ti_cages lo dice la sala trampa con jaulas; ti_avoid y ti_dive son comentarios raros al limpiar la sala.",
+  "ti_cages": [
+    "Jaulas del techo. Alguien en Recursos Humanos ya las pidió para ti.",
+    "Si oyes un tintineo, no mires arriba: muévete."
+  ],
+  "ti_avoid": [
+    "Los enemigos esquivan los pinchos. Cobardes con sentido común, qué horror.",
+    "Rodearon la trampa. Hasta la mazmorra tiene gente prudente."
+  ],
+  "ti_dive": [
+    "Uno se tiró a los pinchos por rabia. Tu seguro no cubre eso.",
+    "La ira vence a la prudencia. A los pinchos, la ira."
+  ]
+}

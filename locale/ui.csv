@@ -3,14 +3,14 @@ INTOX_TIER_0,SOBRIO,SOBER
 INTOX_TIER_1,ACHISPADO,TIPSY
 INTOX_TIER_2,BORRACHO,DRUNK
 INTOX_TIER_3,BLACKOUT,BLACKOUT
-GAMEOVER_VICTORY_TITLE,LO HICISTE. ¿Y AHORA QUÉ?,YOU DID IT. NOW WHAT?
-GAMEOVER_INSULT_1,"MORISTE, CABRÓN","YOU DIED, ASSHOLE"
-GAMEOVER_INSULT_2,SE TE CAYÓ EL PENE,YOUR DICK FELL OFF
+GAMEOVER_VICTORY_TITLE,SE ACABÓ EL PUDOR,THE PRUDERY IS OVER
+GAMEOVER_INSULT_1,FIN DEL TRÁMITE. SIGUIENTE.,END OF PROCEDURE. NEXT.
+GAMEOVER_INSULT_2,SE TE CAYÓ EL PENACHO,YOUR CREST FELL OFF
 GAMEOVER_INSULT_3,VUELVE AL ÚTERO,GET BACK IN THE WOMB
 GAMEOVER_INSULT_4,HASTA MI ABUELA LO HACE MEJOR,EVEN MY GRANDMA DOES IT BETTER
 GAMEOVER_INSULT_5,EL HÍGADO TE LLORA,YOUR LIVER IS WEEPING
-GAMEOVER_INSULT_6,PAQUETE DE LECHE DERRAME,PACKAGE OF SPILLED MILK
-GAMEOVER_INSULT_7,ERROR 404: SKILL NOT FOUND,ERROR 404: SKILL NOT FOUND
+GAMEOVER_INSULT_6,LECHE DERRAMADA. A LLORAR,SPILLED MILK. GO CRY
+GAMEOVER_INSULT_7,ERROR 404: DASH NO ENCONTRADO,ERROR 404: DASH NOT FOUND
 GAMEOVER_RUN,LA PARTIDA,THE RUN
 GAMEOVER_FLOOR,PISO,FLOOR
 GAMEOVER_ENEMIES,ENEMIGOS,ENEMIES
@@ -20,15 +20,15 @@ GAMEOVER_BONES_TOTAL,"Total: %d huesos. Gástalos en Mejoras, en el menú.","Tot
 GAMEOVER_RETRY,OTRA VEZ,AGAIN
 GAMEOVER_MENU,MENÚ,MENU
 GAMEOVER_QUIT,RENDIRSE,GIVE UP
-MENU_NEW_GAME,NUEVA PARTIDA,NEW RUN
+MENU_NEW_GAME,NUEVA RUN,NEW RUN
 MENU_UPGRADES,MEJORAS,UPGRADES
 MENU_CODEX,CÓDICE,CODEX
 MENU_QUIT,SALIR,QUIT
 MENU_WORLD,EL MUNDO,THE WORLD
 MENU_TITLE,ROGUE REPRODUCTIVE,ROGUE REPRODUCTIVE
 MENU_SUBTITLE,"LA GRAN CENSURA · ÓRGANOS, HORMONAS Y MALAS DECISIONES","THE GREAT CENSORSHIP · ORGANS, HORMONES AND BAD DECISIONS"
-MENU_WORLD_GRAY,El mundo sigue gris. Libera una región venciendo a su jefe: queda a color para siempre.,The world is still gray. Free a region by beating its boss: it stays in color forever.
-MENU_WORLD_FREED,%d de %d regiones liberadas. Cada una te regala una bendición al llegar.,%d of %d regions freed. Each one hands you a blessing when you arrive.
+MENU_WORLD_GRAY,El mundo sigue gris. Libera una región venciendo a quien manda en ella: queda a color para siempre.,The world is still gray. Free a region by beating whoever runs it: it stays in color forever.
+MENU_WORLD_FREED,%d de %d regiones liberadas. Cada una te recibe con una bendición.,%d of %d regions freed. Each one welcomes you with a blessing.
 MENU_BONES,%d HUESOS,%d BONES
 MENU_BEST_FLOOR,MEJOR PISO %d,BEST FLOOR %d
 MENU_CODEX_PCT,CÓDICE %.0f%%,CODEX %.0f%%
@@ -39,7 +39,7 @@ MENU_UPGRADE_MAX,%s — %s   [%d/%d] MÁXIMO,%s — %s   [%d/%d] MAXED
 MENU_UPGRADE_BUY,%s — %s   [%d/%d]   %d huesos,%s — %s   [%d/%d]   %d bones
 CODEX_TITLE,CÓDICE  (%.0f%% descubierto),CODEX  (%.0f%% discovered)
 CODEX_HINT,"Elige una entrada. Las que faltan se descubren jugando: inscripciones, objetos, enemigos y jefes.","Pick an entry. The missing ones are discovered by playing: inscriptions, items, enemies and bosses."
-CODEX_LOCKED,"Todavía sin descubrir. Sigue jugando: algo por ahí te la debe.","Not discovered yet. Keep playing: something out there owes you this one."
+CODEX_LOCKED,Todavía sin descubrir. Sigue jugando: algo por ahí te la debe.,Not discovered yet. Keep playing: something out there owes you this one.
 INTRO_HINT,[cualquier tecla] seguir      [ESC] saltar la historia,[any key] continue      [ESC] skip the story
 INTRO_CHOOSE_TITLE,ELIGE A TU HÉROE,CHOOSE YOUR HERO
 INTRO_REPLAY,Ver la historia otra vez,Watch the story again
@@ -98,7 +98,7 @@ FX_FLOOR_DONE,¡PISO %d COMPLETADO!,FLOOR %d COMPLETE!
 FLOOR_CARD,PISO %d\n%s,FLOOR %d\n%s
 FLOOR_REMEMBERS,[b]%s te recuerda.[/b] Ya la liberaste una vez. Elige una bendición de regalo:,[b]%s remembers you.[/b] You already freed it once. Pick a free blessing:
 FLOOR_LIBERATED_TITLE,REGIÓN LIBERADA PARA SIEMPRE,REGION FREED FOREVER
-FLOOR_LIBERATED_BODY,%s ya no vuelve al gris. En próximas partidas te dará una bendición al llegar.,%s will never go gray again. In future runs it will give you a blessing on arrival.
+FLOOR_LIBERATED_BODY,%s recuperó el color y no piensa volver al gris. Próximas partidas: bendición de bienvenida.,%s got its color back and isn't going gray again. Next runs: a welcome blessing.
 FLOOR_BOSS_DEFEATED,[b]Jefe derrotado.[/b] Elige una mejora para el resto de la partida:,[b]Boss defeated.[/b] Pick an upgrade for the rest of the run:
 FLOOR_HATCH,[b]Escotilla al piso %d[/b]\n[font_size=13]Recoge lo que quieras antes: no se vuelve.[/font_size]\n[color=#b08d4a][E] Bajar[/color],[b]Hatch to floor %d[/b]\n[font_size=13]Grab whatever you want first: there's no coming back.[/font_size]\n[color=#b08d4a][E] Go down[/color]
 BOSS_REWARD_HEALTH,+10 vida máxima,+10 max health

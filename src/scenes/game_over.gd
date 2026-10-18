@@ -59,6 +59,20 @@ func _ready() -> void:
 	drop.tween_property(title, "position:y", 28.0, 0.55).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	drop.tween_callback(func(): Sound.play("crack"))
 
+	if victory:  # final propio del heroe (historia.md, seccion 7), bajo el titulo
+		var ending: String = Narrator.get_line("ending_" + str(rm.character))
+		if ending != "":
+			var sub := HudStyle.pixel_label(ending, 18, HudStyle.CREAM, true)
+			sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			sub.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			sub.set_anchors_preset(Control.PRESET_CENTER_TOP)
+			sub.offset_left = -520
+			sub.offset_right = 520
+			sub.offset_top = 96
+			sub.modulate.a = 0.0
+			_root.add_child(sub)
+			create_tween().tween_property(sub, "modulate:a", 1.0, 0.8).set_delay(1.0)
+
 	# cifras de la partida en un panel dorado (izquierda: el centro es de la ilustracion)
 	var panel := PanelContainer.new()
 	panel.position = Vector2(36, 150)

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "whiskey_lore"
 title = "El Whiskey que No Es Whiskey"
-text = "Esa botella barata que encuentras en cada esquina. No es alcohol. Es esencia destilada de malas decisiones. Cada sorbo es un 'sí' a algo que deberías haber dicho 'no'. El ardor en la garganta no es el alcohol. Es tu dignidad evaporándose. Pero oye, +15% daño. Vale la pena, ¿verdad? Siempre vale la pena. Hasta que no lo vale."
+text = "Esa botella barata que encuentras en cada esquina. No es alcohol: es esencia destilada de malas decisiones. Cada sorbo es un «sí» a algo que debiste decir «no». El ardor en la garganta no es el alcohol, es tu dignidad evaporándose. Pero +15% daño. Vale la pena, ¿verdad? Hasta que no."
 category = 2
 unlock_condition = {"type": 4, "target_id": "whiskey", "count": 10}
 flavor_text = "Bebe 10 whiskeys en una run."

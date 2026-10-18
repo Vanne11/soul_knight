@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boss_glandula"
+title = "La Glándula Callada"
+text = "Nunca habla, y crece en cada fase: hiperplasia, pero con ambición. Bloquea el paso, dispara de a poco y se hincha hasta ocupar media sala. Dato: el crecimiento benigno de la próstata es muy común después de los 50. No es cáncer, pero se maneja mejor si se consulta a tiempo. Que no hable no significa que no se note."
+category = 3
+unlock_condition = {"type": 9, "target_id": "LA GLÁNDULA CALLADA"}
+flavor_text = "Derrota a la Glándula Callada."
