@@ -11,6 +11,7 @@ const SIGNATURE := {
 	"vulva": preload("res://src/puzzles/puzzle_flowers.gd"),       # Vulvania: flores Lights Out
 	"mixto": preload("res://src/puzzles/puzzle_stamps.gd"),        # Perineo: papeleo de sellos
 	"censura": preload("res://src/puzzles/puzzle_uncensor.gd"),    # Palacio: descensurar
+	"prostata": preload("res://src/puzzles/puzzle_stamps.gd"),     # La Prostata: turnos y papeleo (sellos)
 }
 const CREATIVE := [
 	preload("res://src/puzzles/puzzle_mirrors.gd"),   # luz y espejos
@@ -26,6 +27,7 @@ const EXTRA := {
 	"vulva": [preload("res://src/puzzles/puzzle_diary.gd")],
 	"mixto": [preload("res://src/puzzles/puzzle_shadows.gd")],
 	"censura": [preload("res://src/puzzles/puzzle_golf.gd")],
+	"prostata": [preload("res://src/puzzles/puzzle_shadows.gd")],
 }
 ## Probabilidad de que la sala sea un acertijo creativo en vez del del reino.
 const CREATIVE_CHANCE := 0.45

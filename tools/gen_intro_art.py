@@ -157,6 +157,13 @@ def key() -> str:
     return k
 
 
+def _image_config() -> dict:
+    cfg = {"aspectRatio": "16:9"}
+    if os.environ.get("GEMINI_IMAGE_SIZE"):  # p.ej. "1K"
+        cfg["imageSize"] = os.environ["GEMINI_IMAGE_SIZE"]
+    return cfg
+
+
 def generate(n) -> Path:
     if isinstance(n, str):
         prompt, refs = SCREENS[n]
@@ -166,7 +173,7 @@ def generate(n) -> Path:
         text = STYLE + REF_NOTE.get(n, "") + SLIDES[n]
     body = {
         "contents": [{"parts": [_ref_part(r) for r in refs] + [{"text": text}]}],
-        "generationConfig": {"responseModalities": ["IMAGE"], "imageConfig": {"aspectRatio": "16:9"}},
+        "generationConfig": {"responseModalities": ["IMAGE"], "imageConfig": _image_config()},
     }
     req = urllib.request.Request(
         f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent",

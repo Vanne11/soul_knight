@@ -155,6 +155,11 @@ KINGS = {
     "censura": dict(stone=Pal("#f2f2f6"), moss=Pal("#14121a"), wood=Pal("#e4e4ec"), wood2=Pal("#fafafc"),
                     metal=Pal("#c5c5d2"), trim=Pal("#8a1a2a"), plate=Pal("#d8d8e2")),
 }
+# La Prostata: se dibuja con las formas del Perineo ("mixto": sillas-bloque, cajas, barreras)
+# pero con paleta de sala de espera (nuez, rosa lechoso, gris).
+KINGS["prostata"] = dict(stone=Pal("#b4a8a6"), moss=Pal("#8e6c50"), wood=Pal("#8a6a50"), wood2=Pal("#b08a68"),
+                         metal=Pal("#7c7476"), trim=Pal("#d6bcb8"), plate=Pal("#a49a9a"))
+SHAPE_AS = {"prostata": "mixto"}
 BAR = C("#14121a")
 BARHI = C("#2c2a36")
 RED = C("#8a1a2a")
@@ -636,17 +641,24 @@ def save(im, k, name):
 
 
 def build(k):
-    save(rock(k, 48, 38, 101), k, "rock_a")
-    save(rock(k, 32, 26, 202), k, "rock_b")
-    save(column(k), k, "column")
-    save(extra(k), k, "extra")
-    save(barrel(k), k, "barrel")
-    save(crate(k), k, "crate")
-    save(debris(k, 36, 20, "barrel", 5), k, "barrel_broken")
-    save(debris(k, 38, 22, "crate", 6), k, "crate_broken")
-    save(chunks(k), k, "chunk")
-    save(spikes(k, 3), k, "spikes")
-    save(spikes(k, 2), k, "spikes_s")
+    shape = SHAPE_AS.get(k, k)
+    if shape != k:
+        KINGS[shape], saved = KINGS[k], KINGS[shape]
+    try:
+        save(rock(shape, 48, 38, 101), k, "rock_a")
+        save(rock(shape, 32, 26, 202), k, "rock_b")
+        save(column(shape), k, "column")
+        save(extra(shape), k, "extra")
+        save(barrel(shape), k, "barrel")
+        save(crate(shape), k, "crate")
+        save(debris(shape, 36, 20, "barrel", 5), k, "barrel_broken")
+        save(debris(shape, 38, 22, "crate", 6), k, "crate_broken")
+        save(chunks(shape), k, "chunk")
+        save(spikes(shape, 3), k, "spikes")
+        save(spikes(shape, 2), k, "spikes_s")
+    finally:
+        if shape != k:
+            KINGS[shape] = saved
 
 
 if __name__ == "__main__":

@@ -24,6 +24,7 @@ const THEMES := {
 	"vulvania": {"art": "vulva", "color": Color("ff7ac0")},
 	"perineo": {"art": "mixto", "color": Color("ffc93c")},
 	"palacio": {"art": "censura", "color": Color("b48cff")},
+	"prostata": {"art": "prostata", "color": Color("d8b890")},
 }
 const CENTER := Vector2(80, 92)   # centro del portal en el lienzo del arte
 const FRAMES := 8

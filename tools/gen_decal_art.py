@@ -18,6 +18,7 @@ Reinos: neutral (selva), pene, vulva, mixto (perineo), censura (palacio).
 """
 import math
 import random
+import sys
 from pathlib import Path
 from PIL import Image
 
@@ -180,6 +181,16 @@ def rug(k):
             for dy in range(5):
                 for dx in range(6):
                     wput(im, x + dx, y + dy, rng.choice([C("6f86aa"), C("b0788c")]) if 0 < dx < 5 and 0 < dy < 4 else C("464244"))
+    elif k == "prostata":  # alfombra gris de sala de espera con rombos nuez
+        base, dk, lt = C("a89c9a"), C("8e6c58"), C("b8aca8")
+        im.paste(base, (0, 0, T, T))
+        blobs(im, rng, [lt], 30, 2, 1)
+        for i in range(T):
+            for off in (0, 16):
+                wput(im, i, (i + off) % T, dk)
+                wput(im, i, (-i + off) % T, dk)
+        for cx, cy in ((8, 8), (24, 24), (8, 24), (24, 8)):
+            wput(im, cx, cy, C("e0c8c4")); wput(im, cx + 1, cy, C("c8aca8")); wput(im, cx, cy + 1, C("c8aca8"))
     else:  # censura: alfombra roja con rombos y botones dorados
         base, dk, lt = C("96202e"), C("7e1826"), C("a82c3a")
         im.paste(base, (0, 0, T, T))
@@ -242,6 +253,19 @@ def patch(k, v):
                 x, y = rng.randrange(T), rng.randrange(T)
                 c = rng.choice([C("8a8480"), C("7a7470"), C("9a948c"), C("58544f")])
                 wput(im, x, y, c); wput(im, x + 1, y, c); wput(im, x, y + 1, shade(c, 0.8))
+    elif k == "prostata":
+        if v == "a":  # baldosa rosa lechoso con juntas
+            im.paste(C("d6bcb8"), (0, 0, T, T))
+            blobs(im, rng, [C("dcc4c0"), C("cdb0ac")], 40, 4, 2)
+            for i in range(T):
+                wput(im, i, 15, C("a89490")); wput(im, 15, i, C("a89490"))
+        else:  # tablones de nuez
+            im.paste(C("8a6a50"), (0, 0, T, T))
+            for y in range(0, T, 8):
+                for x in range(T):
+                    wput(im, x, y, C("5e4634"))
+            for _ in range(5):
+                walk(im, rng, rng.randrange(T), rng.randrange(T), 12, C("7a5c44"), (1, 0))
     else:
         if v == "a":  # marmol gris claro con cruz de juntas
             im.paste(C("dadae2"), (0, 0, T, T))
@@ -345,6 +369,33 @@ def scatter(k, n):
                 im.putpixel((x, y), C("c8c2b0", 235) if (x + y) % 5 else C("b4ae9c", 235))
         for x in range(8, 20, 2):
             im.putpixel((x, 9), C("6a6458", 235))
+        return im
+    if k == "prostata":
+        if n == 0:  # revista vieja abierta
+            im = new(30, 20)
+            for y in range(3, 17):
+                for x in range(2, 28):
+                    im.putpixel((x, y), C("e4dccc", 235) if x != 15 else C("a89c8c", 235))
+            for y in (6, 9, 12):
+                for x in range(4, 13):
+                    im.putpixel((x, y), C("8a8478", 220))
+                for x in range(18, 26):
+                    im.putpixel((x, y), C("8a8478", 220))
+            return im
+        if n == 1:  # turnos tirados
+            im = new(26, 16)
+            for ox, oy in ((3, 3), (14, 6), (8, 9)):
+                for y in range(oy, oy + 5):
+                    for x in range(ox, ox + 8):
+                        im.putpixel((x, y), C("eee2bc", 235))
+                im.putpixel((ox + 3, oy + 2), C("a02828", 235)); im.putpixel((ox + 4, oy + 2), C("a02828", 235))
+            return im
+        im = new(14, 12)  # chicle pegado
+        for y in range(3, 9):
+            for x in range(2, 12):
+                if (x - 7) ** 2 / 24 + (y - 6) ** 2 / 9 <= 1:
+                    im.putpixel((x, y), C("d68aa0", 235))
+        im.putpixel((5, 4), C("f0b8c8", 235))
         return im
     # censura
     if n == 0:  # gotas de tinta
@@ -634,12 +685,14 @@ def glass():
 
 
 def main():
-    for k in ("neutral", "pene", "vulva", "mixto", "censura"):
+    for k in (sys.argv[1:] or ("neutral", "pene", "vulva", "mixto", "censura", "prostata")):
         rug(k)
         patch(k, "a")
         patch(k, "b")
         for n in range(3):
             save(scatter(k, n), f"scatter_{k}_{n}")
+    if len(sys.argv) > 1:  # solo los reinos pedidos
+        return
     save(stamp("mixto"), "stamp_mixto")
     save(stamp("censura"), "stamp_censura")
     for kind in PUDDLES:

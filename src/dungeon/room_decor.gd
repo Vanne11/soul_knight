@@ -80,6 +80,11 @@ const CATALOG := {
 		["statue_censura_f", 1.2, "prop", true], ["statue_censura_mosaic_m", 1.0, "prop", true],
 		["statue_censura_mosaic_f", 1.0, "prop", true],
 	],
+	"prostata": [
+		["prostata_chairs", 4.0, "prop", false], ["prostata_magazines", 3.0, "prop", false],
+		["prostata_dispenser", 2.5, "prop", true], ["prostata_poster", 3.0, "prop", false],
+		["prostata_plant", 3.0, "prop", false], ["prostata_cooler", 2.0, "prop", true],
+	],
 }
 ## Restos de heroes anteriores (todos los reinos). El sentado va de espaldas al muro de arriba.
 const HEROES := ["hero_0", "hero_1", "hero_2", "hero_3"]
@@ -128,7 +133,7 @@ static func _tex(name: String) -> Texture2D:
 
 ## Carteles con texto pintado: variante en el idioma actual (es/en).
 static func _lang_name(name: String) -> String:
-	if name in ["mixto_sign_no", "censura_stamp"]:
+	if name in ["mixto_sign_no", "censura_stamp", "prostata_poster"]:
 		return name + ("_en" if TranslationServer.get_locale().begins_with("en") else "_es")
 	return name
 

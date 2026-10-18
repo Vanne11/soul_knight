@@ -27,6 +27,11 @@ BOSSES = {
                       "glasses, a pearl necklace and thin legs, arms crossed in disapproval, looming in the grey Palace of "
                       "Censorship throne hall with black censor bars and pixelated mosaic squares floating around, dramatic "
                       "light rays. Low camera angle. "),
+    "glandula": ("A dramatic boss reveal: the boss from the reference, a huge pink-brown walnut-shaped gland creature with a sealed "
+                 "stitched mouth, tired heavy-lidded eyes with dark circles and a paper waiting-number ticket on its side, "
+                 "sitting perfectly silent and calm in the middle of a dim hospital waiting room with rows of beige plastic chairs, "
+                 "old magazines scattered on the floor, a ticket-number display and a faint warm saxophone-lit glow. Low camera angle, "
+                 "quiet menace, deadpan comedy. "),
 }
 
 

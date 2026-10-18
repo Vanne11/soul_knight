@@ -12,7 +12,7 @@ class_name RoomLighting
 
 const TILE := 64
 ## Probabilidad de sala en penumbra por piso (indice 0..4).
-const DARK_CHANCE := [0.25, 0.35, 0.45, 0.55, 0.65]
+const DARK_CHANCE := [0.25, 0.35, 0.45, 0.55, 0.65, 0.7]
 ## Extra de salas en penumbra en la 2a etapa de cada reino.
 const DEEP_DARK_BONUS := 0.15
 const DEEP_AMBIENT := Color(0.78, 0.76, 0.88)  # ambiente de salas claras en la 2a etapa

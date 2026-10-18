@@ -29,7 +29,7 @@ enum K { SQUARE, CASING, PUFF, BUBBLE, SPARKLE, PETAL, CONFETTI, SPARK }
 const DUST := {
 	"neutral": Color(0.66, 0.58, 0.42), "pene": Color(0.72, 0.8, 0.92),
 	"vulva": Color(0.92, 0.72, 0.8), "mixto": Color(0.82, 0.72, 0.5),
-	"censura": Color(0.74, 0.74, 0.8),
+	"censura": Color(0.74, 0.74, 0.8), "prostata": Color(0.8, 0.7, 0.66),
 }
 ## Color de la huella cuando no se puede sacar del charco.
 const LIQUID := {
@@ -838,6 +838,13 @@ func _spawn_ambient(age_frac: float) -> void:
 				q.v = Vector2(randf_range(-6.0, 6.0), randf_range(-12.0, -4.0))
 			q.amp = 6.0
 			q.life = randf_range(4.5, 7.0)
+		"prostata":  # motas de polvo de sala de espera, casi quietas
+			q.kind = K.SQUARE
+			q.sz = Vector2(1, 1)
+			q.col = Color(0.92, 0.84, 0.76, 0.55)
+			q.v = Vector2(randf_range(-2.0, 2.0), randf_range(-4.0, 1.0))
+			q.amp = 5.0
+			q.life = randf_range(8.0, 12.0)
 		"pene":  # destellos de rocio azul que titilan
 			q.kind = K.SPARKLE
 			q.sz = Vector2(1, 1)

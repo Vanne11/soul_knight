@@ -210,6 +210,23 @@ def bed_mixto():
     return hum * flick * 0.5
 
 
+def bed_prostata():
+    """La Prostata: sala de espera. Hilo de aire acondicionado, zumbido de tubo y un goteo lejano."""
+    rng = np.random.default_rng(16)
+    n = int(LOOP_S * SR)
+    t = t_(n)
+    air = bw(noise(rng, n), 120, 700)
+    air = air / np.abs(air).max() * 0.25
+    hum = (np.sin(2 * np.pi * 60 * t) + 0.4 * np.sin(2 * np.pi * 120 * t)) * 0.12
+    x = air + hum
+    for k in range(3):  # gota cada ~LOOP_S/3, desfasada del inicio
+        i = int((k + 0.4) * n / 3)
+        m = int(0.18 * SR)
+        tt = t_(m)
+        x[i:i + m] += sine(900 + 500 * np.exp(-tt * 30), m) * np.exp(-tt * 28) * 0.18
+    return x
+
+
 def bed_censura():
     """Palacio: casi silencio. Retumbo muy grave y un reloj (tic-tac cada segundo)."""
     rng = np.random.default_rng(15)
@@ -341,6 +358,7 @@ save("bed_pene", bed_pene(), loop=True, peak=0.6)
 save("bed_vulva", bed_vulva(), loop=True, peak=0.6)
 save("bed_mixto", bed_mixto(), loop=True, peak=0.6)
 save("bed_censura", bed_censura(), loop=True, peak=0.6)
+save("bed_prostata", bed_prostata(), loop=True, peak=0.6)
 save("torch_loop", torch_loop(), loop=True, peak=0.8)
 
 print("%-16s %6s %6s %6s  %s" % ("archivo", "dur s", "pico", "rms", "empalme / extremos"))
