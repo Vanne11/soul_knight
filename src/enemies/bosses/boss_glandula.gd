@@ -49,7 +49,7 @@ func _attack_pool() -> Array:
 
 
 func _challenges() -> Array:
-	return [&"ch_turno", &"ch_revistas", &"ch_sala", &"ch_punto", &"ch_cafe"]
+	return [&"ch_turno", &"ch_revistas", &"ch_sala", &"ch_punto", &"ch_maquina"]
 
 
 func _channel_color() -> Color:
@@ -193,5 +193,5 @@ func ch_punto() -> void:
 
 
 ## CAFE: la taza de la maquina huye por la sala. Alcanzala.
-func ch_cafe() -> void:
+func ch_maquina() -> void:
 	await _ch_chase("cup", {"speed": 340.0, "limit": 8.0})
