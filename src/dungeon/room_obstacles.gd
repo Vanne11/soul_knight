@@ -179,7 +179,8 @@ func _collect() -> void:
 		# donde aparece el jugador al entrar (main._place_player_in_room): 96 px dentro
 		var entry: Vector2 = door.position + inward * 96.0
 		_keep.append(Rect2(entry - Vector2(75, 75), Vector2(150, 150)))
-	_keep.append(Rect2(_center - Vector2(90, 90), Vector2(180, 180)))  # recompensas
+	# recompensas: donde las suelta la sala (en las de forma el centro geometrico puede ser un hueco)
+	_keep.append(Rect2(room.get_center_position() - Vector2(90, 90), Vector2(180, 180)))
 	# spawns de enemigos (+ el reparto de grupos: hasta 56 px a la derecha y 24 abajo)
 	for sp in room.spawn_points_node.get_children():
 		if sp is Node2D:

@@ -88,9 +88,109 @@ static func popup(pos_global: Vector2, text: String, color := GOLD) -> void:
 	(Engine.get_main_loop() as SceneTree).root.get_node("GlobalEvents").show_floating_text.emit(pos_global, text, color)
 
 
+## Monedas en abanico compacto alrededor de `around` (locales), siempre en suelo pisable.
 static func coins(main: Node, room: Room, n: int, around: Vector2) -> void:
+	for p in loot_spots(room, n, around):
+		main._spawn_pickup(room, "coin", p)
+
+
+# ---------------------------------------------------------------- botin accesible
+const LOOT_R := 16.0  # holgura de un objeto en el suelo
+const LOOT_EDGE := 76.0  # distancia minima al borde de la sala (los muros van dentro del rectangulo)
+
+
+## La sala a la que pertenece un nodo (o null).
+static func room_of(n: Node) -> Room:
+	while n != null:
+		if n is Room:
+			return n
+		n = n.get_parent()
+	return null
+
+
+## true si en `p` (local) cabe un objeto: dentro de la sala, en suelo pisable y, si se pasa
+## `space`, sin muros, obstaculos ni huecos encima (consulta fisica).
+static func loot_ok(room: Room, p: Vector2, space: PhysicsDirectSpaceState2D = null) -> bool:
+	var size := size_of(room)
+	if p.x < LOOT_EDGE or p.y < LOOT_EDGE or p.x > size.x - LOOT_EDGE or p.y > size.y - LOOT_EDGE:
+		return false
+	if not room.is_walkable(p, LOOT_R):
+		return false
+	if space != null:
+		var shape := CircleShape2D.new()
+		shape.radius = LOOT_R
+		var q := PhysicsShapeQueryParameters2D.new()
+		q.shape = shape
+		q.collision_mask = 65  # muros y obstaculos + huecos
+		q.transform = Transform2D(0.0, room.global_position + p)
+		if not space.intersect_shape(q, 1).is_empty():
+			return false
+	return true
+
+
+## El sitio valido mas cercano a `prefer` (locales), a `gap` o mas de lo ya `taken`. Sin `space`
+## solo mira la forma de la sala (seguro en cualquier momento); con `space`, tambien la fisica
+## (solo fuera de un callback de fisica). Si no hay ninguno, el punto pisable mas cercano.
+static func loot_spot(room: Room, prefer: Vector2, taken: Array = [], space: PhysicsDirectSpaceState2D = null, gap := 20.0) -> Vector2:
+	for ri in 18:
+		var r := ri * 22.0
+		var steps := 1 if ri == 0 else mini(int(TAU * r / 22.0), 36)
+		for i in steps:
+			var p: Vector2 = prefer + Vector2(r, 0).rotated(TAU * i / steps + ri * 0.7)
+			if not loot_ok(room, p, space):
+				continue
+			if taken.any(func(t): return t.distance_to(p) < gap):
+				continue
+			return p
+	return room.nearest_walkable(prefer, LOOT_R)
+
+
+## `n` sitios en espiral compacta alrededor de `center` (en vez de filas largas que se
+## meten en muros), todos validos y separados. Evita lo que ya hay en el suelo de la sala.
+static func loot_spots(room: Room, n: int, center: Vector2, space: PhysicsDirectSpaceState2D = null, spacing := 24.0) -> Array[Vector2]:
+	var taken: Array = []
+	for c in room.pickups_node.get_children():
+		if c is Node2D:
+			taken.append(c.position)
+	var origin := loot_spot(room, center, taken, space, spacing)
+	var out: Array[Vector2] = []
 	for i in n:
-		main._spawn_pickup(room, "coin", around + Vector2((i - (n - 1) / 2.0) * 26.0, 30.0 + (i % 2) * 14.0))
+		var ideal := origin + Vector2.from_angle(i * 2.39996) * spacing * sqrt(float(i))
+		var p := loot_spot(room, ideal, taken, space, spacing * 0.8)
+		taken.append(p)
+		out.append(p)
+	return out
+
+
+## Posicion local de un drop en `container` (la sala o su pickups_node) llevada a suelo pisable.
+static func snap_drop(container: Node, local_pos: Vector2) -> Vector2:
+	var room := room_of(container)
+	return local_pos if room == null else loot_spot(room, local_pos)
+
+
+## Red de seguridad de un objeto o cofre recien puesto: si nacio sobre algo solido o fuera del
+## suelo, se desliza al sitio libre mas cercano. Lo llaman item_pickup y chest desde _ready.
+static func settle(node: Node2D) -> void:
+	var room := room_of(node)
+	if room == null or not node.is_inside_tree():
+		return
+	await node.get_tree().physics_frame
+	if not is_instance_valid(node) or not node.is_inside_tree():
+		return
+	var space: PhysicsDirectSpaceState2D = room.get_world_2d().direct_space_state
+	var offset: Vector2 = node.position - room.to_local(node.global_position)
+	var here: Vector2 = node.position - offset
+	if loot_ok(room, here, space):
+		return
+	var taken: Array = []
+	for c in node.get_parent().get_children():
+		if c is Node2D and c != node:
+			taken.append(c.get_meta("settle_to", c.position) - offset)
+	var to := loot_spot(room, here, taken, space, 18.0)
+	if to.distance_to(here) < 1.0:
+		return
+	node.set_meta("settle_to", to + offset)
+	node.create_tween().tween_property(node, "position", to + offset, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 ## Enemigos nuevos para esta sala con los datos normales del piso (vida/dano por profundidad).

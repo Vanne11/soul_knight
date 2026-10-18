@@ -351,8 +351,7 @@ func _trial_won(room: Room) -> void:
 	var n: int = 6 + 2 * d if accepted else 4 + d
 	var pl := _player()
 	var center := room.to_local(pl.global_position) if pl else room.get_center_position()
-	for i in n:
-		main._spawn_pickup(room, "coin", center + Vector2((i - (n - 1) / 2.0) * 26, 70))
+	RoomUtil.coins(main, room, n, center + Vector2(0, 70))  # el jugador puede estar pegado a un muro: coins() lo lleva a suelo libre
 	Sound.play("floor_complete")
 	Narrator.toast(tr("TT_WIN_TITLE"), tr("TT_WIN_BODY") % n, "ffd75a")
 	Narrator.say("trial_win")

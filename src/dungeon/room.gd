@@ -315,6 +315,8 @@ func _add_pickup_deferred(pickup: Node) -> void:
 	# Spawning an Area2D while the physics server is flushing queries (the room
 	# clears from a door body_entered callback) throws "Can't change this state
 	# while flushing queries", so the actual add_child waits one frame.
+	if pickup is Node2D:
+		pickup.position = RoomUtil.loot_spot(self, pickup.position)  # siempre en suelo pisable
 	pickups_node.add_child.call_deferred(pickup)
 
 
