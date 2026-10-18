@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "emergency_briefs"
 display_name = "Calzoncillos Limpios de Emergencia"
-description = "Absorben los próximos 2 golpes y limpian cualquier contagio. Tu madre tenía razón: siempre hay que llevar unos limpios."
+description = "Absorben 2 golpes y limpian cualquier contagio. Tu madre tenía razón."
 rarity = 1
 tags = ["consumible", "defensa", "utilidad"]
 effects = []

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "protein_shake"
 display_name = "Batido de Proteínas Sospechoso"
-description = "+25% de cadencia de disparo durante 15 s y +10 de vida. Sabe a tiza con vainilla. El tarro dice 'testosterona natural'. La etiqueta, no tanto."
+description = "+25% cadencia 15 s y +10 de vida. El tarro dice 'natural'. La etiqueta, no tanto."
 rarity = 1
 tags = ["consumible", "ofensa", "buff"]
 effects = [{"type": 2, "magnitude": 10.0}, {"type": 11, "stat": "fire_rate", "magnitude": 1.25, "duration": 15.0}]

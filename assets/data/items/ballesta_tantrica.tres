@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ballesta_tantrica"
 display_name = "Ballesta Tántrica"
-description = "Mantén el gatillo para tensar la cuerda: más carga, más daño y más enemigos atravesados. Soltar antes es un chasquido flojo; aguantar de más, sale sola. 'Lo bueno se hace esperar.'"
+description = "Mantén para tensar: más carga, daño y penetración. Lo bueno se hace esperar."
 rarity = 3
 tags = ["arma", "carga"]
 equip_slot = 1

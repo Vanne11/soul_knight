@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "relic_estrogen"
 display_name = "Estrógeno Concentrado"
-description = "Fuerza fluida. +50% cadencia disparo, +30% velocidad proyectil, regeneración escudos 10/s. 'El poder no siempre es duro.'"
+description = "+50% cadencia, +30% velocidad de bala, escudo regenera 10/s. El poder no siempre es duro."
 rarity = 3
 tags = ["reliquia", "pasivo", "ofensa", "defensa", "femenino"]
 equip_slot = 2

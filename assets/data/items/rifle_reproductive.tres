@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "rifle_reproductive"
 display_name = "Fusil Fecundador"
-description = "Mucho daño por bala y puntería de cirujano, pero con cargador: 6 tiros y recarga larga. 'Cada disparo es un potencial hijo... o una baja confirmada.'"
+description = "Mucho daño, puntería de cirujano, 6 tiros y recarga larga. Cada bala, un posible hijo."
 rarity = 3
 tags = ["arma"]
 equip_slot = 1

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "medkit"
 display_name = "Botiquín Completo"
-description = "Cura 100 vida, limpia efectos negativos, restaura escudos. 'Para cuando las vendas sucias no bastan.'"
+description = "Cura 100 de vida, limpia efectos negativos y restaura escudos."
 rarity = 2
 tags = ["consumible", "curación", "utilidad"]
 effects = [{"type": 2, "magnitude": 100.0}, {"type": 3, "magnitude": 1.0}, {"type": 4, "status_effect": null, "custom_data": {"cleanse": true}}]

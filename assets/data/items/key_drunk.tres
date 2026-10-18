@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "key_drunk"
 display_name = "Llave Oxidada (¿?)"
-description = "Solo funciona si estás borracho. La cerradura tiene forma de copa. Requiere tier 2+ intoxicación."
+description = "Solo funciona borracho (intoxicación tier 2+). La cerradura tiene forma de copa."
 rarity = 3
 tags = ["llave", "especial"]
 effects = [{

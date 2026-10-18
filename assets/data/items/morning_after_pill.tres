@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "morning_after_pill"
 display_name = "Pastilla del Día Después"
-description = "La próxima vez que mueras, no. Revives con el 40% de vida y 2 s de invulnerabilidad. Solo una a la vez. Efectos secundarios: lecciones de vida."
+description = "Si mueres, revives con 40% de vida y 2 s de invulnerabilidad. Efectos: lecciones de vida."
 rarity = 2
 tags = ["consumible", "defensa", "utilidad", "rara"]
 effects = [{"type": 14, "fraction": 0.4}]

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "relic_testosterone"
 display_name = "Testosterona Pura"
-description = "Masculinidad tóxica embotellada. +100% vida, +50% estamina, regeneración vida 2/s. Efecto secundario: crece vello en la lengua."
+description = "+100% vida, +50% estamina, regenera 2 de vida/s. Efecto: crece vello en la lengua."
 rarity = 4
 tags = ["reliquia", "pasivo", "stats", "masculino"]
 equip_slot = 2

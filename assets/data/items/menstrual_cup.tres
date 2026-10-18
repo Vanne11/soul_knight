@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "menstrual_cup"
 display_name = "Copa Menstrual Reforzada"
-description = "Absorbe por completo el próximo golpe que recibas y te quita -20 de intoxicación. Reutilizable, ecológica y más resistente que tu armadura."
+description = "Absorbe el próximo golpe por completo y -20 intoxicación. Más resistente que tu armadura."
 rarity = 1
 tags = ["consumible", "defensa", "utilidad"]
 effects = [{"type": 13, "hits": 1}, {"type": 1, "intoxication_amount": -20.0}]

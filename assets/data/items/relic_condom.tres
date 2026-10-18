@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "relic_condom"
 display_name = "Preservativo de Titanio"
-description = "Protección total. Escudos +50%, inmunidad a efectos de estado sexuales. 'Mejor prevenir que curar... o abortar.'"
+description = "Escudos +50% e inmunidad a estados sexuales. Mejor prevenir que curar."
 rarity = 3
 tags = ["reliquia", "pasivo", "defensa"]
 equip_slot = 2

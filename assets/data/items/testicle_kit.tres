@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "testicle_kit"
 display_name = "Kit de Autoexamen Testicular"
-description = "Revela el mapa del piso, secretas incluidas. Dato real: una vez al mes, tras la ducha, busca bultos o cambios; detectado a tiempo, casi siempre se cura."
+description = "Revela el mapa del piso, secretas incluidas. Manos tibias y cero vergüenza."
 rarity = 2
 tags = ["consumible", "utilidad", "salud"]
 effects = []

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "chamomile_tea"
 display_name = "Té de Manzanilla"
-description = "Calma los nervios: +30 estamina y la estamina se recarga el doble de rápido durante 20 s. -10 intoxicación. Aprobado por la abuela."
+description = "+30 estamina, recarga doble 20 s, -10 intoxicación. Aprobado por la abuela."
 rarity = 1
 tags = ["consumible", "estamina", "buff"]
 effects = [{"type": 0, "stat": "stamina", "magnitude": 30.0}, {"type": 11, "stat": "stamina_regen", "magnitude": 2.0, "duration": 20.0}, {"type": 1, "intoxication_amount": -10.0}]

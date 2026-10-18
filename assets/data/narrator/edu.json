@@ -1,27 +1,27 @@
 {
   "_info": "Frases del bloque 4a (educación sexual ligera). Cortas y con humor; lo serio vive en el códice. Eventos: edu_cura, edu_condon, edu_vacuna, edu_vacuna_ya, edu_pobre, edu_mito_ok (acierto en Mito o Verdad), edu_mito_mal (error, sin castigo).",
   "edu_cura": [
-    "DRA. PREVENTINA: Listo. Sin ardor, sin picazón y sin juicios: aquí nadie pregunta nada.",
-    "DRA. PREVENTINA: Curado. Receta: una pomada, una sonrisa y cero vergüenza."
+    "DRA. PREVENTINA: Listo. Sin ardor ni picazón. Y sin juicios.",
+    "DRA. PREVENTINA: Curado. Receta: una pomada y cero vergüenza."
   ],
   "edu_condon": [
-    "DRA. PREVENTINA: Buen criterio. Póntelo antes, no después del susto.",
-    "DRA. PREVENTINA: Un clásico: barato, eficaz y sin efectos secundarios (salvo ser responsable)."
+    "DRA. PREVENTINA: Buen criterio. Antes, no después del susto.",
+    "DRA. PREVENTINA: Barato, eficaz y sin efectos secundarios. Salvo madurar."
   ],
   "edu_vacuna": [
     "DRA. PREVENTINA: ¡Pinchacito! El VPH Verrugón ya no te saca ni una verruga.",
-    "DRA. PREVENTINA: Vacunado. Eres oficialmente un héroe con carnet."
+    "DRA. PREVENTINA: Vacunado. Oficialmente, un héroe con carnet."
   ],
   "edu_vacuna_ya": [
-    "DRA. PREVENTINA: Ya estás vacunado. No te lo puedo pinchar dos veces, ni aunque insistas."
+    "DRA. PREVENTINA: Ya estás vacunado. Dos veces no, ni insistiendo."
   ],
   "edu_pobre": [
-    "DRA. PREVENTINA: La salud es gratis; los preservativos, no tanto. Vuelve con monedas.",
-    "DRA. PREVENTINA: Te faltan monedas. Yo no fío, pero la prevención sí es barata."
+    "DRA. PREVENTINA: La salud es gratis; los preservativos, no. Vuelve con monedas.",
+    "DRA. PREVENTINA: Te faltan monedas. Yo no fío, pero prevenir sale barato."
   ],
   "edu_mito_ok": [
     "¡Correcto! Se nota que alguien no se creyó el cuento.",
-    "Acertaste. Tu cerebro merece un aplauso (y unas monedas)."
+    "Acertaste. Tu cerebro merece un aplauso y unas monedas."
   ],
   "edu_mito_mal": [
     "Casi. Pasa en las mejores familias... y el Palacio cuenta con ello.",

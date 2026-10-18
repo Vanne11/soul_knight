@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "relic_lube"
 display_name = "Lubricante Cuántico"
-description = "Todo resbala. Dash sin costo stamina, +50% velocidad dash, inmunidad a ralentización. 'Suavidad a nivel subatómico.'"
+description = "Dash gratis, +50% velocidad de dash, inmune a ralentizarse. Suavidad subatómica."
 rarity = 3
 tags = ["reliquia", "pasivo", "movimiento"]
 equip_slot = 2

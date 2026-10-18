@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "satisfyer"
 display_name = "Satisfyer de Asedio"
-description = "Control, no daño: el pulso se planta, succiona y aturde a todo lo cercano mientras lo daña muy poco. Úsalo para juntar enemigos y remátalos con otra cosa. 'Tecnología de ondas de presión. Los enemigos no se resisten. Nadie se resiste.'"
+description = "Succiona y aturde todo lo cercano, casi sin daño. Nadie se resiste."
 rarity = 3
 tags = ["arma"]
 equip_slot = 1

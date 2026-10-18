@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "smg_vibrator"
 display_name = "Subfusil Vibratorio"
-description = "Ráfaga muy rápida pero poco daño y mucha dispersión. Se calienta: si la mantienes apretada se sobrecalienta y se bloquea un momento. 'No es un juguete sexual. Bueno, técnicamente sí.'"
+description = "Ráfaga muy rápida, poco daño, se sobrecalienta. No es un juguete sexual. Bueno, sí."
 rarity = 2
 tags = ["arma"]
 equip_slot = 1

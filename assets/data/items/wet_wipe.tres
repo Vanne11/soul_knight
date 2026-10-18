@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "wet_wipe"
 display_name = "Toallita Húmeda"
-description = "Quita -50 de intoxicación, te limpia la alergia y te deja 45 s inmune a las alergias. 'Elimina el 99% de las hormonas ajenas. El 1% restante tiene abogado.'"
+description = "-50 intoxicación, quita la alergia y da 45 s de inmunidad. El 1% restante tiene abogado."
 rarity = 1
 tags = ["consumible", "desintoxicante", "utilidad"]
 effects = [{"type": 15, "intox": -50.0, "allergy": true}, {"type": 16, "duration": 45.0}]

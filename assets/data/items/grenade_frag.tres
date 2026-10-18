@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "grenade_frag"
 display_name = "Granada de Fragmentación"
-description = "Lánzala. Explota. Daño 80 en radio 120. 'No te quedes a ver los fuegos artificiales.'"
+description = "Daño 80 en radio 120. Lánzala, explota y no te quedes a ver los fuegos artificiales."
 rarity = 1
 tags = ["consumible", "explosivo", "granada"]
 effects = [{"type": 7, "custom_data": {"type": "throw_grenade", "damage": 80, "radius": 120, "fuse_time": 2.0}}]

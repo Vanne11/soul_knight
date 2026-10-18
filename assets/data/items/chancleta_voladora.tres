@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "chancleta_voladora"
 display_name = "Chancleta Voladora"
-description = "Cuerpo a cuerpo en combo: dos chancletazos rápidos y un tercero devastador que lanza lejos a todo el abanico. Sin munición ni calor. 'Aprendida de mamá. Puntería heredada.'"
+description = "Combo cuerpo a cuerpo: dos chancletazos y un tercero devastador. Puntería heredada de mamá."
 rarity = 1
 tags = ["arma", "cuerpo"]
 equip_slot = 1

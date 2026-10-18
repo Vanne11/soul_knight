@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "relic_liver"
 display_name = "Hígado de Acero"
-description = "Reduce intoxicación ganada en 30%. Tu hígado ha visto cosas. Cosas terribles."
+description = "-30% de intoxicación ganada. Tu hígado ha visto cosas terribles."
 rarity = 2
 tags = ["reliquia", "pasivo"]
 equip_slot = 2

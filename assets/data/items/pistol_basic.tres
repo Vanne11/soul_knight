@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "pistol_basic"
 display_name = "Pistola de Plástico"
-description = "Fiable y precisa, sin trucos ni costes. 'Es un juguete', dice la caja. Duele igual."
+description = "Fiable y precisa, sin trucos ni costes. Dice 'juguete' en la caja. Duele igual."
 rarity = 1
 tags = ["arma"]
 equip_slot = 1

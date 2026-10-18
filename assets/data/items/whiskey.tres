@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "whiskey"
 display_name = "Whiskey Barato"
-description = "Te emborracha un poco. +15 intoxicación, -10% precisión, +15% daño. 'Para el dolor', te dices."
+description = "+15 intoxicación, -10% precisión, +15% daño. 'Es para el dolor', te dices."
 rarity = 0
 tags = ["consumible", "intoxicante"]
 effects = [{

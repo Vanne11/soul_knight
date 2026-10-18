@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "deodorant_machote"
 display_name = "Desodorante en Spray \"Machote\""
-description = "Suelta una nube durante 7 s que espanta a los enemigos (los jefes ni la huelen). Olor a bosque, a testosterona y a decisiones discutibles."
+description = "Nube de 7 s que espanta enemigos (los jefes ni la huelen). Huele a decisiones discutibles."
 rarity = 1
 tags = ["consumible", "utilidad", "cc"]
 effects = []

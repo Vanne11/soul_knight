@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "globos_agua"
 display_name = "Lanzador de Globos de Agua"
-description = "Globos que revientan en área y dejan un charco 4 s que frena a los enemigos a la mitad. Poco daño, mucho control. 'Está tibia. Tranquilos, es agua.'"
+description = "Globos que revientan en área y dejan un charco que frena a la mitad 4 s. Está tibia."
 rarity = 2
 tags = ["arma", "explosivo", "área"]
 equip_slot = 1

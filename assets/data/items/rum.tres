@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "rum"
 display_name = "Ron de Cañamo"
-description = "Dulce, espeso, pirata. +35 intoxicación, -20% precisión, +25% daño, +5% lifesteal. 'Yo ho ho y una botella de... arrepentimiento.'"
+description = "+35 intoxicación, -20% precisión, +25% daño, +5% robo de vida. Yo ho ho y arrepentimiento."
 rarity = 1
 tags = ["consumible", "intoxicante"]
 effects = [{"type": 1, "intoxication_amount": 35.0}, {"type": 0, "stat": "accuracy", "magnitude": 0.8}, {"type": 0, "stat": "damage", "magnitude": 1.25}, {"type": 0, "stat": "lifesteal", "magnitude": 0.05}]

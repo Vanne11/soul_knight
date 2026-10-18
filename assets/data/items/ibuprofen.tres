@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "ibuprofen"
 display_name = "Ibuprofeno de 600"
-description = "Recibes un 30% menos de daño durante 25 s. Cura el dolor, la fiebre y las ganas de ir al médico. Tomar con comida (opcional, nadie lo hace)."
+description = "Recibes 30% menos de daño por 25 s. Cura el dolor, la fiebre y las ganas de ir al médico."
 rarity = 1
 tags = ["consumible", "defensa", "buff"]
 effects = [{"type": 12, "magnitude": 0.7, "duration": 25.0}]

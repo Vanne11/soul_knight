@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "relic_prostate"
 display_name = "Próstata Iluminada"
-description = "El punto G masculino. Críticos causan explosión en cadena (radio 100, 50% daño). 'Iluminación anal alcanzada.'"
+description = "Críticos explotan en cadena (radio 100, 50% daño). Iluminación anal alcanzada."
 rarity = 4
 tags = ["reliquia", "pasivo", "ofensa", "especial", "masculino"]
 equip_slot = 2

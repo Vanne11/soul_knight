@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "energy_drink"
 display_name = "Monster Energy (Marcablanca)"
-description = "Alas de cartón. +40 estamina, +15% velocidad 10s, +10 intoxicación (azúcar es droga). 'Te da alas... y taquicardia.'"
+description = "+40 estamina, +15% velocidad 10 s, +10 intoxicación. Te da alas... y taquicardia."
 rarity = 0
 tags = ["consumible", "estamina", "buff"]
 effects = [{"type": 1, "intoxication_amount": 10.0}, {"type": 0, "stat": "stamina", "magnitude": 40.0}, {"type": 0, "stat": "speed", "magnitude": 1.15}]

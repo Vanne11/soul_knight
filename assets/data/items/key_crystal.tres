@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "key_crystal"
 display_name = "Llave de Cristal Líquido"
-description = "Abre la cámara del boss secreto. Solo aparece si completaste el piso sin tomar daño. 'Perfección frágil.'"
+description = "Abre la cámara del jefe secreto si completas el piso sin daño. Perfección frágil."
 rarity = 4
 tags = ["llave", "especial", "secreto", "boss"]
 effects = [{"type": 5, "lore_entry_id": "crystal_key_lore"}]

@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "whip"
 display_name = "Látigo de Cuero"
-description = "Alcance medio: abanico de tres chasquidos que atraviesan hasta 2 enemigos. Consensuado, anunciado y con palabra de seguridad."
+description = "Abanico de tres chasquidos que atraviesan hasta 2 enemigos. Con palabra de seguridad."
 rarity = 2
 tags = ["arma", "cuerpo"]
 equip_slot = 1

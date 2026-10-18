@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "pistol_golden"
 display_name = "Pistola Dorada (Compensación)"
-description = "Precisa y con crítico alto (+20%); las balas atraviesan a un enemigo. Cadencia media. 'Tamaño del cañón inversamente proporcional a otra cosa.'"
+description = "Precisa, +20% de crítico y balas que atraviesan. Cañón grande, compensación mayor."
 rarity = 3
 tags = ["arma"]
 equip_slot = 1

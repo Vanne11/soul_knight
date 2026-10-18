@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "mead"
 display_name = "Hidromiel de Valhalla"
-description = "Bebida de dioses caídos. +40 intoxicación, -10% precisión, +30% daño, +15% velocidad. 'Odín bebió esto. Odín también se cayó de su caballo.'"
+description = "+40 intoxicación, -10% precisión, +30% daño, +15% velocidad. Odín también se cayó."
 rarity = 2
 tags = ["consumible", "intoxicante", "buff"]
 effects = [{"type": 1, "intoxication_amount": 40.0}, {"type": 0, "stat": "accuracy", "magnitude": 0.9}, {"type": 0, "stat": "damage", "magnitude": 1.3}, {"type": 0, "stat": "speed", "magnitude": 1.15}]
