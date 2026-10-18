@@ -386,6 +386,42 @@ def make_censura():
     return outline_both(base, front, swirl_sheet(pal, 5, 1.0), C("b48cff"))
 
 
+def make_prostata():
+    """La Prostata: marco de madera de nuez con el dispensador de turnos arriba."""
+    rnd = random.Random(16)
+    wood = {"base": C("8a6a50"), "hi": C("b99a78"), "lo": C("5e4634"), "deep": C("3a2a20")}
+    base, front = new(), new()
+
+    def tex(im, d, r):
+        n = 28
+        for i in range(n):  # vetas / baldosas rosa lechoso del anillo
+            if i % 4 == 0:
+                a = math.tau * i / n
+                x, y = on_ring(a)
+                rect(im, x - 4, y - 2, x + 4, y + 2, C("dcc0bc"))
+    ring_band(base, wood, rnd, tex)
+    arch = new()
+    for side in (-1, 1):  # sillas de sala de espera a los lados
+        x = CX + side * (RX + 6)
+        rect(arch, x - 7, CY - 30, x + 7, CY - 4, C("c8b4ae"))
+        rect(arch, x - 7, CY - 30, x + 7, CY - 28, C("e4d4ce"))
+        rect(arch, x - 9, CY - 14, x + 9, CY - 6, C("8e7a78"))
+    # dispensador de numeros sobre el arco
+    rect(arch, CX - 16, CY - 78, CX + 16, CY - 62, C("5a5658"))
+    rect(arch, CX - 16, CY - 78, CX + 16, CY - 77, C("8a8688"))
+    rect(arch, CX - 11, CY - 74, CX + 11, CY - 66, C("2a0c0c"))
+    for k in range(3):
+        rect(arch, CX - 8 + k * 6, CY - 72, CX - 6 + k * 6, CY - 68, C("d8483c"))
+    base = Image.alpha_composite(arch, base)
+    clear_hole(base)
+    for side in (-1, 1):  # revistas tiradas delante
+        x, y = on_ring(math.pi * (0.5 + side * 0.34), 1.16, 3)
+        rect(front, x - 4, y - 2, x + 4, y + 3, C("b07888") if side < 0 else C("78909c"))
+        rect(front, x - 3, y - 1, x + 3, y, C("ece4d8"))
+    pal = [C("3a2a28"), C("8a6a60"), C("e4c4b8"), C("fff0e0")]
+    return outline_both(base, front, swirl_sheet(pal, 4, 0.9), C("d8b890"))
+
+
 def outline_both(base, front, sheet, glow):
     return outline(base), outline(front), sheet, glow
 
@@ -396,6 +432,7 @@ MAKERS = {
     "vulva": make_vulva,
     "mixto": make_mixto,
     "censura": make_censura,
+    "prostata": make_prostata,
 }
 
 

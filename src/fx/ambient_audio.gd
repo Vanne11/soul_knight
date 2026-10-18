@@ -19,7 +19,7 @@ const DIR := "res://assets/audio/ambient/"
 const BUS := "SFX"
 
 ## Cama: volumen base por reino (dB sobre el bus SFX).
-const BED_DB := {"neutral": -25.0, "pene": -27.0, "vulva": -24.0, "mixto": -33.0, "censura": -24.0}
+const BED_DB := {"neutral": -25.0, "pene": -27.0, "vulva": -24.0, "mixto": -33.0, "censura": -24.0, "prostata": -30.0}
 const BED_DARK_BONUS := 2.0
 const BED_CALM_BONUS := 2.0
 const BED_COMBAT_DB := -8.0  # en combate sin despejar la cama baja casi del todo
@@ -33,6 +33,7 @@ const EVENTS := {
 	"vulva": [["amb_organic", 1.0]],
 	"mixto": [["amb_stamp", 0.65], ["amb_paper", 0.35]],
 	"censura": [["amb_paper", 0.7], ["amb_stamp", 0.3]],
+	"prostata": [["amb_drip", 0.55], ["amb_paper", 0.45]],
 }
 const EVENT_DB := -20.0
 const EVENT_GAP := Vector2(5.0, 11.0)  # segundos entre eventos (sala tranquila)
@@ -45,7 +46,7 @@ const TORCH_MAX_DIST := 360.0
 const TORCH_ATTEN := 1.8
 
 ## Pasos: suelo por reino y volumen por suelo.
-const STEP_KIND := {"neutral": "dirt", "pene": "marble", "vulva": "organic", "mixto": "cobble", "censura": "tile"}
+const STEP_KIND := {"neutral": "dirt", "pene": "marble", "vulva": "organic", "mixto": "cobble", "censura": "tile", "prostata": "tile"}
 const STEP_DB := {"dirt": -17.0, "marble": -19.0, "organic": -17.0, "cobble": -17.0, "tile": -18.0}
 const STRIDE := 78.0  # px por paso: la cadencia sale sola de la velocidad real
 const MIN_SPEED := 25.0  # px/s por debajo no hay pasos (contra una pared, quieto)
@@ -97,7 +98,7 @@ func _ready() -> void:
 			if not _variants.has(prefix):
 				_variants[prefix] = []
 			_variants[prefix].append(key)
-	for key in ["torch_loop", "bed_neutral", "bed_pene", "bed_vulva", "bed_mixto", "bed_censura"]:
+	for key in ["torch_loop", "bed_neutral", "bed_pene", "bed_vulva", "bed_mixto", "bed_censura", "bed_prostata"]:
 		_make_loop(key)
 
 	_bed = AudioStreamPlayer.new()

@@ -9,6 +9,7 @@ Reinos (RunManager.floor_data().kingdom):
   vulva    Vulvania            fa lidio, calido, campanitas y latido
   mixto    El Perineo          la menor armonica, oficina tensa, maquina de escribir
   censura  Palacio Censura     mi frigio, frio y rigido, campana de bronce, coro
+  prostata La Prostata         sol dorico MUY lento, musica de ascensor, hilo de saxo
 
 Estructura: cada tema son secciones (A, B, A', C...) de compases con una
 progresion de grados (acordes apilados en la escala) y motivos de un compas en
@@ -105,6 +106,7 @@ INSTR = {
     "kazoo": ("saw", 0.01, 0.05, 0.8, 0.0, 0.004, -0.06),
     "bell": ("bell", 0.001, 0.2, 1.0, 3.0, 0.0, 0.0),
     "bronze": ("bronze", 0.001, 0.3, 1.0, 1.4, 0.0, 0.0),
+    "sax": ("saw", 0.06, 0.16, 0.7, 0.0, 0.014, 0.05),
     "choir": ("choir", 0.08, 0.12, 0.9, 0.0, 0.004, 0.0),
     "tri": ("tri", 0.004, 0.04, 1.0, 0.0, 0.0, 0.0),
     "sine": ("sine", 0.01, 0.08, 1.0, 0.0, 0.0, 0.0),
@@ -223,6 +225,14 @@ CEN_B = (M((0, 1, 7), (1, 1, 7), (2, 1, 7), (3, 1, 8), (4, 4, 7)),
          M((0, 1, 8), (1, 1, 8), (2, 1, 8), (3, 1, 9), (4, 4, 8)),
          M((0, 2, 7), (2, 2, 4), (4, 4, 0)))
 
+# ----- La Prostata: sala de espera, notas largas con silencios, saxo que no se decide
+PRO_A = (M((0, 3, 4), (4, 4, 2)),
+         M((0, 2, 2), (3, 1, 4), (4, 4, 0)),
+         M((0, 4, 4), (5, 2, 2), (7, 1, 0)))
+PRO_B = (M((1, 2, 7), (4, 3, 4)),
+         M((0, 3, 5), (4, 1, 4), (6, 2, 2)),
+         M((0, 2, 4), (3, 1, 2), (4, 4, 0)))
+
 # Perfiles de capas por seccion
 FULL = "mabdp"
 SOFT = "mabd"
@@ -306,6 +316,25 @@ THEMES = {
                         ("A", 8, [0, 4, 0, 4, 3, 4, 0, 4], 0, "mabdph"),
                         ("C", 8, [5, 4, 5, 4, 0, 4, 0, 4], 1, "mabdph"),
                         ("A", 8, [0, 4, 0, 4, 3, 4, 0, 4], 0, "mabdph")]),
+    },
+    "prostata": {
+        "e": dict(tonic=55, scale="dorico", bpm=66, lead="sax", lead2="sine", arp="lira",
+                  bass="tri", pad="sine", motifs=(PRO_A, PRO_B), swing=0.1, seed=6,
+                  bpat=[0, None, None, None, 7, None, None, None], bass_oct=-24,
+                  drums={"k": "........", "s": "........", "h": "..h...h."},
+                  secs=[("A", 8, [0, 3, 0, 3, 4, 3, 0, 3], 0, "mabp"),
+                        ("B", 8, [3, 4, 3, 0, 5, 4, 3, 4], 1, "mabdp"),
+                        ("A", 8, [0, 3, 0, 3, 4, 3, 0, 3], 0, "mabp"),
+                        ("C", 8, [5, 3, 0, 3, 5, 4, 0, 0], 1, "apm")]),
+        "b": dict(tonic=55, scale="menor_arm", bpm=104, lead="sax", lead2="saw", arp="lira",
+                  bass="saw", pad="sine", motifs=(PRO_A, PRO_B), swing=0.0, seed=16,
+                  bpat=[0, None, 0, None, 7, None, 0, None], bass_oct=-24,
+                  drums={"k": "k..k..k.", "s": "....s...", "h": "h.h.h.h."},
+                  secs=[("A", 8, [0, 3, 0, 3, 4, 3, 0, 3], 0, "mabd"),
+                        ("B", 8, [3, 4, 3, 0, 5, 4, 3, 4], 1, "mabdh"),
+                        ("A", 8, [0, 1, 0, 1, 4, 3, 0, 3], 0, "mabdph"),
+                        ("C", 8, [5, 3, 1, 3, 5, 4, 3, 4], 1, "mabdph"),
+                        ("A", 8, [0, 1, 0, 1, 4, 3, 0, 3], 0, "mabdph")]),
     },
     "censura": {
         "e": dict(tonic=52, scale="frigio", bpm=84, lead="sq", lead2="bronze", arp="p25",

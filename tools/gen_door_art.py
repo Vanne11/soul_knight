@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "assets/sprites/environment/doors"
 OL = (13, 11, 15, 255)
 N = 64
-KINGDOMS = ["neutral", "pene", "vulva", "mixto", "censura"]
+KINGDOMS = ["neutral", "pene", "vulva", "mixto", "censura", "prostata"]
 
 
 def C(h):
@@ -48,6 +48,8 @@ PAL = {
                   dark=C("#1c0a16"), glow=C("#ffd0e4"), acc=C("#ff5c9c"), metal=C("#ffe8d8")),
     "mixto": dict(hi=C("#a6aec6"), md=C("#6a7290"), dk=C("#3a4058"), jm=C("#646b7e"), floor=C("#4c5268"),
                   dark=C("#0c0e16"), glow=C("#ffe48a"), acc=C("#f4c42c"), metal=C("#2a2c36")),
+    "prostata": dict(hi=C("#b08a68"), md=C("#8a6a50"), dk=C("#54402f"), jm=C("#c8b4ae"), floor=C("#b4a09c"),
+                     dark=C("#14100f"), glow=C("#ffe2c0"), acc=C("#c46a5a"), metal=C("#5a5658")),
     "censura": dict(hi=C("#5a5470"), md=C("#38344a"), dk=C("#1e1c2a"), jm=C("#d0d3e6"), floor=C("#b8bad0"),
                     dark=C("#0a0912"), glow=C("#ffffff"), acc=C("#d6303c"), metal=C("#16141c")),
 }
@@ -167,6 +169,26 @@ def closed_mixto(p):
     return im
 
 
+def closed_prostata(p):
+    im, d = blank()
+    d.rectangle([0, 0, 63, 63], fill=p["md"])
+    for x in range(6, 60, 9):  # veta de la madera de nuez
+        d.line([(x, 3), (x + 3, 60)], fill=mix(p["md"], p["dk"], 0.35))
+    # panel de vidrio esmerilado (se ve una silueta esperando)
+    d.rectangle([18, 8, 45, 36], fill=p["dk"])
+    d.rectangle([20, 10, 43, 34], fill=mix(C("#d8d2d0"), p["md"], 0.2))
+    d.ellipse([28, 16, 35, 23], fill=mix(C("#d8d2d0"), p["dk"], 0.45))
+    d.rectangle([25, 24, 38, 34], fill=mix(C("#d8d2d0"), p["dk"], 0.45))
+    # visor del numero de turno
+    d.rectangle([24, 42, 39, 50], fill=p["metal"], outline=OL)
+    d.rectangle([26, 44, 37, 48], fill=C("#3a0e0e"))
+    d.line([(28, 46), (30, 46)], fill=p["acc"])
+    d.line([(33, 44), (33, 48)], fill=p["acc"])
+    d.rectangle([49, 36, 52, 39], fill=p["glow"])  # manilla
+    rim(d)
+    return im
+
+
 def closed_censura(p):
     im, d = blank()
     d.rectangle([0, 0, 63, 63], fill=p["md"])
@@ -192,7 +214,7 @@ def closed_censura(p):
 
 
 CLOSED = {"neutral": closed_neutral, "pene": closed_pene, "vulva": closed_vulva,
-          "mixto": closed_mixto, "censura": closed_censura}
+          "mixto": closed_mixto, "censura": closed_censura, "prostata": closed_prostata}
 
 
 # ------------------------------------------------------------------ puerta abierta: pasillo

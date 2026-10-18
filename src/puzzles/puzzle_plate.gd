@@ -31,6 +31,8 @@ static func load_tex(name: String) -> Texture2D:
 
 
 func setup(kingdom: String, watch_player := true, shape_half := 10.0) -> PuzzlePlate:
+	if kingdom == "prostata":
+		kingdom = "mixto"  # La Prostata reutiliza las placas del Perineo
 	_kingdom = kingdom if kingdom in ["neutral", "pene", "vulva", "mixto", "censura"] else "neutral"
 	collision_layer = 0
 	collision_mask = 1 if watch_player else 0  # el jugador

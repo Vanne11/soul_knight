@@ -837,6 +837,108 @@ def mixto_motif(cv, rng):
 			cv.blend(rect(90 + k * 6, ty, 91 + k * 6, ty + 8, W, W), (226, 224, 214), 0.5)
 
 
+# ================================================================== LA PROSTATA (prostata)
+# Sala de espera: linoleo en cuadros nuez / rosa lechoso / gris, chicles, revistas y turnos.
+NUEZ = (142, 108, 80)
+LECHE = (222, 192, 190)
+SALA = (150, 150, 154)
+
+
+def prostata_cfg():
+	return dict(
+		seed=61, layout=grid_layout(32, 32), base=(178, 160, 156), tone=0.03, grain=0.02,
+		joint=(112, 104, 104), jd=0.5, hi=(206, 196, 192), jl=0.3, crack=(84, 74, 74), under=(138, 126, 124), dome=0.0,
+		cell_tint=(14, 4, 0),
+	)
+
+
+def revista(cv, rng, col):
+	x, y = rng.randint(18, 36), rng.randint(20, 38)
+	emboss(cv, rect(x, y, x + 11, y + 14), col, lighter(col, 0.3), darker(col, 0.3), 0.3, 0.92)
+	cv.blend(rect(x + 2, y + 2, x + 9, y + 4), (240, 236, 226), 0.8)
+	for k in range(3):
+		cv.blend(rect(x + 2, y + 7 + k * 2, x + 9, y + 7 + k * 2), darker(col, 0.35), 0.8)
+
+
+def turno(cv, rng):
+	"""Ticket de turno tirado (numero impreso)."""
+	x, y = rng.randint(20, 40), rng.randint(22, 40)
+	emboss(cv, rect(x, y, x + 7, y + 10), (238, 226, 190), None, darker((238, 226, 190), 0.2), 0.3, 0.95)
+	cv.blend(rect(x + 2, y + 3, x + 5, y + 3), (160, 40, 40), 0.9)
+	cv.blend(rect(x + 2, y + 5, x + 5, y + 5), (160, 40, 40), 0.9)
+	cv.blend(rect(x + 2, y + 7, x + 4, y + 7), (160, 40, 40), 0.9)
+
+
+def chicle(cv, rng):
+	x, y = rng.randint(16, 46), rng.randint(16, 46)
+	cv.blend(ell(x, y, 2.2, 1.6), (214, 140, 160), 0.9)
+	cv.blend(rect(x - 1, y - 1, x, y - 1), (240, 190, 204), 0.9)
+
+
+def prostata_fill(i, cv, rng, cfg):
+	if i < 5 and rng.random() < 0.4:
+		pebbles(cv, rng, (160, 146, 142), 2)
+	if i == 5:
+		d_stain(cv, rng, (96, 78, 66), 0.26)
+	elif i == 6:
+		d_crack(cv, rng, cfg, 1)
+	elif i == 7:
+		d_flake(cv, rng, cfg, 2)
+	elif i == 8:
+		chicle(cv, rng)
+	elif i == 9:
+		turno(cv, rng)
+	elif i == 10:
+		d_stain(cv, rng, (150, 160, 120), 0.22, 6)  # un charquito dudoso
+		d_crack(cv, rng, cfg, 1, (14, 22))
+	elif i == 11:
+		revista(cv, rng, (170, 110, 120))
+
+
+def prostata_ornate(i, cv, rng, cfg):
+	if i == 0:
+		cv.blend(rect(14, 30, 49, 33), NUEZ, 0.5)
+	elif i == 1:
+		revista(cv, rng, (110, 130, 150))
+	elif i == 2:
+		cv.blend(ell(32, 32, 8, 8), NUEZ, 0.45)
+		cv.blend(line([(32, 25), (32, 39)], 1), darker(NUEZ, 0.3), 0.7)
+	else:
+		for k in range(4):
+			cv.blend(rect(12 + k * 12, 18, 18 + k * 12, 45), LECHE, 0.25)
+
+
+def prostata_band(cv, b):
+	cv.blend(rect(0, 0, 63, 2), (64, 52, 48), 0.55)
+	# zocalo de madera de nuez con veta y una cinta gris
+	emboss(cv, rect(0, 3, 63, 13, cv.w, cv.h), NUEZ, lighter(NUEZ, 0.25), darker(NUEZ, 0.3), 0.0, 0.95)
+	for x0 in (10, 27, 44):
+		cv.blend(line([(x0, 5), (x0 + 6, 11)], 1, cv.w, cv.h), darker(NUEZ, 0.2), 0.45)
+	cv.blend(rect(0, 14, 63, 15, cv.w, cv.h), SALA, 0.6)
+	if b == 1:
+		cv.blend(rect(0, 8, 63, 8, cv.w, cv.h), LECHE, 0.5)
+
+
+def prostata_corner(cv, b):
+	emboss(cv, rect(0, 0, 15, 15, cv.w, cv.h), NUEZ, lighter(NUEZ, 0.25), darker(NUEZ, 0.3), 0.0, 0.95)
+	cv.blend(rect(4, 4, 11, 11, cv.w, cv.h), darker(NUEZ, 0.25), 0.8)
+
+
+def prostata_motif(cv, rng):
+	"""Alfombra de sala de espera: rosa lechoso con orla nuez y, al centro, una nuez partida."""
+	W = cv.w
+	ys, xs = np.mgrid[0:W, 0:W]
+	d = np.minimum(np.minimum(xs, W - 1 - xs), np.minimum(ys, W - 1 - ys))
+	fade = np.clip((d - 6) / 20.0, 0, 1)
+	rug = rect(30, 30, W - 31, W - 31, W, W)
+	cv.blend(rug, LECHE, 0.42 * fade)
+	cv.blend(rug & ~rect(36, 36, W - 37, W - 37, W, W), NUEZ, 0.35 * fade)
+	cv.blend(rug & ((xs + ys) % 12 == 0), SALA, 0.25)
+	emboss(cv, ell(96, 96, 18, 15, W, W), NUEZ, lighter(NUEZ, 0.3), darker(NUEZ, 0.3), 0.3, 0.7)
+	cv.blend(line([(96, 82), (92, 96), (96, 110)], 1, W, W), darker(NUEZ, 0.4), 0.85)
+	cv.blend(ell(100, 94, 5, 7, W, W), lighter(NUEZ, 0.2), 0.5)
+
+
 # ================================================================== PALACIO (censura)
 VIOLET = (128, 104, 176)
 INK = (60, 54, 78)
@@ -966,6 +1068,7 @@ KINGDOMS = {
 	"pene": dict(cfg=pene_cfg, fill=pene_fill, ornate=pene_ornate, band=pene_band, corner=pene_corner, motif=pene_motif),
 	"vulva": dict(cfg=vulva_cfg, fill=vulva_fill, ornate=vulva_ornate, band=vulva_band, corner=vulva_corner, motif=vulva_motif),
 	"mixto": dict(cfg=mixto_cfg, fill=mixto_fill, ornate=mixto_ornate, band=mixto_band, corner=mixto_corner, motif=mixto_motif),
+	"prostata": dict(cfg=prostata_cfg, fill=prostata_fill, ornate=prostata_ornate, band=prostata_band, corner=prostata_corner, motif=prostata_motif),
 	"censura": dict(cfg=censura_cfg, fill=censura_fill, ornate=censura_ornate, band=censura_band, corner=censura_corner, motif=censura_motif),
 }
 

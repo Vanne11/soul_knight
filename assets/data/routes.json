@@ -1,7 +1,7 @@
 {
 	"_nota": "Orden de reinos por heroe (ids de region de assets/data/floors). Una lista anidada = esos reinos en orden al azar segun la semilla. Para sumar un reino: su JSON en floors/ y su id aqui.",
-	"default": ["selva", "penelandia", "vulvania", "perineo", "palacio"],
-	"pitocles": ["penelandia", "selva", "vulvania", "perineo", "palacio"],
-	"vulvalquiria": ["vulvania", "selva", "penelandia", "perineo", "palacio"],
-	"ornitorrinco": ["selva", ["penelandia", "vulvania"], "perineo", "palacio"]
+	"default": ["selva", "penelandia", "vulvania", "perineo", "prostata", "palacio"],
+	"pitocles": ["penelandia", "selva", "vulvania", "perineo", "prostata", "palacio"],
+	"vulvalquiria": ["vulvania", "selva", "penelandia", "perineo", "prostata", "palacio"],
+	"ornitorrinco": ["selva", ["penelandia", "vulvania"], "perineo", "prostata", "palacio"]
 }

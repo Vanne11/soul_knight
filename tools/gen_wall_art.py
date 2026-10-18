@@ -116,6 +116,12 @@ KINGDOMS = {
         "mortar": C("30344a"), "dark": C("5a6078"), "mid": C("7e869e"), "lite": C("a0a8c0"), "hi": C("c8d0e4"),
         "yellow": C("f4c42c"), "black": C("1c1c22"), "rivet": C("d4dae8"), "red": C("d8483c"),
     },
+    "prostata": {
+        "style": "concrete",
+        "light": C("d8b890"),
+        "mortar": C("4a3c3c"), "dark": C("a08a86"), "mid": C("c8b4ae"), "lite": C("dccac4"), "hi": C("efe2dc"),
+        "yellow": C("8e6c50"), "black": C("2a2222"), "rivet": C("d8ccc6"), "red": C("b05050"),
+    },
     "censura": {
         "style": "white",
         "light": C("b48cff"),

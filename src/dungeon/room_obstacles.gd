@@ -58,9 +58,9 @@ const KINDS := {
 	"barrel": {"col": Vector2(22, 14), "pad": 3, "sr": 12.0, "hp": BREAK_HP},
 	"crate": {"col": Vector2(28, 14), "pad": 3, "sr": 15.0, "hp": BREAK_HP},
 }
-const KING_LIST := ["neutral", "pene", "vulva", "mixto", "censura"]
+const KING_LIST := ["neutral", "pene", "vulva", "mixto", "censura", "prostata"]
 ## Peso del barril frente a la caja por reino (anforas en Penelandia, cajas en el Perineo).
-const BARREL_W := {"neutral": 0.5, "pene": 0.75, "vulva": 0.6, "mixto": 0.35, "censura": 0.4}
+const BARREL_W := {"neutral": 0.5, "pene": 0.75, "vulva": 0.6, "mixto": 0.35, "censura": 0.4, "prostata": 0.3}
 
 static var _tex_cache: Dictionary = {}
 

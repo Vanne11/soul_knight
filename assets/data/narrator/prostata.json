@@ -1,0 +1,29 @@
+{
+  "_info": "Frases de LA PROSTATA (etapa R): reaccion del heroe al caer La Glandula Callada (bossglandula_after_<heroe>, via Narrator.say_hero; el resto de frases de la jefa y la entrada al reino estan en lines.json y etapas.json), enemigos (pro_*, se dicen al limpiar la sala con Prostata.note) y ambiente (prostata_ambient). El dato de salud va solo al codice.",
+  "pro_goteo": [
+    "Gota, gota, gota... y nada. Ya no llega como antes.",
+    "El Goteo se cortó a la mitad. Sin drama. Sin prisa. Sin presión."
+  ],
+  "pro_madrugador": [
+    "Tres veces a las tres de la mañana. El baño ya los conoce por nombre.",
+    "Se despierta, se levanta, vuelve. Se despierta, se levanta, vuelve."
+  ],
+  "pro_psa": [
+    "La cifra subió y bajó. Nadie quiso mirarla de frente.",
+    "Un número que nadie quiere abrir. Ahora flota. Qué incómodo."
+  ],
+  "prostata_ambient": [
+    "Revistas de 2009 sobre la mesa. Nadie las toca. Nadie sale.",
+    "Un dispensador de números. Va por el 4. Hace años.",
+    "Silla vacía, silla vacía, abrigo. Silencio incómodo, de los buenos."
+  ],
+  "bossglandula_after_pitocles": [
+    "Pitocles se anota algo en la palma: \"pedir hora\". La tinta no lo convence."
+  ],
+  "bossglandula_after_vulvalquiria": [
+    "Vulvalquiria sale sin mirar atrás. Una sala de espera menos. Por fin."
+  ],
+  "bossglandula_after_ornitorrinco": [
+    "El Ornitorrinco no preguntó qué era. Ni qué le pasaba. Ñic."
+  ]
+}

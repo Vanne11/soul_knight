@@ -47,11 +47,17 @@ ENEMY_BARRA_NEGRA_NAME,Barra Negra,Black Bar
 ENEMY_SELLO_NAME,Sello Censor,Censor Stamp
 ENEMY_PIXEL_CENSURA_NAME,Píxel de Censura,Censorship Pixel
 ENEMY_JAULA_NAME,Jaula Carcelera,Cage Warden
-ENEMY_GRAN_CANDADO_NAME,El Gran Candado,The Great Padlock
 ENEMY_MORDAZA_NAME,La Mordaza,The Gag
 ENEMY_VENDA_NAME,Venda en los Ojos,Blindfold
 ENEMY_SHIBARI_NAME,Shibari,Shibari
+ENEMY_GRAN_CANDADO_NAME,El Gran Candado,The Great Padlock
 BOSS_HOJA_DE_PARRA_NAME,"SU PUDOROSIDAD, LA HOJA DE PARRA","HER MODESTY, THE FIG LEAF"
+FLOOR_6_NAME,LA PRÓSTATA,THE PROSTATE
+FLOOR_6_SHORT,LA PRÓSTATA,THE PROSTATE
+ENEMY_GOTEO_TARDIO_NAME,Goteo Tardío,Belated Drip
+ENEMY_MADRUGADOR_NAME,Madrugador Nocturno,Night Riser
+ENEMY_PSA_NAME,PSA Sospechoso,Suspicious PSA
+BOSS_GLANDULA_NAME,LA GLÁNDULA CALLADA,THE SILENT GLAND
 CHAR_ORNITORRINCO_NAME,ORNITORRINCO,PLATYPUS
 CHAR_ORNITORRINCO_TITLE,No especifica,Does not specify
 CHAR_ORNITORRINCO_PERK,"Electrorrecepción: ve lo invisible. Huevo-trampa (F) y espolón venenoso (clic der./K). Sin alergias, sin reino.","Electroreception: sees the invisible. Egg trap (F) and venom spur (right click/K). No allergies, no kingdom."

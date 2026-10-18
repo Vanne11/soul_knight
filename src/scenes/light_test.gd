@@ -23,7 +23,7 @@ const PILLARS := [Vector2i(4, 3), Vector2i(11, 3), Vector2i(4, 8), Vector2i(11, 
 const ENEMIES := ["granito", "testiculo", "ovulo", "aduanero", "barra_negra"]
 ## Probabilidad de que una sala salga en penumbra con antorchas, por piso
 ## (indice de reino 0..4; la 2a etapa suma RoomLighting.DEEP_DARK_BONUS): cuanto mas hondo, mas salas oscuras.
-const DARK_CHANCE := [0.25, 0.35, 0.45, 0.55, 0.65]
+const DARK_CHANCE := [0.25, 0.35, 0.45, 0.55, 0.65, 0.7]
 
 ## Oscuridad ambiental (punto 1). Censurada: mas oscura y fria (punto 6).
 const AMBIENT_FREE := Color(0.13, 0.12, 0.16)

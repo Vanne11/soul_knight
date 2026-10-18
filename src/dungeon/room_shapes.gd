@@ -57,7 +57,7 @@ const DEFS := {
 const ARENA_SHAPES := ["octagon", "circle"]  # jefe / minijefe / guardian
 const FIGHT_ROOMS := [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION, Room.RoomType.TRAP]
 ## Probabilidad de agua (en vez de abismo) en los huecos, por reino.
-const WATER_CHANCE := {"neutral": 0.6, "pene": 0.3, "vulva": 0.6, "mixto": 0.2, "censura": 0.0}
+const WATER_CHANCE := {"neutral": 0.6, "pene": 0.3, "vulva": 0.6, "mixto": 0.2, "censura": 0.0, "prostata": 0.2}
 ## Prueba/capturas: fuerza esta forma en toda sala de combate donde quepa ("" = sorteo normal).
 static var force_id := ""
 ## Prueba/capturas: fuerza los fosos sueltos en toda sala de combate rectangular donde quepan.

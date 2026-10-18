@@ -1,7 +1,7 @@
 extends Node
 
 ## Bot de pruebas: juega una partida completa (5 pisos) para ver si el juego es jugable.
-## Uso: godot --path . res://tools/autoplay/autoplay.tscn  [-- --hero=pitocles --seed=123 --fast]
+## Uso: godot --path . res://tools/autoplay/autoplay.tscn  [-- --hero=pitocles --seed=123 --fast --floor=9]
 ## Dinamicas de sala (src/rooms): --force-dyn=<escort|hold|thief|stealth|clock|challenge|celo|lubricado|
 ## aduanera|apagon|censurada|barriles|antorchas|trampas|pacto|ruleta|mercado> las fuerza en toda sala donde
 ## quepan; --force-utero=1 abre El Utero (nivel secreto de Vulvania) al pisar Trompas sin comprar el Turno; --no-god=1 juega sin modo dios (para medir los peligros de sala); --armed=1 empieza con pistola.
@@ -118,6 +118,13 @@ func _ready() -> void:
 	main = get_tree().get_first_node_in_group("main")
 	await _wait_s(0.5)
 	player = main.player
+	var jump := int(_arg("--floor=", "0"))  # prueba corta: salta (como el menu de depuracion) al piso N de la ruta (p.ej. 9 = La Prostata con Vulvalquiria)
+	if jump > 1:
+		var rm0 := get_node("/root/RunManager")
+		rm0.current_floor = jump - 1
+		main._advance_to_next_floor()
+		await _wait_s(1.0)
+		_say("Salto al piso %d (%s)" % [jump, rm0.floor_data().id])
 	if _arg("--armed=", "") != "":
 		player.equip_weapon(get_node("/root/ItemDatabase").get_item("pistol_basic"))  # prueba: sin la busqueda inicial del arma
 	_say("Partida nueva: semilla=%d" % get_node("/root/RunManager").current_seed)

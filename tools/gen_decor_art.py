@@ -18,6 +18,7 @@ Los textos van pintados con una fuente de 3x5 px propia (solo mayusculas).
 """
 import math
 import random
+import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw
@@ -114,6 +115,8 @@ _G = {
     "R": ["##.", "#.#", "##.", "#.#", "#.#"], "S": [".##", "#..", ".#.", "..#", "##."],
     "T": ["###", ".#.", ".#.", ".#.", ".#."], "U": ["#.#", "#.#", "#.#", "#.#", "###"],
     "Y": ["#.#", "#.#", ".#.", ".#.", ".#."], " ": ["...", "...", "...", "...", "..."],
+    "L": ["#..", "#..", "#..", "#..", "###"], "G": [".##", "#..", "#.#", "#.#", ".##"],
+    "K": ["#.#", "#.#", "##.", "#.#", "#.#"],
 }
 
 
@@ -1286,8 +1289,102 @@ def sign_hills():
     return outline(padded(im))
 
 
+# ------------------------------------------------------------------ La Prostata (sala de espera)
+NUEZ_D = (C("b08a68"), C("8a6a50"), C("5e4634"))
+LECHE_D = (C("e8d2ce"), C("d0b4b0"), C("a8908c"))
+
+
+def waiting_chairs():
+    im, d = new(48, 26)
+    for i in range(3):
+        x = 1 + i * 15
+        d.rectangle((x, 4, x + 12, 13), fill=LECHE_D[1])          # respaldo
+        d.rectangle((x, 4, x + 12, 5), fill=LECHE_D[0])
+        d.rectangle((x - 1, 13, x + 13, 18), fill=LECHE_D[0])     # asiento
+        d.rectangle((x - 1, 17, x + 13, 18), fill=LECHE_D[2])
+        d.rectangle((x + 1, 19, x + 2, 24), fill=C("5a5658"))     # patas
+        d.rectangle((x + 10, 19, x + 11, 24), fill=C("5a5658"))
+    d.rectangle((0, 18, 47, 19), fill=C("5a5658"))                # barra comun
+    return outline(padded(im))
+
+
+def magazine_table():
+    im, d = new(30, 22)
+    d.rectangle((1, 8, 28, 11), fill=NUEZ_D[0])
+    d.rectangle((1, 11, 28, 12), fill=NUEZ_D[2])
+    d.rectangle((3, 12, 5, 20), fill=NUEZ_D[1])
+    d.rectangle((24, 12, 26, 20), fill=NUEZ_D[1])
+    for ox, oy, c in ((4, 3, C("b87888")), (10, 4, C("78909c")), (16, 2, C("c8b070"))):  # revistas apiladas
+        d.rectangle((ox, oy, ox + 8, oy + 5), fill=c)
+        d.rectangle((ox + 1, oy + 1, ox + 7, oy + 1), fill=C("f0ece0"))
+        d.rectangle((ox, oy + 5, ox + 8, oy + 5), fill=dk(c, 0.7))
+    return outline(padded(im))
+
+
+def number_dispenser():
+    im, d = new(18, 40)
+    d.rectangle((8, 20, 10, 38), fill=C("5a5658"))
+    d.rectangle((3, 36, 14, 38), fill=C("3c3a3c"))
+    d.rectangle((1, 2, 16, 20), fill=C("7c7476"))
+    d.rectangle((1, 2, 16, 3), fill=C("a49a9a"))
+    d.rectangle((3, 5, 14, 11), fill=C("2a0c0c"))
+    d.rectangle((4, 7, 5, 9), fill=C("e0483c")); d.rectangle((7, 6, 8, 10), fill=C("e0483c")); d.rectangle((10, 7, 12, 9), fill=C("e0483c"))
+    d.rectangle((5, 14, 12, 17), fill=C("eee2bc"))      # el ticket asomando
+    d.rectangle((6, 15, 11, 15), fill=C("a02828"))
+    return outline(padded(im))
+
+
+def urologo_poster(lang):
+    a, b = ("HABLE CON", "SU UROLOGO") if lang == "es" else ("ASK YOUR", "UROLOGIST")
+    im, d = new(46, 52)
+    for x in (9, 35):
+        d.rectangle((x, 36, x + 2, 50), fill=C("5a5658"))
+    d.rectangle((1, 1, 44, 38), fill=NUEZ_D[2])
+    d.rectangle((3, 3, 42, 36), fill=C("f0e6dc"))
+    d.rectangle((3, 3, 42, 4), fill=C("d8b8b0"))
+    text(im, 23 - text_w(a) // 2, 7, a, NUEZ_D[2])
+    text(im, 23 - text_w(b) // 2, 14, b, C("a85a4a"))
+    d.ellipse((17, 22, 28, 33), fill=C("d8b8a8"))        # doctor sonriente, sin cara de susto
+    d.rectangle((20, 26, 21, 26), fill=C("3a2a28")); d.rectangle((24, 26, 25, 26), fill=C("3a2a28"))
+    d.rectangle((21, 30, 24, 30), fill=C("3a2a28"))
+    return outline(padded(im))
+
+
+def plastic_plant():
+    im, d = new(20, 34)
+    d.rectangle((4, 24, 15, 32), fill=C("b08a68"))
+    d.rectangle((4, 24, 15, 25), fill=C("d0b090"))
+    d.rectangle((4, 31, 15, 32), fill=C("7a5c44"))
+    for pts in (((10, 24), (4, 8), (7, 2)), ((10, 24), (15, 10), (12, 3)), ((10, 24), (10, 6))):
+        d.line(pts, fill=C("4a8a50"), width=3)
+    d.line(((10, 24), (8, 12)), fill=C("68a868"), width=1)
+    return outline(padded(im))
+
+
+def water_cooler():
+    im, d = new(18, 38)
+    d.ellipse((3, 0, 14, 12), fill=C("a8d0e8"))
+    d.rectangle((3, 6, 14, 12), fill=C("a8d0e8"))
+    d.rectangle((5, 3, 7, 8), fill=C("e4f4fc"))
+    d.rectangle((2, 13, 15, 36), fill=C("e4dcd8"))
+    d.rectangle((2, 13, 3, 36), fill=C("f8f2ee"))
+    d.rectangle((13, 13, 15, 36), fill=C("b8aca8"))
+    d.rectangle((5, 19, 7, 21), fill=C("3a78d0")); d.rectangle((10, 19, 12, 21), fill=C("d0483c"))
+    d.rectangle((6, 27, 11, 29), fill=C("5a5658"))
+    return outline(padded(im))
+
+
 # ------------------------------------------------------------------ salida
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "prostata":
+        save(waiting_chairs(), "prostata_chairs")
+        save(magazine_table(), "prostata_magazines")
+        save(number_dispenser(), "prostata_dispenser")
+        save(urologo_poster("es"), "prostata_poster_es")
+        save(urologo_poster("en"), "prostata_poster_en")
+        save(plastic_plant(), "prostata_plant")
+        save(water_cooler(), "prostata_cooler")
+        return
     save(web(0), "web_a")
     save(web(1), "web_b")
     save(bones(0), "bones_a")

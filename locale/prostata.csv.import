@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dox1o6nidw40c"
+
+[deps]
+
+files=["res://locale/prostata.es.translation", "res://locale/prostata.en.translation"]
+
+source_file="res://locale/prostata.csv"
+dest_files=["res://locale/prostata.es.translation", "res://locale/prostata.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

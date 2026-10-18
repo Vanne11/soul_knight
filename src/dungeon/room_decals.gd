@@ -25,6 +25,7 @@ const RING := {
 	"vulva": [Color(0.44, 0.23, 0.32, 0.5), Color(0.93, 0.55, 0.69, 0.85)],
 	"mixto": [Color(0.19, 0.17, 0.18, 0.55), Color(0.78, 0.63, 0.24, 0.85)],
 	"censura": [Color(0.2, 0.04, 0.08, 0.6), Color(0.84, 0.69, 0.31, 0.9)],
+	"prostata": [Color(0.22, 0.16, 0.15, 0.5), Color(0.8, 0.66, 0.6, 0.85)],
 }
 ## Liquidos por reino (con su peso). El dudoso sale poco: es un chiste, no una plaga.
 const PUDDLES := {
@@ -33,6 +34,7 @@ const PUDDLES := {
 	"vulva": [["baba", 0.6], ["water", 0.25], ["dudoso", 0.15]],
 	"mixto": [["aceite", 0.5], ["water", 0.35], ["dudoso", 0.15]],
 	"censura": [["tinta", 0.65], ["water", 0.35]],
+	"prostata": [["water", 0.7], ["dudoso", 0.3]],
 }
 const WET_PATCHES := {"patch_neutral_b": "mud", "patch_mixto_a": "arena", "patch_censura_b": "tinta"}
 const STAMPS := {"mixto": "stamp_mixto", "censura": "stamp_censura"}
