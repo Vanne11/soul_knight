@@ -422,11 +422,21 @@ func _physics_process(delta: float) -> void:
 
 
 var _slot_t := 0.0
+var _drink_t := 0.0
 
 
 ## Ranuras 1-4: el bot cura con lo que lleve cuando le queda poca vida y se protege (toallas,
 ## calzoncillos...) al entrar en pelea. Asi tambien se prueba el uso real de las ranuras.
 func _use_slots(fighting: bool, delta: float) -> void:
+	_drink_t -= delta
+	# llave borracha en la mano: la intoxicacion baja 2 por segundo y el camino al cofre es largo -> bebe lo que lleve
+	# (tambien peleando: antes solo bebia al explorar y la llave se escurria en medio de una pelea)
+	var kq = main.get_node_or_null("KeyQuests")
+	if _drink_t <= 0.0 and kq != null and kq.kind == "drunk" and kq.state == "carried" and get_node("/root/PlayerStats").intoxication_level < 55.0:
+		var dslots := ItemSlots.find(player)
+		if dslots != null and dslots.use_first_with_tag("intoxicante"):
+			_drink_t = 0.6
+			_say("  bebe un intoxicante de las ranuras para no soltar la llave borracha")
 	_slot_t -= delta
 	if _slot_t > 0.0:
 		return
@@ -727,12 +737,6 @@ func _quest_step(room: Room) -> bool:
 				_issue("Piso %d: la llave %s se perdio %d veces (la mision no se puede hacer con lo que lleva el bot): abandonada" % [_floor_n, kq.kind, _kq_lost])
 		_kq_state = kq.state
 		_say("Mision de llave %s: %s (llave en %s, cofre en %s)" % [kq.kind, kq.state, kq.home.grid_pos, kq.vault.grid_pos])
-	# llave borracha en la mano: la intoxicacion baja 2 por segundo y el camino al cofre es largo -> bebe lo que lleve
-	if kq.kind == "drunk" and kq.state == "carried" and get_node("/root/PlayerStats").intoxication_level < 45.0:
-		var slots := ItemSlots.find(player)
-		if slots != null and _slot_t <= 0.0 and slots.use_first_with_tag("intoxicante"):
-			_slot_t = 1.0
-			_say("  bebe un intoxicante de las ranuras para no soltar la llave borracha")
 	var g: Dictionary = kq.bot_goal(room)
 	if g.is_empty():
 		return false
@@ -1178,6 +1182,12 @@ func _on_stall(room: Room, enemies: Array) -> void:
 	_prog_t = 0.0
 	var where := "%s %s" % [Room.RoomType.keys()[room.room_type], room.grid_pos]
 	_issue("Piso %d: sin progreso en %s (objetivo \"%s\", %s) -> nivel %d" % [_floor_n, where, _goal_text, _goal_kind, _stall_n])
+	if _stall_n == 1 and _goal_kind == "thing" and _goal_ref != null and is_instance_valid(_goal_ref) and _goal_ref is Node2D:
+		var gp: Vector2 = (_goal_ref as Node2D).global_position
+		var zs: Array = RoomUtil.hazard_zones(get_tree())
+		_say("    diag: objeto %s en %s (local %s) celda_libre=%s distancia=%.0f zonas_peligro=%d clase=%s monitorable=%s jugador=%s" % [
+			_thing_name(_goal_ref), gp, gp - room.global_position, _grid.has(_cell(gp)), gp.distance_to(player.global_position), zs.size(),
+			_goal_ref.get_class(), _goal_ref.get("monitorable"), player.global_position])
 	if _stall_n == 1:
 		for e in enemies:
 			_say("    diag: " + _diag_enemy(room, e))
