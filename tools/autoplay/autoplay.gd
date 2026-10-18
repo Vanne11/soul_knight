@@ -39,6 +39,7 @@ extends Node
 ## (.claude/autoplay.log) como posible problema de jugabilidad. Modo dios activo: el
 ## objetivo es recorrer el juego, no medir la dificultad (se cuentan los golpes recibidos).
 
+const BossEvade := preload("res://tools/autoplay/boss_evade.gd")
 const LOG_PATH := "res://.claude/autoplay.log"
 const CELL := 16.0
 const BODY_R := 11.0
@@ -204,6 +205,8 @@ func _ready() -> void:
 		_say("Salto al piso %d (%s)" % [jump, rm0.floor_data().id])
 	if _arg("--armed=", "") != "":
 		player.equip_weapon(get_node("/root/ItemDatabase").get_item("pistol_basic"))  # prueba: sin la busqueda inicial del arma
+	if _arg("--boss-now=", "") != "":
+		_force_boss()  # prueba: entra directo a la sala del jefe del piso (con --floor=N)
 	_game_f0 = Engine.get_physics_frames()
 	_say("Partida nueva: semilla=%d" % get_node("/root/RunManager").current_seed)
 	player.get_node("Hurtbox").area_entered.connect(func(a): if a.is_in_group("enemy_attack"): _hits += 1)
@@ -520,6 +523,8 @@ func _fight(enemies: Array, delta: float) -> void:
 	player.aim_override = to_t
 	if _line_clear(pp, t.global_position):
 		Input.action_press("attack")
+	if t.is_in_group("boss") and _boss_evade(t, (to_t.normalized().orthogonal() * _strafe * 0.8) if to_t.length() < KEEP_NEAR * 1.6 else to_t.normalized()):
+		return
 	# distancia comoda + vaiven lateral
 	_strafe_t -= delta
 	if _strafe_t <= 0.0:
@@ -538,6 +543,19 @@ func _fight(enemies: Array, delta: float) -> void:
 		return
 	_press_move(_avoid_walls(move.normalized()))
 	_dodge(enemies)
+
+
+## Esquiva de un jugador atento contra un jefe (ver boss_evade.gd). Devuelve true si ya decidio el
+## movimiento de este frame (hay peligro cerca); si no, el bot sigue con su movimiento normal.
+func _boss_evade(boss: Node2D, pref: Vector2) -> bool:
+	var r: Dictionary = BossEvade.plan(player, boss, pref, _dash_cd <= 0.0, func(q): return _grid.has(_cell(q)))
+	if r.danger <= 0.0 and r.pref_score < 3.0 and boss.get("bot_safe") == null:
+		return false
+	_press_move(r.dir)
+	if r.dash:
+		Input.action_press("dash")
+		_dash_cd = 1.0
+	return true
 
 
 ## Desafio de canalizacion de un jefe. El jefe publica ayudas para el bot (bot_goal_pos: a donde
@@ -559,6 +577,11 @@ func _boss_challenge(b: Node2D, _delta: float) -> void:
 	Input.action_press("attack")
 	var dv: Vector2 = b.get("bot_dash_vec")
 	var goal = b.get("bot_goal_pos")
+	if b.get("dynamic") == true:
+		var gp = goal if goal != null else b.global_position
+		var pref: Vector2 = ((gp as Vector2) - pp).normalized()
+		if _boss_evade(b, pref if goal != null else Vector2.ZERO):
+			return
 	if b.get("bot_dash_now") == true and _dash_cd <= 0.0:
 		Input.action_press("dash")
 		_dash_cd = 1.0

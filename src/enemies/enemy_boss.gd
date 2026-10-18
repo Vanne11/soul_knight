@@ -23,6 +23,24 @@ const MINION := preload("res://src/enemies/enemy_swarmer.tscn")
 
 enum State { INTRO, IDLE, ATTACK, TIRED, TRANSITION, DEAD }
 
+## Avisos para quien anime o mida al jefe (el animador, el bot): nada depende de ellas.
+signal telegraph_started(secs: float)
+signal attack_released(attack_name: StringName)
+signal channel_started(challenge: StringName)
+signal channel_ended(cut: bool)
+
+## MOTOR DINAMICO (J1): apagado por defecto; cada jefe lo enciende en su _ready (por ahora solo
+## Doña Cera). Encendido: reposo corto, avisos acotados por fase (0.65/0.5/0.4 s), combos de
+## 2-3 ataques en fase 2-3 sin pausa, balas mas rapidas, defensa durante la cura y resumen
+## "[boss-stats]" al terminar la pelea.
+var dynamic := false
+var rest_min := 0.8
+var rest_max := 1.3
+## Velocidad de las balas del abanico base.
+var bullet_speed := 230.0
+## Ataques que le quedan encadenar antes de volver al reposo.
+var _combo_left := 0
+
 ## Dano extra que recibe agotado (antes x2: demasiado).
 const TIRED_MULT := 1.5
 ## Tope de bichos invocados vivos a la vez.
@@ -114,6 +132,8 @@ func _physics_process(delta: float) -> void:
 			return
 	_timer -= delta
 	_shield_msg_cd = maxf(0.0, _shield_msg_cd - delta)
+	if dynamic:
+		_stats_tick(delta)
 	if not _channeling:
 		_chan_cd = maxf(0.0, _chan_cd - delta)
 	match state:
@@ -199,14 +219,31 @@ func _walk_to(pos: Vector2, secs := 1.2, speed := 0.0) -> bool:
 	return true
 
 
+## Siguiente ataque de un combo (solo motor dinamico). Cada jefe lo afina; por defecto, el pool.
+func _combo_next() -> StringName:
+	var options := _attack_pool()
+	return options[RNG.randi_range(0, options.size() - 1)]
+
+
+## Cuantos ataques EXTRA encadena tras uno normal (0 en fase 1).
+func _combo_len() -> int:
+	return 0 if current_phase < 2 else RNG.randi_range(0, current_phase - 1)
+
+
 func _pick_attack() -> StringName:
+	if dynamic and _combo_left > 0 and not _chan_pending:
+		_combo_left -= 1
+		return _combo_next()
 	# Curarse: al cambiar de fase o con la vida baja (mitad), con enfriamiento.
 	if _channels_left > 0 and _chan_cd <= 0.0 and (_chan_pending or current_health < max_health * 0.5):
 		_chan_pending = false
 		_channels_left -= 1
 		_chan_cd = 16.0
 		_ge.boss_charges_changed.emit(_channels_left, _channels_total)
+		_combo_left = 0
 		return &"atk_canalizar"
+	if dynamic:
+		_combo_left = _combo_len()
 	var options := _attack_pool().filter(func(x): return x != _last_attack)
 	if options.is_empty():
 		options = _attack_pool()
@@ -221,8 +258,12 @@ func _start_attack() -> void:
 	velocity = Vector2.ZERO
 	_gen += 1
 	var g := _gen
+	attack_released.emit(a)
 	await Callable(self, a).call()
 	if g == _gen and state == State.ATTACK:
+		if dynamic and _combo_left > 0:
+			_start_attack()  # combo: sin pausa al siguiente
+			return
 		_go_idle()
 
 
@@ -249,6 +290,9 @@ func _frame() -> bool:
 ## Aviso del jefe: parpadea y tiembla durante `secs`. `on_frame(restante)` se llama
 ## cada frame (para seguir al jugador con las lineas de aviso). false = cancelado.
 func _tele(secs: float, col := Color(2.0, 2.0, 0.9), shake := 2.0, on_frame := Callable()) -> bool:
+	if dynamic:
+		secs = minf(secs, [0.65, 0.5, 0.4][clampi(current_phase, 1, 3) - 1])
+	telegraph_started.emit(secs)
 	animated_sprite.play("attack")
 	var left := secs
 	while left > 0.0:
@@ -277,6 +321,9 @@ func _reset_fx() -> void:
 func _go_idle() -> void:
 	_reset_idle()
 	state = State.IDLE
+	if dynamic:
+		_timer = RNG.randf_range(rest_min, rest_max)
+		return
 	_timer = maxf(0.35, RNG.randf_range(0.8, 1.3) - current_phase * 0.15)
 
 
@@ -289,6 +336,7 @@ func _stun(seconds: float) -> void:
 
 
 func _tire(seconds: float) -> void:
+	_combo_left = 0
 	state = State.TIRED
 	_timer = seconds
 	velocity = velocity * 0.3
@@ -413,8 +461,11 @@ func atk_canalizar() -> void:
 	_chan_prog = 0.0
 	_chan_t = 0.0
 	_ch_hit_cb = Callable()
+	_ch_extra = 0.0
 	_reset_bot_hints()
 	velocity = Vector2.ZERO
+	_st_cures += 1
+	channel_started.emit(ch)
 	var col := _channel_color()
 	var key := "BOSS_CH_" + String(ch).substr(3).to_upper()
 	var fx := BossZone.circle(global_position, 95.0, 0.0, -1.0, 0.0, col)
@@ -442,12 +493,39 @@ func atk_canalizar() -> void:
 	if _chan_ok:
 		_float_text(tr("BOSS_CHAN_BREAK"), Color("ffe08a"))
 		Sound.play("crack")
-		_stun(CHANNEL_STUN)
+		_st_cuts += 1
+		_stun(_cure_cut_stun())
+		_on_cure_cut()
 	else:
 		current_health = minf(max_health, current_health + max_health * CHANNEL_HEAL)
 		_emit_health()
 		_float_text(tr("BOSS_CHAN_DONE"), col)
 		HitFx.shake(0.3)
+		_on_cure_done()
+	channel_ended.emit(_chan_ok)
+
+
+## Ganchos de la cura (el jefe dinamico los usa para premiar/castigar): aturdido al cortarla,
+## y que pasa cuando se corta o se completa.
+func _cure_cut_stun() -> float:
+	return CHANNEL_STUN
+
+
+func _on_cure_cut() -> void:
+	pass
+
+
+func _on_cure_done() -> void:
+	pass
+
+
+## Defensa mientras canaliza: se llama cada frame dentro de _ch_loop (solo motor dinamico).
+func _defend(_dt: float) -> void:
+	pass
+
+
+## Segundos extra de la cura (tocar un senuelo le regala tiempo).
+var _ch_extra := 0.0
 
 
 func _reset_bot_hints() -> void:
@@ -462,15 +540,17 @@ func _reset_bot_hints() -> void:
 ## fallar (_chan_fail). on_frame(delta) se llama cada frame. Termina antes si se cancela.
 func _ch_loop(limit: float, on_frame := Callable()) -> void:
 	_chan_t = 0.0
-	while _chan_t < limit and not _chan_ok and not _chan_fail:
+	while _chan_t < limit + _ch_extra and not _chan_ok and not _chan_fail:
 		if not await _frame():
 			return
 		_chan_t += 1.0 / 60.0
+		if dynamic:
+			_defend(1.0 / 60.0)
 		animated_sprite.modulate = Color.WHITE.lerp(_channel_color() * 1.6, 0.25 + 0.2 * sin(_chan_t * 12.0))
 		if on_frame.is_valid():
 			on_frame.call(1.0 / 60.0)
 		if is_instance_valid(_chan_fx):
-			_chan_fx.p_time = _chan_t / limit
+			_chan_fx.p_time = _chan_t / (limit + _ch_extra)
 			_chan_fx.p_break = _chan_prog
 
 
@@ -561,6 +641,7 @@ func _blackout_stop() -> void:
 
 
 func _exit_tree() -> void:
+	_print_stats("pelea abandonada (jugador muerto o salida)")
 	if is_instance_valid(_blackout):
 		_blackout.queue_free()
 
@@ -632,6 +713,56 @@ func _fake_pop(pos: Vector2) -> void:
 	_add_hazard(z)
 
 
+# ---------------------------------------------------------------- estadisticas de la pelea
+var _st_t := 0.0
+var _st_threat := 0.0
+var _st_atk := 0.0
+var _st_hits := 0
+var _st_cures := 0
+var _st_cuts := 0
+var _st_minions := 0
+var _st_iframes := 0.0
+var _st_done := false
+var _st_by := {}  # golpes al jugador por ataque
+
+
+## Nombre de lo que acaba de pegar al jugador fuera de un ataque (para el resumen de la pelea).
+func _hit_source() -> String:
+	return "pasivo/reposo"
+
+
+## Amenaza = el jefe tiene un ataque activo (los jefes dinamicos lo afinan: pasivos, etc.).
+func _is_threatening() -> bool:
+	return state == State.ATTACK
+
+
+func _stats_tick(delta: float) -> void:
+	if state in [State.INTRO, State.TRANSITION]:
+		return
+	_st_t += delta
+	if _is_threatening():
+		_st_threat += delta
+	if state == State.ATTACK:
+		_st_atk += delta
+	var ifr := float(target.get("_iframes"))
+	if ifr > _st_iframes + 0.3:
+		_st_hits += 1
+		var k := String(_last_attack) if state == State.ATTACK else _hit_source()
+		_st_by[k] = int(_st_by.get(k, 0)) + 1
+		if OS.has_environment("BOSS_DEBUG"):
+			print("[boss-hit] t=%.1f fase=%d %s dist=%.0f gotas=%d vel_jug=%.0f" % [_st_t, current_phase, k, target.global_position.distance_to(global_position), get_tree().get_nodes_in_group("gota_cera").size(), (target as CharacterBody2D).velocity.length()])
+	_st_iframes = ifr
+
+
+## Resumen de la pelea para el bot (una sola vez por jefe).
+func _print_stats(result: String) -> void:
+	if not dynamic or _st_done or _st_t < 0.5:
+		return
+	_st_done = true
+	print("[boss-stats] %s | %s | duracion=%.1f s | ataque_activo=%.0f%% | solo_ataque=%.0f%% | golpes_al_jugador=%d | curas_intentadas=%d | curas_cortadas=%d | esbirros=%d | fase_final=%d | golpes_por=%s" % [
+		enemy_name, result, _st_t, 100.0 * _st_threat / maxf(_st_t, 0.01), 100.0 * _st_atk / maxf(_st_t, 0.01), _st_hits, _st_cures, _st_cuts, _st_minions, current_phase, _st_by])
+
+
 # ---------------------------------------------------------------- utilidades de combate
 
 func _muzzle() -> Vector2:
@@ -685,7 +816,7 @@ func _fire_from(pos: Vector2, angle: float, speed: float, mult := 0.7, tint := C
 func _fire_fan(shots: int) -> void:
 	var base: float = (target.global_position - _muzzle()).angle()
 	for i in range(shots):
-		_fire(base + (i - (shots - 1) / 2.0) * 0.17, 230.0)
+		_fire(base + (i - (shots - 1) / 2.0) * 0.17, bullet_speed)
 
 
 ## Anade una zona de peligro a la sala. Devuelve la misma zona.
@@ -751,12 +882,12 @@ func _on_floor(p: Vector2) -> Vector2:
 
 
 ## Invoca bichos hasta el tope. Devuelve cuantos salieron.
-func _spawn_minions(positions: Array, hp := 12.0, dmg := 8.0, label := "Espermatozoide") -> int:
+func _spawn_minions(positions: Array, hp := 12.0, dmg := 8.0, label := "Espermatozoide", scene: PackedScene = null) -> int:
 	var made := 0
 	for p in positions:
 		if get_tree().get_nodes_in_group("boss_minion").size() >= MINION_CAP:
 			break
-		var m := MINION.instantiate()
+		var m := (scene if scene != null else MINION).instantiate()
 		m.max_health = hp
 		m.damage = dmg
 		m.enemy_name = label
@@ -764,6 +895,7 @@ func _spawn_minions(positions: Array, hp := 12.0, dmg := 8.0, label := "Espermat
 		_spawn_container().add_child(m)
 		m.global_position = p
 		made += 1
+	_st_minions += made
 	return made
 
 
@@ -838,6 +970,7 @@ func _enter_phase(n: int) -> void:
 
 ## Rinde las corrutinas de ataque en curso y limpia lo que dejaron en la sala.
 func _cancel_attack() -> void:
+	_combo_left = 0
 	_gen += 1
 	_channeling = false
 	_ch_hit_cb = Callable()
@@ -858,6 +991,7 @@ func die(killer: Node = null) -> void:
 	_emit_health()
 	_clear_bullets()
 	_on_death()
+	_print_stats("jefe derrotado")
 	for m in get_tree().get_nodes_in_group("boss_minion"):
 		if is_instance_valid(m) and m.has_method("die"):
 			m.die(null)
