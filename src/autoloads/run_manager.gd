@@ -154,6 +154,16 @@ static func route_for(hero: String, seed_: int) -> Array:
 	return out
 
 
+## Reinos en el orden del mundo/historia (la ruta "default" de routes.json; los que falten van al
+## final, en orden de archivo). Para listarlos al jugador; NO cambia ids ni guardados.
+static func world_order() -> Array:
+	var out := route_for("default", 0)
+	for r in regions():
+		if r not in out:
+			out.append(r)
+	return out
+
+
 ## Fija la ruta activa (lista de ids de region): sus pisos, por reino y etapa.
 static func set_route(region_ids: Array) -> void:
 	route_regions = region_ids.duplicate()
