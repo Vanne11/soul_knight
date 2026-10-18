@@ -41,7 +41,7 @@ const TOAST_SECONDS_SHORT := 1.8
 const MIN_GAP_MS := 45000
 const MINOR_CHANCE := 0.3
 ## Eventos que empiezan asi son importantes (ver arriba).
-const MAJOR_PREFIXES := ["boss", "death", "victory", "floor_", "chosen_", "first_run", "run_start", "censura_up"]
+const MAJOR_PREFIXES := ["boss", "death", "victory", "floor_", "chosen_", "first_run", "run_start", "censura_up", "pz_", "taser_drop"]
 ## Subconjunto que se muestra aunque haya combate: se cierran solos pasados unos segundos.
 const URGENT_PREFIXES := ["boss", "death", "victory"]
 const COMBAT_LINGER := 3.5
