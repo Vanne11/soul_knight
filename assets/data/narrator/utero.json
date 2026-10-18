@@ -1,0 +1,36 @@
+{
+  "_info": "EL UTERO (nivel secreto de Vulvania, etapa V; src/utero/). Frases de las fases, la Consulta de la Doctora V., el Turno, el ovulo, las reacciones por heroe (Dona Regla habla con bossutero_* de lines.json). La frase de ENTRADA a la region (por heroe) vive en otro archivo (evento floor_utero). Los datos del ciclo van al codice, no aqui. Registro latino neutro; Ornitorrinco sin pronombre.",
+  "utero_fase_1": [
+    "Marea roja. Aquí no hay barra negra que alcance."
+  ],
+  "utero_fase_2": [
+    "Florece todo. Los folículos esperan un balazo para ser felices."
+  ],
+  "utero_fase_3": [
+    "Ovulación. Todos en celo y con prisa. Hay un óvulo suelto: corre."
+  ],
+  "utero_fase_4": [
+    "Fase lútea. Todos irritables y nadie sabe por qué. Hay chocolate."
+  ],
+  "utero_consulta": [
+    "Consulta de la Doctora V. Atiende solo con turno. Y sin quejas."
+  ],
+  "utero_sin_turno": [
+    "Sin turno no se pasa. Aquí hay lista de espera, como en todas partes."
+  ],
+  "utero_turno_ok": [
+    "Turno 37. La puerta cede. Qué eficiencia. Qué sospechoso."
+  ],
+  "utero_ovulo": [
+    "El óvulo se suelta y corre. Tiene prisa. Tú también."
+  ],
+  "utero_react_pitocles": [
+    "(El narrador baja la mirada. Hay cosas que no se describen.)"
+  ],
+  "utero_react_ornitorrinco": [
+    "Se detiene el hospital. Una enfermera revisa el protocolo; no hay protocolo."
+  ],
+  "utero_react_vulvalquiria": [
+    "Aquí no hay nada que explicarle. Por primera vez, no bosteza."
+  ]
+}
