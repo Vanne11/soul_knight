@@ -105,6 +105,8 @@ var _face := Vector2.DOWN
 var _fl := {}  # piso -> {name, rooms_total, rooms_visited, unvisited, seen, chests, t}
 var _wpn_taken := {}  # id de arma -> true (recoger-todo: cada arma una vez, sin intercambiarlas sin fin)
 var _scan_t := 0.0
+var _coins_gained := {}  # piso -> monedas recogidas
+var _coins_prev := -1
 var _codex0 := 0
 var _game_f0 := -1  # fotograma de fisica en que empezo la partida
 
@@ -356,6 +358,10 @@ func _physics_process(delta: float) -> void:
 	var enemies := _alive_enemies(room)
 	_use_slots(not enemies.is_empty(), delta)
 	_moved = false
+	var coins_now: int = rm.coins
+	if _coins_prev >= 0 and coins_now > _coins_prev:
+		_coins_gained[_floor_n] = int(_coins_gained.get(_floor_n, 0)) + coins_now - _coins_prev
+	_coins_prev = coins_now
 	_scan_t -= delta
 	if _scan_t <= 0.0:
 		_scan_t = 1.0
@@ -810,8 +816,8 @@ func _things(room: Room) -> Array:
 			out.append(c)
 		elif path.ends_with("shop_item.gd"):
 			var it = c.get("_item")
-			if it == null or c.get("price") == null:
-				continue
+			if it == null or c.get("price") == null or c.get("_sold") == true:
+				continue  # (vendido: el nodo sigue visible aunque su sprite no)
 			var h: String = str(it.custom_data.get("hormone", ""))
 			var need: bool = (h != "" and h in missing) or (not armed and it.equip_slot == Item.EquipSlot.WEAPON)
 			if need and rm.coins >= c.price:
@@ -1262,11 +1268,17 @@ func _scan_floor() -> void:
 	var rooms: Dictionary = main.dungeon_generator.rooms
 	_watch_outsiders()
 	f.rooms_total = rooms.size()
+	f["coins"] = _coins_gained.get(_floor_n, 0)
 	f.rooms_visited = _visited.size()
 	var un := []
 	for pos in rooms:
 		if not _visited.has(pos):
-			un.append("%s%s" % [Room.RoomType.keys()[rooms[pos].room_type], pos])
+			var ds := []
+			for nb in main.dungeon_generator.room_graph.get(pos, []):
+				var d: Door = rooms[nb].door_to(pos)
+				if d != null:
+					ds.append("desde %s %s" % [Room.RoomType.keys()[rooms[nb].room_type], Door.State.keys()[d.state]] + ("(llave %s)" % d.required_key if d.required_key != "" else "") + ("(intox %d)" % d.required_intoxication_tier if d.required_intoxication_tier > 0 else ""))
+			un.append("%s%s [%s]" % [Room.RoomType.keys()[rooms[pos].room_type], pos, "; ".join(ds)])
 	f.unvisited = un
 	for pos in rooms:
 		var r: Room = rooms[pos]
@@ -1301,10 +1313,7 @@ func _log_floor_summary(n: int) -> void:
 		return
 	var f: Dictionary = _fl[n]
 	var taken := _floor_items(n)
-	var coins := 0
-	for it in get_node("/root/RunManager").items_collected:
-		if int(it.floor) == n and str(it.id) == "coin":
-			coins += 1
+	var coins: int = int(f.get("coins", 0))
 	var opened := 0
 	var closed := []
 	for id in f.chests:
@@ -1316,7 +1325,7 @@ func _log_floor_summary(n: int) -> void:
 	for id in f.seen:
 		if id not in taken:
 			not_taken.append(id)
-	_say("  RESUMEN piso %d (%s): salas %d/%d visitadas; cofres abiertos %d/%d; objetos recogidos %d (%s) + %d monedas; vistos y NO recogidos %d (%s)" % [
+	_say("  RESUMEN piso %d (%s): salas %d/%d visitadas; cofres abiertos %d/%d; objetos recogidos %d (%s) + %d monedas ganadas; vistos y NO recogidos %d (%s)" % [
 		n, f.name, f.rooms_visited, f.rooms_total, opened, f.chests.size(), taken.size(), ", ".join(taken), coins, not_taken.size(), ", ".join(not_taken)])
 	if not f.unvisited.is_empty():
 		_say("    salas sin visitar: %s" % ", ".join(f.unvisited))
