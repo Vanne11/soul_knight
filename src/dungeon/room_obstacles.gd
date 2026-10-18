@@ -8,6 +8,8 @@ extends Node2D
 ##  33  columnas de cobertura, solo en salas grandes.
 ##  34  barriles y cajas que se rompen a balazos y, a veces (COIN_CHANCE), sueltan una moneda
 ##      con el mismo pickup "coin" de siempre. Poco: no toca la economia.
+##  36  charcos pegajosos (StickyPuddle): frenan 40% al jugador y a los enemigos; uno por reino.
+##      Solo en salas de pelea sin trampas; no bloquean, asi que no cuentan para la grilla.
 ##  37  salas trampa: pinchos visibles con huesos. Es SOLO decoracion (hoy las salas trampa
 ##      son combates sin mecanica propia): no hacen dano, estan lejos de los caminos.
 ##
@@ -165,6 +167,7 @@ func _populate() -> void:
 			var n := 1 if _rng.randf() < 0.6 else 2
 			for i in n:
 				_place_breakables()
+		_place_puddles()
 
 
 func _collect() -> void:
@@ -387,6 +390,41 @@ func _place_breakables() -> void:
 				_spawn_prop(it.kind, it.pos, it.flip)
 			_solid.append_array(mine)
 			return
+
+
+# ------------------------------------------------------------------ charcos pegajosos (36)
+const PUDDLE_CHANCE := 0.4
+const PUDDLE_ROOMS := [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION]
+
+
+## Al final de _populate (no altera el sorteo de lo anterior). Lejos de puertas, centro y spawns
+## (_valid), de los obstaculos y de los fosos; se anotan en wet_zones para las huellas de WorldFx.
+func _place_puddles() -> void:
+	if room.room_type not in PUDDLE_ROOMS or _rng.randf() >= PUDDLE_CHANCE:
+		return
+	var placed: Array[Rect2] = []
+	for i in (1 if _rng.randf() < 0.7 else 2):
+		for attempt in 20:
+			var rx := _rng.randf_range(46.0, 74.0)
+			var ry := rx * _rng.randf_range(0.6, 0.76)
+			var c := Vector2(snappedf(_rng.randf_range(STRIP + rx, _size.x - STRIP - rx), 8.0), snappedf(_rng.randf_range(STRIP + ry, _size.y - STRIP - ry), 8.0))
+			var r := Rect2(c - Vector2(rx, ry), Vector2(rx, ry) * 2.0)
+			if not _valid(r, _solid + placed, 16.0):
+				continue
+			var pud := StickyPuddle.new()
+			pud.room = room
+			pud.kingdom = kingdom
+			pud.rx = rx
+			pud.ry = ry
+			pud.seed_ = _rng.randi()
+			pud.position = c
+			pud.material = material
+			_flat_node.add_child(pud)
+			placed.append(r)
+			var zones: Array = room.get_meta("wet_zones", [])
+			zones.append({"center": c, "rx": rx, "ry": ry, "kind": StickyPuddle.wet_kind(kingdom)})
+			room.set_meta("wet_zones", zones)
+			break
 
 
 # ------------------------------------------------------------------ pinchos (37)

@@ -229,6 +229,7 @@ func _physics_process(delta: float) -> void:
 		for e in enemies:
 			if e is CharacterBody2D and not e.is_in_group("boss") and zone.has_point(e.global_position):
 				(e as CharacterBody2D).move_and_collide(push * PUSH_ENEMY * delta)
+				PitFall.launch(e, 0.15)  # el viento puede tirarlos a un foso
 		# proyectiles: los del jugador cuelgan de main (clase PlayerBullet); los enemigos, del grupo enemy_attack
 		var shots: Array = []
 		for c in main.get_children():

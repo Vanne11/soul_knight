@@ -181,6 +181,7 @@ func take_damage(amount: float, source: Node = null, kb: Vector2 = Vector2.ZERO)
 	# Retroceso solo si no esta embistiendo: el golpe no cancela su ataque.
 	if kb != Vector2.ZERO and state in [State.CHASE, State.IDLE, State.RECOVER]:
 		velocity = kb
+		PitFall.push(self, kb)  # empujado hacia un foso: puede caer
 		state = State.STUNNED
 		_state_timer = 0.15
 	
