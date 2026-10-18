@@ -6,10 +6,10 @@ uid="uid://drw8tscco1keg"
 
 [deps]
 
-files=["res://locale/heroes.es.translation", "res://locale/heroes.en.translation"]
+files=["res://locale/heroes.es.translation", "res://locale/heroes.en.translation", "res://locale/heroes.fr.translation"]
 
 source_file="res://locale/heroes.csv"
-dest_files=["res://locale/heroes.es.translation", "res://locale/heroes.en.translation"]
+dest_files=["res://locale/heroes.es.translation", "res://locale/heroes.en.translation", "res://locale/heroes.fr.translation"]
 
 [params]
 

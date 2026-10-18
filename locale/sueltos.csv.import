@@ -6,10 +6,10 @@ uid="uid://bw1r3aorlyk4q"
 
 [deps]
 
-files=["res://locale/sueltos.es.translation", "res://locale/sueltos.en.translation"]
+files=["res://locale/sueltos.es.translation", "res://locale/sueltos.en.translation", "res://locale/sueltos.fr.translation"]
 
 source_file="res://locale/sueltos.csv"
-dest_files=["res://locale/sueltos.es.translation", "res://locale/sueltos.en.translation"]
+dest_files=["res://locale/sueltos.es.translation", "res://locale/sueltos.en.translation", "res://locale/sueltos.fr.translation"]
 
 [params]
 

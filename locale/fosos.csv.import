@@ -6,10 +6,10 @@ uid="uid://cwh5cu6bu1kgs"
 
 [deps]
 
-files=["res://locale/fosos.es.translation", "res://locale/fosos.en.translation"]
+files=["res://locale/fosos.es.translation", "res://locale/fosos.en.translation", "res://locale/fosos.fr.translation"]
 
 source_file="res://locale/fosos.csv"
-dest_files=["res://locale/fosos.es.translation", "res://locale/fosos.en.translation"]
+dest_files=["res://locale/fosos.es.translation", "res://locale/fosos.en.translation", "res://locale/fosos.fr.translation"]
 
 [params]
 

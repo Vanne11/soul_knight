@@ -6,10 +6,10 @@ uid="uid://ct2e3tdieknry"
 
 [deps]
 
-files=["res://locale/etapas.es.translation", "res://locale/etapas.en.translation"]
+files=["res://locale/etapas.es.translation", "res://locale/etapas.en.translation", "res://locale/etapas.fr.translation"]
 
 source_file="res://locale/etapas.csv"
-dest_files=["res://locale/etapas.es.translation", "res://locale/etapas.en.translation"]
+dest_files=["res://locale/etapas.es.translation", "res://locale/etapas.en.translation", "res://locale/etapas.fr.translation"]
 
 [params]
 

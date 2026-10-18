@@ -64,6 +64,7 @@ G = {
     "R": ["###.", "#..#", "###.", "#.#.", "#..#", "#..#"], "S": [".###", "#...", ".##.", "...#", "...#", "###."],
     "T": ["####", ".#..", ".#..", ".#..", ".#..", ".#.."], "U": ["#..#", "#..#", "#..#", "#..#", "#..#", ".##."],
     "V": ["#...#", "#...#", "#...#", ".#.#.", ".#.#.", "..#.."], "W": ["#...#", "#...#", "#.#.#", "#.#.#", "##.##", "#...#"],
+    "L": ["#...", "#...", "#...", "#...", "#...", "####"],
     ".": ["....", "....", "....", "....", ".##.", ".##."], " ": ["....", "....", "....", "....", "....", "...."],
 }
 GH, GW = 6, 4
@@ -74,14 +75,14 @@ def glyph_pixels(s):
     pts = []
     x = 0
     for ch in s:
-        acc = ch == "Í"
-        g = G["I" if acc else ch]
+        acc = ch in "ÍÉÀ"
+        g = G[{"Í": "I", "É": "E", "À": "A"}.get(ch, ch)]
         for gy in range(GH):
             for gx in range(len(g[0])):
                 if g[gy][gx] == "#":
                     pts.append((x + gx, gy))
         if acc:
-            pts += [(x + 2, -2), (x + 3, -3)]
+            pts += [(x + 1, -3), (x + 2, -2)] if ch == "À" else [(x + 2, -2), (x + 3, -3)]
         x += 3 if ch == " " else len(g[0]) + 1
     return pts
 
@@ -203,6 +204,7 @@ def estante():
 def main():
     save(graffiti("V. ESTUVO AQUÍ"), "graffiti_v_es")
     save(graffiti("V. WAS HERE"), "graffiti_v_en")
+    save(graffiti("V. \u00c9TAIT L\u00c0"), "graffiti_v_fr")
     save(nota(), "nota")
     save(estante(), "estante_archivo")
     print("ok ->", OUT)

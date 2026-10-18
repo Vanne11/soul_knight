@@ -6,10 +6,10 @@ uid="uid://c03dhyieyvae5"
 
 [deps]
 
-files=["res://locale/censura.es.translation", "res://locale/censura.en.translation"]
+files=["res://locale/censura.es.translation", "res://locale/censura.en.translation", "res://locale/censura.fr.translation"]
 
 source_file="res://locale/censura.csv"
-dest_files=["res://locale/censura.es.translation", "res://locale/censura.en.translation"]
+dest_files=["res://locale/censura.es.translation", "res://locale/censura.en.translation", "res://locale/censura.fr.translation"]
 
 [params]
 

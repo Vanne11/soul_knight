@@ -44,9 +44,10 @@ static func pick_index(n: int, floor_n: int, seed_: int, salt: String) -> int:
 	return absi(hash([seed_, floor_n, salt])) % maxi(n, 1)
 
 
-## Graffiti en el idioma actual (es/en).
+## Graffiti en el idioma actual (es/fr/en).
 static func graffiti_tex() -> Texture2D:
-	return tex("graffiti_v_" + ("es" if TranslationServer.get_locale().begins_with("es") else "en"))
+	var loc := TranslationServer.get_locale()
+	return tex("graffiti_v_" + ("es" if loc.begins_with("es") else ("fr" if loc.begins_with("fr") else "en")))
 
 
 ## Archivo Clasificado: 2.ª etapa del Palacio.

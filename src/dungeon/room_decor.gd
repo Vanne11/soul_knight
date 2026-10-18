@@ -135,10 +135,11 @@ static func _tex(name: String) -> Texture2D:
 	return _cache[name]
 
 
-## Carteles con texto pintado: variante en el idioma actual (es; el resto de idiomas usa la en).
+## Carteles con texto pintado: variante en el idioma actual (es, fr; el resto de idiomas usa la en).
 static func _lang_name(name: String) -> String:
 	if name in ["mixto_sign_no", "censura_stamp", "prostata_poster"]:
-		return name + ("_es" if TranslationServer.get_locale().begins_with("es") else "_en")
+		var loc := TranslationServer.get_locale()
+		return name + ("_es" if loc.begins_with("es") else ("_fr" if loc.begins_with("fr") else "_en"))
 	return name
 
 

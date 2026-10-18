@@ -6,10 +6,10 @@ uid="uid://cuomrc2kepv58"
 
 [deps]
 
-files=["res://locale/ia.es.translation", "res://locale/ia.en.translation"]
+files=["res://locale/ia.es.translation", "res://locale/ia.en.translation", "res://locale/ia.es_ES.translation", "res://locale/ia.fr.translation"]
 
 source_file="res://locale/ia.csv"
-dest_files=["res://locale/ia.es.translation", "res://locale/ia.en.translation"]
+dest_files=["res://locale/ia.es.translation", "res://locale/ia.en.translation", "res://locale/ia.es_ES.translation", "res://locale/ia.fr.translation"]
 
 [params]
 

@@ -6,10 +6,10 @@ uid="uid://uhlsi16go47a"
 
 [deps]
 
-files=["res://locale/codex_toast.es.translation", "res://locale/codex_toast.en.translation"]
+files=["res://locale/codex_toast.es.translation", "res://locale/codex_toast.en.translation", "res://locale/codex_toast.fr.translation"]
 
 source_file="res://locale/codex_toast.csv"
-dest_files=["res://locale/codex_toast.es.translation", "res://locale/codex_toast.en.translation"]
+dest_files=["res://locale/codex_toast.es.translation", "res://locale/codex_toast.en.translation", "res://locale/codex_toast.fr.translation"]
 
 [params]
 

@@ -6,10 +6,10 @@ uid="uid://bxgeyvbxpa8lt"
 
 [deps]
 
-files=["res://locale/settings.es.translation", "res://locale/settings.en.translation"]
+files=["res://locale/settings.es.translation", "res://locale/settings.en.translation", "res://locale/settings.fr.translation"]
 
 source_file="res://locale/settings.csv"
-dest_files=["res://locale/settings.es.translation", "res://locale/settings.en.translation"]
+dest_files=["res://locale/settings.es.translation", "res://locale/settings.en.translation", "res://locale/settings.fr.translation"]
 
 [params]
 
