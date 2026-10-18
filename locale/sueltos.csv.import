@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bw1r3aorlyk4q"
+
+[deps]
+
+files=["res://locale/sueltos.es.translation", "res://locale/sueltos.en.translation"]
+
+source_file="res://locale/sueltos.csv"
+dest_files=["res://locale/sueltos.es.translation", "res://locale/sueltos.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
