@@ -20,6 +20,11 @@ var locale := "es"
 var screen_fx := 0
 ## Sacudida de camara y pausa breve al impactar.
 var screen_shake := true
+## --- Bloque movil/tactil (F4) ---
+## Controles tactiles: 0 auto (pantalla tactil o primer toque), 1 siempre, 2 nunca.
+var touch_mode := 0
+## Tamano de la interfaz: 0 normal, 1 grande (por defecto en Android).
+var ui_size := 1 if OS.has_feature("android") else 0
 
 
 func _init() -> void:
@@ -52,6 +57,8 @@ func load_settings() -> void:
 	fullscreen = bool(cfg.get_value("video", "fullscreen", false))
 	screen_fx = clampi(int(cfg.get_value("video", "screen_fx", 0)), 0, 2)
 	screen_shake = bool(cfg.get_value("video", "screen_shake", true))
+	touch_mode = clampi(int(cfg.get_value("touch", "mode", 0)), 0, 2)
+	ui_size = clampi(int(cfg.get_value("touch", "ui_size", ui_size)), 0, 1)
 	var l := str(cfg.get_value("game", "locale", "es"))
 	locale = l if LOCALES.any(func(x): return x[0] == l) else "es"
 
@@ -63,6 +70,8 @@ func save_settings() -> void:
 	cfg.set_value("video", "fullscreen", fullscreen)
 	cfg.set_value("video", "screen_fx", screen_fx)
 	cfg.set_value("video", "screen_shake", screen_shake)
+	cfg.set_value("touch", "mode", touch_mode)
+	cfg.set_value("touch", "ui_size", ui_size)
 	cfg.set_value("game", "locale", locale)
 	cfg.save(PATH)
 
@@ -71,6 +80,7 @@ func apply() -> void:
 	_apply_bus(BUS_MUSIC, music_volume)
 	_apply_bus(BUS_SFX, sfx_volume)
 	_apply_fullscreen()
+	apply_ui_size()
 	TranslationServer.set_locale(locale)
 
 
@@ -100,6 +110,26 @@ func set_screen_fx(mode: int) -> void:
 func set_screen_shake(on: bool) -> void:
 	screen_shake = on
 	save_settings()
+
+
+# ---------------------------------------------------------- movil / tactil
+## Factor de contenido de la ventana por cada tamano de UI (>1 = todo mas grande).
+const UI_SCALES := [1.0, 1.2]
+
+
+func set_touch_mode(mode: int) -> void:
+	touch_mode = clampi(mode, 0, 2)
+	save_settings()
+
+
+func set_ui_size(size: int) -> void:
+	ui_size = clampi(size, 0, 1)
+	apply_ui_size()
+	save_settings()
+
+
+func apply_ui_size() -> void:
+	get_tree().root.content_scale_factor = UI_SCALES[ui_size]
 
 
 func set_locale(code: String) -> void:

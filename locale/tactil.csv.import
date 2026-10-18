@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://ceewyjrl1673v"
+
+[deps]
+
+files=["res://locale/tactil.es.translation", "res://locale/tactil.en.translation"]
+
+source_file="res://locale/tactil.csv"
+dest_files=["res://locale/tactil.es.translation", "res://locale/tactil.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

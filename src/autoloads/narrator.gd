@@ -556,7 +556,9 @@ func _input(event: InputEvent) -> void:
 	var playing := get_tree().get_first_node_in_group("player") != null
 	var click: bool = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT
 	var space: bool = event is InputEventKey and event.physical_keycode == KEY_SPACE
-	if enter or pad or (not playing and (click or space)):
+	# Con controles tactiles se avanza tocando la caja del narrador.
+	var tap: bool = click and playing and TouchControls.is_active() and _panel.get_global_rect().has_point(event.position)
+	if enter or pad or tap or (not playing and (click or space)):
 		# Sin set_input_as_handled: en menus el mismo clic debe pulsar el boton.
 		_advance()
 		if not playing:
