@@ -27,11 +27,6 @@
     "Run {runs}. Hay gente que aprende de sus errores. Y hay héroes con nombre de chiste."
   ],
 
-  "floor_1": ["Piso 1: LA SELVA PÚBICA. Una jungla densa, rizada y sin podar desde la censura. Cuidado con las ladillas: son pequeñas, pero tienen sindicato."],
-  "floor_2": ["Piso 2: PENELANDIA. Todo es alargado, todo es orgulloso y todo huele a desodorante de 3 euros. Aquí manda el Testículo Primordial."],
-  "floor_3": ["Piso 3: VULVANIA. Elegante, cíclica y con muy poca paciencia para turistas. La reina Ovaria II no recibe visitas sin cita previa."],
-  "floor_4": ["Piso 4: EL PERINEO. La tierra de nadie entre los dos reinos. Literalmente. Anatómicamente. Aquí no vive nadie, solo un aduanero con un sello."],
-  "floor_5": ["Piso 5: EL PALACIO DE LA CENSURA. Todo está pixelado. Todo tiene una barra negra encima. Huele a moralina y a pegamento de hoja."],
 
   "room_combat": [
     "Las puertas se cierran. Hay bichos. Ya sabes cómo va esto.",
@@ -89,12 +84,7 @@
     "Baldosas que brillan. Pisa en el mismo orden en que se encienden. Es memoria, no física cuántica. Para ti, lo mismo.",
     "Un acertijo. Las baldosas se encienden en orden; repítelo con los pies. Si lo resuelves, se abre algo secreto. Si no, me río."
   ],
-  "puzzle_fail": [
-    "Mal. Otra vez. Te lo repito despacito, como a un niño. O a un jefe de piso.",
-    "Esa no era. Ni de lejos. Tienes la memoria de un pez borracho."
-  ],
   "puzzle_solved": ["Correcto. Has oído un clic lejano: una sala secreta acaba de abrirse. No te emociones, seguro que hay algo feo dentro."],
-  "door_secret": ["Cerrada a cal y canto. En algún lugar del piso hay baldosas que brillan. Resuélvelo y esto se abre."],
   "kill_first": ["Primera víctima. Era un ciudadano censurado con mala leche. Ahora es un ciudadano censurado sin leche."],
   "kill": ["Uno menos.", "Lo has liberado. Del mundo de los vivos, pero liberado."],
   "kill_streak": ["Cinco seguidos sin que te toquen. ¿Quién eres y qué has hecho con el torpe de antes?"],
