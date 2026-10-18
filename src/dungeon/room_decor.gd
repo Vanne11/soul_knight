@@ -88,6 +88,8 @@ static var _cache: Dictionary = {}
 
 var room: Room
 var kingdom := "neutral"
+var floor_n := 1
+var run_seed := 0
 var _rng := RandomNumberGenerator.new()
 var _size := Vector2.ZERO
 var _under: Node2D   # a ras de suelo y de pared, bajo los actores
@@ -109,6 +111,8 @@ static func build(room_: Room, kingdom_: String, run_seed: int, floor_n: int) ->
 	d.name = "Decor"
 	d.room = room_
 	d.kingdom = kingdom_ if CATALOG.has(kingdom_) else "neutral"
+	d.floor_n = floor_n
+	d.run_seed = run_seed
 	room_.set_meta("decor", d)
 	d._rng.seed = hash([run_seed, floor_n, room_.grid_pos.x, room_.grid_pos.y, "decor"])
 	room_.add_child(d)
@@ -165,6 +169,7 @@ func _populate() -> void:
 		if not (t in NO_COVER):
 			_build_cover()
 	_build_webs(calm)
+	_build_vane_tomo()
 
 
 func _collect_avoid() -> void:
@@ -181,8 +186,43 @@ func _collect_avoid() -> void:
 		_torches.append(Vector2(_size.x - 6.0, (y + 0.5) * TILE))
 
 
+# ------------------------------------------------------------------ guiño a Vanessa (VaneWinks)
+## Archivo Clasificado: en UNA sala hay un estante de tomos tachados con barra negra... y uno
+## que no lo esta ("Manual de Educación Sexual, 2.ª ed. (V.)"). Se hojea con E. Contra el muro de arriba.
+func _build_vane_tomo() -> void:
+	if not VaneWinks.is_archive(floor_n) or room.get_parent() == null:
+		return
+	var list := VaneWinks.candidates(room.get_parent().get_children())
+	if list.is_empty() or list[VaneWinks.pick_index(list.size(), floor_n, run_seed, "tomo")] != room:
+		return
+	var tex := VaneWinks.tex("estante_archivo")
+	if tex == null:
+		return
+	# el estante (64 px) es mas ancho que el hueco entre antorchas: se apoya en un borde de baldosa
+	# (las antorchas cuelgan en los centros) y solo evita puertas, otros adornos y suelo no pisable
+	var spot := {}
+	var cols: Array[int] = []
+	for i in range(1, int(_size.x / TILE)):
+		cols.append(i)
+	for i in range(cols.size() - 1, 0, -1):
+		var j := _rng.randi_range(0, i)
+		var t := cols[i]
+		cols[i] = cols[j]
+		cols[j] = t
+	for c in cols:
+		var r := Rect2(c * TILE - tex.get_width() * 0.5, TOP_FEET - tex.get_height(), tex.get_width(), tex.get_height())
+		if _free_wall(r, true):
+			spot = {"rect": r, "feet": Vector2(c * TILE, TOP_FEET), "wall": 0}
+			break
+	if spot.is_empty():
+		return
+	_taken.append(spot.rect)
+	_add_item(tex, spot, "prop", false)
+	VaneWinks.add_tomo_prompt(room, spot.feet)
+
+
 # ------------------------------------------------------------------ colocacion
-func _free_wall(r: Rect2) -> bool:
+func _free_wall(r: Rect2, ignore_torches := false) -> bool:
 	if not Rect2(Vector2.ZERO, _size).encloses(r):
 		return false
 	# los pies tienen que caer en suelo pisable (forma de sala: recortes, huecos)
@@ -194,6 +234,8 @@ func _free_wall(r: Rect2) -> bool:
 	for o in _taken:
 		if o.grow(3.0).intersects(r):
 			return false
+	if ignore_torches:
+		return true
 	var g := r.grow(10.0)
 	for p in _torches:
 		if g.has_point(p):
