@@ -1,34 +1,102 @@
 {
-  "_info": "Frases de inicio de piso (cada piso, 1a y 2a etapa de cada reino). Evento = floor_<id del piso> (id = nombre del archivo en assets/data/floors sin prefijo ni .json). Sustituyen a floor_1..floor_5 de lines.json, que quedaron sin uso al pasar a 10 pisos.",
-
+  "_info": "Frases de entrada a region. floor_<id del piso> es la general; floor_<id>_<heroe> es la de ese heroe (casa / visita / no corresponde, segun historia.md seccion 5) y la usa Narrator.say_hero. Los ids utero y prostata esperan a que existan esos pisos.",
   "floor_selva_publica": [
-    "LA SELVA PÚBICA. Una jungla densa, rizada y sin podar desde la censura. Cuidado con las ladillas: son pequeñas, pero tienen sindicato."
+    "SELVA PÚBICA. Sin podar desde la Gran Censura. Lo que se mueve es vecino."
+  ],
+  "floor_selva_publica_pitocles": [
+    "SELVA PÚBICA. Aquí nadie respeta rangos ni cascos. Las ladillas, sindicalizadas."
+  ],
+  "floor_selva_publica_vulvalquiria": [
+    "SELVA PÚBICA. Sin podar y sin permiso. Como a ella le gusta."
+  ],
+  "floor_selva_publica_ornitorrinco": [
+    "SELVA PÚBICA. Aquí nadie mira raro al Ornitorrinco. Bueno, los monos."
   ],
   "floor_foliculo_profundo": [
-    "FOLÍCULO PROFUNDO. Más adentro de la selva, donde cada pelo tiene raíz, rencor y representación sindical. Aquí los bichos vienen reforzados. Y al fondo, la cera."
+    "FOLÍCULO PROFUNDO. Cada pelo tiene raíz y rencor. Hay que ir hasta el fondo."
   ],
   "floor_penelandia": [
-    "PENELANDIA. Todo es alargado, todo es orgulloso y todo huele a desodorante de 3 euros. Aquí manda el Testículo Primordial."
+    "PENELANDIA. Todo es alargado, orgulloso y huele a desodorante de oferta."
+  ],
+  "floor_penelandia_pitocles": [
+    "PENELANDIA. Casa. Con una barra negra sobre el penacho."
+  ],
+  "floor_penelandia_vulvalquiria": [
+    "PENELANDIA. Huele a desodorante de oferta y a ganas de discutir."
+  ],
+  "floor_penelandia_ornitorrinco": [
+    "PENELANDIA. Un hoplita confunde al Ornitorrinco con un pato. Aplauden igual."
   ],
   "floor_conducto_deferente": [
-    "CONDUCTO DEFERENTE. Un pasillo estrecho, húmedo y con mucho tráfico. Todo va en una dirección y nadie pregunta adónde. El Testículo Primordial espera al final del túnel."
+    "CONDUCTO DEFERENTE. Túnel estrecho, húmedo y con tráfico. Un solo sentido."
   ],
   "floor_vulvania": [
-    "VULVANIA. Elegante, cíclica y con muy poca paciencia para turistas. La reina Ovaria II no recibe visitas sin cita previa."
+    "VULVANIA. Elegante, cíclica y con poca paciencia para las visitas."
+  ],
+  "floor_vulvania_pitocles": [
+    "VULVANIA. Pitocles pide permiso para pasar. Primera vez en su vida."
+  ],
+  "floor_vulvania_vulvalquiria": [
+    "VULVANIA. Casa. Y alguien tapó la sala de trofeos."
+  ],
+  "floor_vulvania_ornitorrinco": [
+    "VULVANIA. Sirven té al Ornitorrinco y no preguntan nada."
   ],
   "floor_trompas_falopio": [
-    "TROMPAS DE FALOPIO. Dos pasillos largos, curvos y dudosamente iluminados. Su Majestad espera al final del recorrido, con la corona torcida."
+    "TROMPAS DE FALOPIO. Pasillos largos, curvos y mal iluminados. A empujones."
+  ],
+  "floor_utero": [
+    "EL ÚTERO. Cuatro estaciones en un solo cuarto. Todas de mal humor."
+  ],
+  "floor_utero_pitocles": [
+    "EL ÚTERO. Calambres, primera vez. 'No es nada' sí era algo."
+  ],
+  "floor_utero_vulvalquiria": [
+    "EL ÚTERO. Por fin un nivel que no hay que explicar."
+  ],
+  "floor_utero_ornitorrinco": [
+    "EL ÚTERO. El Ornitorrinco pone un huevo. Nadie entiende nada. Todos aplauden."
   ],
   "floor_perineo": [
-    "EL PERINEO. La tierra de nadie entre los dos reinos. Literalmente. Anatómicamente. Aquí no vive nadie, solo un aduanero con un sello."
+    "EL PERINEO. Tierra de nadie entre dos reinos. Hay filas, sellos y papeles."
+  ],
+  "floor_perineo_pitocles": [
+    "EL PERINEO. Piden papeles. Se quedaron con el casco."
+  ],
+  "floor_perineo_vulvalquiria": [
+    "EL PERINEO. Colas. Ella prefiere las esquinas."
+  ],
+  "floor_perineo_ornitorrinco": [
+    "EL PERINEO. Formulario: Sexo ____. El Ornitorrinco se come el bolígrafo."
   ],
   "floor_aduana_interior": [
-    "ADUANA INTERIOR. Ventanillas, colas y formularios por triplicado. Aquí hasta los bichos tienen los papeles en regla. Los tuyos, dudo. El Aduanero lo comprobará."
+    "ADUANA INTERIOR. Ventanillas, colas y formularios por triplicado. Nadie sonríe."
+  ],
+  "floor_prostata": [
+    "LA PRÓSTATA. La zona de la que nadie habla. Aquí también se habla bajito."
+  ],
+  "floor_prostata_pitocles": [
+    "LA PRÓSTATA. Pitocles sabe que existe. Ha preferido no saber más."
+  ],
+  "floor_prostata_vulvalquiria": [
+    "LA PRÓSTATA. ¿Una próstata aquí? Hay otra, y es de ella."
+  ],
+  "floor_prostata_ornitorrinco": [
+    "LA PRÓSTATA. Ni ella ni el Ornitorrinco saben qué son. Se llevan bien."
   ],
   "floor_palacio_censura": [
-    "EL PALACIO DE LA CENSURA. Todo está pixelado. Todo tiene una barra negra encima. Huele a moralina y a pegamento de hoja."
+    "EL PALACIO DE LA CENSURA. Todo pixelado, todo con barra negra. Huele a moralina."
+  ],
+  "floor_palacio_censura_pitocles": [
+    "PALACIO DE LA CENSURA. Pitocles se quita el casco. Sin motivo. Por si acaso."
+  ],
+  "floor_palacio_censura_vulvalquiria": [
+    "PALACIO DE LA CENSURA. Trenzas listas. Paciencia, no."
+  ],
+  "floor_palacio_censura_ornitorrinco": [
+    "PALACIO DE LA CENSURA. El Ornitorrinco no entiende la solemnidad. Hasta que sí."
   ],
   "floor_archivo_clasificado": [
-    "ARCHIVO CLASIFICADO. Estanterías infinitas de expedientes tachados. Todo lo que alguien no quiso que se supiera, por orden alfabético. La Hoja de Parra, al fondo, con su sello."
+    "ARCHIVO CLASIFICADO. Lo que nadie quería saber, en orden alfabético."
   ]
 }
