@@ -22,7 +22,8 @@ var seed: int = 0
 var main_path: Array = []
 var elite_rooms: Array = []
 
-## Salas por piso: de 7 + (piso-1)/3 a 9 + (piso-1)/3 (tope 12); la semilla elige dentro del rango.
+## Salas por piso: de 7 + (piso-1)/3 a 9 + (piso-1)/3 (tope 12), con suelo de 8 (1a etapa) / 9 (2a)
+## para que quepan los combates minimos (3 / 4) junto a secretas y respiro; la semilla elige dentro del rango.
 const MIN_ROOMS := 7
 const MAX_ROOMS := 12
 
@@ -209,8 +210,9 @@ func _connect_rooms(edges: Array) -> void:
 func target_room_count(floor_n: int) -> int:
 	var lo := mini(MIN_ROOMS + (floor_n - 1) / 3, MAX_ROOMS)
 	var hi := mini(9 + (floor_n - 1) / 3, MAX_ROOMS)
-	if RunManager.floor_stage(floor_n) > 1:
-		lo = maxi(lo, MIN_ROOMS + 1)  # la 2a etapa pide 4 combates: con 7 salas no salen
+	# Con menos salas no caben el minimo de combates (3 / 4) mas tienda, secretas y respiro.
+	lo = maxi(lo, MIN_ROOMS + RunManager.floor_stage(floor_n))
+	hi = mini(maxi(hi, lo + 2), MAX_ROOMS)
 	return RNG.randi_range(lo, hi)
 
 ## Elige rects de sala y aristas. Devuelve {rects, edges}. Repite hasta que el grafo tenga
