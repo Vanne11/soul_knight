@@ -90,15 +90,21 @@ static func _assign_phases(main: Node) -> void:
 	if start == null:
 		return
 	var dist: Dictionary = gen._graph_dist(start.grid_pos)
-	var far := 1
+	# las salas (sin la entrada ni la del jefe) ordenadas por distancia en puertas se reparten en 4
+	# tramos iguales: asi salen siempre las 4 fases, aunque el piso sea poco profundo
+	var order: Array = []
 	for pos in gen.rooms:
-		if gen.rooms[pos].room_type != Room.RoomType.BOSS:
-			far = maxi(far, int(dist.get(pos, 0)))
+		var rr: Room = gen.rooms[pos]
+		if rr.room_type not in [Room.RoomType.BOSS, Room.RoomType.START]:
+			order.append(pos)
+	order.sort_custom(func(a, b): return int(dist.get(a, 0)) < int(dist.get(b, 0)))
 	var best_ovulo: Room = null
 	for pos in gen.rooms:
 		var r: Room = gen.rooms[pos]
 		var d := int(dist.get(pos, 0))
-		var p := clampi(int(floor(d * 4.0 / (far + 1.0))), 0, 3)
+		var p := 0
+		if pos in order:
+			p = clampi(int(floor(order.find(pos) * 4.0 / order.size())), 0, 3)
 		if r.room_type == Room.RoomType.BOSS:
 			p = 4
 		r.set_meta("utero_phase", p)
@@ -215,9 +221,9 @@ static func _pick_consulta(main: Node) -> void:
 	var dead: Array = cands.filter(func(r): return gen.room_graph[r.grid_pos].size() == 1)
 	if not dead.is_empty():
 		cands = dead
-	# el piso necesita sus combates: solo si sobra alguno ademas de la Consulta
+	# el piso necesita sus combates: (quedan >= 3 mas el minijefe y el jefe)
 	var fights := gen.rooms.values().filter(func(r): return r.room_type in FIGHT).size()
-	if cands.is_empty() or fights < 5:
+	if cands.is_empty() or fights < 4:
 		return
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([_rm().current_seed, "consulta"])

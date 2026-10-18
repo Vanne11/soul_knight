@@ -4,7 +4,7 @@ extends Node
 ## Uso: godot --path . res://tools/autoplay/autoplay.tscn  [-- --hero=pitocles --seed=123 --fast]
 ## Dinamicas de sala (src/rooms): --force-dyn=<escort|hold|thief|stealth|clock|challenge|celo|lubricado|
 ## aduanera|apagon|censurada|barriles|antorchas|trampas|pacto|ruleta|mercado> las fuerza en toda sala donde
-## quepan; --no-god=1 juega sin modo dios (para medir los peligros de sala); --armed=1 empieza con pistola.
+## quepan; --force-utero=1 abre El Utero (nivel secreto de Vulvania) al pisar Trompas sin comprar el Turno; --no-god=1 juega sin modo dios (para medir los peligros de sala); --armed=1 empieza con pistola.
 ## Se mueve con las acciones reales (move_*, attack, dash, interact), apunta con
 ## Player.aim_override, navega cada sala con una grilla sobre las colisiones reales y
 ## recorre el piso sala por sala hasta el jefe. Lo que lo traba queda en el registro
@@ -73,6 +73,7 @@ func _ready() -> void:
 		set_process(false)
 		return
 	DebugMenu.god_mode = _arg("--no-god=", "") == ""  # --no-god=1: sin modo dios (mide dificultad y peligros de sala)
+	Utero.force = _arg("--force-utero=", "") != ""  # prueba: El Utero se abre solo al pisar Trompas (sin comprar el Turno)
 	RoomDirector.force_kind = _arg("--force-dyn=", "")  # prueba: fuerza esa dinamica de sala en todas las salas donde quepa
 	# para alargar los jefes y ver todos sus desafios: --boss-hp=1,1,12,12,12 (multiplicador por piso)
 	EnemyBoss.test_hp_mults = Array(_arg("--boss-hp=", "1").split(",", false)).map(func(x): return float(x))

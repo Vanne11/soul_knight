@@ -69,7 +69,7 @@ func _process(delta: float) -> void:
 	if _room != null and is_instance_valid(_room):
 		lit = _room.cleared or _room.room_type in main.CALM_ROOMS
 	var want := _target
-	want.a *= 1.0 if lit else 0.35  # mientras la sala siga censurada, solo un asomo de color
+	want.a *= 1.0 if lit else 0.5  # mientras la sala siga censurada, solo un asomo de color
 	if _cur == 0 or _cur == 4:
 		want.a *= 0.88 + 0.12 * sin(_t * 1.7)  # la marea sube y baja
 	_tint.color = _tint.color.lerp(want, clampf(delta * 3.0, 0.0, 1.0))

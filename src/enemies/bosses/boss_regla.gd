@@ -71,7 +71,7 @@ func atk_golpes() -> void:
 	var dir := 1.0 if RNG.randf() < 0.5 else -1.0
 	for i in n:
 		# la primera cae sobre ti; las demas se van desplazando en un sentido y otro
-		var off := 0.0 if i == 0 else gap * ceil(i / 2.0) * (dir if i % 2 == 1 else -dir)
+		var off: float = 0.0 if i == 0 else gap * ceil(i / 2.0) * (dir if i % 2 == 1 else -dir)
 		var z: BossZone
 		if vertical:
 			var x := clampf(base.x + off, a.position.x + 20.0, a.end.x - 20.0)

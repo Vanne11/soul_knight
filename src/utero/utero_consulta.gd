@@ -18,7 +18,7 @@ static func build(main: Node, room: Room) -> void:
 	room.set_meta("consulta_built", true)
 	var visual := UteroConsulta.new()
 	visual.is_open = RunManager.utero_inserted  # (--force-utero o ya abierta)
-	var pos: Vector2 = room.get_center_position() + Vector2(0, -50)
+	var pos: Vector2 = room.get_center_position() + Vector2(0, 40)
 	var prompt := main.tr("UTERO_PROMPT_OPEN") if visual.is_open else main.tr("UTERO_PROMPT_DOOR")
 	main._add_prop(room, pos, visual, prompt, func(_p, it):
 		if visual.is_open:
@@ -43,17 +43,17 @@ static func build(main: Node, room: Room) -> void:
 
 func _ready() -> void:
 	# cartel colgado sobre el arco y subtitulo en el marco
-	_sign = HudStyle.pixel_label(tr("UTERO_SIGN"), 11, Color("3a1a14"), false)
+	_sign = HudStyle.pixel_label(tr("UTERO_SIGN"), 11, Color("f2ead6"), true)
 	_sign.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_sign.position = Vector2(-96, -142)
-	_sign.size = Vector2(192, 36)
+	_sign.position = Vector2(-96, -158)
+	_sign.size = Vector2(192, 28)
 	_sign.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_sign.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	add_child(_sign)
-	_sub = HudStyle.pixel_label(tr("UTERO_SIGN_SUB"), 9, Color("f2ead6"), true)
+	_sub = HudStyle.pixel_label(tr("UTERO_SIGN_SUB"), 9, Color("ff9fb8"), true)
 	_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_sub.position = Vector2(-90, 56)
-	_sub.size = Vector2(180, 24)
+	_sub.position = Vector2(-92, -131)
+	_sub.size = Vector2(184, 22)
 	_sub.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(_sub)
 	set_meta("tall", true)
@@ -76,9 +76,9 @@ func _draw() -> void:
 	# cartel (placa de madera con dos cadenas)
 	draw_line(Vector2(-70, -108), Vector2(-70, -90), dark, 2.0)
 	draw_line(Vector2(70, -108), Vector2(70, -90), dark, 2.0)
-	draw_rect(Rect2(-100, -146, 200, 40), wood_hi)
-	draw_rect(Rect2(-100, -146, 200, 40), dark, false, 3.0)
-	draw_rect(Rect2(-95, -141, 190, 30), Color("e9d9b6"))
+	draw_rect(Rect2(-100, -162, 200, 56), wood_hi)
+	draw_rect(Rect2(-100, -162, 200, 56), dark, false, 3.0)
+	draw_rect(Rect2(-95, -157, 190, 46), Color("3a1a14"))
 	# marco del arco
 	draw_rect(Rect2(-44, -96, 88, 150), wood)
 	draw_rect(Rect2(-44, -96, 88, 150), dark, false, 3.0)
