@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://lpwba6eu433k"
+
+[deps]
+
+files=["res://locale/jefes_cera_dinamica.es.translation", "res://locale/jefes_cera_dinamica.en.translation", "res://locale/jefes_cera_dinamica.es_ES.translation"]
+
+source_file="res://locale/jefes_cera_dinamica.csv"
+dest_files=["res://locale/jefes_cera_dinamica.es.translation", "res://locale/jefes_cera_dinamica.en.translation", "res://locale/jefes_cera_dinamica.es_ES.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

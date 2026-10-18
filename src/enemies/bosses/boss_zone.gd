@@ -8,7 +8,9 @@ class_name BossZone
 ## el aviso se lea siempre, tambien en la penumbra.
 
 enum Shape { CIRCLE, RECT }
-enum Style { NORMAL, BAR, PIXEL, SHIELD, CHANNEL }
+## WAX: zona de PELIGRO con aspecto de cera caliente (charco irregular, burbujas, vapor, borde
+## rojizo; nunca blanco, para no confundirla con lo que hay que TOCAR). Reutilizable por cualquier jefe.
+enum Style { NORMAL, BAR, PIXEL, SHIELD, CHANNEL, WAX }
 
 const CENSOR_UNSHADED := preload("res://src/shaders/censor_unshaded.gdshader")
 const GROUP := "boss_hazard"
@@ -83,6 +85,8 @@ func _ready() -> void:
 		n = n.get_parent()
 	_room = n
 	_sync_censor()
+	if style == Style.WAX:
+		material = null  # el peligro conserva su color aunque la sala siga censurada (gris)
 	if style == Style.PIXEL or style == Style.BAR:
 		z_index = 40  # por encima de actores y balas
 	elif style == Style.SHIELD or style == Style.CHANNEL:
@@ -163,6 +167,8 @@ func _draw() -> void:
 			_draw_channel()
 		Style.BAR:
 			_draw_bar()
+		Style.WAX:
+			_draw_wax()
 		_:
 			_draw_normal()
 
@@ -292,3 +298,81 @@ func _draw_channel() -> void:
 		var sz2 := f.get_string_size(label2, HORIZONTAL_ALIGNMENT_LEFT, -1, 15)
 		draw_string_outline(f, Vector2(clampf(-sz2.x * 0.5, 16.0 - sx, 1264.0 - sx - sz2.x), y), label2, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, 4, Color(0, 0, 0))
 		draw_string(f, Vector2(clampf(-sz2.x * 0.5, 16.0 - sx, 1264.0 - sx - sz2.x), y), label2, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color(0.95, 0.95, 0.8))
+
+
+# ------------------------------------------------------------------ estilo WAX (cera caliente)
+const WAX_HOT := Color(1.0, 0.6, 0.1)
+const WAX_CORE := Color(1.0, 0.86, 0.32)
+const WAX_EDGE := Color(0.5, 0.1, 0.04)
+
+
+## Contorno irregular (no un circulo perfecto) de la zona, escalado por `k`; ondula con `wt`.
+func _wax_pts(k: float, wt: float) -> PackedVector2Array:
+	var pts := PackedVector2Array()
+	if shape == Shape.CIRCLE:
+		for i in 30:
+			var a := TAU * i / 30.0
+			var wob := 1.0 + 0.07 * sin(a * 3.0 + _seed + wt) + 0.04 * sin(a * 5.0 - _seed * 2.0 + wt * 1.3)
+			pts.append(Vector2.RIGHT.rotated(a) * radius * k * wob)
+		return pts
+	var h := size * 0.5 * k
+	var step := 26.0
+	var corners := [Vector2(-h.x, -h.y), Vector2(h.x, -h.y), Vector2(h.x, h.y), Vector2(-h.x, h.y)]
+	for e in 4:
+		var a0: Vector2 = corners[e]
+		var a1: Vector2 = corners[(e + 1) % 4]
+		var n := maxi(int(a0.distance_to(a1) / step), 1)
+		var nrm := (a1 - a0).orthogonal().normalized()
+		for j in n:
+			var q := a0.lerp(a1, float(j) / n)
+			pts.append(q + nrm * (4.0 * sin(j * 1.9 + e * 2.3 + _seed + wt)) * k)
+	return pts
+
+
+func _draw_wax() -> void:
+	var pulse := 0.5 + 0.5 * sin(t * 20.0)
+	if shape == Shape.RECT and size.y <= 12.0:
+		# linea de punteria: roja anaranjada, sin blanco
+		draw_rect(Rect2(-size * 0.5, size), Color(1.0, 0.3, 0.1, 0.45 + 0.4 * pulse))
+		return
+	var wt := Time.get_ticks_msec() * 0.002
+	if phase == 0:
+		var p := clampf(t / maxf(warn, 0.01), 0.0, 1.0)
+		var full := _wax_pts(1.0, wt * 0.5)
+		# la cera se va derramando: crece desde el centro hasta el contorno de aviso
+		draw_colored_polygon(_wax_pts(0.2 + 0.8 * p, wt * 0.5), Color(WAX_HOT, 0.28 + 0.4 * p))
+		draw_colored_polygon(full, Color(WAX_HOT, 0.08 + 0.12 * p))
+		var closed := full.duplicate()
+		closed.append(full[0])
+		draw_polyline(closed, Color(WAX_EDGE.lerp(Color(1.0, 0.25, 0.08), pulse), 0.75 + 0.25 * pulse), 4.0)
+		return
+	if phase == 1:
+		var pts := _wax_pts(1.0, wt * 2.0)
+		draw_colored_polygon(pts, Color(WAX_HOT, 0.88))
+		draw_colored_polygon(_wax_pts(0.62, wt * 3.0), Color(WAX_CORE, 0.8))
+		var closed := pts.duplicate()
+		closed.append(pts[0])
+		draw_polyline(closed, WAX_EDGE, 4.0)
+		var ext := Vector2(radius, radius) if shape == Shape.CIRCLE else size * 0.5
+		# burbujas que revientan
+		for i in 7:
+			var life := fposmod(t * 1.3 + i * 0.37, 1.0)
+			var bp := Vector2(sin(i * 12.9 + _seed) * ext.x * 0.7, cos(i * 7.3 + _seed) * ext.y * 0.7)
+			draw_arc(bp, 3.0 + 9.0 * life, 0.0, TAU, 12, Color(WAX_EDGE, 0.8 * (1.0 - life)), 2.0)
+		# vapor
+		for i in 4:
+			var life := fposmod(t * 0.8 + i * 0.25, 1.0)
+			var sp := Vector2(sin(i * 5.1 + _seed) * ext.x * 0.5, -life * 55.0)
+			draw_circle(sp, 10.0 + 14.0 * life, Color(1.0, 0.9, 0.8, 0.14 * (1.0 - life)))
+		return
+	# se enfria: opaca y con grietas
+	var a := 1.0 - clampf(t / maxf(fade, 0.01), 0.0, 1.0)
+	var cp := _wax_pts(1.0, 0.0)
+	draw_colored_polygon(cp, Color(0.86, 0.68, 0.4, 0.85 * a))
+	var ex := Vector2(radius, radius) if shape == Shape.CIRCLE else size * 0.5
+	for i in 5:
+		var a0 := _seed + i * 1.7
+		draw_line(Vector2(cos(a0), sin(a0)) * ex * 0.15, Vector2(cos(a0 + 0.5), sin(a0 + 0.5)) * ex * 0.8, Color(WAX_EDGE, 0.8 * a), 2.0)
+	var closed2 := cp.duplicate()
+	closed2.append(cp[0])
+	draw_polyline(closed2, Color(WAX_EDGE, a), 3.0)
