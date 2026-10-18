@@ -53,9 +53,9 @@ Misma estructura: quiere / defecto / voz / arco / final. Las reacciones por rein
 **Ornitorrinco** (fauna salvaje de la Selva; "No especifica"; sin alergias, sin reino; electrorrecepción, huevo-trampa, espolón venenoso)
 - Quiere: que le dejen de preguntar qué es. Nadie lo acepta; lo confunden con un pato.
 - Defecto: no tiene ambición ni explicación; si algo sale mal se encoge de pico.
-- Voz: no habla. Solo "Ñic." y mímica; el narrador lo "traduce" mal con cara seria ("Dice que está de acuerdo. Nadie le consultó."). Nunca usar él/ella para este personaje: repetir "el Ornitorrinco" o "el animal".
+- Voz: habla poco y siempre existencial, de cuarta pared (idea de Nico, etapa 4b: "¿Soy un personaje o un error del código?", "La autora me dibujó apurada."). Su sonido es "Ñic."; cuando no habla, el narrador lo "traduce" mal con cara seria ("Dice que está de acuerdo. Nadie le consultó."). Nunca usar él/ella para este personaje: repetir "el Ornitorrinco" o "el animal".
 - Arco: la Hoja intentó censurarlo y no supo qué tapar. Recorre todo el mundo y en cada reino lo clasifican mal; consigue que dejen de hacerlo sin cambiar nada de sí.
-- Final: en el nuevo formulario del censo aparece la casilla "Otro: Ornitorrinco". Medio mundo la marca, para ser como él. Él se va a la Selva a dormir.
+- Final: en el nuevo formulario del censo aparece la casilla "Otro: Ornitorrinco". Medio mundo la marca, para ser como él. El Ornitorrinco se va a la Selva a dormir.
 
 ## 5. Rutas y reacciones
 La dificultad sigue la POSICIÓN en la ruta, no el reino. Cada héroe despierta en su casa, que ya está gris, y va al Palacio.
