@@ -2,24 +2,24 @@ keys,es,en,es_ES,fr
 FLOOR_1_NAME,LA SELVA PÚBICA,THE PUBIC JUNGLE,,LA JUNGLE PUBIENNE
 FLOOR_1_SHORT,LA SELVA PÚBICA,THE PUBIC JUNGLE,,LA JUNGLE PUBIENNE
 ENEMY_PELO_ENCARNADO_NAME,Pelo Encarnado,Ingrown Hair,,Poil Incarné
-ENEMY_GRANITO_NAME,Granito Rencoroso,Spiteful Zit,,Bouton Rancunier
+ENEMY_GRANITO_NAME,Granito Rencoroso,Spiteful Zit,,Petit Bouton Rancunier
 ENEMY_LADILLA_NAME,Ladilla,Crab Louse,,Morpion
-ENEMY_ESPINILLA_NAME,Espinilla Reventona,Bursting Pimple,,Pustule Explosive
+ENEMY_ESPINILLA_NAME,Espinilla Reventona,Bursting Pimple,,Bouton Explosif
 ENEMY_CLAMIDIA_NAME,Clamidia Clandestina,Clandestine Chlamydia,,Chlamydia Clandestine
-ENEMY_VPH_NAME,VPH Verrugón,Big Wart HPV,,Gros VPH Verruqueux
+ENEMY_VPH_NAME,VPH Verrugón,Big Wart HPV,,HPV Verruqueux
 ENEMY_HUINCHA_NAME,Huincha de Medir,Tape Measure,Cinta Métrica,Mètre Ruban
-ENEMY_MITO_MANO_NAME,Mano Peluda,Hairy Palm,,Main Poilue
+ENEMY_MITO_MANO_NAME,Mano Peluda,Hairy Palm,,Mythe : la Main Poilue
 BOSS_CERA_NAME,DOÑA CERA CALIENTE,MADAME HOT WAX,,MADAME CIRE CHAUDE
 FLOOR_2_NAME,PENELANDIA,PENELAND,,PÉNISLANDIE
 FLOOR_2_SHORT,PENELANDIA,PENELAND,,PÉNISLANDIE
 ENEMY_TESTICULO_NAME,Testículo Errante,Wandering Testicle,,Testicule Errant
-ENEMY_VESICULA_NAME,Vesícula Resentida,Resentful Vesicle,,Vésicule Rancunière
+ENEMY_VESICULA_NAME,Vesícula Resentida,Resentful Vesicle,,Vésicule Aigrie
 ENEMY_ESPERMATOZOIDE_NAME,Espermatozoide,Sperm Cell,,Spermatozoïde
 ENEMY_HERPES_NAME,Herpes Recurrente,Recurring Herpes,,Herpès Récurrent
-ENEMY_GONORREA_NAME,Gonorrea Goteante,Dripping Gonorrhea,,Chaude-Pisse Dégoulinante
+ENEMY_GONORREA_NAME,Gonorrea Goteante,Dripping Gonorrhea,,Gonorrhée Goutte-à-goutte
 ENEMY_SONDA_NAME,Sonda Uretral,Urethral Probe,,Sonde Urétrale
-ENEMY_EGO_INFLADO_NAME,Ego Inflado,Inflated Ego,,Ego Surgonflé
-ENEMY_MITO_MARCHA_NAME,Marcha Atrás,Pulling Out,,Marche Arrière
+ENEMY_EGO_INFLADO_NAME,Ego Inflado,Inflated Ego,,Ego Gonflé
+ENEMY_MITO_MARCHA_NAME,Marcha Atrás,Pulling Out,,Mythe : la Marche Arrière
 BOSS_TESTICULO_PRIMORDIAL_NAME,TESTÍCULO PRIMORDIAL,PRIMORDIAL TESTICLE,,LE TESTICULE PRIMORDIAL
 FLOOR_3_NAME,VULVANIA,VULVANIA,,VULVANIE
 FLOOR_3_SHORT,VULVANIA,VULVANIA,,VULVANIE
@@ -28,13 +28,13 @@ ENEMY_TROMPA_NAME,Trompa Escupidora,Spitting Fallopian,,Trompe Cracheuse
 ENEMY_CALAMBRE_NAME,Calambre,Cramp,,Crampe
 ENEMY_ESPECULO_NAME,Espéculo Mordedor,Biting Speculum,,Spéculum Mordeur
 ENEMY_DILDO_ELECTRICO_NAME,Dildo Eléctrico,Electric Dildo,,Godemichet Électrique
-ENEMY_MITO_HIMEN_NAME,Himen-Certificador,Hymen Certifier,,Hymen-Certificateur
+ENEMY_MITO_HIMEN_NAME,Himen-Certificador,Hymen Certifier,,Mythe : l'Hymen-Certificateur
 BOSS_REINA_OVARIA_NAME,SU MAJESTAD OVARIA II,HER MAJESTY OVARIA II,,SA MAJESTÉ OVARIA II
 FLOOR_4_NAME,EL PERINEO,THE PERINEUM,,LE PÉRINÉE
 FLOOR_4_SHORT,EL PERINEO,THE PERINEUM,,LE PÉRINÉE
 ENEMY_HEMORROIDE_NAME,Hemorroide Fronteriza,Border Hemorrhoid,,Hémorroïde Frontalière
 ENEMY_INSPECTOR_FLUIDOS_NAME,Inspector de Fluidos,Fluid Inspector,,Inspecteur des Fluides
-ENEMY_PELUSA_PERINEAL_NAME,Pelusa Perineal,Perineal Fluff,,Bourre Périnéale
+ENEMY_PELUSA_PERINEAL_NAME,Pelusa Perineal,Perineal Fluff,,Mouton Périnéal
 ENEMY_SIFILIS_NAME,Sífilis Imitadora,Imitator Syphilis,,Syphilis Imitatrice
 ENEMY_DEDO_NAME,Dedo del Urólogo,Urologist's Finger,,Doigt de l'Urologue
 ENEMY_GRAN_UROLOGO_NAME,El Gran Urólogo,The Great Urologist,,Le Grand Urologue

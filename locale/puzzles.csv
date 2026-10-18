@@ -8,10 +8,10 @@ PZ_MUSH_3,verde,green,,vert
 PZ_KEY_CRYSTAL_NAME,Llave de Cristal,Crystal Key,,Clé de Cristal
 PZ_KEY_CRYSTAL_DESC,Cristal líquido. Brilla como si le diera miedo algo.,Liquid crystal. It glimmers as if it were afraid of something.,,Cristal liquide. Elle brille comme si quelque chose lui faisait peur.
 PZ_KEY_CRYSTAL_TAKEN,La llevas contigo. Con cuidado.,You carry it with you. Carefully.,,Tu l'emportes. Avec précaution.
-PZ_KEY_DRUNK_NAME,Llave Borracha,Drunken Key,,Clé Bourrée
+PZ_KEY_DRUNK_NAME,Llave Borracha,Drunken Key,,Clé Rouillée
 PZ_KEY_DRUNK_DESC,Oxidada y con olor a taberna. Se resbala sola.,"Rusty, smells of tavern. It keeps slipping away.",,Rouillée et sentant la taverne. Elle glisse toute seule.
 PZ_KEY_DRUNK_TAKEN,Agarrada con la firmeza de un borracho.,Held with a drunkard's firm grip.,Cogida con la firmeza de un borracho.,Tenue avec la fermeté d'un ivrogne.
-PZ_KEY_BLOOD_NAME,Llave de Sangre,Blood Key,,Clé de Sang
+PZ_KEY_BLOOD_NAME,Llave de Sangre,Blood Key,,Clé Imbibée de Sang
 PZ_KEY_BLOOD_DESC,Todavía está tibia.,It is still warm.,,Elle est encore tiède.
 PZ_KEY_BLOOD_TAKEN,Pagada con tu propia sangre.,Paid for with your own blood.,,Payée de ton propre sang.
 PZ_KEY_MASTER_NAME,Llave Maestra,Master Key,,Clé Maîtresse
