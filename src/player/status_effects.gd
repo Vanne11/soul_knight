@@ -207,7 +207,8 @@ func _physics_process(delta: float) -> void:
 					dt += MASH_STEP
 		if k == "enganchado" and dashing:
 			dt += 99.0
-		var src: Node = _src.get(k, null)
+		var src_v = _src.get(k, null)  # sin tipo: asignar un nodo ya liberado a una var Node da error
+		var src: Node = src_v if is_instance_valid(src_v) else null
 		if k == "esposado" or k == "enganchado":
 			if src == null or not is_instance_valid(src) or float(src.get("current_health")) <= 0.0:
 				dt += 99.0  # el dueno murio: se acabo

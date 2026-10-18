@@ -73,7 +73,7 @@ func _physics_process(delta: float) -> void:
 		pl.move_and_collide(-pl.velocity * SLOW * delta)
 		if not pl.has_meta("sticky_" + kingdom):
 			pl.set_meta("sticky_" + kingdom, true)  # el nombre sale la primera vez de la partida
-			get_node("/root/GlobalEvents").show_floating_text.emit(pl.global_position + Vector2(0, -34), tr(NAME_KEYS[kingdom]), LOOKS[kingdom].hi)
+			get_node("/root/GlobalEvents").show_floating_text.emit(pl.global_position + Vector2(0, -34), tr(NAME_KEYS.get(kingdom, NAME_KEYS.neutral)), LOOKS.get(kingdom, LOOKS.neutral).hi)
 	for e in get_tree().get_nodes_in_group("enemy"):
 		if e is CharacterBody2D and room.is_ancestor_of(e) and float(e.get("current_health")) > 0.0 and _inside(e.global_position):
 			var k := BOSS_SLOW if e.is_in_group("boss") else SLOW
