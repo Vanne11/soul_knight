@@ -113,7 +113,7 @@ PROP_FOUNTAIN_TOAST_BODY,Vida y estamina al máximo.,Health and stamina maxed ou
 PROP_INSCRIPTION,[color=#c08cff][b]Inscripción antigua[/b][/color]\n[font_size=13]Alguien grabó algo aquí antes de la censura.[/font_size]\n[color=#b08d4a][E] Leer[/color],[color=#c08cff][b]Ancient inscription[/b][/color]\n[font_size=13]Someone carved something here before the censorship.[/font_size]\n[color=#b08d4a][E] Read[/color]
 PROP_INSCRIPTION_SAY,INSCRIPCIÓN: [b]%s.[/b] %s,INSCRIPTION: [b]%s.[/b] %s
 NARRATOR_NAME,NARRADOR,NARRATOR
-NARRATOR_HINT,▶ clic / espacio,▶ click / space
+NARRATOR_HINT,▶ Enter,▶ Enter
 NARRATOR_LORE_UNLOCKED,Lore desbloqueado: %s,Lore unlocked: %s
 SHOP_BUY,[E] Comprar por %d monedas,[E] Buy for %d coins
 SHOP_POOR,Cuesta %d monedas. Tienes %d.,Costs %d coins. You have %d.

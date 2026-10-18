@@ -402,12 +402,18 @@ func _input(event: InputEvent) -> void:
 		return
 	if not _panel.visible or not event.is_pressed() or event.is_echo():
 		return
+	# Jugando, el texto se pasa con Enter (o Select en el mando): espacio y clic son dash y disparo
+	# y no deben comerse. Fuera de la partida (menus, sin heroe) tambien sirven clic y espacio.
+	var enter: bool = event is InputEventKey and event.physical_keycode in [KEY_ENTER, KEY_KP_ENTER]
+	var pad: bool = event is InputEventJoypadButton and event.button_index == JOY_BUTTON_BACK
+	var playing := get_tree().get_first_node_in_group("player") != null
 	var click: bool = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT
 	var space: bool = event is InputEventKey and event.physical_keycode == KEY_SPACE
-	if click or space:
+	if enter or pad or (not playing and (click or space)):
 		# Sin set_input_as_handled: en menus el mismo clic debe pulsar el boton.
 		_advance()
-		_ate_input_ms = Time.get_ticks_msec()
+		if not playing:
+			_ate_input_ms = Time.get_ticks_msec()
 
 
 # ---------------------------------------------------------------- eventos
