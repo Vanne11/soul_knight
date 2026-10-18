@@ -207,7 +207,8 @@ func _physics_process(delta: float) -> void:
 					dt += MASH_STEP
 		if k == "enganchado" and dashing:
 			dt += 99.0
-		var src: Node = _src.get(k, null)
+		var src_v = _src.get(k, null)  # sin tipo: asignar un nodo ya liberado a una var Node da error
+		var src: Node = src_v if is_instance_valid(src_v) else null
 		if k == "esposado" or k == "enganchado":
 			if src == null or not is_instance_valid(src) or float(src.get("current_health")) <= 0.0:
 				dt += 99.0  # el dueno murio: se acabo
@@ -281,7 +282,8 @@ func _draw_cage() -> void:
 
 
 func _draw_cuffs() -> void:
-	var src: Node = _src.get("esposado", null)
+	var src_v = _src.get("esposado", null)
+	var src: Node = src_v if is_instance_valid(src_v) else null
 	var gold := Color("ff7ac0")
 	draw_circle(Vector2(-14, 4), 5.0, Color("23202c"))
 	draw_circle(Vector2(14, 4), 5.0, Color("23202c"))
@@ -307,7 +309,8 @@ func _draw_gag() -> void:
 
 
 func _draw_leash() -> void:
-	var src: Node = _src.get("enganchado", null)
+	var src_v = _src.get("enganchado", null)
+	var src: Node = src_v if is_instance_valid(src_v) else null
 	if src == null or not is_instance_valid(src):
 		return
 	var to := to_local(src.global_position + Vector2(0, -8))
