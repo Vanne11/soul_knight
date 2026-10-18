@@ -229,18 +229,19 @@ func _format(line: String, args: Dictionary) -> String:
 ## (original o alternativo), con mayusculas normales: "Doña Cera Caliente".
 func _boss_name(final: bool) -> String:
 	var rm := get_node("/root/RunManager")
-	var floors: Array = RunManager.FLOORS
+	var total := RunManager.route_size()  # la ruta del heroe (el ultimo piso NO es el ultimo archivo)
 	var n: int = rm.current_floor
 	var fd: Dictionary = rm.floor_data()
 	if final:
-		n = floors.size()
-		fd = floors[n - 1]
+		n = total
+		fd = RunManager.floor_at(n)
 	elif not RunManager.floor_has_boss(n):
 		# 1a etapa: el jefe del reino es el del piso siguiente de la misma region
-		for i in range(n, floors.size()):
-			if floors[i].region == fd.region and str(floors[i].boss) != "":
-				fd = floors[i]
-				n = i + 1
+		for i in range(n + 1, total + 1):
+			var nf := RunManager.floor_at(i)
+			if nf.region == fd.region and str(nf.boss) != "":
+				fd = nf
+				n = i
 				break
 	if str(fd.get("boss", "")) == "":
 		return ""

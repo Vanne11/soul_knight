@@ -10,7 +10,8 @@ extends Node
 ## main._generate_enemy_data_for_room (elites, escalado, ITS... igual que antes).
 ##
 ## ---------------------------------------------------------------------------------
-## CURVA (tabla CURVE, por numero de piso 1..10; "etapa 2" = pisos pares)
+## CURVA (tabla CURVE, por posicion 1..10; _curve() la estira al largo real de la ruta: el ultimo
+## piso es siempre la fila 10, con 10 pisos la tabla sale tal cual)
 ##   p_waves  probabilidad de 1 / 2 / 3 oleadas (se sortea con la semilla, RNG del juego)
 ##   mult     multiplica la cantidad de bichos de hoy (RNG.randi_range(2,4) + depth_i), asi el
 ##            total sube de a poco y repartido (nunca x3 de golpe)
@@ -173,8 +174,22 @@ static func make_plan(pool: Array, floor_n: int, soft: bool, can_ambush: bool) -
 	return out
 
 
+## Fila de la curva para el piso n de la ruta. La tabla esta escrita para 10 pisos; con una ruta de
+## otro largo (11 con la Prostata, 12 con el Utero) se estira: el ultimo piso es el 10 de la tabla y
+## los intermedios se interpolan (con 10 pisos sale la tabla tal cual).
 static func _curve(floor_n: int) -> Dictionary:
-	return CURVE[clampi(floor_n, 1, 10)]
+	var total := maxi(RunManager.route_size(), 2)
+	var pos := 1.0 + 9.0 * float(clampi(floor_n, 1, total) - 1) / float(total - 1)
+	var lo := clampi(int(floorf(pos)), 1, 10)
+	var hi := mini(lo + 1, 10)
+	var k := pos - float(lo)
+	var a: Dictionary = CURVE[lo]
+	var b: Dictionary = CURVE[hi]
+	var pw: Array = []
+	for i in 3:
+		pw.append(lerpf(float(a.p_waves[i]), float(b.p_waves[i]), k))
+	return {"p_waves": pw, "mult": lerpf(float(a.mult), float(b.mult), k),
+		"form": lerpf(float(a.form), float(b.form), k), "amb": lerpf(float(a.amb), float(b.amb), k)}
 
 
 ## Puerta por la que entraste: la mas cercana al jugador si esta cerca (si entraste "de
