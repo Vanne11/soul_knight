@@ -64,6 +64,8 @@ var _thing_cur: Node = null
 var _thing_t := 0.0  # instance_id -> true (interactuables ya usados)
 var _grid := {}  # Vector2i -> true si se puede pisar
 var _grid_t := 0.0
+var _in_fallback := false
+var _grid_open := {}  # la rejilla sin las zonas de peligro: si ellas parten la sala, se cruza igual (el bot juega en modo dios)
 var _path: Array[Vector2] = []
 var _path_goal := Vector2.INF
 var _path_t := 0.0
@@ -959,6 +961,7 @@ func _build_grid(room: Room) -> void:
 			q.transform = Transform2D(0, p)
 			if space.intersect_shape(q, 1).is_empty():
 				_grid[Vector2i(x, y)] = true
+	_grid_open = _grid.duplicate()
 	_avoid_hazards(room)
 
 
@@ -1038,6 +1041,15 @@ func _find_path(from: Vector2, to: Vector2) -> Array[Vector2]:
 			queue.append(n)
 	var out: Array[Vector2] = []
 	if not prev.has(b):
+		if not _grid_open.is_empty() and _grid_open.size() != _grid.size() and not _in_fallback:
+			# los peligros (fuego, pinchos...) cortan la sala en dos: el camino cruza por encima, como haria un jugador
+			var keep := _grid
+			_grid = _grid_open
+			_in_fallback = true
+			var alt := _find_path(from, to)
+			_in_fallback = false
+			_grid = keep
+			return alt
 		out.append(to)
 		return out
 	var k := b
@@ -1117,7 +1129,10 @@ func _watch_stuck(delta: float, room: Room, enemies: Array) -> void:
 			_unstick_n = 0
 		return
 	_still_t += delta
-	if _still_t > 3.0 and _unstick_t <= 0.0 and _unstick_n < 8 and _alive_enemies(room).is_empty():
+	# con enemigos vivos tambien: quieto 5 s empujando una pared no es esquivar (el Granito Rencoroso de una sala en L
+	# se quedo atras de una esquina y el bot, pegado a la otra pared, 3 min sin moverse)
+	var free_to_move := _alive_enemies(room).is_empty() or (_still_t > 5.0 and room.room_type != Room.RoomType.BOSS)
+	if _still_t > 3.0 and _unstick_t <= 0.0 and _unstick_n < 8 and free_to_move:
 		_unstick_n += 1
 		_unstick_t = 1.6
 		_unstick_dir = Vector2.RIGHT.rotated(randf() * TAU)
@@ -1188,6 +1203,8 @@ func _on_stall(room: Room, enemies: Array) -> void:
 		_say("    diag: objeto %s en %s (local %s) celda_libre=%s distancia=%.0f zonas_peligro=%d clase=%s monitorable=%s jugador=%s" % [
 			_thing_name(_goal_ref), gp, gp - room.global_position, _grid.has(_cell(gp)), gp.distance_to(player.global_position), zs.size(),
 			_goal_ref.get_class(), _goal_ref.get("monitorable"), player.global_position])
+	if _stall_n == 1 and not enemies.is_empty():
+		_say("    diag: sala dinamica=%s zonas_peligro=%d celdas=%d (sin peligros %d) camino_al_enemigo=%d puntos sendero_actual=%s meta=%s inmovil=%.0f s" % [room.get_meta("dynamic") if room.has_meta("dynamic") else "-", RoomUtil.hazard_zones(get_tree()).size(), _grid.size(), _grid_open.size(), _find_path(player.global_position, enemies[0].global_position).size(), _path.slice(0, 3), _path_goal, _still_t])
 	if _stall_n == 1:
 		for e in enemies:
 			_say("    diag: " + _diag_enemy(room, e))
