@@ -1,45 +1,45 @@
 keys,es,en,es_ES,fr
-NARR_ROOMS__RM_CELO_0,"Sala en celo. Los bichos están a mil, y no por ti.","A room in heat. The critters are all worked up, and not over you.",,
-NARR_ROOMS__RM_LUBRICADO_0,El suelo está lubricado. No pregunto con qué. Tú tampoco.,The floor is lubricated. I won't ask with what. Neither should you.,,
-NARR_ROOMS__RM_ADUANERA_0,Una aduana en plena mazmorra. Burocracia: el único monstruo que nunca muere.,A customs post in the middle of a dungeon. Bureaucracy: the only monster that never dies.,,
-NARR_ROOMS__RM_ADUANERA_ASK_0,El aduanero te mira de arriba abajo. Con demasiado detalle.,The customs officer looks you up and down. In far too much detail.,,
-NARR_ROOMS__RM_ADUANERA_PAID_0,"Mordida pagada. El sistema funciona, si tienes con qué.","Bribe paid. The system works, if you can afford it.",,
-NARR_ROOMS__RM_ADUANERA_FIGHT_0,"¿Pelear contra la burocracia? Valiente. Inútil, pero valiente.","Fighting bureaucracy? Brave. Pointless, but brave.",,
-NARR_ROOMS__RM_APAGON_0,Se fue la luz. Momento ideal para que todo te toque.,The lights went out. Perfect time for everything to touch you.,,
-NARR_ROOMS__RM_CENSURADA_0,"Barras negras por todas partes. Lo que no se ve, no existe.",Black bars everywhere. What can't be seen doesn't exist.,,
-NARR_ROOMS__RM_ESCORT_0,"Un óvulo a escoltar. Frágil, y con todo el futuro por delante. Qué presión.","An egg to escort. Fragile, with its whole future ahead. What pressure.",,
-NARR_ROOMS__RM_ESCORT_1,"Escolta. Tú pegas tiros, el óvulo camina y yo opino. Reparto justo.","Escort duty. You shoot, the egg walks and I comment. A fair split.",,
-NARR_ROOMS__RM_ESCORT_OK_0,"Entregado. La trompa está encantada. Se le nota en la... bueno, en toda ella.","Delivered. The tube is delighted. You can tell by the... well, all of it.",,
-NARR_ROOMS__RM_ESCORT_FAIL_0,"Se rompió el óvulo. Tu primera vez como padre, se nota.","The egg broke. Your first time as a parent, it shows.",,
-NARR_ROOMS__RM_HOLD_0,"La fiesta. Aguanta 45 segundos. La música es mala; los invitados, peores.","The party. Hold out 45 seconds. Bad music, worse guests.",,
-NARR_ROOMS__RM_HOLD_OK_0,Fin de la fiesta. Te dejan una botella y mal aliento.,Party's over. They leave you a bottle and bad breath.,,
-NARR_ROOMS__RM_THIEF_0,Una ladilla con buena cara. Va a por tu cartera.,A louse with a friendly face. She's after your wallet.,,
-NARR_ROOMS__RM_THIEF_STOLE_0,Te robó una ladilla. Ni los parásitos te respetan.,A louse robbed you. Not even parasites respect you.,,
-NARR_ROOMS__RM_THIEF_CAUGHT_0,"Atrapada. El dinero vuelve a tu bolsillo, que es donde mejor está.","Caught. The money goes back in your pocket, which is where it belongs.",,
-NARR_ROOMS__RM_THIEF_ESCAPED_0,Se escapó. Te espera en la sala de al lado. Las ladillas se quedan.,She got away. She'll wait next door. Lice always stick around.,,
-NARR_ROOMS__RM_THIEF_AGAIN_0,"Otra vez ella. Con el mismo descaro y las mismas monedas, que son tuyas.","Her again. With the same nerve and the same coins, which are yours.",,
-NARR_ROOMS__RM_THIEF_LOST_0,Se fue con tu dinero. Lo gastará en cera. Nadie se libra de la cera.,She left with your money. She'll spend it on wax. Nobody escapes the wax.,,
-NARR_ROOMS__RM_STEALTH_0,Sigilo. Linternas por todos lados. Hace años que nadie te alumbraba tanto.,Stealth. Flashlights everywhere. Nobody has shone this much light on you in years.,,
-NARR_ROOMS__RM_STEALTH_OK_0,"Ni se enteraron. Qué orgullo. Un orgullo discreto, claro.","They never noticed. How proud. A discreet pride, of course.",,
-NARR_ROOMS__RM_STEALTH_ALARM_0,Te vieron. Tanto sigilo para terminar rodeado de gente.,They saw you. All that stealth to end up surrounded by people.,,
-NARR_ROOMS__RM_CLOCK_0,La Censura entra pintándolo todo de gris. Corre. O mata. O las dos.,The Censorship walks in painting everything grey. Run. Or kill. Or both.,,
-NARR_ROOMS__RM_CLOCK_OK_0,A tiempo. La Censura retrocede avergonzada. Se le nota.,"Just in time. The Censorship retreats, embarrassed. It shows.",,
-NARR_ROOMS__RM_CLOCK_FAIL_0,Te alcanzó. Todo gris. Tu dignidad ya venía descolorida.,It caught you. All grey. Your dignity was already faded.,,
-NARR_ROOMS__RM_CHALLENGE_0,"Un reto. Yo propongo, tú sufres, el premio te lo pongo yo. Sistema perfecto.","A challenge. I propose, you suffer, I hand out the prize. Perfect system.",,
-NARR_ROOMS__RM_CHALLENGE_OK_0,Lo cumpliste. Anoto: una (1) sorpresa agradable en toda la partida.,You did it. Noting down: one (1) pleasant surprise this entire run.,,
-NARR_ROOMS__RM_CHALLENGE_FAIL_0,Fallaste. Lo esperaba. El pesimismo casi siempre acierta.,You failed. I expected it. Pessimism is almost always right.,,
-NARR_ROOMS__RM_BARRELS_0,"Barriles rojos. Rojo significa peligro, o vino. Hoy, peligro.","Red barrels. Red means danger, or wine. Today, danger.",,
-NARR_ROOMS__RM_TORCHES_0,Antorchas en el techo. Quizá debiste mirarlas antes. Esquiva ahora.,Torches in the ceiling. You might have looked sooner. Dodge now.,,
-NARR_ROOMS__RM_TRAPS_0,"Trampas. Con aviso, que no soy un monstruo. Los bichos no leen.","Traps. With a warning, because I'm no monster. The critters can't read.",,
-NARR_ROOMS__RM_PACT_0,"Una oferta de la Hoja. Cuando Su Pudorosidad ofrece algo, lee la letra chica.","An offer from the Fig Leaf. When Her Modesty offers something, read the fine print.",,
-NARR_ROOMS__RM_PACT_OFFER_0,"Poder a cambio de un costo. Nadie regala nada, ni las hojas.","Power in exchange for a cost. Nobody gives anything away, not even leaves.",,
-NARR_ROOMS__RM_PACT_DONE_0,Pacto sellado. No hace falta firmar: yo te lo recuerdo.,Pact sealed. No signature needed: I'll do the reminding.,,
-NARR_ROOMS__RM_PACT_NO_0,"Te largas sin pactar. Prudente. Aburrido, pero prudente.","You leave without a pact. Prudent. Boring, but prudent.",,
-NARR_ROOMS__RM_ROULETTE_0,"Un vendedor ambulante con gabardina. No es lo que piensas. Bueno, sí lo es.","A peddler in a trench coat. It's not what you think. Well, yes it is.",,
-NARR_ROOMS__RM_ROULETTE_ASK_0,La ruleta del preservativo. Único juego donde ganar es que nada se rompa.,The condom roulette. The only game where winning means nothing broke.,,
-NARR_ROOMS__RM_ROULETTE_WIN_0,Intacto. Ganas. Que no se te suba a la cabeza.,Intact. You win. Don't let it go to your head.,,
-NARR_ROOMS__RM_ROULETTE_JACKPOT_0,¡Premio gordo! Extra grande. Eso siempre da suerte.,Jackpot! Extra large. That always brings luck.,,
-NARR_ROOMS__RM_ROULETTE_LOSE_0,"Pinchado. Pierdes. Confía en la protección, no en el vendedor.","Punctured. You lose. Trust the protection, not the seller.",,
-NARR_ROOMS__RM_MARKET_0,Mercado negro. Cobran en sangre. Al menos no piden factura.,Black market. They charge in blood. At least nobody asks for a receipt.,,
-NARR_ROOMS__RM_MARKET_BUY_0,Comprado con sangre. Tibio. Lo más íntimo que has hecho en la partida.,Bought with blood. Warm. The most intimate thing you've done all run.,,
-NARR_ROOMS__RM_MARKET_POOR_0,Sin sangre suficiente. Ni los vampiros dan fiado.,Not enough blood left. Not even vampires give credit.,,
+NARR_ROOMS__RM_CELO_0,"Sala en celo. Los bichos están a mil, y no por ti.","A room in heat. The critters are all worked up, and not over you.",,"Salle en chaleur. Les bestioles sont à fond, et pas pour toi."
+NARR_ROOMS__RM_LUBRICADO_0,El suelo está lubricado. No pregunto con qué. Tú tampoco.,The floor is lubricated. I won't ask with what. Neither should you.,,Le sol est lubrifié. Je ne demande pas avec quoi. Toi non plus.
+NARR_ROOMS__RM_ADUANERA_0,Una aduana en plena mazmorra. Burocracia: el único monstruo que nunca muere.,A customs post in the middle of a dungeon. Bureaucracy: the only monster that never dies.,,Une douane en plein donjon. La bureaucratie : le seul monstre immortel.
+NARR_ROOMS__RM_ADUANERA_ASK_0,El aduanero te mira de arriba abajo. Con demasiado detalle.,The customs officer looks you up and down. In far too much detail.,,Le douanier te toise de haut en bas. Avec trop de détails.
+NARR_ROOMS__RM_ADUANERA_PAID_0,"Mordida pagada. El sistema funciona, si tienes con qué.","Bribe paid. The system works, if you can afford it.","Soborno pagado. El sistema funciona, si tienes con qué.","Pot-de-vin payé. Le système marche, si tu as de quoi."
+NARR_ROOMS__RM_ADUANERA_FIGHT_0,"¿Pelear contra la burocracia? Valiente. Inútil, pero valiente.","Fighting bureaucracy? Brave. Pointless, but brave.",,"Se battre contre la bureaucratie ? Courageux. Inutile, mais courageux."
+NARR_ROOMS__RM_APAGON_0,Se fue la luz. Momento ideal para que todo te toque.,The lights went out. Perfect time for everything to touch you.,,Plus de courant. Moment idéal pour que tout te tombe dessus.
+NARR_ROOMS__RM_CENSURADA_0,"Barras negras por todas partes. Lo que no se ve, no existe.",Black bars everywhere. What can't be seen doesn't exist.,,Des barres noires partout. Ce qu'on ne voit pas n'existe pas.
+NARR_ROOMS__RM_ESCORT_0,"Un óvulo a escoltar. Frágil, y con todo el futuro por delante. Qué presión.","An egg to escort. Fragile, with its whole future ahead. What pressure.",,"Un ovule à escorter. Fragile, avec tout l'avenir devant lui. Quelle pression."
+NARR_ROOMS__RM_ESCORT_1,"Escolta. Tú pegas tiros, el óvulo camina y yo opino. Reparto justo.","Escort duty. You shoot, the egg walks and I comment. A fair split.","Escolta. Tú disparas, el óvulo camina y yo opino. Reparto justo.","Escorte. Toi, tu tires, l'ovule marche, moi je commente. Partage équitable."
+NARR_ROOMS__RM_ESCORT_OK_0,"Entregado. La trompa está encantada. Se le nota en la... bueno, en toda ella.","Delivered. The tube is delighted. You can tell by the... well, all of it.",,"Livré. La trompe est enchantée. Ça se voit à son... enfin, à tout son être."
+NARR_ROOMS__RM_ESCORT_FAIL_0,"Se rompió el óvulo. Tu primera vez como padre, se nota.","The egg broke. Your first time as a parent, it shows.",,"L'ovule s'est brisé. Ta première fois en tant que père, ça se sent."
+NARR_ROOMS__RM_HOLD_0,"La fiesta. Aguanta 45 segundos. La música es mala; los invitados, peores.","The party. Hold out 45 seconds. Bad music, worse guests.",,"La fête. Tiens 45 secondes. La musique est nulle ; les invités, pires."
+NARR_ROOMS__RM_HOLD_OK_0,Fin de la fiesta. Te dejan una botella y mal aliento.,Party's over. They leave you a bottle and bad breath.,,Fin de la fête. On te laisse une bouteille et une haleine de chacal.
+NARR_ROOMS__RM_THIEF_0,Una ladilla con buena cara. Va a por tu cartera.,A louse with a friendly face. She's after your wallet.,,Un morpion bien élevé. Il vise ton portefeuille.
+NARR_ROOMS__RM_THIEF_STOLE_0,Te robó una ladilla. Ni los parásitos te respetan.,A louse robbed you. Not even parasites respect you.,,Un Morpion t'a volé. Même les parasites te manquent de respect.
+NARR_ROOMS__RM_THIEF_CAUGHT_0,"Atrapada. El dinero vuelve a tu bolsillo, que es donde mejor está.","Caught. The money goes back in your pocket, which is where it belongs.",,"Attrapé. L'argent retourne dans ta poche, là où il est le mieux."
+NARR_ROOMS__RM_THIEF_ESCAPED_0,Se escapó. Te espera en la sala de al lado. Las ladillas se quedan.,She got away. She'll wait next door. Lice always stick around.,,"Il s'est échappé. Il t'attend dans la salle d'à côté. Les morpions, ça colle."
+NARR_ROOMS__RM_THIEF_AGAIN_0,"Otra vez ella. Con el mismo descaro y las mismas monedas, que son tuyas.","Her again. With the same nerve and the same coins, which are yours.",,"Encore lui. Avec le même culot et les mêmes pièces, qui sont à toi."
+NARR_ROOMS__RM_THIEF_LOST_0,Se fue con tu dinero. Lo gastará en cera. Nadie se libra de la cera.,She left with your money. She'll spend it on wax. Nobody escapes the wax.,,Il part avec ton argent. Il le dépensera en cire. Nul n'échappe à la cire.
+NARR_ROOMS__RM_STEALTH_0,Sigilo. Linternas por todos lados. Hace años que nadie te alumbraba tanto.,Stealth. Flashlights everywhere. Nobody has shone this much light on you in years.,,Infiltration. Des lampes partout. Nul ne t'éclairait autant depuis des années.
+NARR_ROOMS__RM_STEALTH_OK_0,"Ni se enteraron. Qué orgullo. Un orgullo discreto, claro.","They never noticed. How proud. A discreet pride, of course.",,"Ils n'ont rien vu. Quelle fierté. Une fierté discrète, bien sûr."
+NARR_ROOMS__RM_STEALTH_ALARM_0,Te vieron. Tanto sigilo para terminar rodeado de gente.,They saw you. All that stealth to end up surrounded by people.,,On t'a vu. Tant de discrétion pour finir entouré de monde.
+NARR_ROOMS__RM_CLOCK_0,La Censura entra pintándolo todo de gris. Corre. O mata. O las dos.,The Censorship walks in painting everything grey. Run. Or kill. Or both.,,La Censure entre en tout peignant en gris. Cours. Ou tue. Ou les deux.
+NARR_ROOMS__RM_CLOCK_OK_0,A tiempo. La Censura retrocede avergonzada. Se le nota.,"Just in time. The Censorship retreats, embarrassed. It shows.",,"À temps. La Censure recule, honteuse. Ça se voit."
+NARR_ROOMS__RM_CLOCK_FAIL_0,Te alcanzó. Todo gris. Tu dignidad ya venía descolorida.,It caught you. All grey. Your dignity was already faded.,,Elle t'a rattrapé. Tout est gris. Ta dignité était déjà délavée.
+NARR_ROOMS__RM_CHALLENGE_0,"Un reto. Yo propongo, tú sufres, el premio te lo pongo yo. Sistema perfecto.","A challenge. I propose, you suffer, I hand out the prize. Perfect system.",,"Un défi. Je propose, tu souffres, et la récompense, c'est moi. Système parfait."
+NARR_ROOMS__RM_CHALLENGE_OK_0,Lo cumpliste. Anoto: una (1) sorpresa agradable en toda la partida.,You did it. Noting down: one (1) pleasant surprise this entire run.,,Réussi. Je note : une (1) bonne surprise sur toute la partie.
+NARR_ROOMS__RM_CHALLENGE_FAIL_0,Fallaste. Lo esperaba. El pesimismo casi siempre acierta.,You failed. I expected it. Pessimism is almost always right.,,Raté. Je m'y attendais. Le pessimisme tombe presque toujours juste.
+NARR_ROOMS__RM_BARRELS_0,"Barriles rojos. Rojo significa peligro, o vino. Hoy, peligro.","Red barrels. Red means danger, or wine. Today, danger.",,"Des tonneaux rouges. Rouge veut dire danger, ou vin. Aujourd'hui, danger."
+NARR_ROOMS__RM_TORCHES_0,Antorchas en el techo. Quizá debiste mirarlas antes. Esquiva ahora.,Torches in the ceiling. You might have looked sooner. Dodge now.,,Des torches au plafond. Tu aurais dû les regarder avant. Esquive maintenant.
+NARR_ROOMS__RM_TRAPS_0,"Trampas. Con aviso, que no soy un monstruo. Los bichos no leen.","Traps. With a warning, because I'm no monster. The critters can't read.",,"Des pièges. Préavis donné, je ne suis pas un monstre. Les bestioles, illettrées."
+NARR_ROOMS__RM_PACT_0,"Una oferta de la Hoja. Cuando Su Pudorosidad ofrece algo, lee la letra chica.","An offer from the Fig Leaf. When Her Modesty offers something, read the fine print.","Una oferta de la Hoja. Cuando Su Pudorosidad ofrece algo, lee la letra pequeña.","Une offre de la Feuille. Quand Sa Pudibonderie offre, lis les petits caractères."
+NARR_ROOMS__RM_PACT_OFFER_0,"Poder a cambio de un costo. Nadie regala nada, ni las hojas.","Power in exchange for a cost. Nobody gives anything away, not even leaves.",,"Du pouvoir contre un prix. Personne n'offre rien, pas même les feuilles."
+NARR_ROOMS__RM_PACT_DONE_0,Pacto sellado. No hace falta firmar: yo te lo recuerdo.,Pact sealed. No signature needed: I'll do the reminding.,,Pacte scellé. Pas besoin de signer : je te le rappellerai.
+NARR_ROOMS__RM_PACT_NO_0,"Te largas sin pactar. Prudente. Aburrido, pero prudente.","You leave without a pact. Prudent. Boring, but prudent.",,"Tu t'en vas sans pacte. Prudent. Ennuyeux, mais prudent."
+NARR_ROOMS__RM_ROULETTE_0,"Un vendedor ambulante con gabardina. No es lo que piensas. Bueno, sí lo es.","A peddler in a trench coat. It's not what you think. Well, yes it is.",,"Un camelot en imperméable. Ce n'est pas ce que tu crois. Enfin, si."
+NARR_ROOMS__RM_ROULETTE_ASK_0,La ruleta del preservativo. Único juego donde ganar es que nada se rompa.,The condom roulette. The only game where winning means nothing broke.,,"La roulette du préservatif. Le seul jeu où gagner, c'est que rien ne craque."
+NARR_ROOMS__RM_ROULETTE_WIN_0,Intacto. Ganas. Que no se te suba a la cabeza.,Intact. You win. Don't let it go to your head.,,Intact. Tu gagnes. Ne te monte pas à la tête.
+NARR_ROOMS__RM_ROULETTE_JACKPOT_0,¡Premio gordo! Extra grande. Eso siempre da suerte.,Jackpot! Extra large. That always brings luck.,,Gros lot ! Taille XL. Ça porte toujours chance.
+NARR_ROOMS__RM_ROULETTE_LOSE_0,"Pinchado. Pierdes. Confía en la protección, no en el vendedor.","Punctured. You lose. Trust the protection, not the seller.",,"Percé. Tu perds. Fais confiance à la protection, pas au vendeur."
+NARR_ROOMS__RM_MARKET_0,Mercado negro. Cobran en sangre. Al menos no piden factura.,Black market. They charge in blood. At least nobody asks for a receipt.,,"Marché noir. On paie en sang. Au moins, pas de facture."
+NARR_ROOMS__RM_MARKET_BUY_0,Comprado con sangre. Tibio. Lo más íntimo que has hecho en la partida.,Bought with blood. Warm. The most intimate thing you've done all run.,,Payé en sang. Tiède. Le truc le plus intime que tu aies fait de la partie.
+NARR_ROOMS__RM_MARKET_POOR_0,Sin sangre suficiente. Ni los vampiros dan fiado.,Not enough blood left. Not even vampires give credit.,,Pas assez de sang. Même les vampires ne font pas crédit.
