@@ -56,6 +56,15 @@ var _shadow: Sprite2D = null
 var _shadow_scale := Vector2.ONE
 var _shadow_pos := Vector2.ZERO
 var _landed := false
+var _queue: Array[StringName] = []
+var _prev_state := -1
+var _tele_t := 0.0
+var _tele_n := 0
+var _rel_t := -99.0
+var _rel_v := ""
+var _next_blink := 2.0
+var _next_gesture := 7.0
+var _tele_est := {"attack_tiron": 0.9, "attack_salpicadura": 0.45, "attack_cruz": 0.95, "attack_embestida": 0.85, "attack": 0.65}
 
 
 ## Agrega el animador al jefe si su SpriteFrames tiene variantes por fase o animaciones nuevas.
@@ -112,8 +121,8 @@ func _find_shadow() -> void:
 		_shadow_pos = _shadow.position
 
 
-func _on_telegraph(_secs: float = 0.0) -> void:
-	_start_variant()
+func _on_telegraph(secs: float = 0.0) -> void:
+	_start_variant(secs)
 
 
 func _on_released(_n = null) -> void:
@@ -164,25 +173,56 @@ func _swap_frames(sf: SpriteFrames) -> void:
 			spr.frame = mini(f, sf.get_frame_count(a) - 1)
 
 
-func _play(a: StringName) -> void:
-	if spr.animation != a and spr.sprite_frames.has_animation(a):
+func _play(a: StringName, scale := 1.0) -> void:
+	if not spr.sprite_frames.has_animation(a):
+		return
+	if spr.animation != a:
+		spr.speed_scale = scale
 		spr.play(a)
-	elif spr.animation == a and not spr.is_playing() and spr.sprite_frames.get_animation_loop(a):
+	elif not spr.is_playing() and spr.sprite_frames.get_animation_loop(a):
 		spr.play(a)
 
 
-## Elige la variante de aviso segun lo que el jefe marco con set_meta("atk", ...).
-func _start_variant() -> void:
+## Reproduce una secuencia: la primera ahora y el resto al terminar cada una.
+func _play_seq(list: Array) -> void:
+	_queue.clear()
+	if list.is_empty():
+		return
+	spr.speed_scale = 1.0
+	spr.play(list[0])
+	for i in range(1, list.size()):
+		_queue.append(StringName(list[i]))
+
+
+func _advance_queue() -> void:
+	if not _queue.is_empty() and not spr.is_playing():
+		var a: StringName = _queue.pop_front()
+		spr.speed_scale = 1.0
+		spr.play(a)
+
+
+## Elige la animacion de aviso segun el ataque en curso y la estira para que dure lo que dura el aviso:
+## con la senal telegraph_started(secs) usa secs; sin ella, la duracion medida en los avisos anteriores
+## del mismo ataque (arranca con el valor de Cera y se corrige sola). Nunca en bucle: queda en el ultimo
+## cuadro de carga hasta soltar.
+func _start_variant(secs := 0.0) -> void:
 	var atk := str(boss.get_meta("atk", str(boss._last_attack).trim_prefix("atk_")))
 	atk = {"charge": "embestida"}.get(atk, atk)
 	var v := "attack_" + atk if atk != "" else "attack"
-	if not spr.sprite_frames.has_animation(v):
-		v = "attack"
+	if not spr.sprite_frames.has_animation(v) or (atk == "tiron" and _tele_n >= 1):
+		v = "attack"  # el manotazo final del tiron usa la carga generica
+	_tele_n += 1
 	_variant = v
 	_released = false
 	_shaking = false
 	_zero_frames = 0
+	_queue.clear()
+	var est: float = secs if secs > 0.05 else float(_tele_est.get(v, 0.65))
+	var frames := spr.sprite_frames.get_frame_count(v)
+	var fps := spr.sprite_frames.get_animation_speed(v)
+	spr.speed_scale = clampf(float(frames) / (fps * est), 0.25, 3.0)
 	spr.play(v)
+	_tele_t = _t
 
 
 func _release() -> void:
@@ -191,25 +231,61 @@ func _release() -> void:
 	_released = true
 	var v := _variant
 	_variant = ""
+	var measured := _t - _tele_t
+	if measured > 0.15 and measured < 2.0:
+		_tele_est[v] = lerpf(float(_tele_est.get(v, measured)), measured, 0.7)
+	_rel_t = _t
+	_rel_v = v
 	_lean_v += 7.0  # latigazo hacia delante
 	_squash_v -= 5.0
-	if v == "attack_cruz":
-		return  # la cruz sigue girando: se queda en su bucle
-	var rel := "release_spit" if v == "attack_salpicadura" else "release"
-	if v == "attack_embestida":
-		rel = "charge"
-	if spr.sprite_frames.has_animation(rel):
-		spr.play(rel)
-		_hold_until = _t + 0.25
+	match v:
+		"attack_cruz":
+			_play_seq([&"cross_spin"])
+		"attack_embestida":
+			_play_seq([&"charge"])
+		"attack_salpicadura":
+			_play_seq([&"release_spit", &"spitting"])
+		"attack_tiron":
+			_play_seq([&"release", &"drag"])  # si falla, el estado TIRED lo cambia por "stuck"
+		_:
+			_play_seq([&"release"])
+
+
+func _on_state_change(from: int, to: int) -> void:
+	if to == EnemyBoss.State.ATTACK:
+		_tele_n = 0
+		_variant = ""
+	if to == EnemyBoss.State.TIRED:
+		_variant = ""
+		var stunned := bool(boss.get_meta("stunned", false))
+		if stunned:
+			_play_seq([&"stun_in", &"tired"])
+			_squash_v += 4.0
+		elif _rel_v == "attack_tiron" and _t - _rel_t < 0.6:
+			_play_seq([&"stuck"])  # la tira quedo pegada y forcejea
+		elif spr.animation == &"charge" or boss.velocity.length() > 150.0:
+			_play_seq([&"brake", &"recover"])
+		else:
+			_play_seq([&"recover_in", &"recover"])
+	elif from == EnemyBoss.State.TIRED or to == EnemyBoss.State.IDLE:
+		_queue.clear()
+		spr.speed_scale = 1.0
+
+
+const SPECIAL_ATTACK_ANIMS := [&"release", &"release_spit", &"spitting", &"cross_spin", &"charge", &"drag"]
 
 
 func _pick_animation() -> void:
 	var st := boss.state
 	var speed := boss.velocity.length()
+	if st != _prev_state:
+		_on_state_change(_prev_state, st)
+		_prev_state = st
 	if boss._channeling:
 		_variant = ""
 		_play(&"channel")
 		return
+	_advance_queue()
 	match st:
 		EnemyBoss.State.INTRO:
 			if spr.animation != &"intro":
@@ -218,15 +294,13 @@ func _pick_animation() -> void:
 			_variant = ""
 			_play(&"idle")
 		EnemyBoss.State.TIRED:
-			_variant = ""
-			_play(&"tired")
+			if _queue.is_empty() and not spr.is_playing():
+				_play(&"recover" if not bool(boss.get_meta("stunned", false)) else &"tired")
 		EnemyBoss.State.IDLE:
 			_variant = ""
-			if _t < _hold_until or (spr.animation == &"hurt" and spr.is_playing()):
-				return
-			_play(&"walk" if speed > 12.0 else &"idle")
+			_idle_life(speed)
 		EnemyBoss.State.ATTACK:
-			if spr.animation == &"attack":  # el jefe acaba de empezar un aviso
+			if spr.animation == &"attack" and _variant != "attack":  # el jefe acaba de empezar un aviso
 				_start_variant()
 			if _variant != "" and not _released and not _sig_release:
 				if absf(spr.offset.x) > 0.001:
@@ -236,13 +310,44 @@ func _pick_animation() -> void:
 					_zero_frames += 1
 					if _zero_frames >= 2:
 						_release()
-			if _variant == "" and _t >= _hold_until:
-				if speed > 250.0:
-					_play(&"charge")
-				elif not spr.animation.begins_with("attack") and spr.animation not in [&"release", &"release_spit", &"charge"]:
-					_play(&"walk" if speed > 12.0 else &"idle")
-				elif spr.animation == &"charge" and speed < 120.0:
-					_play(&"idle")
+			# tras soltar, la animacion de golpe se queda en su ultimo cuadro hasta que acabe el ataque
+			if _variant == "" and spr.animation not in SPECIAL_ATTACK_ANIMS and not spr.animation.begins_with("attack"):
+				spr.speed_scale = clampf(speed / 90.0, 0.6, 1.7) if speed > 12.0 else 1.0
+				_play(&"walk" if speed > 12.0 else &"idle")
+
+
+var _gesture_playing := false
+
+
+## Reposo con vida: parpadeo al azar, gestos (revolver la cera, impaciencia si la haces correr),
+## velocidad de idle que respira y walk que sigue la velocidad real.
+func _idle_life(speed: float) -> void:
+	if _t < _hold_until or (spr.animation == &"hurt" and spr.is_playing()):
+		return
+	if speed > 12.0:
+		_queue.clear()
+		_play(&"walk")
+		spr.speed_scale = clampf(speed / 90.0, 0.6, 1.7)
+		return
+	var a := spr.animation
+	if a in [&"blink", &"idle_stir", &"idle_impatient"] and spr.is_playing():
+		return
+	if a != &"idle":
+		if not _queue.is_empty() and not spr.is_playing():
+			return
+		_queue.clear()
+		_play(&"idle")
+		_next_blink = _t + randf_range(1.2, 3.0)
+		return
+	spr.speed_scale = 0.85 + 0.2 * sin(_t * 0.7 + 1.3) + 0.05 * sin(_t * 2.3)
+	if _t >= _next_gesture:
+		_next_gesture = _t + randf_range(6.0, 12.0)
+		var far := boss.target != null and is_instance_valid(boss.target) and boss.global_position.distance_to(boss.target.global_position) > 330.0
+		var g: StringName = &"idle_impatient" if (far or randf() < 0.4) else &"idle_stir"
+		_play_seq([g, &"idle"])
+	elif _t >= _next_blink:
+		_next_blink = _t + randf_range(2.2, 5.0)
+		_play_seq([&"blink", &"idle"])
 
 
 # ---------------------------------------------------------------- movimiento por codigo
@@ -269,7 +374,7 @@ func _motion(dt: float) -> void:
 		if _variant == "attack_embestida":
 			_lean_goal = -0.26
 	elif boss.state == EnemyBoss.State.TIRED:
-		_lean_goal = 0.1  # cabeza gacha
+		_lean_goal = 0.12 if bool(boss.get_meta("stunned", false)) else 0.15 + 0.03 * sin(_t * 6.0)  # cabeza gacha / jadeando
 	elif spr.animation == &"charge":
 		_lean_goal = 0.28
 	elif speed > 12.0:
@@ -309,14 +414,23 @@ func _motion(dt: float) -> void:
 func _hit_reaction() -> void:
 	var hp := boss.current_health
 	if _prev_hp >= 0.0 and hp < _prev_hp - 0.01:
-		_squash_v += 2.5
+		var bd: Dictionary = boss.get_meta("bd", {})
+		var weak := str(bd.get("kind", "")) == "weak"
+		var match_now := bool(bd.get("match_now", false))
 		var away := Vector2.RIGHT if (boss.target == null or boss.target.global_position.x > boss.global_position.x) else Vector2.LEFT
-		_recoil = -away * 3.0
-		_lean_v -= 3.0
+		var k := 1.0
+		if match_now:
+			k = 4.0  # MATCH: reaccion enorme
+		elif weak:
+			k = 2.2  # "LE DUELE": se nota mas
+		_squash_v += 2.5 * k
+		_recoil = -away * 3.0 * k
+		_lean_v -= 3.0 * k
+		# el retroceso de cuadros no corta ataques ni la recuperacion: solo en reposo
 		var big := (_prev_hp - hp) > boss.max_health * 0.03
-		if big and _hurt_cd <= 0.0 and boss.state == EnemyBoss.State.IDLE and not boss._channeling:
-			_hurt_cd = 0.8
-			spr.play("hurt")
+		if (big or weak) and _hurt_cd <= 0.0 and boss.state == EnemyBoss.State.IDLE and not boss._channeling:
+			_hurt_cd = 0.5
+			_play_seq([&"hurt"])
 	_prev_hp = hp
 
 

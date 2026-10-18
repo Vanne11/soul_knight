@@ -104,9 +104,28 @@ func _run() -> void:
 			if t >= 0.8 and atk == &"atk_charge":
 				boss.velocity = Vector2(420, 0) if t < 1.3 else Vector2.ZERO)
 		boss.velocity = Vector2.ZERO
-	# tired
-	boss.state = EnemyBoss.State.TIRED
-	await _clip("tired", 1.4, 0.18)
+	# agotada (tras su propio ataque: recupera el aliento) vs aturdida (la aturde el jugador: mareo)
+	boss.state = EnemyBoss.State.IDLE
+	await get_tree().process_frame
+	boss._tire(2.0)
+	await _clip("recover", 2.0, 0.2)
+	boss.state = EnemyBoss.State.IDLE
+	await get_tree().process_frame
+	boss._stun(2.0)
+	await _clip("tired", 2.0, 0.2)
+	# tiron fallido: la tira queda pegada y forcejea
+	boss.state = EnemyBoss.State.IDLE
+	await get_tree().process_frame
+	boss._last_attack = &"atk_tiron"
+	boss.state = EnemyBoss.State.ATTACK
+	boss.animated_sprite.play("attack")
+	await _clip("tiron_fallo", 2.4, 0.15, func(t):
+		boss.animated_sprite.offset.x = sin(t * 90.0) * 2.0 if t < 0.9 else 0.0
+		if t >= 1.0 and boss.state == EnemyBoss.State.ATTACK:
+			boss._tire(1.4))
+	# reposo largo: parpadeo y gestos
+	boss.state = EnemyBoss.State.IDLE
+	await _clip("reposo_largo", 14.0, 0.5)
 	# channel
 	boss.state = EnemyBoss.State.IDLE
 	boss._channeling = true
