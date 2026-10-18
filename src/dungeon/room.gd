@@ -267,6 +267,10 @@ func spawn_enemies(enemy_data: Array[Dictionary], seal := true, positions: Array
 		return
 
 	var use_pos := not positions.is_empty()
+	var used_spots: Array[Vector2] = []
+	for e in enemies_spawned:  # oleadas: tampoco encima de los que ya estan en la sala
+		if is_instance_valid(e) and e is Node2D and e.is_inside_tree() and float(e.get("current_health")) > 0.0:
+			used_spots.append((e as Node2D).global_position)
 	if not use_pos:
 		RNG.shuffle(spawn_points)  # Array.shuffle() usa el azar global: misma semilla, mazmorra distinta
 
@@ -296,10 +300,37 @@ func spawn_enemies(enemy_data: Array[Dictionary], seal := true, positions: Array
 			Affixes.attach(enemy, data.get("affixes", []))  # afijos de elite (src/enemies/affixes)
 			
 			enemies_spawned.append(enemy)
-			_add_enemy_deferred(enemy, snap_global((positions[i] if use_pos else spawn_points[i]) + Vector2(g * 28, (g % 2) * 24), 22.0))
+			var at := _free_spawn_spot(snap_global((positions[i] if use_pos else spawn_points[i]) + Vector2(g * 28, (g % 2) * 24), 22.0), used_spots)
+			used_spots.append(at)
+			_add_enemy_deferred(enemy, at)
 	
 	if enemies_spawned.size() > 0 and seal:
 		seal_doors()
+
+const SPAWN_GAP := 34.0
+
+
+## Punto de aparicion libre: si otro enemigo ya nacio ahi (varios puntos caian en el mismo borde de
+## suelo al ajustarlos a una sala con forma) busca en anillos crecientes un sitio pisable a SPAWN_GAP.
+## Dos cuerpos que nacen encimados se separan a patadas de fisica y salen disparados a traves de los muros.
+func _free_spawn_spot(at: Vector2, used: Array[Vector2]) -> Vector2:
+	if not _spot_taken(at, used):
+		return at
+	for ring in range(1, 9):
+		var r := SPAWN_GAP * ring
+		for k in 8 * ring:
+			var cand := snap_global(at + Vector2.from_angle(TAU * k / (8.0 * ring)) * r, 22.0)
+			if not _spot_taken(cand, used):
+				return cand
+	return at
+
+
+func _spot_taken(at: Vector2, used: Array[Vector2]) -> bool:
+	for u in used:
+		if u.distance_to(at) < SPAWN_GAP:
+			return true
+	return false
+
 
 ## Walks up the tree to the owning Room, so spawned nodes end up inside the
 ## room they belong to instead of relying on get_tree().current_scene.
