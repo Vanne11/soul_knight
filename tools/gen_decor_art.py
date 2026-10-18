@@ -491,6 +491,35 @@ def bush(variant):
     return outline(padded(im))
 
 
+def bosom_bush():
+    """Guiño: matorral con dos lobulos grandes de pecho y su pezon en cada uno (70x50)."""
+    w, h = 70, 50
+    rng = random.Random(777)
+    pal = GREENS["b"]
+    r = h * 0.36
+    lobes = [(w * 0.3, h - r - 2, r), (w * 0.7, h - r - 2, r),   # el par, delante
+             (w * 0.5, h - r * 1.55, r * 0.72), (w * 0.14, h - r * 0.7, r * 0.6), (w * 0.86, h - r * 0.7, r * 0.6)]
+    im = lobe_mound(w, h, lobes, pal, rng, 0.18)
+    leaf_tips(im, pal, rng, 6, int(h * 0.45))
+    leaf_marks(im, pal, rng, 60)
+    for cx in (w * 0.3, w * 0.7):
+        nipple(im, int(cx + 3), int(h - r * 0.95))  # un poco abajo y a la derecha del centro del lobulo
+    return outline(padded(im))
+
+
+def nipple(im, cx, cy):
+    """Areola rosada con borde mas oscuro, pezon y un brillo de 1 px."""
+    px = im.load()
+    for y in range(cy - 4, cy + 5):
+        for x in range(cx - 4, cx + 5):
+            d = math.hypot(x - cx, (y - cy) * 1.1)
+            if 0 <= x < im.width and 0 <= y < im.height and px[x, y][3] and d <= 4.2:
+                px[x, y] = C("b8606c") if d > 3.2 else C("e8909c")
+    for x, y, c in ((cx, cy, C("a8404e")), (cx + 1, cy, C("a8404e")), (cx, cy + 1, C("8a3040")),
+                    (cx + 1, cy + 1, C("8a3040")), (cx, cy - 1, C("ffd0d4"))):
+        px[x, y] = c
+
+
 def spiral(im, cx, cy, r_max, pal, rot=0.0, turns=1.6, flip=1):
     """Rizo en espiral (1 px de grosor): lo claro arriba-izquierda, lo oscuro abajo-derecha."""
     px = im.load()
@@ -1271,6 +1300,7 @@ def main():
     for i, k in enumerate("abcd"):
         save(bush(i), f"neutral_bush_{k}")
         save(hair(i), f"neutral_hair_{k}")
+    save(bosom_bush(), "neutral_bush_e")
     save(liana(0), "neutral_liana_a")
     save(liana(1), "neutral_liana_b")
     save(mushrooms(0), "neutral_mushroom_a")
