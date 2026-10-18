@@ -1,68 +1,61 @@
 {
   "_info": "Acertijos nuevos (bloque acertijos2): sombras, minigolf, huellas, diario intimo y esfinge. NO se explican: pz_<acertijo>_1..3 solo salen tras fallar (cada dos fallos, mas claras).",
-
   "pz_shadows_1": [
     "Esas placas le tienen miedo a la luz. Como tú a los compromisos.",
-    "Una antorcha, una sombra y una placa. Parece un triángulo amoroso, pero más sano."
+    "Una antorcha, una sombra y una placa. Un triángulo amoroso, pero más sano."
   ],
   "pz_shadows_2": [
-    "Tu sombra también cuenta como tú. Y pesa lo mismo que tu dignidad: nada, pero se nota.",
-    "No hace falta pisar la placa. Basta con que tu sombra se meta donde tú no te atreves."
+    "Tu sombra también cuenta. Pesa lo mismo que tu dignidad: nada, pero se nota.",
+    "Tu sombra va donde tú no te atreves."
   ],
   "pz_shadows_3": [
-    "Ponte entre la antorcha y la placa. Un poco más lejos. Ahora aguanta, como todo lo demás en tu vida.",
-    "La sombra se alarga cuanto más lejos te pones de la luz. Ajusta hasta que la placa quede a oscuras y aguanta quieto."
+    "Entre la luz y la placa hay un lugar para ti. Quédate quieto, como siempre."
   ],
-
   "pz_golf_1": [
     "Eso rueda mejor de lo que parece. Y de lo que debería.",
     "Cuidado con el charco. No pienses en qué es. Piensa en la puntuación."
   ],
   "pz_golf_2": [
-    "Hay un hoyo, una bola y un muro con hueco. Lo demás es técnica. Y tú tienes poca.",
+    "Un hoyo, una bola y un muro con hueco. Lo demás es técnica. Tú tienes poca.",
     "Los toques se acaban. Los de la bola, digo. Los otros se acabaron hace tiempo."
   ],
   "pz_golf_3": [
-    "Primero por el hueco del muro, después a la bandera. No te des prisa: el hoyo no se va a ninguna parte, a diferencia de ti.",
-    "Si lo lanzas con el dash va mucho más lejos. Si lo lanzas con ganas, también más lejos. Pero no más acertado."
+    "El hoyo no se va a ninguna parte, a diferencia de ti. El muro, tampoco.",
+    "Con el dash va más lejos. Con ganas, también. Más acertado, no."
   ],
-
   "pz_tracks_1": [
     "Algo pasó por aquí. Seguro que no te estaba esperando.",
-    "Huellas de tres dedos. No quiero saber qué tiene tres dedos. Mejor sí, pero luego."
+    "Huellas de tres dedos. No quiero saber qué tiene tres dedos. Luego sí."
   ],
   "pz_tracks_2": [
-    "Fíjate hacia dónde apuntan los deditos. Lo que llegó por un camino no se va por el mismo. Normalmente.",
-    "No todas las huellas van a donde piensas. Algunas vuelven de donde no deberían haber ido."
+    "Mira hacia dónde apuntan los deditos. Lo que llega no siempre se queda.",
+    "No todas las huellas van a donde piensas. Algunas ya volvieron."
   ],
   "pz_tracks_3": [
-    "Sigue las que apuntan en tu misma dirección, no las que vienen a por ti. Es lo más sensato, y por eso te cuesta.",
-    "En los cruces, las buenas son las que se alejan de la entrada. Las otras vienen de una madriguera vacía, como tú de tu casa."
+    "Las huellas que vienen a por ti no son el camino. Son el aviso.",
+    "En los cruces gana la que se aleja de la entrada. Lo demás, madrigueras vacías."
   ],
-
   "pz_diary_1": [
-    "Un diario íntimo con candado. Qué bonito. Qué poco íntimo, ahora que lo miras tú.",
-    "Los diarios íntimos guardan sus secretos en otros sitios. Como las parejas, cada cual donde puede."
+    "Un diario íntimo con candado. Qué poco íntimo, ahora que lo miras tú.",
+    "Los secretos nunca están donde se supone. Pregúntale a cualquier pareja."
   ],
   "pz_diary_2": [
-    "Hay hojas arrancadas pegadas en las paredes de otras salas. Quien las pegó tenía mucha prisa y poco pudor.",
-    "Los números no están aquí. Están por ahí. Es una especie de infidelidad, pero con papeles."
+    "Alguien pegó hojas por las salas con mucha prisa y poco pudor.",
+    "Los números no están aquí. Andan por ahí, como toda infidelidad."
   ],
   "pz_diary_3": [
-    "Tres hojas, tres números. Los corazoncitos dicen el orden: uno, dos, tres. Es de las pocas cosas claras que pasan aquí.",
-    "Busca las hojas pegadas en los muros de otras salas. Y gira las ruedas en el mismo orden que los corazones."
+    "Tres hojas, tres números. Los corazoncitos dicen el orden. Qué claridad."
   ],
-
   "pz_sphinx_1": [
-    "Una esfinge. Con una corona que, qué quieres que te diga, algo me recuerda. No lo digas.",
-    "Piensa mal si quieres, pero responde bien. Es la única regla, y nadie la dijo en voz alta."
+    "Una esfinge. Con cara de saber más de ti de lo que debería.",
+    "Piensa mal si quieres, pero responde bien. Nadie lo dijo en voz alta."
   ],
   "pz_sphinx_2": [
-    "La respuesta correcta suele ser la más aburrida. Si te estás riendo, probablemente es la equivocada.",
-    "Si todo te suena a guarrada, respira. A veces un helado es solo un helado. A veces."
+    "La respuesta buena es la más aburrida. Si te ríes, mala señal.",
+    "Si todo suena a guarrada, respira. A veces un helado es solo un helado."
   ],
   "pz_sphinx_3": [
     "Contesta lo inocente. Sí, esa. La que no te hace gracia. Esa es.",
-    "La Esfinge disfruta viéndote dudar. Pero se cansa. Con un par de intentos más, hasta te ayuda."
+    "La Esfinge disfruta tu duda. Pero se cansa, y entonces te ayuda."
   ]
 }

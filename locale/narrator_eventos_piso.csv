@@ -1,17 +1,13 @@
 keys,es,en
-NARR_EVENTOS_PISO__EVENT_INSPECCION_0,Inspección general. Alguien con corbata ha dicho que todo estaba en orden. Mentía.,General inspection. Someone in a tie said everything was in order. They lied.
-NARR_EVENTOS_PISO__EVENT_INSPECCION_1,"Hoy cada sala tiene un élite. Es una auditoría, y las auditorías siempre muerden.","Every room has an elite today. It's an audit, and audits always bite."
+NARR_EVENTOS_PISO__EVENT_INSPECCION_0,Inspección general. Alguien con corbata dice que todo está en orden. Miente.,General inspection. Someone in a tie says everything is in order. They lie.
+NARR_EVENTOS_PISO__EVENT_INSPECCION_1,"Hoy cada sala tiene un élite. Es una auditoría, y las auditorías muerden.","Every room has an elite today. It's an audit, and audits bite."
 NARR_EVENTOS_PISO__EVENT_CALOR_0,"Ola de calor. Todo va más rápido, incluido tu mal humor.","Heat wave. Everything is faster, including your bad mood."
-NARR_EVENTOS_PISO__EVENT_CALOR_1,Hace calor. Los bichos corren más y tú también. Es una carrera de sudores.,It's hot. The bugs run faster and so do you. A sweaty race.
-NARR_EVENTOS_PISO__EVENT_CENSURA_0,"Censura total. Sin mapa. Te guías por instinto, que es lo que hacías de todas formas.","Total censorship. No map. You go by instinct, which you did anyway."
-NARR_EVENTOS_PISO__EVENT_CENSURA_1,El mapa ha sido retirado por indecente. Pregunta a alguien o equivócate con estilo.,The map was removed for indecency. Ask somebody or get lost with style.
-NARR_EVENTOS_PISO__EVENT_ESPUMA_0,"Fiesta de espuma. Nadie recuerda quién la organizó, pero el suelo agradece la limpieza.","Foam party. Nobody remembers who organized it, but the floor appreciates the cleaning."
-NARR_EVENTOS_PISO__EVENT_ESPUMA_1,Suelo resbaladizo en todo el piso. Frena con anticipación y dignidad.,Slippery floor all over. Brake early and with dignity.
-NARR_EVENTOS_PISO__EVENT_LUZ_0,Corte de luz. Alguien tropezó con el cable de la mazmorra.,Power outage. Someone tripped over the dungeon's cable.
-NARR_EVENTOS_PISO__EVENT_LUZ_1,"Todo en penumbra. Los bichos ven en la oscuridad. Tú, con suerte, tu linterna.","Everything in the dark. Bugs see in the dark. You, hopefully, have your flashlight."
-NARR_EVENTOS_PISO__EVENT_REBAJAS_0,Día de rebajas. La tienda está a mitad de precio y los bichos a mitad de paciencia: hay uno más por sala.,Sale day. The shop is half price and the bugs are half patience: one more per room.
-NARR_EVENTOS_PISO__EVENT_REBAJAS_1,"Rebajas. Todo a mitad de precio. Los bichos, claro, también vienen por la oferta.","Sales. Everything half price. The bugs came for the deal too, of course."
-NARR_EVENTOS_PISO__TRIAL_OFFER_0,"Hay un reloj de pared en la entrada. Si lo tocas, aceptas un contrarreloj. Si no, nadie te juzga. Mucho.","There's a wall clock at the entrance. Touch it and you accept a time trial. Don't, and nobody judges you. Much."
+NARR_EVENTOS_PISO__EVENT_CENSURA_0,"Sin mapa. Te guías por instinto, que es lo que hacías igual.","No map. You go by instinct, which is what you did anyway."
+NARR_EVENTOS_PISO__EVENT_CENSURA_1,Pregunta a alguien o equivócate con estilo.,Ask someone or get lost with style.
+NARR_EVENTOS_PISO__EVENT_ESPUMA_0,"Fiesta de espuma. Nadie sabe quién la organizó. El suelo, agradecido.",Foam party. Nobody knows who organized it. The floor is grateful.
+NARR_EVENTOS_PISO__EVENT_LUZ_0,"Penumbra. Los bichos ven en la oscuridad. Tú, con suerte, tu linterna.","Dim. The critters see in the dark. You, with luck, your flashlight."
+NARR_EVENTOS_PISO__EVENT_REBAJAS_0,Día de rebajas. Tienda a mitad de precio y bichos a mitad de paciencia.,Sale day. Shop at half price and critters at half patience.
+NARR_EVENTOS_PISO__TRIAL_OFFER_0,"Un reloj de pared. Tócalo y hay contrarreloj. Si no, nadie te juzga. Mucho.",A wall clock. Touch it for a time trial. Otherwise nobody judges you. Much.
 NARR_EVENTOS_PISO__TRIAL_WIN_0,"A tiempo. La puntualidad es una virtud, y también una cartera llena.","On time. Punctuality is a virtue, and also a full wallet."
 NARR_EVENTOS_PISO__TRIAL_LATE_0,"Se acabó el tiempo. Llega la Censura: no es personal, es administrativa.","Time's up. The Censorship arrives: it's not personal, it's administrative."
 NARR_EVENTOS_PISO__ELITE_CLEAR_0,"Una sala élite menos. Tu valentía, o tu imprudencia, tiene premio.","One elite room less. Your bravery, or your recklessness, has a prize."
