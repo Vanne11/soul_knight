@@ -1,14 +1,14 @@
 keys,es,en,es_ES,fr
-NARR_EDU__EDU_CURA_0,DRA. PREVENTINA: Listo. Sin ardor ni picazón. Y sin juicios.,"DR. PREVENTINA: Done. No burning, no itching. And no judgement.",,
-NARR_EDU__EDU_CURA_1,DRA. PREVENTINA: Curado. Receta: una pomada y cero vergüenza.,DR. PREVENTINA: Cured. Prescription: one ointment and zero shame.,,
-NARR_EDU__EDU_CONDON_0,"DRA. PREVENTINA: Buen criterio. Antes, no después del susto.","DR. PREVENTINA: Good call. Before the scare, not after.",,
-NARR_EDU__EDU_CONDON_1,"DRA. PREVENTINA: Barato, eficaz y sin efectos secundarios. Salvo madurar.","DR. PREVENTINA: Cheap, effective, no side effects. Except maturing.",,
-NARR_EDU__EDU_VACUNA_0,DRA. PREVENTINA: ¡Pinchacito! El VPH Verrugón ya no te saca ni una verruga.,DR. PREVENTINA: Little prick! HPV Verruga can't get a single wart out of you now.,,
-NARR_EDU__EDU_VACUNA_1,"DRA. PREVENTINA: Vacunado. Oficialmente, un héroe con carnet.","DR. PREVENTINA: Vaccinated. Officially, a card-carrying hero.",,
-NARR_EDU__EDU_VACUNA_YA_0,"DRA. PREVENTINA: Ya estás vacunado. Dos veces no, ni insistiendo.","DR. PREVENTINA: You're already vaccinated. Not twice, not even if you insist.",,
-NARR_EDU__EDU_POBRE_0,"DRA. PREVENTINA: La salud es gratis; los preservativos, no. Vuelve con monedas.",DR. PREVENTINA: Health is free; condoms are not. Come back with coins.,,
-NARR_EDU__EDU_POBRE_1,"DRA. PREVENTINA: Te faltan monedas. Yo no fío, pero prevenir sale barato.","DR. PREVENTINA: You're short on coins. I don't do credit, but prevention is cheap.",,
-NARR_EDU__EDU_MITO_OK_0,¡Correcto! Se nota que alguien no se creyó el cuento.,Correct! Someone clearly didn't buy the story.,,
-NARR_EDU__EDU_MITO_OK_1,Acertaste. Tu cerebro merece un aplauso y unas monedas.,You got it. Your brain deserves applause and a few coins.,,
-NARR_EDU__EDU_MITO_MAL_0,Casi. Pasa en las mejores familias... y el Palacio cuenta con ello.,Close. It happens in the best families... and the Palace counts on it.,,
-NARR_EDU__EDU_MITO_MAL_1,"Fallaste, sin castigo. Para eso están los mitos: para caer una vez.","Wrong, no penalty. That's what myths are for: falling for them once.",,
+NARR_EDU__EDU_CURA_0,DRA. PREVENTINA: Listo. Sin ardor ni picazón. Y sin juicios.,"DR. PREVENTINA: Done. No burning, no itching. And no judgement.",,DOCTEURE PRÉVENTINE : Voilà. Sans brûlure ni démangeaison. Et sans jugement.
+NARR_EDU__EDU_CURA_1,DRA. PREVENTINA: Curado. Receta: una pomada y cero vergüenza.,DR. PREVENTINA: Cured. Prescription: one ointment and zero shame.,,DOCTEURE PRÉVENTINE : Guéri. Ordonnance : une pommade et zéro honte.
+NARR_EDU__EDU_CONDON_0,"DRA. PREVENTINA: Buen criterio. Antes, no después del susto.","DR. PREVENTINA: Good call. Before the scare, not after.",,"DOCTEURE PRÉVENTINE : Bon réflexe. Avant, pas après la frayeur."
+NARR_EDU__EDU_CONDON_1,"DRA. PREVENTINA: Barato, eficaz y sin efectos secundarios. Salvo madurar.","DR. PREVENTINA: Cheap, effective, no side effects. Except maturing.",,"DOCTEURE PRÉVENTINE : Pas cher, efficace, sans effets secondaires. Sauf mûrir."
+NARR_EDU__EDU_VACUNA_0,DRA. PREVENTINA: ¡Pinchacito! El VPH Verrugón ya no te saca ni una verruga.,DR. PREVENTINA: Little prick! HPV Verruga can't get a single wart out of you now.,,DOCTEURE PRÉVENTINE : Piqûrette ! Le HPV Verruqueux ne te fera plus de verrue.
+NARR_EDU__EDU_VACUNA_1,"DRA. PREVENTINA: Vacunado. Oficialmente, un héroe con carnet.","DR. PREVENTINA: Vaccinated. Officially, a card-carrying hero.",,"DOCTEURE PRÉVENTINE : Vacciné. Officiellement, un héros avec carnet."
+NARR_EDU__EDU_VACUNA_YA_0,"DRA. PREVENTINA: Ya estás vacunado. Dos veces no, ni insistiendo.","DR. PREVENTINA: You're already vaccinated. Not twice, not even if you insist.",,"DOCTEURE PRÉVENTINE : Tu es déjà vacciné. Deux fois, non, même en insistant."
+NARR_EDU__EDU_POBRE_0,"DRA. PREVENTINA: La salud es gratis; los preservativos, no. Vuelve con monedas.",DR. PREVENTINA: Health is free; condoms are not. Come back with coins.,,"DOCTEURE PRÉVENTINE : Santé gratuite, capotes payantes. Reviens avec des sous."
+NARR_EDU__EDU_POBRE_1,"DRA. PREVENTINA: Te faltan monedas. Yo no fío, pero prevenir sale barato.","DR. PREVENTINA: You're short on coins. I don't do credit, but prevention is cheap.",,"DOCTEURE PRÉVENTINE : Pièces manquantes. Pas de crédit, mais prévenir coûte peu."
+NARR_EDU__EDU_MITO_OK_0,¡Correcto! Se nota que alguien no se creyó el cuento.,Correct! Someone clearly didn't buy the story.,,Correct ! On voit que quelqu'un n'a pas gobé l'histoire.
+NARR_EDU__EDU_MITO_OK_1,Acertaste. Tu cerebro merece un aplauso y unas monedas.,You got it. Your brain deserves applause and a few coins.,,Bien vu. Ton cerveau mérite des applaudissements et quelques pièces.
+NARR_EDU__EDU_MITO_MAL_0,Casi. Pasa en las mejores familias... y el Palacio cuenta con ello.,Close. It happens in the best families... and the Palace counts on it.,,Presque. Ça arrive dans les meilleures familles... et le Palais y compte bien.
+NARR_EDU__EDU_MITO_MAL_1,"Fallaste, sin castigo. Para eso están los mitos: para caer una vez.","Wrong, no penalty. That's what myths are for: falling for them once.",,"Raté, sans punition. Les mythes servent à ça : tomber une fois."
