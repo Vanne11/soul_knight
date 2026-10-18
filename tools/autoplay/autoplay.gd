@@ -95,6 +95,7 @@ var _evade_n := 0
 var _flee_goal := Vector2.INF
 var _flee_t := 0.0
 var _pause_t := 0.0
+var _narr_t := 0.0
 var _win_pos := Vector2.ZERO
 var _win_t := 0.0
 var _moved := false  # este fotograma se pidio un movimiento
@@ -294,6 +295,14 @@ func _physics_process(delta: float) -> void:
 		_say("Eleccion: \"%s\" -> opcion 1" % Narrator._choice_label.text.left(60))
 		Narrator._pick_choice(0)
 		return
+	# Los dialogos del narrador esperan Enter (como un jugador que los lee): se pasan tras unos segundos de lectura.
+	if Narrator._panel.visible:
+		_narr_t += delta
+		if _narr_t > 4.0:
+			_narr_t = 0.0
+			_tap_key(KEY_ENTER)
+	else:
+		_narr_t = 0.0
 	if get_tree().paused:
 		_pause_t += delta
 		if _pause_t > 45.0 and fmod(_pause_t, 15.0) < delta:
