@@ -29,6 +29,8 @@ const HOST_ID := "trompas_falopio"
 const TURNO := "turno"
 const PHASE_NAMES := ["menstruacion", "folicular", "ovulacion", "lutea"]
 const FIGHT := [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION]
+## Salas tranquilas que la Consulta puede reemplazar si faltan peleas.
+const CALM_HOST := [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]
 const MENS_ITEMS := ["tampon", "menstrual_cup"]  # + todo lo de tag "toalla"
 const MENS_BOOST := 1.5
 const LUTEA_BOOST := 2.0  # el chocolate cura el doble
@@ -202,8 +204,25 @@ static func owns_turno(main: Node) -> bool:
 
 ## true si todavia tiene sentido ofrecer/soltar el Turno: en Vulvania, sin usar y sin tenerlo.
 static func turno_obtainable(main: Node) -> bool:
-	return str(_rm().floor_data().get("region", "")) == "vulvania" and str(_rm().floor_data().get("id", "")) != FLOOR_ID \
-		and not RunManager.utero_used and not owns_turno(main)
+	if str(_rm().floor_data().get("region", "")) != "vulvania" or str(_rm().floor_data().get("id", "")) == FLOOR_ID \
+		or RunManager.utero_used or owns_turno(main):
+		return false
+	return _consulta_available(main)
+
+
+## Hay una Consulta a la que llevar el Turno: Trompas esta en la ruta y, si estamos en Trompas, la
+## sala existe (setup_floor la garantiza; esto es la red de seguridad para no vender un Turno inutil).
+static func _consulta_available(main: Node) -> bool:
+	var in_route := false
+	for f in (RunManager.route_floors if not RunManager.route_floors.is_empty() else RunManager.FLOORS):
+		if f.id == HOST_ID:
+			in_route = true
+	if not in_route:
+		return false
+	if str(_rm().floor_data().get("id", "")) == HOST_ID:
+		var gen: DungeonGenerator = main.dungeon_generator
+		return gen != null and gen.rooms.values().any(func(r): return r.has_meta("consulta"))
+	return true
 
 
 ## main._build_shop: la tienda de Vulvania vende el Turno (2a etapa: solo si no lo tienes ya).
@@ -214,17 +233,33 @@ static func shop_stock(main: Node, stock: Array) -> Array:
 
 
 # ------------------------------------------------------------------ la Consulta
+## Elige la sala de la Consulta en Trompas. SIEMPRE hay una: primero una sala de pelea sin salida
+## (si el piso tiene >= 4 peleas); si no, una sala tranquila ya existente (no cuesta combates); y
+## como ultimo recurso cualquier sala convertible, preferida fuera del camino al jefe.
 static func _pick_consulta(main: Node) -> void:
 	var gen: DungeonGenerator = main.dungeon_generator
-	var cands: Array = gen.rooms.values().filter(func(r):
-		return r.room_type == Room.RoomType.COMBAT and not r.has_meta("elite_room") and r.grid_pos not in gen.main_path)
-	var dead: Array = cands.filter(func(r): return gen.room_graph[r.grid_pos].size() == 1)
-	if not dead.is_empty():
-		cands = dead
-	# el piso necesita sus combates: (quedan >= 3 mas el minijefe y el jefe)
-	var fights := gen.rooms.values().filter(func(r): return r.room_type in FIGHT).size()
-	if cands.is_empty() or fights < 4:
+	var all: Array = gen.rooms.values()
+	var fights := all.filter(func(r): return r.room_type in FIGHT).size()
+	var off_path := func(r): return not r.has_meta("elite_room") and r.grid_pos not in gen.main_path
+	var dead := func(r): return gen.room_graph[r.grid_pos].size() == 1
+	var tiers: Array = []
+	if fights >= 4:
+		tiers.append(all.filter(func(r): return r.room_type == Room.RoomType.COMBAT and off_path.call(r)))
+	tiers.append(all.filter(func(r): return r.room_type in CALM_HOST and r.grid_pos not in gen.main_path))
+	tiers.append(all.filter(func(r): return r.room_type in [Room.RoomType.COMBAT, Room.RoomType.TRAP, Room.RoomType.INTOXICATION] and off_path.call(r)))
+	tiers.append(all.filter(func(r): return r.room_type in CALM_HOST))
+	tiers.append(all.filter(func(r): return r.room_type == Room.RoomType.COMBAT and not r.has_meta("elite_room")))
+	var cands: Array = []
+	for t in tiers:
+		if not t.is_empty():
+			cands = t
+			break
+	if cands.is_empty():
+		push_warning("Utero: Trompas no tiene ninguna sala para la Consulta")
 		return
+	var dead_ends: Array = cands.filter(dead)
+	if not dead_ends.is_empty():
+		cands = dead_ends
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([_rm().current_seed, "consulta"])
 	var room: Room = cands[rng.randi_range(0, cands.size() - 1)]

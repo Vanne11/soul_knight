@@ -8,5 +8,5 @@ id = "boss_alt_4"
 title = "La Ventanilla Única"
 text = "Una ventanilla con piernas y ningún interés en atenderte. Reparte fichas, cierra cubículos por almuerzo, llena la sala de gente en cola y te lanza papeles en espiral. Siempre falta un papel. Hace poco se llamaba otra cosa, pero la próstata se mudó a la región de al lado, con sus datos y todo, y ella se quedó con el escritorio."
 category = 3
-unlock_condition = {"type": 9, "target_id": "LA PRÓSTATA BUROCRÁTICA"}
+unlock_condition = {"type": 9, "target_id": "LA VENTANILLA ÚNICA"}
 flavor_text = "Derrota a la Ventanilla Única."

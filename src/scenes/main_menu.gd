@@ -121,7 +121,7 @@ func _world_strip() -> Control:
 	var rm = _game_controller.get_run_manager()
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 4)
-	var regions := RunManager.regions()
+	var regions := RunManager.world_order()  # orden de la historia, no el de los archivos
 	for i in regions.size():
 		# un reino = sus dos etapas: se muestra con el nombre y color de la 1a
 		var first := 1 + RunManager.FLOORS.find_custom(func(x): return x.region == regions[i])
