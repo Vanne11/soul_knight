@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 """Comprueba las traducciones: toda clave usada con tr("...") en src/ existe en
-locale/*.csv, ninguna fila tiene columnas vacias y los marcadores de formato
-(%d, %s, %.0f) coinciden entre idiomas. Uso: python3 tools/check_locale.py"""
+locale/*.csv, es y en no estan vacios y los marcadores de formato (%d, %s, %.0f)
+coinciden entre los idiomas con texto. Columnas: keys,es,en,es_ES,fr (es_ES y fr pueden
+ir vacias: respaldo es_ES->es, fr->en; informa cuantas faltan, y con --strict es error).
+Uso: python3 tools/check_locale.py [--strict]"""
 import csv, glob, os, re, sys
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+STRICT = "--strict" in sys.argv
+REQUIRED = ["es", "en"]
+OPTIONAL = ["es_ES", "fr"]
 keys, errors = {}, []
+missing = {l: 0 for l in OPTIONAL}
 for path in sorted(glob.glob(os.path.join(root, "locale", "*.csv"))):
     with open(path, encoding="utf-8", newline="") as f:
         rows = list(csv.reader(f))
@@ -16,12 +22,22 @@ for path in sorted(glob.glob(os.path.join(root, "locale", "*.csv"))):
     for i, row in enumerate(rows[1:], 2):
         if not row or not row[0]:
             continue
-        if len(row) != len(rows[0]) or any(c.strip() == "" for c in row):
-            errors.append(f"{os.path.basename(path)}:{i} columnas vacias o de mas: {row[0]}")
+        if len(row) != len(rows[0]):
+            errors.append(f"{os.path.basename(path)}:{i} columnas de mas o de menos: {row[0]}")
+            continue
+        cells = dict(zip(langs, row[1:]))
+        for l in langs:
+            if cells[l].strip() == "":
+                if l in OPTIONAL:
+                    missing[l] += 1
+                    if STRICT:
+                        errors.append(f"{os.path.basename(path)}:{i} {l} vacio: {row[0]}")
+                else:
+                    errors.append(f"{os.path.basename(path)}:{i} columna {l} vacia: {row[0]}")
         if row[0] in keys:
             errors.append(f"clave duplicada: {row[0]}")
         keys[row[0]] = row
-        fmts = [sorted(re.findall(r"%[-+0-9.]*[sdfxX]", c)) for c in row[1:]]
+        fmts = [sorted(re.findall(r"%[-+0-9.]*[sdfxX]", c)) for c in row[1:] if c.strip()]
         if any(x != fmts[0] for x in fmts):
             errors.append(f"{os.path.basename(path)}:{i} formatos distintos entre idiomas: {row[0]}")
 
@@ -43,6 +59,7 @@ for k, where in sorted(used.items()):
     if k not in keys:
         errors.append(f"clave usada y no definida: {k} ({where})")
 print(f"{len(keys)} claves definidas, {len(used)} usadas literalmente")
+print("sin traducir: " + ", ".join(f"{l} {missing[l]}/{len(keys)}" for l in OPTIONAL))
 for e in errors:
     print("ERROR:", e)
 sys.exit(1 if errors else 0)

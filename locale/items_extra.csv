@@ -1,47 +1,47 @@
-keys,es,en
-ITEM_CURSED_CAGE_NAME,Jaula de Castidad Maldita,Cursed Chastity Cage
-ITEM_CURSED_CAGE_DESC,"MALDITA. +35 de escudo, absorbe 2 golpes, sin hormonas. Se quita con llave. Cero diversión.","CURSED. +35 shield, absorbs 2 hits, no hormones. Needs a key to remove. Zero fun."
-ITEM_DEODORANT_MACHOTE_NAME,"Desodorante en Spray ""Machote""","""Machote"" Body Spray"
-ITEM_DEODORANT_MACHOTE_DESC,Nube de 7 s que espanta enemigos (los jefes ni la huelen). Huele a decisiones discutibles.,A 7 s cloud that scares enemies (bosses don't even smell it). Smells of questionable decisions.
-ITEM_EMERGENCY_BRIEFS_NAME,Calzoncillos Limpios de Emergencia,Emergency Clean Underwear
-ITEM_EMERGENCY_BRIEFS_DESC,Absorben 2 golpes y limpian cualquier contagio. Tu madre tenía razón.,Absorb 2 hits and clear any infection. Your mother was right.
-ITEM_LATEX_SUIT_NAME,Traje de Látex,Latex Suit
-ITEM_LATEX_SUIT_DESC,"+20 de escudo, pero 8% más lento y rechina. Se pega a todo, hasta a tus decisiones.","+20 shield, but 8% slower and it squeaks. Sticks to everything, even your decisions."
-ITEM_PSA_TEST_NAME,Examen de PSA,PSA Test
-ITEM_PSA_TEST_DESC,20 s: ves la vida de todos los enemigos y se les caen los disfraces.,20 s: you see every enemy's health and their disguises fall off.
-ITEM_TALC_NAME,Talco para la Entrepierna,Groin Talc
-ITEM_TALC_DESC,"Quita la picazón y da inmunidad al contagio 25 s. Zona seca, zona feliz.","Stops the itching and grants infection immunity for 25 s. Dry zone, happy zone."
-ITEM_TAMPON_NAME,Tampón,Tampon
-ITEM_TAMPON_DESC,Tapa la siguiente herida y corta ardor y contagio 40 s. Más útil que tus armas.,Plugs the next wound and stops burning and infection for 40 s. More useful than your weapons.
-ITEM_TESTICLE_KIT_NAME,Kit de Autoexamen Testicular,Testicular Self-Exam Kit
-ITEM_TESTICLE_KIT_DESC,"Revela el mapa del piso, secretas incluidas. Manos tibias y cero vergüenza.","Reveals the floor map, secrets included. Warm hands and zero shame."
-ITEM_TOWEL_COTTON_NAME,Toalla de Tela,Cotton Pad
-ITEM_TOWEL_COTTON_DESC,"Absorbe 2 golpes, sin roce, y la estamina se recarga 30% más rápido 30 s.","Absorbs 2 hits, no chafing, and stamina recharges 30% faster for 30 s."
-ITEM_TOWEL_MESH_NAME,Toalla de Malla,Mesh Pad
-ITEM_TOWEL_MESH_DESC,"Absorbe 3 golpes, pero roza: 8% más lento mientras dure. Todo tiene su precio.","Absorbs 3 hits, but chafes: 8% slower while it lasts. Everything has a price."
-ITEM_TOWEL_NIGHT_NAME,Toalla Nocturna,Overnight Pad
-ITEM_TOWEL_NIGHT_DESC,Absorbe 3 golpes y recorta 40% el daño por 2 min. Larga como su nombre.,"Absorbs 3 hits and cuts damage by 40% for 2 min. Long, like its name."
-ITEM_TURNO_NAME,Turno,Appointment Slip
-ITEM_TURNO_DESC,Pase para la Consulta de la Doctora V. (Trompas de Falopio): abre la puerta del Cuello Uterino. Una vez por partida.,Pass for Doctor V.'s clinic (Fallopian Tubes): opens the cervix door. Once per run.
-ITEM_WHIP_NAME,Látigo de Cuero,Leather Whip
-ITEM_WHIP_DESC,Abanico de tres chasquidos que atraviesan hasta 2 enemigos. Con palabra de seguridad.,A fan of three cracks that pierce up to 2 enemies. Comes with a safe word.
-PICKUP_SLOT_HINT,Se guarda en una ranura (teclas 1-4 o cruceta).,Stored in a slot (keys 1-4 or d-pad).
-PICKUP_CURSE_HINT,Maldito: ocupa una ranura hasta que lo quites con una llave.,Cursed: takes a slot until you remove it with a key.
-FX_SLOT_FULL,Sin ranura libre: se usa al instante,No free slot: used right away
-FX_CAGE_NO_HORMONE,La jaula no deja pasar hormonas,The cage won't let hormones through
-FX_CURSE_NO_SLOT,Necesitas una ranura libre,You need a free slot
-FX_CURSED,¡Maldito!,Cursed!
-FX_CURSE_FREED,¡Libre!,Free!
-FX_CURSE_NEEDS_KEY,Hace falta una llave,A key is needed
-FX_SET_COMPLETE,¡Set completo! %s,Set complete! %s
-FX_LATEX_SQUEAK,*ñic*,*squeak*
-FX_STIM_CRASH,¡Bajón!,Crash!
-STATUS_DOT_IMMUNE,Sin ardor,No burning
-STATUS_INFECT_IMMUNE,Inmune al contagio,Contagion-proof
-STATUS_CHAFE,Roce de malla,Mesh chafing
-HUD_SET_ON,Set %s: ACTIVO,Set %s: ACTIVE
-HUD_SET_PROGRESS,Set %s: %d/%d,Set %s: %d/%d
-SET_PENE_NAME,Orgullo de Penelandia,Pride of Penelandia
-SET_PENE_DESC,"3 objetos de Penelandia: +10% de daño y +5% de crítico. Si eres de allí, más.",3 Penelandia items: +10% damage and +5% crit. More if you're from there.
-SET_VULVA_NAME,Ciclo de Vulvania,Cycle of Vulvania
-SET_VULVA_DESC,"3 objetos de Vulvania: +10% de cadencia y estamina 20% más rápida. Si eres de allí, más.",3 Vulvania items: +10% fire rate and 20% faster stamina. More if you're from there.
+keys,es,en,es_ES,fr
+ITEM_CURSED_CAGE_NAME,Jaula de Castidad Maldita,Cursed Chastity Cage,,
+ITEM_CURSED_CAGE_DESC,"MALDITA. +35 de escudo, absorbe 2 golpes, sin hormonas. Se quita con llave. Cero diversión.","CURSED. +35 shield, absorbs 2 hits, no hormones. Needs a key to remove. Zero fun.",,
+ITEM_DEODORANT_MACHOTE_NAME,"Desodorante en Spray ""Machote""","""Machote"" Body Spray",,
+ITEM_DEODORANT_MACHOTE_DESC,Nube de 7 s que espanta enemigos (los jefes ni la huelen). Huele a decisiones discutibles.,A 7 s cloud that scares enemies (bosses don't even smell it). Smells of questionable decisions.,,
+ITEM_EMERGENCY_BRIEFS_NAME,Calzoncillos Limpios de Emergencia,Emergency Clean Underwear,,
+ITEM_EMERGENCY_BRIEFS_DESC,Absorben 2 golpes y limpian cualquier contagio. Tu madre tenía razón.,Absorb 2 hits and clear any infection. Your mother was right.,,
+ITEM_LATEX_SUIT_NAME,Traje de Látex,Latex Suit,,
+ITEM_LATEX_SUIT_DESC,"+20 de escudo, pero 8% más lento y rechina. Se pega a todo, hasta a tus decisiones.","+20 shield, but 8% slower and it squeaks. Sticks to everything, even your decisions.",,
+ITEM_PSA_TEST_NAME,Examen de PSA,PSA Test,,
+ITEM_PSA_TEST_DESC,20 s: ves la vida de todos los enemigos y se les caen los disfraces.,20 s: you see every enemy's health and their disguises fall off.,,
+ITEM_TALC_NAME,Talco para la Entrepierna,Groin Talc,,
+ITEM_TALC_DESC,"Quita la picazón y da inmunidad al contagio 25 s. Zona seca, zona feliz.","Stops the itching and grants infection immunity for 25 s. Dry zone, happy zone.",,
+ITEM_TAMPON_NAME,Tampón,Tampon,,
+ITEM_TAMPON_DESC,Tapa la siguiente herida y corta ardor y contagio 40 s. Más útil que tus armas.,Plugs the next wound and stops burning and infection for 40 s. More useful than your weapons.,,
+ITEM_TESTICLE_KIT_NAME,Kit de Autoexamen Testicular,Testicular Self-Exam Kit,,
+ITEM_TESTICLE_KIT_DESC,"Revela el mapa del piso, secretas incluidas. Manos tibias y cero vergüenza.","Reveals the floor map, secrets included. Warm hands and zero shame.",,
+ITEM_TOWEL_COTTON_NAME,Toalla de Tela,Cotton Pad,,
+ITEM_TOWEL_COTTON_DESC,"Absorbe 2 golpes, sin roce, y la estamina se recarga 30% más rápido 30 s.","Absorbs 2 hits, no chafing, and stamina recharges 30% faster for 30 s.",,
+ITEM_TOWEL_MESH_NAME,Toalla de Malla,Mesh Pad,,
+ITEM_TOWEL_MESH_DESC,"Absorbe 3 golpes, pero roza: 8% más lento mientras dure. Todo tiene su precio.","Absorbs 3 hits, but chafes: 8% slower while it lasts. Everything has a price.",,
+ITEM_TOWEL_NIGHT_NAME,Toalla Nocturna,Overnight Pad,,
+ITEM_TOWEL_NIGHT_DESC,Absorbe 3 golpes y recorta 40% el daño por 2 min. Larga como su nombre.,"Absorbs 3 hits and cuts damage by 40% for 2 min. Long, like its name.",,
+ITEM_TURNO_NAME,Turno,Appointment Slip,,
+ITEM_TURNO_DESC,Pase para la Consulta de la Doctora V. (Trompas de Falopio): abre la puerta del Cuello Uterino. Una vez por partida.,Pass for Doctor V.'s clinic (Fallopian Tubes): opens the cervix door. Once per run.,,
+ITEM_WHIP_NAME,Látigo de Cuero,Leather Whip,,
+ITEM_WHIP_DESC,Abanico de tres chasquidos que atraviesan hasta 2 enemigos. Con palabra de seguridad.,A fan of three cracks that pierce up to 2 enemies. Comes with a safe word.,,
+PICKUP_SLOT_HINT,Se guarda en una ranura (teclas 1-4 o cruceta).,Stored in a slot (keys 1-4 or d-pad).,,
+PICKUP_CURSE_HINT,Maldito: ocupa una ranura hasta que lo quites con una llave.,Cursed: takes a slot until you remove it with a key.,,
+FX_SLOT_FULL,Sin ranura libre: se usa al instante,No free slot: used right away,,
+FX_CAGE_NO_HORMONE,La jaula no deja pasar hormonas,The cage won't let hormones through,,
+FX_CURSE_NO_SLOT,Necesitas una ranura libre,You need a free slot,,
+FX_CURSED,¡Maldito!,Cursed!,,
+FX_CURSE_FREED,¡Libre!,Free!,,
+FX_CURSE_NEEDS_KEY,Hace falta una llave,A key is needed,,
+FX_SET_COMPLETE,¡Set completo! %s,Set complete! %s,,
+FX_LATEX_SQUEAK,*ñic*,*squeak*,,
+FX_STIM_CRASH,¡Bajón!,Crash!,,
+STATUS_DOT_IMMUNE,Sin ardor,No burning,,
+STATUS_INFECT_IMMUNE,Inmune al contagio,Contagion-proof,,
+STATUS_CHAFE,Roce de malla,Mesh chafing,,
+HUD_SET_ON,Set %s: ACTIVO,Set %s: ACTIVE,,
+HUD_SET_PROGRESS,Set %s: %d/%d,Set %s: %d/%d,,
+SET_PENE_NAME,Orgullo de Penelandia,Pride of Penelandia,,
+SET_PENE_DESC,"3 objetos de Penelandia: +10% de daño y +5% de crítico. Si eres de allí, más.",3 Penelandia items: +10% damage and +5% crit. More if you're from there.,,
+SET_VULVA_NAME,Ciclo de Vulvania,Cycle of Vulvania,,
+SET_VULVA_DESC,"3 objetos de Vulvania: +10% de cadencia y estamina 20% más rápida. Si eres de allí, más.",3 Vulvania items: +10% fire rate and 20% faster stamina. More if you're from there.,,

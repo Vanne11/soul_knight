@@ -11,8 +11,10 @@ signal quality_changed
 const PATH := "user://settings.cfg"
 const BUS_MUSIC := "Music"
 const BUS_SFX := "SFX"
-## [codigo, nombre en su propio idioma]
-const LOCALES := [["es", "Español"], ["en", "English"]]
+## [codigo, nombre en su propio idioma]. "es" = espanol latinoamericano neutro (texto base de
+## los CSV y respaldo de es_ES); "es_ES" = Espana; "fr" y "es_ES" caen a en/es si falta una
+## clave (ver locale/fallback en project.godot y tools/register_locales.py).
+const LOCALES := [["es", "Español (Latinoamérica)"], ["es_ES", "Español (España)"], ["en", "English"], ["fr", "Français"]]
 
 var music_volume := 100  # 0-100
 var sfx_volume := 100
@@ -60,6 +62,7 @@ func _init() -> void:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	quality_mode = default_quality()
+	locale = system_locale()
 	load_settings()
 	apply()
 	_start_quality()
@@ -86,8 +89,8 @@ func load_settings() -> void:
 	touch_mode = clampi(int(cfg.get_value("touch", "mode", 0)), 0, 2)
 	ui_size = clampi(int(cfg.get_value("touch", "ui_size", ui_size)), 0, 1)
 	quality_mode = clampi(int(cfg.get_value("video", "quality", default_quality())), 0, Quality.AUTO) as Quality
-	var l := str(cfg.get_value("game", "locale", "es"))
-	locale = l if LOCALES.any(func(x): return x[0] == l) else "es"
+	var l := str(cfg.get_value("game", "locale", locale))  # sin ajuste guardado: el del sistema/Steam
+	locale = l if LOCALES.any(func(x): return x[0] == l) else system_locale()
 
 
 func save_settings() -> void:
@@ -207,6 +210,44 @@ func _process(delta: float) -> void:
 		_set_quality(quality + 1)  # y vuelve a medir con el nivel nuevo
 	else:
 		_auto_done = true
+
+
+## Idioma de Steam ("spanish" = Espana, "latam", "french", "english"...) si el juego corre
+## en Steam. GANCHO: aun no hay SDK de Steam (GodotSteam); cuando lo haya, devolver aqui
+## Steam.getCurrentGameLanguage() y, si no es "", tendra prioridad sobre el idioma del sistema.
+func steam_language() -> String:
+	return ""
+
+
+## Codigo de LOCALES segun Steam (si aplica) o el sistema (OS.get_locale()):
+## es_ES / es-ES -> es_ES; otros es_* -> es; fr* -> fr; en* y cualquier otro -> en.
+func system_locale() -> String:
+	var steam := steam_language()
+	if steam != "":
+		return locale_from_steam(steam)
+	return locale_from_os(OS.get_locale())
+
+
+static func locale_from_os(os_locale: String) -> String:
+	var l := os_locale.replace("-", "_").to_lower()
+	if l == "es_es":
+		return "es_ES"
+	if l == "es" or l.begins_with("es_"):
+		return "es"
+	if l == "fr" or l.begins_with("fr_"):
+		return "fr"
+	return "en"
+
+
+static func locale_from_steam(lang: String) -> String:
+	match lang:
+		"spanish":
+			return "es_ES"
+		"latam":
+			return "es"
+		"french":
+			return "fr"
+	return "en"
 
 
 func set_locale(code: String) -> void:

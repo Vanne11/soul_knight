@@ -1,19 +1,19 @@
-keys,es,en
-NARR_ITEMS_EXTRA__ITEM_GET_TOWEL_MESH_0,Toalla de malla. Aguanta mucho y roza más. Ni la protección es gratis.,Mesh towel. Absorbs a lot and chafes more. Even protection has a price.
-NARR_ITEMS_EXTRA__ITEM_GET_TOWEL_COTTON_0,"Toalla de tela. Menos aguante, cero roce. Cada cuerpo con su favorita.","Cotton towel. Less hold, zero chafing. Every body has its favorite."
-NARR_ITEMS_EXTRA__ITEM_GET_TOWEL_NIGHT_0,"Toalla nocturna. Larga, rara y cara. Como una película de autor.","Night towel. Long, odd and pricey. Like an arthouse film."
-NARR_ITEMS_EXTRA__ITEM_USE_TOWEL_MESH_0,"Puesta. Si roza, es normal. Para eso existe la de tela.","On. If it chafes, that's normal. That's what the cotton one is for."
-NARR_ITEMS_EXTRA__ITEM_GET_TAMPON_0,"Un tampón. Pequeño, discreto y heroico. Salvar el reino no exime del cambio.","A tampon. Small, discreet and heroic. Saving the realm doesn't excuse changing it."
-NARR_ITEMS_EXTRA__ITEM_GET_TALC_0,"Talco. Zona seca, zona feliz. Salva más batallas que la espada.","Talc. Dry zone, happy zone. Wins more battles than the sword."
-NARR_ITEMS_EXTRA__ITEM_GET_EMERGENCY_BRIEFS_0,Calzoncillos limpios. Tu madre tenía razón sobre el accidente.,Clean underwear. Your mother was right about the accident.
-NARR_ITEMS_EXTRA__ITEM_GET_DEODORANT_MACHOTE_0,"Desodorante Machote: bosque, testosterona y decisiones discutibles.","Machote deodorant: forest, testosterone and questionable decisions."
-NARR_ITEMS_EXTRA__ITEM_GET_TESTICLE_KIT_0,"Kit de autoexamen testicular. Manos tibias, cero vergüenza y mucha seriedad.","Testicular self-exam kit. Warm hands, zero shame and a very serious face."
-NARR_ITEMS_EXTRA__ITEM_USE_TESTICLE_KIT_0,Revisado y todo en orden. Esto sí merecía aplauso.,Checked and all in order. This one deserves applause.
-NARR_ITEMS_EXTRA__ITEM_GET_PSA_TEST_0,Examen de PSA: un análisis de sangre y listo. Cero ceremonia.,PSA test: a blood draw and done. Zero ceremony.
-NARR_ITEMS_EXTRA__ITEM_USE_PSA_TEST_0,Ves hasta la vida de cada bicho. Por fin un análisis útil.,"You see every critter's health. Finally, a useful test."
-NARR_ITEMS_EXTRA__ITEM_GET_WHIP_0,"El látigo: consensuado, anunciado y con palabra de seguridad. Como debe ser.","The whip: consensual, announced and with a safe word. As it should be."
-NARR_ITEMS_EXTRA__ITEM_GET_LATEX_SUIT_0,"Traje de látex: elegante como un tanque, y rechina igual.","Latex suit: elegant as a tank, and it squeaks like one."
-NARR_ITEMS_EXTRA__ITEM_GET_CURSED_CAGE_0,Jaula maldita: te cubre bien. Los pactos con candado nunca salen baratos.,Cursed cage: covers you well. Padlocked pacts are never cheap.
-NARR_ITEMS_EXTRA__ITEM_CURSE_FREED_0,Libre. La llave se fue con el candado. Hay jaulas de todo tipo.,Free. The key left with the padlock. There are cages of all kinds.
-NARR_ITEMS_EXTRA__ITEM_SET_PENE_0,"Set de Penelandia completo. Orgullo de reino, con todas sus consecuencias.","Penelandia set complete. Kingdom pride, with all its consequences."
-NARR_ITEMS_EXTRA__ITEM_SET_VULVA_0,"Set de Vulvania completo. Todo en su ciclo, todo en su sitio.","Vulvania set complete. Everything in its cycle, everything in its place."
+keys,es,en,es_ES,fr
+NARR_ITEMS_EXTRA__ITEM_GET_TOWEL_MESH_0,Toalla de malla. Aguanta mucho y roza más. Ni la protección es gratis.,Mesh towel. Absorbs a lot and chafes more. Even protection has a price.,,
+NARR_ITEMS_EXTRA__ITEM_GET_TOWEL_COTTON_0,"Toalla de tela. Menos aguante, cero roce. Cada cuerpo con su favorita.","Cotton towel. Less hold, zero chafing. Every body has its favorite.",,
+NARR_ITEMS_EXTRA__ITEM_GET_TOWEL_NIGHT_0,"Toalla nocturna. Larga, rara y cara. Como una película de autor.","Night towel. Long, odd and pricey. Like an arthouse film.",,
+NARR_ITEMS_EXTRA__ITEM_USE_TOWEL_MESH_0,"Puesta. Si roza, es normal. Para eso existe la de tela.","On. If it chafes, that's normal. That's what the cotton one is for.",,
+NARR_ITEMS_EXTRA__ITEM_GET_TAMPON_0,"Un tampón. Pequeño, discreto y heroico. Salvar el reino no exime del cambio.","A tampon. Small, discreet and heroic. Saving the realm doesn't excuse changing it.",,
+NARR_ITEMS_EXTRA__ITEM_GET_TALC_0,"Talco. Zona seca, zona feliz. Salva más batallas que la espada.","Talc. Dry zone, happy zone. Wins more battles than the sword.",,
+NARR_ITEMS_EXTRA__ITEM_GET_EMERGENCY_BRIEFS_0,Calzoncillos limpios. Tu madre tenía razón sobre el accidente.,Clean underwear. Your mother was right about the accident.,,
+NARR_ITEMS_EXTRA__ITEM_GET_DEODORANT_MACHOTE_0,"Desodorante Machote: bosque, testosterona y decisiones discutibles.","Machote deodorant: forest, testosterone and questionable decisions.",,
+NARR_ITEMS_EXTRA__ITEM_GET_TESTICLE_KIT_0,"Kit de autoexamen testicular. Manos tibias, cero vergüenza y mucha seriedad.","Testicular self-exam kit. Warm hands, zero shame and a very serious face.",,
+NARR_ITEMS_EXTRA__ITEM_USE_TESTICLE_KIT_0,Revisado y todo en orden. Esto sí merecía aplauso.,Checked and all in order. This one deserves applause.,,
+NARR_ITEMS_EXTRA__ITEM_GET_PSA_TEST_0,Examen de PSA: un análisis de sangre y listo. Cero ceremonia.,PSA test: a blood draw and done. Zero ceremony.,,
+NARR_ITEMS_EXTRA__ITEM_USE_PSA_TEST_0,Ves hasta la vida de cada bicho. Por fin un análisis útil.,"You see every critter's health. Finally, a useful test.",,
+NARR_ITEMS_EXTRA__ITEM_GET_WHIP_0,"El látigo: consensuado, anunciado y con palabra de seguridad. Como debe ser.","The whip: consensual, announced and with a safe word. As it should be.",,
+NARR_ITEMS_EXTRA__ITEM_GET_LATEX_SUIT_0,"Traje de látex: elegante como un tanque, y rechina igual.","Latex suit: elegant as a tank, and it squeaks like one.",,
+NARR_ITEMS_EXTRA__ITEM_GET_CURSED_CAGE_0,Jaula maldita: te cubre bien. Los pactos con candado nunca salen baratos.,Cursed cage: covers you well. Padlocked pacts are never cheap.,,
+NARR_ITEMS_EXTRA__ITEM_CURSE_FREED_0,Libre. La llave se fue con el candado. Hay jaulas de todo tipo.,Free. The key left with the padlock. There are cages of all kinds.,,
+NARR_ITEMS_EXTRA__ITEM_SET_PENE_0,"Set de Penelandia completo. Orgullo de reino, con todas sus consecuencias.","Penelandia set complete. Kingdom pride, with all its consequences.",,
+NARR_ITEMS_EXTRA__ITEM_SET_VULVA_0,"Set de Vulvania completo. Todo en su ciclo, todo en su sitio.","Vulvania set complete. Everything in its cycle, everything in its place.",,

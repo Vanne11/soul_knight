@@ -1,25 +1,25 @@
-keys,es,en
-NARR_ENEMIGOS3A__E3A_HUINCHA_0,La huincha dijo tu medida en voz alta. Hay oficios que piden tacto.,The tape measure announced your size out loud. Some jobs call for tact.
-NARR_ENEMIGOS3A__E3A_HUINCHA_1,Anotó tu medida con una sonrisita. Nadie se la había pedido.,It noted your size with a little grin. Nobody had asked.
-NARR_ENEMIGOS3A__E3A_DEDO_0,Un Dedo del Urólogo embistió a {hero} de frente y se fue sonrojado.,A Urologist's Finger charged {hero} head-on and left blushing.
-NARR_ENEMIGOS3A__E3A_DEDO_1,El Dedo solo ataca por detrás. Como los buenos consejos médicos.,The Finger only attacks from behind. Like all good medical advice.
-NARR_ENEMIGOS3A__E3A_JAULA_0,Te encerraron sin preguntar. Y sin palabra de seguridad.,You were locked up without being asked. Not even a safe word.
-NARR_ENEMIGOS3A__E3A_JAULA_1,"Jaula carcelera: encierra primero, conversa nunca.","Cage warden: locks first, talks never."
-NARR_ENEMIGOS3A__E3A_MORDAZA_0,"La Mordaza te dejó sin voz. Yo, sin comentarios. Literalmente.",The Gag took your voice. I have no comment. Literally.
-NARR_ENEMIGOS3A__E3A_MORDAZA_1,Una mordaza es lo contrario de la educación sexual. La Hoja las regala.,A gag is the opposite of sex ed. The Leaf hands them out for free.
-NARR_ENEMIGOS3A__E3A_VENDA_0,Una venda te dejó a ciegas. {hero} sobrevivió. Hay quien paga por eso.,A blindfold left you in the dark. {hero} survived. Some people pay for that.
-NARR_ENEMIGOS3A__E3A_VENDA_1,Venda sin confianza ni forma de quitársela. Viene del Palacio.,A blindfold with no trust and no way off. Straight from the Palace.
-NARR_ENEMIGOS3A__E3A_ESPOSAS_0,Unas esposas de peluche te ataron y te soltaste. La ternura también atrapa.,Plush handcuffs tied you up and you broke free. Tenderness traps too.
-NARR_ENEMIGOS3A__E3A_ESPOSAS_1,"Si hormiguea, se suelta. Siempre. Hasta con esposas de peluche.","If it tingles, it comes off. Always. Even with plush handcuffs."
-NARR_ENEMIGOS3A__E3A_CORREA_0,"La Correa tiró de ti y el dash la cortó. Sin permiso, no es un paseo.","The Leash yanked you and the dash snapped it. Without consent, that's no walk."
-NARR_ENEMIGOS3A__E3A_CORREA_1,Te sacaron a pasear sin preguntar. Y sin bolsita.,You were taken for a walk without being asked. And no little bag.
-NARR_ENEMIGOS3A__E3A_SHIBARI_0,El shibari es un arte. Esto era tráfico de cuerdas.,Shibari is an art. This was rope traffic.
-NARR_ENEMIGOS3A__E3A_SHIBARI_1,Rompiste las redes a tiros. Un shibari de verdad lleva tijeras a mano.,You shot the nets apart. Real shibari keeps scissors handy.
-NARR_ENEMIGOS3A__E3A_SONDA_0,"La sonda vino como lanza y {hero} la esquivó. Mala puntería, mala fama.","The probe came like a spear and {hero} dodged it. Bad aim, bad rep."
-NARR_ENEMIGOS3A__E3A_SONDA_1,La sonda falló y quedó clavada. Penelandia respiró. Un poco.,The probe missed and stuck. Penelandia sighed with relief. A little.
-NARR_ENEMIGOS3A__E3A_EGO_0,"El Ego Inflado se infló, se infló y pfffft. Mucho aire, poca verdad.","The Inflated Ego puffed, puffed, and pfffft. Lots of air, little truth."
-NARR_ENEMIGOS3A__E3A_EGO_1,Se desinfló a golpes de realidad. Su mejor terapia.,Deflated by hits of reality. Best therapy it ever had.
-NARR_ENEMIGOS3A__E3A_MARCHA_0,La Marcha Atrás dejó espermatozoides de sorpresa. La estadística no perdona.,Pulling Out left sperm as a surprise. The statistics are unforgiving.
-NARR_ENEMIGOS3A__E3A_MARCHA_1,'Me retiré a tiempo.' Dos salieron detrás. El condón sale más barato.,'I pulled out in time.' Two followed. A condom is cheaper.
-NARR_ENEMIGOS3A__E3A_MITO_0,Un mito acaba de morir. La verdad está en el códice y no da vergüenza.,"A myth just died. The truth is in the codex, and it's not embarrassing."
-NARR_ENEMIGOS3A__E3A_MITO_1,Mito roto. Cada uno que rompes le quita poder al Palacio.,Myth busted. Every one you break takes power from the Palace.
+keys,es,en,es_ES,fr
+NARR_ENEMIGOS3A__E3A_HUINCHA_0,La huincha dijo tu medida en voz alta. Hay oficios que piden tacto.,The tape measure announced your size out loud. Some jobs call for tact.,,
+NARR_ENEMIGOS3A__E3A_HUINCHA_1,Anotó tu medida con una sonrisita. Nadie se la había pedido.,It noted your size with a little grin. Nobody had asked.,,
+NARR_ENEMIGOS3A__E3A_DEDO_0,Un Dedo del Urólogo embistió a {hero} de frente y se fue sonrojado.,A Urologist's Finger charged {hero} head-on and left blushing.,,
+NARR_ENEMIGOS3A__E3A_DEDO_1,El Dedo solo ataca por detrás. Como los buenos consejos médicos.,The Finger only attacks from behind. Like all good medical advice.,,
+NARR_ENEMIGOS3A__E3A_JAULA_0,Te encerraron sin preguntar. Y sin palabra de seguridad.,You were locked up without being asked. Not even a safe word.,,
+NARR_ENEMIGOS3A__E3A_JAULA_1,"Jaula carcelera: encierra primero, conversa nunca.","Cage warden: locks first, talks never.",,
+NARR_ENEMIGOS3A__E3A_MORDAZA_0,"La Mordaza te dejó sin voz. Yo, sin comentarios. Literalmente.",The Gag took your voice. I have no comment. Literally.,,
+NARR_ENEMIGOS3A__E3A_MORDAZA_1,Una mordaza es lo contrario de la educación sexual. La Hoja las regala.,A gag is the opposite of sex ed. The Leaf hands them out for free.,,
+NARR_ENEMIGOS3A__E3A_VENDA_0,Una venda te dejó a ciegas. {hero} sobrevivió. Hay quien paga por eso.,A blindfold left you in the dark. {hero} survived. Some people pay for that.,,
+NARR_ENEMIGOS3A__E3A_VENDA_1,Venda sin confianza ni forma de quitársela. Viene del Palacio.,A blindfold with no trust and no way off. Straight from the Palace.,,
+NARR_ENEMIGOS3A__E3A_ESPOSAS_0,Unas esposas de peluche te ataron y te soltaste. La ternura también atrapa.,Plush handcuffs tied you up and you broke free. Tenderness traps too.,,
+NARR_ENEMIGOS3A__E3A_ESPOSAS_1,"Si hormiguea, se suelta. Siempre. Hasta con esposas de peluche.","If it tingles, it comes off. Always. Even with plush handcuffs.",,
+NARR_ENEMIGOS3A__E3A_CORREA_0,"La Correa tiró de ti y el dash la cortó. Sin permiso, no es un paseo.","The Leash yanked you and the dash snapped it. Without consent, that's no walk.",,
+NARR_ENEMIGOS3A__E3A_CORREA_1,Te sacaron a pasear sin preguntar. Y sin bolsita.,You were taken for a walk without being asked. And no little bag.,,
+NARR_ENEMIGOS3A__E3A_SHIBARI_0,El shibari es un arte. Esto era tráfico de cuerdas.,Shibari is an art. This was rope traffic.,,
+NARR_ENEMIGOS3A__E3A_SHIBARI_1,Rompiste las redes a tiros. Un shibari de verdad lleva tijeras a mano.,You shot the nets apart. Real shibari keeps scissors handy.,,
+NARR_ENEMIGOS3A__E3A_SONDA_0,"La sonda vino como lanza y {hero} la esquivó. Mala puntería, mala fama.","The probe came like a spear and {hero} dodged it. Bad aim, bad rep.",,
+NARR_ENEMIGOS3A__E3A_SONDA_1,La sonda falló y quedó clavada. Penelandia respiró. Un poco.,The probe missed and stuck. Penelandia sighed with relief. A little.,,
+NARR_ENEMIGOS3A__E3A_EGO_0,"El Ego Inflado se infló, se infló y pfffft. Mucho aire, poca verdad.","The Inflated Ego puffed, puffed, and pfffft. Lots of air, little truth.",,
+NARR_ENEMIGOS3A__E3A_EGO_1,Se desinfló a golpes de realidad. Su mejor terapia.,Deflated by hits of reality. Best therapy it ever had.,,
+NARR_ENEMIGOS3A__E3A_MARCHA_0,La Marcha Atrás dejó espermatozoides de sorpresa. La estadística no perdona.,Pulling Out left sperm as a surprise. The statistics are unforgiving.,,
+NARR_ENEMIGOS3A__E3A_MARCHA_1,'Me retiré a tiempo.' Dos salieron detrás. El condón sale más barato.,'I pulled out in time.' Two followed. A condom is cheaper.,,
+NARR_ENEMIGOS3A__E3A_MITO_0,Un mito acaba de morir. La verdad está en el códice y no da vergüenza.,"A myth just died. The truth is in the codex, and it's not embarrassing.",,
+NARR_ENEMIGOS3A__E3A_MITO_1,Mito roto. Cada uno que rompes le quita poder al Palacio.,Myth busted. Every one you break takes power from the Palace.,,

@@ -1,52 +1,52 @@
-keys,es,en
-PZ_SPH_NAME,Esfinge,Sphinx
-PZ_SPH_ASK,Hablar con la Esfinge,Talk to the Sphinx
-PZ_SPH_TITLE,La Esfinge de Penelandia levanta la ceja: «%s»,"The Sphinx of Penisland raises an eyebrow: ""%s"""
-PZ_SPH_OK_1,«Correcto. Qué decepción: esperaba que lo pensaras sucio.»,"""Correct. What a letdown: I expected you to think dirty."""
-PZ_SPH_OK_2,«Muy bien. Se nota la mente limpia. O que nadie te ha lavado nunca.»,«Very good. A clean mind. Or nobody ever washed it.»
-PZ_SPH_OK_3,«Acertaste. Lo anoto antes de que se te olvide.»,«Correct. I'll note it down before you forget.»
-PZ_SPH_OK_4,"«Otra buena. Me caes bien, y es raro: no tengo gustos.»","«Another good one. I like you, which is odd: I have no tastes.»"
-PZ_SPH_OK_5,«Mira por dónde. Eso no tenía doble sentido. Era simple. Como tú.»,"""Look at that. That one had no double meaning. It was simple. Like you."""
-PZ_SPH_DONE,"«Ya está. Pasa, mortal. Y si pensaste mal, guárdatelo.»","«Done. Pass, mortal. And if you thought dirty, keep it to yourself.»"
-PZ_SPH_BAD,«Mal. Pensaste lo que pensaste y no se lo diré a nadie. Mentira. De nuevo.»,«Wrong. You thought what you thought and I'll tell no one. Lie. Again.»
-PZ_SPH_PITY,"«Me das pena. Te pongo la buena primero, por educación.»","«You make me sad. I'll put the right one first, out of courtesy.»"
-PZ_SPH_Q1,"Entra duro y seco, sale blando y mojado, y todo el mundo se lo mete en la boca sin pudor. ¿Qué es?","It goes in hard and dry, comes out soft and wet, and everyone shoves it in their mouth with no shame. What is it?"
-PZ_SPH_Q1_A0,Un chicle,A chewing gum
-PZ_SPH_Q1_A1,Tu cita de anoche,Last night's date
-PZ_SPH_Q1_A2,Un caramelo de menta... y de lo otro,A mint... and the other thing
-PZ_SPH_Q1_W,«Un chicle. Tu cita de anoche no cuenta: ese no entró duro.»,"""A chewing gum. Last night's date doesn't count: that one never went in hard."""
-PZ_SPH_Q2,"Lo agarras con las dos manos, lo bombeas de arriba abajo y al final sale algo blanco y espumoso. ¿Qué es?","You grab it with both hands, pump it up and down and in the end something white and foamy comes out. What is it?"
-PZ_SPH_Q2_A0,El dispensador de jabón,The soap dispenser
-PZ_SPH_Q2_A1,Tu pasatiempo favorito,Your favorite hobby
-PZ_SPH_Q2_A2,Una vaca nerviosa,A nervous cow
-PZ_SPH_Q2_W,"«El dispensador de jabón. Y lávate las manos, por favor, antes de contestar.»","""The soap dispenser. And please wash your hands before answering."""
-PZ_SPH_Q3,"Se pone duro con el frío, se derrite con el calor y en verano todos lo chupan. ¿Qué es?","It gets hard with cold, melts with heat, and in summer everybody licks it. What is it?"
-PZ_SPH_Q3_A0,Un helado,An ice cream
-PZ_SPH_Q3_A1,El vecino del tercero,The guy from the third floor
-PZ_SPH_Q3_A2,Un iglú erótico,An erotic igloo
-PZ_SPH_Q3_W,«Un helado. El vecino del tercero se pone duro con otras cosas.»,"""An ice cream. The guy from the third floor gets hard with other stuff."""
-PZ_SPH_Q4,"Sale de la ducha, te recorre todo el cuerpo y se queda colgado toda la noche. ¿Qué es?","It comes out of the shower, runs over your whole body and stays hanging all night. What is it?"
-PZ_SPH_Q4_A0,La toalla,The towel
-PZ_SPH_Q4_A1,Tu amante secreto,Your secret lover
-PZ_SPH_Q4_A2,"El agua caliente, que no se va","The hot water, which never leaves"
-PZ_SPH_Q4_W,"«La toalla. El amante secreto también se queda colgado, pero de otra forma.»","""The towel. The secret lover stays hanging too, but in a different way."""
-PZ_SPH_Q5,"Tiene un ojo pequeñito, le meten un hilo con mucha paciencia y a veces pincha. ¿Qué es?","It has a tiny eye, you thread it with a lot of patience and sometimes it pricks. What is it?"
-PZ_SPH_Q5_A0,La aguja,The needle
-PZ_SPH_Q5_A1,El ojete del vecino,The neighbor's rosy eye
-PZ_SPH_Q5_A2,Un cíclope tímido,A shy cyclops
-PZ_SPH_Q5_W,"«La aguja. Lo demás déjalo en paz, que ya tiene bastante.»","""The needle. Leave the rest alone, it has enough on its plate."""
-PZ_SPH_Q6,Si lo frotas bien fuerte sale algo que cumple todos tus deseos. ¿Qué es?,If you rub it hard enough something comes out that grants all your wishes. What is it?
-PZ_SPH_Q6_A0,La lámpara mágica,The magic lamp
-PZ_SPH_Q6_A1,Tu mano,Your hand
-PZ_SPH_Q6_A2,Un cupón de descuento,A discount coupon
-PZ_SPH_Q6_W,«La lámpara mágica. Lo de tu mano ya no concede deseos hace años.»,"""The magic lamp. What your hand does hasn't granted wishes in years."""
-PZ_SPH_Q7,"Lo golpeas por la mañana, te hace caso un rato y a los cinco minutos vuelve a gritarte. ¿Qué es?","You hit it in the morning, it listens for a while and starts yelling again five minutes later. What is it?"
-PZ_SPH_Q7_A0,El despertador,The alarm clock
-PZ_SPH_Q7_A1,Tu pareja,Your partner
-PZ_SPH_Q7_A2,Un gallo con resaca,A hungover rooster
-PZ_SPH_Q7_W,"«El despertador. Tu pareja hace lo mismo, pero con peor sonido.»","""The alarm clock. Your partner does the same, but with worse sound."""
-PZ_SPH_Q8,"Tiene cabeza y no piensa, es largo y delgado, y si lo frotas con ganas se enciende. ¿Qué es?","It has a head and doesn't think, is long and thin, and if you rub it hard enough it lights up. What is it?"
-PZ_SPH_Q8_A0,Una cerilla,A match
-PZ_SPH_Q8_A1,Tu mejor amigo,Your best friend
-PZ_SPH_Q8_A2,Una antorcha nerviosa,A nervous torch
-PZ_SPH_Q8_W,«Una cerilla. Tu mejor amigo se enciende con mucho menos.»,"""A match. Your best friend lights up with far less."""
+keys,es,en,es_ES,fr
+PZ_SPH_NAME,Esfinge,Sphinx,,
+PZ_SPH_ASK,Hablar con la Esfinge,Talk to the Sphinx,,
+PZ_SPH_TITLE,La Esfinge de Penelandia levanta la ceja: «%s»,"The Sphinx of Penisland raises an eyebrow: ""%s""",,
+PZ_SPH_OK_1,«Correcto. Qué decepción: esperaba que lo pensaras sucio.»,"""Correct. What a letdown: I expected you to think dirty.""",,
+PZ_SPH_OK_2,«Muy bien. Se nota la mente limpia. O que nadie te ha lavado nunca.»,«Very good. A clean mind. Or nobody ever washed it.»,,
+PZ_SPH_OK_3,«Acertaste. Lo anoto antes de que se te olvide.»,«Correct. I'll note it down before you forget.»,,
+PZ_SPH_OK_4,"«Otra buena. Me caes bien, y es raro: no tengo gustos.»","«Another good one. I like you, which is odd: I have no tastes.»",,
+PZ_SPH_OK_5,«Mira por dónde. Eso no tenía doble sentido. Era simple. Como tú.»,"""Look at that. That one had no double meaning. It was simple. Like you.""",,
+PZ_SPH_DONE,"«Ya está. Pasa, mortal. Y si pensaste mal, guárdatelo.»","«Done. Pass, mortal. And if you thought dirty, keep it to yourself.»",,
+PZ_SPH_BAD,«Mal. Pensaste lo que pensaste y no se lo diré a nadie. Mentira. De nuevo.»,«Wrong. You thought what you thought and I'll tell no one. Lie. Again.»,,
+PZ_SPH_PITY,"«Me das pena. Te pongo la buena primero, por educación.»","«You make me sad. I'll put the right one first, out of courtesy.»",,
+PZ_SPH_Q1,"Entra duro y seco, sale blando y mojado, y todo el mundo se lo mete en la boca sin pudor. ¿Qué es?","It goes in hard and dry, comes out soft and wet, and everyone shoves it in their mouth with no shame. What is it?",,
+PZ_SPH_Q1_A0,Un chicle,A chewing gum,,
+PZ_SPH_Q1_A1,Tu cita de anoche,Last night's date,,
+PZ_SPH_Q1_A2,Un caramelo de menta... y de lo otro,A mint... and the other thing,,
+PZ_SPH_Q1_W,«Un chicle. Tu cita de anoche no cuenta: ese no entró duro.»,"""A chewing gum. Last night's date doesn't count: that one never went in hard.""",,
+PZ_SPH_Q2,"Lo agarras con las dos manos, lo bombeas de arriba abajo y al final sale algo blanco y espumoso. ¿Qué es?","You grab it with both hands, pump it up and down and in the end something white and foamy comes out. What is it?",,
+PZ_SPH_Q2_A0,El dispensador de jabón,The soap dispenser,,
+PZ_SPH_Q2_A1,Tu pasatiempo favorito,Your favorite hobby,,
+PZ_SPH_Q2_A2,Una vaca nerviosa,A nervous cow,,
+PZ_SPH_Q2_W,"«El dispensador de jabón. Y lávate las manos, por favor, antes de contestar.»","""The soap dispenser. And please wash your hands before answering.""",,
+PZ_SPH_Q3,"Se pone duro con el frío, se derrite con el calor y en verano todos lo chupan. ¿Qué es?","It gets hard with cold, melts with heat, and in summer everybody licks it. What is it?",,
+PZ_SPH_Q3_A0,Un helado,An ice cream,,
+PZ_SPH_Q3_A1,El vecino del tercero,The guy from the third floor,,
+PZ_SPH_Q3_A2,Un iglú erótico,An erotic igloo,,
+PZ_SPH_Q3_W,«Un helado. El vecino del tercero se pone duro con otras cosas.»,"""An ice cream. The guy from the third floor gets hard with other stuff.""",,
+PZ_SPH_Q4,"Sale de la ducha, te recorre todo el cuerpo y se queda colgado toda la noche. ¿Qué es?","It comes out of the shower, runs over your whole body and stays hanging all night. What is it?",,
+PZ_SPH_Q4_A0,La toalla,The towel,,
+PZ_SPH_Q4_A1,Tu amante secreto,Your secret lover,,
+PZ_SPH_Q4_A2,"El agua caliente, que no se va","The hot water, which never leaves",,
+PZ_SPH_Q4_W,"«La toalla. El amante secreto también se queda colgado, pero de otra forma.»","""The towel. The secret lover stays hanging too, but in a different way.""",,
+PZ_SPH_Q5,"Tiene un ojo pequeñito, le meten un hilo con mucha paciencia y a veces pincha. ¿Qué es?","It has a tiny eye, you thread it with a lot of patience and sometimes it pricks. What is it?",,
+PZ_SPH_Q5_A0,La aguja,The needle,,
+PZ_SPH_Q5_A1,El ojete del vecino,The neighbor's rosy eye,,
+PZ_SPH_Q5_A2,Un cíclope tímido,A shy cyclops,,
+PZ_SPH_Q5_W,"«La aguja. Lo demás déjalo en paz, que ya tiene bastante.»","""The needle. Leave the rest alone, it has enough on its plate.""",,
+PZ_SPH_Q6,Si lo frotas bien fuerte sale algo que cumple todos tus deseos. ¿Qué es?,If you rub it hard enough something comes out that grants all your wishes. What is it?,,
+PZ_SPH_Q6_A0,La lámpara mágica,The magic lamp,,
+PZ_SPH_Q6_A1,Tu mano,Your hand,,
+PZ_SPH_Q6_A2,Un cupón de descuento,A discount coupon,,
+PZ_SPH_Q6_W,«La lámpara mágica. Lo de tu mano ya no concede deseos hace años.»,"""The magic lamp. What your hand does hasn't granted wishes in years.""",,
+PZ_SPH_Q7,"Lo golpeas por la mañana, te hace caso un rato y a los cinco minutos vuelve a gritarte. ¿Qué es?","You hit it in the morning, it listens for a while and starts yelling again five minutes later. What is it?",,
+PZ_SPH_Q7_A0,El despertador,The alarm clock,,
+PZ_SPH_Q7_A1,Tu pareja,Your partner,,
+PZ_SPH_Q7_A2,Un gallo con resaca,A hungover rooster,,
+PZ_SPH_Q7_W,"«El despertador. Tu pareja hace lo mismo, pero con peor sonido.»","""The alarm clock. Your partner does the same, but with worse sound.""",,
+PZ_SPH_Q8,"Tiene cabeza y no piensa, es largo y delgado, y si lo frotas con ganas se enciende. ¿Qué es?","It has a head and doesn't think, is long and thin, and if you rub it hard enough it lights up. What is it?",,
+PZ_SPH_Q8_A0,Una cerilla,A match,,
+PZ_SPH_Q8_A1,Tu mejor amigo,Your best friend,,
+PZ_SPH_Q8_A2,Una antorcha nerviosa,A nervous torch,,
+PZ_SPH_Q8_W,«Una cerilla. Tu mejor amigo se enciende con mucho menos.»,"""A match. Your best friend lights up with far less.""",,

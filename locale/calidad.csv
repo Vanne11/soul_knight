@@ -1,6 +1,6 @@
-keys,es,en
-QUALITY_LABEL,Calidad gráfica,Graphics quality
-QUALITY_0,Alta,High
-QUALITY_1,Media,Medium
-QUALITY_2,Baja,Low
-QUALITY_3,Automática,Automatic
+keys,es,en,es_ES,fr
+QUALITY_LABEL,Calidad gráfica,Graphics quality,,
+QUALITY_0,Alta,High,,
+QUALITY_1,Media,Medium,,
+QUALITY_2,Baja,Low,,
+QUALITY_3,Automática,Automatic,,

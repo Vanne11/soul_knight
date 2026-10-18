@@ -1,33 +1,33 @@
-keys,es,en
-CENSURA_LEVEL,PUDOR %d / %d,PRUDERY %d / %d
-CENSURA_NORMAL,Pudor de fábrica.,Factory-setting prudery.
-CENSURA_BADGE,PUDOR %d,PRUDERY %d
-CENSURA_FURIA,¡FURIA!,RAGE!
-CENSURA_UNLOCKED_TITLE,Pudor desbloqueado,Prudery unlocked
-CENSURA_UNLOCKED_BODY,Ya puedes jugar con Pudor %d. Tiene más tijeras.,You can now play on Prudery %d. More scissors.
-CENSURA_DAILY_BTN,PARTIDA DEL DÍA,DAILY RUN
-CENSURA_DAILY_BTN_REC,DEL DÍA: %s,DAILY: %s
-CENSURA_DAILY_TIP,"La misma mazmorra para todos hoy (semilla de la fecha, con el Pudor elegido). Guarda tu mejor resultado.","The same dungeon for everyone today (date seed, with the chosen Prudery). Keeps your best result."
-CENSURA_DAILY_WIN,¡VICTORIA %d:%02d!,WIN %d:%02d!
-CENSURA_DAILY_FLOOR,piso %d,floor %d
-CENSURA_DAILY_NOTICE,PARTIDA DEL DÍA · %s · misma mazmorra para todos,DAILY RUN · %s · same dungeon for everyone
-CENSURA_RULE_ELITES_NAME,Élites más seguidas,More frequent elites
-CENSURA_RULE_ELITES_DESC,Un 50% más de bichos reforzados.,50% more reinforced critters.
-CENSURA_RULE_MONEDAS_NAME,Monedas escasas,Scarce coins
-CENSURA_RULE_MONEDAS_DESC,Los bichos sueltan un 25% menos de monedas.,Critters drop 25% fewer coins.
-CENSURA_RULE_TIENDA_NAME,Tienda más cara,Pricier shop
-CENSURA_RULE_TIENDA_DESC,Todo cuesta un 25% más (tienda y consultorio).,Everything costs 25% more (shop and clinic).
-CENSURA_RULE_CURACION_NAME,Curación escasa,Scarce healing
-CENSURA_RULE_CURACION_DESC,"Orbes, fuentes y robo de vida curan un 30% menos.","Orbs, fountains and lifesteal heal 30% less."
-CENSURA_RULE_RAPIDOS_NAME,Bichos más rápidos,Faster critters
-CENSURA_RULE_RAPIDOS_DESC,Los enemigos corren un 10% más.,Enemies run 10% faster.
-CENSURA_RULE_OLEADAS_NAME,Más oleadas,Bigger waves
-CENSURA_RULE_OLEADAS_DESC,Un 20% más de bichos por sala.,20% more critters per room.
-CENSURA_RULE_JEFES_NAME,Jefes más duros,Tougher bosses
-CENSURA_RULE_JEFES_DESC,Los jefes tienen un 25% más de vida.,Bosses have 25% more health.
-CENSURA_RULE_ESCUDO_NAME,Escudo recortado,Trimmed shield
-CENSURA_RULE_ESCUDO_DESC,Todo el escudo que ganas vale un 40% menos.,All the shield you gain is worth 40% less.
-CENSURA_RULE_CONTAGIO_NAME,Contagio persistente,Lingering infection
-CENSURA_RULE_CONTAGIO_DESC,Los contagios duran un 50% más.,Infections last 50% longer.
-CENSURA_RULE_FURIA_NAME,Jefes furiosos,Furious bosses
-CENSURA_RULE_FURIA_DESC,Al 15% de vida el jefe se enfurece: más rápido y más fuerte.,At 15% health the boss goes into a rage: faster and stronger.
+keys,es,en,es_ES,fr
+CENSURA_LEVEL,PUDOR %d / %d,PRUDERY %d / %d,,
+CENSURA_NORMAL,Pudor de fábrica.,Factory-setting prudery.,,
+CENSURA_BADGE,PUDOR %d,PRUDERY %d,,
+CENSURA_FURIA,¡FURIA!,RAGE!,,
+CENSURA_UNLOCKED_TITLE,Pudor desbloqueado,Prudery unlocked,,
+CENSURA_UNLOCKED_BODY,Ya puedes jugar con Pudor %d. Tiene más tijeras.,You can now play on Prudery %d. More scissors.,,
+CENSURA_DAILY_BTN,PARTIDA DEL DÍA,DAILY RUN,,
+CENSURA_DAILY_BTN_REC,DEL DÍA: %s,DAILY: %s,,
+CENSURA_DAILY_TIP,"La misma mazmorra para todos hoy (semilla de la fecha, con el Pudor elegido). Guarda tu mejor resultado.","The same dungeon for everyone today (date seed, with the chosen Prudery). Keeps your best result.",,
+CENSURA_DAILY_WIN,¡VICTORIA %d:%02d!,WIN %d:%02d!,,
+CENSURA_DAILY_FLOOR,piso %d,floor %d,,
+CENSURA_DAILY_NOTICE,PARTIDA DEL DÍA · %s · misma mazmorra para todos,DAILY RUN · %s · same dungeon for everyone,,
+CENSURA_RULE_ELITES_NAME,Élites más seguidas,More frequent elites,,
+CENSURA_RULE_ELITES_DESC,Un 50% más de bichos reforzados.,50% more reinforced critters.,,
+CENSURA_RULE_MONEDAS_NAME,Monedas escasas,Scarce coins,,
+CENSURA_RULE_MONEDAS_DESC,Los bichos sueltan un 25% menos de monedas.,Critters drop 25% fewer coins.,,
+CENSURA_RULE_TIENDA_NAME,Tienda más cara,Pricier shop,,
+CENSURA_RULE_TIENDA_DESC,Todo cuesta un 25% más (tienda y consultorio).,Everything costs 25% more (shop and clinic).,,
+CENSURA_RULE_CURACION_NAME,Curación escasa,Scarce healing,,
+CENSURA_RULE_CURACION_DESC,"Orbes, fuentes y robo de vida curan un 30% menos.","Orbs, fountains and lifesteal heal 30% less.",,
+CENSURA_RULE_RAPIDOS_NAME,Bichos más rápidos,Faster critters,,
+CENSURA_RULE_RAPIDOS_DESC,Los enemigos corren un 10% más.,Enemies run 10% faster.,,
+CENSURA_RULE_OLEADAS_NAME,Más oleadas,Bigger waves,,
+CENSURA_RULE_OLEADAS_DESC,Un 20% más de bichos por sala.,20% more critters per room.,,
+CENSURA_RULE_JEFES_NAME,Jefes más duros,Tougher bosses,,
+CENSURA_RULE_JEFES_DESC,Los jefes tienen un 25% más de vida.,Bosses have 25% more health.,,
+CENSURA_RULE_ESCUDO_NAME,Escudo recortado,Trimmed shield,,
+CENSURA_RULE_ESCUDO_DESC,Todo el escudo que ganas vale un 40% menos.,All the shield you gain is worth 40% less.,,
+CENSURA_RULE_CONTAGIO_NAME,Contagio persistente,Lingering infection,,
+CENSURA_RULE_CONTAGIO_DESC,Los contagios duran un 50% más.,Infections last 50% longer.,,
+CENSURA_RULE_FURIA_NAME,Jefes furiosos,Furious bosses,,
+CENSURA_RULE_FURIA_DESC,Al 15% de vida el jefe se enfurece: más rápido y más fuerte.,At 15% health the boss goes into a rage: faster and stronger.,,

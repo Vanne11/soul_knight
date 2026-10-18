@@ -46,7 +46,7 @@ static func pick_index(n: int, floor_n: int, seed_: int, salt: String) -> int:
 
 ## Graffiti en el idioma actual (es/en).
 static func graffiti_tex() -> Texture2D:
-	return tex("graffiti_v_" + ("en" if TranslationServer.get_locale().begins_with("en") else "es"))
+	return tex("graffiti_v_" + ("es" if TranslationServer.get_locale().begins_with("es") else "en"))
 
 
 ## Archivo Clasificado: 2.ª etapa del Palacio.

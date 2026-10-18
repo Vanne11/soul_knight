@@ -1,35 +1,35 @@
-keys,es,en
-FLOOR_UTERO_NAME,EL ÚTERO,THE UTERUS
-UTERO_PHASE_1,I · MENSTRUACIÓN,I · MENSTRUATION
-UTERO_PHASE_1_D,"Toallas, tampones y copas rinden más.","Pads, tampons and cups work better."
-UTERO_PHASE_2,II · FOLICULAR,II · FOLLICULAR
-UTERO_PHASE_2_D,Revienta los folículos: sueltan botín.,Pop the follicles: they drop loot.
-UTERO_PHASE_3,III · OVULACIÓN,III · OVULATION
-UTERO_PHASE_3_D,Todos en celo y más rápidos. Alcanza el óvulo.,Everyone in heat and faster. Catch the egg.
-UTERO_PHASE_4,IV · LÚTEA,IV · LUTEAL
-UTERO_PHASE_4_D,Enemigos irritables. El chocolate cura el doble.,Irritable enemies. Chocolate heals double.
-UTERO_BLESSING_TITLE,BENDICIÓN DE CICLO,CYCLE BLESSING
-UTERO_DOOR_HINT,CONSULTA,CLINIC
-UTERO_SIGN,CONSULTA DE LA DOCTORA V.,DOCTOR V.'S CLINIC
-UTERO_SIGN_SUB,Cuello uterino: solo con turno,Cervix: by appointment only
-UTERO_PROMPT_DOOR,Puerta del Cuello Uterino,Cervix door
-UTERO_PROMPT_OPEN,Puerta del Cuello Uterino (abierta),Cervix door (open)
-UTERO_ALREADY_OPEN,Ya está abierta,Already open
-UTERO_NEED_TURNO,Falta el Turno,You need an appointment slip
-UTERO_OPENED_T,CUELLO UTERINO ABIERTO,CERVIX OPEN
-UTERO_OPENED_D,"Cuando caiga la reina, la escotilla baja al Útero.","When the queen falls, the hatch leads down to the uterus."
-UTERO_OVULO_T,¡EL ÓVULO SE SOLTÓ!,THE EGG IS LOOSE!
-UTERO_OVULO_D,Alcánzalo antes de que se vaya.,Catch it before it leaves.
-UTERO_OVULO_BAR,Óvulo: %d s,Egg: %d s
-UTERO_OVULO_CAUGHT,¡Atrapado!,Caught!
-UTERO_OVULO_LOST,Se fue,It's gone
-UTERO_FOLI_POP,¡Floreció!,Bloomed!
-UTERO_AY,¡Ay!,Ow!
-UTERO_FIN,¡Por fin!,Finally!
-UTERO_EGG_PLOP,¡PLOP!,PLOP!
-UTERO_APPLAUSE,(aplausos),(applause)
-UTERO_REGLA_MIDE,Mide %.2f m,Measures %.2f m
-UTERO_REGLA_PUNTUAL,¡Puntual!,On time!
-BOSS_REGLA_NAME,DOÑA REGLA,LADY PERIOD
-BOSS_CH_REGLAS_T,¡TRES REGLAS!,THREE RULERS!
-BOSS_CH_REGLAS_D,Pega a la real: solo ella tiene sombra.,Hit the real one: only she casts a shadow.
+keys,es,en,es_ES,fr
+FLOOR_UTERO_NAME,EL ÚTERO,THE UTERUS,,
+UTERO_PHASE_1,I · MENSTRUACIÓN,I · MENSTRUATION,,
+UTERO_PHASE_1_D,"Toallas, tampones y copas rinden más.","Pads, tampons and cups work better.",,
+UTERO_PHASE_2,II · FOLICULAR,II · FOLLICULAR,,
+UTERO_PHASE_2_D,Revienta los folículos: sueltan botín.,Pop the follicles: they drop loot.,,
+UTERO_PHASE_3,III · OVULACIÓN,III · OVULATION,,
+UTERO_PHASE_3_D,Todos en celo y más rápidos. Alcanza el óvulo.,Everyone in heat and faster. Catch the egg.,,
+UTERO_PHASE_4,IV · LÚTEA,IV · LUTEAL,,
+UTERO_PHASE_4_D,Enemigos irritables. El chocolate cura el doble.,Irritable enemies. Chocolate heals double.,,
+UTERO_BLESSING_TITLE,BENDICIÓN DE CICLO,CYCLE BLESSING,,
+UTERO_DOOR_HINT,CONSULTA,CLINIC,,
+UTERO_SIGN,CONSULTA DE LA DOCTORA V.,DOCTOR V.'S CLINIC,,
+UTERO_SIGN_SUB,Cuello uterino: solo con turno,Cervix: by appointment only,,
+UTERO_PROMPT_DOOR,Puerta del Cuello Uterino,Cervix door,,
+UTERO_PROMPT_OPEN,Puerta del Cuello Uterino (abierta),Cervix door (open),,
+UTERO_ALREADY_OPEN,Ya está abierta,Already open,,
+UTERO_NEED_TURNO,Falta el Turno,You need an appointment slip,,
+UTERO_OPENED_T,CUELLO UTERINO ABIERTO,CERVIX OPEN,,
+UTERO_OPENED_D,"Cuando caiga la reina, la escotilla baja al Útero.","When the queen falls, the hatch leads down to the uterus.",,
+UTERO_OVULO_T,¡EL ÓVULO SE SOLTÓ!,THE EGG IS LOOSE!,,
+UTERO_OVULO_D,Alcánzalo antes de que se vaya.,Catch it before it leaves.,,
+UTERO_OVULO_BAR,Óvulo: %d s,Egg: %d s,,
+UTERO_OVULO_CAUGHT,¡Atrapado!,Caught!,,
+UTERO_OVULO_LOST,Se fue,It's gone,,
+UTERO_FOLI_POP,¡Floreció!,Bloomed!,,
+UTERO_AY,¡Ay!,Ow!,,
+UTERO_FIN,¡Por fin!,Finally!,,
+UTERO_EGG_PLOP,¡PLOP!,PLOP!,,
+UTERO_APPLAUSE,(aplausos),(applause),,
+UTERO_REGLA_MIDE,Mide %.2f m,Measures %.2f m,,
+UTERO_REGLA_PUNTUAL,¡Puntual!,On time!,,
+BOSS_REGLA_NAME,DOÑA REGLA,LADY PERIOD,,
+BOSS_CH_REGLAS_T,¡TRES REGLAS!,THREE RULERS!,,
+BOSS_CH_REGLAS_D,Pega a la real: solo ella tiene sombra.,Hit the real one: only she casts a shadow.,,

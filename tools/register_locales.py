@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """Regenera `locale/translations` de project.godot con todos los locale/*.csv.
 
-Convencion: cada bloque crea SU locale/<bloque>.csv (cabecera keys,es,en) y no toca los
-de otros. Godot importa cada CSV a locale/<bloque>.<idioma>.translation (una por columna).
-Este script lista esas .translation a partir de las cabeceras de los CSV (asi funciona
-tambien en un clon limpio, antes de importar) y reescribe la linea de project.godot:
+Convencion: cada bloque crea SU locale/<bloque>.csv (cabecera keys,es,en,es_ES,fr) y no toca
+los de otros. Godot importa cada CSV a locale/<bloque>.<idioma>.translation (una por columna),
+PERO se salta las columnas totalmente vacias: no genera su .translation. Por eso solo se
+registran las columnas con al menos una celda con texto (en un clon limpio, antes de importar,
+tambien funciona porque se lee el CSV, no lo importado). Cuando se rellene la 1a celda de
+una columna (p.ej. fr) hay que volver a correr este script y reimportar.
+Este script lista esas .translation a partir de los CSV y reescribe la linea de project.godot:
 conserva el orden de las que ya estaban, quita las de CSV borrados y agrega las nuevas en
 orden alfabetico.
 
@@ -30,12 +33,15 @@ def wanted() -> list:
     out = []
     for p in sorted((ROOT / "locale").glob("*.csv")):
         with p.open(newline="", encoding="utf-8") as fh:
-            header = next(csv.reader(fh), [])
+            rows = list(csv.reader(fh))
+        header = rows[0] if rows else []
         if header[:1] != ["keys"]:
             print(f"aviso: {p.name} no empieza por 'keys', se ignora")
             continue
-        # columnas vacias o que empiezan por '_' las ignora el importador de Godot
-        out += [f"res://locale/{p.stem}.{lang}.translation" for lang in header[1:] if lang and not lang.startswith("_")]
+        # el importador ignora las columnas con cabecera vacia o '_...' y las que no tienen ni una celda con texto
+        for i, lang in enumerate(header[1:], 1):
+            if lang and not lang.startswith("_") and any(len(r) > i and r[i] for r in rows[1:]):
+                out.append(f"res://locale/{p.stem}.{lang}.translation")
     return out
 
 

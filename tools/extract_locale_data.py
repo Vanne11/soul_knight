@@ -7,14 +7,19 @@ assets/data/narrator/*.json y las constantes de src/autoloads/run_manager.gd
 (FLOORS, CHARACTERS, BLESSINGS, META_UPGRADES; se vuelcan con tools/dump_world.gd).
 
 - La columna `es` SIEMPRE se regenera desde los datos.
-- La columna `en` (y cualquier otra columna de idioma) se CONSERVA de los CSV existentes;
-  las claves nuevas quedan con `en` vacio para traducirlas.
-- Las claves que ya no existen en los datos se eliminan.
+- Las demas columnas (en, es_ES, fr...) se CONSERVAN de los CSV existentes; las claves nuevas
+  quedan con ellas vacias para traducirlas. Una celda de es_ES/fr vacia significa "usa el
+  respaldo" (es_ES -> es; fr -> en), asi que NO es un error.
+- Las filas existentes conservan su ORDEN; las claves nuevas se agregan al final. Un CSV cuyo
+  contenido no cambia no se reescribe (ni se toca su fecha). Solo se tocan los CSV de SOURCES.
+- Las claves que ya no existen en los datos NO se borran (se avisa); --prune las elimina.
 
-Uso:  tools/extract_locale_data.py [--merge-en traducciones.json]
+Uso:  tools/extract_locale_data.py [--merge-en traducciones.json] [--prune]
   --merge-en: JSON {clave: texto_en}; rellena/sobrescribe la columna en de esas claves.
+  --prune: elimina las filas cuya clave ya no existe en los datos.
 """
 import csv
+import io
 import json
 import re
 import subprocess
@@ -24,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LOCALE = ROOT / "locale"
-LANGS = ["es", "en"]
+LANGS = ["es", "en", "es_ES", "fr"]  # es = Latinoamerica (base); es_ES y fr pueden ir vacios
 
 _STR = re.compile(r'^(\w+)\s*=\s*("(?:[^"\\]|\\.)*")\s*$')
 
@@ -189,37 +194,64 @@ for _p in sorted(NARRATOR_DIR.glob("*.json")):
         SOURCES[f"narrator_{_p.stem}"] = (lambda s: lambda: collect_narrator(s))(_p.stem)
 
 
-def read_existing(path: Path) -> dict:
+def read_existing(path: Path):
+    """(cabecera, filas en orden) del CSV actual; ([], []) si no existe."""
     if not path.exists():
-        return {}
+        return [], []
     with path.open(newline="", encoding="utf-8") as fh:
-        return {r["keys"]: r for r in csv.DictReader(fh)}
+        r = csv.DictReader(fh)
+        return list(r.fieldnames or []), list(r)
+
+
+def render(header: list, rows: list) -> str:
+    out = io.StringIO()
+    w = csv.writer(out, lineterminator="\n", quoting=csv.QUOTE_MINIMAL)
+    w.writerow(header)
+    for r in rows:
+        w.writerow([r.get(h, "") or "" for h in header])
+    return out.getvalue()
 
 
 def main() -> None:
     merge = {}
     if "--merge-en" in sys.argv:
         merge = json.loads(Path(sys.argv[sys.argv.index("--merge-en") + 1]).read_text(encoding="utf-8"))
+    prune = "--prune" in sys.argv
     LOCALE.mkdir(exist_ok=True)
     for name, fn in SOURCES.items():
         path = LOCALE / f"{name}.csv"
-        old = read_existing(path)
+        old_header, old_rows = read_existing(path)
         new = fn()
-        with path.open("w", newline="", encoding="utf-8") as fh:
-            w = csv.writer(fh, lineterminator="\n", quoting=csv.QUOTE_MINIMAL)
-            w.writerow(["keys"] + LANGS)
-            missing = 0
-            for key, es in new.items():
-                row = [key, es]
-                for lang in LANGS[1:]:
-                    val = old.get(key, {}).get(lang, "") or ""
-                    if lang == "en" and key in merge:
-                        val = merge[key]
-                    if not val:
-                        missing += 1
-                    row.append(val)
-                w.writerow(row)
-        print(f"{name}.csv: {len(new)} claves, {missing} sin traducir, {len(set(old) - set(new))} obsoletas eliminadas")
+        header = list(old_header) if old_header[:1] == ["keys"] else ["keys"]
+        for lang in LANGS:  # agrega las columnas que falten, sin mover las existentes
+            if lang not in header:
+                header.append(lang)
+        by_key = {r["keys"]: r for r in old_rows}
+        rows = []
+        for r in old_rows:  # orden original
+            k = r["keys"]
+            if k in new:
+                r["es"] = new[k]
+            elif prune:
+                continue
+            rows.append(r)
+        for k, es in new.items():  # claves nuevas al final
+            if k not in by_key:
+                rows.append({"keys": k, "es": es})
+        for r in rows:
+            if r["keys"] in merge:
+                r["en"] = merge[r["keys"]]
+        missing = sum(1 for r in rows if r["keys"] in new and not r.get("en"))
+        obsolete = [r["keys"] for r in rows if r["keys"] not in new]
+        text = render(header, rows)
+        changed = not path.exists() or path.read_text(encoding="utf-8") != text
+        if changed:
+            with path.open("w", newline="", encoding="utf-8") as fh:
+                fh.write(text)
+        print(f"{name}.csv: {len(new)} claves, {missing} sin en, {len(obsolete)} obsoletas "
+              f"({'eliminadas' if prune else 'conservadas'})" + ("" if changed else ", sin cambios"))
+        for k in obsolete[:5]:
+            print(f"    obsoleta: {k}")
 
 
 if __name__ == "__main__":
