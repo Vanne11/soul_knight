@@ -436,10 +436,10 @@ func _step_crawlers(dt: float) -> void:
 
 # ------------------------------------------------------------------ matorrales y pelos (35)
 func _build_cover() -> void:
-	# 4 matorrales frondosos (liso, con bayas, con flores, con rizos asomando) y 4 matas de vello rizado
-	var names := ["neutral_bush_a", "neutral_bush_b", "neutral_bush_c", "neutral_bush_d",
-		"neutral_hair_a", "neutral_hair_b", "neutral_hair_c", "neutral_hair_d"]
-	var weights := [0.15, 0.15, 0.14, 0.14, 0.11, 0.1, 0.1, 0.11]
+	# 4 matorrales frondosos (liso, con bayas, con flores, con rizos asomando). Las matas de vello
+	# rizado (neutral_hair_a..d) quedan fuera: no se leian como vello (parecian otra cosa).
+	var names := ["neutral_bush_a", "neutral_bush_b", "neutral_bush_c", "neutral_bush_d"]
+	var weights := [0.27, 0.25, 0.23, 0.25]
 	var n := _rng.randi_range(2, 3) + (1 if _size.x * _size.y > 700.0 * 500.0 else 0)
 	var center := Rect2(_size * 0.5 - Vector2(100, 80), Vector2(200, 160))
 	var placed: Array[Rect2] = []
