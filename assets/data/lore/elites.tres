@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "elites"
 title = "Élites con Afijos"
-text = "A veces un bicho común se mira al espejo, se cree especial y le sale un ego del tamaño de un anillo rojo. Son los élites, y la censura los clasificó como 'personal con responsabilidades'. Cada uno trae uno o dos afijos, que son como las propinas: nadie los pidió y siempre cuestan. El Veloz corre más de la cuenta. El Blindado llega con un escudo azul que hay que romper primero (no, no se negocia). El Vampiro se cura con tu dolor, el Explosivo se despide con fuegos artificiales y avisa, el Invocador trae primos, el Saltarín aparece donde menos lo esperas (pero un aro cian lo delata), el Espejado te devuelve las balas con cariño, el Venenoso deja charcos que nadie pidió, el Vengativo se ofende si le matas a un amigo y el Pegajoso, bueno, es pegajoso. Cuanto más hondo bajas, más probable es que vengan de a dos. Moraleja: mira los iconitos sobre su cabeza antes de decidir cómo pelear. Y si ves 'Explosivo y Vampiro', corre."
+text = "A veces un bicho común se mira al espejo, se cree especial y le sale un ego del tamaño de un anillo rojo. Cada élite trae uno o dos afijos, como las propinas: nadie los pidió y siempre cuestan. Veloz, Blindado, Vampiro, Explosivo, Invocador, Saltarín, Espejado, Venenoso, Vengativo, Pegajoso. Mira los iconos. Si ves Explosivo y Vampiro, corre."
 category = 3
 unlock_condition = {"type": 10, "target_id": "elite", "count": 3}
 flavor_text = "Mata a 3 élites con afijos."

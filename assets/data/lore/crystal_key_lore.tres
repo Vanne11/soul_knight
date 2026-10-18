@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "crystal_key_lore"
 title = "La Perfección Rota"
-text = "No tomaste ni un rasguño. El piso yace a tus pies, estéril, silencioso. El cristal brilla en tu mano, frío, imposible. Abres la puerta. Dentro no hay boss. Hay un espejo. Tu reflejo sonríe. Tú no. 'Perfección', susurra el cristal al romperse. 'Es lo único que no se puede repetir.' La llave se deshace en polvo. La puerta se cierra. La run continúa. Pero ya no eres perfecto. Tienes una grieta. Y por esa grieta entra la luz. O la oscuridad. Da igual. Algo cambió."
+text = "No recibiste ni un rasguño en toda la región. El cristal brilla en tu mano, frío e imposible. Abres la puerta y no hay jefe: hay un espejo donde tu reflejo sonríe y tú no. Al romperse, el cristal avisa que la perfección es lo único que no se puede repetir. Ahora tienes una grieta. Por ahí entra la luz. O la humedad."
 category = 2
 unlock_condition = {"type": 1, "target_id": "key_crystal", "count": 1}
-flavor_text = "Completa un piso sin daño y usa la Llave de Cristal."
+flavor_text = "Completa una región sin daño y usa la Llave de Cristal."
