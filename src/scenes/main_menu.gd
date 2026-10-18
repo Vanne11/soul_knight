@@ -291,9 +291,21 @@ func _open_codex() -> void:
 	for e in entries:
 		var img: Texture2D = CodexArt.image(e)
 		list.add_item(Loc.lore_title(e) if e.unlocked else "???", CodexArt.thumb(img, 32, not e.unlocked) if img else null)
-		list.set_item_disabled(list.item_count - 1, not e.unlocked)
+		# Las bloqueadas NO van deshabilitadas: asi las flechas siguen bajando y se ve cuanto falta.
+		if not e.unlocked:
+			list.set_item_custom_fg_color(list.item_count - 1, Color(0.55, 0.5, 0.6))
 	list.item_selected.connect(func(i):
 		var e = entries[i]
+		if not e.unlocked:
+			# solo la silueta y un empujon: nada de spoilers
+			var sil: Texture2D = CodexArt.image(e)
+			frame.visible = sil != null
+			if sil:
+				pic.texture = CodexArt.thumb(sil, 160, true, true)
+				pic.texture_filter = CanvasItem.TEXTURE_FILTER_PARENT_NODE
+				pic.custom_minimum_size = Vector2(pic.texture.get_width(), pic.texture.get_height())
+			text.text = "[b]???[/b]\n\n" + tr("CODEX_LOCKED")
+			return
 		var art: Texture2D = CodexArt.illustration(e)  # lamina ilustrada; si no hay, el sprite de siempre
 		var img: Texture2D = art if art else CodexArt.image(e)
 		frame.visible = img != null

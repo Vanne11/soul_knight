@@ -39,6 +39,7 @@ MENU_UPGRADE_MAX,%s — %s   [%d/%d] MÁXIMO,%s — %s   [%d/%d] MAXED
 MENU_UPGRADE_BUY,%s — %s   [%d/%d]   %d huesos,%s — %s   [%d/%d]   %d bones
 CODEX_TITLE,CÓDICE  (%.0f%% descubierto),CODEX  (%.0f%% discovered)
 CODEX_HINT,"Elige una entrada. Las que faltan se descubren jugando: inscripciones, objetos, enemigos y jefes.","Pick an entry. The missing ones are discovered by playing: inscriptions, items, enemies and bosses."
+CODEX_LOCKED,"Todavía sin descubrir. Sigue jugando: algo por ahí te la debe.","Not discovered yet. Keep playing: something out there owes you this one."
 INTRO_HINT,[cualquier tecla] seguir      [ESC] saltar la historia,[any key] continue      [ESC] skip the story
 INTRO_CHOOSE_TITLE,ELIGE A TU HÉROE,CHOOSE YOUR HERO
 INTRO_REPLAY,Ver la historia otra vez,Watch the story again
