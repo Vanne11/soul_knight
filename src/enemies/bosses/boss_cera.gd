@@ -23,6 +23,7 @@ func _ready() -> void:
 	keep_min = 190.0
 	keep_max = 310.0
 	_last_pos = global_position
+	BossAnimator.attach(self)  # cuadros nuevos + animacion por codigo (solo si el SpriteFrames los trae)
 
 
 func _attack_pool() -> Array:
