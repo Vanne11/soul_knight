@@ -38,7 +38,7 @@ func _build() -> void:
 		remove_child(c)
 		c.queue_free()
 	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 14)
+	box.add_theme_constant_override("separation", 14 if Settings.ui_size == 0 else 9)  # UI grande: cabe en pantalla chica
 	add_child(box)
 	box.add_child(HudStyle.pixel_label(tr("SETTINGS_TITLE"), 24, Color("ff4f9a"), true))
 
@@ -78,12 +78,35 @@ func _build() -> void:
 	_lang_option.mouse_entered.connect(_lang_option.grab_focus)
 	box.add_child(_row(tr("SETTINGS_LANGUAGE"), _lang_option))
 
+	_build_touch_rows(box)
+
 	var back := Button.new()
 	back.text = tr("SETTINGS_BACK")  # antes de juice_button: guarda el texto final
 	back.custom_minimum_size = Vector2(0, 46)
 	back.pressed.connect(func(): closed.emit())
 	HudStyle.juice_button(back)
 	box.add_child(back)
+
+
+## Bloque movil/tactil (F4): tamano de la interfaz y controles tactiles.
+func _build_touch_rows(box: VBoxContainer) -> void:
+	var ui := OptionButton.new()
+	ui.custom_minimum_size = Vector2(220, 40)
+	for i in 2:
+		ui.add_item(tr("SETTINGS_UISIZE_%d" % i), i)
+	ui.select(Settings.ui_size)
+	ui.item_selected.connect(func(i: int): Settings.set_ui_size(i))
+	ui.mouse_entered.connect(ui.grab_focus)
+	box.add_child(_row(tr("SETTINGS_UISIZE"), ui))
+
+	var tc := OptionButton.new()
+	tc.custom_minimum_size = Vector2(220, 40)
+	for i in 3:
+		tc.add_item(tr("SETTINGS_TOUCH_%d" % i), i)
+	tc.select(Settings.touch_mode)
+	tc.item_selected.connect(func(i: int): Settings.set_touch_mode(i))
+	tc.mouse_entered.connect(tc.grab_focus)
+	box.add_child(_row(tr("SETTINGS_TOUCH"), tc))
 
 
 func _row(label_text: String, control: Control) -> HBoxContainer:

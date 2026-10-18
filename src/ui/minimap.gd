@@ -55,6 +55,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_M:
 		_big = not _big
 		_resize()
+	# con controles tactiles: tocar el mapa lo agranda / achica
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT \
+			and TouchControls.is_active() and get_global_rect().has_point(event.position):
+		_big = not _big
+		_resize()
 
 func _process(delta: float) -> void:
 	queue_redraw()
