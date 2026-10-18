@@ -21,6 +21,8 @@ class_name BossAnimator
 const NAME := "BossAnimator"
 const GHOST_EVERY := 0.045
 const MAX_GHOSTS := 10
+## Alto minimo (px) de un cuadro para considerarlo de alta densidad.
+const HD_MIN_H := 150
 
 var boss: EnemyBoss
 var spr: AnimatedSprite2D
@@ -72,6 +74,13 @@ func setup(b: EnemyBoss, s: AnimatedSprite2D) -> void:
 	boss = b
 	spr = s
 	_base_scale = s.scale
+	# Cuadros de alta densidad (1 pixel de arte = 1 unidad, como el heroe): el .tscn trae scale 1.5
+	# y offset -60 pensados para 80x120; aqui el sprite vuelve a scale 1 y los pies siguen en y=0.
+	var t0 := s.sprite_frames.get_frame_texture("idle", 0)
+	if t0 != null and t0.get_height() >= HD_MIN_H:
+		_base_scale = s.scale / 1.5
+		s.scale = _base_scale
+		s.offset = Vector2(0, -t0.get_height() * 0.5)
 	_sets = [s.sprite_frames]
 	var base := s.sprite_frames.resource_path
 	for n in ["_p2", "_p3"]:
