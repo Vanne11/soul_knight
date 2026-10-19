@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bby3a4yxlg1bm"
+
+[deps]
+
+files=["res://locale/monte_venus.es.translation", "res://locale/monte_venus.en.translation", "res://locale/monte_venus.fr.translation"]
+
+source_file="res://locale/monte_venus.csv"
+dest_files=["res://locale/monte_venus.es.translation", "res://locale/monte_venus.en.translation", "res://locale/monte_venus.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

@@ -130,7 +130,7 @@ func _build_plan() -> void:
 	var objectives := 0
 	for pos in keys:
 		var room: Room = gen.rooms[pos]
-		if room.has_meta("elite_room") or room.has_meta("consulta"):
+		if room.has_meta("elite_room") or room.has_meta("consulta") or room.has_meta("monte_venus"):
 			continue  # la sala elite (6b) y la Consulta del Utero ya traen su propia mecanica
 		if force_kind != "":
 			if KINDS.has(force_kind) and room.room_type in KINDS[force_kind].rooms:

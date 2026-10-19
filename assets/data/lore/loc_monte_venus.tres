@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "loc_monte_venus"
+title = "El Monte de Venus"
+text = "Todas las personas tienen monte del pubis: la almohadilla de grasa que cubre el hueso púbico y amortigua la zona. En las mujeres se llama monte de Venus y suele ser más prominente, porque los estrógenos hacen que ahí se acumule más grasa. En la pubertad se cubre de vello, que protege la piel de roces y suciedad. Doña Cera Caliente lo odia; la anatomía, no."
+category = 4
+unlock_condition = {"type": 10, "target_id": "monte_venus"}
+flavor_text = "Sube a la loma de la Selva Púbica."
