@@ -40,7 +40,7 @@ func generate_floor(floor: int, seed_override: int = 0) -> Node2D:
 	# Trazado (7-12 salas segun piso y semilla): hojas del BSP elegidas + grafo con ramas y ciclos.
 	# Las Tierras del Silencio no: una cadena fija de salas de situacion (src/silencio/), sin enemigos.
 	var silent := Silencio.is_floor(floor)
-	var plan := Silencio.plan_layout() if silent else _plan_layout()
+	var plan := Silencio.plan_layout(floor) if silent else _plan_layout()
 	_create_rooms(plan.rects, dungeon_root)
 	_connect_rooms(plan.edges)
 	_layout_doors()

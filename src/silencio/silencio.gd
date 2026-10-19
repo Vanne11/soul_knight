@@ -2,9 +2,10 @@ class_name Silencio
 extends RefCounted
 
 ## LAS TIERRAS DEL SILENCIO (nombre provisorio; Vanessa pone el definitivo): el reino de la violencia
-## de genero (E3). Este archivo es el piso 1, "Superficie", y solo eso: aviso de contenido, S1 Turno,
-## S2 Espacio, S3 Revision y S4 Mensajes. Diseno aprobado: diseno_E3_silencio.md (secciones 0-3).
-## NO incluye S5, S6, el jefe, la sala de memoria ni la transformacion del reino (decisiones pendientes).
+## de genero (E3). Este archivo cubre el piso 1, "Superficie" (aviso de contenido, S1 Turno,
+## S2 Espacio, S3 Revision y S4 Mensajes) y el piso 2, "Fondo" (S5 Cinco puertas y S6 El pasillo; ver mas
+## abajo). Diseno aprobado: diseno_E3_silencio.md (secciones 0-4).
+## NO incluye el jefe, la sala de memoria (S7) ni la transformacion del reino (los hacen otros agentes).
 ##
 ## REINO INCOMPLETO ("wip": true en assets/data/floors/80_silencio.json): no entra en la ruta normal
 ## (ver la cabecera de run_manager.gd). Se prueba desde F1 > "Ir al Silencio (WIP)".
@@ -18,16 +19,20 @@ extends RefCounted
 ## una cadena horizontal de salas, cada una un RoomType.SILENCIO (la 1a, START) ya "limpia" para que
 ## nunca se selle ni genere enemigos. Las 4 situaciones son nodos hijos de su sala (silencio_turno.gd,
 ## silencio_espacio.gd, silencio_revision.gd, silencio_mensajes.gd) que main._enter_room arranca con
-## on_enter_room y para con on_leave_room. La luz baja un escalon por sala (CHAIN) con el ambiente de
+## on_enter_room y para con on_leave_room. La luz baja un escalon por sala (CHAIN_SUPERFICIE / CHAIN_FONDO) con el ambiente de
 ## RoomLighting. Textos: locale/silencio.csv (SIL_*). Codice: assets/data/lore/silencio_*.tres.
 ##
 ## CIRCULO (HUD de 3 luces, tus personas de confianza): aparece en S3 y se apaga ahi. API para el jefe:
 ## circle_show(), circle_set(i, on), circle_relight(i), circle_is_on(i), circle_lit(). El estado dura la
 ## partida (se reinicia al empezar otra).
 ##
-## TODO piso 2 "Fondo" (S5 Cinco puertas, S6 El pasillo, jefe "El Pacto de Silencio", S7 sala de
-## memoria): 85_silencio_fondo.json. Mientras falte, la salida de S4 abre el portal a la siguiente parte
-## de la ruta (main.open_exit) y este piso cuenta como la ultima etapa del reino.
+## PISO 2 "Fondo" (85_silencio_fondo.json, CHAIN_FONDO): entrada vacia, S5 "Cinco puertas"
+## (silencio_consent.gd), pasillo, S6 A "El pasillo" (silencio_pasillo.gd, con el cambio de tono),
+## S6 B "para ti" (silencio_habitacion.gd), pasillo y la SALA DEL JEFE (clave "jefe"), hoy VACIA
+## (silencio_jefe_hueco.gd): una puerta que avanza. TODO jefe "El Pacto de Silencio" (otro agente) y
+## S7 sala de memoria: el jefe reemplaza a SilencioJefeHueco en _make_sala("jefe"); la S7 se suma como
+## otra sala de la cadena. La salida de S4 abre el portal al piso 2 (main.open_exit).
+## OJO jefe: S6 B vuelve a encender la luz 0 del circulo (el telefono); las otras dos siguen apagadas.
 ##
 ## SONIDO (sin sonidos adecuados en assets/audio, se deja el silencio que permite el diseno): faltan el
 ## murmullo sin palabras y el corte seco de la voz (S1), los pasos de multitud apagados y el golpe sordo
@@ -37,7 +42,7 @@ extends RefCounted
 const REGION := "silencio"
 ## Cadena del piso 1: [clave, ancho, alto (tiles), luz ambiente 0..1]. "pasillo" = vacio. Sigue el
 ## diseno: la luz baja un escalon por sala (1.0 -> 0.35; S5 y S6 la llevan a 0.35 en el piso 2).
-const CHAIN := [
+const CHAIN_SUPERFICIE := [
 	["entrada", 9, 5, 1.0],
 	["turno", 14, 9, 1.0],
 	["pasillo", 8, 5, 0.92],
@@ -47,6 +52,16 @@ const CHAIN := [
 	["pasillo", 8, 5, 0.6],
 	["mensajes", 14, 10, 0.5],
 ]
+## Cadena del piso 2 "Fondo": la luz sigue bajando (S6, el pasillo, es lo mas oscuro: 0.35).
+const CHAIN_FONDO := [
+	["pasillo", 9, 5, 0.55],
+	["cinco_puertas", 28, 8, 0.5],
+	["pasillo", 8, 5, 0.42],
+	["pasillo_s6", 26, 6, 0.35],
+	["habitacion", 12, 8, 0.4],
+	["pasillo", 8, 5, 0.36],
+	["jefe", 16, 12, 0.35],
+]
 const GAP := 4  # tiles libres entre sala y sala (las puertas teletransportan: no hay suelo entre ellas)
 const GROUP_HUD := "sil_hud"
 
@@ -55,6 +70,7 @@ static var circle_shown := false
 static var circle_on: Array = [true, true, true]
 static var _held_weapon: Item = null
 static var _run_stamp := -1.0
+static var _aviso_stamp := -1.0
 
 
 static func _tree() -> SceneTree:
@@ -91,20 +107,26 @@ static func lore(event: String) -> void:
 
 
 # ------------------------------------------------------------------ trazado (DungeonGenerator)
-## Cadena horizontal: {rects (Rect2 en tiles), edges (pares de grid_pos consecutivos), keys}.
-static func plan_layout() -> Dictionary:
+## Cadena del piso n: la de la superficie (etapa 1) o la del fondo (etapa 2).
+static func chain_for(floor_n: int) -> Array:
+	return CHAIN_FONDO if RunManager.floor_stage(floor_n) >= 2 else CHAIN_SUPERFICIE
+
+
+## Cadena horizontal: {rects (Rect2 en tiles), edges (pares de grid_pos consecutivos), keys, chain}.
+static func plan_layout(floor_n := 1) -> Dictionary:
 	var rects: Array = []
 	var edges: Array = []
 	var keys: Array = []
 	var x := 0
-	for c in CHAIN:
+	var chain := chain_for(floor_n)
+	for c in chain:
 		var r := Rect2(x, 0, int(c[1]), int(c[2]))
 		rects.append(r)
 		keys.append(c[0])
 		x += int(c[1]) + GAP
 	for i in range(rects.size() - 1):
 		edges.append([Vector2i(rects[i].position), Vector2i(rects[i + 1].position)])
-	return {"rects": rects, "edges": edges, "keys": keys}
+	return {"rects": rects, "edges": edges, "keys": keys, "chain": chain}
 
 
 ## Tipos y luz de cada sala. Todas nacen limpias: sin enemigos, sin sellos, sin recompensa.
@@ -114,7 +136,7 @@ static func assign_rooms(gen: DungeonGenerator, plan: Dictionary) -> void:
 		room.room_type = Room.RoomType.START if i == 0 else Room.RoomType.SILENCIO
 		room.cleared = true
 		room.set_meta("silencio", plan.keys[i])
-		room.set_meta("sil_light", float(CHAIN[i][3]))
+		room.set_meta("sil_light", float(plan.chain[i][3]))
 	gen.main_path = gen.rooms.keys()
 
 
@@ -138,7 +160,11 @@ static func setup_floor(main: Node) -> void:
 	var hud := SilencioHud.new()
 	hud.add_to_group(GROUP_HUD)
 	main.add_child(hud)
-	SilencioAviso.open_aviso(main)
+	# El aviso sale al cruzar el umbral (piso 1) y tambien si se llega al piso 2 sin haberlo visto en esta
+	# partida (p. ej. al cargarla): al pasar de la Superficie al Fondo no se repite.
+	if RunManager.floor_stage(int(_rm().current_floor)) < 2 or _aviso_stamp != _run_stamp:
+		SilencioAviso.open_aviso(main)
+	_aviso_stamp = _run_stamp
 
 
 ## main._enter_room: viste la sala (suelo plano gris tibio) y arranca su situacion, si la tiene.
@@ -171,6 +197,10 @@ static func _make_sala(key: String) -> SilencioSala:
 		"espacio": return SilencioEspacio.new()
 		"revision": return SilencioRevision.new()
 		"mensajes": return SilencioMensajes.new()
+		"cinco_puertas": return SilencioConsent.new()
+		"pasillo_s6": return SilencioPasillo.new()
+		"habitacion": return SilencioHabitacion.new()
+		"jefe": return SilencioJefeHueco.new()  # TODO: el jefe "El Pacto de Silencio" la reemplaza
 	return null
 
 
