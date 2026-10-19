@@ -53,6 +53,16 @@ const DEFENSES := {
 	"pito": preload("res://src/player/defenses/pito.gd"),
 	"latigo": preload("res://src/player/defenses/latigo_seda.gd"),
 	"esposas": preload("res://src/player/defenses/esposas_peludas.gd"),
+	"condon_interno": preload("res://src/player/defenses/condon_interno.gd"),
+	"anillo": preload("res://src/player/defenses/anillo.gd"),
+	"prep": preload("res://src/player/defenses/prep.gd"),
+	"pep": preload("res://src/player/defenses/pep.gd"),
+	"autotest": preload("res://src/player/defenses/autotest.gd"),
+	"app_ciclo": preload("res://src/player/defenses/app_ciclo.gd"),
+	"termometro": preload("res://src/player/defenses/termometro.gd"),
+	"espermicida": preload("res://src/player/defenses/espermicida.gd"),
+	"mascarilla": preload("res://src/player/defenses/mascarilla.gd"),
+	"sosten": preload("res://src/player/defenses/sosten.gd"),
 }
 const HERO_ABILITIES := {
 	"pitocles": preload("res://src/player/abilities/pitocles.gd"),
@@ -448,14 +458,14 @@ func _handle_dash(delta: float) -> void:
 	if st != null and st.blocks_dash():
 		return
 	if Input.is_action_just_pressed("dash") and not Narrator.ate_input() and not is_dashing and _dash_cooldown_timer <= 0.0 and _dash_left > 0:
-		if get_node("/root/PlayerStats").use_stamina(dash_stamina_cost * get_node("/root/PlayerStats").dash_cost_modifier):
+		if get_node("/root/PlayerStats").use_stamina(dash_stamina_cost * get_node("/root/PlayerStats").dash_cost_modifier * (defense.dash_cost_mult() if defense != null else 1.0)):
 			_start_dash()
 		else:
 			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("FX_NO_STAMINA"), Color.YELLOW)
 
 func _start_dash() -> void:
 	is_dashing = true
-	_dash_timer = dash_duration
+	_dash_timer = dash_duration * (defense.dash_time_mult() if defense != null else 1.0)
 	var full_cd: float = dash_cooldown * pow(0.7, _rm().blessing("escurridiza"))
 	if _dash_left >= dash_charges:
 		_dash_refill = full_cd  # arranca la recarga de todas las cargas
@@ -850,7 +860,7 @@ func _dash_cut() -> void:
 func shove(vel: Vector2, secs := 0.2) -> void:
 	if is_dashing or (defense != null and defense.anchored()):
 		return
-	velocity = vel
+	velocity = vel * (defense.knockback_mult() if defense != null else 1.0)
 	_sneeze_push = maxf(_sneeze_push, secs)
 
 

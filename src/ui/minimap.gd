@@ -91,6 +91,18 @@ func _draw() -> void:
 		for pos in gen.rooms:
 			known[pos] = true
 
+	# Autotest de VIH (defensa de mano izquierda): unos segundos, las salas secretas cercanas se ven en el mapa.
+	var peeked := {}
+	if main.has_meta("autotest_until") and Time.get_ticks_msec() < int(main.get_meta("autotest_until")) and current != null:
+		var cur_pos := Vector2.ZERO
+		for pos in gen.rooms:
+			if gen.rooms[pos] == current:
+				cur_pos = Vector2(pos)
+		for pos in gen.rooms:
+			if gen.rooms[pos].room_type == Room.RoomType.SECRET and Vector2(pos).distance_to(cur_pos) <= 45.0:
+				known[pos] = true
+				peeked[pos] = true
+
 	# Encaja todo el piso (no solo lo conocido) para que el mapa no "salte".
 	var bounds := Rect2i()
 	var first := true
@@ -127,6 +139,8 @@ func _draw() -> void:
 			fill = Color("f2ead6") if blink else Color("ffc93c")
 		elif visited.has(pos):
 			fill = Color(0.45, 0.75, 0.45) if room.cleared or room.enemies_spawned.is_empty() else Color(0.8, 0.4, 0.4)
+		elif peeked.has(pos):
+			fill = Color("5fd0c8") if blink else Color("2f8f8a")
 		else:
 			fill = Color(0.42, 0.42, 0.48)
 		draw_rect(r, fill)

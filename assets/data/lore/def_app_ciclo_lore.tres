@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_app_ciclo_lore"
+title = "Predecir No Es Prevenir"
+text = "«Hoy te toca esquivar, cariño.» Dato: una app puede ayudarte a conocer tu ciclo (duración, síntomas, fechas), pero por sí sola no es un método anticonceptivo confiable: los ciclos varían y predecir no es lo mismo que prevenir."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_app_ciclo", "count": 1}
+flavor_text = "Abre la app del ciclo."

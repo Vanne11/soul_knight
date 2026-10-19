@@ -175,6 +175,7 @@ func take_damage(amount: float, source: Node = null, kb: Vector2 = Vector2.ZERO)
 		return 0.0
 	if ai != null:
 		amount = ai.on_damage(amount, source)
+	amount *= float(get_meta("dmg_taken_mult", 1.0))  # defensas de mano izquierda: fiebre (termometro), espermicida
 	
 	current_health -= amount
 	
