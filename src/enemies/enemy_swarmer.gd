@@ -219,7 +219,11 @@ func die(killer: Node = null) -> void:
 func _drop_loot() -> void:
 	for drop in drop_table:
 		if RNG.randf() < drop.chance:
-			var pickup = ITEM_PICKUP_SCENE.instantiate()
+			var pickup = ITEM_PICKUP_SCENE.instantiate() if ITEM_PICKUP_SCENE else null
+			if pickup == null:  # al cerrar o con la escena a medio desarmar el preload puede venir vacio
+				pickup = load("res://src/items/item_pickup.tscn").instantiate()
+			if pickup == null or not is_inside_tree():
+				return
 			pickup.item_id = drop.item_id
 			# El contenedor es la sala (Node2D desplazado): en su espacio local, no en el global
 			# (antes la sala se sumaba dos veces y el botin caia fuera del mapa).
