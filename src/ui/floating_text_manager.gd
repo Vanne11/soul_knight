@@ -20,7 +20,7 @@ func _ready() -> void:
 
 ## `position` es de mundo. `is_number` distingue danos de avisos (ambos 16 px).
 func spawn(position: Vector2, text: String, color: Color = Color.WHITE, is_crit: bool = false, font_size: int = 0) -> void:
-	if _active >= MAX_ACTIVE:
+	if _active >= MAX_ACTIVE or ContemplationMode.active:  # contemplacion: sin numeros flotantes
 		return
 	var ft := _get_from_pool()
 	if ft.get_parent() == null:
@@ -31,7 +31,7 @@ func spawn(position: Vector2, text: String, color: Color = Color.WHITE, is_crit:
 
 ## Texto con tamano propio (debilidades/resistencias de jefes): `size` >= 24 va en negrita.
 func spawn_styled(position: Vector2, text: String, color: Color, size: int) -> void:
-	if _active >= MAX_ACTIVE:
+	if _active >= MAX_ACTIVE or ContemplationMode.active:
 		return
 	var ft := _get_from_pool()
 	if ft.get_parent() == null:
