@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "mito_la_etiqueta"
+title = "«La Etiqueta»"
+text = "Verdad: las etiquetas son herramientas, no obligaciones. Puedes usar una, varias, cambiar de una a otra o ninguna; sirven para describirte y encontrar a tu gente, no para encerrarte. Lo que sí es de mala educación es ponérsela a otro sin preguntar. Las etiquetas son para la ropa."
+category = 7
+unlock_condition = {"target_id": "orgullo_vencido_la_etiqueta", "type": 10}
+flavor_text = "Las etiquetas son para la ropa."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "concepto_salir_closet"
+title = "Salir del Clóset"
+text = "Es contar tu orientación o tu identidad, y es decisión de cada quien: si, cuándo, a quién y cómo. Se puede hacer a unas personas sí y a otras no, y no se hace «de una vez y para siempre». Y jamás se saca a otra persona del clóset: ese secreto no es tuyo."
+category = 7
+unlock_condition = {"target_id": "reino_orgullo_entrada", "type": 10}
+flavor_text = "Tu historia la cuentas tú."

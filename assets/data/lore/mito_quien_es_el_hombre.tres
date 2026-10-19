@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "mito_quien_es_el_hombre"
+title = "«¿Y quién es el hombre?»"
+text = "Verdad: una pareja no es una copia de un guion hetero. Nadie «es el hombre» ni «la mujer»: las tareas, los gustos y el dinero se reparten como en cualquier pareja, conversando. Y en las parejas hetero tampoco hay un solo guion; ya hay bastante gente que lava platos. La pregunta supone que el amor necesita un jefe."
+category = 7
+unlock_condition = {"target_id": "orgullo_vencido_quien_es_el_hombre", "type": 10}
+flavor_text = "En una pareja, nadie necesita casting de hombre."

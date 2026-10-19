@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "mito_es_una_fase"
+title = "«Es una fase»"
+text = "Verdad: la orientación y la identidad no son modas de la adolescencia. Hay quien explora y descubre algo nuevo de sí a cualquier edad, y también está bien: eso es conocerse, no una enfermedad que se pasa. Lo que se cree «pasajero» suele ser alguien esperando que lo tomen en serio. La única fase comprobada es la de la luna."
+category = 7
+unlock_condition = {"target_id": "orgullo_vencido_es_una_fase", "type": 10}
+flavor_text = "La única fase comprobada es la lunar."

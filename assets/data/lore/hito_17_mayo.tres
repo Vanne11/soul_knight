@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "hito_17_mayo"
+title = "17 de Mayo (1990)"
+text = "El 17 de mayo de 1990 la Asamblea Mundial de la Salud de la OMS retiró la homosexualidad de la lista de enfermedades de la CIE. Por eso esa fecha es el Día Internacional contra la Homofobia, la Transfobia y la Bifobia, que se celebra desde 2005. Tardó, pero el diagnóstico se retiró: ser quien eres nunca fue una enfermedad."
+category = 7
+unlock_condition = {"target_id": "reino_orgullo_entrada", "type": 10}
+flavor_text = "Los datos corrigieron al prejuicio. Tarde, pero corrigieron."

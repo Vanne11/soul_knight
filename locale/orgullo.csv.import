@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bmfc0ik4g5qus"
+
+[deps]
+
+files=["res://locale/orgullo.es.translation", "res://locale/orgullo.en.translation", "res://locale/orgullo.fr.translation"]
+
+source_file="res://locale/orgullo.csv"
+dest_files=["res://locale/orgullo.es.translation", "res://locale/orgullo.en.translation", "res://locale/orgullo.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
