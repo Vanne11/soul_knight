@@ -34,6 +34,9 @@ var water := false
 var puddle: Dictionary = {}
 var skin: Texture2D = null
 var stun := 0.0
+## Tarro de Masilla: mancha {radius, time, stick, boss_slow} al reventar; `arc` = altura visual del lanzamiento en arco.
+var putty: Dictionary = {}
+var arc := 0.0
 var _done := false
 
 func _ready() -> void:
@@ -46,7 +49,7 @@ func _ready() -> void:
 		$Sprite2D.modulate = tint
 		glow_col = tint
 	if explosion_radius > 0.0 and water:
-		glow_col = Color(0.4, 0.7, 1.0)
+		glow_col = Color(0.7, 0.85, 0.6) if not putty.is_empty() else Color(0.4, 0.7, 1.0)
 	elif explosion_radius > 0.0:
 		$Sprite2D.scale = Vector2.ONE * 1.8
 		glow_col = Color(1.0, 0.45, 0.7)
@@ -57,6 +60,10 @@ func _physics_process(delta: float) -> void:
 	position += Vector2.RIGHT.rotated(rotation) * speed * delta
 	_dist += speed * delta
 	_t += delta
+	if arc > 0.0:
+		var k := clampf(_t / lifetime, 0.0, 1.0)
+		$Sprite2D.position.y = -sin(k * PI) * arc
+		$Sprite2D.rotation += delta * 9.0
 	if explosion_radius > 0.0 and not water:
 		# la mecha avisa: el preservativo parpadea mas rapido al acercarse a estallar
 		var left := lifetime - _t
@@ -107,11 +114,13 @@ func _explode() -> void:
 	var fx := ExplosionFx.new()
 	fx.radius = explosion_radius
 	if water:
-		fx.modulate = Color(0.45, 1.0, 1.4)
+		fx.modulate = Color(0.85, 1.05, 0.8) if not putty.is_empty() else Color(0.45, 1.0, 1.4)
 	get_parent().add_child(fx)
 	fx.global_position = global_position
 	if not puddle.is_empty():
 		Puddle.spawn(get_parent(), global_position, puddle)
+	if not putty.is_empty():
+		Masilla.spawn(get_parent(), global_position, putty)
 	HitFx.shake(0.4)
 	HitFx.hitstop()
 	get_node("/root/Sound").play("crack", 0.15)

@@ -63,6 +63,29 @@ def art_globos_agua():
     return _outline(im)
 
 
+def art_tarro_masilla():
+    im, d = _new()
+    can, ch, cd = _c(150, 168, 150), _c(196, 212, 190), _c(88, 104, 92)    # lata gris-verdosa
+    lid, lh, ld = _c(216, 221, 227), _c(255, 255, 255), _c(110, 114, 130)  # tapa metalica
+    putty, ph = _c(168, 182, 150), _c(214, 226, 196)
+    d.rounded_rectangle([3, 9, 16, 21], radius=2, fill=can)                # cuerpo del tarro
+    d.line([(4, 11), (4, 19)], fill=ch)
+    d.line([(15, 11), (15, 20)], fill=cd)
+    d.line([(4, 20), (15, 20)], fill=cd)
+    d.rectangle([5, 12, 14, 17], fill=_c(232, 200, 70))                    # etiqueta
+    d.rectangle([5, 14, 14, 15], fill=_c(200, 60, 50))
+    d.point([(7, 13), (9, 13), (11, 13)], fill=_c(80, 60, 20))
+    d.rounded_rectangle([2, 6, 17, 10], radius=1, fill=lid)                # tapa
+    d.line([(3, 7), (16, 7)], fill=lh)
+    d.line([(3, 10), (16, 10)], fill=ld)
+    d.ellipse([4, 3, 14, 7], fill=putty)                                   # masilla asomando
+    d.line([(6, 4), (11, 4)], fill=ph)
+    d.line([(17, 18), (22, 5)], fill=_c(120, 78, 44), width=2)             # mango de la espatula
+    d.polygon([(19, 6), (23, 2), (23, 8), (20, 9)], fill=lid)              # hoja
+    d.line([(21, 3), (22, 3)], fill=lh)
+    return _outline(im)
+
+
 def art_ballesta_tantrica():
     im, d = _new()
     wood, wh, wd = _c(168, 108, 60), _c(214, 156, 96), _c(98, 60, 34)
@@ -147,6 +170,18 @@ def proj_water_balloon():
     d.ellipse([1, 1, 10, 11], fill=_c(80, 170, 255))
     d.ellipse([3, 3, 5, 5], fill=_c(200, 235, 255))
     d.polygon([(4, 11), (7, 11), (6, 13), (5, 13)], fill=_c(40, 110, 220))
+    return _outline(im)
+
+
+def proj_tarro_masilla():
+    im = _proj(14, 14)
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle([2, 4, 11, 12], radius=1, fill=_c(150, 168, 150))
+    d.line([(3, 6), (3, 11)], fill=_c(196, 212, 190))
+    d.rectangle([3, 7, 10, 9], fill=_c(232, 200, 70))
+    d.rectangle([1, 2, 12, 4], fill=_c(216, 221, 227))
+    d.line([(2, 2), (11, 2)], fill=_c(255, 255, 255))
+    d.ellipse([3, 0, 9, 3], fill=_c(168, 182, 150))
     return _outline(im)
 
 
