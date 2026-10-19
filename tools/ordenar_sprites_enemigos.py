@@ -44,6 +44,8 @@ MANUAL = {
     "sintoma": "prostata/sintoma",
     "satelite_cobre": "vulvania/satelite_cobre",
     "funcionario": "perineo/funcionario",
+    "don_chequeo": "prostata/don_chequeo",
+    "don_chequeo_timbre": "prostata/don_chequeo_timbre",
 }
 EXTS = (".gd", ".tscn", ".tres", ".import", ".py", ".json", ".cfg", ".godot")
 

@@ -124,6 +124,30 @@
 		"line_resist": "BOSSDMG_TESTICULO_RESIST",
 		"hint_weapon": "shotgun_pelvic"
 	},
+	"don_chequeo": {
+		"weak": {
+			"agua": 1.6,
+			"electrico": 1.5
+		},
+		"resist": {
+			"confeti": 0.5
+		},
+		"match": {
+			"pitocles": [
+				"electrico"
+			],
+			"vulvalquiria": [
+				"agua"
+			],
+			"ornitorrinco": [
+				"agua",
+				"electrico"
+			]
+		},
+		"line_weak": "BOSSDMG_CHEQUEO_WEAK",
+		"line_resist": "BOSSDMG_CHEQUEO_RESIST",
+		"hint_weapon": "globos_agua"
+	},
 	"don_sildenafil": {
 		"weak": {
 			"agua": 1.8,

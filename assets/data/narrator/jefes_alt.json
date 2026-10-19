@@ -75,5 +75,20 @@
   ],
   "bossalt5_after": [
     "Desde el fondo del servidor, una voz suspira: qué vergüenza."
+  ],
+  "bosschequeo_intro": [
+    "DON CHEQUEO: Primero hay que hacerse el chequeo. Después, lo que quiera."
+  ],
+  "bosschequeo_phase2": [
+    "DON CHEQUEO: ¡Pase al box! Y traiga la planilla completa, por favor."
+  ],
+  "bosschequeo_phase3": [
+    "DON CHEQUEO: ¿Tiene turno? ¿Tiene orden? ¿Y la credencial? ¡Todo en regla o nada!"
+  ],
+  "bosschequeo_death": [
+    "DON CHEQUEO: Me retiro... con mi chequeo... al día... y la corbata torcida..."
+  ],
+  "bosschequeo_after": [
+    "Cuentan que, en la sala de espera, alguien por fin pidió hora."
   ]
 }
