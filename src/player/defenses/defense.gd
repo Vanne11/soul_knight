@@ -47,7 +47,7 @@ func icon() -> Texture2D:
 
 
 func replaces_hero_guard() -> bool:
-	return not spent
+	return not spent and not is_passive()
 
 
 func speed_mult() -> float:
@@ -71,6 +71,21 @@ func blocks_contagion() -> bool:
 
 
 func blocks_status() -> bool:
+	return false
+
+
+## Anclado: ni empujones, ni succiones, ni correas te mueven (Player.shove, StatusEffects.push/pull).
+func anchored() -> bool:
+	return false
+
+
+## Suelo limpio: charcos pegajosos, cera y rampas no te frenan (toallita).
+func floor_clean() -> bool:
+	return false
+
+
+## Esta defensa NO reemplaza a la guard del heroe (pasivas de largo plazo: implante, parche).
+func is_passive() -> bool:
 	return false
 
 
@@ -105,6 +120,23 @@ func is_projectile(area: Area2D) -> bool:
 func facing_dot(area: Node2D) -> float:
 	var to_src: Vector2 = (area.global_position - player.global_position).normalized()
 	return to_src.dot(player._aim)
+
+
+## Enemigo vivo mas cercano dentro de `max_dist` y de cara al apuntado (min_dot: 1 = justo enfrente, -1 = cualquiera).
+func nearest_enemy(max_dist: float, min_dot := 0.5, include_bosses := true) -> Node2D:
+	var best: Node2D = null
+	var bd := max_dist
+	for e in get_tree().get_nodes_in_group("enemy"):
+		if not is_instance_valid(e) or not (e is Node2D) or float(e.get("current_health")) <= 0.0:
+			continue
+		if not include_bosses and e.is_in_group("boss"):
+			continue
+		var to: Vector2 = (e as Node2D).global_position - player.global_position
+		var d := to.length()
+		if d < bd and (min_dot <= -1.0 or to.normalized().dot(player._aim) >= min_dot):
+			bd = d
+			best = e
+	return best
 
 
 ## Se come el proyectil sin que ponga su estado (venda, mordaza...).

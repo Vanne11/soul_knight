@@ -124,6 +124,9 @@ func stick_label(src: Node = null) -> bool:
 
 ## Empujon: suma una velocidad que se apaga sola (la camina el jugador en player.gd con pull_velocity).
 func push(v: Vector2) -> void:
+	var df = player.get("defense") if player != null else null
+	if df != null and df.anchored():
+		return  # Tampon Ancla: no te mueves
 	_push = v
 
 
@@ -151,6 +154,9 @@ func speed_mult() -> float:
 
 ## Velocidad extra impuesta (correa, cadena, empujon). Player la suma al caminar.
 func pull_velocity() -> Vector2:
+	var df = player.get("defense") if player != null else null
+	if df != null and df.anchored():
+		return Vector2.ZERO
 	return _pull + _push
 
 

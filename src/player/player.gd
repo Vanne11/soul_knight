@@ -42,6 +42,16 @@ const DEFENSES := {
 	"diu": preload("res://src/player/defenses/diu_cobre.gd"),
 	"barrera": preload("res://src/player/defenses/barrera_latex.gd"),
 	"vacuna": preload("res://src/player/defenses/vacuna_vph.gd"),
+	"implante": preload("res://src/player/defenses/implante.gd"),
+	"tampon_ancla": preload("res://src/player/defenses/tampon_ancla.gd"),
+	"suspensorio": preload("res://src/player/defenses/suspensorio.gd"),
+	"parche": preload("res://src/player/defenses/parche.gd"),
+	"talco": preload("res://src/player/defenses/talco.gd"),
+	"toallita": preload("res://src/player/defenses/toallita.gd"),
+	"bolsa_agua": preload("res://src/player/defenses/bolsa_agua.gd"),
+	"pastilla": preload("res://src/player/defenses/pastilla_dia_despues.gd"),
+	"latigo": preload("res://src/player/defenses/latigo_seda.gd"),
+	"esposas": preload("res://src/player/defenses/esposas_peludas.gd"),
 }
 const HERO_ABILITIES := {
 	"pitocles": preload("res://src/player/abilities/pitocles.gd"),
@@ -210,6 +220,8 @@ func _physics_process(delta: float) -> void:
 
 # ------------------------------------------------------------------ terreno
 func set_terrain_slow(mult: float) -> void:
+	if defense != null and defense.floor_clean():
+		return  # toallita: suelo limpio
 	_terrain_mult = mult
 	_terrain_ttl = 0.1
 
@@ -835,7 +847,7 @@ func _dash_cut() -> void:
 
 ## Empujon externo (Pujon de la Puerta Trasera, Ducha...): fija la velocidad `secs` s sin que el input la pise.
 func shove(vel: Vector2, secs := 0.2) -> void:
-	if is_dashing:
+	if is_dashing or (defense != null and defense.anchored()):
 		return
 	velocity = vel
 	_sneeze_push = maxf(_sneeze_push, secs)
