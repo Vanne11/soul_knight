@@ -11,6 +11,7 @@ Partes de build: afeitadora (176x184 -> afeitadora_sheet{,_p2,_p3}.png + afeitad
                  pelusa (32x48 -> pelusa_estatica_sheet.png + pelusa_estatica_sprite_frames.tres)
 Referencia de diseno: tools/_intro_raw/afeitadora_v2.png (fuera de git; ruta absoluta del repo principal).
 """
+import functools
 import sys
 from pathlib import Path
 
@@ -62,6 +63,14 @@ _DMG3 = (
     "bloodshot eyes, gritted teeth, a thin wisp of grey smoke, many cyan sparks, a cartoon plaster patch on the body and the LED "
     "turned orange. "
 )
+_MATCH_BC = (
+    " STYLE MATCH (critical): the reference sheet shows the approved look. Copy it EXACTLY: the SAME chunky low-res pixel art with "
+    "big visible square pixels and a thick 1-pixel near-black outline, the SAME flat matte dark royal-blue body (NOT bright glossy "
+    "blue), the SAME wide flat-topped light-grey head slab with its row of dark vertical comb teeth (do NOT redesign it as a "
+    "modern shaver), the SAME tiny eyes, the same thin dark stubby legs, the same green LED size, the same black cable. No smooth "
+    "vector shading, no glossy highlights, no glow outlines. Do NOT write any text, caption or pose name anywhere, and no floor "
+    "shadow."
+)
 _MATCH = (
     " STYLE MATCH (critical): keep EXACTLY the silhouette, proportions, eye size, the wide silver head, the green LED position and "
     "the stubby legs of the reference sheet, the same chunky pixel size and 1-pixel dark outline, the same pose composition in every "
@@ -91,7 +100,7 @@ PROMPTS = {
         "glowing big and bright, serene closed eyes, eerie cyan glow and sparkles; (6) HURT: flinching backwards, eyes "
         "squeezed, a spark bursting from the head; (7) EXHAUSTED: slumped forward, head drooping, smoke puffing out, eyes "
         "half closed, panting, deflated; (8) STUNNED and short-circuiting: swirly spiral eyes, little stars and sparks "
-        "circling the head, arms limp, the cable cut and sparking."
+        "circling the head, arms limp, the cable cut and sparking." + _MATCH_BC
     ),
     "afei_c": (
         STYLE + "BOSS SPRITE SHEET with exactly 2 rows of 4 large poses (8 poses), the SAME character as the "
@@ -104,7 +113,7 @@ PROMPTS = {
         "reeling backwards, off-balance, eyes spinning; (7) fallen flat on its back, the whole body tipped over lying "
         "sideways on the ground, stubby legs sticking out, X eyes, the head lying beside it, smoke rising, the plug lying "
         "on the ground (a completely NEW pose, do not copy any pose of the reference); (8) the same lying pose, all dead and "
-        "deflated, a little white flag stuck in the plug, a tiny wisp of smoke forming a little ghost."
+        "deflated, a little white flag stuck in the plug, a tiny wisp of smoke forming a little ghost." + _MATCH_BC
     ),
 }
 PROMPTS["afei_a_p2"] = (
@@ -169,8 +178,10 @@ def gen(names):
             refs = [_raw("afei_a")]
         elif n == "afei_a_p3":
             refs = [_raw("afei_a"), _raw("afei_a_p2")]
-        elif n in ("afei_c_p2", "afei_c_p3"):
-            refs = [_raw("afei_a_" + n[-2:]), _raw("afei_c")]
+        elif n == "afei_c_p2":  # como b_p2: la hoja sana manda la disposicion, la A danada el aspecto
+            refs = [_raw("afei_c"), _raw("afei_a_p2")]
+        elif n == "afei_c_p3":
+            refs = [_raw("afei_a_p3"), _raw("afei_c_p2")]
         elif n.endswith("_p2"):
             refs = [_raw(n[:-3]), _raw("afei_a_p2")]
         else:
@@ -181,31 +192,86 @@ def gen(names):
 
 # ------------------------------------------------------------------ recorte por rejilla (4 columnas x 2 filas)
 W4 = [0, 688, 1376, 2064, 2752]
-ROWS = {}
-MARG = {}
-GAPS = {}
 
 
-def _bg(path):
+# Zonas que Gemini rotulo con texto (x0, y0, x1, y1 en la hoja de 2752x1536): "full" borra todo, "dark" solo tinta oscura/verde de rotulo
+ERASE = {"afei_b": [("full", (0, 715, 2752, 770)), ("full", (40, 785, 520, 885)), ("full", (960, 815, 1110, 872)),
+                    ("full", (1630, 815, 1940, 872)), ("full", (2330, 805, 2580, 858)), ("full", (780, 0, 1580, 95)),
+                    ("dark", (1580, 0, 1960, 95))]}
+for _suf in ("_p2", "_p3"):
+    ERASE["afei_b" + _suf] = ERASE["afei_b"]
+ERASE["pelusa"] = [("full", (0, 655, 2752, 765)), ("full", (0, 1395, 2752, 1536))]  # rotulos de texto
+EXPECT = {"a": (5, 4), "b": (4, 4), "c": (4, 4)}  # poses por fila que dejo Gemini (la hoja A salio 5 + 4)
+
+
+def _bg(path, name=""):
     im = PA.cut_bg(Image.open(path))
     a = np.array(im).astype(int)
+    for mode, (x0, y0, x1, y1) in ERASE.get(name, ()):
+        reg = a[y0:y1, x0:x1]
+        if mode == "full":
+            reg[:, :, 3] = 0
+        else:
+            bad = (reg[:, :, :3].max(axis=2) < 60) | ((reg[:, :, 1] > np.maximum(reg[:, :, 0], reg[:, :, 2]) + 25) & (reg[:, :, 3] > 0))
+            reg[bad, 3] = 0
     r, g, b = a[:, :, 0], a[:, :, 1], a[:, :, 2]
     green = (g > np.maximum(r, b) + 18) & (a[:, :, 3] > 0) & (g < 150) & (r < 90) & (b < 90)  # sombra verde oscura del suelo
     a[:, :, 3] = np.where(green, 0, a[:, :, 3])
+    enclosed = (g > 200) & (r < 90) & (b < 90)  # fondo atrapado dentro del bucle del cable (el flood desde el borde no llega)
+    a[:, :, 3] = np.where(enclosed, 0, a[:, :, 3])
+    # halo verde pegado al fondo: pixeles verdosos junto a transparente (el LED, interior, no se toca)
+    for _ in range(3):
+        tr = a[:, :, 3] == 0
+        near = np.zeros_like(tr)
+        near[1:] |= tr[:-1]
+        near[:-1] |= tr[1:]
+        near[:, 1:] |= tr[:, :-1]
+        near[:, :-1] |= tr[:, 1:]
+        halo = near & (a[:, :, 3] > 0) & (a[:, :, 1] > np.maximum(a[:, :, 0], a[:, :, 2]) + 30)
+        a[:, :, 3] = np.where(halo, 0, a[:, :, 3])
     return Image.fromarray(a.astype(np.uint8), "RGBA")
 
 
-def _grid(name, fam):
-    im = _bg(RAW / f"{name}.png")
-    rows = ROWS.get(fam, ((0, im.height // 2), (im.height // 2, im.height)))
+SPLITS = {"afei_c": [630, 2068], "afei_c_p2": [630, 2068], "afei_c_p3": [630, 2068]}
+GAP = {"a": 24, "b": 24, "c": 24}  # separacion maxima para juntar chispas con su pose (A trae poses casi pegadas)
+
+
+def _poses_of(name, expect, minh=110, gap=40):
+    """Poses de una hoja por componentes, en orden de lectura (filas por mitad de la imagen)."""
+    im = _bg(RAW / f"{name}.png", name)
+    al = np.array(im)[:, :, 3]
+    CUT.MASKS.clear()
+    boxes = [b for b in CUT.components(al, gap, minsize=3000) if b[3] - b[1] >= minh]
+    H = im.height
+    for sx in SPLITS.get(name, ()):  # poses que Gemini dejo pegadas (humo/cable): se cortan por una vertical
+        for bx in [b for b in boxes if b[0] < sx < b[2] and b[2] - b[0] > 900]:
+            m = CUT.MASKS[bx]
+            k = sx // 4
+            left, right = (bx[0], bx[1], sx, bx[3]), (sx, bx[1], bx[2], bx[3])
+            ml = np.zeros_like(m)
+            ml[:, :k] = m[:, :k]
+            mr = np.zeros_like(m)
+            mr[:, k:] = m[:, k:]
+            boxes.remove(bx)
+            boxes += [left, right]
+            CUT.MASKS[left], CUT.MASKS[right] = ml, mr
+    rows = [sorted([b for b in boxes if ((b[1] + b[3]) / 2 < H * 0.5) == (r == 0)], key=lambda b: b[0]) for r in range(2)]
+    if tuple(len(r) for r in rows) != tuple(expect):
+        raise SystemExit(f"{name}: poses por fila {[len(r) for r in rows]} (esperaba {list(expect)}): ajustar EXPECT/ERASE")
     out = {}
-    for r, (y0, y1) in enumerate(rows):
-        for c in range(4):
-            k = r * 4 + c
-            mg = MARG.get((fam, k), 0)
-            x0, x1 = (W4[c] * im.width) // 2752, (W4[c + 1] * im.width) // 2752
-            out[k] = CUT.main_blob(im.crop((max(0, x0 - mg), y0, min(im.width, x1 + mg), y1)), GAPS.get((fam, k), 40))
-    return out
+    for r, bs in enumerate(rows):
+        for c, bx in enumerate(bs):
+            cr = im.crop(bx)
+            mk = CUT.MASKS[bx][bx[1] // 4:bx[3] // 4, bx[0] // 4:bx[2] // 4]
+            full = np.array(Image.fromarray(mk.astype(np.uint8) * 255).resize(cr.size, Image.NEAREST)) > 0
+            ca = np.array(cr)
+            ca[:, :, 3] = np.where(full, ca[:, :, 3], 0)
+            out[(r, c)] = Image.fromarray(ca, "RGBA")
+    return {k: CUT.main_blob(v, 30) for k, v in out.items()}  # quita restos de poses vecinas
+
+
+def _grid(name, fam):
+    return _poses_of(name, EXPECT[fam], gap=GAP.get(fam, 40))
 
 
 def _feet_x(im):
@@ -216,7 +282,35 @@ def _feet_x(im):
     return (xs.min() + xs.max()) / 2.0
 
 
-def fit(raw, cw, ch, idle_h, ncol=44):
+def _is_fx(a):
+    """Pixeles de chispa/aura cian-blanco (la paleta comun de medianas los mandaba a verde): paleta propia."""
+    r, g, b = a[:, :, 0].astype(int), a[:, :, 1].astype(int), a[:, :, 2].astype(int)
+    return (b > 170) & (g > 150) & (r < 175) & (b - r > 40) & (a[:, :, 3] > 0)
+
+
+def quant(frames, ncol, nfx=8):
+    base, fx = {}, {}
+    for k, im in frames.items():
+        a = np.array(im)
+        m = _is_fx(a)
+        b2, f2 = a.copy(), a.copy()
+        b2[m, 3] = 0
+        f2[~m, 3] = 0
+        base[k], fx[k] = Image.fromarray(b2, "RGBA"), Image.fromarray(f2, "RGBA")
+    qb = A.quantize_set(base, ncol - nfx)
+    try:
+        qf = A.quantize_set(fx, nfx)
+    except Exception:
+        qf = fx
+    out = {}
+    for k in frames:
+        cv = qb[k].copy()
+        cv.alpha_composite(qf[k])
+        out[k] = cv
+    return out
+
+
+def fit(raw, cw, ch, idle_h, ncol=52):
     """Todas las poses a la MISMA escala (idle -> idle_h), pies abajo y anclados en la base."""
     raw = {k: A.trim(v) for k, v in raw.items()}
     s = idle_h / raw["idle"].height
@@ -231,7 +325,7 @@ def fit(raw, cw, ch, idle_h, ncol=44):
         cv.alpha_composite(sm, (x0, ch - h))
         out[k] = cv
     print("  escala", round(s, 3))
-    return A.quantize_set(out, ncol)
+    return quant(out, ncol)
 
 
 DW, DH = 176, 184
@@ -239,12 +333,13 @@ VARIANTS = {"": ("afei_a", "afei_b", "afei_c"), "_p2": ("afei_a_p2", "afei_b_p2"
             "_p3": ("afei_a_p3", "afei_b_p3", "afei_c_p3")}
 
 
+@functools.lru_cache(maxsize=None)
 def poses(suffix):
     na, nb, nc = VARIANTS[suffix]
     a, b, c = _grid(na, "a"), _grid(nb, "b"), _grid(nc, "c")
-    raw = dict(idle=a[0], walk=a[1], walk2=a[2], wind=a[3], spark=a[4], zwind=a[5], zrel=a[6], bounce=a[7],
-               cwind=b[0], crel=b[1], pwind=b[2], prel=b[3], channel=b[4], hurt=b[5], tired=b[6], stun=b[7],
-               intro=c[0], walk3=c[1], gesture=c[2], blink=c[3], d1=c[4], d2=c[5], d3=c[6], d4=c[7])
+    raw = dict(idle=a[0, 0], walk=a[0, 1], walk2=a[0, 2], walk4=a[0, 3], wind=a[0, 4], spark=a[1, 0], zwind=a[1, 1], zrel=a[1, 2], bounce=a[1, 3],
+               cwind=b[0, 0], crel=b[0, 1], pwind=b[0, 2], prel=b[0, 3], channel=b[1, 0], hurt=b[1, 1], tired=b[1, 2], stun=b[1, 3],
+               intro=c[0, 0], walk3=c[0, 1], gesture=c[0, 2], blink=c[0, 3], d1=c[1, 0], d2=c[1, 1], d3=c[1, 2], d4=c[1, 3])
     return fit(raw, DW, DH, 150)
 
 
@@ -253,7 +348,7 @@ def anims(P):
     I, W, W2 = P["idle"], P["walk"], P["walk2"]
     f = {}
     f["idle"] = [I, xf(I, sy=0.985)]
-    f["walk"] = [W, xf(W, dy=-2), W2, xf(W2, dy=-2), P["walk3"], xf(P["walk3"], dy=-2)]
+    f["walk"] = [W, W2, P["walk4"], P["walk3"]]
     f["intro"] = [P["intro"], P["intro"], xf(P["intro"], sy=1.02), I]
     f["attack"] = [I, xf(P["wind"], rot=-3), P["wind"]]
     f["release"] = [P["spark"], xf(P["spark"], dx=2), P["spark"]]
@@ -336,7 +431,7 @@ PRES = "res://assets/sprites/enemies/selva/pelusa_estatica/"
 
 
 def pelusa_poses():
-    im = _bg(RAW / "pelusa.png")
+    im = _bg(RAW / "pelusa.png", "pelusa")
     h2 = im.height // 2
     raw = {}
     for k, name in enumerate(("idle", "wa", "wb", "charge", "zap", "hurt", "d1", "d2")):
@@ -393,6 +488,8 @@ def preview(dest):
     dest.mkdir(parents=True, exist_ok=True)
     tiles = []
     for suf in VARIANTS:
+        if not all((RAW / f"{n}.png").exists() for n in VARIANTS[suf]):
+            continue
         for k, im in poses(suf).items():
             tiles.append((f"afei{suf} {k}", im))
     _sheet(tiles, DW, DH, 8, 1).convert("RGB").save(dest / "afei_poses_x1.png")
@@ -414,5 +511,9 @@ if __name__ == "__main__":
             build_boss()
         if "pelusa" in parts:
             build_pelusa()
+    elif cmd == "todo":  # build + preview en un solo proceso (los recortes se calculan una vez)
+        build_boss()
+        build_pelusa()
+        preview(args[0] if args else ".")
     elif cmd == "preview":
         preview(args[0] if args else ".")

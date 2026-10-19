@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0wcl6alblc7s"
-path="res://.godot/imported/afeitadora_attack_02.png-562465afc5e619a894482bed97369255.ctex"
+uid="uid://dxqh6xgaqtm3g"
+path="res://.godot/imported/pelusa_estatica_sheet.png-64bff68092b05637e3eeca58075ff8cf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/selva/afeitadora/afeitadora_attack_02.png"
-dest_files=["res://.godot/imported/afeitadora_attack_02.png-562465afc5e619a894482bed97369255.ctex"]
+source_file="res://assets/sprites/enemies/selva/pelusa_estatica/pelusa_estatica_sheet.png"
+dest_files=["res://.godot/imported/pelusa_estatica_sheet.png-64bff68092b05637e3eeca58075ff8cf.ctex"]
 
 [params]
 

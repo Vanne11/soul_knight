@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6648hmjlfwkf"
-path="res://.godot/imported/afeitadora_death_00.png-efa4a91d891fa63114c1f4c7aaf65f04.ctex"
+uid="uid://b3wtqv08mhben"
+path="res://.godot/imported/afeitadora_sheet_p2.png-9e1de957591ace9fbde315d5fb714c59.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/selva/afeitadora/afeitadora_death_00.png"
-dest_files=["res://.godot/imported/afeitadora_death_00.png-efa4a91d891fa63114c1f4c7aaf65f04.ctex"]
+source_file="res://assets/sprites/enemies/selva/afeitadora/afeitadora_sheet_p2.png"
+dest_files=["res://.godot/imported/afeitadora_sheet_p2.png-9e1de957591ace9fbde315d5fb714c59.ctex"]
 
 [params]
 

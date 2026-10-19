@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqxarg4pfrqui"
-path="res://.godot/imported/afeitadora_walk_02.png-b58e2ffca25f8d015885df9fb21fe4e2.ctex"
+uid="uid://bnctqbju54s7a"
+path="res://.godot/imported/afeitadora_sheet.png-5583ab22a29baead65e2aac16ee28f20.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/selva/afeitadora/afeitadora_walk_02.png"
-dest_files=["res://.godot/imported/afeitadora_walk_02.png-b58e2ffca25f8d015885df9fb21fe4e2.ctex"]
+source_file="res://assets/sprites/enemies/selva/afeitadora/afeitadora_sheet.png"
+dest_files=["res://.godot/imported/afeitadora_sheet.png-5583ab22a29baead65e2aac16ee28f20.ctex"]
 
 [params]
 
