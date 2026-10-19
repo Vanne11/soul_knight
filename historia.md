@@ -126,6 +126,7 @@ Los textos de final usan `{boss_final}`; vencer al Algoritmo YA NO cuenta como v
   3. Bajo la Hoja caída: una nota "Si lees esto, ganaste. Un abrazo, Vane."
   4. En el Archivo Clasificado, un tomo "Manual de Educación Sexual, 2.ª ed. (V.)" que no está tachado.
   5. El currículum del narrador: su despido lo firma "Vane, Recursos Humanos".
+  6. El Tarro de Masilla (arma arrojadiza rara): una vez, restaurando un auto, ella le lanzó uno a Nico. Hoy es chiste interno; el códice lo firma "— V." y la medalla oculta se llama "Con cariño".
 
 ## 8. REGLAS DE TONO
 1. Frase de juego ≤ 80 caracteres. Intro, presentaciones de jefe, final y victoria: hasta ~120. Nada pasa de 120; si pasa, se parte o se mueve al códice.
