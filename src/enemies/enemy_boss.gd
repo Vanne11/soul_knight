@@ -292,6 +292,11 @@ const WARN_SHOTS := ["abanico", "fan", "rafaga", "oleada", "ondas", "orbitas", "
 
 
 func _on_telegraph_sound(_secs: float) -> void:
+	# Muchos ataques llaman a _tele() en bucle (una vez por mancha/volea): un solo aviso por ataque,
+	# si no el mismo pitido se repite en rafaga durante todo el ataque.
+	if _gen == _warned_gen:
+		return
+	_warned_gen = _gen
 	if _last_attack == &"atk_canalizar":
 		return  # lo avisa channel_started
 	var n := String(_last_attack).trim_prefix("atk_")
@@ -303,8 +308,11 @@ func _on_telegraph_sound(_secs: float) -> void:
 		_warn_sound(&"zona")
 
 
+var _warned_gen := -1  # _gen del ultimo ataque que ya avisó con sonido
+
+
 func _warn_sound(kind: StringName) -> void:
-	if state == State.DEAD:
+	if state == State.DEAD or not is_inside_tree():
 		return
 	Sound.play("aviso_" + String(kind), 0.03)
 
