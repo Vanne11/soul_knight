@@ -23,7 +23,6 @@ func _init() -> void:
 func _ready() -> void:
 	drop_table = [{"item_id": "health_small", "chance": 0.3}]
 	super()
-	animated_sprite.self_modulate = BELL
 	add_to_group("timbre_ventanilla")
 	_dir = 1.0 if RNG.randf() < 0.5 else -1.0
 	t_t = RNG.randf_range(1.2, 2.2)
@@ -66,6 +65,15 @@ func _physics_process(delta: float) -> void:
 				_dir = -_dir
 	_update_animation(to_t)
 	move_and_slide()
+
+
+## Poses propias (tools/gen_ventanilla_art.py): rondar (walk), aviso con anillo (attack) y DING (ding).
+func _update_animation(dir: Vector2) -> void:
+	var a := &"attack" if t_state == T.WINDUP else (&"ding" if t_state == T.REST and t_t > 0.55 else &"walk")
+	if animated_sprite.animation != a and animated_sprite.sprite_frames.has_animation(a):
+		animated_sprite.play(a)
+	if absf(dir.x) > 1.0:
+		animated_sprite.flip_h = dir.x < 0.0
 
 
 func _ding() -> void:
