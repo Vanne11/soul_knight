@@ -84,7 +84,7 @@ Regla de menciones: los textos de región, de héroe, de cofre y del final NUNCA
 | Penelandia | El Testículo Primordial | Don Sildenafil | masculinidad, expectativas, disfunción |
 | Vulvania | Su Majestad Ovaria II | El DIU Cósmico | ciclo, anticoncepción |
 | Útero (opcional) | Doña Regla (único) | (sin alternativo) | menstruación |
-| Perineo | El Aduanero Hormonal | La Ventanilla Única | casillas, clasificar a la gente, burocracia de salud |
+| Perineo | El Aduanero Hormonal | Doña Ventanilla | casillas, clasificar a la gente, burocracia de salud |
 | Próstata | La Glándula Callada (único) | (sin alternativo) | salud masculina, el chequeo |
 | Palacio | La Hoja de Parra | El Algoritmo Moderador | pudor, censura |
 
@@ -95,7 +95,7 @@ Regla de menciones: los textos de región, de héroe, de cofre y del final NUNCA
 - **Su Majestad Ovaria II**: reina con capa morada y corona de oro (sí tiene corona), audiencias una vez al mes. Chiste: "hoy no es el día". "Recibo audiencias una vez al mes. Hoy no es el día." Al caer confiesa que el collar de la Hoja era bisutería (NO "la corona de la Hoja").
 - **El DIU Cósmico**: orbita sin pedir nada. "Llevo años orbitando sin molestar. Y vienes a moverme." Dato (99%, reversible, no protege de ITS) al códice.
 - **El Aduanero Hormonal**: sello gigante, gorra, formulario 27-B. Tabú real: clasificar a la gente. "Pasaporte hormonal, certificado de alergias y el 27-B. Por triplicado." Al caer, el paso queda libre "sin papeles".
-- **La Ventanilla Única** (antes "La Próstata Burocrática"; renombrada para liberar la Próstata): ventanilla con piernas. "Número 37. Pase. Falta un papel. Siempre falta uno." Sus datos de próstata se mudan a la Próstata.
+- **Doña Ventanilla** (antes "La Próstata Burocrática" y luego "La Ventanilla Única"; 2026-10-19 pasa a mujer: alternativa femenina del Perineo frente al Aduanero): casilla de atención con patas, rulos, lentes de gato y chicle. "Número 37. Pase. Falta un papel. Siempre falta uno." Sus datos de próstata se mudan a la Próstata.
 - **Su Pudorosidad, la Hoja de Parra**: "¡Tápate, sinvergüenza! En mi palacio se viene vestido. Y callado." Avisa que si cae todo queda al descubierto, "hasta lo de tu tía". Esa es la gracia: es exactamente el plan.
 - **El Algoritmo Moderador**: la Hoja contrató automatización cuando se llenó de trabajo; es la Hoja en versión nube. "Infracción detectada: existir. Procedo a retirar." Al caer, desde el fondo del servidor, una voz suspira "qué vergüenza": la Hoja también cae.
 - **EL ÚTERO** (nivel secreto, parte de Vulvania, +1 piso opcional):
@@ -110,7 +110,7 @@ Regla de menciones: los textos de región, de héroe, de cofre y del final NUNCA
   - Enemigos (3 nuevos): **Goteo Tardío** (dispara de a poco y tarda; remate: "ya no llega como antes"), **Madrugador Nocturno** (aparece en oleadas, siempre de noche, tres veces; chiste del baño a las 3 a. m.), **PSA Sospechoso** (cifra flotante que sube; si la dejas subir se pone roja).
   - Jefe: **La Glándula Callada**. Única jefa/jefe que NUNCA habla, y crece (hiperplasia) en cada fase. Solo en la fase 3 dice: "Debiste venir antes." Presentación del narrador (susurrando): "No dice nada. Nunca dice nada. Hasta que es tarde."
   - Reacción de héroes: tabla de la sección 5. Chequeo y PSA van al códice (no al narrador).
-  - Choque de nombre resuelto: "La Próstata Burocrática" pasa a ser "La Ventanilla Única". Nada más usa "Próstata" salvo esta región y sus códices.
+  - Choque de nombre resuelto: "La Próstata Burocrática" pasa a ser "Doña Ventanilla". Nada más usa "Próstata" salvo esta región y sus códices.
 
 ## 7. Finales
 Los textos de final usan `{boss_final}`; vencer al Algoritmo cuenta como vencer a la Hoja (misma villana, versión nube). Cada final tiene UNA frase propia (≤120) y un chiste que no se repite en otro lado.
@@ -160,7 +160,7 @@ Los textos de final usan `{boss_final}`; vencer al Algoritmo cuenta como vencer 
 | `char_vulvalquiria`: hacha y "dash a mitad de costo" | Sin hacha. Habilidades reales: velocidad, doble dash, alas que planean, grito. |
 | "Corona" de la Hoja que nunca se describe | La Hoja no tiene corona. Corona = Ovaria II. Ovaria confiesa que el collar de la Hoja era bisutería. |
 | "Censura": villana, suceso y dificultad | Villana = la Hoja / Su Pudorosidad. Suceso = la Gran Censura. Dificultad = Pudor. |
-| "La Próstata Burocrática" choca con el nuevo reino | Renombrado "La Ventanilla Única". La Próstata es solo el reino nuevo. |
+| "La Próstata Burocrática" choca con el nuevo reino | Renombrado "Doña Ventanilla". La Próstata es solo el reino nuevo. |
 | Jefes alternativos al 50% sin lógica | Cada región tiene un original y un alternativo (excepto Útero y Próstata, jefe único). |
 | Español de España y Chile mezclados | Latino neutro con guiños chilenos ocasionales (regla 9). |
 | Pronombre del Ornitorrinco | Sin él/ella (ver regla 10). |
@@ -183,7 +183,7 @@ Hogar único de cada chiste repetido:
 - Héroes: **Pitocles**, **Vulvalquiria**, **Ornitorrinco** (con mayúscula, "el Ornitorrinco"; título "No especifica").
 - Villana: **Su Pudorosidad, la Hoja de Parra** / "la Hoja". Suceso: **la Gran Censura**. Dificultad: **Pudor**. Lugar: **Palacio de la Censura**, **Archivo Clasificado**.
 - Reinos y etapas: **Selva Púbica**, **Folículo Profundo**, **Penelandia**, **Conducto Deferente**, **Vulvania**, **Trompas de Falopio**, **El Útero**, **El Perineo**, **Aduana Interior**, **La Próstata**.
-- Jefes: **Doña Cera Caliente**, **La Afeitadora Eléctrica**, **El Testículo Primordial** (con tilde), **Don Sildenafil**, **Su Majestad Ovaria II**, **El DIU Cósmico**, **Doña Regla**, **El Aduanero Hormonal**, **La Ventanilla Única**, **La Glándula Callada**, **El Algoritmo Moderador**.
+- Jefes: **Doña Cera Caliente**, **La Afeitadora Eléctrica**, **El Testículo Primordial** (con tilde), **Don Sildenafil**, **Su Majestad Ovaria II**, **El DIU Cósmico**, **Doña Regla**, **El Aduanero Hormonal**, **Doña Ventanilla**, **La Glándula Callada**, **El Algoritmo Moderador**.
 - Enemigos nuevos de la Próstata: **Goteo Tardío**, **Madrugador Nocturno**, **PSA Sospechoso**.
 - Otros: **Puerta Hormonal**, **Guerra Fría Hormonal**, **Turno** (llave del Útero), **la Doctora V.**, **Hombres que Hablan**, **Cuello Uterino**.
 - Hormonas: **testosterona**, **estrógeno** (con tilde).

@@ -1,7 +1,8 @@
 extends BossAltBase
 
-## LA VENTANILLA UNICA (alternativo del Perineo, reino 4; id "prostata") - usa el MOTOR DINAMICO.
-## Del tamano de una nuez y con ventanilla propia; dice que "primero hay que hacerse el chequeo".
+## DOÑA VENTANILLA (alternativa femenina del Perineo, reino 4, frente al Aduanero; id "prostata") - usa el MOTOR DINAMICO.
+## Una casilla de atencion con patas (rulos, lentes de gato, chicle, cortina metalica de parpado); dice que
+## "primero hay que hacerse el chequeo". La version nuez (masculina) quedo guardada en la rama nuez-ventanilla-guardada.
 ## IDENTIDAD "TOME SU NUMERO": bajo sus pies hay un marcador con el turno que atiende (N° 012) y la cola
 ## de los que vienen. Sus balas salen POR TURNOS: el numero que sigue parpadea y se llena (aviso >= 0,55 s,
 ## con una linea hacia ti) y recien entonces ese turno dispara. Lo ves venir, uno a uno.

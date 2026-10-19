@@ -25,7 +25,7 @@
 	"boss": "aduanero",
 	"boss_name": "EL ADUANERO HORMONAL",
 	"boss_alt": "prostata",
-	"boss_alt_name": "LA VENTANILLA ÚNICA",
+	"boss_alt_name": "DOÑA VENTANILLA",
 	"needs": ["testosterona", "estrogeno"],
 	"miniboss": {"type": "gran_urologo", "variant": "gran_urologo", "name": "El Gran Urólogo"}
 }

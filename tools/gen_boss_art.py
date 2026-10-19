@@ -53,10 +53,14 @@ BOSSES = {
               "big round glasses and a red dress, holding a giant two-meter wooden measuring ruler and a calendar, standing "
               "inside the warm red Uterus chamber with soft walls, floating calendar pages and little clocks. Low camera "
               "angle, punctual and strict, funny. Respectful: no blood. "),
-    "prostata": ("A dramatic boss reveal: the boss from the reference, a walnut-shaped bureaucrat creature "
-                 "with glasses, a grey tie, an ID badge and papers in hand, standing behind a single office service window "
-                 "with a red take-a-number ticket dispenser and a glowing number display showing only the digits 001, piles of forms "
-                 "flying like snow in a beige customs office. Low camera angle, bureaucratic menace, funny. "),
+    "prostata": ("A dramatic boss reveal: DOÑA VENTANILLA, a grumpy middle-aged female bureaucrat creature that IS a "
+                 "customer-service booth: a beige metal ticket-window booth with short stubby legs and arms, its glass "
+                 "window is her face (bored half-closed eyes with cat-eye glasses on a beaded chain, red lipstick, chewing "
+                 "gum), a half-lowered rolling metal shutter above the glass like a droopy eyelid, pink hair curlers on top of "
+                 "the booth like a hairdo, a red take-a-number ticket dispenser on her side with a paper ticket hanging, "
+                 "long painted nails holding a rubber stamp and a silver service bell. She stands at a border checkpoint "
+                 "corridor between two territories with long waiting lines of tiny tired blob creatures holding paper "
+                 "tickets, forms flying like snow, cold office lights. Low camera angle, bureaucratic menace, funny. "),
     "algoritmo": ("A dramatic boss reveal: the boss from the reference, a smartphone creature with an "
                   "antenna and a single giant red eye on its screen, tiny arms and legs, scanning the room with a red laser, "
                   "in a dark data-center hall of the Censorship Palace with server racks with blank blinking lights, flying grey pixel "
@@ -81,6 +85,11 @@ REFS = {
 }
 NEW_LOOK = ("The boss MUST look exactly like the character in the attached reference sheet (same body, face, colors, "
             "outfit and accessories; it is a sheet of poses of ONE character): draw it once, big, in a single heroic pose. ")
+
+
+## Rediseñados desde cero (Nico 2026-10-19): la Ventanilla deja de ser nuez (la nuez es la prostata, ya es la
+## Glandula) y pasa a ser Doña Ventanilla, una casilla de atencion con patas, para el Perineo (frontera, tramites).
+NEW_DESIGN = {"prostata"}
 
 
 def _old_refs(name: str) -> list:
@@ -117,6 +126,15 @@ def run(name):
                 raw = g.generate("pacto_silencio_v2")
             finally:
                 g.STYLE = style
+        g.pixelate(raw, name)
+        (g.ROOT / f"assets/sprites/ui/screens/{name}.png").replace(g.ROOT / f"assets/sprites/ui/bosses/{name}.png")
+        print("ok", name)
+        return
+    if name in NEW_DESIGN:  # diseño nuevo sin referencia (la caratula vieja ya no vale)
+        raw = g.RAW / f"{name}_v3.png"
+        if not raw.exists():
+            g.SCREENS[name + "_v3"] = (BOSSES[name] + g.CREATURES + "ABSOLUTELY NO text, words, letters, signs with writing or labels anywhere in the image. Dark vignette at the bottom third. ", [])
+            raw = g.generate(name + "_v3")
         g.pixelate(raw, name)
         (g.ROOT / f"assets/sprites/ui/screens/{name}.png").replace(g.ROOT / f"assets/sprites/ui/bosses/{name}.png")
         print("ok", name)
