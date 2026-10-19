@@ -9,7 +9,7 @@ var _t := 0.0
 
 
 func _ready() -> void:
-	position = Vector2(0, -150)
+	position = Vector2(0, 34)
 	z_index = 20
 
 
@@ -19,14 +19,15 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
-	var w := 84.0
+	var w := 104.0
 	var shake := Vector2(sin(_t * 70.0) * 1.6, 0.0) if level > 0.85 else Vector2.ZERO
 	var col := Color(0.35, 0.65, 1.0).lerp(Color(1.0, 0.2, 0.25), clampf(level, 0.0, 1.0))
 	draw_set_transform(shake, 0.0, Vector2.ONE)
-	draw_rect(Rect2(-w * 0.5 - 2, -7, w + 4, 14), Color(0.05, 0.03, 0.08, 0.9))
-	draw_rect(Rect2(-w * 0.5, -5, w * clampf(level, 0.0, 1.0), 10), col)
-	draw_rect(Rect2(-w * 0.5 - 2, -7, w + 4, 14), Color(0.62, 0.06, 0.1), false, 2.0)
+	draw_rect(Rect2(-w * 0.5 - 2, -9, w + 4, 18), Color(0.05, 0.03, 0.08, 0.95))
+	draw_rect(Rect2(-w * 0.5, -7, maxf(w * clampf(level, 0.0, 1.0), 4.0), 14), col)
+	draw_rect(Rect2(-w * 0.5 - 2, -9, w + 4, 18), Color(0.8, 0.1, 0.15), false, 2.0)
 	var f := ThemeDB.fallback_font
-	draw_string(f, Vector2(-w * 0.5, -11), tr("VIAGRA_METER"), HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color(0.9, 0.95, 1.0))
+	draw_string(f, Vector2(-w * 0.5 + 1, 29), tr("VIAGRA_METER"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(0, 0, 0, 0.9))
+	draw_string(f, Vector2(-w * 0.5, 28), tr("VIAGRA_METER"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(1.0, 0.95, 0.6))
 	if level >= 0.99:
-		draw_string(f, Vector2(-w * 0.5, 26), "!!!", HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color(1.0, 0.3, 0.3))
+		draw_string(f, Vector2(w * 0.5 + 6, 6), "!!!", HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color(1.0, 0.3, 0.3))
