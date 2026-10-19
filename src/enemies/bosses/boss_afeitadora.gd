@@ -43,7 +43,7 @@ func _ready() -> void:
 	_channels_total = 2
 	_channels_left = 2
 	_ge.boss_charges_changed.emit(_channels_left, _channels_total)
-	BossAnimator.attach(self)  # solo actua si el SpriteFrames trae cuadros nuevos
+	BossAnimator.attach(self, true)  # arte actual (40x60): animacion por codigo, sin cuadros nuevos
 
 
 func _attack_pool() -> Array:
