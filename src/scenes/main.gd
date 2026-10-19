@@ -749,7 +749,7 @@ func _complete_floor() -> void:
 			"completo":
 				Narrator.say_raw(tr("P6_COMPLETO_NARR"))
 			"verdadero":
-				Narrator.say_raw(tr("P6_VERDADERO_NARR"))  # pista de musica pendiente: "final_verdadero" (ver Sound, otro agente)
+				Narrator.say_raw(tr("P6_VERDADERO_NARR"))
 		if ending not in ["verdadero", "copia"] and not _run_manager.pending_regions().is_empty():
 			Narrator.say_raw(tr("DESORDEN_NARR") % DesordenPanel.pending_names(_run_manager))
 		get_node("/root/LoreDatabase").custom_event("victory")

@@ -22,7 +22,10 @@ func _ready() -> void:
 	var rm = _game_controller.get_run_manager()
 	var run_data = rm.get_run_data()
 	var victory: bool = rm.last_run_victory
-	Sound.music("victoria" if victory else "derrota", false)  # jingles de una sola vez
+	if victory and get_node("/root/RunManager").last_ending == "verdadero":
+		Sound.music("final_verdadero")  # plan 6: todos los reinos liberados
+	else:
+		Sound.music("victoria" if victory else "derrota", false)  # jingles de una sola vez
 	var floor_n: int = run_data.get("floor", 1)
 	var kills: int = run_data.get("enemies_killed", 0)
 	var time_sec := int(run_data.get("time", 0))
@@ -46,7 +49,7 @@ func _ready() -> void:
 	if victory and rm.last_ending == "copia":  # plan 6: ganaste sin vencer al Algoritmo
 		title_text = tr("P6_COPIA_TITLE")
 	elif victory and rm.last_ending == "verdadero":
-		title_text = tr("P6_VERDADERO_TITLE")  # pista de musica pendiente: "final_verdadero" (Sound lo anade el otro agente)
+		title_text = tr("P6_VERDADERO_TITLE")
 	var title := Control.new()
 	title.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
