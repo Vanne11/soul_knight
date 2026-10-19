@@ -1,10 +1,9 @@
 {
-	"_nota": "LAS TIERRAS DEL SILENCIO, piso 1 \"Superficie\" (E3, reino de la violencia de genero; diseno en diseno_E3_silencio.md). REINO INCOMPLETO: \"wip\": true lo deja fuera de FLOORS, de regions() y de la ruta (RunManager.enable_wip, solo desde F1 \"Ir al Silencio (WIP)\"). Prefijo 80: va DESPUES de 75_arcoiria_profunda y no mueve los indices canonicos de reino. Sin enemigos: \"layout\": \"silencio\" arma una cadena de salas de situacion unidas por pasillos vacios (src/silencio/). Roster y names son de relleno (RunManager y Loc los leen); nunca se invocan. Ya NO es la ultima etapa: el piso 2 \"Fondo\" esta en 85_silencio_fondo.json (S5 Cinco puertas y S6 El pasillo hechos; sala del jefe vacia hasta que exista el jefe; falta S7, la sala de memoria). Textos: locale/silencio.csv.",
+	"_nota": "[NO PUBLICAR SIN REVISION]LAS TIERRAS DEL SILENCIO, piso 1 \"Superficie\" (E3, reino de la violencia de genero; diseno en diseno_E3_silencio.md). REINO INCOMPLETO: \"wip\": true lo deja fuera de FLOORS, de regions() y de la ruta (RunManager.enable_wip, solo desde F1 \"Ir al Silencio (WIP)\"). Prefijo 80: va DESPUES de 75_arcoiria_profunda y no mueve los indices canonicos de reino. Sin enemigos: \"layout\": \"silencio\" arma una cadena de salas de situacion unidas por pasillos vacios (src/silencio/). Roster y names son de relleno (RunManager y Loc los leen); nunca se invocan. Ya NO es la ultima etapa: el piso 2 \"Fondo\" esta en 85_silencio_fondo.json (S5 Cinco puertas y S6 El pasillo hechos; sala del jefe vacia hasta que exista el jefe; falta S7, la sala de memoria). Textos: locale/silencio.csv. EN LA RUTA desde 2026-10-19 (Nico), pero NO SE PUBLICA hasta la revision externa de una ONG o profesional (diseno_E3_silencio.md; carta_ONG_revision_E3.md): no subir builds publicas (itch, Steam) con este reino sin esa revision.",
 	"name": "LAS TIERRAS DEL SILENCIO",
 	"name_key": "FLOOR_SILENCIO_NAME",
 	"region": "silencio",
 	"stage": 1,
-	"wip": true,
 	"layout": "silencio",
 	"elite_chance": 0.0,
 	"kingdom": "silencio",
