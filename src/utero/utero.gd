@@ -1,44 +1,34 @@
 class_name Utero
 extends RefCounted
 
-## EL UTERO: nivel secreto de Vulvania (etapa V). Ganchos estaticos que llaman main.gd,
-## room.gd/player.gd y la tienda; todo lo demas vive en src/utero/.
+## EL UTERO: reino del centro (etapa V), de 1 piso con jefa propia, como la Prostata. Ganchos
+## estaticos que llaman main.gd, room.gd/player.gd; todo lo demas vive en src/utero/.
 ##
 ## COMO SE ENTRA
-##   1. En Trompas de Falopio (2a etapa de Vulvania) una sala sin salida pasa a ser la "Consulta
-##      de la Doctora V." (guino a la autora): cartel + la Puerta del Cuello Uterino.
-##   2. La puerta se abre con un TURNO (objeto "turno": se compra en la tienda de Vulvania o lo
-##      suelta un elite de Vulvania; una vez por partida). Al abrirla RunManager.insert_utero()
-##      mete el piso EXTRA "utero" justo despues de Trompas en la ruta activa.
-##   3. Al vencer a la reina Ovaria II la escotilla baja al Utero; al vencer a Dona Regla (o al
-##      morir) todo sigue como siempre. La dificultad es la de Trompas (region "vulvania").
-##   Pruebas / bot: --force-utero=1 (Utero.force) lo abre solo al entrar a Trompas.
+##   Es un reino normal del carril comun (assets/data/routes.json "center"): tras los sellos, (arcoiria)
+##   > utero > prostata > palacio. Su JSON es assets/data/floors/65_utero.json (region "utero").
+##   La Doctora V. (guino a la autora) te recibe en la sala de inicio, sin cobrar (UteroConsulta).
+##   Al vencer a Dona Regla la ruta sigue como siempre.
 ##
 ## EL PISO: 4 tramos, uno por fase del ciclo, segun la distancia (en puertas) desde la entrada:
 ##   0 menstruacion  1 folicular  2 ovulacion  3 lutea   (la sala del jefe: fase 4 = Dona Regla)
 ## Cada sala guarda su fase en el meta "utero_phase". Lo que hace cada fase esta en UteroFx
 ## (tinte, buffs, banner), UteroFolliculos, UteroOvulo y en los ganchos de abajo.
 ##
-## EVENTOS DE CODICE (LoreDatabase.custom_event): utero_consulta (entras a la Consulta),
-## utero_turno (abres la puerta), enter_utero (pisas el Utero; lo usa el codice: loc_utero), utero_fase_menstruacion /
+## EVENTOS DE CODICE (LoreDatabase.custom_event): utero_consulta (hablas con la Doctora V.),
+## enter_utero (pisas el Utero; lo usa el codice: loc_utero), utero_fase_menstruacion /
 ## utero_fase_folicular / utero_fase_ovulacion / utero_fase_lutea, utero_ovulo (alcanzas el
 ## ovulo), utero_regla (vences a Dona Regla). Para el codice: boss_regla se desbloquea matando a "DOÑA REGLA".
 
 const FLOOR_ID := "utero"
-const HOST_ID := "trompas_falopio"
-const TURNO := "turno"
 const PHASE_NAMES := ["menstruacion", "folicular", "ovulacion", "lutea"]
 const FIGHT := [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION]
-## Salas tranquilas que la Consulta puede reemplazar si faltan peleas.
-const CALM_HOST := [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]
 const MENS_ITEMS := ["tampon", "menstrual_cup"]  # + todo lo de tag "toalla"
 const MENS_BOOST := 1.5
 const LUTEA_BOOST := 2.0  # el chocolate cura el doble
 ## Personalidades de enemigo (src/enemies/ai) irritables, para el SPM de la fase lutea.
 const SPM_PERSONALITIES := ["terco", "rencoroso", "resentida", "quejona", "impredecible", "hiperactivo"]
 
-## Prueba/bot: --force-utero=1. Abre el Utero solo al pisar Trompas, sin comprar el Turno.
-static var force := false
 ## Fase de la sala actual (-1 = fuera del Utero). La actualiza UteroFx.
 static var phase := -1
 
@@ -60,20 +50,15 @@ static func fx(main: Node) -> UteroFx:
 
 
 # ------------------------------------------------------------------ piso
-## Al terminar de generar un piso (main._generate_dungeon). Trompas: elige la Consulta; Utero:
-## reparte las fases; cualquier otro: limpia lo que dejo el Utero.
+## Al terminar de generar un piso (main._generate_dungeon). Utero: reparte las fases; cualquier
+## otro: limpia lo que dejo el Utero.
 static func setup_floor(main: Node) -> void:
 	var old := fx(main)
 	if old != null:
 		old.queue_free()  # su _exit_tree devuelve los buffs de la fase
 	phase = -1
 	var id := str(_rm().floor_data().get("id", ""))
-	if id == HOST_ID and not RunManager.utero_used:
-		_pick_consulta(main)
-		if force:
-			RunManager.insert_utero()
-			print("[utero] --force-utero: el Utero queda en la ruta tras Trompas")
-	elif id == FLOOR_ID:
+	if id == FLOOR_ID:
 		_assign_phases(main)
 		var f := UteroFx.new()
 		f.name = "UteroFx"
@@ -124,9 +109,8 @@ static func phase_of(room: Room) -> int:
 # ------------------------------------------------------------------ ganchos de main.gd
 ## main._enter_room, antes del director de salas.
 static func on_enter(main: Node, room: Room, entry_door: Door) -> void:
-	if room.has_meta("consulta"):
-		_lore("utero_consulta")
-		return
+	if is_utero() and room.room_type == Room.RoomType.START:
+		UteroConsulta.build(main, room)  # la Doctora V. te recibe en la entrada del Utero
 	var f := fx(main)
 	if f != null:
 		f.enter_room(room, entry_door)
@@ -147,12 +131,6 @@ static func data_tweak(room: Room, info: Dictionary) -> void:
 	var p := phase_of(room)
 	if p == 3 and info.get("enemy_type", "") != "boss":
 		info.personality = SPM_PERSONALITIES[randi() % SPM_PERSONALITIES.size()]  # SPM: irritables y cambiantes
-
-
-## Elites de Vulvania: a veces sueltan el Turno (si todavia lo puedes usar).
-static func elite_drop(main: Node, info: Dictionary) -> void:
-	if info.get("elite", false) and turno_obtainable(main):
-		info.drops.append({"item_id": TURNO, "chance": 0.18})
 
 
 ## main._on_room_cleared: premios propios de cada fase.
@@ -189,84 +167,9 @@ static func on_boss_dead(main: Node) -> void:
 
 
 ## main._complete_floor, tras elegir la mejora del jefe: la bendicion "de ciclo" (3 cartas del
-## reino del heroe; el Ornitorrinco, de Vulvania, que es donde estamos).
+## reino del heroe; el Ornitorrinco, que es de Selva/Arcoiria, recibe la de Vulvania).
 static func cycle_blessing(main: Node) -> void:
 	if not is_utero():
 		return
 	var k: String = str(_rm().character_data().kingdom)
 	main._offer_blessing(k if k in ["pene", "vulva"] else "vulva", main.tr("UTERO_BLESSING_TITLE"))
-
-
-# ------------------------------------------------------------------ Turno
-static func owns_turno(main: Node) -> bool:
-	return TURNO in main.player.collected_items
-
-
-## true si todavia tiene sentido ofrecer/soltar el Turno: en Vulvania, sin usar y sin tenerlo.
-static func turno_obtainable(main: Node) -> bool:
-	if str(_rm().floor_data().get("region", "")) != "vulvania" or str(_rm().floor_data().get("id", "")) == FLOOR_ID \
-		or RunManager.utero_used or owns_turno(main):
-		return false
-	return _consulta_available(main)
-
-
-## Hay una Consulta a la que llevar el Turno: Trompas esta en la ruta y, si estamos en Trompas, la
-## sala existe (setup_floor la garantiza; esto es la red de seguridad para no vender un Turno inutil).
-static func _consulta_available(main: Node) -> bool:
-	var in_route := false
-	for f in (RunManager.route_floors if not RunManager.route_floors.is_empty() else RunManager.FLOORS):
-		if f.id == HOST_ID:
-			in_route = true
-	if not in_route:
-		return false
-	if str(_rm().floor_data().get("id", "")) == HOST_ID:
-		var gen: DungeonGenerator = main.dungeon_generator
-		return gen != null and gen.rooms.values().any(func(r): return r.has_meta("consulta"))
-	return true
-
-
-## main._build_shop: la tienda de Vulvania vende el Turno (2a etapa: solo si no lo tienes ya).
-static func shop_stock(main: Node, stock: Array) -> Array:
-	if turno_obtainable(main) and stock.size() > 1:
-		stock[1] = TURNO
-	return stock
-
-
-# ------------------------------------------------------------------ la Consulta
-## Elige la sala de la Consulta en Trompas. SIEMPRE hay una: primero una sala de pelea sin salida
-## (si el piso tiene >= 4 peleas); si no, una sala tranquila ya existente (no cuesta combates); y
-## como ultimo recurso cualquier sala convertible, preferida fuera del camino al jefe.
-static func _pick_consulta(main: Node) -> void:
-	var gen: DungeonGenerator = main.dungeon_generator
-	var all: Array = gen.rooms.values()
-	var fights := all.filter(func(r): return r.room_type in FIGHT).size()
-	var off_path := func(r): return not r.has_meta("elite_room") and r.grid_pos not in gen.main_path
-	var dead := func(r): return gen.room_graph[r.grid_pos].size() == 1
-	var tiers: Array = []
-	if fights >= 4:
-		tiers.append(all.filter(func(r): return r.room_type == Room.RoomType.COMBAT and off_path.call(r)))
-	tiers.append(all.filter(func(r): return r.room_type in CALM_HOST and r.grid_pos not in gen.main_path))
-	tiers.append(all.filter(func(r): return r.room_type in [Room.RoomType.COMBAT, Room.RoomType.TRAP, Room.RoomType.INTOXICATION] and off_path.call(r)))
-	tiers.append(all.filter(func(r): return r.room_type in CALM_HOST))
-	tiers.append(all.filter(func(r): return r.room_type == Room.RoomType.COMBAT and not r.has_meta("elite_room")))
-	var cands: Array = []
-	for t in tiers:
-		if not t.is_empty():
-			cands = t
-			break
-	if cands.is_empty():
-		push_warning("Utero: Trompas no tiene ninguna sala para la Consulta")
-		return
-	var dead_ends: Array = cands.filter(dead)
-	if not dead_ends.is_empty():
-		cands = dead_ends
-	var rng := RandomNumberGenerator.new()
-	rng.seed = hash([_rm().current_seed, "consulta"])
-	var room: Room = cands[rng.randi_range(0, cands.size() - 1)]
-	room.room_type = Room.RoomType.LORE  # sala tranquila (el cartel de su puerta lo pone _room_hint)
-	room.set_meta("consulta", true)
-
-
-## main._build_calm_room: la sala marcada es la Consulta.
-static func build_consulta(main: Node, room: Room) -> void:
-	UteroConsulta.build(main, room)

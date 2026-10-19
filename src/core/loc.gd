@@ -107,7 +107,7 @@ static func floor_name(floor_or_fd, short := false) -> String:
 	var fb: String = fd.get("name", "")
 	if short:
 		fb = fb.replace("EL PALACIO DE LA ", "PALACIO ")
-	if fd.get("name_key", "") != "":  # pisos secretos (El Utero): su nombre propio, no el de su region
+	if fd.get("name_key", "") != "":  # pisos con nombre propio (El Utero): no el canonico de su region
 		return tr_or(str(fd.name_key), fb)
 	var canon := RunManager.regions().find(fd.get("region", ""))
 	if canon < 0:
@@ -145,7 +145,7 @@ const SUMMON_NAME_KEYS := {
 
 static func _build_enemy_keys() -> void:
 	_enemy_keys.merge(SUMMON_NAME_KEYS)
-	for f in RunManager.FLOORS + RunManager.SECRET_FLOORS.values():  # (El Utero: floors_secret/)
+	for f in RunManager.FLOORS:
 		for pair in [["roster", "names"], ["alt_roster", "alt_names"]]:
 			if f.has(pair[0]):
 				for i in f[pair[0]].size():

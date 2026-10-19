@@ -46,10 +46,9 @@ static func tr_(key: String) -> String:
 	return TranslationServer.translate(key)
 
 
-## Region donde esta el jugador ahora ("utero" si esta en el piso secreto).
+## Region donde esta el jugador ahora.
 static func current_region(rm: Node) -> String:
-	var fd: Dictionary = rm.floor_data()
-	return "utero" if str(fd.get("id", "")) == "utero" else str(fd.get("region", ""))
+	return str(rm.floor_data().get("region", ""))
 
 
 ## Nombre del reino: el de siempre si existe en FLOORS (Loc.region_name_id) o la clave de mapa_mundo.csv.
@@ -108,7 +107,7 @@ func _rect(x: float, y: float, w: float, h: float) -> Rect2:
 
 
 func _visited(id: String) -> bool:
-	return id in _route or id == _cur or (id == "utero" and RunManager.utero_inserted)
+	return id in _route or id == _cur
 
 
 ## Reino "pasado": visitado, o inexistente (aun por disenar) con un reino posterior del centro visitado.
@@ -125,7 +124,7 @@ func _reached(id: String) -> bool:
 
 
 func _is_missing(id: String) -> bool:
-	return id not in _exist and not (id == "utero" and RunManager.utero_inserted)
+	return id not in _exist
 
 
 func _draw_region(ci: CanvasItem, r: Dictionary) -> void:

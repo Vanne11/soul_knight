@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bqm7khm4nel4i"
+
+[deps]
+
+files=["res://locale/utero_reino.es.translation", "res://locale/utero_reino.en.translation", "res://locale/utero_reino.fr.translation"]
+
+source_file="res://locale/utero_reino.csv"
+dest_files=["res://locale/utero_reino.es.translation", "res://locale/utero_reino.en.translation", "res://locale/utero_reino.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

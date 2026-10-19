@@ -1,8 +1,7 @@
-"""Arte de EL UTERO (etapa V): Dona Regla (80x120 + SpriteFrames), icono del Turno (24x24) y folículo.
+"""Arte de EL UTERO (etapa V): Dona Regla (80x120 + SpriteFrames) y folículo.
 
-Uso: python3 tools/gen_utero_art.py [regla|turno|foliculo|intro|intro_pil ...]   (sin args = todo menos intro)
+Uso: python3 tools/gen_utero_art.py [regla|foliculo|intro|intro_pil ...]   (sin args = todo menos intro)
   regla     assets/sprites/enemies/regla_<anim>_NN.png + regla_sprite_frames.tres
-  turno     assets/sprites/items/turno.png
   foliculo  assets/sprites/utero/foliculo.png
   intro     presentacion a pantalla completa assets/sprites/ui/bosses/regla.png con Gemini (UNA llamada;
             reusa tools/gen_boss_art.py / gen_intro_art.py y la key de ~/.kaggle/gemini_key)
@@ -142,33 +141,6 @@ def make_regla():
     print("ok regla", sum(len(f) for f in anims.values()), "frames")
 
 
-# ------------------------------------------------------------------ Turno (24x24)
-def make_turno():
-    im = Image.new("RGBA", (24, 24), (0, 0, 0, 0))
-    d = ImageDraw.Draw(im)
-    paper = (255, 246, 214, 255)
-    shade = (222, 196, 140, 255)
-    # boleto con dientes en los lados y la mella central
-    d.rectangle([3, 5, 20, 19], fill=paper)
-    for y in range(6, 19, 3):
-        d.point([(3, y), (20, y)], fill=(0, 0, 0, 0))
-    d.rectangle([3, 17, 20, 19], fill=shade)
-    d.rectangle([5, 7, 18, 9], fill=DRESS)          # franja roja de cabecera
-    d.rectangle([5, 7, 18, 7], fill=DRESS_HI)
-    # "37" con puntos de 3x5
-    digits = {"3": ["111", "001", "111", "001", "111"], "7": ["111", "001", "010", "010", "010"]}
-    for k, ch in enumerate("37"):
-        for r, row in enumerate(digits[ch]):
-            for c, v in enumerate(row):
-                if v == "1":
-                    d.point((7 + k * 5 + c, 11 + r), fill=INK)
-    d.ellipse([14, 12, 19, 17], outline=(60, 120, 200, 255))  # sello azul
-    d.point([(16, 14), (17, 14)], fill=(60, 120, 200, 255))
-    im = G.outline(im)
-    im.save(ROOT / "assets/sprites/items/turno.png")
-    print("ok turno")
-
-
 # ------------------------------------------------------------------ folículo (28x36)
 def make_foliculo():
     im = Image.new("RGBA", (28, 36), (0, 0, 0, 0))
@@ -245,7 +217,7 @@ def make_intro_pil():
 
 
 if __name__ == "__main__":
-    todo = sys.argv[1:] or ["regla", "turno", "foliculo"]
+    todo = sys.argv[1:] or ["regla", "foliculo"]
     for t in todo:
-        {"regla": make_regla, "turno": make_turno, "foliculo": make_foliculo,
+        {"regla": make_regla, "foliculo": make_foliculo,
          "intro": make_intro_gemini, "intro_pil": make_intro_pil}[t]()
