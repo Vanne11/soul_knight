@@ -5,24 +5,33 @@ extends EnemyBoss
 ## sentadas en circulo bajo una cortina pesada que absorbe el sonido. Es lo que pasa cuando todos saben y
 ## nadie dice. SIN dialogo, SIN humor y SIN musica (el reino no tiene).
 ##
+## ESCENARIO Y CUERPOS (rediseno): la cortina, el haz de luz y el circulo de sillas son un ESCENARIO FIJO
+## (SilencioEscenario, decorado centrado en la sala). Las 7 siluetas (SilencioCuerpo) son los CUERPOS del
+## jefe: este nodo (EnemyBoss) conserva LA UNICA vida y barra, las fases, las curas y la muerte; los cuerpos
+## reciben el golpe y se lo pasan (cuerpo_hit). Este nodo no recibe golpes directos ni se mueve.
+## - SENTADAS: se RECARGAN (tiempo antes de volver a salir), se PROTEGEN (la cortina las cubre: dano x0,08,
+##   se ve el velo) y se REPARAN (la cura "El pacto se cierra", solo con todas sentadas, asienten en bloque).
+## - FUERA: salen DE A UNA O EN GRUPOS (fase 1: 1-2, fase 2: 2-3, fase 3: 3-4) y son VULNERABLES; luego
+##   SIEMPRE vuelven a sentarse. Sus ataques son de SILENCIAR y AISLAR, nunca de golpear ni de contacto: ondas
+##   de "shh", rodear al jugador para cerrarle el paso y cubrirlo con la cortina (zona que anula tus golpes).
+##   El dano al jugador viene solo de las ondas.
+## - EL RUIDO es la clave: un objeto de ruido que suena con las siluetas sentadas ABRE la cortina 3 s (quedan
+##   vulnerables) y las FUERZA a salir antes de tiempo; si suena durante la cura, la corta.
+##
 ## COMO SE LE VENCE (haciendo ruido):
 ## - Tipos de dano (assets/data/boss_damage.json, fila "pacto_silencio"): "sonido" x1,8 y TODO lo demas
 ##   x0,3 ("apagado": nunca cero, la pelea no se bloquea). Cuentan como "sonido" (a) los golpes que le das
-##   al Pacto desde DENTRO del anillo de un objeto de ruido que suena, (b) el pulso de cada objeto de
+##   a un cuerpo desde DENTRO del anillo de un objeto de ruido que suena, (b) el pulso de cada objeto de
 ##   ruido al golpearlo, (c) el grito de Vulvalquiria, el golpe de escudo de Pitocles y el "Ñic" del
-##   Ornitorrinco (sound_hit, ver src/player/abilities) y (d) los pulsos de las Voces aliadas.
-## - Los objetos de ruido (SilencioRuido, borde de la arena: 2 campanas, 2 ollas, 1 vidrio) los pone la
-##   sala (src/silencio/silencio_jefe.gd). El jefe los escucha en el grupo "sil_ruido".
-## - El MANTO (atk_manto) amortigua: mientras estas dentro de un manto tus golpes al Pacto hacen x0.
+##   Ornitorrinco (sound_hit) y (d) los pulsos de las Voces aliadas.
+## - Los objetos de ruido (SilencioRuido, borde de la arena) los pone la sala (src/silencio/silencio_jefe.gd).
 ##
-## FASES (66% / 33%): 1 "Nadie oyo" (manto, susurro, puerta; sin combos), 2 "Nadie vio" (suma oidos y
-## mirar_otro_lado, combos de hasta 2, apagon de la sala: ves tu halo y las Voces como luces), 3 "Nadie
-## dijo" (suma la firma atk_nadie_dijo, combos de hasta 3, mantos mas grandes y la sala se achica un poco).
-## ATAQUES (todos avisan, minimo 0,55 s): manto, susurro, puerta, oidos (grande: queda AGOTADO 1,4 s),
-## mirar_otro_lado, nadie_dijo (14 s sin audio; si aguantas sin golpe queda AGOTADO 2,5 s).
+## FASES (66% / 33%): 1 "Nadie oyo" (salidas de 1-2), 2 "Nadie vio" (grupos de 2-3, combos de hasta 2, mirar
+## otro lado: media sala a oscuras, apagon parcial), 3 "Nadie dijo" (grupos de 3-4, oleadas, combos de hasta 3, la
+## firma atk_nadie_dijo: 14 s sin audio, y la sala se achica un poco). Todos los avisos duran >= 0,55 s.
 ## CURA "El pacto se cierra" (maximo 2): se corta golpeando 3 objetos de ruido DISTINTOS (tocar uno que
 ## ya conto solo reinicia, sin dano); mientras canaliza se defiende con susurros. Completada: furia 7 s.
-## Cortada: aturdido 5 s, -6% de vida y "Alguien hablo.".
+## Cortada: aturdidas 5 s (de pie, vulnerables), -6% de vida y "Alguien hablo.".
 ##
 ## LAS 3 LUCES DEL CIRCULO (HUD) se encienden aqui (empiezan apagadas, tambien la 1 que dejo S6 B):
 ##  luz 1  dos objetos de ruido golpeados en 3 s -> el anillo sube de 120 a 160 px.
@@ -31,33 +40,23 @@ extends EnemyBoss
 ##  luz 3  aguantar "Nadie dijo" sin recibir golpe -> coro: las aliadas hablan a la vez (pulsos x2, 8 s).
 ## Las luces no se apagan por tus errores.
 ##
-## SEPARARSE Y JUNTARSE (mecanica visual; la logica de dano NO cambia): a veces la asamblea es UN SOLO ENTE (el bloque bajo
-## la cortina) y a veces se separa en 7 siluetas sueltas (SilencioEnte) que caminan por la arena y luego vuelven al bloque.
-## Ocurre en atk_mirar_otro_lado (fase 2+) y durante atk_nadie_dijo (fase 3). Mientras estan separadas el sprite del bloque
-## se oculta y queda la CORTINA VACIA (pose "vacia": sillas vacias bajo la cortina). Las siluetas son solo imagen: el
-## "jefe" sigue siendo este nodo (cuerpo, vida, fases y ataques intactos) y su zona de golpe se AGRANDA para cubrir la
-## zona por donde vagan las siluetas, asi dispararles a ellas le pega al jefe igual (lo mas simple y robusto: nada de
-## vidas ni hitboxes por silueta). Al juntarse se restituye el bloque. Si el ataque se cancela o el jefe muere, se
-## juntan de golpe (_juntar(true)).
-##
-## MUERTE: sin violencia. Emite `defeated`; la sala (silencio_jefe.gd) levanta el manto, las siluetas se
-## ponen de pie y salen cada una con una luz. SIN botin (drop_table vacio), SIN logro, SIN sello: no emite
-## enemy_killed (main._complete_floor daria recompensa a elegir) y no cuenta como muerte.
+## MUERTE: sin violencia. Emite `defeated`; las siluetas se levantan y salen cada una con su luz y se
+## desvanecen (SilencioCuerpo.final_exit); la sala (silencio_jefe.gd) abre las puertas y dice "Se rompio el
+## silencio.". SIN botin (drop_table vacio), SIN logro, SIN sello: no emite enemy_killed.
 
 signal defeated(at: Vector2)
 
-const DIR := "res://assets/sprites/silencio/pacto/"
-const SPLIT_RECT := Vector2(420, 260)
-const HP_MULT := 0.7
 const MANTO_R := 92.0
 const MANTO_SECS := 7.0
 const HALF_SECS := 6.0
+const HP_MULT := 0.7
 const PULSE_PCT := 0.014          ## pulso de un objeto de ruido: fraccion de la vida maxima (antes de x1,8)
 const ALLY_PCT := 0.012
 const CURE_NEED := 3
+const PROTECT_MULT := 0.08        ## dano a una silueta sentada y cubierta por la cortina
+const RECHARGE := [3.0, 2.4, 1.8]
 const COL_MANTO := Color(0.2, 0.19, 0.3)
-const COL_WAVE := Color(0.55, 0.56, 0.72)
-const COL_WALL := Color(0.3, 0.28, 0.42)
+const COL_WAVE := Color(0.42, 0.44, 0.74)   ## frio y oscuro: el peligro nunca es blanco (los anillos blancos son del ruido)
 
 ## true durante el "coro" (luz 3): las Voces aliadas pulsan x2.
 var chorus_on := false
@@ -69,33 +68,32 @@ var _lights := [false, false, false]
 var _rung_times: Array = []
 var _chorus_t := 0.0
 var _fury_t := 0.0
-var _dark_t := 0.0
 var _def_t := 1.5
 var _ch_used: Array = []
 var _hooked := false
 var _muted := false
 var _force_sound := false  # el golpe viene de un grito / escudo / pico del heroe (sound_hit)
-var _pulse_hit := false    # el golpe es un pulso interno (objeto de ruido o Voz aliada): ignora el manto
+var _inner := false        # el golpe llega por un cuerpo, un pulso o una Voz (el nodo no recibe golpes directos)
 var _shrunk := false
-var _entes: Array = []
-var _split := false
-var _vacia: Sprite2D = null
-var _body_hurt_size := Vector2(176, 120)
+var _cuerpos: Array = []
+var _esc: SilencioEscenario = null
+var _pending := 0          # siluetas de la salida en curso que aun no vuelven a su silla
+var _nod := 0.0
 
 
 func _ready() -> void:
 	var spr: AnimatedSprite2D = $AnimatedSprite2D  # (el @onready de la base aun no corrio)
-	spr.sprite_frames = load(DIR + "pacto_sprite_frames.tres")  # arte definitivo 224x184 (tools/gen_pacto_art.py)
+	spr.sprite_frames = load("res://assets/sprites/silencio/pacto/pacto_sprite_frames.tres")
 	super()
 	dynamic = true
 	fan_tint = COL_WAVE
 	keep_min = 200.0
 	keep_max = 330.0
-	rest_min = 0.7
-	rest_max = 1.2
+	rest_min = 1.2
+	rest_max = 1.8
 	bullet_speed = 170.0
 	tele_caps = [0.8, 0.7, 0.6]  # nunca menos de 0,55 s de aviso
-	move_speed = 34.0
+	move_speed = 0.0
 	max_health *= HP_MULT
 	current_health = max_health
 	_emit_health()
@@ -103,54 +101,88 @@ func _ready() -> void:
 	_channels_left = 2
 	_ge.boss_charges_changed.emit(_channels_left, _channels_total)
 	add_to_group("boss_pacto")
-	# una luz fria y tenue sobre la asamblea: la sala esta casi a oscuras y el jefe tiene que leerse
-	var glow := LightKit.make_light(Color(0.82, 0.86, 1.0), 0.5, 2.8, false)
-	glow.remove_from_group(LightKit.GROUP_DARK)
-	glow.enabled = true
-	glow.position = Vector2(0, -70)
-	add_child(glow)
-	# La asamblea es ancha: cuerpo y zona de golpe a su medida (el .tscn es de un jefe de 100 px)
-	var body := RectangleShape2D.new()  # (las formas del .tscn se comparten con los demas jefes: no tocarlas)
-	body.size = Vector2(150, 96)
-	$CollisionShape2D.shape = body
-	$CollisionShape2D.position = Vector2(0, -52)
-	var hurt := RectangleShape2D.new()
-	hurt.size = Vector2(176, 120)
-	$Hurtbox/CollisionShape2D.shape = hurt
-	$Hurtbox.position = Vector2(0, -70)
-	BossAnimator.attach(self)  # animacion por cuadros + movimiento por codigo; variantes _p2/_p3 por fase
+	# Este nodo es solo la vida, la barra y el cerebro: no se ve, no choca y no recibe golpes (los reciben los cuerpos).
+	remove_from_group("enemy")
+	animated_sprite.visible = false
+	collision_layer = 0
+	$CollisionShape2D.set_deferred("disabled", true)
+	$Hurtbox.set_deferred("monitoring", false)
+	$Hurtbox.set_deferred("monitorable", false)
+	$Hitbox.set_deferred("monitoring", false)
+	var sh := get_node_or_null("ContactShadow")
+	if sh != null:
+		sh.visible = false
 	Silencio.cartel([tr("SIL_JEFE_F1")], 2.6)
-
-
-## El golpe del ataque ocurre cuando termina el aviso: se avisa al animador (como boss_regla.gd) para que pase de la pose
-## de carga (attack_<x>) a la de golpe (release_<x>) justo en ese momento.
-func _tele(secs: float, col := Color(2.0, 2.0, 0.9), shake := 2.0, on_frame := Callable()) -> bool:
-	var ok: bool = await super(secs, col, shake, on_frame)
-	if ok:
-		attack_released.emit(_last_attack)
-	return ok
 
 
 func _say(_suffix: String) -> void:
 	pass  # el Pacto no habla y el narrador calla en todo el reino
 
 
+# ---------------------------------------------------------------- escenario y cuerpos
+## Pone el escenario (si la sala no lo puso) y las 7 siluetas sentadas. Se hace en el primer _tick: la posicion
+## del jefe (el centro del escenario) ya es la definitiva.
+func _make_cuerpos() -> void:
+	if not _cuerpos.is_empty():
+		return
+	_esc = get_tree().get_first_node_in_group(SilencioEscenario.GROUP) as SilencioEscenario
+	if _esc == null:
+		_esc = SilencioEscenario.new()
+		_spawn_container().add_child(_esc)
+		_esc.global_position = global_position
+	for i in SilencioEnte.SEATS.size():
+		var c := SilencioCuerpo.new()
+		c.boss = self
+		c.idx = i
+		_spawn_container().add_child(c)
+		c.global_position = seat_of(i)
+		c.recharge = 1.0 + 0.4 * i
+		_cuerpos.append(c)
+
+
+func seat_of(i: int) -> Vector2:
+	return global_position + (SilencioEnte.SEATS[i] as Vector2)
+
+
+func recharge_secs() -> float:
+	return RECHARGE[clampi(current_phase, 1, 3) - 1]
+
+
+## Las siluetas listas para salir: sentadas, primero las mas recargadas.
+func _libres(n: int) -> Array:
+	var l := _cuerpos.filter(func(c): return is_instance_valid(c) and c.mode == SilencioCuerpo.Mode.SEATED)
+	RNG.shuffle(l)
+	l.sort_custom(func(a, b): return a.recharge < b.recharge)
+	return l.slice(0, n)
+
+
+## Todas vuelven a su silla (si se cancela el ataque, cambia la fase o empieza la cura).
+func _sentar_todos(speed := 150.0) -> void:
+	for c in _cuerpos:
+		if is_instance_valid(c) and c.mode in [SilencioCuerpo.Mode.OUT, SilencioCuerpo.Mode.STUN]:
+			c.volver(speed)
+
+
+func _all_seated() -> bool:
+	for c in _cuerpos:
+		if is_instance_valid(c) and c.mode != SilencioCuerpo.Mode.SEATED:
+			return false
+	return true
+
+
 # ---------------------------------------------------------------- ganchos del motor
 func _attack_pool() -> Array:
 	match current_phase:
 		1:
-			return [&"atk_manto", &"atk_susurro", &"atk_puerta"]
+			return [&"atk_salida"]
 		2:
-			return [&"atk_manto", &"atk_susurro", &"atk_puerta", &"atk_oidos", &"atk_mirar_otro_lado"]
-	return [&"atk_manto", &"atk_susurro", &"atk_puerta", &"atk_oidos", &"atk_mirar_otro_lado", &"atk_nadie_dijo"]
+			return [&"atk_salida", &"atk_salida", &"atk_mirar_otro_lado"]
+	return [&"atk_salida", &"atk_oleada", &"atk_mirar_otro_lado", &"atk_nadie_dijo"]
 
 
-## Los combos solo encadenan ataques cortos (nunca la firma ni el ataque grande).
+## Los combos solo encadenan salidas (nunca la firma): salen otras siluetas, sin pausa para recargar.
 func _combo_next() -> StringName:
-	var options := [&"atk_manto", &"atk_susurro", &"atk_puerta"]
-	if current_phase >= 2:
-		options.append(&"atk_mirar_otro_lado")
-	return options[RNG.randi_range(0, options.size() - 1)]
+	return &"atk_salida"
 
 
 func _combo_len() -> int:
@@ -182,6 +214,9 @@ func _on_cure_cut() -> void:
 	current_health = maxf(1.0, current_health - max_health * 0.06)
 	_emit_health()
 	_light(1)
+	for c in _cuerpos:  # aturdidas: de pie, fuera de la silla y vulnerables
+		if is_instance_valid(c):
+			c.aturdir(4.4)
 
 
 func _on_cure_done() -> void:
@@ -205,7 +240,7 @@ func _clear_hazards() -> void:
 
 
 func _cancel_attack() -> void:
-	_juntar(true)
+	_sentar_todos()
 	_audio(false)
 	for o in get_tree().get_nodes_in_group(SilencioRuido.GROUP):
 		o.loud = false
@@ -217,7 +252,8 @@ func _exit_tree() -> void:
 	super()
 
 
-## Sin muerte violenta: no suelta botin, no emite enemy_killed (sin logro, sin recompensa a elegir).
+## Sin muerte violenta: no suelta botin, no emite enemy_killed (sin logro, sin recompensa a elegir). Las siluetas
+## se levantan y salen cada una con su luz.
 func die(_killer: Node = null) -> void:
 	if state == State.DEAD:
 		return
@@ -229,25 +265,21 @@ func die(_killer: Node = null) -> void:
 	_emit_health()
 	_clear_bullets()
 	_print_stats("jefe derrotado")
-	set_collision_layer_value(2, false)
 	velocity = Vector2.ZERO
+	var a := arena()
+	var n := _cuerpos.size()
+	for i in n:
+		var c: SilencioCuerpo = _cuerpos[i]
+		if is_instance_valid(c):
+			c.final_exit(Vector2(a.end.x - 40.0 - (i % 2) * 24.0, a.get_center().y + (i - n / 2.0) * 34.0), 0.8 + i * 0.5)
 	defeated.emit(global_position)
-	# el bloque se levanta (cabezas arriba) y queda la cortina alzada sobre las sillas vacias; las siluetas
-	# que salen con su luz las pone la sala (silencio_jefe.gd, SilencioEnte)
-	animated_sprite.visible = true
-	animated_sprite.speed_scale = 1.0
-	animated_sprite.play("death")
-	var tw := create_tween()
-	tw.tween_interval(3.4)
-	tw.tween_property(animated_sprite, "modulate:a", 0.0, 1.2)
-	tw.tween_callback(queue_free)
+	get_tree().create_timer(0.3).timeout.connect(queue_free)
 
 
 # ---------------------------------------------------------------- reposo y pasivos
-## La asamblea no persigue: se queda en el centro de la arena (con un balanceo apenas).
+## El nodo no se mueve: es el escenario.
 func _idle_move(_delta: float) -> void:
-	var to_c := arena().get_center() - global_position
-	velocity = to_c.limit_length(move_speed) if to_c.length() > 12.0 else Vector2.ZERO
+	velocity = Vector2.ZERO
 
 
 func _now() -> float:
@@ -269,6 +301,7 @@ func _hook_noise() -> void:
 func _tick(delta: float) -> void:
 	if state == State.DEAD or target == null:
 		return
+	_make_cuerpos()
 	_hook_noise()
 	if state in [State.INTRO, State.TRANSITION]:
 		return
@@ -281,22 +314,28 @@ func _tick(delta: float) -> void:
 			chorus_on = false
 	if _fury_t > 0.0:
 		_fury_t -= delta
-		rest_min = 0.2
-		rest_max = 0.45
+		rest_min = 0.4
+		rest_max = 0.8
 	else:
-		rest_min = 0.7
-		rest_max = 1.2
-	# Fase 2+: apagon de la sala (tu halo y las Voces como luces). Parcial: la pelea se tiene que poder leer.
+		rest_min = 1.2
+		rest_max = 1.8
+	# Fase 2+: apagon de la sala (tu halo y las siluetas/Voces como luces). Parcial: la pelea se tiene que poder leer.
 	if current_phase >= 2 and not _channeling:
 		if not is_instance_valid(_blackout):
 			_blackout_start(210.0, Color(0.02, 0.02, 0.06), 0.62)
 		_blackout_update(_light_focus(), 120.0)
 
 
-## El punto que brilla ademas del halo del heroe: la Voz aliada mas cercana, o el propio Pacto.
+## El punto que brilla ademas del halo del heroe: la Voz aliada mas cercana, la silueta que esta fuera o el escenario.
 func _light_focus() -> Vector2:
-	var best := _body_center()
+	var best := global_position + Vector2(0, -70)
 	var bd := INF
+	for c in _cuerpos:
+		if is_instance_valid(c) and c.is_out():
+			var d: float = c.global_position.distance_to(target.global_position)
+			if d < bd:
+				bd = d
+				best = c.global_position + Vector2(0, -34)
 	for a in _allies:
 		if is_instance_valid(a):
 			var d: float = (a.global_position + Vector2(0, -26)).distance_to(target.global_position)
@@ -304,76 +343,6 @@ func _light_focus() -> Vector2:
 				bd = d
 				best = a.global_position + Vector2(0, -26)
 	return best
-
-
-# ---------------------------------------------------------------- separarse y juntarse
-## El bloque se abre en 7 siluetas sueltas que vagan por la arena (ver la cabecera). `spread` = radio de dispersion.
-func _separar(spread := 150.0) -> void:
-	if _split or state == State.DEAD:
-		return
-	_split = true
-	if _vacia == null:
-		_vacia = Sprite2D.new()
-		_vacia.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		add_child(_vacia)
-	var sf := animated_sprite.sprite_frames
-	_vacia.texture = sf.get_frame_texture("vacia", 0)
-	_vacia.offset = Vector2(0, -_vacia.texture.get_height() * 0.5)
-	_vacia.scale = Vector2.ONE
-	_vacia.show()
-	animated_sprite.visible = false
-	_set_hurt_size(SPLIT_RECT)
-	for i in SilencioEnte.SEATS.size():
-		var e := SilencioEnte.make(SilencioEnte.SEATS[i])
-		e.modulate.a = 0.0
-		add_child(e)
-		_entes.append(e)
-		var ang := TAU * (float(i) + RNG.randf_range(-0.2, 0.2)) / float(SilencioEnte.SEATS.size())
-		var to := Vector2(cos(ang) * spread * 1.15, sin(ang) * spread * 0.55 - 30.0) + Vector2(RNG.randf_range(-20, 20), RNG.randf_range(-10, 10))
-		e.set_home(to)
-		var tw := e.create_tween()
-		tw.tween_property(e, "modulate:a", 1.0, 0.25)
-		e.go_to(to, RNG.randf_range(0.9, 1.4), [&"turn", &"away", &"bow"][i % 3])
-		e.wander = true
-		e.wander_r = 30.0
-
-
-## Las siluetas vuelven al bloque (0,9 s) y reaparece el sprite de la asamblea. `now` = de golpe.
-func _juntar(now := false) -> void:
-	if not _split:
-		return
-	_split = false
-	_set_hurt_size(_body_hurt_size)
-	var list := _entes.duplicate()
-	_entes.clear()
-	if now or not is_inside_tree():
-		_fin_juntar(list)
-		return
-	for i in list.size():
-		var e: SilencioEnte = list[i]
-		if is_instance_valid(e):
-			e.wander = false
-			e.go_to(SilencioEnte.SEATS[i], 0.9, &"idle")
-	get_tree().create_timer(0.95).timeout.connect(func(): _fin_juntar(list))
-
-
-func _fin_juntar(list: Array) -> void:
-	for e in list:
-		if is_instance_valid(e):
-			e.queue_free()
-	if _split:
-		return  # volvieron a separarse antes de terminar: el bloque sigue oculto
-	if is_instance_valid(_vacia):
-		_vacia.hide()
-	if state != State.DEAD:
-		animated_sprite.visible = true
-
-
-func _set_hurt_size(sz: Vector2) -> void:
-	var shape := RectangleShape2D.new()
-	shape.size = sz
-	$Hurtbox/CollisionShape2D.shape = shape
-	$Hurtbox.position = Vector2(0, -70.0 if sz.y <= 120.0 else -100.0)
 
 
 # ---------------------------------------------------------------- mantos y mitades cubiertas
@@ -402,37 +371,49 @@ func _near_ring(p: Vector2) -> bool:
 
 
 # ---------------------------------------------------------------- dano
+## El nodo no recibe golpes directos: solo los que llegan por un cuerpo, un pulso o una Voz.
 func take_damage(amount: float, source: Node = null, kb: Vector2 = Vector2.ZERO) -> float:
-	if state in [State.DEAD, State.INTRO, State.TRANSITION] or _channeling:
-		return super(amount, source, kb)
-	var sound := _force_sound or _pulse_hit
-	if not _pulse_hit:
-		if _split:
-			for e in _entes:
-				HitFx.flash(e, 0.05)
-		if _in_manto(target.global_position):
-			if _shield_msg_cd <= 0.0:
-				_shield_msg_cd = 0.9
-				_float_text("…", Color("9a9aa6"))
-			HitFx.flash(animated_sprite, 0.05)
-			return 0.0
-		if not sound and _near_ring(target.global_position):
-			sound = true
-	BossDamage.tag("", 1.0, "sonido" if sound else "apagado")
+	if not _inner:
+		return 0.0
 	return super(amount, source, kb)
 
 
-## Golpe de SONIDO de una habilidad del heroe (grito, escudo, pico). Respeta el manto.
-func sound_hit(amount: float, source: Node = null) -> void:
-	_force_sound = true
-	take_damage(amount, source)
-	_force_sound = false
+## Un cuerpo recibio un golpe: se lo pasa al jefe (una sola vida). Sentada y cubierta casi no hace dano; dentro de
+## un manto, nada; fuera, normal ("sonido" x1,8 o "apagado" x0,3).
+func cuerpo_hit(c: SilencioCuerpo, amount: float, source: Node, forced_sound: bool) -> float:
+	if state in [State.DEAD, State.INTRO, State.TRANSITION]:
+		return 0.0
+	HitFx.flash(c.sprite, 0.05)
+	if _channeling:
+		_on_channel_hit(amount, source)
+		return 0.0
+	var off := c.global_position - global_position + Vector2(0, -90)
+	if _in_manto(target.global_position):
+		if _shield_msg_cd <= 0.0:
+			_shield_msg_cd = 0.9
+			_float_text("…", Color("9a9aa6"), off)
+		return 0.0
+	var sound := forced_sound or _force_sound or _near_ring(target.global_position)
+	if c.protected():
+		amount *= PROTECT_MULT
+		if _shield_msg_cd <= 0.0:
+			_shield_msg_cd = 0.9
+			_float_text("…", Color("9a9aa6"), off)
+	return _hit(amount, source, sound)
+
+
+func _hit(amount: float, source: Node, sound: bool) -> float:
+	BossDamage.tag("", 1.0, "sonido" if sound else "apagado")
+	_inner = true
+	var r := take_damage(amount, source)
+	_inner = false
+	return r
 
 
 func _pulse(amount: float) -> void:
-	_pulse_hit = true
-	take_damage(amount)
-	_pulse_hit = false
+	if state in [State.DEAD, State.INTRO, State.TRANSITION] or _channeling:
+		return
+	_hit(amount, null, true)
 
 
 ## Pulso de una Voz aliada.
@@ -456,6 +437,13 @@ func _on_rung(obj: SilencioRuido) -> void:
 		_cure_ring(obj)
 		return
 	_pulse(max_health * PULSE_PCT)  # el ruido le llega
+	if state == State.IDLE:
+		# el ruido abre la cortina (3 s vulnerables) y las fuerza a salir antes de tiempo
+		for c in _cuerpos:
+			if is_instance_valid(c) and c.mode == SilencioCuerpo.Mode.SEATED:
+				c.exposed = 3.0
+				c.recharge = 0.0
+		_timer = minf(_timer, 0.5)
 
 
 ## Cura: 3 objetos distintos; uno que ya conto, tras rearmarse, solo reinicia (sin dano).
@@ -500,127 +488,36 @@ func _spawn_allies() -> void:
 		_allies.append(v)
 
 
-# ---------------------------------------------------------------- ataques
+# ---------------------------------------------------------------- salidas de las siluetas
 func _warn_secs() -> float:
 	return [0.75, 0.68, 0.62][clampi(current_phase, 1, 3) - 1]
 
 
-## MANTO: tres zonas de tela caen (aviso: circulo oscuro que crece). Dentro, tus golpes hacen x0. No daña.
-func atk_manto() -> void:
-	var warn := _warn_secs()
-	var r := MANTO_R * (1.3 if current_phase == 3 else 1.0)
-	var spots: Array[Vector2] = [clamp_to_arena(target.global_position, 100.0)]
-	for _i in (2 if current_phase < 3 else 3):
-		spots.append(arena_point(100.0))
-	var now := _now()
-	for p in spots:
-		_add_hazard(BossZone.circle(p, r, warn, MANTO_SECS, 0.0, COL_MANTO))
-		_mantos.append({"pos": p, "r": r, "from": now + warn, "until": now + warn + MANTO_SECS})
-	if not await _tele(warn, Color(1.3, 1.3, 1.7), 2.0):
-		return
-	await _wait(0.2)
+func _walk_speed() -> float:
+	return [78.0, 88.0, 98.0][clampi(current_phase, 1, 3) - 1]
 
 
-## SUSURRO: abanico de 7 ondas oscuras lentas que se cierran hacia donde estabas. Dano leve.
-func atk_susurro() -> void:
-	var aim := target.global_position
-	var warn := _warn_secs()
-	var volleys := 1 if current_phase == 1 else 2
-	for v in volleys:
-		var spots := _susurro_spots(aim, 7)
-		for p in spots:
-			_add_hazard(BossZone.rect(p.lerp(aim, 0.5), Vector2(p.distance_to(aim), 5.0), (aim - p).angle(), warn, 0.05, 0.0, COL_WAVE))
-		if not await _tele(warn, Color(1.3, 1.3, 1.7), 2.0):
-			return
-		for p in spots:
-			_fire_from(p, (aim - p).angle(), 140.0 + 20.0 * current_phase, 0.5, COL_WAVE, 4.5)
-		if v < volleys - 1:
-			if not await _wait(0.4):
-				return
-			aim = target.global_position
-	await _wait(0.3)
+func _group_size() -> int:
+	match current_phase:
+		1:
+			return RNG.randi_range(1, 2)
+		2:
+			return RNG.randi_range(2, 3)
+	return RNG.randi_range(3, 4)
 
 
-func _susurro_spots(aim: Vector2, n: int) -> Array[Vector2]:
-	var base := (global_position - aim).angle()
-	var out: Array[Vector2] = []
-	for i in n:
-		out.append(clamp_to_arena(aim + Vector2.RIGHT.rotated(base + (i - (n - 1) / 2.0) * 0.36) * 280.0, 30.0))
-	return out
+## SALIDA: una silueta o un grupo se levanta de sus sillas, sale hacia ti a silenciarte y aislarte, y vuelve a sentarse.
+func atk_salida() -> void:
+	await _enviar(_libres(_group_size()), 0.7)
 
 
-## PUERTA: dos muros de tela caen desde los bordes con un hueco de 90 px (flechas en el hueco).
-func atk_puerta() -> void:
-	var a := arena()
-	var warn := _warn_secs()
-	var vertical := RNG.randf() < 0.5
-	var along := a.size.x if vertical else a.size.y
-	var lo := a.position.x if vertical else a.position.y
-	var gap_axis := a.position.y if vertical else a.position.x
-	var gap_len := a.size.y if vertical else a.size.x
-	var player_gap := (target.global_position.y if vertical else target.global_position.x) - gap_axis
-	for k in 2:
-		var pos := lo + along * (0.34 if k == 0 else 0.66)
-		var gap := clampf(player_gap + RNG.randf_range(-70.0, 70.0), 90.0, gap_len - 90.0) if k == 0 else RNG.randf_range(110.0, gap_len - 110.0)
-		_wall(vertical, pos, gap_axis, gap_len, gap, warn)
-	if not await _tele(warn, Color(1.3, 1.3, 1.7), 2.0):
-		return
-	await _wait(0.55)
+## OLEADA (fase 3): cuatro siluetas salen una tras otra.
+func atk_oleada() -> void:
+	await _enviar(_libres(4), 0.9)
 
 
-func _wall(vertical: bool, pos: float, gap_axis: float, gap_len: float, gap: float, warn: float) -> void:
-	var half := 45.0  # medio hueco: 90 px
-	var thick := 44.0
-	var segs := [[0.0, gap - half], [gap + half, gap_len]]
-	for s in segs:
-		var l: float = float(s[1]) - float(s[0])
-		if l <= 4.0:
-			continue
-		var mid := gap_axis + float(s[0]) + l * 0.5
-		var z: BossZone
-		if vertical:
-			z = BossZone.rect(Vector2(pos, mid), Vector2(thick, l), 0.0, warn, 0.5, damage * 0.8, COL_WALL)
-		else:
-			z = BossZone.rect(Vector2(mid, pos), Vector2(l, thick), 0.0, warn, 0.5, damage * 0.8, COL_WALL)
-		_add_hazard(z)
-	# flechas que cruzan el hueco
-	var at := Vector2(pos, gap_axis + gap) if vertical else Vector2(gap_axis + gap, pos)
-	var pr := _make_prop(at, func(p):
-		var col := Color(1, 1, 1, 0.55 + 0.35 * sin(p.t * 16.0))
-		for k in 3:
-			var o := Vector2(float(k - 1) * 14.0, 0.0) if not vertical else Vector2(0.0, float(k - 1) * 14.0)
-			var tip := Vector2(7, 0) if vertical else Vector2(0, 7)
-			var a1 := Vector2(-7, -11) if vertical else Vector2(-11, -7)
-			var a2 := Vector2(-7, 11) if vertical else Vector2(11, -7)
-			p.draw_polyline(PackedVector2Array([o + a1, o + tip, o + a2]), col, 3.0))
-	get_tree().create_timer(warn + 0.9).timeout.connect(func():
-		if is_instance_valid(pr):
-			pr.queue_free())
-
-
-## OIDOS (fase 2+): las siluetas bajan la cabeza y lanzan 3 anillos desde el centro (se saltan con dash,
-## cada uno con un hueco). Ataque GRANDE: despues queda AGOTADO 1,4 s (ventana x1,5).
-func atk_oidos() -> void:
-	var c := _body_center()
-	_add_hazard(BossZone.circle(c, 90.0, 0.85, 0.05, 0.0, COL_WAVE))
-	if not await _tele(0.85, Color(0.9, 0.9, 1.4), 1.5):
-		return
-	var n := 22
-	for k in 3:
-		var skip := (k * 7) % n
-		for i in n:
-			if i == skip or i == (skip + 1) % n:
-				continue
-			_fire_from(c, TAU * i / n, 165.0, 0.55, COL_WAVE, 5.0)
-		if not await _wait(0.6):
-			return
-	if not await _wait(0.3):
-		return
-	_tire(1.4)
-
-
-## MIRAR OTRO LADO (fase 2+): se apaga una mitad de la sala; las Voces de esa mitad quedan cubiertas hasta
-## que un objeto de ruido cercano suene.
+## MIRAR OTRO LADO (fase 2+): se apaga una mitad de la sala (las Voces de esa mitad quedan cubiertas hasta que un
+## objeto de ruido cercano suene) y sale un grupo de 2.
 func atk_mirar_otro_lado() -> void:
 	var a := arena()
 	var left := RNG.randf() < 0.5
@@ -633,27 +530,171 @@ func atk_mirar_otro_lado() -> void:
 	_add_hazard(BossZone.rect(rect.get_center(), rect.size, 0.0, warn, HALF_SECS, 0.0, Color(0.08, 0.08, 0.14)))
 	var now := _now()
 	_halves.append({"rect": rect, "from": now + warn, "until": now + warn + HALF_SECS})
-	if not await _tele(warn, Color(0.9, 0.9, 1.4), 1.5):
+	if not await _tele_wait(warn):
 		return
-	_separar()  # las siluetas se separan: miran a otro lado cada una por su cuenta
-	if not await _wait(3.2):
-		return
-	_juntar()
-	await _wait(1.0)
+	await _enviar(_libres(2), 0.7)
 
 
-## NADIE DIJO (FIRMA, fase 3): el audio del juego va a cero (subtitulo "..."). Cuatro oleadas de ondas
-## lentas desde cuatro lados; solo "suena" lo que tu golpeas. 14 s. Si aguantas sin recibir golpe, el Pacto
-## queda AGOTADO 2,5 s y se enciende la luz 3.
+## Aviso sin animacion de sprite (el nodo no se ve): la senal da el sonido de aviso.
+func _tele_wait(secs: float) -> bool:
+	telegraph_started.emit(secs)
+	return await _wait(secs)
+
+
+func _enviar(members: Array, stagger: float) -> void:
+	if members.is_empty():
+		return
+	var n := members.size()
+	var rodear := n >= 2 and RNG.randf() < 0.5
+	telegraph_started.emit(_warn_secs())
+	_pending = n
+	var g := _gen
+	for i in n:
+		var kind: String = "rodear" if rodear else ["shh", "cubrir"][RNG.randi_range(0, 1)]
+		if kind == "cubrir" and current_phase < 2 and RNG.randf() < 0.5:
+			kind = "shh"
+		_rutina(members[i], kind, i * stagger, i, n, g)
+	var t := 0.0
+	while _pending > 0:
+		if not await _frame():
+			return
+		t += 1.0 / 60.0
+		if t > 30.0:
+			return
+
+
+## Lo que hace una silueta desde que se levanta hasta que vuelve a sentarse.
+func _rutina(c: SilencioCuerpo, kind: String, delay: float, slot: int, count: int, g: int) -> void:
+	if delay > 0.0 and not await _wait(delay):
+		return
+	c.salir()
+	if not await _wait(0.45):
+		return
+	match kind:
+		"shh":
+			if not await _r_shh(c):
+				return
+		"cubrir":
+			if not await _r_cubrir(c):
+				return
+		"rodear":
+			if not await _r_rodear(c, slot, count):
+				return
+	# se queda un momento fuera (vulnerable) y vuelve a su silla
+	if not await _wait(RNG.randf_range(0.8, 1.4)):
+		return
+	c.volver(_walk_speed() + 15.0)
+	var t := 0.0
+	while c.mode != SilencioCuerpo.Mode.SEATED:
+		if not await _frame():
+			return
+		t += 1.0 / 60.0
+		if t > 8.0:
+			break
+	if g == _gen:
+		_pending -= 1
+
+
+## Camina hacia ti hasta quedar a `dist` (o hasta `max_t` s). false = ataque cancelado.
+func _approach(c: SilencioCuerpo, dist: float, max_t: float) -> bool:
+	var t := 0.0
+	while t < max_t:
+		var away := c.global_position - target.global_position
+		if away.length() <= dist + 12.0:
+			break
+		c.go(clamp_to_arena(target.global_position + away.normalized() * dist, 40.0), _walk_speed())
+		if not await _frame():
+			return false
+		t += 1.0 / 60.0
+	c.stop()
+	return true
+
+
+## SHH: se detiene a distancia, avisa con lineas finas y lanza ondas de "shh" cortas y lentas que apagan.
+func _r_shh(c: SilencioCuerpo) -> bool:
+	if not await _approach(c, 240.0, 3.2):
+		return false
+	var volleys := 2 if current_phase == 3 else 1
+	var shots := 3 if current_phase == 1 else 5
+	for v in volleys:
+		c.face(target.global_position)
+		c.pose(&"lean")
+		var from := c.global_position + Vector2(0, -40)
+		var base := (target.global_position - from).angle()
+		var warn := _warn_secs()
+		for k in shots:
+			var ang := base + (k - (shots - 1) / 2.0) * 0.3
+			_add_hazard(BossZone.rect(from + Vector2.RIGHT.rotated(ang) * 130.0, Vector2(260.0, 5.0), ang, warn, 0.05, 0.0, COL_WAVE))
+		if not await _wait(warn):
+			return false
+		for k in shots:
+			_fire_from(from, base + (k - (shots - 1) / 2.0) * 0.3, 140.0 + 15.0 * current_phase, 0.5, COL_WAVE, 2.8)
+		c.pose(&"idle")
+		if v < volleys - 1 and not await _wait(0.5):
+			return false
+	return true
+
+
+## CUBRIR: se acerca y la cortina cae sobre ti: una zona oscura que anula tus golpes a las siluetas. No daña.
+func _r_cubrir(c: SilencioCuerpo) -> bool:
+	if not await _approach(c, 170.0, 3.2):
+		return false
+	c.face(target.global_position)
+	c.pose(&"bow")
+	var warn := _warn_secs()
+	var r := MANTO_R * (1.25 if current_phase == 3 else 1.0)
+	var p := clamp_to_arena(target.global_position, 90.0)
+	var now := _now()
+	_add_hazard(BossZone.circle(p, r, warn, MANTO_SECS, 0.0, COL_MANTO))
+	_mantos.append({"pos": p, "r": r, "from": now + warn, "until": now + warn + MANTO_SECS})
+	if not await _wait(warn + 0.3):
+		return false
+	c.pose(&"idle")
+	return true
+
+
+## RODEAR: forman un circulo alrededor de ti para aislarte (cierran el paso) y, juntas, lanzan una onda lenta hacia el centro.
+func _r_rodear(c: SilencioCuerpo, slot: int, count: int) -> bool:
+	var base := TAU * float(slot) / float(count) + RNG.randf_range(-0.2, 0.2)
+	var t := 0.0
+	while t < 2.2:
+		var a := base + t * 0.5
+		c.go(clamp_to_arena(target.global_position + Vector2.RIGHT.rotated(a) * 190.0, 40.0), _walk_speed() + 10.0)
+		if not await _frame():
+			return false
+		t += 1.0 / 60.0
+	c.stop()
+	c.face(target.global_position)
+	c.pose(&"lean")
+	var from := c.global_position + Vector2(0, -40)
+	var aim := target.global_position
+	var warn := _warn_secs()
+	_add_hazard(BossZone.rect(from.lerp(aim, 0.5), Vector2(from.distance_to(aim), 5.0), (aim - from).angle(), warn, 0.05, 0.0, COL_WAVE))
+	if not await _wait(warn):
+		return false
+	_fire_from(from, (aim - from).angle(), 125.0, 0.5, COL_WAVE, 3.0)
+	c.pose(&"idle")
+	return true
+
+
+## NADIE DIJO (FIRMA, fase 3): el audio del juego va a cero (subtitulo "..."). Cuatro siluetas salen y quedan de
+## espaldas, quietas (nadie dice nada), mientras cuatro oleadas de ondas lentas llegan desde cuatro lados; solo "suena"
+## lo que tu golpeas. 14 s. Si aguantas sin recibir golpe, el Pacto queda AGOTADO 2,5 s y se enciende la luz 3.
 func atk_nadie_dijo() -> void:
 	var h0 := _st_hits
 	_audio(true)
 	Silencio.cartel(["..."], 3.0)
 	for o in _noise():
 		o.loud = true
-	if not await _tele(0.85, Color(0.8, 0.8, 1.3), 1.5):
+	if not await _tele_wait(0.85):
 		return
-	_separar(180.0)  # "nadie dijo": cada silueta por su lado durante las oleadas
+	var c0 := arena().get_center()
+	var libres := _libres(4)
+	for i in libres.size():
+		var c: SilencioCuerpo = libres[i]
+		c.salir()
+		c.go(clamp_to_arena(c0 + Vector2((i - (libres.size() - 1) / 2.0) * 80.0, 120.0), 60.0), _walk_speed())
+		c.pose(&"away")
 	var order := [0, 1, 2, 3]
 	RNG.shuffle(order)
 	var wave := 0
@@ -671,8 +712,13 @@ func atk_nadie_dijo() -> void:
 	_audio(false)
 	for o in _noise():
 		o.loud = false
-	_juntar()
-	if not await _wait(1.0):
+	_sentar_todos(_walk_speed() + 15.0)
+	var w := 0.0
+	while not _all_seated() and w < 6.0:
+		if not await _frame():
+			return
+		w += 1.0 / 60.0
+	if not await _wait(0.6):
 		return
 	if _st_hits == h0:
 		_light(2)
@@ -719,11 +765,32 @@ func _audio(mute: bool) -> void:
 
 
 # ---------------------------------------------------------------- cura
-## EL PACTO SE CIERRA: las siluetas asienten y repiten un "shh" bajo. Se corta golpeando 3 objetos de ruido.
+## La cura solo empieza con todas sentadas (y protegidas por la cortina).
+func atk_canalizar() -> void:
+	_sentar_todos()
+	var w := 0.0
+	while not _all_seated() and w < 4.0:
+		if not await _frame():
+			return
+		w += 1.0 / 60.0
+	await super()
+
+
+## EL PACTO SE CIERRA: sentadas y cubiertas, las siluetas asienten en bloque y repiten un "shh" bajo. Se corta
+## golpeando 3 objetos de ruido (eso las aturde y las deja de pie, vulnerables).
 func ch_ruido() -> void:
 	_ch_used.clear()
 	_def_t = 1.2
-	await _ch_loop(12.5)
+	_nod = 0.0
+	await _ch_loop(12.5, func(dt: float):
+		_nod += dt
+		var bow := int(_nod / 0.9) % 2 == 1
+		for c in _cuerpos:
+			if is_instance_valid(c) and c.mode == SilencioCuerpo.Mode.SEATED:
+				c.pose(&"bow" if bow else &"idle"))
+	for c in _cuerpos:
+		if is_instance_valid(c) and c.mode == SilencioCuerpo.Mode.SEATED:
+			c.pose(&"idle")
 
 
 ## Mientras canaliza se defiende con susurros (cada ~2,6 s, con linea de aviso de 0,6 s).
@@ -741,4 +808,12 @@ func _defend(dt: float) -> void:
 		if g != _gen or not _channeling:
 			return
 		for p in spots:
-			_fire_from(p, (aim - p).angle(), 130.0, 0.4, COL_WAVE, 4.0))
+			_fire_from(p, (aim - p).angle(), 130.0, 0.4, COL_WAVE, 3.0))
+
+
+func _susurro_spots(aim: Vector2, n: int) -> Array[Vector2]:
+	var base := (global_position - aim).angle()
+	var out: Array[Vector2] = []
+	for i in n:
+		out.append(clamp_to_arena(aim + Vector2.RIGHT.rotated(base + (i - (n - 1) / 2.0) * 0.36) * 280.0, 30.0))
+	return out
