@@ -2,7 +2,7 @@
   "_info": "Fuente breve por entrada del códice (id de assets/data/lore). Se muestra solo en el detalle del códice. validar: true = pendiente de Vanessa.",
   "items": {
     "ene_vph": {
-      "fuente": "OMS, nota descriptiva sobre VPH y cáncer cervicouterino; MINSAL, Programa Nacional de Inmunizaciones",
+      "fuente": "OMS, nota descriptiva sobre VPH y cáncer cervicouterino",
       "validar": true
     },
     "ene_mito_marcha": {
@@ -22,7 +22,7 @@
       "validar": true
     },
     "ene_clamidia": {
-      "fuente": "OMS, nota descriptiva sobre infecciones de transmisión sexual; MINSAL, Chile",
+      "fuente": "OMS, nota descriptiva sobre infecciones de transmisión sexual",
       "validar": true
     },
     "ene_herpes": {
@@ -30,11 +30,11 @@
       "validar": true
     },
     "ene_gonorrea": {
-      "fuente": "OMS, nota descriptiva sobre infecciones de transmisión sexual; MINSAL, Chile",
+      "fuente": "OMS, nota descriptiva sobre infecciones de transmisión sexual",
       "validar": true
     },
     "ene_sifilis": {
-      "fuente": "OMS, nota descriptiva sobre infecciones de transmisión sexual; MINSAL, Chile",
+      "fuente": "OMS, nota descriptiva sobre infecciones de transmisión sexual",
       "validar": true
     },
     "ene_ladilla": {
