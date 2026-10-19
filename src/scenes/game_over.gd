@@ -22,6 +22,7 @@ func _ready() -> void:
 	var rm = _game_controller.get_run_manager()
 	var run_data = rm.get_run_data()
 	var victory: bool = rm.last_run_victory
+	Sound.music("victoria" if victory else "derrota", false)  # jingles de una sola vez
 	var floor_n: int = run_data.get("floor", 1)
 	var kills: int = run_data.get("enemies_killed", 0)
 	var time_sec := int(run_data.get("time", 0))
