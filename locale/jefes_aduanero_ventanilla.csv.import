@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://32e2ptlmrlau"
+
+[deps]
+
+files=["res://locale/jefes_aduanero_ventanilla.es.translation", "res://locale/jefes_aduanero_ventanilla.en.translation", "res://locale/jefes_aduanero_ventanilla.es_ES.translation", "res://locale/jefes_aduanero_ventanilla.fr.translation"]
+
+source_file="res://locale/jefes_aduanero_ventanilla.csv"
+dest_files=["res://locale/jefes_aduanero_ventanilla.es.translation", "res://locale/jefes_aduanero_ventanilla.en.translation", "res://locale/jefes_aduanero_ventanilla.es_ES.translation", "res://locale/jefes_aduanero_ventanilla.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

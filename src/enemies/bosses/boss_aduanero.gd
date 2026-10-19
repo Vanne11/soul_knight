@@ -1,38 +1,94 @@
 extends EnemyBoss
 
-## EL ADUANERO HORMONAL (piso 4, Perineo). Control de fronteras:
-## - ADUANA: barreras laser que barren la sala con un hueco; el aviso marca el hueco
-##   y el sentido del avance. Despues queda AGOTADO "sellando";
-## - SELLOS: estampas que caen sobre circulos marcados, una tras otra;
-## - DOCUMENTOS (fase 2+): un cartel pide "¡QUIETO!" o "¡CIRCULE!"; quien incumple
-##   (tras un instante de cortesia) se come balas. Despues queda AGOTADO.
+## EL ADUANERO HORMONAL (piso 4, Perineo) - usa el MOTOR DINAMICO (dynamic = true).
+## Control de fronteras con mucho papeleo. IDENTIDAD "VENTANILLAS": divide la sala en carriles
+## numerados y CIERRA algunos (el cartel dice cuales y parpadean 1 s antes de caer), y sus sellos
+## te PERSIGUEN por la sala hasta que se clavan.
+## - PRESION: camina pegado a ti y estampa un sellito suelto (aviso 0,6 s) donde vas mientras camina.
+## - VENTANILLAS: 4 carriles; 1 / 2 / 2-3 se cierran segun la fase (zona TOXIC). Mientras estan
+##   cerradas te dispara por quedarte quieto. Despues queda AGOTADO "sellando";
+## - SELLOS PERSEGUIDORES: salen de sus manos, te siguen y se fijan 0,5 s antes de caer;
+## - ADUANA: barreras laser con un hueco; SELLOS: estampas en circulos marcados;
+## - DOCUMENTOS (fase 2+): "¡QUIETO!" o "¡CIRCULE!"; quien incumple se come balas;
+## - LLAMAR: "¡EL SIGUIENTE!" trae mini-funcionarios (enemy_funcionario.gd): estampan donde vas;
+##   si viven ~10 s le entregan un tramite y lo curan; revientalos y a veces sueltan corazon.
+## Cura (2 cargas): VENTANILLAS, APAGON, LINTERNA, SELLO.
 
 const TAPE := Color(1.0, 0.85, 0.25)
 const LASER := Color(1.0, 0.25, 0.3)
+const HP_MULT := 0.7
+const FUNC := preload("res://src/enemies/enemy_funcionario.tscn")
+const BASE_SPEED := [120.0, 140.0, 160.0]
+const BASE_CAPS := [0.85, 0.7, 0.6]
 
 var _aim := Vector2.RIGHT
 var _sign: Label = null
 var _sign_mat := ShaderMaterial.new()
 var _room: Node = null
+var _stamp_t := 3.0
 
 
 func _ready() -> void:
 	super()
+	dynamic = true
 	fan_tint = TAPE
-	move_speed = 85.0
-	keep_min = 220.0
-	keep_max = 340.0
+	move_speed = BASE_SPEED[0]
+	keep_min = 90.0
+	keep_max = 170.0
+	rest_min = 0.45
+	rest_max = 0.8
+	bullet_speed = 320.0
+	tele_caps = BASE_CAPS.duplicate()
+	max_health *= HP_MULT
+	current_health = max_health
+	_emit_health()
+	_channels_total = 2
+	_channels_left = 2
+	_ge.boss_charges_changed.emit(_channels_left, _channels_total)
 	_sign_mat.shader = BossZone.CENSOR_UNSHADED
 	_room = find_owning_room()
+	BossAnimator.attach(self, true)  # arte actual (40x60): animacion por codigo, sin cuadros nuevos
 
 
 func _attack_pool() -> Array:
+	var pool: Array
 	match current_phase:
 		1:
-			return [&"atk_fan", &"atk_aduana", &"atk_sellos"]
+			pool = [&"atk_fan", &"atk_ventanillas", &"atk_persigue", &"atk_sellos", &"atk_llamar"]
 		2:
-			return [&"atk_fan", &"atk_aduana", &"atk_sellos", &"atk_documentos"]
-	return [&"atk_aduana", &"atk_sellos", &"atk_documentos", &"atk_documentos", &"atk_fan"]
+			pool = [&"atk_fan", &"atk_ventanillas", &"atk_persigue", &"atk_aduana", &"atk_sellos", &"atk_documentos", &"atk_llamar"]
+		_:
+			pool = [&"atk_ventanillas", &"atk_ventanillas", &"atk_persigue", &"atk_aduana", &"atk_sellos", &"atk_documentos", &"atk_llamar", &"atk_llamar"]
+	if _funcs() >= current_phase + 1:
+		pool = pool.filter(func(x): return x != &"atk_llamar")
+	return pool
+
+
+func _funcs() -> int:
+	return get_tree().get_nodes_in_group("funcionario_aduana").size()
+
+
+## Todo peligro del Aduanero se ve como peligro (borde rojo oscuro, franjas).
+func _add_hazard(z: BossZone) -> BossZone:
+	if z.style == BossZone.Style.NORMAL:
+		z.style = BossZone.Style.TOXIC
+	return super(z)
+
+
+func _tick(delta: float) -> void:
+	if state in [State.INTRO, State.TRANSITION, State.DEAD] or target == null:
+		return
+	var ph := clampi(current_phase, 1, 3) - 1
+	move_speed = BASE_SPEED[ph] * (1.35 if _furia else 1.0)
+	if state != State.IDLE or _channeling:
+		return
+	_stamp_t -= delta
+	if _stamp_t <= 0.0:  # sellito suelto mientras camina: circulo avisado 0,6 s donde vas a estar
+		_stamp_t = [3.6, 3.0, 2.4][ph]
+		var lead: Vector2 = target.global_position + (target.velocity * 0.5 if "velocity" in target else Vector2.ZERO)
+		var z := BossZone.circle(clamp_to_arena(lead, 40.0), 44.0, 0.6, 0.2, damage * 0.7, TAPE)
+		z.went_active.connect(func(): Sound.play("crack"))
+		_add_hazard(z)
 
 
 func _challenges() -> Array:
@@ -43,8 +99,9 @@ func _channel_color() -> Color:
 	return TAPE
 
 
-func _on_phase(_n: int) -> void:
+func _on_phase(n: int) -> void:
 	_hide_sign()
+	_float_text(tr("ADU_PHASE_%d" % n), TAPE)
 
 
 func _on_death() -> void:
@@ -59,7 +116,7 @@ func _reset_idle() -> void:
 func atk_aduana() -> void:
 	if not await _walk_to(arena().get_center(), 1.2):
 		return
-	if not await _tele(0.45, Color(2.2, 0.6, 0.7)):
+	if not await _tele(0.8, Color(2.2, 0.6, 0.7)):
 		return
 	var sweeps := current_phase
 	var longest := 0.0
@@ -112,7 +169,7 @@ func _barrier(side: int) -> float:
 # ---------------------------------------------------------------- sellos
 func atk_sellos() -> void:
 	var n := 2 + current_phase
-	if not await _tele(0.5, Color(2.2, 1.9, 0.7)):
+	if not await _tele(0.8, Color(2.2, 1.9, 0.7)):
 		return
 	for i in n:
 		var p: Vector2 = target.global_position + (Vector2.ZERO if i == 0 else Vector2(RNG.randf_range(-70, 70), RNG.randf_range(-70, 70)))
@@ -128,13 +185,122 @@ func atk_sellos() -> void:
 	_tire(0.8)
 
 
+# ---------------------------------------------------------------- ventanillas (identidad)
+## La sala se divide en 4 carriles numerados; un cartel dice cuales se cierran (y parpadean ~1 s antes).
+## Cerrado = zona de peligro 2 s. Fase 1: 1 carril; fase 2: 2 carriles x2 rondas; fase 3: 2-3 x3 rondas.
+func atk_ventanillas() -> void:
+	var a := arena().grow(-24.0)
+	var vertical := RNG.randf() < 0.5
+	var n := 4
+	var rounds := current_phase
+	var car := AduanaCarriles.new()
+	car.area = a
+	car.vertical = vertical
+	car.n = n
+	car.life = 2.6 + rounds * 4.2
+	_spawn_container().add_child(car)
+	var w := minf(1.1 - 0.1 * current_phase, tele_caps[current_phase - 1])
+	for r in rounds:
+		var k := 1 + (1 if current_phase >= 2 else 0) + (1 if current_phase == 3 and r == rounds - 1 else 0)
+		var lanes: Array = range(n)
+		lanes.shuffle()
+		var shut: Array = lanes.slice(0, k)
+		# casi siempre cierra el carril donde estas: te obliga a moverte
+		var pp: Vector2 = target.global_position
+		var mine := clampi(int(((pp.x - a.position.x) / a.size.x if vertical else (pp.y - a.position.y) / a.size.y) * n), 0, n - 1)
+		if RNG.randf() < 0.75 and not (mine in shut):
+			shut[0] = mine
+		car.closing = shut
+		car.closed = false
+		var names := []
+		for i in shut:
+			names.append(str(i + 1))
+		names.sort()
+		_float_text(tr("ADU_LANE_CLOSE") % ", ".join(names), TAPE)
+		for i in shut:
+			var lr := car._lane(i)
+			var z := BossZone.rect(lr.get_center(), lr.size, 0.0, w, 2.0, damage * 0.8, TAPE)
+			z.one_hit = false
+			z.fade = 0.3
+			_add_hazard(z)
+		if not await _tele(w, Color(2.2, 1.9, 0.7), 2.0):
+			return
+		car.closed = true
+		Sound.play("crack")
+		HitFx.shake(0.2)
+		var t := 0.0
+		var shot := 0.5
+		while t < 2.0:
+			if not await _frame():
+				return
+			t += 1.0 / 60.0
+			shot -= 1.0 / 60.0
+			if shot <= 0.0:  # no te quedes mirando: un sellazo directo
+				shot = 0.75
+				_fire((target.global_position - _muzzle()).angle(), bullet_speed * 1.05, 0.6, TAPE)
+				Sound.play("enemy_shoot")
+		car.closing = []
+		car.closed = false
+		if r < rounds - 1 and not await _wait(0.3):
+			return
+	_tire(1.2)
+
+
+## Sellos que salen de sus manos y TE PERSIGUEN; se fijan 0,5 s antes de caer (aviso final claro).
+func atk_persigue() -> void:
+	var n := 1 + current_phase
+	var life := 2.0
+	var gap := 0.55
+	if not await _tele(0.8, Color(2.2, 1.9, 0.7)):
+		return
+	var stamps: Array = []
+	var spawned := 0
+	var t := 0.0
+	var next := 0.0
+	var end_t := (n - 1) * gap + life + 0.5
+	var chase := 165.0 + 15.0 * current_phase
+	while t < end_t:
+		if not await _frame():
+			return
+		t += 1.0 / 60.0
+		if spawned < n and t >= next:
+			next += gap
+			spawned += 1
+			var z := BossZone.circle(_muzzle(), 52.0, life, 0.25, damage * 1.1, TAPE)
+			z.went_active.connect(func():
+				HitFx.shake(0.22)
+				Sound.play("crack"))
+			_add_hazard(z)
+			stamps.append(z)
+			Sound.play("enemy_shoot")
+		for z in stamps:
+			if is_instance_valid(z) and z.phase == 0 and z.t < life - 0.5:
+				var to: Vector2 = target.global_position - z.global_position
+				z.global_position += to.normalized() * minf(to.length(), chase / 60.0)
+	_tire(0.9)
+
+
+## "¡EL SIGUIENTE!": llama mini-funcionarios (1 / 2 / 3 segun la fase).
+func atk_llamar() -> void:
+	if not await _tele(0.8, Color(2.2, 1.9, 0.7), 2.0):
+		return
+	var pts: Array = []
+	for i in current_phase:
+		pts.append(clamp_to_arena(global_position + Vector2.RIGHT.rotated(RNG.randf_range(0.0, TAU)) * 90.0, 50.0))
+	_float_text(tr("ADU_CALL"), TAPE)
+	_spawn_minions(pts, 12.0 + _floor * 2.0, 6.0 + _floor * 1.5, tr("FUNC_NAME"), FUNC)
+	Sound.play("crack")
+	HitFx.shake(0.15)
+	await _wait(0.4)
+
+
 # ---------------------------------------------------------------- documentos
 func atk_documentos() -> void:
 	var first := 1 + RNG.randi_range(0, 1)  # 1 = quieto, 2 = circule
 	var rules := [first] if current_phase < 3 else [first, 3 - first]
 	for r in rules:
 		_show_sign(r)
-		if not await _tele(1.0, Color(2.2, 1.9, 0.7), 1.5):
+		if not await _tele(0.9, Color(2.2, 1.9, 0.7), 1.5):
 			return
 		var dur := 3.0 if current_phase < 3 else 2.6
 		var t := 0.0
@@ -151,7 +317,7 @@ func atk_documentos() -> void:
 			if bad > 0.4 and shot_cd <= 0.0:
 				shot_cd = 0.5
 				var ang := (target.global_position - _muzzle()).angle()
-				_fire(ang, 300.0, 0.7, TAPE)
+				_fire(ang, 340.0, 0.7, TAPE)
 				Sound.play("enemy_shoot")
 		_hide_sign()
 		if not await _wait(0.5):
@@ -191,6 +357,8 @@ func ch_ventanillas() -> void:
 		if p.distance_to(global_position) < 130.0 or pts.any(func(q): return q.distance_to(p) < 170.0):
 			continue
 		pts.append(p)
+	while pts.size() < 4:  # sala chica: relleno sin separacion (si no, faltaban ventanillas y fallaba el indice)
+		pts.append(arena_point(100.0))
 	var seq: Array = [1, 2, 3, 4]
 	for i in range(3, 0, -1):
 		var j := RNG.randi_range(0, i)
