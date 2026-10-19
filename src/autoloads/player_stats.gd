@@ -465,6 +465,12 @@ func infect(kind: String, seconds: float, source: String = "") -> bool:
 		return false
 	if vph_vaccinated and _from_vph(source):
 		return false
+	var pl := get_tree().get_first_node_in_group("player")
+	var df = pl.get("defense") if pl != null else null
+	if df != null and df.blocks_contagion():  # burbuja de condon / vacuna VPH (src/player/defenses/)
+		contagion_blocked_count += 1
+		_ge.show_floating_text.emit(pl.global_position + Vector2(0, -34), tr("FX_PROTECTED"), Color("7fe0a0"))
+		return false
 	if _infect_immune_left > 0.0 or (_dot_immune_left > 0.0 and CONTAGION[kind].dot > 0.0):
 		contagion_blocked_count += 1
 		_ge.show_floating_text.emit(get_tree().get_first_node_in_group("player").global_position + Vector2(0, -34), tr("FX_PROTECTED"), Color("7fe0a0"))

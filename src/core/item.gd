@@ -17,4 +17,4 @@ class_name Item
 @export var custom_data: Dictionary = {}
 
 enum Rarity { COMMON = 0, UNCOMMON = 1, RARE = 2, EPIC = 3, LEGENDARY = 4, JUNK = 5 }
-enum EquipSlot { NONE = 0, WEAPON = 1, RELIC = 2, ACCESSORY = 3 }
+enum EquipSlot { NONE = 0, WEAPON = 1, RELIC = 2, ACCESSORY = 3, OFFHAND = 4 }  # OFFHAND: defensa de MANO IZQUIERDA (src/player/defenses/)

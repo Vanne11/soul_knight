@@ -8,7 +8,7 @@ CTRL_MOVE_DOWN,Mover abajo,Move down,,Aller en bas
 CTRL_MOVE_LEFT,Mover a la izquierda,Move left,,Aller à gauche
 CTRL_MOVE_RIGHT,Mover a la derecha,Move right,,Aller à droite
 CTRL_ATTACK,Atacar / disparar,Attack / shoot,,Attaquer / tirer
-CTRL_GUARD,"Guardia (escudo, alas, espolón)","Guard (shield, wings, spur)",,"Garde (bouclier, ailes, éperon)"
+CTRL_GUARD,"Guardia (escudo, alas, espolón o defensa de mano izquierda)","Guard (shield, wings, spur or left-hand defense)",,"Garde (bouclier, ailes, éperon ou défense de la main gauche)"
 CTRL_ABILITY,Habilidad del héroe,Hero ability,,Capacité du héros
 CTRL_DASH,Dash / esquivar,Dash / dodge,,Dash / esquive
 CTRL_INTERACT,Interactuar,Interact,,Interagir

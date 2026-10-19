@@ -130,6 +130,8 @@ static func pickup_block(p: Node, item) -> String:
 static func hint_line(item) -> String:
 	if item.custom_data.get("curse", false):
 		return "\n[font_size=12][color=#c05a5a]%s[/color][/font_size]" % TranslationServer.translate("PICKUP_CURSE_HINT")
+	if item.equip_slot == Item.EquipSlot.OFFHAND:
+		return "\n[font_size=12][color=#9be8ff]%s[/color][/font_size]" % TranslationServer.translate("PICKUP_OFFHAND_HINT")
 	if item.custom_data.get("slot", false):
 		return "\n[font_size=12][color=#9be8ff]%s[/color][/font_size]" % TranslationServer.translate("PICKUP_SLOT_HINT")
 	return ""

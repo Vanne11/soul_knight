@@ -57,7 +57,7 @@ func _physics_process(delta: float) -> void:
 	if player == null:
 		return
 	_lock = maxf(0.0, _lock - delta)
-	var want: bool = Input.is_action_pressed("guard") and _lock <= 0.0 and not player.is_dashing \
+	var want: bool = guard_held() and _lock <= 0.0 and not player.is_dashing \
 			and not Narrator.ate_input() and stats.current_stamina > 1.0
 	if want and not guarding:
 		guarding = true

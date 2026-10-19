@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_barrera_latex_lore"
+title = "Campo de Látex"
+text = "«Una hojita, un solo uso y el sexo oral queda mucho más tranquilo.» Dato: la barrera de látex (o campo de látex) es una lámina fina que se coloca entre la boca y la vulva o el ano durante el sexo oral para reducir el contagio de ITS. Se usa una sola vez y por un solo lado, y reduce el riesgo, no lo elimina. También sirve contra enemigos: tapa el paso."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_barrera_latex", "count": 1}
+flavor_text = "Usa una barrera de látex."

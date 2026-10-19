@@ -88,6 +88,9 @@ func apply(kind: String, seconds: float, src: Node = null) -> bool:
 		return false
 	if "is_dashing" in player and player.is_dashing:
 		return false
+	var df = player.get("defense")
+	if df != null and df.blocks_status():  # Vacuna VPH: inmune a estados un rato
+		return false
 	var was := _left.has(kind)
 	_left[kind] = maxf(float(_left.get(kind, 0.0)), seconds)
 	_total[kind] = maxf(float(_total.get(kind, 0.0)), seconds)

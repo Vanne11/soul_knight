@@ -83,6 +83,9 @@ func _prompt_text() -> String:
 		action = tr("PICKUP_SWAP") % Loc.item_name(_player.current_weapon)
 	elif _item.equip_slot == Item.EquipSlot.WEAPON:
 		action = tr("PICKUP_WIELD")
+	elif _item.equip_slot == Item.EquipSlot.OFFHAND:
+		var cur: Item = _player.current_defense if "current_defense" in _player else null
+		action = tr("PICKUP_SWAP") % Loc.item_name(cur) if cur != null and _player.defense != null and not _player.defense.spent else tr("PICKUP_WIELD_LEFT")
 	return "[color=#%s][b]%s[/b][/color]\n[font_size=13]%s[/font_size]%s%s\n[color=#b08d4a]%s[/color]" % [
 		color, Loc.item_name(_item), Loc.item_desc(_item), _affinity_suffix() + ItemSlots.hint_line(_item), "", action]
 
