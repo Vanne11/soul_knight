@@ -1,5 +1,5 @@
 {
-	"_nota": "[NO PUBLICAR SIN REVISION] LA PUERTA TRASERA, piso 1 (reino secreto del Perineo; diseno en ~/Videos/Rogue Reproductive/diseno_puerta_trasera.md; datos en datos_ano.md). REINO INCOMPLETO: \"wip\": true lo deja fuera de FLOORS, de regions() y de la ruta (RunManager.enable_wip). Hoy solo sirve de ancla del jefe El Coprolito (pelea directa del bot: --boss=coprolito, tools/autoplay). Sala, enemigos y entrada reales: por hacer. Prefijo 90: despues de 85_silencio_fondo.",
+	"_nota": "[NO PUBLICAR SIN REVISION] LA PUERTA TRASERA, piso 1 (reino secreto del Perineo; diseno en ~/Videos/Rogue Reproductive/diseno_puerta_trasera.md; datos en datos_ano.md). REINO INCOMPLETO: \"wip\": true lo deja fuera de FLOORS, de regions() y de la ruta (RunManager.enable_wip). Hoy solo sirve de ancla del jefe El Coprolito (pelea directa del bot: --boss=coprolito, tools/autoplay). Enemigos propios del reino (extra): Fisura Fina, Pujon, Cartel Falso, Aceite Traicionero (piso 2), Todos-lo-Hacen y Polipo Callado; el trio generico queda de relleno. Sala y entrada reales: por hacer. Prefijo 90: despues de 85_silencio_fondo.",
 	"wip": true,
 	"name": "LA PUERTA TRASERA",
 	"name_key": "FLOOR_PUERTA_TRASERA_NAME",
@@ -11,8 +11,13 @@
 	"roster": ["testiculo", "trompa", "calambre"],
 	"names": ["Testículo Errante", "Trompa Escupidora", "Calambre"],
 	"extra": [
-		{"variant": "hemorroide", "name": "Hemorroide Fronteriza", "type": "tank", "weight": 0.3}
+		{"variant": "hemorroide", "name": "Hemorroide Fronteriza", "type": "tank", "weight": 0.15},
+		{"variant": "fisura", "name": "Fisura Fina", "type": "fisura", "weight": 0.3},
+		{"variant": "pujon", "name": "Pujón", "type": "pujon", "weight": 0.26},
+		{"variant": "cartel", "name": "Cartel Falso", "type": "cartel", "weight": 0.24},
+		{"variant": "todos", "name": "Todos-lo-Hacen", "type": "todos", "weight": 0.14},
+		{"variant": "polipo", "name": "Pólipo Callado", "type": "polipo", "weight": 0.16}
 	],
-	"weights": [0.3, 0.3, 0.3],
+	"weights": [0.1, 0.1, 0.1],
 	"needs": []
 }

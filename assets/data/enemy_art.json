@@ -82,5 +82,11 @@
 	"venda": "palacio/venda",
 	"verruguita": "comunes/its/verruguita",
 	"vesicula": "penelandia/vesicula",
-	"vph": "comunes/its/vph"
+	"vph": "comunes/its/vph",
+	"aceite": "puerta_trasera/aceite",
+	"cartel": "puerta_trasera/cartel",
+	"fisura": "puerta_trasera/fisura",
+	"polipo": "puerta_trasera/polipo",
+	"pujon": "puerta_trasera/pujon",
+	"todos": "puerta_trasera/todos"
 }
