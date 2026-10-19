@@ -26,7 +26,6 @@ func _init() -> void:
 func _ready() -> void:
 	drop_table = [{"item_id": "health_small", "chance": 0.25}]
 	super()
-	animated_sprite.self_modulate = BLUE
 	add_to_group("pastilla_viagra")
 	p_t = RNG.randf_range(1.2, 2.2)  # que no rueden todas a la vez
 
@@ -95,6 +94,12 @@ func _end_roll() -> void:
 
 func _update_animation(dir: Vector2) -> void:
 	if p_state == P.ROLL:
+		if animated_sprite.animation != &"roll":
+			animated_sprite.play(&"roll")  # el cuerpo ya gira por codigo: la pose es la de rodar
+		return
+	if p_state == P.WINDUP:
+		if animated_sprite.animation != &"attack":
+			animated_sprite.play(&"attack")  # clavada al piso y brillando
 		return
 	super(dir)
 
