@@ -1,6 +1,12 @@
 extends EnemyBoss
 
-## SU MAJESTAD OVARIA II (piso 3, Vulvania). Reina del ciclo:
+## SU MAJESTAD OVARIA II (piso 3, Vulvania) - usa el MOTOR DINAMICO (dynamic = true). Reina del ciclo.
+## IDENTIDAD J2: los huevos ECLOSIONAN si no los rompes a tiempo. En el ultimo segundo cada huevo
+## avisa (se enciende un circulo de peligro rojizo con "ECLOSIONA" y el huevo tiembla) y revienta:
+## golpea a quien este cerca y suelta Crias ovaricas (2 por huevo en la fase 3). Las crias lloran
+## lagrimones lentos y, si las dejas vivas ~9 s, vuelven con mama y la curan. Desde la fase 2 ademas
+## pone un huevo suelto de vez en cuando mientras camina (presion constante).
+## - Esbirros: pocas crias en fase 1 (2 huevos) y mas en la 3 (4 huevos x 2 crias; tope 6).
 ## - OVULOS: pone huevos marcados en el suelo; si no los rompes a tiempo eclosionan en
 ##   bichos. Desde la fase 2 un escudo de ciclo la hace invulnerable mientras quede alguno;
 ##   romper el ultimo la deja AGOTADA;
@@ -9,19 +15,36 @@ extends EnemyBoss
 ##   despues del ataque de ondas queda AGOTADA.
 
 const PINK := Color(1.0, 0.45, 0.7)
+const HP_MULT := 0.75
+const CRIA := preload("res://src/enemies/enemy_cria_ovarica.tscn")
+const HATCH_WARN := 1.2     ## segundos de aviso de eclosion
+const BASE_SPEED := [90.0, 110.0, 130.0]
 
 var _shield: BossZone = null
 var _eggs_open := 0       # huevos por resolver
 var _eggs_hatched := 0
 var _eggs_broken := 0
+var _egg_t := 9.0         ## enfriamiento del huevo suelto (fase 2+)
 
 
 func _ready() -> void:
 	super()
+	dynamic = true
 	fan_tint = PINK
-	move_speed = 80.0
-	keep_min = 260.0
-	keep_max = 380.0
+	move_speed = BASE_SPEED[0]
+	keep_min = 150.0
+	keep_max = 240.0
+	rest_min = 0.45
+	rest_max = 0.8
+	bullet_speed = 280.0
+	tele_caps = [0.85, 0.7, 0.6]
+	max_health *= HP_MULT
+	current_health = max_health
+	_emit_health()
+	_channels_total = 2
+	_channels_left = 2
+	_ge.boss_charges_changed.emit(_channels_left, _channels_total)
+	BossAnimator.attach(self)  # solo actua si el SpriteFrames trae cuadros nuevos
 
 
 func _attack_pool() -> Array:
@@ -46,9 +69,11 @@ func _channel_color() -> Color:
 	return PINK
 
 
-func _on_phase(_n: int) -> void:
+func _on_phase(n: int) -> void:
 	_drop_shield()
 	_eggs_open = 0
+	move_speed = BASE_SPEED[n - 1]
+	_egg_t = 6.0
 
 
 func _on_death() -> void:
@@ -62,9 +87,41 @@ func _drop_shield() -> void:
 	_shield = null
 
 
-func _tick(_delta: float) -> void:
+## Toda zona que hace dano se ve como peligro (borde rojo oscuro), no como las marcas inofensivas.
+func _add_hazard(z: BossZone) -> BossZone:
+	if z.style == BossZone.Style.NORMAL and z.damage > 0.0:
+		z.style = BossZone.Style.TOXIC
+	return super(z)
+
+
+func _tick(delta: float) -> void:
 	if invuln and _eggs_open <= 0:
 		_drop_shield()
+	if state in [State.INTRO, State.TRANSITION, State.DEAD] or target == null:
+		return
+	_hatch_warnings()
+	# huevo suelto mientras camina (fase 2+): presion sin pausa
+	if current_phase >= 2 and state == State.IDLE and not _channeling and _eggs_open == 0:
+		_egg_t -= delta
+		if _egg_t <= 0.0:
+			_egg_t = 11.0 - current_phase * 1.5
+			var pts := _pick_egg_points(1)
+			if not pts.is_empty():
+				_place_eggs(pts, false)
+				Sound.play("enemy_shoot")
+
+
+## Aviso de eclosion: en el ultimo segundo el huevo marca el estallido y avisa con texto.
+func _hatch_warnings() -> void:
+	for n in get_tree().get_nodes_in_group("boss_breakable"):
+		if not (n is BossBreakable) or n.kind != BossBreakable.Kind.EGG or n.life < 0.0 or not n.is_alive():
+			continue
+		if n.has_meta("hatch_warned") or n.remaining() > HATCH_WARN:
+			continue
+		n.set_meta("hatch_warned", true)
+		var z := BossZone.circle(n.global_position, 62.0, maxf(n.remaining(), 0.1), 0.2, damage * 0.5, PINK)
+		_add_hazard(z)
+		_float_text(tr("OVA_HATCH"), Color("ff6a8a"), n.global_position - global_position + Vector2(0, -50))
 
 
 # ---------------------------------------------------------------- huevos
@@ -90,7 +147,7 @@ func _place_eggs(pts: Array[Vector2], with_shield: bool) -> void:
 		e.kind = BossBreakable.Kind.EGG
 		e.enemy_name = "Huevo"
 		e.max_health = 14.0 + _floor * 3.0
-		e.life = 8.5 - current_phase * 0.5
+		e.life = 8.0 - current_phase * 0.7
 		e.color = PINK
 		_spawn_container().add_child(e)
 		e.global_position = p
@@ -141,9 +198,13 @@ func _on_egg_broken(_e: BossBreakable) -> void:
 func _on_egg_expired(e: BossBreakable) -> void:
 	_eggs_open -= 1
 	_eggs_hatched += 1
-	# Eclosiona: un bicho por huevo que no rompiste (con tope).
-	_spawn_minions([e.global_position], 12.0 + _floor * 2.0, 5.0 + _floor * 1.5, "Cría")
-	HitFx.shake(0.15)
+	# Eclosiona: una cria por huevo que no rompiste (dos en la fase 3), con tope.
+	var spots: Array = [e.global_position]
+	if current_phase >= 3:
+		spots.append(e.global_position + Vector2.RIGHT.rotated(RNG.randf_range(0.0, TAU)) * 36.0)
+	_spawn_minions(spots, 12.0 + _floor * 2.0, 5.0 + _floor * 1.5, tr("CRIA_NAME"), CRIA)
+	HitFx.shake(0.25)
+	Sound.play("crack")
 	if _eggs_open <= 0:
 		_drop_shield()
 
@@ -166,7 +227,7 @@ func atk_ondas() -> void:
 			var a := k * TAU / n
 			if absf(angle_difference(a, gap_a)) < 0.34 or absf(angle_difference(a, gap_a + PI)) < 0.34:
 				continue
-			var b := _fire(a, 150.0, 0.6, PINK)
+			var b := _fire(a, 190.0, 0.6, PINK)
 			b.scale = Vector2(1.2, 1.2)
 		Sound.play("enemy_shoot")
 		gap_a += shift
@@ -180,7 +241,7 @@ func atk_ondas() -> void:
 # ---------------------------------------------------------------- foliculos
 func atk_foliculos() -> void:
 	var n := 1 + current_phase
-	if not await _tele(0.4, Color(2.0, 1.2, 1.6)):
+	if not await _tele(0.55, Color(2.0, 1.2, 1.6)):
 		return
 	for i in n:
 		var z := BossZone.circle(clamp_to_arena(target.global_position, 40.0), 72.0, 0.85, 0.25, damage, PINK)
@@ -215,7 +276,7 @@ func ch_guardian() -> void:
 		if st.shoot <= 0.0:
 			st.shoot = 2.0
 			for k in 8:
-				_fire_from(n.global_position + Vector2(0, -24), k * TAU / 8.0 + n.get_instance_id() % 5, 140.0, 0.45, PINK, 5.0)
+				_fire_from(n.global_position + Vector2(0, -24), k * TAU / 8.0 + n.get_instance_id() % 5, 180.0, 0.45, PINK, 5.0)
 			Sound.play("enemy_shoot")
 	e.broken.connect(func(_b): _chan_ok = true)
 	_spawn_container().add_child(e)
