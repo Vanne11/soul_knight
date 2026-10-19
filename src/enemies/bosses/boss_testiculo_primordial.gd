@@ -17,6 +17,9 @@ const SPERM := Color(1.0, 0.92, 0.75)
 const REBOTIN := preload("res://src/enemies/enemy_rebotin.tscn")
 const BIG := [&"atk_pinball", &"atk_mitades", &"atk_oleada"]
 const HP_MULT := 0.7
+## Mitades de la fase 3 (tools/gen_testiculo_art.py): hojas de 4 cuadros de 96x96 (pinza + 3 de rodar), A mira a la derecha y B a la izquierda.
+const HALF_A := preload("res://assets/sprites/enemies/penelandia/testiculo_primordial/testiculo_mitad_a_sheet.png")
+const HALF_B := preload("res://assets/sprites/enemies/penelandia/testiculo_primordial/testiculo_mitad_b_sheet.png")
 const REBOTIN_CAP := [2, 3, 5]
 const ROLL_SPEED := [135.0, 155.0, 175.0]
 
@@ -44,7 +47,27 @@ func _ready() -> void:
 	_channels_total = 2
 	_channels_left = 2
 	_ge.boss_charges_changed.emit(_channels_left, _channels_total)
-	BossAnimator.attach(self, true)  # arte actual (40x60): animacion por codigo, sin cuadros nuevos
+	BossAnimator.attach(self)  # arte definitivo 176x184 (tools/gen_testiculo_art.py): cuadros nuevos + animacion por codigo
+
+
+## El golpe del ataque ocurre cuando termina el aviso: se avisa al animador para que pase de la pose de carga
+## (attack_<x>) a la de golpe (release_<x>) justo en ese momento.
+func _tele(secs: float, col := Color(2.0, 2.0, 0.9), shake := 2.0, on_frame := Callable()) -> bool:
+	var ok: bool = await super(secs, col, shake, on_frame)
+	if ok:
+		attack_released.emit(_last_attack)
+	return ok
+
+
+## Cuadros de rodar de una mitad (indices 1-3 de su hoja; el 0 es la pose de pinza).
+func _half_frames(sheet: Texture2D) -> Array[Texture2D]:
+	var out: Array[Texture2D] = []
+	for i in range(1, 4):
+		var at := AtlasTexture.new()
+		at.atlas = sheet
+		at.region = Rect2(i * 96, 0, 96, 96)
+		out.append(at)
+	return out
 
 
 func _attack_pool() -> Array:
@@ -206,6 +229,7 @@ func atk_oleada() -> void:
 		Sound.play("locked")
 		if not await _wait(0.8):
 			return
+		attack_released.emit(&"atk_oleada")
 		Sound.play("enemy_shoot")
 		for p in pts:
 			var b := _fire_from(p, dir.angle(), 270.0, 0.6, SPERM, 6.0)
@@ -246,7 +270,8 @@ func _segments(pts: Array[Vector2], horizontal: bool, spacing: float) -> Array:
 ## aviso (1 s) se cruzan en el punto donde estabas; ambas parten a la vez. Segunda pinza girada 90
 ## grados. Mientras tanto el cuerpo, mas chico, se queda AGOTADO en el centro.
 func atk_mitades() -> void:
-	var tex := animated_sprite.sprite_frames.get_frame_texture("idle", 0)
+	var fr_a := _half_frames(HALF_A)
+	var fr_b := _half_frames(HALF_B)
 	var waves := 2
 	var base := RNG.randf() * TAU
 	var tw := minf(1.0, tele_caps[current_phase - 1])
@@ -267,8 +292,9 @@ func atk_mitades() -> void:
 			return
 		for h in halves:
 			var bn := BossBouncer.new()
-			bn.tex = tex
-			bn.sprite_scale = 0.8
+			bn.frames_right = fr_a
+			bn.frames_left = fr_b
+			bn.sprite_scale = 0.85
 			bn.dir = h[1]
 			bn.speed = 330.0
 			bn.bounces_left = 3

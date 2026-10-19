@@ -16,6 +16,10 @@ var damage := 14.0
 var body_radius := 30.0
 var tex: Texture2D = null
 var sprite_scale := 1.0
+## Cuadros de rodar de la mitad (arte de tools/gen_testiculo_art.py): mirando a la derecha / a la izquierda.
+## Si estan vacios se dibuja `tex` girando, como siempre.
+var frames_right: Array[Texture2D] = []
+var frames_left: Array[Texture2D] = []
 
 var _trail: Array[Vector2] = []
 var _t := 0.0
@@ -90,7 +94,14 @@ func _draw() -> void:
 	if _launch_delay > 0.0:
 		var p := 0.5 + 0.5 * sin(_t * 30.0)
 		draw_arc(Vector2(0, -20), body_radius + 6.0, 0.0, TAU, 32, Color(1, 1, 1, 0.5 + 0.5 * p), 3.0)
-	if tex:
+	var fr := frames_right if dir.x >= 0.0 else frames_left
+	if not fr.is_empty():
+		var ft: Texture2D = fr[int(_t * 11.0) % fr.size()]
+		var sq := 1.0 + 0.04 * sin(_t * 22.0)  # latido: la mitad rueda "a golpes"
+		draw_set_transform(Vector2(0, -20), 0.0, Vector2(sprite_scale * sq, sprite_scale / sq))
+		draw_texture(ft, -ft.get_size() * 0.5)
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	elif tex:
 		var s := sprite_scale
 		draw_set_transform(Vector2(0, -20), _t * 7.0 * (1.0 if dir.x >= 0.0 else -1.0), Vector2(s, s))
 		draw_texture(tex, -tex.get_size() * 0.5)
