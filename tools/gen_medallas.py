@@ -177,6 +177,11 @@ C.append(M("humor_partidas_10", "humor", "sonrojo", {"tipo": "contador", "nombre
            ("Una más y me voy", "One More and I'm Out", "Une dernière et j'arrête"),
            ("Empieza 10 partidas.", "Start 10 runs.", "Commence 10 parties.")))
 
+C.append(M("humor_masilla", "humor", "sonrojo", {"tipo": "contador", "nombre": "masillados", "n": 10},
+           ("Con cariño", "With Love", "Avec tendresse"),
+           ("Pega a 10 enemigos con masilla. Se lanza con cariño.", "Stick 10 enemies with body filler. Throw with love.",
+            "Colle 10 ennemis avec du mastic. À lancer avec tendresse."), True))
+
 # Platino
 C.append(M("desnudo_integral", "final", "platino", {"tipo": "todas"},
            ("Desnudo Integral", "Full Monty", "Nu Intégral"),

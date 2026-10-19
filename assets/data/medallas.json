@@ -577,6 +577,19 @@
       "icono": "humor"
     },
     {
+      "id": "humor_masilla",
+      "nombre_key": "MEDAL_HUMOR_MASILLA_NAME",
+      "desc_key": "MEDAL_HUMOR_MASILLA_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "contador",
+        "nombre": "masillados",
+        "n": 10
+      },
+      "oculta": true,
+      "icono": "humor"
+    },
+    {
       "id": "desnudo_integral",
       "nombre_key": "MEDAL_DESNUDO_INTEGRAL_NAME",
       "desc_key": "MEDAL_DESNUDO_INTEGRAL_DESC",
