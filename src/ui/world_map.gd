@@ -19,6 +19,8 @@ var back := ""
 var center: Array = []
 var body: Array = []
 var lib: Array = []
+## Reinos TOMADOS por la copia de seguridad del Algoritmo (RunManager.taken: region -> jefe que lo tomo).
+var taken: Dictionary = {}
 
 
 static func data() -> Dictionary:
@@ -61,6 +63,7 @@ func refresh(rm: Node) -> void:
 	center = RunManager.ROUTES.get("center", [])
 	body = RunManager.ROUTES.get("body", [])
 	lib = rm.liberated
+	taken = RunManager.taken
 
 
 func visited(id: String) -> bool:
@@ -82,6 +85,10 @@ func reached(id: String) -> bool:
 
 func is_missing(id: String) -> bool:
 	return id not in exist
+
+
+func is_taken(id: String) -> bool:
+	return taken.has(id)
 
 
 ## "Desorden": reino que existe, no esta liberado y no lo pisas ahora. Solo se marca cuando ya

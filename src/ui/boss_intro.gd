@@ -15,7 +15,7 @@ var _root: Control
 
 ## Gancho para main._enter_room: muestra la presentacion si la sala es la del jefe y es su primera vez.
 static func on_enter_room(host: Node, room: Room) -> void:
-	if room == null or room.room_type != Room.RoomType.BOSS or room.cleared:
+	if room == null or room.cleared or (room.room_type != Room.RoomType.BOSS and not room.has_meta("secret_boss")):
 		return
 	var rm := host.get_node("/root/RunManager")
 	var key := "%s:%s:%s" % [rm.current_seed, rm.current_floor, room.grid_pos]
@@ -23,6 +23,8 @@ static func on_enter_room(host: Node, room: Room) -> void:
 		return
 	var fl: Dictionary = rm.floor_data()
 	var bv := BossPicker.pick(fl, rm.current_seed, rm.current_floor)  # original o alternativo (6c)
+	if room.has_meta("secret_boss"):  # el Algoritmo, jefe secreto del Archivo (plan 6)
+		bv = {"variant": str(room.get_meta("secret_boss")), "name": str(fl.get("secret_boss_name", ""))}
 	var path := "res://assets/sprites/ui/bosses/%s.png" % bv.variant
 	if not ResourceLoader.exists(path):
 		return

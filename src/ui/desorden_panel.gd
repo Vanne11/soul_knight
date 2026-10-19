@@ -15,6 +15,11 @@ static func pending_names(rm: Node) -> String:
 	return ", ".join(rm.pending_regions().map(func(r): return Loc.region_name_id(str(r))))
 
 
+## Reinos TOMADOS por la copia de seguridad del Algoritmo, "reino (jefe)" separados por comas.
+static func taken_names(rm: Node) -> String:
+	return ", ".join(rm.taken_regions().map(func(r): return "%s (%s)" % [Loc.region_name_id(str(r)), Loc.enemy_name(str(RunManager.taken_boss(str(r)).get("name", "")))]))
+
+
 ## null si no queda ningun desorden.
 static func create(rm: Node) -> DesordenPanel:
 	if rm.pending_regions().is_empty():
@@ -34,6 +39,11 @@ func _build(rm: Node) -> void:
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	title.custom_minimum_size.x = 330
 	box.add_child(title)
+	if not rm.taken.is_empty():  # plan 6: quienes los tienen
+		var tk := HudStyle.pixel_label(tr("P6_PANEL_TOMADOS") % [rm.taken.size(), taken_names(rm)], 14, Color("ff6a6a"), true)
+		tk.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		tk.custom_minimum_size.x = 330
+		box.add_child(tk)
 	_button(box, tr("DESORDEN_CAMBIAR"), tr("DESORDEN_CAMBIAR_TIP"), func(): _change_hero(rm))
 	_button(box, tr("DESORDEN_MISMO"), tr("DESORDEN_MISMO_TIP"), func(): _same_hero(rm))
 	_button(box, tr("DESORDEN_TERMINAR"), tr("DESORDEN_TERMINAR_TIP"), func(): closed.emit())

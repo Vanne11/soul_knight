@@ -6,7 +6,7 @@ extends CanvasLayer
 const ORDER := ["pitocles", "vulvalquiria", "ornitorrinco"]
 const CARD_COLORS := {"pitocles": Color("6ec6ff"), "vulvalquiria": Color("ff7ac0"), "ornitorrinco": Color("9be53c")}
 
-var _slides: Array = []
+var _slides: Array[Dictionary] = []  ## {text, art, gray}: las arma IntroStory segun tu avance (plan 6)
 var _slide := -1
 var _bg: ColorRect
 ## Ilustracion de la diapositiva (assets/sprites/intro/slide_NN.png, 320x180 a 4x)
@@ -63,10 +63,12 @@ func _ready() -> void:
 	add_child(_shade)
 	_build_story()
 	_build_select()
-	_slides = Narrator.get_lines("intro_slides")
-	if get_node("/root/RunManager").rescue_requested:
+	var rm: RunManager = get_node("/root/RunManager")
+	_slides = IntroStory.build(rm)
+	if rm.rescue_requested:
 		_show_select()  # post-juego "Desordenes": la historia ya se conoce, directo a elegir heroe
 	else:
+		rm.mark_intro_seen()
 		_next_slide()
 
 
@@ -139,8 +141,8 @@ func _next_slide() -> void:
 	if _slide >= _slides.size():
 		_show_select()
 		return
-	_set_art(_slide)
-	_story.text = "[center]%s[/center]" % _decorate(_slides[_slide])
+	_set_art(int(_slides[_slide].art))
+	_story.text = "[center]%s[/center]" % _decorate(str(_slides[_slide].text))
 	_plain = _story.get_parsed_text()
 	_story.visible_characters = 0
 	_shown = 0.0
@@ -148,7 +150,7 @@ func _next_slide() -> void:
 	_more.visible = false
 	_story.modulate.a = 0.0
 	# El fondo pasa de gris (censura) a color segun avanza la historia... y vuelve a gris cuando llega la Hoja.
-	var censored := _slide >= 4
+	var censored: bool = _slides[_slide].gray
 	if _tween:
 		_tween.kill()
 	_tween = create_tween().set_parallel()

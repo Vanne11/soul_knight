@@ -31,6 +31,7 @@ static func image(e) -> Texture2D:
 ## Entradas sin objeto/bicho propio: su ilustracion de la intro o de pantalla.
 const CODEX_ART := {
 	"world_intro": "res://assets/sprites/intro/slide_00.png",
+	"copia_seguridad": "res://assets/sprites/intro/slide_04.png",
 	"guerra_fria": "res://assets/sprites/intro/slide_01.png",
 	"alergia_hormonal": "res://assets/sprites/intro/slide_02.png",
 	"floor_anatomy": "res://assets/sprites/intro/slide_00.png",
@@ -62,6 +63,8 @@ static func _enemy_variants() -> Dictionary:
 			m[f.boss_name] = f.boss
 		if str(f.get("boss_alt_name", "")) != "":
 			m[f.boss_alt_name] = f.boss_alt
+		if str(f.get("secret_boss_name", "")) != "":
+			m[f.secret_boss_name] = f.secret_boss
 	return m
 
 ## Miniatura size x size sin suavizar (escala entera si cabe, vecino mas cercano);

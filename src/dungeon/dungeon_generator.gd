@@ -543,6 +543,7 @@ func _assign_room_types() -> void:
 	RNG.shuffle(candidates)
 	for i in range(min(secret_count, candidates.size())):
 		candidates[i].room_type = Room.RoomType.SECRET
+	_assign_secret_boss(room_list, candidates)
 	
 	# Sala elite (riesgo/premio, fuera del camino al jefe): todos los enemigos elite y botin
 	# grande. Prefiere una rama muerta; si no queda, una sala fuera del camino principal.
@@ -614,6 +615,25 @@ func _assign_elite_rooms(room_list: Array) -> void:
 		pick.set_meta("no_waves", true)  # sin oleadas: son sus enemigos elite de siempre
 		elite_rooms.append(pick.grid_pos)
 
+## PLAN 6: el piso con "secret_boss" (Archivo Clasificado: el Algoritmo Moderador) SIEMPRE tiene una
+## sala secreta con ese jefe opcional. Usa una de las secretas ya sorteadas o, si no hubo, convierte una
+## rama muerta (sin salida: asi nunca bloquea el camino al jefe final) aunque cueste un combate. La
+## puerta va cerrada hasta resolver el puzzle del piso (main._lock_secret_rooms), asi que hay que BUSCARLA.
+func _assign_secret_boss(room_list: Array, dead_ends: Array) -> void:
+	if str(RunManager.floor_at(current_floor).get("secret_boss", "")) == "" or get_node("/root/RunManager").algoritmo_vencido:
+		return  # (con el Algoritmo ya vencido no hay jefe secreto: las secretas son las de siempre)
+	var secrets: Array = room_list.filter(func(r): return r.room_type == Room.RoomType.SECRET)
+	if secrets.is_empty():
+		var cands: Array = dead_ends.filter(func(r): return r.room_type == Room.RoomType.COMBAT)
+		if cands.is_empty():
+			cands = room_list.filter(func(r): return r.room_type == Room.RoomType.COMBAT and room_graph[r.grid_pos].size() == 1)
+		if cands.is_empty():
+			return  # sin ramas muertas no hay donde esconderlo (no deberia pasar con el trazado del piso)
+		cands[0].room_type = Room.RoomType.SECRET
+		secrets = [cands[0]]
+	secrets[0].set_meta("secret_boss", str(RunManager.floor_at(current_floor).secret_boss))
+
+
 func _find_midway_room(from_pos: Vector2i, to_pos: Vector2i) -> Room:
 	var mid = (from_pos + to_pos) / 2
 	var min_dist = INF
@@ -643,6 +663,12 @@ func _place_special_rooms() -> void:
 		if room.room_type == Room.RoomType.SECRET:
 			# Secret rooms need special entry condition
 			room.required_intoxication_tier = 2
+			if room.has_meta("secret_boss"):  # el jefe secreto necesita puestos donde aparecer
+				var ssize: Vector2i = room_sizes.get(room.grid_pos, Vector2i(8, 6))
+				for off in [Vector2(0, -64), Vector2(-96, 0), Vector2(96, 0)]:
+					var sp := Node2D.new()
+					sp.position = Vector2(ssize.x * 32, ssize.y * 32) + off
+					room.get_node("SpawnPoints").add_child(sp)
 
 func _add_spawn_points(room: Room) -> void:
 	var count = RNG.randi_range(2, 4) + RunManager.depth_i(current_floor)

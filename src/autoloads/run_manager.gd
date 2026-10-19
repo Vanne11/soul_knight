@@ -506,6 +506,7 @@ func liberate(floor_n: int) -> bool:
 	if r in liberated:
 		return false
 	liberated.append(r)
+	taken.erase(r)  # si estaba tomado (copia de seguridad), vuelve a ser libre
 	if desorden_notice and pending_regions().is_empty():
 		desorden_notice = false  # ya no queda ningun desorden
 	save_meta_progression()
@@ -533,6 +534,127 @@ func pending_regions() -> Array:
 func note_desordenes() -> void:
 	desorden_notice = not pending_regions().is_empty()
 	save_meta_progression()
+
+## --- PLAN 6: la copia de seguridad del Algoritmo (historia.md, seccion 2 y 7) ---
+## Estado persistente (meta_save.json). El Algoritmo Moderador es un jefe SECRETO opcional del Archivo
+## (piso 2 del Palacio): vencerlo marca `algoritmo_vencido` y la copia de seguridad ya no existe.
+## Si vences a la Hoja de Parra SIN haberlo vencido, "restaura su copia": cada reino liberado que
+## tenga jefe de retorno pasa a TOMADO (sale de `liberated`, entra en `taken`), asi que todo lo del
+## post-juego (pending_regions, rutas de rescate, panel de desordenes) lo trata como pendiente.
+## Reinos tomados: region -> {"variant", "name"} del jefe que lo tomo (estatico: lo lee BossPicker).
+static var taken: Dictionary = {}
+var algoritmo_vencido := false
+## Venciste a la Hoja sin vencer al Algoritmo (hay copia de seguridad restaurada).
+var copia_restaurada := false
+## La intro larga de la copia de seguridad ya se conto una vez (despues solo el resumen).
+var copia_intro_vista := false
+## Todos los reinos liberados al mismo tiempo: final verdadero (gancho para medallas/platino).
+var final_verdadero := false
+## Cuantas veces se mostro la intro completa (0 = primera vez).
+var intro_vistas := 0
+## Derrotas seguidas (se pone a 0 al ganar).
+var derrotas_seguidas := 0
+## Heroe de la partida con la que terminaste el juego sin vencer al Algoritmo: {hero, region}. Aparece
+## entre los restos de heroes anteriores del decorado (room_decor.gd).
+var heroe_resto: Dictionary = {}
+## Final de la ultima victoria: "" (normal), "copia", "completo" (Hoja y Algoritmo) o "verdadero".
+var last_ending := ""
+## Gancho para medallas/platino: se emite al lograr el final verdadero.
+signal true_ending_reached
+
+
+## Jefe con el que un reino vuelve a ser tomado: {variant, name} o {} (silencio, palacio...). Es el jefe
+## alternativo del reino ("boss_alt") o, si el piso lo marca "boss_returns": true (Utero, Arcoiria), su
+## propio jefe de siempre.
+static func takeover_for(region: String) -> Dictionary:
+	for f in FLOORS:
+		if f.region != region or str(f.boss) == "":
+			continue
+		if str(f.get("boss_alt", "")) != "":
+			return {"variant": str(f.boss_alt), "name": str(f.get("boss_alt_name", f.boss_name))}
+		if bool(f.get("boss_returns", false)):
+			return {"variant": str(f.boss), "name": str(f.boss_name)}
+	return {}
+
+
+## Jefe que tiene tomado el reino ({variant, name}) o {} si no esta tomado.
+static func taken_boss(region: String) -> Dictionary:
+	var t = taken.get(region, {})
+	return t if t is Dictionary else {}
+
+
+## Ultimo reino de la ruta del juego (el palacio de la Hoja de Parra).
+static func final_region() -> String:
+	return str(final_floor().region)
+
+
+## El Algoritmo cae: la copia de seguridad se destruye. Los reinos tomados vuelven a ser libres.
+func defeat_algoritmo() -> void:
+	algoritmo_vencido = true
+	copia_restaurada = false
+	for r in taken.keys():
+		if r not in liberated:
+			liberated.append(r)
+	taken.clear()
+	note_desordenes()
+
+
+## Se llama al vencer al jefe que cierra la partida (fin de ruta; el piso ya se libero). Decide el final
+## y deja el estado persistente: "copia" | "completo" | "verdadero" | "" (victoria normal de rescate).
+func resolve_victory(floor_n: int, was_liberated: bool) -> String:
+	var kind := ""
+	if floor_region(floor_n) == final_region() and not was_liberated:
+		if algoritmo_vencido:
+			kind = "completo"
+		else:
+			kind = "copia"
+			_restore_backup(floor_n)
+	if pending_regions().is_empty():
+		kind = "verdadero"
+		if not final_verdadero:
+			final_verdadero = true
+			true_ending_reached.emit()
+	derrotas_seguidas = 0
+	last_ending = kind
+	note_desordenes()
+	return kind
+
+
+## "El Algoritmo restauro su copia de seguridad": los reinos liberados con jefe de retorno quedan tomados.
+func _restore_backup(floor_n: int) -> void:
+	copia_restaurada = true
+	copia_intro_vista = false
+	heroe_resto = {"hero": character, "region": floor_region(floor_n)}
+	for r in liberated.duplicate():
+		var t := takeover_for(str(r))
+		if not t.is_empty():
+			taken[r] = t
+			liberated.erase(r)
+
+
+## Que intro toca (ver src/core/intro_story.gd): "primera" | "resumen" | "copia" | "verdadero".
+func intro_kind() -> String:
+	if intro_vistas <= 0:
+		return "primera"
+	if final_verdadero and pending_regions().is_empty():
+		return "verdadero"
+	if copia_restaurada and not algoritmo_vencido:
+		return "copia"
+	return "resumen"
+
+
+## La intro completa se mostro: la proxima vez cuenta el resumen (y la historia de la copia, una sola vez).
+func mark_intro_seen() -> void:
+	intro_vistas += 1
+	if intro_kind() == "copia":
+		copia_intro_vista = true
+	save_meta_progression()
+
+
+## Reinos tomados, en el orden del mundo.
+func taken_regions() -> Array:
+	return world_order().filter(func(r): return taken.has(r))
+
 
 ## Ruta de rescate (fija, sin sellos): tramos en paz por reinos ya liberados y luego los pendientes
 ## (hasta RESCUE_MAX_TARGETS). Si new_hero, el heroe empieza en SU reino de inicio (en paz si ya
@@ -687,10 +809,24 @@ func _ready() -> void:
 	meta_upgrades = data.get("meta_upgrades", {})
 	liberated = migrate_liberated(data.get("liberated", []))
 	desorden_notice = bool(data.get("desorden_notice", false)) and not pending_regions().is_empty()
+	var tk = data.get("taken", {})
+	taken = {}
+	if tk is Dictionary:
+		for r in tk:
+			if tk[r] is Dictionary and str(r) in regions() and str(r) not in liberated:
+				taken[str(r)] = tk[r]
+	algoritmo_vencido = bool(data.get("algoritmo_vencido", false))
+	copia_restaurada = bool(data.get("copia_restaurada", false))
+	copia_intro_vista = bool(data.get("copia_intro_vista", false))
+	final_verdadero = bool(data.get("final_verdadero", false))
+	derrotas_seguidas = int(data.get("derrotas_seguidas", 0))
+	var hr = data.get("heroe_resto", {})
+	heroe_resto = hr if hr is Dictionary else {}
 	best_floor = int(data.get("best_floor", 0))
 	if int(data.get("save_version", 1)) < 2 and best_floor > 0:
 		best_floor = best_floor * 2 - 1  # antes 5 pisos (1 por reino); ahora 2 por reino
 	total_runs = int(data.get("total_runs", 0))
+	intro_vistas = maxi(int(data.get("intro_vistas", 0)), 1 if total_runs > 0 else 0)  # guardado viejo: ya la viste
 	# Censura y partida del dia: campos nuevos; un guardado viejo sin ellos arranca en 0 / vacio.
 	censura_unlocked = clampi(int(data.get("censura_unlocked", 0)), 0, Censura.MAX_LEVEL)
 	censura_selected = clampi(int(data.get("censura_selected", 0)), 0, censura_unlocked)
@@ -784,6 +920,7 @@ func end_run(victory: bool = false) -> void:
 	last_huesos = huesos_for_run(victory)
 	meta_currency += last_huesos
 	total_runs += 1
+	derrotas_seguidas = 0 if victory else derrotas_seguidas + 1
 	best_floor = maxi(best_floor, current_floor)
 	if victory and Censura.level == censura_unlocked and censura_unlocked < Censura.MAX_LEVEL:
 		censura_unlocked += 1  # ganar en tu nivel maximo abre el siguiente
@@ -881,6 +1018,14 @@ func save_meta_progression() -> void:
 		"best_floor": best_floor,
 		"liberated": liberated,
 		"desorden_notice": desorden_notice,
+		"taken": taken,
+		"algoritmo_vencido": algoritmo_vencido,
+		"copia_restaurada": copia_restaurada,
+		"copia_intro_vista": copia_intro_vista,
+		"final_verdadero": final_verdadero,
+		"intro_vistas": intro_vistas,
+		"derrotas_seguidas": derrotas_seguidas,
+		"heroe_resto": heroe_resto,
 		"censura_unlocked": censura_unlocked,
 		"censura_selected": censura_selected,
 		"daily_records": daily_records,
