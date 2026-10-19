@@ -18,6 +18,15 @@ Piezas (1 pixel de arte = 1 pixel de mundo, igual que el resto del juego):
   panel_caminos      cartel de dos caminos, sin letras (88x56; las letras las pone el codigo)
   puerta_pintada     puerta dibujada en el muro, no abre (44x64)
   bolsa              bolsa y abrigo sobre un asiento (28x16)
+Piso 2 "Fondo" (S5 Cinco puertas, S6 El pasillo):
+  puerta_s5          puerta de una estacion, hueco oscuro con marco (44x64)
+  puerta_cerrada     sexta puerta: cerrada, sin picaporte a la vista (44x64)
+  puerta_adentro     puerta con el picaporte hacia el lado de adentro (44x64)
+  linterna, mochila, nota, vaso   objetos cotidianos de las estaciones
+  figura_dormida     sentada contra la pared, cabeza baja (36x40)
+  figura_encogida    de pie, hombros caidos, mas baja (36x44)
+  figura_brazo       de pie con un brazo extendido contra la pared (44x52)
+  interruptor, telefono          el interruptor lejano y el telefono sin pantalla
 """
 import random
 from pathlib import Path
@@ -195,6 +204,126 @@ def bolsa():
 	im.save(OUT / "bolsa.png")
 
 
+def puerta_s5():
+	im, d = canvas(44, 64)
+	d.rectangle([0, 0, 43, 63], fill=(122, 118, 112, 255))  # marco en el muro
+	d.rectangle([5, 6, 38, 63], fill=(30, 29, 34, 255))     # hueco oscuro
+	d.rectangle([5, 6, 38, 8], fill=(74, 72, 80, 255))
+	outline(im)
+	im.save(OUT / "puerta_s5.png")
+
+
+def puerta_cerrada():
+	im, d = canvas(44, 64)
+	d.rectangle([0, 0, 43, 63], fill=(112, 108, 104, 255))
+	d.rectangle([5, 6, 38, 63], fill=(70, 66, 64, 255))
+	d.rectangle([7, 8, 36, 63], fill=(78, 74, 72, 255))
+	d.line([(21, 8), (21, 62)], fill=(60, 57, 56, 255))
+	outline(im)
+	im.save(OUT / "puerta_cerrada.png")
+
+
+def puerta_adentro():
+	im, d = canvas(44, 64)
+	d.rectangle([0, 0, 43, 63], fill=(100, 96, 92, 255))
+	d.rectangle([5, 6, 38, 63], fill=(86, 80, 76, 255))
+	d.rectangle([7, 8, 36, 63], fill=(96, 90, 84, 255))
+	d.rectangle([9, 36, 13, 40], fill=(168, 160, 142, 255))  # picaporte del lado de adentro
+	outline(im)
+	im.save(OUT / "puerta_adentro.png")
+
+
+def linterna():
+	im, d = canvas(16, 12)
+	d.rectangle([1, 3, 9, 9], fill=METAL)
+	d.rectangle([9, 2, 14, 10], fill=(150, 144, 120, 255))
+	outline(im)
+	im.save(OUT / "linterna.png")
+
+
+def mochila():
+	im, d = canvas(16, 20)
+	d.rounded_rectangle([1, 4, 14, 18], radius=3, fill=(84, 78, 72, 255))
+	d.rectangle([4, 9, 11, 14], fill=(70, 64, 60, 255))
+	d.arc([3, 0, 12, 9], 180, 360, fill=OL)
+	outline(im)
+	im.save(OUT / "mochila.png")
+
+
+def nota():
+	im, d = canvas(12, 14)
+	d.rectangle([1, 1, 10, 12], fill=(210, 204, 188, 255))
+	for y in (4, 6, 8):
+		d.line([(3, y), (8, y)], fill=(150, 144, 130, 255))
+	outline(im)
+	im.save(OUT / "nota.png")
+
+
+def vaso():
+	im, d = canvas(10, 12)
+	d.polygon([(1, 1), (8, 1), (7, 10), (2, 10)], fill=(150, 156, 160, 255))
+	d.rectangle([2, 5, 7, 9], fill=(120, 126, 132, 255))
+	outline(im)
+	im.save(OUT / "vaso.png")
+
+
+def figura_dormida():
+	w, h = 36, 40
+	im, d = canvas(w, h)
+	cx = w // 2
+	d.ellipse([cx - 5, 8, cx + 7, 22], fill=BODY)  # cabeza caida hacia un lado
+	d.polygon([(cx - 11, 22), (cx + 11, 20), (cx + 12, 36), (cx - 12, 36)], fill=BODY)
+	d.rectangle([cx - 14, 26, cx - 11, 35], fill=BODY)
+	d.rectangle([cx + 11, 26, cx + 14, 35], fill=BODY)
+	shade(im, seed=5)
+	outline(im)
+	im.save(OUT / "figura_dormida.png")
+
+
+def figura_encogida():
+	w, h = 36, 48
+	im, d = canvas(w, h)
+	cx = w // 2
+	d.ellipse([cx - 5, 12, cx + 5, 24], fill=BODY)  # cabeza baja
+	d.polygon([(cx - 9, 25), (cx + 9, 25), (cx + 8, 38), (cx + 7, h - 3), (cx + 1, h - 3), (cx, 40),
+		(cx - 1, 40), (cx - 1, h - 3), (cx - 7, h - 3), (cx - 8, 38)], fill=BODY)
+	d.rectangle([cx - 11, 26, cx - 9, 38], fill=BODY)
+	d.rectangle([cx + 9, 26, cx + 11, 38], fill=BODY)
+	shade(im, seed=6)
+	outline(im)
+	im.save(OUT / "figura_encogida.png")
+
+
+def figura_brazo():
+	w, h = 52, 52
+	im, d = canvas(w, h)
+	cx = 20
+	d.ellipse([cx - 5, 3, cx + 5, 15], fill=BODY)
+	d.polygon([(cx - 8, 17), (cx + 8, 17), (cx + 9, 36), (cx + 8, h - 3), (cx + 1, h - 3), (cx + 1, 38),
+		(cx - 1, 38), (cx - 1, h - 3), (cx - 8, h - 3), (cx - 9, 36)], fill=BODY)
+	d.rectangle([cx - 11, 19, cx - 9, 34], fill=BODY)
+	d.rectangle([cx + 8, 19, w - 4, 22], fill=BODY)  # el brazo se apoya en la pared
+	shade(im, seed=7)
+	outline(im)
+	im.save(OUT / "figura_brazo.png")
+
+
+def interruptor():
+	im, d = canvas(12, 16)
+	d.rectangle([1, 1, 10, 14], fill=(150, 146, 138, 255))
+	d.rectangle([4, 4, 7, 10], fill=(70, 68, 72, 255))
+	outline(im)
+	im.save(OUT / "interruptor.png")
+
+
+def telefono():
+	im, d = canvas(28, 16)
+	d.rounded_rectangle([1, 3, 26, 14], radius=2, fill=(72, 72, 82, 255))
+	d.rectangle([4, 5, 23, 11], fill=(24, 24, 28, 255))  # sin pantalla: apagado
+	outline(im)
+	im.save(OUT / "telefono.png")
+
+
 def main():
 	OUT.mkdir(parents=True, exist_ok=True)
 	figura_pie("figura_pie_a.png", shoulder=7, hip=6, head_r=5, seed=1)    # delgado
@@ -210,6 +339,9 @@ def main():
 	panel_caminos()
 	puerta_pintada()
 	bolsa()
+	for f in (puerta_s5, puerta_cerrada, puerta_adentro, linterna, mochila, nota, vaso, figura_dormida,
+			figura_encogida, figura_brazo, interruptor, telefono):
+		f()
 	print("silencio: %d piezas en %s" % (len(list(OUT.glob("*.png"))), OUT))
 
 

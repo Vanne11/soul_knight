@@ -4,7 +4,7 @@ SIL_MAP_SALA,Sala,Room,,Salle
 SIL_CODEX_TAG,Silencio · ,Silence · ,,Silence · 
 DEBUG_SILENCIO,Ir al Silencio (WIP),Go to Silence (WIP),,Aller au Silence (WIP)
 SIL_AVISO_TITULO,Las Tierras del Silencio,The Lands of Silence,,Les Terres du Silence
-SIL_AVISO_1,"Este reino trata de violencia de género: control, agresión y femicidio.","This realm is about gender-based violence: control, aggression and femicide.",,"Ce royaume parle de violence de genre : contrôle, agression et féminicide."
+SIL_AVISO_1,"Este reino trata de violencia de género: control, agresión y femicidio.","This realm is about gender-based violence: control, aggression and femicide.","Este reino trata de violencia de género: control, agresión y feminicidio.","Ce royaume parle de violence de genre : contrôle, agression et féminicide."
 SIL_AVISO_2,No hay bromas aquí. Puedes pausar o salir del juego cuando quieras.,There are no jokes here. You can pause or quit the game whenever you want.,,"Ici, pas de blagues. Tu peux faire pause ou quitter le jeu quand tu veux."
 SIL_AVISO_3,"Si estás en peligro ahora, llama a emergencias de tu país.","If you are in danger right now, call your country's emergency number.",,"Si tu es en danger maintenant, appelle les urgences de ton pays."
 SIL_CONTINUAR,Continuar,Continue,,Continuer
@@ -61,3 +61,67 @@ LORE_SILENCIO_REVISION_FLAVOR,"Si pasa mucho, no es cariño. Es control.","If it
 LORE_SILENCIO_MENSAJES_TITLE,Mensajes y vigilancia,Messages and surveillance,,Messages et surveillance
 LORE_SILENCIO_MENSAJES_TEXT,"¿Dónde estás? ¿Con quién? Responde. Estoy esperando. Si respondes, preguntan más. Si no respondes, preguntan más. Sentirte vigilada o vigilado es una señal. Si sientes miedo de no responder, también. No hay respuesta correcta. El problema no eres tú. Puedes pedir ayuda.","Where are you? Who are you with? Answer. I am waiting. If you answer, they ask more. If you do not answer, they ask more. Feeling watched is a sign. So is being afraid of not answering. There is no right answer. You are not the problem. You can ask for help.",,"Où es-tu ? Avec qui ? Réponds. J'attends. Si tu réponds, on demande plus. Si tu ne réponds pas, on demande plus. Te sentir surveillé ou surveillée est un signe. Avoir peur de ne pas répondre aussi. Il n'y a pas de bonne réponse. Le problème, ce n'est pas toi. Tu peux demander de l'aide."
 LORE_SILENCIO_MENSAJES_FLAVOR,El problema no eres tú.,You are not the problem.,,"Le problème, ce n'est pas toi."
+SIL_OPCIONES_HINT,[E]: elegir · Tab: cambiar,[E]: choose · Tab: switch,,[E] : choisir · Tab : changer
+SIL_S5_ENTRADA,El consentimiento es un acuerdo. Se pregunta. Se escucha.,Consent is an agreement. You ask. You listen.,,Le consentement est un accord. On demande. On écoute.
+SIL_S5_PREGUNTAR,Preguntar,Ask,,Demander
+SIL_S5_SEGUIR,Seguir,Go ahead,,Continuer
+SIL_S5_PARAR,Parar,Stop,,Arrêter
+SIL_S5_NO,Dijo que no. Se acabó.,The answer is no. That is the end of it.,,La réponse est non. C'est terminé.
+SIL_S5_NO_REP,Preguntar otra vez no cambia el no. No se abre nada.,Asking again does not change a no. Nothing opens.,,Redemander ne change pas un non. Rien ne s'ouvre.
+SIL_S5_SILENCIO,Silencio no es sí.,Silence is not a yes.,,Le silence n'est pas un oui.
+SIL_S5_DUDA,Dudar no es un sí entusiasta. Pregunta de nuevo.,Doubt is not an enthusiastic yes. Ask again.,,Hésiter n'est pas un oui enthousiaste. Redemande.
+SIL_S5_DUDA_PREG,¿Prefieres no?,Would you rather not?,,Tu préfères dire non ?
+SIL_S5_COR_1,Dale.,Come on.,,Allez.
+SIL_S5_COR_2,No seas así.,Don't be like that.,,Ne sois pas comme ça.
+SIL_S5_COR_3,Todos lo hacen.,Everyone does it.,,Tout le monde le fait.
+SIL_S5_LIBRE_NO,"Con presión, un sí no es libre. Un no sigue siendo no.","With pressure, a yes is not free. A no is still a no.",,"Sous pression, un oui n'est pas libre. Un non reste un non."
+SIL_S5_LIBRE_SI,"Con presión, no es libre. No fue tu culpa.","With pressure, it is not free. It was not your fault.",,"Sous pression, ce n'est pas libre. Ce n'était pas ta faute."
+SIL_S5_LIBRE_CALLA,Quedarte callada o callado no es aceptar.,Staying quiet is not agreeing.,,"Rester silencieuse ou silencieux, ce n'est pas accepter."
+SIL_S5_REV,Se puede cambiar de idea en cualquier momento.,You can change your mind at any time.,,On peut changer d'avis à tout moment.
+SIL_S5_PARA,Para.,Stop.,,Arrête.
+SIL_S5_DECIR,Decir para qué,Say what for,,Dire pourquoi
+SIL_S5_INFO,Un sí sin saber qué aceptas no cuenta.,A yes without knowing what you agree to does not count.,,Un oui sans savoir à quoi on consent ne compte pas.
+SIL_S5_ENTUS,"Un sí entusiasta se nota. Si no se nota, pregunta.","An enthusiastic yes shows. If it does not show, ask.",,"Un oui enthousiaste se voit. Si on ne le voit pas, demande."
+SIL_S5_ESPEC,Un sí vale para una cosa.,A yes is for one thing.,,Un oui vaut pour une chose.
+SIL_S5_ESPEC_NO,Eso no te lo dije.,I did not say that.,,Je n'ai pas dit ça.
+SIL_S5_AYER_CARTEL,Ayer dijo que sí.,"Yesterday, the answer was yes.",,"Hier, la réponse était oui."
+SIL_S5_AYER_BTN,Usar el sí de ayer,Use yesterday's yes,,Utiliser le oui d'hier
+SIL_S5_AYER,Un sí de antes no obliga a nada hoy.,A yes from before does not commit anyone to anything today.,,Un oui d'avant n'oblige à rien aujourd'hui.
+SIL_S5_SINRESP,Sin respuesta.,No answer.,,Pas de réponse.
+SIL_S5_NOPUEDE,"Quien duerme, o está muy borracha o borracho, o drogada o drogado, no puede consentir.","Someone who is asleep, very drunk or drugged cannot consent.",,"Une personne qui dort, ou qui est très ivre ou droguée, ne peut pas consentir."
+SIL_S5_AVISAR,Avisar a alguien de confianza,Tell someone you trust,,Prévenir une personne de confiance
+SIL_S5_FIN,"Consentir es libre, reversible, informado, entusiasta y específico.","Consent is free, reversible, informed, enthusiastic and specific.",,"Consentir, c'est libre, réversible, éclairé, enthousiaste et spécifique."
+SIL_S5_R_SI,"Sí, claro.","Yes, of course.",,"Oui, bien sûr."
+SIL_S5_R_NO,No.,No.,,Non.
+SIL_S5_R_DUDA,Bueno... está bien.,Well... okay.,,Bon... d'accord.
+SIL_S5_ABRAZO,¿Un abrazo?,A hug?,,Un câlin ?
+SIL_S5_SI,Sí,Yes,,Oui
+SIL_S5_NO_BTN,No,No,,Non
+SIL_S5_PEDIR_LINTERNA,¿Me prestas la linterna?,Can I borrow the flashlight?,,Tu me prêtes la lampe ?
+SIL_S5_PEDIR_MOCHILA,¿Me prestas la mochila?,Can I borrow the backpack?,,Tu me prêtes le sac à dos ?
+SIL_S5_MOCHILA_BTN,Usar también su mochila,Also use their backpack,,Utiliser aussi son sac à dos
+SIL_S5_NOTA,La necesito para buscar algo en el sótano.,I need it to look for something in the basement.,,J'en ai besoin pour chercher quelque chose à la cave.
+SIL_S5_SEG_IZQ,Seguir con la persona de la izquierda,Go ahead with the person on the left,,Continuer avec la personne de gauche
+SIL_S5_SEG_DER,Seguir con la persona de la derecha,Go ahead with the person on the right,,Continuer avec la personne de droite
+SIL_S5_IRTE,Irte,Leave,,Partir
+SIL_S5_QUEDAR,Quedarte cerca,Stay close,,Rester près
+SIL_S6_TONO,Aquí cambia el tono.,The tone changes here.,,"Ici, le ton change."
+SIL_S6_DISTRAER,Distraer,Distract,,Faire diversion
+SIL_S6_BUSCAR,Buscar a alguien,Go find someone,,Aller chercher quelqu'un
+SIL_S6_QUEDAR,Quedarte cerca después,Stay close afterwards,,Rester près ensuite
+SIL_S6_HORA,¿Tienes la hora?,Do you have the time?,,Tu as l'heure ?
+SIL_S6_LLAMAR,¿Quieres que llame a alguien?,Do you want me to call someone?,,Tu veux que j'appelle quelqu'un ?
+SIL_S6_NADA,También paraliza. No es culpa tuya.,Freezing is also a reaction. It is not your fault.,,On peut aussi rester figé. Ce n'est pas ta faute.
+SIL_S6_SENALES,"Señales de agresión: te humilla, te amenaza, rompe cosas, te impide salir, te obliga a algo que no quieres, te golpea.","Signs of aggression: humiliates you, threatens you, breaks things, stops you from leaving, forces you to do something you do not want, hits you.",,"Signes d'agression : t'humilie, te menace, casse des objets, t'empêche de sortir, te force à faire ce que tu ne veux pas, te frappe."
+SIL_S6_VIOLENCIA,Es violencia. No es tu culpa.,It is violence. It is not your fault.,,C'est de la violence. Ce n'est pas ta faute.
+SIL_S6_RIESGO,"Si piensas irte, planéalo con apoyo: es un momento de riesgo.","If you are thinking of leaving, plan it with support: it is a time of risk.",,"Si tu penses partir, prépare-le avec un soutien : c'est un moment à risque."
+SIL_S6_AYUDAR,Para ayudar: pregunta. Escucha. No la presiones. Ofrece ayuda. No decidas por ella o por él.,To help: ask. Listen. Do not pressure. Offer help. Do not decide for them.,,Pour aider : demande. Écoute. Ne fais pas pression. Propose de l'aide. Ne décide pas à sa place.
+SIL_S6_RESP_SI,"Sí, por favor.","Yes, please.",,"Oui, s'il te plaît."
+SIL_S6_RESP_NO,Ahora no. Gracias.,Not now. Thank you.,,Pas maintenant. Merci.
+SIL_S6_TELEFONO,[E] Cómo buscar ayuda,[E] How to find help,,[E] Comment chercher de l'aide
+LORE_SILENCIO_CONSENTIMIENTO_TITLE,Consentimiento,Consent,,Consentement
+LORE_SILENCIO_CONSENTIMIENTO_TEXT,"Consentir es libre, reversible, informado, entusiasta y específico. Libre: sin presión. Reversible: se puede cambiar de idea en cualquier momento, también después de un sí. Informado: se sabe qué se acepta. Entusiasta: un sí con duda no es un sí, y el silencio tampoco. Específico: un sí a una cosa no es un sí a todo. Quien duerme, o está muy borracha o borracho, o drogada o drogado, no puede consentir. Se pregunta. Se escucha. Un no se respeta, y respetarlo es lo normal.","Consent is free, reversible, informed, enthusiastic and specific. Free: without pressure. Reversible: you can change your mind at any time, even after a yes. Informed: you know what you are agreeing to. Enthusiastic: a yes with doubt is not a yes, and silence is not one either. Specific: a yes to one thing is not a yes to everything. Someone who is asleep, very drunk or drugged cannot consent. You ask. You listen. A no is respected, and respecting it is what is expected.",,"Le consentement est libre, réversible, éclairé, enthousiaste et spécifique. Libre : sans pression. Réversible : on peut changer d'avis à tout moment, même après un oui. Éclairé : on sait à quoi on consent. Enthousiaste : un oui avec un doute n'est pas un oui, et le silence non plus. Spécifique : un oui à une chose n'est pas un oui à tout. Une personne qui dort, ou qui est très ivre ou droguée, ne peut pas consentir. On demande. On écoute. Un non se respecte, et le respecter, c'est la normalité."
+LORE_SILENCIO_CONSENTIMIENTO_FLAVOR,Se pregunta. Se escucha.,You ask. You listen.,,On demande. On écoute.
+LORE_SILENCIO_AGRESION_TITLE,Señales de agresión,Signs of aggression,,Signes d'agression
+LORE_SILENCIO_AGRESION_TEXT,"Señales de agresión: te humilla, te amenaza, rompe cosas, te impide salir, te obliga a algo que no quieres, te golpea. Es violencia. No es tu culpa. Si piensas irte, planéalo con apoyo: es un momento de riesgo. Para ayudar a otra persona: pregunta, escucha, no la presiones, ofrece ayuda y no decidas por ella o por él. Distraer, buscar a alguien o quedarte cerca después son formas de ayudar. Puedes pedir ayuda.","Signs of aggression: humiliates you, threatens you, breaks things, stops you from leaving, forces you to do something you do not want, hits you. It is violence. It is not your fault. If you are thinking of leaving, plan it with support: it is a time of risk. To help another person: ask, listen, do not pressure, offer help and do not decide for them. Distracting, finding someone or staying close afterwards are ways to help. You can ask for help.",,"Signes d'agression : t'humilie, te menace, casse des objets, t'empêche de sortir, te force à faire ce que tu ne veux pas, te frappe. C'est de la violence. Ce n'est pas ta faute. Si tu penses partir, prépare-le avec un soutien : c'est un moment à risque. Pour aider une autre personne : demande, écoute, ne fais pas pression, propose de l'aide et ne décide pas à sa place. Faire diversion, aller chercher quelqu'un ou rester près ensuite sont des façons d'aider. Tu peux demander de l'aide."
+LORE_SILENCIO_AGRESION_FLAVOR,No es tu culpa.,It is not your fault.,,Ce n'est pas ta faute.

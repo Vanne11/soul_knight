@@ -12,6 +12,10 @@ const TONES := {
 	"espacio": Color("7d8086"),    # anden: gris frio y uniforme
 	"revision": Color("786f66"),   # cuarto: tibio y apagado
 	"mensajes": Color("5c5d66"),   # salon oscuro
+	"cinco_puertas": Color("767379"),  # pasillo de las cinco puertas: gris tibio, mas frio que arriba
+	"pasillo_s6": Color("6a6a73"),     # el pasillo largo: la luz ya es casi nada
+	"habitacion": Color("726b66"),     # habitacion: tibia y apagada
+	"jefe": Color("65646d"),           # sala del jefe (vacia por ahora)
 }
 const TILE := 64.0
 

@@ -10,6 +10,7 @@ const DIR := "res://assets/sprites/silencio/"
 const POSES := {
 	"pie_a": "figura_pie_a", "pie_b": "figura_pie_b", "pie_c": "figura_pie_c",
 	"sentada": "figura_sentada", "espalda": "figura_espalda",
+	"dormida": "figura_dormida", "encogida": "figura_encogida", "brazo": "figura_brazo",
 }
 
 var sprite := Sprite2D.new()

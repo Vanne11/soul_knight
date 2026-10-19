@@ -60,6 +60,43 @@ func size_px() -> Vector2:
 	return Vector2(room.floor_tilemap.get_used_rect().size) * 64.0
 
 
+## Cambia la luz ambiente de la sala (0.35 casi negro .. 1.0 plena) con una transicion de 1.2 s.
+func set_light(l: float) -> void:
+	room.set_meta("sil_light", clampf(l, 0.2, 1.0))
+	main._lighting.paint(room, false, true)
+
+
+## Resplandor aditivo (lampara, luz de salida): un punto de luz de color `col` y radio `r` px en el punto
+## local `at`. Empieza con alpha `a0` y se puede subir con fade_glow.
+func glow(at: Vector2, r: float, col: Color, a0 := 0.0) -> Sprite2D:
+	var g := Sprite2D.new()
+	var t := GradientTexture2D.new()
+	t.fill = GradientTexture2D.FILL_RADIAL
+	t.fill_from = Vector2(0.5, 0.5)
+	t.fill_to = Vector2(1.0, 0.5)
+	t.width = 128
+	t.height = 128
+	var grad := Gradient.new()
+	grad.colors = PackedColorArray([Color(col.r, col.g, col.b, 0.6), Color(col.r, col.g, col.b, 0.0)])
+	t.gradient = grad
+	g.texture = t
+	g.scale = Vector2.ONE * (r * 2.0 / 128.0)
+	g.position = at
+	g.modulate.a = a0
+	var mat := CanvasItemMaterial.new()
+	mat.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	mat.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	g.material = mat
+	g.z_index = 2
+	room.props_node.add_child(g)
+	_decor.append(g)
+	return g
+
+
+func fade_glow(g: Sprite2D, to: float, secs := 2.0) -> void:
+	create_tween().tween_property(g, "modulate:a", to, secs)
+
+
 ## Posicion de mundo de un punto local de la sala.
 func to_world(p: Vector2) -> Vector2:
 	return room.global_position + p
