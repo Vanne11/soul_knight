@@ -27,7 +27,6 @@ func _init() -> void:
 func _ready() -> void:
 	drop_table = [{"item_id": "health_small", "chance": 0.3}]
 	super()
-	animated_sprite.self_modulate = COPPER
 	add_to_group("satelite_cobre")
 	s_ang = RNG.randf_range(0.0, TAU)
 	s_r = RNG.randf_range(95.0, 135.0)
@@ -85,6 +84,15 @@ func _physics_process(delta: float) -> void:
 				s_cd = RNG.randf_range(3.2, 4.8)
 	_update_animation(to_t)
 	move_and_slide()
+
+
+## Poses propias (tools/gen_diu_art.py): orbita (walk), apuntando (attack, brilla) y picada (dive).
+func _update_animation(dir: Vector2) -> void:
+	var a := &"attack" if s_state == S.AIM else (&"dive" if s_state == S.DIVE else &"walk")
+	if animated_sprite.animation != a and animated_sprite.sprite_frames.has_animation(a):
+		animated_sprite.play(a)
+	if absf(dir.x) > 1.0:
+		animated_sprite.flip_h = dir.x < 0.0
 
 
 func _start_aim(to_t: Vector2) -> void:
