@@ -40,6 +40,7 @@ MANUAL = {
     "parra": "palacio/hoja_de_parra",
     "ego_inflado": "comunes/ego_inflado",
     "pastilla": "penelandia/pastilla",
+    "pelusa_estatica": "selva/pelusa_estatica",
 }
 EXTS = (".gd", ".tscn", ".tres", ".import", ".py", ".json", ".cfg", ".godot")
 
