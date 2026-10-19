@@ -227,7 +227,7 @@ func atk_box() -> void:
 	Sound.play("crack")
 	HitFx.shake(0.15)
 	# firma "ordenes de examen" mientras el hueco se cierra
-	var n := [2, 3, 5][ph - 1]
+	var n: int = [2, 3, 5][ph - 1]
 	var gap := open_t / float(n + 1)
 	for i in n:
 		if not await _wait(gap):
