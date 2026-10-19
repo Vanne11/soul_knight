@@ -35,5 +35,29 @@
 		"line_weak": "BOSSDMG_PARRA_WEAK",
 		"line_resist": "BOSSDMG_PARRA_RESIST",
 		"hint_weapon": "laser_depilador"
+	},
+	"don_viagra": {
+		"weak": {"agua": 1.8, "electrico": 1.4},
+		"resist": {"vibracion": 0.5},
+		"match": {
+			"pitocles": ["electrico"],
+			"vulvalquiria": ["agua"],
+			"ornitorrinco": ["agua", "electrico"]
+		},
+		"line_weak": "BOSSDMG_VIAGRA_WEAK",
+		"line_resist": "BOSSDMG_VIAGRA_RESIST",
+		"hint_weapon": "globos_agua"
+	},
+	"reina_ovaria": {
+		"weak": {"calor": 1.8, "explosivo": 1.3},
+		"resist": {"latex": 0.5, "confeti": 0.7},
+		"match": {
+			"pitocles": ["calor", "explosivo"],
+			"vulvalquiria": ["calor"],
+			"ornitorrinco": ["calor", "explosivo"]
+		},
+		"line_weak": "BOSSDMG_OVARIA_WEAK",
+		"line_resist": "BOSSDMG_OVARIA_RESIST",
+		"hint_weapon": "laser_depilador"
 	}
 }
