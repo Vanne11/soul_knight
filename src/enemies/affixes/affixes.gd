@@ -132,7 +132,7 @@ static func attach(enemy: Node2D, list: Array) -> Array:
 		if not DEFS.has(id) or not ResourceLoader.exists(path):
 			push_warning("Affixes: afijo desconocido '%s'" % id)
 			continue
-		var node: Node = (load(path) as GDScript).new()
+		var node: Node = (Room.cached_load(path) as GDScript).new()
 		node.name = "Affix_" + id
 		node.set("id", id)
 		node.set("tag", tag)
@@ -140,6 +140,11 @@ static func attach(enemy: Node2D, list: Array) -> Array:
 		out.append(node)
 	tag.affix_nodes = out
 	return out
+
+
+## Scripts de todos los afijos cargados de antemano (el primer elite de la partida congelaba ~40 ms).
+static func warm() -> void:
+	Room.warm(DEFS.keys().map(func(id): return DIR + "affix_%s.gd" % id))
 
 
 static func ids_of(enemy: Node) -> Array:

@@ -279,15 +279,24 @@ func _blob(center: Vector2, rx: float, ry: float, tile_name: String) -> void:
 	var edge := Color(avg.r * 0.55, avg.g * 0.55, avg.b * 0.58, 0.8)
 	var img := Image.create(box.size.x, box.size.y, false, Image.FORMAT_RGBA8)
 	var rmin := minf(rx, ry)
+	# f va de 0.58 a 1.10: lejos de esa franja el pixel es seguro fondo o seguro baldosa
+	var r_out := 1.1 + 3.0 / rmin
+	var r_in := 0.58 - 1.5 / rmin
 	for y in box.size.y:
 		for x in box.size.x:
 			var wx := box.position.x + x
 			var wy := box.position.y + y
 			var u := (wx + 0.5 - center.x) / rx
 			var v := (wy + 0.5 - center.y) / ry
+			var rr := sqrt(u * u + v * v)
+			if rr >= r_out:
+				continue
+			if rr <= r_in:
+				img.set_pixel(x, y, tile.get_pixel(wx % T, wy % T))
+				continue
 			var a := atan2(v, u)
 			var f := 0.84 + 0.13 * sin(3.0 * a + ph[0]) + 0.08 * sin(5.0 * a + ph[1]) + 0.05 * sin(8.0 * a + ph[2])
-			var s := (f - sqrt(u * u + v * v)) * rmin  # distancia (px) al borde, + dentro
+			var s := (f - rr) * rmin  # distancia (px) al borde, + dentro
 			if s >= 1.5:
 				img.set_pixel(x, y, tile.get_pixel(wx % T, wy % T))
 			elif s >= 0.0:

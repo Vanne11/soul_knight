@@ -49,7 +49,7 @@ static func make_light(color: Color, energy: float, scale_: float, shadows := tr
 	l.range_item_cull_mask = MASK_FLOOR | MASK_WALL
 	l.shadow_item_cull_mask = MASK_FLOOR
 	l.shadow_enabled = shadows and Settings.Q_SHADOW_LIGHTS[Settings.quality] > 0
-	l.shadow_filter = Light2D.SHADOW_FILTER_PCF13
+	l.shadow_filter = Light2D.SHADOW_FILTER_PCF5  # PCF13 costaba ~4 ms mas de GPU y con smooth casi no se nota
 	l.shadow_filter_smooth = 6.0
 	l.set_meta("base_shadow", shadows)
 	l.set_meta("base_energy", energy)

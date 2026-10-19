@@ -34,14 +34,17 @@ var ui_size := 1 if OS.has_feature("android") else 0
 
 # ---------------------------------------------------------------- calidad grafica
 ## Nivel efectivo: 0 alta, 1 media, 2 baja. `quality_mode` es lo que elige el jugador;
-## AUTO arranca como el defecto de la plataforma y baja un nivel si el FPS medio de
-## los primeros segundos de partida cae de AUTO_MIN_FPS (nunca sube solo).
+## AUTO arranca como el defecto de la plataforma y baja un nivel cada vez que el FPS medio
+## de una ventana de juego cae de AUTO_MIN_FPS (nunca sube solo). Mide durante toda la
+## sesion: las salas oscuras (las caras) no suelen ser las primeras.
 enum Quality { HIGH, MEDIUM, LOW, AUTO }
 const AUTO_MIN_FPS := 45.0
 const AUTO_WINDOW_S := 5.0
 ## Por nivel [alta, media, baja]:
-const Q_MAX_LIGHTS := [999, 8, 4]             # luces dinamicas encendidas a la vez (las mas cercanas al jugador)
-const Q_SHADOW_LIGHTS := [999, 3, 0]          # cuantas de ellas proyectan sombra (PointLight2D.shadow_enabled)
+## Medido (tools/perf/bench_rooms.gd, sala oscura con 33 luces, Radeon Vega a 1080p): sin tope
+## eran 15-17 ms de GPU; las sombras son lo caro, el resto de luces lejanas casi no cuenta.
+const Q_MAX_LIGHTS := [12, 8, 4]              # luces dinamicas encendidas a la vez (las mas cercanas al jugador)
+const Q_SHADOW_LIGHTS := [4, 2, 0]            # cuantas de ellas proyectan sombra (PointLight2D.shadow_enabled)
 const Q_CAST_SHADOWS := [true, true, false]   # sombras alargadas de actores (raycasts por luz)
 const Q_PARTICLES := [1.0, 0.5, 0.25]         # factor de cantidad de particulas (WorldFx y CPUParticles2D)
 const Q_AMBIENT_FX := [1.0, 0.5, 0.0]         # particulas ambientales del reino (WorldFx)
@@ -63,7 +66,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	quality_mode = default_quality()
+	quality_mode = default_mode()
 	locale = system_locale()
 	load_settings()
 	apply()
@@ -91,7 +94,7 @@ func load_settings() -> void:
 	hero_numbers = bool(cfg.get_value("game", "hero_numbers", true))
 	touch_mode = clampi(int(cfg.get_value("touch", "mode", 0)), 0, 2)
 	ui_size = clampi(int(cfg.get_value("touch", "ui_size", ui_size)), 0, 1)
-	quality_mode = clampi(int(cfg.get_value("video", "quality", default_quality())), 0, Quality.AUTO) as Quality
+	quality_mode = clampi(int(cfg.get_value("video", "quality", default_mode())), 0, Quality.AUTO) as Quality
 	var l := str(cfg.get_value("game", "locale", locale))  # sin ajuste guardado: el del sistema/Steam
 	locale = l if LOCALES.any(func(x): return x[0] == l) else system_locale()
 
@@ -172,7 +175,13 @@ func set_ui_size(size: int) -> void:
 func apply_ui_size() -> void:
 	get_tree().root.content_scale_factor = UI_SCALES[ui_size]
 
-## Alta en escritorio, baja en web y movil.
+## Modo para quien no ha tocado el ajuste: automatico en escritorio (sin tope de luces una
+## GPU integrada se arrastraba en las salas oscuras), baja en web y movil.
+static func default_mode() -> int:
+	return Quality.LOW if OS.has_feature("web") or OS.has_feature("android") or OS.has_feature("ios") else Quality.AUTO
+
+
+## Nivel de partida: alta en escritorio, baja en web y movil.
 static func default_quality() -> int:
 	return Quality.LOW if OS.has_feature("web") or OS.has_feature("android") or OS.has_feature("ios") else Quality.HIGH
 
@@ -217,9 +226,8 @@ func _process(delta: float) -> void:
 	_auto_t = 0.0
 	_auto_frames = 0
 	if fps < AUTO_MIN_FPS and quality < 2:
-		_set_quality(quality + 1)  # y vuelve a medir con el nivel nuevo
-	else:
-		_auto_done = true
+		_set_quality(quality + 1)  # y sigue midiendo con el nivel nuevo
+	_auto_done = quality >= 2
 
 
 ## Idioma de Steam ("spanish" = Espana, "latam", "french", "english"...) si el juego corre

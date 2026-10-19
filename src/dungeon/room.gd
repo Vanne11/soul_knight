@@ -18,6 +18,27 @@ var ITEM_PICKUP_SCENE: PackedScene:
 	get:
 		return load(ITEM_PICKUP_PATH)
 
+## Recursos de enemigos (SpriteFrames, scripts de jefe) ya cargados. La cache de Godot es debil:
+## al morir el ultimo bicho de un tipo sus frames se descargan y el siguiente spawn los relee del
+## disco (20-40 ms de tiron al entrar a la sala). Aqui quedan vivos toda la partida.
+static var _res_cache: Dictionary = {}
+
+
+static func cached_load(path: String) -> Resource:
+	if not _res_cache.has(path):
+		_res_cache[path] = load(path)
+	return _res_cache[path]
+
+
+## Carga por adelantado (al generar el piso, tras la transicion) los recursos que usara la sala.
+## reset: suelta lo del piso anterior (las hojas de los jefes pesan en la memoria de video).
+static func warm(paths: Array, reset := false) -> void:
+	if reset:
+		_res_cache.clear()
+	for p in paths:
+		if not _res_cache.has(p) and ResourceLoader.exists(p):
+			_res_cache[p] = load(p)
+
 @export var room_type: RoomType = 0
 @export var grid_pos: Vector2i = Vector2i.ZERO
 @export var difficulty: int = 1
@@ -293,7 +314,7 @@ func spawn_enemies(enemy_data: Array[Dictionary], seal := true, positions: Array
 			var enemy = scene.instantiate()
 			
 			if data.has("script") and ResourceLoader.exists(data.script):
-				enemy.set_script(load(data.script))  # jefes: cada uno con sus ataques
+				enemy.set_script(cached_load(data.script))  # jefes: cada uno con sus ataques
 			if data.has("name"): enemy.enemy_name = data.name
 			if data.has("health"): enemy.max_health = data.health
 			if data.has("damage"): enemy.damage = data.damage
@@ -303,7 +324,7 @@ func spawn_enemies(enemy_data: Array[Dictionary], seal := true, positions: Array
 			if data.has("personality") and "personality" in enemy: enemy.personality = data.personality  # El Utero (lutea): irritables
 			if data.has("drops"): enemy.drop_table = _as_drop_list(data.drops if g == 0 else [])
 			if data.has("frames") and ResourceLoader.exists(data.frames):
-				enemy.get_node("AnimatedSprite2D").sprite_frames = load(data.frames)
+				enemy.get_node("AnimatedSprite2D").sprite_frames = cached_load(data.frames)
 			if data.has("scale"):
 				enemy.get_node("AnimatedSprite2D").scale *= data.scale
 			if data.get("elite", false):
