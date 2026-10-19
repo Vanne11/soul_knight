@@ -113,26 +113,39 @@ func _victory(at: Vector2) -> void:
 	room.set_meta("sil_light", 0.66)
 	main._lighting.paint(room, false, false)
 	var base := at - room.global_position
+	# el bloque se levanta (animacion "death" del jefe) y, cuando queda la cortina alzada sobre las sillas vacias,
+	# las 7 siluetas salen, cada una con una luz
+	await get_tree().create_timer(1.3).timeout
+	if not is_inside_tree():
+		return
 	var exit_x := size_px().x - 70.0
 	for i in 7:
-		var pose: String = ["pie_a", "pie_b", "pie_c"][i % 3]
-		var f := figure(pose, base + Vector2(-78.0 + i * 26.0, -4.0 + (i % 2) * 8.0), Color(1.0, 1.0, 1.05))
+		var e := SilencioEnte.make(base + SilencioEnte.SEATS[i])
+		e.modulate.a = 0.0
+		room.props_node.add_child(e)
+		_decor.append(e)
+		e.carry_light()
 		var l := LightKit.make_light(Color(1.0, 0.86, 0.55), 0.3, 0.9, false)
 		l.remove_from_group(LightKit.GROUP_DARK)
 		l.position = Vector2(0, -22)
 		l.enabled = true
-		f.add_child(l)
-		_leave(f, Vector2(exit_x - i * 22.0, size_px().y * 0.5 + (i - 3) * 38.0), 1.0 + i * 0.5)
+		e.add_child(l)
+		create_tween().tween_property(e, "modulate:a", 1.0, 0.6)
+		_leave(e, Vector2(exit_x - i * 22.0, size_px().y * 0.5 + (i - 3) * 38.0), 0.8 + i * 0.5)
 	if not RunManager.wip_enabled:
 		get_node("/root/RunManager").liberate(int(get_node("/root/RunManager").current_floor))
 
 
 ## La silueta espera su turno, camina sin prisa hacia la salida y se desvanece.
-func _leave(f: SilencioFigura, to: Vector2, delay: float) -> void:
+func _leave(f: SilencioEnte, to: Vector2, delay: float) -> void:
 	await get_tree().create_timer(delay).timeout
 	if not is_instance_valid(f):
 		return
+	var secs := f.position.distance_to(to) / 55.0
+	f.go_to(to, secs, &"light")
+	await get_tree().create_timer(maxf(0.1, secs - 1.0)).timeout
+	if not is_instance_valid(f):
+		return
 	var tw := create_tween()
-	tw.tween_property(f, "position", to, f.position.distance_to(to) / 55.0)
 	tw.tween_property(f, "modulate:a", 0.0, 1.2)
 	tw.tween_callback(f.queue_free)

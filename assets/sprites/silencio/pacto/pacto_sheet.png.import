@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://66pg3ewp61md"
-path="res://.godot/imported/pacto_attack.png-46ed27c7080182781718ad6d8092e4fd.ctex"
+uid="uid://du7xxbskvag2h"
+path="res://.godot/imported/pacto_sheet.png-d7c33b136239da3a990f6b53df2f9cd8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/silencio/pacto_attack.png"
-dest_files=["res://.godot/imported/pacto_attack.png-46ed27c7080182781718ad6d8092e4fd.ctex"]
+source_file="res://assets/sprites/silencio/pacto/pacto_sheet.png"
+dest_files=["res://.godot/imported/pacto_sheet.png-d7c33b136239da3a990f6b53df2f9cd8.ctex"]
 
 [params]
 

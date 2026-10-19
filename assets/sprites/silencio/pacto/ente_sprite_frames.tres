@@ -1,0 +1,129 @@
+[gd_resource type="SpriteFrames" load_steps=13 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/silencio/pacto/ente_sheet.png" id="1_sheet"]
+
+[sub_resource type="AtlasTexture" id="f0"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 0, 48, 72)
+
+[sub_resource type="AtlasTexture" id="f1"]
+atlas = ExtResource("1_sheet")
+region = Rect2(48, 0, 48, 72)
+
+[sub_resource type="AtlasTexture" id="f2"]
+atlas = ExtResource("1_sheet")
+region = Rect2(96, 0, 48, 72)
+
+[sub_resource type="AtlasTexture" id="f3"]
+atlas = ExtResource("1_sheet")
+region = Rect2(144, 0, 48, 72)
+
+[sub_resource type="AtlasTexture" id="f4"]
+atlas = ExtResource("1_sheet")
+region = Rect2(192, 0, 48, 72)
+
+[sub_resource type="AtlasTexture" id="f5"]
+atlas = ExtResource("1_sheet")
+region = Rect2(240, 0, 48, 72)
+
+[sub_resource type="AtlasTexture" id="f6"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 72, 48, 72)
+
+[sub_resource type="AtlasTexture" id="f7"]
+atlas = ExtResource("1_sheet")
+region = Rect2(48, 72, 48, 72)
+
+[sub_resource type="AtlasTexture" id="f8"]
+atlas = ExtResource("1_sheet")
+region = Rect2(96, 72, 48, 72)
+
+[sub_resource type="AtlasTexture" id="f9"]
+atlas = ExtResource("1_sheet")
+region = Rect2(144, 72, 48, 72)
+
+[sub_resource type="AtlasTexture" id="f10"]
+atlas = ExtResource("1_sheet")
+region = Rect2(192, 72, 48, 72)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f2")
+}, {
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f3")
+}, {
+"duration": 1.0,
+"texture": SubResource("f0")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f4")
+}],
+"loop": false,
+"name": &"turn",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f5")
+}],
+"loop": false,
+"name": &"lean",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f6")
+}, {
+"duration": 1.0,
+"texture": SubResource("f7")
+}],
+"loop": true,
+"name": &"light",
+"speed": 2.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f8")
+}],
+"loop": false,
+"name": &"away",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f9")
+}],
+"loop": false,
+"name": &"bow",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f10")
+}],
+"loop": false,
+"name": &"ears",
+"speed": 1.0
+}]
