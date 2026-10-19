@@ -89,3 +89,13 @@ static func consultorio_cfg() -> Dictionary:
 ## Precio en monedas: sube con el piso igual que la tienda (shop_item.gd FLOOR_MARKUP).
 static func price(base: int) -> int:
 	return int(round(base * (1.0 + 0.15 * (RunManager.depth(rm().current_floor) - 1.0)) * Censura.mult("price")))
+
+
+## Seccion "Educacion" del codice: las entradas que traen un dato de salud con fuente (las de
+## fuentes_codice.json) mas "Como buscar ayuda". No se duplican: es la misma entrada, solo que el
+## menu la agrupa aparte (su categoria sigue siendo la de siempre: de ella sale la imagen).
+static func is_codex_entry(lore_id: String) -> bool:
+	if lore_id == "como_buscar_ayuda":
+		return true
+	var d = _json("fuentes_codice.json")
+	return d != null and d.items.has(lore_id)
