@@ -1,0 +1,121 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/iris_door/iris_door_00.png" id="f0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/iris_door/iris_door_01.png" id="f1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/iris_door/iris_door_02.png" id="f2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/iris_door/iris_door_03.png" id="f3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/iris_door/iris_door_04.png" id="f4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/iris_door/iris_door_05.png" id="f5"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/iris_door/iris_door_06.png" id="f6"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/iris_door/iris_door_07.png" id="f7"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/iris_door/iris_door_08.png" id="f8"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/iris_door/iris_door_09.png" id="f9"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/iris_door/iris_door_10.png" id="f10"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/iris_door/iris_door_11.png" id="f11"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f4")
+}],
+"loop": false,
+"name": &"shake",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f9")
+}],
+"loop": false,
+"name": &"open",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f10")
+}],
+"loop": true,
+"name": &"opened",
+"speed": 3.5
+}]

@@ -37,6 +37,8 @@ var stun := 0.0
 ## Tarro de Masilla: mancha {radius, time, stick, boss_slow} al reventar; `arc` = altura visual del lanzamiento en arco.
 var putty: Dictionary = {}
 var arc := 0.0
+## Efecto propio al reventar (Globocondon, Lubricante): Callable(parent: Node, pos: Vector2).
+var burst_cb := Callable()
 var _done := false
 
 func _ready() -> void:
@@ -121,6 +123,8 @@ func _explode() -> void:
 		Puddle.spawn(get_parent(), global_position, puddle)
 	if not putty.is_empty():
 		Masilla.spawn(get_parent(), global_position, putty)
+	if burst_cb.is_valid():
+		burst_cb.call(get_parent(), global_position)
 	HitFx.shake(0.4)
 	HitFx.hitstop()
 	get_node("/root/Sound").play("crack", 0.15)

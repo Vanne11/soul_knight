@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://3oowrabxewg6"
+
+[deps]
+
+files=["res://locale/puerta_trasera_contenido.es.translation", "res://locale/puerta_trasera_contenido.en.translation", "res://locale/puerta_trasera_contenido.fr.translation"]
+
+source_file="res://locale/puerta_trasera_contenido.csv"
+dest_files=["res://locale/puerta_trasera_contenido.es.translation", "res://locale/puerta_trasera_contenido.en.translation", "res://locale/puerta_trasera_contenido.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

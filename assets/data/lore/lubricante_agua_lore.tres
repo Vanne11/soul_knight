@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "lubricante_agua_lore"
+title = "Piso Resbaloso"
+text = "«PRECAUCIÓN: PISO RESBALOSO». Con razón. Dato: el ano no se lubrica solo; con lubricante, y con calma, se cuida el tejido. A base de agua o de silicona; con condones de látex, nunca aceites. Y el de silicona puede dañar los juguetes de silicona."
+category = 2
+unlock_condition = {"type": 4, "target_id": "lubricante_agua", "count": 1}
+flavor_text = "Usa lubricante a base de agua."

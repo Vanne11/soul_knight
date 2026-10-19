@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_aceite"
+title = "Aceite Traicionero"
+text = "Una botellita sonriente que patina por ahí soltando charcos «de cortesía». Se ve inofensiva, pero se lleva fatal con el látex. Dato: con condones de látex, nunca aceites (vaselina, aceite de bebé, crema de manos): rompen el látex. Lubricante a base de agua o de silicona."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Aceite Traicionero", "count": 5}
+flavor_text = "Mata 5 aceites traicioneros."

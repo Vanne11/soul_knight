@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "lubricante_agua"
+display_name = "Lubricante a Base de Agua"
+description = "Deja el piso resbaloso: los enemigos patinan y se caen. Disipa el aceite. Con látex, nunca aceites: usa agua o silicona."
+rarity = 3
+tags = ["arma", "área", "agua", "pt_arma"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 440
+custom_data = {"dmg_type": "agua", "affinity": "neutral", "special": "lube", "base_damage": 18, "fire_rate": 1.5, "projectile_speed": 250, "range": 240, "explosion_radius": 30, "arc": 18, "patch_radius": 64, "patch_time": 6.0, "slip_every": 1.6, "slip_time": 0.7, "slip_mult": 1.0}

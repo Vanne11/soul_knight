@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ducha_anal"
+display_name = "Ducha Anal"
+description = "Chorro de agua a presión: empuja, limpia charcos y grietas. Ojo: duchas internas frecuentes irritan; con higiene normal basta."
+rarity = 3
+tags = ["arma", "agua", "pt_arma"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 480
+custom_data = {"dmg_type": "agua", "affinity": "neutral", "special": "ducha", "base_damage": 3.4, "fire_rate": 0.09, "range": 175, "cone": 0.28, "push": 55}

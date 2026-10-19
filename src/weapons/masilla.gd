@@ -15,6 +15,8 @@ var radius := 58.0
 var time := 5.0
 var stick := 2.5
 var boss_slow := 0.75
+## false: no suma a la medalla "Con carino" (lo usa CondomBubble, que hereda de Masilla).
+var counts_medal := true
 var _t := 0.0
 var _state: Dictionary = {}  # enemigo -> segundos pegado (>= stick = ya liberado)
 var _seed := 0.0
@@ -53,7 +55,7 @@ func _physics_process(delta: float) -> void:
 			_state[e] = 0.0
 			if not e.is_in_group("boss"):
 				var m := get_node_or_null("/root/Medallas")
-				if m != null and m.has_method("contar_masilla"):
+				if counts_medal and m != null and m.has_method("contar_masilla"):
 					m.contar_masilla()
 		else:
 			_state[e] += delta

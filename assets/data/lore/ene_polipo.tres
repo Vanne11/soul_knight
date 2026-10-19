@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_polipo"
+title = "Pólipo Callado"
+text = "No hace ruido, no hace nada y casi no se ve. Justo por eso hay que ir a mirar: si nadie lo revisa, crece. Dato: el tamizaje de cáncer colorrectal busca problemas antes de que den síntomas. La edad y el examen dependen del país: pregunta en tu centro de salud. Y algunas personas con más riesgo se hacen controles del ano."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Pólipo Callado", "count": 3}
+flavor_text = "Mata 3 pólipos callados."

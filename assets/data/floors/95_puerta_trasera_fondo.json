@@ -11,9 +11,15 @@
 	"roster": ["testiculo", "trompa", "calambre"],
 	"names": ["Testículo Errante", "Trompa Escupidora", "Calambre"],
 	"extra": [
-		{"variant": "hemorroide", "name": "Hemorroide Fronteriza", "type": "tank", "weight": 0.3}
+		{"variant": "hemorroide", "name": "Hemorroide Fronteriza", "type": "tank", "weight": 0.15},
+		{"variant": "fisura", "name": "Fisura Fina", "type": "fisura", "weight": 0.26},
+		{"variant": "pujon", "name": "Pujón", "type": "pujon", "weight": 0.24},
+		{"variant": "cartel", "name": "Cartel Falso", "type": "cartel", "weight": 0.22},
+		{"variant": "aceite", "name": "Aceite Traicionero", "type": "aceite", "weight": 0.3},
+		{"variant": "todos", "name": "Todos-lo-Hacen", "type": "todos", "weight": 0.2},
+		{"variant": "polipo", "name": "Pólipo Callado", "type": "polipo", "weight": 0.2}
 	],
-	"weights": [0.3, 0.3, 0.3],
+	"weights": [0.1, 0.1, 0.1],
 	"boss": "coprolito",
 	"boss_name": "EL COPROLITO",
 	"needs": []

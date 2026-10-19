@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "globocondon"
+display_name = "Globocondón"
+description = "Un condón-globo que se infla en burbuja y atrapa a los enemigos. Protección con estilo (y se pone antes de empezar)."
+rarity = 3
+tags = ["arma", "explosivo", "área", "pt_arma"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}, {"type": 4, "status_effect": null, "custom_data": {"immunity": ["its"]}}]
+base_value = 460
+custom_data = {"dmg_type": "agua", "affinity": "neutral", "special": "globocondon", "base_damage": 16, "fire_rate": 1.1, "projectile_speed": 290, "range": 270, "explosion_radius": 34, "bubble_radius": 54, "bubble_time": 3.6, "boss_slow": 0.7, "pop_mult": 1.8}

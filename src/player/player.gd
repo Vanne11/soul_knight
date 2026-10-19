@@ -684,10 +684,10 @@ func _shoot() -> void:
 	_last_shot_ms = Time.get_ticks_msec()
 	var cd: Dictionary = current_weapon.custom_data
 	var special: String = cd.get("special", "")
-	var quiet := special == "beam" and Engine.get_physics_frames() % 6 != 0  # el rayo no ametralla el sonido
+	var quiet := (special == "beam" or special == "ducha") and Engine.get_physics_frames() % 6 != 0  # el rayo y el chorro no ametrallan el sonido
 	if not quiet:
 		Sound.play("shoot")
-	if special != "beam" and special != "combo":
+	if special != "beam" and special != "combo" and special != "ducha":
 		_muzzle_flash()
 		_recoil = minf(RECOIL_MAX, _recoil + RECOIL_KICK)
 	var effects = _player_stats.get_intoxication_effects()
@@ -762,6 +762,8 @@ func _shoot() -> void:
 		b.chain_mult = float(cd.get("chain_mult", 0.5))
 		if cd.has("bullet_color"):
 			b.tint = Color(cd["bullet_color"])
+		if cd.has("skin"):  # proyectil con arte propio (Fibra Canon)
+			b.skin = load(String(cd["skin"]))
 		if cd.get("confetti", false):
 			b.tint = Color(CONFETTI_COLORS[RNG.randi_range(0, CONFETTI_COLORS.size() - 1)])
 			b.skin = CONFETTI_TEX
@@ -814,6 +816,14 @@ func _dash_cut() -> void:
 			_dash_hits.append(e)
 			BossDamage.tag("", 1.0, "cuerpo_a_cuerpo")
 			e.take_damage(get_weapon_damage() * _player_stats.damage_modifier * 1.5 * lvl * (1.8 if Synergies.has("corte_y_fuga") else 1.0), self, _dash_direction * 200.0)
+
+## Empujon externo (Pujon de la Puerta Trasera, Ducha...): fija la velocidad `secs` s sin que el input la pise.
+func shove(vel: Vector2, secs := 0.2) -> void:
+	if is_dashing:
+		return
+	velocity = vel
+	_sneeze_push = maxf(_sneeze_push, secs)
+
 
 func _sneeze() -> void:
 	_sneeze_in = RNG.randf_range(3.0, 6.0)

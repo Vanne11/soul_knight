@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_fisura"
+title = "Fisura Fina"
+text = "Pequeña, flaca y de mal humor: corre dejando rajas en el suelo y no se cansa de quejarse. Dato: una fisura anal es un desgarro pequeño en el borde del ano. Duele al hacer caca y puede dejar sangre roja y viva. Es común y muchas cicatrizan solas. Con fibra, agua y baños tibios suele mejorar; si no mejora o el dolor es fuerte, hay tratamientos: consulta."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Fisura Fina", "count": 5}
+flavor_text = "Mata 5 fisuras finas."

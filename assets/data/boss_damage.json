@@ -27,7 +27,8 @@
 	"coprolito": {
 		"weak": {
 			"agua": 1.6,
-			"contundente": 1.4
+			"contundente": 1.4,
+			"fibra": 1.4
 		},
 		"resist": {
 			"calor": 0.4
