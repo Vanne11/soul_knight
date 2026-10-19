@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_cartel"
+title = "Cartel Falso"
+text = "Un letrero con cara de político que grita «¡DEBE DOLER!». Es mentira, y a veces ni se esfuerza en disimularlo. Mito: tiene que doler. Verdad: no. Si duele, se para; ir despacio, con lubricante y comunicación, importa."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Cartel Falso", "count": 5}
+flavor_text = "Mata 5 carteles falsos."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_pujon"
+title = "Pujón"
+text = "Se infla, se pone rojo y lo da todo, con el celular en la mano, como si alguien fuera a darle un premio por aguantar. Nadie lo da. Dato: si tu cuerpo avisa, ve al baño: aguantarse una y otra vez puede endurecer la caca. Y pujar fuerte y pasar mucho rato sentado en el inodoro (con el celular, por ejemplo) castiga a las hemorroides."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Pujón", "count": 5}
+flavor_text = "Mata 5 pujones."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "globocondon_lore"
+title = "Antes de Empezar"
+text = "Inflarlo es fácil; lo difícil es acordarse. Dato: el condón también protege en el sexo anal. Se pone antes de empezar, con lubricante, y se cambia si pasas a otra práctica."
+category = 2
+unlock_condition = {"type": 4, "target_id": "globocondon", "count": 1}
+flavor_text = "Usa un globocondón."
