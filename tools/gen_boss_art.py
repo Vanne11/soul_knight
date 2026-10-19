@@ -71,6 +71,13 @@ BOSSES = {
                     "with rows of beige plastic chairs, a red take-a-number dispenser, a glowing number display showing only "
                     "digits, old magazines and tired patients waiting. Low camera angle, strict but funny: it is time for "
                     "your check-up. "),
+    "coprolito": ("A dramatic boss reveal: EL COPROLITO, the boss from the reference, an ancient fossil creature shaped like a "
+                  "chubby coiled swirl of petrified brown-grey stone with ammonite shells embedded in it, tired heavy-lidded "
+                  "old-man eyes, a golden monocle, a long moss beard and a gnarled wooden cane, solemn and ridiculous like a "
+                  "grumpy museum professor made of rock, towering in an underground archaeological excavation hall with wooden "
+                  "scaffolding, hanging work lamps, brushes and trowels, strata of earth in the walls with dinosaur bones, "
+                  "ammonites and fern fossils, a rope grid on the floor and small dust clouds. Low camera angle, deadpan "
+                  "comedy, cartoon style, nothing gross and nothing realistic. "),
     "glandula": ("A dramatic boss reveal: the boss from the reference, a huge pink-brown walnut-shaped gland creature with a sealed "
                  "stitched mouth, tired heavy-lidded eyes with dark circles and a paper waiting-number ticket on its side, "
                  "sitting perfectly silent and calm in the middle of a dim hospital waiting room with rows of beige plastic chairs, "
@@ -88,6 +95,9 @@ REFS = {
     "don_sildenafil": [ART + "sildenafil/sildenafil_a.png"],
     "don_chequeo": ["tools/_intro_raw/prostata_v2.png"],  # la nuez de la Ventanilla vieja (rama nuez-ventanilla-guardada)
     "hoja_de_parra": [ART + "parra/hoja_a.png"],
+    # El Coprolito: la hoja copro_a sale de tools/gen_coprolito_art.py (hoy la caratula es PROVISORIA, tools/gen_coprolito_provisorio.py;
+    # al haber cuota de Gemini: gen_coprolito_art.py gen copro_a, luego este script para "coprolito" -> sobrescribe la provisoria).
+    "coprolito": [ART + "coprolito/copro_a.png"],
     "destine": [ART + "arcoiria/boss_a.png"],
 }
 NEW_LOOK = ("The boss MUST look exactly like the character in the attached reference sheet (same body, face, colors, "
