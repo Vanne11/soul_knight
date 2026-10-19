@@ -5,7 +5,8 @@ extends Node2D
 ## quien la respira se MAREA (StatusEffects "mareado": la pantalla ondula y el control se vuelve torpe un rato).
 ## Dibujada por codigo (circulos translucidos que giran); sin fisica: se mide por distancia. Se esquiva rodeandola.
 
-const COL := Color(0.78, 0.9, 0.4)
+const COL := Color(0.62, 0.85, 0.22)
+const EDGE := Color(0.3, 0.5, 0.1)
 
 var velocity := Vector2.ZERO
 var life := 1.8
@@ -46,8 +47,11 @@ func _draw() -> void:
 		var a := _seed + _t * 1.6 + TAU * float(i) / 5.0
 		var c := Vector2.from_angle(a) * r * 0.45
 		var col := COL
-		col.a = 0.34 * minf(1.0, k * 2.2)
+		col.a = 0.5 * minf(1.0, k * 2.2)
 		draw_circle(c, r * 0.58, col)
+		var ed := EDGE
+		ed.a = 0.55 * minf(1.0, k * 2.2)
+		draw_arc(c, r * 0.58, 0.0, TAU, 20, ed, 2.0)
 	var core := COL
-	core.a = 0.3 * minf(1.0, k * 2.2)
+	core.a = 0.45 * minf(1.0, k * 2.2)
 	draw_circle(Vector2.ZERO, r * 0.7, core)

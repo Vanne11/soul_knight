@@ -1114,8 +1114,8 @@ func _iris_step() -> bool:
 		_goal_text = "cruzar la puerta biologica"
 		_press_move(Vector2.UP)
 		return true
-	var stand: Vector2 = iris.global_position + Vector2(0, 150)
-	if player.global_position.distance_to(stand) > 30.0 and iris.state == IrisDoor.S.CLOSED:
+	var stand: Vector2 = iris.global_position + Vector2(0, 105)
+	if player.global_position.distance_to(stand) > 40.0 and iris.state == IrisDoor.S.CLOSED:
 		_goal_text = "ir frente a la puerta biologica"
 		_steer_to(stand)
 		return true

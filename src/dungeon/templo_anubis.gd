@@ -70,7 +70,7 @@ static func flank(iris: Node2D, parent: Node) -> void:
 	_prop(parent, "anubis_statue", c + Vector2(92, 44), true)
 	_prop(parent, "anubis_inscripcion", c + Vector2(0, 112))
 	var g := Graffiti.new()
-	g.position = c + Vector2(-168, 14)
+	g.position = c + Vector2(150, 30)
 	parent.add_child(g)
 
 

@@ -866,7 +866,7 @@ func _arm_exit_doors() -> void:
 	for it in Pasillos.layout([{"region": str(detour.get("to", "")), "dir": "up", "along": 0.0}], taken, size_px, ok):
 		var iris := IrisDoor.new()
 		iris.wall_dir = it.dir
-		iris.position = it.pos + (inward[it.dir] as Vector2) * (18.0 if it.dir == "up" else -6.0)  # en la pared norte la camara corta su borde: se asoma al suelo
+		iris.position = it.pos + (inward[it.dir] as Vector2) * (50.0 if it.dir == "up" else -6.0)  # en la pared norte la camara corta su borde: se baja al suelo para que se vea entera
 		iris.set_meta("exit_region", it.region)
 		iris.can_open = bool(detour.get("open", false)) and str(detour.get("to", "")) in RunManager.regions()
 		boss.props_node.add_child(iris)
