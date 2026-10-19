@@ -7,6 +7,7 @@ Lo que ya decidieron Nico y Vanessa (rutas, Útero dentro de Vulvania, Próstata
 Un mundo se avergonzó de su cuerpo y se volvió gris. Tres inadaptados (un hoplita que se cree autoridad, una valquiria sin paciencia y un animal que nadie sabe clasificar) le devuelven el color riéndose de lo que la Censura tapa. Se aprende al pasar, nunca con sermón: el chiste va primero, el dato va al códice. Humor adulto, doble sentido, cariño por los personajes. Nadie es el malo de verdad, salvo la que tapa.
 
 ## 2. Premisa y mundo
+- **La copia de seguridad (plan 6)**: esto YA PASÓ una vez. Otro héroe venció a la Hoja, pero nadie buscó al Algoritmo Moderador, que guardaba una copia de seguridad de todo: la restauró y la Censura volvió. Los "restos de héroes anteriores" del decorado son la prueba. Si vences a la Hoja SIN haber vencido al Algoritmo, pasa lo mismo contigo: tu héroe queda de decorado y los reinos que liberaste quedan TOMADOS (alternativo, Doña Regla, La Censura que destiñe; el Silencio nunca vuelve, sin humor). Vencer al Algoritmo destruye la copia: nadie vuelve.
 - **La Gran Censura**: el suceso. Un día la Hoja de Parra tapó estatuas, cuadros, libros de biología, gente. Todo quedó gris. Nombre propio, siempre con mayúscula.
 - **La Hoja de Parra** ("Su Pudorosidad", "la Hoja"): la villana. Hoja de higuera gigante, lentes de leer, collar de perlas (bisutería), sillón de mimbre. NO tiene corona.
   - Qué quiere: que todo esté tapado, callado y ordenado. No odia a nadie; cree que "así se está mejor".
@@ -86,7 +87,7 @@ Regla de menciones: los textos de región, de héroe, de cofre y del final NUNCA
 | Útero (opcional) | Doña Regla (único) | (sin alternativo) | menstruación |
 | Perineo | El Aduanero Hormonal | Doña Ventanilla | casillas, clasificar a la gente, burocracia de salud |
 | Próstata | La Glándula Callada (único) | (sin alternativo) | salud masculina, el chequeo |
-| Palacio | La Hoja de Parra | El Algoritmo Moderador | pudor, censura |
+| Palacio | La Hoja de Parra | (ninguno; el Algoritmo Moderador es un SEGUNDO JEFE SECRETO y opcional del Archivo, no un alternativo) | pudor, censura |
 
 - **Doña Cera Caliente**: esteticista que lo deja todo como un azulejo. Chiste: "Esto no duele" (duele). Presentación: "¡Siéntate, cariño, esto no duele nada! MENTIRA. Duele muchísimo." Muere quemándose con su propia cera. Códice: lo del jardín libre.
 - **La Afeitadora Eléctrica**: perfeccionista al ras. Chiste: "cero margen de error" y duda existencial de cabezal. "Bzzz. Cero margen de error. Tú y yo, al ras." Dato (rasurar no engrosa el vello) solo en códice.
@@ -97,7 +98,7 @@ Regla de menciones: los textos de región, de héroe, de cofre y del final NUNCA
 - **El Aduanero Hormonal**: sello gigante, gorra, formulario 27-B. Tabú real: clasificar a la gente. "Pasaporte hormonal, certificado de alergias y el 27-B. Por triplicado." Al caer, el paso queda libre "sin papeles".
 - **Doña Ventanilla** (antes "La Próstata Burocrática" y luego "La Ventanilla Única"; 2026-10-19 pasa a mujer: alternativa femenina del Perineo frente al Aduanero): casilla de atención con patas, rulos, lentes de gato y chicle. "Número 37. Pase. Falta un papel. Siempre falta uno." Sus datos de próstata se mudan a la Próstata.
 - **Su Pudorosidad, la Hoja de Parra**: "¡Tápate, sinvergüenza! En mi palacio se viene vestido. Y callado." Avisa que si cae todo queda al descubierto, "hasta lo de tu tía". Esa es la gracia: es exactamente el plan.
-- **El Algoritmo Moderador**: la Hoja contrató automatización cuando se llenó de trabajo; es la Hoja en versión nube. "Infracción detectada: existir. Procedo a retirar." Al caer, desde el fondo del servidor, una voz suspira "qué vergüenza": la Hoja también cae.
+- **El Algoritmo Moderador** (jefe secreto del Archivo, se llega buscando la sala secreta; vencerlo marca `algoritmo_vencido`): la Hoja contrató automatización cuando se llenó de trabajo; es la Hoja en versión nube. "Infracción detectada: existir. Procedo a retirar." Al caer, desde el fondo del servidor, una voz suspira "qué vergüenza": la Hoja también cae.
 - **EL ÚTERO** (nivel secreto, parte de Vulvania, +1 piso opcional):
   - Cómo se entra: en la segunda etapa de Vulvania hay una sala especial, la **Consulta de la Doctora V.** (guiño a Vanessa), con la puerta del Cuello Uterino, que se abre con un **Turno** (objeto: se compra en la tienda o lo suelta un élite). Se entra una vez por partida. Es opcional: no cambia la historia, da una bendición de ciclo y desbloquea el códice del ciclo.
   - Forma: un nivel de 4 tramos (4 fases del ciclo): menstruación (marea roja, calambres, las toallas rinden más), folicular (florece todo, folículos que revientan en botín), ovulación (todos en celo y más rápidos; hay que alcanzar el óvulo), lútea (SPM: enemigos irritables y antojos; el chocolate cura el doble).
@@ -113,7 +114,7 @@ Regla de menciones: los textos de región, de héroe, de cofre y del final NUNCA
   - Choque de nombre resuelto: "La Próstata Burocrática" pasa a ser "Doña Ventanilla". Nada más usa "Próstata" salvo esta región y sus códices.
 
 ## 7. Finales
-Los textos de final usan `{boss_final}`; vencer al Algoritmo cuenta como vencer a la Hoja (misma villana, versión nube). Cada final tiene UNA frase propia (≤120) y un chiste que no se repite en otro lado.
+Los textos de final usan `{boss_final}`; vencer al Algoritmo YA NO cuenta como vencer a la Hoja: son dos jefes distintos del Palacio. Finales (plan 6): sin Algoritmo = "la copia de seguridad" (reinos tomados, post-juego); con Algoritmo = solo quedan los reinos no visitados; con TODOS los reinos liberados = FINAL VERDADERO. Cada final tiene UNA frase propia (≤120) y un chiste que no se repite en otro lado.
 - **Victoria genérica** (narrador, pantalla final): "La Hoja cayó y el color volvió. ¿Y ahora qué? Nada. Sal a la calle." Es el único sitio del juego con ese chiste.
 - **Pitocles**: "Pitocles fundó los Hombres que Hablan. Cuatro asistentes y una galleta. Un comienzo."
 - **Vulvalquiria**: "Vulvalquiria colgó a la Hoja de alfombra. Una sola estatua sigue tapada: la suya, por gusto."
@@ -156,7 +157,7 @@ Los textos de final usan `{boss_final}`; vencer al Algoritmo cuenta como vencer 
 | Lámina 6: los tres juntos en una colina | Rehacer como tríptico: tres rincones, tres héroes que despiertan por separado. Texto: "Pero en tres rincones del mundo, tres inadaptados despertaron sin ganas de callarse." |
 | "5 pisos" (floor_anatomy) vs 10 reales | Nunca "5 pisos". Hablar de regiones (6 + el Útero secreto). La interfaz muestra el piso real (11, o 12 con Útero). |
 | Textos que nombran al jefe original | Región/héroe/final: sin nombre o con `{boss}`. Frases por jefe en su clave. |
-| Victoria dice "La Hoja ha caído" aunque ganes al Algoritmo | El Algoritmo es la Hoja en versión nube: vencerlo es vencerla. Victoria con `{boss_final}`. |
+| Victoria dice "La Hoja ha caído" aunque ganes al Algoritmo | (obsoleto desde el plan 6: el Algoritmo ya no es jefe final alternativo; la victoria es siempre sobre la Hoja) |
 | `char_vulvalquiria`: hacha y "dash a mitad de costo" | Sin hacha. Habilidades reales: velocidad, doble dash, alas que planean, grito. |
 | "Corona" de la Hoja que nunca se describe | La Hoja no tiene corona. Corona = Ovaria II. Ovaria confiesa que el collar de la Hoja era bisutería. |
 | "Censura": villana, suceso y dificultad | Villana = la Hoja / Su Pudorosidad. Suceso = la Gran Censura. Dificultad = Pudor. |
