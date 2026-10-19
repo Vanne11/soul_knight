@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://c6qn624drqhmi"
+
+[deps]
+
+files=["res://locale/jefes_afeitadora_testiculo.es.translation", "res://locale/jefes_afeitadora_testiculo.en.translation", "res://locale/jefes_afeitadora_testiculo.fr.translation"]
+
+source_file="res://locale/jefes_afeitadora_testiculo.csv"
+dest_files=["res://locale/jefes_afeitadora_testiculo.es.translation", "res://locale/jefes_afeitadora_testiculo.en.translation", "res://locale/jefes_afeitadora_testiculo.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
