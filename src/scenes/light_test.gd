@@ -202,7 +202,7 @@ func _build_actors() -> void:
 	# Enemigos quietos: solo para ver sombras y luz sobre ellos.
 	for i in ENEMIES.size():
 		var spr := AnimatedSprite2D.new()
-		spr.sprite_frames = load("res://assets/sprites/enemies/%s_sprite_frames.tres" % ENEMIES[i])
+		spr.sprite_frames = load(EnemyArt.frames(ENEMIES[i]))
 		spr.play("idle")
 		spr.position = Vector2(180 + i * 170, 560 if i % 2 == 0 else 200)
 		add_child(spr)

@@ -315,7 +315,7 @@ var _coin_mult := 1.0
 var _hormone_room: Room = null
 
 func _frames_path(variant: String) -> String:
-	return "res://assets/sprites/enemies/%s_sprite_frames.tres" % variant
+	return EnemyArt.frames(variant)
 
 func _spawn_room_enemies(room: Room) -> void:
 	if RoomDirector.takes_over(room):

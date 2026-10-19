@@ -21,7 +21,7 @@ static func image(e) -> Texture2D:
 		LoreEntry.Category.ENEMY:
 			var v: String = _enemy_variants().get(target, "")
 			if v != "":
-				path = "res://assets/sprites/enemies/%s_idle_00.png" % v
+				path = EnemyArt.file(v, "%s_idle_00.png" % v)
 		LoreEntry.Category.CHARACTER:
 			path = "res://assets/sprites/player/%s/portrait.png" % target.trim_prefix("play_")
 	if path == "" or not ResourceLoader.exists(path):

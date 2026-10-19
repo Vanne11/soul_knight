@@ -51,7 +51,7 @@ func summon() -> void:
 	kid.set("drop_table", [] as Array[Dictionary])
 	var frames_path := ""
 	if idx >= 0 and idx < roster.size():
-		frames_path = "res://assets/sprites/enemies/%s_sprite_frames.tres" % roster[idx]
+		frames_path = EnemyArt.frames(roster[idx])
 	if frames_path != "" and ResourceLoader.exists(frames_path):
 		kid.get_node("AnimatedSprite2D").sprite_frames = load(frames_path)
 	kid.get_node("AnimatedSprite2D").scale *= 0.75
