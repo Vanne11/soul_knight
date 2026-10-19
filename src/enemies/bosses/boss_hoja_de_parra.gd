@@ -386,10 +386,16 @@ func _update_animation() -> void:
 		super()
 
 
+## Musica: la forma 1 usa las fases 1-2 y "La Parra Entera" (forma 2) la fase 3.
+func music_phase() -> int:
+	return 3 if form == 2 else clampi(current_phase, 1, 2)
+
+
 func _become_parra() -> void:
 	_reviving = false
 	form = 2
 	current_phase = 1
+	update_music()
 	max_health = _hoja_hp * PARRA_HP_MULT
 	current_health = max_health
 	enemy_name = tr("BOSS_PARRA_NAME")

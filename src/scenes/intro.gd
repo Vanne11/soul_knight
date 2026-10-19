@@ -67,6 +67,7 @@ func _ready() -> void:
 	if get_node("/root/RunManager").rescue_requested:
 		_show_select()  # post-juego "Desordenes": la historia ya se conoce, directo a elegir heroe
 	else:
+		Sound.music("intro")  # tema de la historia; al elegir heroe vuelve el del menu
 		_next_slide()
 
 
@@ -266,6 +267,7 @@ func _build_select() -> void:
 	HudStyle.juice_button(story_btn)
 	story_btn.pressed.connect(func():
 		_slide = -1
+		Sound.music("intro")
 		_select.visible = false
 		_story.visible = true
 		_hint.visible = true
@@ -337,6 +339,7 @@ func _card(id: String, parent: Control) -> Button:
 
 
 func _show_select() -> void:
+	Sound.music("menu")
 	if _tween:
 		_tween.kill()
 	_story.visible = false

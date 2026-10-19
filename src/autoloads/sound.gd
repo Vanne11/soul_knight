@@ -1,6 +1,6 @@
 extends Node
 
-## Efectos y musica. Los efectos (.wav) salen de tools/gen_audio.py; la musica va en .ogg (tools/gen_floor_music.py, gen_menu_music.py).
+## Efectos y musica. Los efectos (.wav) salen de tools/gen_audio.py; la musica va en .ogg (tools/gen_music_lyria.py: chiptune de Lyria 3.5).
 ##   Sound.play("shoot")      efecto (ver assets/audio/sfx)
 ##   Sound.music("boss")      cambia de tema ("" para callar)
 ## Lo que ya tiene señal en GlobalEvents suena desde aqui; el resto lo llama
@@ -21,7 +21,9 @@ var _sfx: Dictionary = {}
 var _last_ms: Dictionary = {}
 var _players: Array[AudioStreamPlayer] = []
 var _next := 0
-var _music: AudioStreamPlayer
+## Dos reproductores de musica para el fundido cruzado; _cur es el que suena ahora.
+var _music: Array[AudioStreamPlayer] = []
+var _cur := 0
 var _music_name := ""
 var _fade: Tween
 
@@ -37,10 +39,12 @@ func _ready() -> void:
 		p.bus = "SFX"
 		add_child(p)
 		_players.append(p)
-	_music = AudioStreamPlayer.new()
-	_music.volume_db = MUSIC_DB
-	_music.bus = "Music"
-	add_child(_music)
+	for i in 2:
+		var m := AudioStreamPlayer.new()
+		m.volume_db = MUSIC_DB
+		m.bus = "Music"
+		add_child(m)
+		_music.append(m)
 
 	var ge := get_node("/root/GlobalEvents")
 	ge.enemy_damaged.connect(func(_e, _a, _s): play("enemy_hit"))
@@ -80,39 +84,38 @@ func voice(ch: String, base_pitch := 1.0, vol_offset_db := 0.0) -> void:
 	p.play()
 
 
-## Cambia de tema con un fundido corto (FADE s de bajada y FADE de subida).
+## Cambia de tema con un fundido cruzado (la pista vieja baja mientras la nueva sube).
 ## Si ya suena esa pista no hace nada (no reinicia). El volumen del jugador
-## lo ajusta el bus "Music"; aqui solo se mueve volume_db del player.
-## loop=false para jingles de una sola vez (ej. "studio_jingle").
-func music(track: String, loop := true) -> void:
+## lo ajusta el bus "Music"; aqui solo se mueve volume_db de los players.
+## loop=false para jingles de una sola vez (ej. "studio_jingle", "victoria").
+## fade: segundos del cruce (0.6 al cambiar de fase de jefe).
+func music(track: String, loop := true, fade := MUSIC_FADE) -> void:
 	if track == _music_name:
 		return
 	_music_name = track
 	if _fade:
 		_fade.kill()
-	if not _music.playing:
-		_start_track(track, loop)
+	var old := _music[_cur]
+	var nuevo := _music[1 - _cur]
+	nuevo.stop()  # un cruce anterior sin terminar: se corta
+	var started := false
+	if track != "" and ResourceLoader.exists(MUSIC_DIR + track + ".ogg"):
+		var s: AudioStreamOggVorbis = load(MUSIC_DIR + track + ".ogg")
+		s.loop = loop
+		nuevo.stream = s
+		nuevo.volume_db = FADE_DB if old.playing else MUSIC_DB
+		nuevo.play()
+		started = true
+	if started:
+		_cur = 1 - _cur
+	if not old.playing:
 		return
-	# Si hay pista sonando: baja, cambia y sube
 	_fade = create_tween()  # el nodo es ALWAYS: el fundido sigue en pausa
-	_fade.tween_property(_music, "volume_db", FADE_DB, MUSIC_FADE)
-	_fade.tween_callback(_start_track.bind(track, loop))
-	if track != "":
-		_fade.tween_property(_music, "volume_db", MUSIC_DB, MUSIC_FADE)
-
-
-func _start_track(track: String, loop := true) -> void:
-	if track == "" or not ResourceLoader.exists(MUSIC_DIR + track + ".ogg"):
-		_music.stop()
-		_music.volume_db = MUSIC_DB
-		return
-	var s: AudioStreamOggVorbis = load(MUSIC_DIR + track + ".ogg")
-	s.loop = loop
-	_music.stream = s
-	_music.volume_db = FADE_DB
-	_music.play()
-	if _fade == null or not _fade.is_valid():
-		_music.volume_db = MUSIC_DB
+	_fade.set_parallel(true)
+	_fade.tween_property(old, "volume_db", FADE_DB, fade)
+	if started:
+		_fade.tween_property(nuevo, "volume_db", MUSIC_DB, fade)
+	_fade.chain().tween_callback(old.stop)
 
 
 ## F2 silencia todo (los volumenes finos estan en Ajustes).
@@ -125,5 +128,6 @@ func _unhandled_input(event: InputEvent) -> void:
 func _exit_tree() -> void:
 	if _fade:
 		_fade.kill()
-	_music.stop()
-	_music.stream = null
+	for m in _music:
+		m.stop()
+		m.stream = null

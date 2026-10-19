@@ -170,20 +170,22 @@ func _on_door_entered_room(room: Room, door: Door) -> void:
 	_enter_room(next_room, next_room.door_to(room.grid_pos))
 
 
-## Pista del reino del piso ("explore_pene", "boss_vulva"...); si no existe, la generica.
+## Pista de la sala: exploracion por reino (explore_<reino>), jefe por id y fase (boss_<id>_p1; el
+## propio jefe cruza a _p2/_p3, EnemyBoss.update_music), "voz" en las Tierras de la Voz y "paz" en
+## los tramos en paz. Sin pista (el Silencio oscuro, la sala de memoria, el Pacto) no suena nada.
 func _room_track(room: Room) -> String:
+	var boss_alive := room.room_type == Room.RoomType.BOSS and not room.cleared
 	if Silencio.active():
+		if Silencio.liberado and not boss_alive and str(room.get_meta("silencio", "")) != "memoria":
+			return "explore_voz"  # Las Tierras de la Voz: el Silencio liberado
 		return ""  # el Silencio no tiene musica
-	if RunManager.floor_is_peace(_run_manager.current_floor) and ResourceLoader.exists(Sound.MUSIC_DIR + "paz.ogg"):
-		return "paz"  # pista alegre de los reinos en paz (si algun dia existe; si no, la del reino)
-	var base := "boss" if room.room_type == Room.RoomType.BOSS and not room.cleared else "explore"
-	if base == "boss" and not RunManager.floor_has_boss(_run_manager.current_floor):
-		base = "explore"  # el guardian de la 1a etapa no es jefe: sin musica de jefe
-	var kingdom: String = str(_run_manager.floor_data().get("kingdom", ""))
-	var themed := base + "_" + kingdom
-	if kingdom != "" and ResourceLoader.exists(Sound.MUSIC_DIR + themed + ".ogg"):
-		return themed
-	return base
+	if RunManager.floor_is_peace(_run_manager.current_floor):
+		return "explore_paz"
+	var fd: Dictionary = _run_manager.floor_data()
+	if boss_alive and RunManager.floor_has_boss(_run_manager.current_floor):
+		var bv := BossPicker.pick(fd, _run_manager.current_seed, _run_manager.current_floor)
+		return "boss_%s_p1" % str(bv.variant).trim_prefix("boss_")
+	return "explore_" + str(fd.get("region", ""))
 
 
 func _enter_room(room: Room, entry_door: Door = null) -> void:

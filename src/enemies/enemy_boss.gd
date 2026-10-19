@@ -995,9 +995,30 @@ func _enter_furia() -> void:
 	_ge.show_floating_text.emit(global_position + Vector2(0, -160), tr("CENSURA_FURIA"), Color("ff4f9a"))
 
 
+## Fase de la musica (1..3): la banda sonora sigue la ira del jefe (boss_<id>_p1/_p2/_p3).
+## La Hoja de Parra la cambia: su segunda forma es la fase 3 de la musica.
+func music_phase() -> int:
+	return clampi(current_phase, 1, 3)
+
+
+## Pista del jefe en su fase actual; "" si ese jefe no tiene musica (el Pacto de Silencio).
+func music_track() -> String:
+	var id := (get_script() as Script).resource_path.get_file().get_basename().trim_prefix("boss_")
+	var track := "boss_%s_p%d" % [id, music_phase()]
+	return track if ResourceLoader.exists(Sound.MUSIC_DIR + track + ".ogg") else ""
+
+
+## Cruza a la pista de la fase actual (fundido corto de 0.6 s).
+func update_music() -> void:
+	var track := music_track()
+	if track != "" and state != State.DEAD:
+		Sound.music(track, true, 0.6)
+
+
 func _enter_phase(n: int) -> void:
 	_cancel_attack()
 	current_phase = n
+	update_music()
 	_chan_pending = _channels_left > 0
 	state = State.TRANSITION
 	_timer = 1.8
