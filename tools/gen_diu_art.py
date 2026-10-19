@@ -14,6 +14,7 @@ Densidad: 1 pixel de arte = 1 unidad de juego, como Ovaria / Testiculo / Sildena
 import sys
 from pathlib import Path
 
+import numpy as np
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -23,7 +24,7 @@ import gen_arcoiria_art2 as A  # noqa: E402
 from arc2_gemini import STYLE  # noqa: E402
 
 ROOT = GEM.ROOT
-RAW = ROOT / ".claude/arte_fuente/diu"
+RAW = Path("/home/nick/Escritorio/Proyectos/soul_knight/.claude/arte_fuente/diu")
 GEM.RAW = RAW
 T.RAW = RAW
 COVER = Path("/home/nick/Escritorio/Proyectos/soul_knight/tools/_intro_raw/diu_cosmico_v2.png")
@@ -79,7 +80,7 @@ _POSES_B = (
     "down limp like a wilted T, the gem dull, eyes half shut, panting, a sweat drop, threads limp; (3) STUNNED and dizzy: tilted "
     "and wobbling, swirly spiral eyes, tiny stars circling the gem, gem flickering; (4) CHANNELING A HEALING: eyes closed, serene, "
     "arms raised, a warm orange-gold and violet aura, tiny plus signs and sparkles rising, the gem pulsing with light. Bottom row: "
-    "(5) HURT: flinching, tilted back, eyes squeezed shut, the mouth a gasp, a dent in the shaft, a small spray of sparks; then a "
+    "(5) flinching pose, flinching, tilted back, eyes squeezed shut, the mouth a gasp, a dent in the shaft, a small spray of sparks; then a "
     "theatrical DEATH in 3 steps: (6) shaking, cracked all over, sparks flying, the gem cracking, eyes spinning; (7) glowing "
     "white-hot from inside, the shaft bulging, the gem about to burst, cracks of light; (8) fallen apart: the shaft and the two arms "
     "broken into several separate copper pieces floating loosely around a small violet gem, X-shaped eyes on the biggest piece, a "
@@ -103,9 +104,9 @@ _SAT = (
     "and two small square solar-panel wings, one on each side (copper-orange panels with darker brown grid lines and a violet "
     "tint). Hovering, no legs. Cute but aggressive and humorous. Palette: copper orange, brown, violet, a touch of white. "
     "Same design as the reference image (the small satellites around the big copper IUD). Poses left to right, top row: "
-    "(1) idle hovering, wings level; (2) idle frame 2: tilted slightly, wings angled, as if orbiting; (3) AIMING: the eye glowing, "
-    "body trembling, the gem glowing bright, red-violet glow, a thin aiming line to the right; (4) DIVE: stretched forward as a "
-    "streak diving to the right, wings folded back, speed lines. Bottom row: (5) HURT: flinching, eye squeezed shut, wings "
+    "(1) idle hovering, wings level; (2) idle frame 2: tilted slightly, wings angled, as if orbiting; (3) aiming pose, the eye glowing, "
+    "body trembling, the gem glowing bright, red-violet glow, a thin aiming line to the right; (4) diving pose, stretched forward as a "
+    "streak diving to the right, wings folded back, speed lines. Bottom row: (5) flinching pose, flinching, eye squeezed shut, wings "
     "bent, sparks; (6) death part one: cracked and smoking, spinning eye, a wing detaching; (7) death part two: bursting "
     "into copper pieces, the gem and the wings flying apart; (8) death part three: a tiny puff with few copper bits and a "
     "small ghost leaving."
@@ -131,7 +132,13 @@ for _n in ("diu_b", "diu_c"):
         "orange with a lighter highlight stripe, the same violet gem, the same square eyes, the same chunky pixel size and 1-pixel "
         "dark outline. No glossy plastic highlights, no smooth airbrushed shading. Do NOT write pose names or any caption."
     )
-PROMPTS["satelite"] = STYLE + _SAT
+PROMPTS["diu_b"] += (
+    " IMPORTANT: the arms are STRAIGHT stiff diagonal copper bars with squared pixel ends (NOT curved tentacles, NOT hands), the "
+    "violet round gem sits ON TOP at the junction of the arms (never on the shaft), eyes are the same small square white eyes, "
+    "the body is a plain flat matte copper cylinder exactly like the reference sheets, hard-edged pixel shading only, no glossy "
+    "airbrushed highlights, no soft glow outlines."
+)
+PROMPTS["satelite"] = STYLE + _SAT + " ABSOLUTELY NO TEXT: do not write pose names, captions, labels, words or letters anywhere in the image, the bottom of every cell is empty green."
 GEN_ORDER = ["diu_a", "diu_b", "diu_c", "diu_a_p2", "diu_b_p2", "diu_c_p2", "diu_a_p3", "diu_b_p3", "diu_c_p3", "satelite"]
 
 
@@ -149,6 +156,8 @@ def gen(names):
             refs = [boss_ref]
         elif n in ("diu_b", "diu_c"):
             refs = [boss_ref, Image.open(RAW / "diu_a.png")]
+            if n == "diu_b" and (RAW / "diu_c.png").exists():
+                refs.append(Image.open(RAW / "diu_c.png"))
         elif n == "satelite":
             refs = [_cover((225, 290, 375, 415)), _cover((955, 50, 1110, 165)), boss_ref]
         else:
@@ -243,7 +252,14 @@ def satelite_poses():
         cv.alpha_composite(A.down(v, w, h), (max(0, (SW_ - w) // 2), (SH_ - h) // 2))  # centrado: orbita, no pisa el suelo
         out[k] = cv
     print("  satelite escala", round(s, 3))
-    return A.quantize_set(out, 24)
+    for k, im in out.items():  # el violeta de la gema se agrisa al reducir: se satura antes de cuantizar
+        a = np.array(im).astype(float)
+        m = (a[:, :, 2] > a[:, :, 1] + 14) & (a[:, :, 1] < 185) & (a[:, :, 2] >= a[:, :, 0] - 12) & (a[:, :, 3] > 128)
+        a[m, 1] *= 0.62
+        a[m, 0] *= 0.92
+        a[m, 2] = np.minimum(255, a[m, 2] * 1.12)
+        out[k] = Image.fromarray(a.astype(np.uint8), "RGBA")
+    return A.quantize_set(out, 32)
 
 
 def build_satelite():
