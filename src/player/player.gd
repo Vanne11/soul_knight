@@ -696,7 +696,7 @@ func _shoot() -> void:
 	dmg *= 1.0 + (affinity_boost(current_weapon) - 1.0) * 0.2  # arma de tu reino: hasta +10%
 	if special == "charge":
 		dmg *= _charge_mult
-	# Satisfyer: en vez de balas lanza un vortice que succiona (base_damage = dano por tic)
+	# Succionador: en vez de balas lanza un vortice que succiona (base_damage = dano por tic)
 	if cd.has("vortex"):
 		_attack_anim = 0.15
 		var v := SuctionVortex.new()

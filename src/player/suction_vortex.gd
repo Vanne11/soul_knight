@@ -1,7 +1,7 @@
 extends Node2D
 class_name SuctionVortex
 
-## Satisfyer: un pulso que vuela corto, se planta y succiona a los enemigos
+## Succionador: un pulso que vuela corto, se planta y succiona a los enemigos
 ## cercanos hacia su centro mientras les hace dano a tics (poco) y los aturde
 ## con cada tic. Es un arma de control: junta grupos y los inmoviliza para
 ## rematarlos con otra arma (o con el mismo vortice).

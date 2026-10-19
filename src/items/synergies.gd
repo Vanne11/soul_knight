@@ -29,7 +29,7 @@ const TABLE := {
 	"chancla_materna": {"weapon": "chancleta_voladora", "blessings": ["orgullo"]},
 	"spa_improvisado": {"weapon": "globos_agua", "blessings": ["regla"]},
 	"doble_proteccion": {"weapon": "preservativo_atrapabalas", "items": ["relic_condom"]},
-	"lubricacion_eficiente": {"weapon": "satisfyer", "items": ["relic_lube"]},
+	"lubricacion_eficiente": {"weapon": "succionador", "items": ["relic_lube"]},
 	"corte_y_fuga": {"blessings": ["filo", "escurridiza"]},
 	"orgullo_de_casa": {"any": [
 		{"hero": ["pitocles"], "sets": ["pene"]},

@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1")
-id = "satisfyer"
-display_name = "Satisfyer de Asedio"
+id = "succionador"
+display_name = "Succionador de Asedio"
 description = "Succiona y aturde todo lo cercano, casi sin daño. Nadie se resiste."
 rarity = 3
 tags = ["arma"]

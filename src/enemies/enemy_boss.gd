@@ -445,7 +445,7 @@ func _channel_color() -> Color:
 	return Color(1.0, 0.8, 0.3)
 
 
-## true = el vortice del Satisfyer no lo arrastra (burbuja de la Hoja de Parra).
+## true = el vortice del Succionador no lo arrastra (burbuja de la Hoja de Parra).
 func is_suck_immune() -> bool:
 	return false
 

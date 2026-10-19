@@ -87,8 +87,8 @@ ITEM_RIFLE_REPRODUCTIVE_NAME,Fusil Fecundador,Fertilizing Rifle,,Fusil Fécondat
 ITEM_RIFLE_REPRODUCTIVE_DESC,"Mucho daño, puntería de cirujano, 6 tiros y recarga larga. Cada bala, un posible hijo.","Heavy damage, surgeon aim, 6 shots and a long reload. Every bullet, a potential child.",,"Gros dégâts, visée de chirurgien, 6 tirs et longue recharge. Chaque balle, un enfant possible."
 ITEM_RUM_NAME,Ron de Cañamo,Hemp Rum,,Rhum au Chanvre
 ITEM_RUM_DESC,"+35 intoxicación, -20% precisión, +25% daño, +5% robo de vida. Yo ho ho y arrepentimiento.","+35 intoxication, -20% accuracy, +25% damage, +5% lifesteal. Yo ho ho and regret.",,"+35 intox, -20% précision, +25% dégâts, +5% vol de vie. Yo-ho-ho et regret."
-ITEM_SATISFYER_NAME,Satisfyer de Asedio,Siege Satisfyer,,Satisfyer de Siège
-ITEM_SATISFYER_DESC,"Succiona y aturde todo lo cercano, casi sin daño. Nadie se resiste.","Sucks in and stuns everything nearby, barely any damage. Nobody resists.",,"Aspire et étourdit tout autour, presque sans dégâts. Personne n'y résiste."
+ITEM_SUCCIONADOR_NAME,Succionador de Asedio,Siege Suction Toy,,Succionneur de Siège
+ITEM_SUCCIONADOR_DESC,"Succiona y aturde todo lo cercano, casi sin daño. Nadie se resiste.","Sucks in and stuns everything nearby, barely any damage. Nobody resists.",,"Aspire et étourdit tout autour, presque sans dégâts. Personne n'y résiste."
 ITEM_SHOTGUN_PELVIC_NAME,Escopeta Pélvica,Pelvic Shotgun,,Fusil à Pompe Pelvien
 ITEM_SHOTGUN_PELVIC_DESC,"Brutal a quemarropa, inútil de lejos, empuja mucho. Para abrir piernas... y cráneos.","Brutal point-blank, useless at range, big knockback. For opening legs... and skulls.",,"Brutal à bout portant, nul de loin, gros recul. Pour ouvrir les cuisses... et les crânes."
 ITEM_SMG_VIBRATOR_NAME,Subfusil Vibratorio,Vibrating SMG,,Pistolet-Mitrailleur Vibrant

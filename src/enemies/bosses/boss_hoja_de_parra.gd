@@ -1043,7 +1043,7 @@ func _defend(dt: float) -> void:
 
 # ---------------------------------------------------------------- desafios de la cura
 ## BURBUJA: una burbuja de hojas la envuelve: refleja tus balas hacia ti y el vortice del
-## Satisfyer no la arrastra. Tiene una abertura que gira; mete balas por ahi.
+## Succionador no la arrastra. Tiene una abertura que gira; mete balas por ahi.
 func ch_burbuja() -> void:
 	var R := 125.0
 	var need := 5

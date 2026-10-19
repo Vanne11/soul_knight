@@ -736,7 +736,7 @@ func _watch_shots() -> void:
 	var pivot := _player.get_node_or_null("WeaponPivot") as Node2D
 	var wp: Vector2 = pivot.global_position if pivot else _player.global_position
 	match id:
-		"satisfyer":
+		"succionador":
 			return
 		"launcher_condom":
 			_droplets(wp + aim * 16.0, aim)
