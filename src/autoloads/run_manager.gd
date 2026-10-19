@@ -25,6 +25,10 @@ class_name RunManager
 ## elite_chance: probabilidad de que un bicho comun salga reforzado (mas vida/dano, aura roja).
 ## needs: hormonas que exige la Puerta Hormonal de la sala del jefe (solo stage 2).
 ## miniboss: {type, variant, name} opcional: minijefe propio de la sala MINIBOSS (sin el, dos gigantes del roster).
+## liberated_variant: (GANCHO, sin implementar) id de otro reino en el que se transforma este al
+##   liberarlo. Para Silencio: no es un reino de celebracion, al liberarlo pasa a ser un reino de
+##   igualdad. Hoy solo se lee con RunManager.liberated_variant(region); nadie lo aplica aun.
+## peace: true lo pone RunManager.begin_rescue en la copia del piso que se recorre en paz (no va en los JSON).
 ## tint: color de la sala cuando la liberas (antes de eso esta gris: censurada). En el
 ##   JSON va en hex ("7fe0a0") y aqui se convierte a Color.
 ## FLOORS se carga una vez al cargar el script (static var): mismo Array de Dictionary que
@@ -133,6 +137,11 @@ static var seal_regions: Array = []
 static var route_dynamic := false
 ## Eleccion de puerta del bot (--route-pick): "first", "random" (determinista) o un id de region.
 static var route_pick := "first"
+## Run de rescate (post-juego "Desordenes"): ruta fija = tramos en paz por reinos ya liberados +
+## los reinos pendientes (ver begin_rescue).
+static var rescue_mode := false
+## Reinos de la ruta que se cruzan en paz (un piso corto sin combates, ver _peace_floor).
+static var peace_regions: Array = []
 
 
 static func _load_routes() -> Dictionary:
@@ -193,6 +202,8 @@ static func _add_region_floors(id: String) -> void:
 ## Empieza la ruta de un heroe: solo su reino inicial; el resto se decide jugando.
 static func begin_route(hero: String, _seed: int = 0) -> void:
 	route_dynamic = true
+	rescue_mode = false
+	peace_regions = []
 	route_regions = []
 	route_floors = []
 	seal_regions = []
@@ -206,6 +217,8 @@ static func set_route_for(hero: String, seed_: int) -> void:
 ## Fija una ruta fija (lista de ids de region): sus pisos, por reino y etapa. Sin sellos ni eleccion.
 static func set_route(region_ids: Array) -> void:
 	route_dynamic = false
+	rescue_mode = false
+	peace_regions = []
 	route_regions = []
 	route_floors = []
 	seal_regions = []
@@ -429,7 +442,10 @@ static func floor_region(floor_n: int) -> String:
 ## por reino usa canon_region_index (no depende del heroe).
 static func region_index(floor_n: int) -> int:
 	var r := floor_region(floor_n)
-	var i: int = route_regions.find(r) if not route_floors.is_empty() else regions().find(r)
+	var played: Array = route_regions
+	if not peace_regions.is_empty():
+		played = route_regions.filter(func(x): return x not in peace_regions)  # los tramos en paz no suben la dificultad
+	var i: int = played.find(r) if not route_floors.is_empty() else regions().find(r)
 	return maxi(i, 0)
 
 ## Indice fijo del reino entre todos (orden de los archivos), igual para todos los heroes.
@@ -466,8 +482,91 @@ func liberate(floor_n: int) -> bool:
 	if r in liberated:
 		return false
 	liberated.append(r)
+	if desorden_notice and pending_regions().is_empty():
+		desorden_notice = false  # ya no queda ningun desorden
 	save_meta_progression()
 	return true
+
+## --- Post-juego "Desordenes" ---
+## Tras ganar, cada heroe solo cruzo parte de los reinos: los que no estan en `liberated` (progreso
+## permanente) quedan "en desorden". El aviso se recuerda entre partidas hasta liberarlos todos.
+var desorden_notice := false
+## Lo piden el panel del post-juego / el menu y lo consume start_new_run.
+var rescue_requested := false
+## true = otro heroe (arranca en SU reino de inicio); false = el mismo, "caminando" desde donde ganaste.
+var rescue_new_hero := false
+## Heroe que gano y se cambia: el selector lo deshabilita (la idea es probar otro).
+var rescue_swap_from := ""
+## Maximo de reinos pendientes por run de rescate y de tramos en paz antes del primero.
+const RESCUE_MAX_TARGETS := 2
+const PEACE_MAX_STOPS := 3
+
+## Reinos existentes sin liberar, en el orden del mundo.
+func pending_regions() -> Array:
+	return world_order().filter(func(r): return r not in liberated)
+
+## Marca (o borra) el aviso segun lo que quede pendiente. Se llama al ganar.
+func note_desordenes() -> void:
+	desorden_notice = not pending_regions().is_empty()
+	save_meta_progression()
+
+## Ruta de rescate (fija, sin sellos): tramos en paz por reinos ya liberados y luego los pendientes
+## (hasta RESCUE_MAX_TARGETS). Si new_hero, el heroe empieza en SU reino de inicio (en paz si ya
+## esta liberado; si esta pendiente, es el primer objetivo); si no, "se va caminando" y cruza en
+## paz los PEACE_MAX_STOPS reinos liberados que preceden al primer objetivo en el orden del mundo.
+## Cada tramo en paz es UN piso de una sala (sin enemigos, ni monedas ni cofres): ver _peace_floor.
+func begin_rescue(hero: String, new_hero: bool) -> void:
+	var pending := pending_regions()
+	if pending.is_empty():
+		begin_route(hero)
+		return
+	var start := start_region(hero)
+	var targets: Array = []
+	if new_hero and start in pending:
+		targets.append(start)
+	for r in pending:
+		if targets.size() >= RESCUE_MAX_TARGETS:
+			break
+		if r not in targets:
+			targets.append(r)
+	var stops: Array = []
+	if new_hero and start in liberated:
+		stops.append(start)
+	var order := world_order()
+	var before: Array = order.slice(0, order.find(targets[0])).filter(func(r): return r in liberated and r not in stops)
+	stops.append_array(before.slice(maxi(before.size() - (PEACE_MAX_STOPS - stops.size()), 0)))
+	route_dynamic = false
+	rescue_mode = true
+	peace_regions = stops.duplicate()
+	route_regions = []
+	route_floors = []
+	seal_regions = []
+	for s in stops:
+		route_regions.append(s)
+		route_floors.append(_peace_floor(s))
+	for t in targets:
+		_add_region_floors(t)
+
+## Copia del 1er piso del reino para recorrerlo en paz: sin jefe y con UNA sala (la de inicio,
+## que main.gd viste de plaza con carteles y portal).
+static func _peace_floor(region: String) -> Dictionary:
+	var f: Dictionary = FLOORS[FLOORS.find_custom(func(x): return x.region == region)].duplicate(true)
+	f["peace"] = true
+	f["boss"] = ""
+	f["room_count"] = [1, 1]
+	return f
+
+## El piso n es un tramo en paz de la run de rescate.
+static func floor_is_peace(floor_n: int) -> bool:
+	return bool(_floor_at(floor_n).get("peace", false))
+
+## GANCHO (sin implementar): reino en el que se transforma `region` al liberarlo ("" = ninguno).
+## Silencio lo usara para volverse un reino de igualdad; ver "liberated_variant" arriba.
+static func liberated_variant(region: String) -> String:
+	for f in FLOORS:
+		if f.region == region:
+			return str(f.get("liberated_variant", ""))
+	return ""
 
 ## Guardados viejos (antes de las etapas): enteros = indice de piso 1..5 (el reino k). Se pasan a
 ## id de region sin perder progreso. Tambien acepta 0..4 si aparece un 0. Ids desconocidos se descartan.
@@ -560,6 +659,7 @@ func _ready() -> void:
 	meta_currency = int(data.get("meta_currency", 0))
 	meta_upgrades = data.get("meta_upgrades", {})
 	liberated = migrate_liberated(data.get("liberated", []))
+	desorden_notice = bool(data.get("desorden_notice", false)) and not pending_regions().is_empty()
 	best_floor = int(data.get("best_floor", 0))
 	if int(data.get("save_version", 1)) < 2 and best_floor > 0:
 		best_floor = best_floor * 2 - 1  # antes 5 pisos (1 por reino); ahora 2 por reino
@@ -607,7 +707,12 @@ func start_new_run(seed: int = 0) -> void:
 	Censura.clear_curses()  # las maldiciones de pactos mayores no pasan de una partida a otra
 	last_censura_unlocked = 0
 	
-	begin_route(character, seed)  # el orden de los reinos depende del heroe (y la semilla)
+	var go_rescue := rescue_requested and not pending_regions().is_empty()
+	rescue_requested = false
+	if go_rescue:
+		begin_rescue(character, rescue_new_hero)  # post-juego: tramos en paz + reinos pendientes
+	else:
+		begin_route(character, seed)  # el orden de los reinos depende del heroe (y la semilla)
 	current_floor = starting_floor
 	current_room_index = 0
 	rooms_cleared_this_floor = 0
@@ -747,6 +852,7 @@ func save_meta_progression() -> void:
 		"total_runs": total_runs,
 		"best_floor": best_floor,
 		"liberated": liberated,
+		"desorden_notice": desorden_notice,
 		"censura_unlocked": censura_unlocked,
 		"censura_selected": censura_selected,
 		"daily_records": daily_records,

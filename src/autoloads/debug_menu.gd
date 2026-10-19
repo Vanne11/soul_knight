@@ -143,6 +143,36 @@ func _open() -> void:
 			main._advance_to_next_floor()
 	_row(box, floors)
 
+	_label(box, tr("DEBUG_DESORDEN_HEAD"))
+	var order := RunManager.world_order()
+	_row(box, {
+		tr("DEBUG_DESORDEN_TODOS"): func():
+			rm.liberated = order.duplicate()
+			rm.note_desordenes(),
+		tr("DEBUG_DESORDEN_FALTAN2"): func():
+			rm.liberated = order.slice(0, maxi(order.size() - 2, 0))
+			rm.note_desordenes(),  # deja los 2 ultimos del mundo como desorden (y el aviso puesto)
+		tr("DEBUG_DESORDEN_NINGUNO"): func():
+			rm.liberated = []
+			rm.note_desordenes(),
+		tr("DEBUG_DESORDEN_AVISO"): func():
+			rm.desorden_notice = true
+			rm.save_meta_progression(),
+		tr("DEBUG_DESORDEN_RESCATE"): func():
+			_close()
+			rm.rescue_requested = true  # mismo heroe: tramos en paz y luego los pendientes
+			rm.rescue_new_hero = false
+			rm.start_new_run()
+			Transition.change_scene("res://src/scenes/main.tscn"),
+		tr("DEBUG_DESORDEN_RESCATE_NUEVO"): func():
+			_close()
+			rm.rescue_requested = true  # otro heroe: empieza en SU reino
+			rm.rescue_new_hero = true
+			rm.character = RunManager.CHARACTERS.keys()[(RunManager.CHARACTERS.keys().find(rm.character) + 1) % RunManager.CHARACTERS.size()]
+			rm.start_new_run()
+			Transition.change_scene("res://src/scenes/main.tscn"),
+	})
+
 	_label(box, tr("DEBUG_CHAR_HEAD"))
 	var chars := {}
 	for c in RunManager.CHARACTERS:

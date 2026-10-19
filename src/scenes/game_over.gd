@@ -124,6 +124,23 @@ func _ready() -> void:
 	_button(buttons, tr("GAMEOVER_QUIT"), _on_quit)
 	retry.grab_focus.call_deferred()
 	_add_fact()
+	if victory:
+		_add_desordenes(rm)
+
+
+## Post-juego: si quedan reinos sin liberar, panel con las tres salidas (ver DesordenPanel).
+func _add_desordenes(rm: Node) -> void:
+	var panel := DesordenPanel.create(rm)
+	if panel == null:
+		return
+	panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	panel.offset_left = -396
+	panel.offset_right = -36
+	panel.offset_top = 150
+	panel.modulate.a = 0.0
+	_root.add_child(panel)
+	create_tween().tween_property(panel, "modulate:a", 1.0, 0.6).set_delay(1.4)
+	panel.closed.connect(func(): panel.queue_free())  # (c) terminar por ahora: el aviso queda guardado
 
 
 ## Un "¿Sabias que...?" breve sobre los botones: aparece despues de las cifras, sin

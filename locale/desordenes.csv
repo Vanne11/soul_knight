@@ -1,0 +1,49 @@
+keys,es,en,es_ES,fr
+DESORDEN_TITULO,Aún hay desórdenes en: %s,There is still disorder in: %s,,Il reste du désordre à : %s
+DESORDEN_CAMBIAR,Cambiar de héroe,Switch hero,,Changer de héros
+DESORDEN_CAMBIAR_TIP,Otro héroe empieza en SU reino y va a liberar los pendientes.,Another hero starts in THEIR realm and goes to free the pending ones.,,Un autre héros part de SON royaume pour libérer les restants.
+DESORDEN_MISMO,Seguir con el mismo,Keep going with the same hero,,Continuer avec le même
+DESORDEN_MISMO_TIP,Cruzas en paz los reinos ya liberados hasta el pendiente.,You walk through the freed realms in peace until the pending one.,,Tu traverses en paix les royaumes libérés jusqu'au suivant.
+DESORDEN_TERMINAR,Terminar por ahora,Stop for now,,Arrêter pour l'instant
+DESORDEN_TERMINAR_TIP,El aviso se recuerda en el menú.,The notice is remembered in the menu.,,L'avis reste affiché dans le menu.
+DESORDEN_MENU_BTN,Desórdenes pendientes,Pending disorder,,Désordres restants
+DESORDEN_NARR,"Ganaste, pero el mundo no está del todo en orden. Aún hay desórdenes en: %s. Alguien tiene que ir.","You won, but the world is not quite in order. There is still disorder in: %s. Somebody has to go.",,"Gagné, mais le monde n'est pas tout à fait en ordre. Il reste du désordre à : %s. Quelqu'un doit y aller."
+DESORDEN_ELEGIR,Elige a quién mandar a rescatar el resto del mundo (no puede ser quien acaba de ganar).,Pick who goes to rescue the rest of the world (not the one who just won).,,Choisis qui part sauver le reste du monde (pas celui qui vient de gagner).
+DESORDEN_RUTA,Misión de rescate: reinos en desorden,Rescue mission: realms in disorder,,Mission de sauvetage : royaumes en désordre
+DESORDEN_LIBRES,"Todos los reinos están libres. El mundo, por fin, en orden.","Every realm is free. The world, at last, in order.",,"Tous les royaumes sont libres. Le monde, enfin en ordre."
+DESORDEN_PAZ_TITULO,Reino en paz,Realm at peace,,Royaume en paix
+DESORDEN_PAZ_PORTAL,Seguir camino,Keep walking,,Poursuivre la route
+DESORDEN_CARTEL,Leer el cartel,Read the sign,,Lire le panneau
+DESORDEN_MAPA_LIBRE,Liberado,Freed,,Libéré
+DESORDEN_MAPA_DESORDEN,Desorden,Disorder,,Désordre
+DEBUG_DESORDEN_HEAD,Desórdenes (post-juego),Disorder (post-game),,Désordres (post-jeu)
+DEBUG_DESORDEN_TODOS,Liberar todos,Free all,,Tout libérer
+DEBUG_DESORDEN_FALTAN2,Liberar todo menos 2,Free all but 2,,Tout libérer sauf 2
+DEBUG_DESORDEN_NINGUNO,Borrar liberados,Clear freed,,Effacer les libérés
+DEBUG_DESORDEN_AVISO,Marcar aviso,Set notice,,Activer l'avis
+DEBUG_DESORDEN_RESCATE,Rescate (mismo héroe),Rescue (same hero),,Sauvetage (même héros)
+DEBUG_DESORDEN_RESCATE_NUEVO,Rescate (otro héroe),Rescue (another hero),,Sauvetage (autre héros)
+DESORDEN_PAZ_SELVA_0,"La Selva Pública, por fin sin censura. Las lianas se peinaron para la ocasión.","Public Jungle, finally uncensored. The vines did their hair for the occasion.",,"La Jungle Publique, enfin sans censure. Les lianes se sont coiffées pour l'occasion."
+DESORDEN_PAZ_SELVA_1,"Bienvenidos a la Selva. Prohibido censurar, permitido el follaje.","Welcome to the Jungle. Censoring forbidden, foliage allowed.",,"Bienvenue dans la Jungle. Censure interdite, feuillage autorisé."
+DESORDEN_PAZ_SELVA_2,Los helechos votaron: hoy no se poda nada.,The ferns voted: no pruning today.,,Les fougères ont voté : pas de taille aujourd'hui.
+DESORDEN_PAZ_PENELANDIA_0,Penelandia en paz: nadie comparó tamaños en toda la tarde. Récord histórico.,Penelandia at peace: nobody compared sizes all afternoon. A historic record.,,Pénélandie en paix : personne n'a comparé les tailles de tout l'après-midi. Record historique.
+DESORDEN_PAZ_PENELANDIA_1,Se agradece no hacer comparaciones. Aquí todos somos de tamaño «suficiente».,"No comparisons, please. Here everyone is «big enough».",,"Pas de comparaisons, merci. Ici, tout le monde a la taille « suffisante »."
+DESORDEN_PAZ_PENELANDIA_2,"Ejército desmovilizado. El penacho rojo sigue de moda, por desgracia.","Army demobilized. The red plume is still in fashion, sadly.",,"Armée démobilisée. Le plumet rouge reste à la mode, hélas."
+DESORDEN_PAZ_VULVANIA_0,Vulvania celebra con fiordos iluminados y cero disculpas.,Vulvania celebrates with lit-up fjords and zero apologies.,,La Vulvanie fête ça avec des fjords illuminés et zéro excuse.
+DESORDEN_PAZ_VULVANIA_1,Aquí se dice el nombre completo. Sin susurros y sin pedir perdón.,"Here we say the full name. No whispering, no apologies.",,"Ici on dit le nom complet. Sans chuchoter, sans s'excuser."
+DESORDEN_PAZ_VULVANIA_2,Los fiordos están abiertos al público. Se ruega hablar con propiedad.,The fjords are open to the public. Please speak properly.,,Les fjords sont ouverts au public. Merci de parler correctement.
+DESORDEN_PAZ_PERINEO_0,"El Perineo, tierra de nadie, ahora tierra de todos. La aduana quedó de adorno.","The Perineum, no man's land, now everyone's land. The customs house is just decoration.",,"Le Périnée, no man's land, désormais terre de tous. La douane n'est plus qu'une déco."
+DESORDEN_PAZ_PERINEO_1,"Frontera cerrada por fiesta. Pasaportes: no hacen falta, ni aquí ni allá.","Border closed for a party. Passports: not needed, here or there.",,"Frontière fermée pour fête. Passeports : inutiles, ici comme là."
+DESORDEN_PAZ_PERINEO_2,Aquí se juntan los dos reinos. ¿De quién es el puente? De todos.,Both realms meet here. Whose bridge is it? Everyone's.,,Les deux royaumes se rejoignent ici. À qui le pont ? À tous.
+DESORDEN_PAZ_PROSTATA_0,La Próstata respira: por fin alguien la revisó a tiempo. Se agradece el chequeo.,The Prostate breathes: someone finally checked it in time. Thanks for the checkup.,,La Prostate respire : quelqu'un l'a enfin contrôlée à temps. Merci pour le bilan.
+DESORDEN_PAZ_PROSTATA_1,Chequeo anual: hecho. Premio: un reino sin sustos.,Annual checkup: done. Prize: a realm without scares.,,Bilan annuel : fait. Récompense : un royaume sans frayeur.
+DESORDEN_PAZ_PROSTATA_2,"Consejo del reino: al urólogo a los 50. Incomoda cinco minutos; lo otro, mucho más.",Realm advice: see the urologist at 50. Five awkward minutes; the alternative is far worse.,,Conseil du royaume : urologue à 50 ans. Cinq minutes gênantes ; l'autre option est pire.
+DESORDEN_PAZ_UTERO_0,"El Útero libre: el ciclo sigue, pero ahora con permiso para quejarse.","The Womb, free: the cycle goes on, but now with permission to complain.",,"L'Utérus libre : le cycle continue, mais avec le droit de se plaindre."
+DESORDEN_PAZ_UTERO_1,Hoy no hay cólicos oficiales. Se aceptan chocolates.,No official cramps today. Chocolate accepted.,,Pas de crampes officielles aujourd'hui. Chocolat accepté.
+DESORDEN_PAZ_UTERO_2,"El ciclo es normal; la vergüenza, no. Pase, siéntese.","The cycle is normal; the shame is not. Come in, sit down.",,"Le cycle est normal ; la honte, non. Entrez, asseyez-vous."
+DESORDEN_PAZ_PALACIO_0,"El Palacio de la Censura, vuelto museo. La Hoja de Parra cuelga de la pared, jubilada.","The Palace of Censorship, now a museum. The Fig Leaf hangs on the wall, retired.",,"Le Palais de la Censure, devenu musée. La Feuille de Vigne est accrochée au mur, retraitée."
+DESORDEN_PAZ_PALACIO_1,Visitas guiadas: aquí nada se tapa y todo se explica.,Guided tours: nothing is covered here and everything is explained.,,Visites guidées : ici rien n'est caché et tout s'explique.
+DESORDEN_PAZ_PALACIO_2,Antes decía «prohibido». Ahora dice «pregunte sin miedo».,It used to say «forbidden». Now it says «ask without fear».,,Avant : « interdit ». Maintenant : « posez vos questions sans crainte ».
+DESORDEN_PAZ_GENERICO_0,"Un reino liberado: sin combates, sin cofres y con el color puesto. Vacaciones.","A freed realm: no fights, no chests, colors on. A holiday.",,"Un royaume libéré : ni combats ni coffres, couleurs allumées. Vacances."
+DESORDEN_PAZ_GENERICO_1,Cartel: «Gracias por liberarnos. Pase sin romper nada».,Sign: «Thanks for freeing us. Please do not break anything».,,Panneau : « Merci de nous avoir libérés. Ne cassez rien ».
+DESORDEN_PAZ_GENERICO_2,Cartel: «Aquí ya se puede hablar de todo».,Sign: «Everything can be discussed here now».,,"Panneau : « Ici, on peut enfin parler de tout »."

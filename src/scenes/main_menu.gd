@@ -37,6 +37,8 @@ func _create_ui() -> void:
 	panel.add_child(vbox)
 
 	start_btn = _menu_button(vbox, tr("MENU_NEW_GAME"), _on_start)
+	if has_desordenes():
+		_menu_button(vbox, tr("DESORDEN_MENU_BTN"), _open_desordenes)  # aviso del post-juego, hasta liberar todo
 	daily_btn = _menu_button(vbox, tr("CENSURA_DAILY_BTN"), _on_daily)
 	daily_btn.tooltip_text = tr("CENSURA_DAILY_TIP")
 	continue_btn = _menu_button(vbox, tr("MENU_UPGRADES"), _open_upgrades)
@@ -63,6 +65,34 @@ func _create_ui() -> void:
 	meta_box.add_theme_constant_override("separation", 4)
 	sv.add_child(meta_box)
 	_meta_box = meta_box
+
+
+## Hay un aviso de "Desordenes" guardado (ganaste y quedaron reinos sin liberar).
+func has_desordenes() -> bool:
+	var rm = _game_controller.get_run_manager()
+	return rm.desorden_notice and not rm.pending_regions().is_empty()
+
+
+## Panel de DesordenPanel sobre el menu; "terminar por ahora" lo cierra y el aviso sigue.
+func _open_desordenes() -> void:
+	var rm = _game_controller.get_run_manager()
+	var panel := DesordenPanel.create(rm)
+	if panel == null:
+		return
+	var dim := ColorRect.new()
+	dim.color = Color(0.04, 0.02, 0.06, 0.85)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_root.add_child(dim)
+	var center := CenterContainer.new()
+	center.set_anchors_preset(Control.PRESET_FULL_RECT)
+	dim.add_child(center)
+	center.add_child(panel)
+	var close := func():
+		_close_popup = Callable()
+		dim.queue_free()
+		start_btn.grab_focus.call_deferred()
+	_close_popup = close
+	panel.closed.connect(close)
 
 
 func _menu_button(parent: Control, text: String, cb: Callable) -> Button:
@@ -141,6 +171,8 @@ func _world_strip() -> Control:
 	var caption := Label.new()
 	caption.text = tr("MENU_WORLD_GRAY") if n == 0 \
 		else tr("MENU_WORLD_FREED") % [n, regions.size()]
+	if has_desordenes():
+		caption.text += "\n" + tr("DESORDEN_TITULO") % DesordenPanel.pending_names(rm)
 	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	caption.custom_minimum_size.x = 250
 	caption.add_theme_font_size_override("font_size", 13)
@@ -426,12 +458,14 @@ func _daily_summary(rec: Dictionary) -> String:
 
 
 func _on_daily() -> void:
+	_game_controller.get_run_manager().rescue_requested = false
 	# misma historia + eleccion de heroe; intro.gd arranca la run con la semilla de hoy
 	_game_controller.get_run_manager().daily_requested = true
 	Transition.change_scene("res://src/scenes/intro.tscn")
 
 
 func _on_start() -> void:
+	_game_controller.get_run_manager().rescue_requested = false  # partida normal, no de rescate
 	_game_controller.get_run_manager().daily_requested = false
 	# historia + eleccion de personaje; la run empieza alli
 	Transition.change_scene("res://src/scenes/intro.tscn")
