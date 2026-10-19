@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "pest_cunado"
+title = "Cuñado Experto"
+text = "Sabe de todo, no sabe de nada y te lo explica con el dedo en alto mientras te empuja hacia atrás. Su especialidad: opinar sin que nadie le pregunte."
+category = 3
+unlock_condition = {"type": 10, "target_id": "pest_cunado"}
+flavor_text = "Encuéntralo en un pasillo entre reinos."

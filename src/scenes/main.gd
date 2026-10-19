@@ -850,10 +850,10 @@ func _arm_exit_doors() -> void:
 	var inward := {"up": Vector2.DOWN, "down": Vector2.UP, "left": Vector2.RIGHT, "right": Vector2.LEFT}
 	var ok := func(pos: Vector2, dir: String) -> bool:
 		return boss.is_walkable(pos + (inward[dir] as Vector2) * 40.0, 18.0)
-	for it in Pasillos.layout([{"region": str(detour.get("to", "")), "dir": "down", "along": 0.0}], taken, size_px, ok):
+	for it in Pasillos.layout([{"region": str(detour.get("to", "")), "dir": "up", "along": 0.0}], taken, size_px, ok):
 		var iris := IrisDoor.new()
 		iris.wall_dir = it.dir
-		iris.position = it.pos - (inward[it.dir] as Vector2) * 6.0
+		iris.position = it.pos + (inward[it.dir] as Vector2) * (18.0 if it.dir == "up" else -6.0)  # en la pared norte la camara corta su borde: se asoma al suelo
 		iris.set_meta("exit_region", it.region)
 		boss.props_node.add_child(iris)
 
@@ -917,7 +917,12 @@ func _begin_corridor(from_r: String, to_r: String, dir: String) -> void:
 	var rm := _run_manager
 	var fl: int = rm.current_floor
 	_corridor = {"from": from_r, "to": to_r, "dir": dir, "add": fl >= RunManager.route_floors.size(), "fl": fl,
-		"seed": rm.current_seed + fl * 7919, "switched": false}
+		"seed": rm.current_seed + fl * 7919, "switched": false, "enc_done": false}
+	var slide := to_r in RunManager.detour_regions()  # la Puerta Trasera se entra CAYENDO por un tobogan organico
+	if slide:
+		dir = "down"
+	_corridor.slide = slide
+	_corridor.enc = {} if slide else CorridorEncounter.roll(int(_corridor.seed), from_r, to_r)  # encuentro aleatorio (~30%)
 	if has_meta("map_key") and get_meta("map_seed", -1) == rm.current_seed and not dungeon_generator.rooms.is_empty():
 		rm.floor_maps[get_meta("map_key")] = MapMetroid.snapshot(self)  # foto del piso que dejas (mapa del mundo)
 	set_meta("map_seed", -1)  # el pasillo no es un piso: _generate_dungeon no vuelve a fotografiar
@@ -929,7 +934,7 @@ func _begin_corridor(from_r: String, to_r: String, dir: String) -> void:
 	if dungeon_root:
 		dungeon_root.queue_free()
 	exit_doors.clear()
-	var room := Corridor.build(from_r, to_r, dir, int(_corridor.seed))
+	var room := Corridor.build(from_r, to_r, dir, int(_corridor.seed), slide)
 	dungeon_root = Node2D.new()
 	dungeon_root.name = "Corridor_%s_%s" % [from_r, to_r]
 	add_child(dungeon_root)
@@ -949,7 +954,7 @@ func _begin_corridor(from_r: String, to_r: String, dir: String) -> void:
 	_lighting.enter_room(room)
 	_paint_room(room, true)
 	Sound.music("explore_" + from_r)
-	player.global_position = room.global_position + Corridor.start_pos(dir)
+	player.global_position = room.global_position + Corridor.start_pos(room)
 	player.velocity = Vector2.ZERO
 	_update_camera_limits(room)
 	camera.reset_smoothing()
@@ -964,16 +969,70 @@ func _begin_corridor(from_r: String, to_r: String, dir: String) -> void:
 	bar_layer.add_child(_corridor_bar)
 	add_child(bar_layer)
 	corridor_active = true
+	if slide:
+		await _fade_to(0.0, 0.35)
+		_exit_busy = false
+		_run_slide(room)
+		return
 	player.set_physics_process(true)
 	await _fade_to(0.0, 0.35)
 	_exit_busy = false
+
+
+## TOBOGAN a la Puerta Trasera: el heroe cae por el tubo, cada vez mas rapido (2,6 s), dando vueltas y gritando;
+## la camara lo sigue. Al llegar (corridor_step) se entra al reino y aterriza con rebote (_slide_landing).
+func _run_slide(room: Room) -> void:
+	var cl: PackedVector2Array = room.get_meta("corridor_cl")
+	player.set_physics_process(false)
+	player.velocity = Vector2.ZERO
+	var spr: Node2D = player.get("animated_sprite")
+	var dur := 2.6
+	var ge := get_node("/root/GlobalEvents")
+	var tw := create_tween()
+	tw.tween_method(_slide_step.bind(room, cl, spr), 0.0, 1.0, dur).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	for pair in [[0.2, "¡WIII!"], [1.1, "¡WIIIII!"], [1.9, "¡¡WIIIIIII!!"]]:
+		get_tree().create_timer(float(pair[0])).timeout.connect(func():
+			if corridor_active and is_instance_valid(player):
+				ge.show_floating_text.emit(player.global_position + Vector2(0, -30), str(pair[1]), Color("ffd0f0")))
+	for t in [0.5, 1.4, 2.2]:
+		get_tree().create_timer(float(t)).timeout.connect(func():
+			if corridor_active:
+				Sound.play("suck")
+				if spr:
+					HitFx.flash(spr))
+
+
+func _slide_step(t: float, room: Room, cl: PackedVector2Array, spr: Node2D) -> void:
+	if not is_instance_valid(player) or not corridor_active or not is_instance_valid(room):
+		return
+	var idx := t * float(cl.size() - 1)
+	var i := mini(floori(idx), cl.size() - 2)
+	var pos := cl[i].lerp(cl[i + 1], idx - float(i)) + Vector2(sin(t * 18.0) * 22.0, 0.0)
+	player.global_position = room.global_position + pos
+	if spr:
+		spr.rotation = t * TAU * 3.0
+
+
+## Aterrizaje con rebote tras el tobogan (el heroe llega aplastado y rebota).
+func _slide_landing() -> void:
+	var spr: Node2D = player.get("animated_sprite")
+	if spr == null:
+		return
+	spr.rotation = 0.0
+	spr.scale = Vector2(1.4, 0.55)
+	var tw := create_tween()
+	tw.tween_property(spr, "scale", Vector2(0.85, 1.25), 0.14)
+	tw.tween_property(spr, "scale", Vector2(1.12, 0.9), 0.12)
+	tw.tween_property(spr, "scale", Vector2.ONE, 0.12)
+	Sound.play("crack")
+	get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position + Vector2(0, -34), "¡PLOF!", Color("ffd0f0"))
 
 
 ## Avance 0..1 del heroe por el pasillo actual.
 func corridor_progress() -> float:
 	if not corridor_active or current_room == null:
 		return 0.0
-	return Corridor.progress(str(_corridor.dir), player.global_position - current_room.global_position)
+	return Corridor.progress(current_room, player.global_position - current_room.global_position)
 
 
 func _corridor_step() -> void:
@@ -982,10 +1041,14 @@ func _corridor_step() -> void:
 	var p := corridor_progress()
 	if _corridor_bar:
 		_corridor_bar.set_value(p)
+	var enc: Dictionary = _corridor.get("enc", {})
+	if not enc.is_empty() and not _corridor.enc_done and p >= float(enc.at):
+		_corridor.enc_done = true
+		CorridorEncounter.run(self, enc.types)
 	if p >= 0.5 and not _corridor.switched:
 		_corridor.switched = true
 		Sound.music("explore_" + str(_corridor.to))  # a mitad de camino suena ya el reino nuevo
-	if p >= 0.965:
+	if p >= 0.97 and player.global_position.distance_to(current_room.global_position + Corridor.end_pos(current_room)) < 90.0:
 		_finish_corridor()
 
 
@@ -1001,6 +1064,8 @@ func _finish_corridor() -> void:
 		RunManager.add_region(str(c.to))
 	_advance_to_next_floor()
 	player.set_physics_process(true)
+	if c.get("slide", false):
+		_slide_landing()
 	await get_tree().create_timer(0.1).timeout
 	await _fade_to(0.0, 0.5)
 	_exit_busy = false

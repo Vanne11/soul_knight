@@ -15,6 +15,8 @@ extends Node
 ##   --weapon=<id> --dmg-mult=N --crit=1   pruebas de dano: arma inicial, multiplicador de dano, critico siempre
 ##   --log=<ruta>   registro propio (varias partidas en paralelo; por defecto .claude/autoplay.log)
 ##   --overlay=0    oculta el rotulo verde del bot (para grabar)
+##   --enc=none|random|tio|spam|vendedor|mosquito|cunado|notificacion|ex|influencer|chicle|captcha   fuerza (o apaga) el encuentro de los pasillos
+##   --corridor-hold=0.4   en los pasillos entre reinos se queda quieto al pasar ese avance (0..1); para mirar de cerca a los bichos incomodos
 ##   --max-secs=N   termina solo tras N s de juego (tiempo de juego, no de reloj; para grabaciones de prueba)
 ##   --quit-on-end  cierra Godot al terminar la partida
 ## VARIAS PARTIDAS A LA VEZ: el juego guarda progreso, codice y narrador en user://; aislalas con
@@ -158,6 +160,7 @@ func _ready() -> void:
 	var hero := _arg("--hero=", "vulvalquiria")
 	_hero = hero
 	RunManager.test_seed = int(_arg("--seed=", "0"))
+	CorridorEncounter.force = _arg("--enc=", "")  # encuentros de los pasillos: none (nunca) | random | <tipo> (siempre); sin esto ~30%
 	RunManager.route_pick = _arg("--route-pick=", "first")  # eleccion de puerta tras el jefe: first | random | <reino>
 	_collect = _arg("--collect=", "") == "all"
 	_max_secs = float(_arg("--max-secs=", "0"))
@@ -714,7 +717,7 @@ func _boss_report(result: String) -> void:
 func _alive_enemies(room: Room) -> Array:
 	var out := []
 	for e in get_tree().get_nodes_in_group("enemy"):
-		if is_instance_valid(e) and e is Node2D and e.is_visible_in_tree() and room.is_ancestor_of(e):
+		if is_instance_valid(e) and e is Node2D and e.is_visible_in_tree() and room.is_ancestor_of(e) and not e.has_meta("corridor_pest"):  # (los bichos de los pasillos se esquivan: se corre al final)
 			if e.get("current_health") == null or e.current_health > 0.0:
 				out.append(e)
 	return out
@@ -1096,6 +1099,9 @@ func _things(room: Room) -> Array:
 	return out
 
 
+var _cor_t := 0.0
+var _cor_p := 0.0
+var _cor_stuck := 0.0
 const _OUT := {"up": Vector2.UP, "down": Vector2.DOWN, "left": Vector2.LEFT, "right": Vector2.RIGHT}
 
 ## Cruza la puerta de salida que toca (RunManager.pick_option sobre los reinos de las puertas abiertas).
@@ -1120,7 +1126,25 @@ func _exit_door_step() -> void:
 func _corridor_walk(room: Room) -> void:
 	var dir: String = str(room.get_meta("corridor_dir", "right"))
 	_goal_text = "pasillo %s -> %s (%s) %d%%" % [room.get_meta("corridor_from", "?"), room.get_meta("corridor_to", "?"), dir, int(main.corridor_progress() * 100.0)]
-	_press_move(_OUT[dir])
+	if _arg("--corridor-hold=", "") != "" and main.corridor_progress() >= float(_arg("--corridor-hold=", "1")):
+		return  # prueba: se queda quieto (para ver de cerca a los bichos incomodos)
+	# bichos y burbujas de los encuentros: si el avance se atasca, se revientan a tiros y se esquivan con dash
+	_cor_t += get_physics_process_delta_time()
+	if _cor_t >= 0.5:
+		var pr: float = main.corridor_progress()
+		_cor_stuck = _cor_stuck + 0.5 if pr - _cor_p < 0.004 else 0.0
+		_cor_p = pr
+		_cor_t = 0.0
+	var goal_pos: Vector2 = room.global_position + Corridor.end_pos(room)
+	if _cor_stuck >= 1.0:
+		player.aim_override = (goal_pos - player.global_position).normalized()
+		Input.action_press("attack")
+		if _dash_cd <= 0.0:
+			_press_move((goal_pos - player.global_position).normalized())
+			Input.action_press("dash")
+			_dash_cd = 1.0
+			return
+	_steer_to(room.global_position + Corridor.end_pos(room))  # camino estrecho con curvas: BFS sobre el suelo del pasillo
 
 
 func _door_region(n: Node) -> String:

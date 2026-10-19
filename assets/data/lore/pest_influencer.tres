@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "pest_influencer"
+title = "Influencer de Cremas"
+text = "Va dejando una niebla brillante, rosa y perfumada que no deja ver nada. No daña, pero tampoco se ve. Su secreto de belleza: ocho filtros y mucha luz."
+category = 3
+unlock_condition = {"type": 10, "target_id": "pest_influencer"}
+flavor_text = "Encuéntralo en un pasillo entre reinos."

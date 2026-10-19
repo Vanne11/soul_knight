@@ -688,7 +688,7 @@ func _add_exit_doors() -> void:
 	var from := RunManager.floor_region(current_floor)
 	var items: Array = []
 	for r in regions:
-		var d := Pasillos.direction(from, str(r))
+		var d := "up" if str(r) in RunManager.detour_regions() else Pasillos.direction(from, str(r))  # el desvio (Puerta Trasera) va en la pared norte
 		items.append({"region": str(r), "dir": d, "along": Pasillos.along(from, str(r), d)})
 	var size_px := Vector2(room_sizes.get(boss.grid_pos, Vector2i(8, 6))) * 64.0
 	var taken: Array = boss.doors.values().map(func(dd): return dd.position)

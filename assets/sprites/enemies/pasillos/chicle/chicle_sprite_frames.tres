@@ -1,0 +1,90 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_idle_00.png" id="idle0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_idle_01.png" id="idle1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_walk_00.png" id="walk0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_walk_01.png" id="walk1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_walk_02.png" id="walk2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_walk_03.png" id="walk3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_annoy_00.png" id="annoy0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_annoy_01.png" id="annoy1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_annoy_02.png" id="annoy2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_annoy_03.png" id="annoy3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_hurt_00.png" id="hurt0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_hurt_01.png" id="hurt1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_death_00.png" id="death0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_death_01.png" id="death1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/pasillos/chicle/chicle_death_02.png" id="death2"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("idle0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("idle1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("walk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("annoy0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("annoy1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("annoy2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("annoy3")
+}],
+"loop": true,
+"name": &"annoy",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("hurt0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("hurt1")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("death0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death2")
+}],
+"loop": false,
+"name": &"death",
+"speed": 6.0
+}]
