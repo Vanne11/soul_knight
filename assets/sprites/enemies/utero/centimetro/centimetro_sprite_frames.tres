@@ -1,0 +1,107 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_idle_00.png" id="idle0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_idle_01.png" id="idle1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_walk_00.png" id="walk0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_walk_01.png" id="walk1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_walk_02.png" id="walk2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_walk_03.png" id="walk3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_aim_00.png" id="aim0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_aim_01.png" id="aim1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_aim_02.png" id="aim2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_aim_03.png" id="aim3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_strike_00.png" id="strike0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_strike_01.png" id="strike1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_hurt_00.png" id="hurt0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_hurt_01.png" id="hurt1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_death_00.png" id="death0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_death_01.png" id="death1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_death_02.png" id="death2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/utero/centimetro/centimetro_death_03.png" id="death3"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("idle0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("idle1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("walk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("aim0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("aim1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("aim2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("aim3")
+}],
+"loop": true,
+"name": &"aim",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("strike0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("strike1")
+}],
+"loop": false,
+"name": &"strike",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("hurt0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("hurt1")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("death0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death3")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}]
