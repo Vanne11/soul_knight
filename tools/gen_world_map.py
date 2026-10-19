@@ -20,10 +20,21 @@ def gy(v): return round((v-GRID_Y0)/UNIT,2)
 def gl(v): return round(v/UNIT,2)
 REG=[]; DOORS=[]; TUNNELS=[]
 PISOS=[]; STAIRS={}; STARTS=[]  # extra para el mapa metroidvania del juego (src/ui/map_metroid.gd)
+def _sprite(p):
+    # el arte de enemigos vive en enemies/<reino>/<enemigo>/ (indice assets/data/enemy_art.json)
+    if p.startswith("enemies/") and not Path(R+p).exists():
+        idx=json.loads((ROOT/"assets/data/enemy_art.json").read_text(encoding="utf8"))
+        name=p.split("/")[-1]
+        for v in sorted(idx,key=len,reverse=True):
+            if name.startswith(v+"_"): return R+"enemies/"+idx[v]+"/"+name
+    return R+p
 def b64(p,h=None,scale=None,crop=None):
     if JSON_ONLY: return "",1,1
     from PIL import Image
-    im=Image.open(R+p).convert("RGBA")
+    f=_sprite(p)
+    if not Path(f).exists() and f.endswith("_idle_00.png") and Path(f.replace("_idle_00.png","_sheet.png")).exists():
+        f=f.replace("_idle_00.png","_sheet.png"); crop=crop or (0,0,156,180)  # solo hay hoja: 1er cuadro (156x180)
+    im=Image.open(f).convert("RGBA")
     if crop: im=im.crop(crop)
     im=im.crop(im.getbbox()); sc=scale if scale else h/im.height
     im=im.resize((max(1,int(im.width*sc)),max(1,int(im.height*sc))),Image.NEAREST)
@@ -406,7 +417,7 @@ def build_json():
         "regions":regs,"doors":DOORS,"tunnels":tun,
         "elevator":{"x":gx(1340),"y":gy(1000),"w":gl(120),"h":gl(568)},
         "piso_cell":{"unit":gl(U),"pitch":gl(P),"w":4,"h":3,"cw":gl(CW),"ch":gl(CH)},"templates":tpl,
-        "starts":[{"hero":q["hero"],"x":gx(q["x"]),"y":gy(q["y"]),"w":gl(q["w"]),"h":gl(q["h"])} for q in STARTS],
+        "starts":[{"hero":q["hero"],"x":gx(q["x"]),"y":gy(q["y"])} for q in STARTS],
         "heroes":heroes,"eje_routes":eje}
 JSON_OUT.write_text(json.dumps(build_json(),ensure_ascii=False,indent=1)+"\n",encoding="utf8"); print("json ->",JSON_OUT)
 if not JSON_ONLY:
