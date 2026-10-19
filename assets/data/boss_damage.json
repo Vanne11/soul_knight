@@ -174,5 +174,55 @@
 		"line_weak": "BOSSDMG_REGLA_WEAK",
 		"line_resist": "BOSSDMG_REGLA_RESIST",
 		"hint_weapon": "smg_vibrator"
+	},
+	"aduanero": {
+		"weak": {
+			"calor": 1.8,
+			"explosivo": 1.4
+		},
+		"resist": {
+			"latex": 0.5,
+			"contundente": 0.8
+		},
+		"match": {
+			"pitocles": [
+				"explosivo"
+			],
+			"vulvalquiria": [
+				"calor"
+			],
+			"ornitorrinco": [
+				"calor",
+				"explosivo"
+			]
+		},
+		"line_weak": "BOSSDMG_ADUANERO_WEAK",
+		"line_resist": "BOSSDMG_ADUANERO_RESIST",
+		"hint_weapon": "laser_depilador"
+	},
+	"prostata": {
+		"weak": {
+			"electrico": 1.8,
+			"agua": 1.35
+		},
+		"resist": {
+			"confeti": 0.5,
+			"perforante": 0.85
+		},
+		"match": {
+			"pitocles": [
+				"electrico"
+			],
+			"vulvalquiria": [
+				"agua"
+			],
+			"ornitorrinco": [
+				"agua",
+				"electrico"
+			]
+		},
+		"line_weak": "BOSSDMG_VENTANILLA_WEAK",
+		"line_resist": "BOSSDMG_VENTANILLA_RESIST",
+		"hint_weapon": "dildo_taser"
 	}
 }
