@@ -912,7 +912,7 @@ func _explore(room: Room) -> void:
 		return
 	# 1b) PASILLOS: con el piso completo, la sala del jefe tiene puertas de salida (una por reino destino):
 	# el bot elige segun --route-pick y la cruza empujandola (como un jugador).
-	if main.floor_completed and not main.exit_doors.is_empty():
+	if main.floor_completed and main.exit_doors.any(func(d): return is_instance_valid(d) and d.state == Door.State.OPEN):
 		_exit_door_step()
 		return
 	# 2) siguiente sala
@@ -972,6 +972,8 @@ var _kq_lost := 0
 
 func _quest_step(room: Room) -> bool:
 	_quest_room = null
+	if main.floor_completed:
+		return false  # jefe vencido: ya no hay mision de llave que valga (la sala del pasillo/salida manda)
 	var kq = main.get_node_or_null("KeyQuests")
 	if kq == null or not kq.ready_ok or player.current_weapon == null:
 		return false  # sin arma no hay custodios que valgan: primero el arma
@@ -1098,7 +1100,7 @@ const _OUT := {"up": Vector2.UP, "down": Vector2.DOWN, "left": Vector2.LEFT, "ri
 
 ## Cruza la puerta de salida que toca (RunManager.pick_option sobre los reinos de las puertas abiertas).
 func _exit_door_step() -> void:
-	var doors: Array = main.exit_doors.filter(func(d): return is_instance_valid(d))
+	var doors: Array = main.exit_doors.filter(func(d): return is_instance_valid(d) and d.state == Door.State.OPEN)
 	if doors.is_empty():
 		return
 	var regs: Array = doors.map(func(d): return str(d.get_meta("exit_region")))

@@ -11,8 +11,8 @@ extends RefCounted
 const TILE := 64
 const LEN := 24          # baldosas a lo largo del viaje
 const WID := 6           # baldosas de ancho
-const BLEND_A := 0.30    # el mestizaje ocupa el 30%..70% del recorrido
-const BLEND_B := 0.70
+const BLEND_A := 0.18    # el mestizaje ocupa el 18%..82% del recorrido (el reino de origen manda al principio)
+const BLEND_B := 0.82
 const WALL_SOURCE := 4
 const ROOM_SCENE := preload("res://src/dungeon/room.tscn")
 
@@ -217,10 +217,10 @@ static func _half_rects(dir: String, size_px: Vector2) -> Array:
 ## El cartel va pegado al muro, cerca del arranque.
 static func _sign_pos(dir: String, size_px: Vector2) -> Vector2:
 	match dir:
-		"right": return Vector2(4.0 * TILE, 30.0)
-		"left": return Vector2(size_px.x - 4.0 * TILE, size_px.y - 30.0)
-		"down": return Vector2(size_px.x - 30.0, 4.0 * TILE)
-	return Vector2(30.0, size_px.y - 4.0 * TILE)
+		"right": return Vector2(3.0 * TILE, 1.0 * TILE + 20.0)
+		"left": return Vector2(size_px.x - 3.0 * TILE, size_px.y - 1.0 * TILE + 20.0)
+		"down": return Vector2(size_px.x - 1.0 * TILE, 3.0 * TILE)
+	return Vector2(1.0 * TILE, size_px.y - 3.0 * TILE)
 
 
 ## Chevrones ">" repetidos a lo largo del camino, del color del reino de origen al de destino.

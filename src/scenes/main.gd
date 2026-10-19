@@ -104,6 +104,7 @@ func _generate_dungeon() -> void:
 	dungeon_root = dungeon_generator.generate_floor(_run_manager.current_floor, seed)
 	visited_rooms.clear()
 	add_child(dungeon_root)
+	_arm_exit_doors()  # puertas de salida del jefe (pasillos): selladas hasta vencerlo
 	_lighting.setup_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)
 	# Tramo en paz de la run de rescate (reino ya liberado): una plaza sin combates ni trampas.
 	var peace := RunManager.floor_is_peace(_run_manager.current_floor)
@@ -174,6 +175,10 @@ func _connect_room_doors(room: Room) -> void:
 			door.player_interacted.connect(callback)
 
 func _on_door_entered_room(room: Room, door: Door) -> void:
+	if door.has_meta("exit_region"):  # puerta de salida del jefe: pasillo al reino de destino
+		if room == current_room and not corridor_active:
+			_on_exit_door_used(door)
+		return
 	if room != current_room or floor_completed or _transition_lock > 0.0:
 		return
 	var next_room: Room = dungeon_generator.rooms.get(door.target_pos)
@@ -796,89 +801,89 @@ func _complete_floor() -> void:
 ## `at` = donde se pone, relativo al centro de la sala; `hatch_text` = el cartel del portal (vacio = el de
 ## siempre). La usa _complete_floor y, sin jefe ni guardian, el Silencio (src/silencio: salida de S4).
 func open_exit(boss_room: Room, floor_n: int, at := Vector2(0, 150), hatch_text := "") -> void:
-	var already := floor_n < RunManager.route_floors.size()
-	var options: Array = _exit_regions(floor_n)
-	if hatch_text == "" and not options.is_empty():
-		# PASILLOS: puertas en las paredes de la sala, hacia donde cae cada reino en el mapa del mundo.
-		var region := RunManager.floor_region(floor_n)
-		var detour: Dictionary = RunManager.detour_for(region) if not RunManager.rescue_mode else {}
-		_build_exit_doors(boss_room, floor_n, options, detour)
+	if hatch_text == "" and _open_exit_doors(boss_room):
 		return
-	# FloorPortal: solo la escotilla entre las etapas de un reino (y la salida del Silencio); el portal de
-	# eleccion de reino ya no se usa (depuracion F1 y casos especiales).
+	# FloorPortal: solo la escotilla entre las etapas de un reino (y la salida del Silencio y casos sin puertas);
+	# el portal de eleccion de reino ya no se usa para viajar entre reinos (depuracion F1 aparte).
+	var already := floor_n < RunManager.route_floors.size()
+	var options: Array = RunManager.next_options() if RunManager.route_dynamic and not already else []
 	var portal := _hatch_visual()
 	_add_prop(boss_room, boss_room.get_center_position() + at, portal,
 		hatch_text if hatch_text != "" else tr("FLOOR_HATCH") % (floor_n + 1),
 		func(p, it):
 			it.finish()
 			await portal.absorb(p)  # el heroe se encoge y gira hacia el centro antes de bajar
-			if options.size() == 1 and not already:
+			if options.size() == 1:
 				RunManager.add_region(str(options[0]))
 			_advance_to_next_floor()
 			FloorPortal.restore(p))
 
 
-## Reinos a los que se puede ir al terminar este piso: el siguiente de la ruta si ya esta armada (rescate,
-## saltos de depuracion) o las opciones por sellos (next_options) si la ruta es dinamica. [] = misma region.
-func _exit_regions(floor_n: int) -> Array:
-	if floor_n < RunManager.route_floors.size():
-		var nf: Dictionary = RunManager.floor_at(floor_n + 1)
-		if str(nf.region) != RunManager.floor_region(floor_n) and not RunManager.floor_is_peace(floor_n + 1):
-			return [str(nf.region)]
-		return []
-	return RunManager.next_options() if RunManager.route_dynamic else []
-
-
-## Puertas de salida del jefe: una por reino destino, en la pared que le toca (Pasillos.direction); dos del
-## mismo lado se separan. Cada una lleva el estilo del reino destino y su nombre; el desvio sellado (Puerta
-## Trasera) es un iris biologico que no abre. Cruzar una = _begin_corridor.
-func _build_exit_doors(room: Room, floor_n: int, regions: Array, detour: Dictionary) -> void:
-	var from := RunManager.floor_region(floor_n)
-	var items: Array = []
-	for r in regions:
-		var d := Pasillos.direction(from, str(r))
-		items.append({"region": str(r), "dir": d, "along": Pasillos.along(from, str(r), d), "sealed": false})
-	if not detour.is_empty():
-		items.append({"region": str(detour.get("to", "")), "dir": "down", "along": 0.0, "sealed": not bool(detour.get("open", false))})
-	var size_px := Vector2(dungeon_generator.room_sizes.get(room.grid_pos, Vector2i(8, 6))) * 64.0
-	var taken: Array = room.doors.values().map(func(dd): return dd.position)
+## PASILLOS: al generar el piso, las puertas de salida de la sala del jefe (las crea dungeon_generator) nacen
+## SELLADAS y con su cartel (reino destino y, si es del centro, los sellos); la Puerta Trasera (desvio de
+## routes.json) es un iris biologico sellado en la pared sur.
+func _arm_exit_doors() -> void:
+	exit_doors.clear()
+	var boss: Room = null
+	for r in dungeon_generator.rooms.values():
+		if r.room_type == Room.RoomType.BOSS:
+			boss = r
+	if boss == null:
+		return
+	for door: Door in boss.doors.values():
+		if not door.has_meta("exit_region"):
+			continue
+		exit_doors.append(door)
+		door.set_state(Door.State.SEALED)
+		var region := str(door.get_meta("exit_region"))
+		var text := Loc.region_name_id(region)
+		if region in RunManager.center_regions():
+			text += "\n" + tr("PAS_DOOR_SEALS") % [RunManager.seals() + (1 if RunManager.would_award_seal(_run_manager.current_floor) else 0), RunManager.seals_needed()]
+		door.set_hint(text, RunManager.region_tint(region).lerp(Color.WHITE, 0.35))
+		_add_emblem(door, RunManager.region_tint(region))
+	# desvio opcional (hoy: la entrada de servicio del Perineo -> Puerta Trasera): sellada hasta nuevo aviso
+	var detour: Dictionary = RunManager.detour_for(RunManager.floor_region(_run_manager.current_floor)) if not exit_doors.is_empty() and not RunManager.rescue_mode else {}
+	if detour.is_empty() or bool(detour.get("open", false)):
+		return  # (abierto: pendiente, ver routes.json "detours"; hoy no hay ninguno abierto)
+	var size_px := Vector2(dungeon_generator.room_sizes.get(boss.grid_pos, Vector2i(8, 6))) * 64.0
+	var taken: Array = boss.doors.values().map(func(dd): return dd.position)
 	var inward := {"up": Vector2.DOWN, "down": Vector2.UP, "left": Vector2.RIGHT, "right": Vector2.LEFT}
 	var ok := func(pos: Vector2, dir: String) -> bool:
-		return room.is_walkable(pos + (inward[dir] as Vector2) * 40.0, 18.0)
-	for it in Pasillos.layout(items, taken, size_px, ok):
-		if it.sealed:
-			var iris := IrisDoor.new()
-			iris.wall_dir = it.dir
-			iris.position = it.pos - (inward[it.dir] as Vector2) * 30.0
-			iris.set_meta("exit_region", it.region)
-			room.props_node.add_child.call_deferred(iris)
-			continue
-		var door: Door = DOOR_SCENE.instantiate()
-		door.direction = Pasillos.dir_index(it.dir)
-		door.set_meta("door_kingdom", RunManager.region_kingdom(it.region))
-		door.set_meta("exit_region", it.region)
-		door.name = "Exit_" + str(it.region)
-		door.position = it.pos
-		room.doors_node.add_child(door)
-		door.room = room
-		exit_doors.append(door)
+		return boss.is_walkable(pos + (inward[dir] as Vector2) * 40.0, 18.0)
+	for it in Pasillos.layout([{"region": str(detour.get("to", "")), "dir": "down", "along": 0.0}], taken, size_px, ok):
+		var iris := IrisDoor.new()
+		iris.wall_dir = it.dir
+		iris.position = it.pos - (inward[it.dir] as Vector2) * 6.0
+		iris.set_meta("exit_region", it.region)
+		boss.props_node.add_child(iris)
+
+
+## Emblema del reino: rombo de su color junto al cartel de la puerta.
+func _add_emblem(door: Door, tint: Color) -> void:
+	var out := {"up": Vector2.UP, "down": Vector2.DOWN, "left": Vector2.LEFT, "right": Vector2.RIGHT}[door.get_direction_name()] as Vector2
+	var pos := -out * 82.0 if door.direction < 2 else -out * 52.0 + Vector2(0, -36)
+	var rim := Polygon2D.new()
+	rim.polygon = PackedVector2Array([Vector2(0, -12), Vector2(12, 0), Vector2(0, 12), Vector2(-12, 0)])
+	rim.color = Color("0d0b0f")
+	rim.position = pos
+	var em := Polygon2D.new()
+	em.polygon = PackedVector2Array([Vector2(0, -9), Vector2(9, 0), Vector2(0, 9), Vector2(-9, 0)])
+	em.color = tint
+	em.position = pos
+	door.add_child(rim)
+	door.add_child(em)
+
+
+## Vencido el jefe: las puertas de salida se ABREN (animacion de la puerta + sonido). false si el piso no las tiene.
+func _open_exit_doors(boss_room: Room) -> bool:
+	var doors := exit_doors.filter(func(d): return is_instance_valid(d))
+	if doors.is_empty():
+		return false
+	Sound.play("door")
+	for door: Door in doors:
+		door.remove_meta("hold_sealed")
 		door.set_state(Door.State.OPEN)
-		var text := Loc.region_name_id(str(it.region))
-		if str(it.region) in RunManager.center_regions():
-			text += "\n" + tr("PAS_DOOR_SEALS") % [RunManager.seals(), RunManager.seals_needed()]
-		var tint := RunManager.region_tint(str(it.region)).lerp(Color.WHITE, 0.35)
-		door.set_hint(text, tint)
-		var em := Polygon2D.new()  # emblema del reino: rombo de su color sobre la puerta
-		em.polygon = PackedVector2Array([Vector2(0, -9), Vector2(9, 0), Vector2(0, 9), Vector2(-9, 0)])
-		em.color = RunManager.region_tint(str(it.region))
-		em.position = (inward[it.dir] as Vector2) * 82.0
-		var rim := Polygon2D.new()
-		rim.polygon = PackedVector2Array([Vector2(0, -12), Vector2(12, 0), Vector2(0, 12), Vector2(-12, 0)])
-		rim.color = Color("0d0b0f")
-		rim.position = em.position
-		door.add_child(rim)
-		door.add_child(em)
-		door.player_interacted.connect(_on_exit_door_used.bind(door))
+	return true
 
 
 func _on_exit_door_used(door: Door) -> void:
@@ -1053,6 +1058,8 @@ func _assign_rewards() -> void:
 ## Carteles de las puertas de la sala actual: que hay al otro lado.
 func _label_doors(room: Room) -> void:
 	for door: Door in room.doors.values():
+		if door.has_meta("exit_region"):
+			continue  # el cartel de las puertas de salida lo pone _arm_exit_doors
 		var target: Room = dungeon_generator.rooms.get(door.target_pos)
 		var hint := ["", Color("f2ead6")]
 		if target and not target.cleared:

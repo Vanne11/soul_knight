@@ -109,7 +109,8 @@ func try_open(player: Node) -> bool:
 			return false
 	
 	if state == State.SEALED:
-		get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("DOOR_SEALED"), Color.RED)
+		var msg := tr("PAS_DOOR_WAIT") if has_meta("exit_region") else tr("DOOR_SEALED")  # puerta de salida del jefe
+		get_node("/root/GlobalEvents").show_floating_text.emit(global_position, msg, Color.RED)
 		return false
 	
 	if state == State.CLOSED:

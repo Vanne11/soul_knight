@@ -234,6 +234,8 @@ func _on_door_state_changed(direction: String, state: int) -> void:
 
 func all_doors_open() -> bool:
 	for door in doors.values():
+		if door.has_meta("hold_sealed"):
+			continue  # puerta de salida del jefe (pasillos): no cuenta para limpiar la sala
 		if door.state != DoorState.OPEN:
 			return false
 	return true
@@ -248,7 +250,7 @@ func seal_doors() -> void:
 
 func unseal_doors() -> void:
 	for door in doors.values():
-		if door.state == DoorState.SEALED:
+		if door.state == DoorState.SEALED and not door.has_meta("hold_sealed"):
 			door.set_state(DoorState.OPEN)
 
 func _add_enemy_deferred(enemy: Node2D, pos: Vector2) -> void:

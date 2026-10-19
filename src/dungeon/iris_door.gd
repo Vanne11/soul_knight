@@ -12,9 +12,9 @@ extends "res://src/items/interactable.gd"
 ## Para ABRIRLA en el futuro: open() anima los pliegues (se retraen y el hueco crece); despues main.gd
 ## la cambia por una Door normal hacia el pasillo (hoy lo decide routes.json "detours"."open").
 
-const R := 40.0           # radio del iris, px
+const R := 34.0           # radio del iris, px
 const FOLDS := 14         # pliegues radiales
-const TOUCH_R := 46.0     # a esta distancia del centro "la tocas"
+const TOUCH_R := 40.0     # a esta distancia del centro "la tocas"
 const FLESH := Color("e9928f")
 const FLESH_LIGHT := Color("f6b6ac")
 const FLESH_DARK := Color("b8605f")
@@ -42,6 +42,9 @@ func _ready() -> void:
 	collision_mask = 1
 	super._ready()
 	z_index = 1
+	var mat := CanvasItemMaterial.new()
+	mat.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED  # se lee tambien en la sala a oscuras
+	material = mat
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
 
