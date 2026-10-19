@@ -17,6 +17,8 @@
 	"weights": [0.04, 0.04, 0.04],
 	"boss": "glandula",
 	"boss_name": "LA GLÁNDULA CALLADA",
+	"boss_alt": "don_chequeo",
+	"boss_alt_name": "DON CHEQUEO",
 	"needs": [],
 	"miniboss": {"type": "gran_urologo", "variant": "gran_urologo", "name": "El Gran Urólogo"}
 }
