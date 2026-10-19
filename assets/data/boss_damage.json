@@ -224,5 +224,55 @@
 		"line_weak": "BOSSDMG_VENTANILLA_WEAK",
 		"line_resist": "BOSSDMG_VENTANILLA_RESIST",
 		"hint_weapon": "dildo_taser"
+	},
+	"glandula": {
+		"weak": {
+			"vibracion": 1.8,
+			"electrico": 1.3
+		},
+		"resist": {
+			"contundente": 0.65,
+			"perforante": 0.85
+		},
+		"match": {
+			"pitocles": [
+				"vibracion"
+			],
+			"vulvalquiria": [
+				"vibracion"
+			],
+			"ornitorrinco": [
+				"vibracion",
+				"electrico"
+			]
+		},
+		"line_weak": "BOSSDMG_GLANDULA_WEAK",
+		"line_resist": "BOSSDMG_GLANDULA_RESIST",
+		"hint_weapon": "smg_vibrator"
+	},
+	"algoritmo": {
+		"weak": {
+			"confeti": 1.9,
+			"agua": 1.25
+		},
+		"resist": {
+			"perforante": 0.7,
+			"contundente": 0.85
+		},
+		"match": {
+			"pitocles": [
+				"confeti"
+			],
+			"vulvalquiria": [
+				"confeti"
+			],
+			"ornitorrinco": [
+				"confeti",
+				"agua"
+			]
+		},
+		"line_weak": "BOSSDMG_ALGORITMO_WEAK",
+		"line_resist": "BOSSDMG_ALGORITMO_RESIST",
+		"hint_weapon": "canon_confeti"
 	}
 }
