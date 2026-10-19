@@ -24,6 +24,30 @@
 		"line_resist": "BOSSDMG_CERA_RESIST",
 		"hint_weapon": "globos_agua"
 	},
+	"coprolito": {
+		"weak": {
+			"agua": 1.6,
+			"contundente": 1.4
+		},
+		"resist": {
+			"calor": 0.4
+		},
+		"match": {
+			"pitocles": [
+				"contundente"
+			],
+			"vulvalquiria": [
+				"agua"
+			],
+			"ornitorrinco": [
+				"agua",
+				"contundente"
+			]
+		},
+		"line_weak": "BOSSDMG_COPRO_WEAK",
+		"line_resist": "BOSSDMG_COPRO_RESIST",
+		"hint_weapon": "globos_agua"
+	},
 	"destine": {
 		"weak": {
 			"confeti": 1.9,

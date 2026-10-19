@@ -1,0 +1,18 @@
+{
+	"_nota": "[NO PUBLICAR SIN REVISION] LA PUERTA TRASERA, piso 1 (reino secreto del Perineo; diseno en ~/Videos/Rogue Reproductive/diseno_puerta_trasera.md; datos en datos_ano.md). REINO INCOMPLETO: \"wip\": true lo deja fuera de FLOORS, de regions() y de la ruta (RunManager.enable_wip). Hoy solo sirve de ancla del jefe El Coprolito (pelea directa del bot: --boss=coprolito, tools/autoplay). Sala, enemigos y entrada reales: por hacer. Prefijo 90: despues de 85_silencio_fondo.",
+	"wip": true,
+	"name": "LA PUERTA TRASERA",
+	"name_key": "FLOOR_PUERTA_TRASERA_NAME",
+	"region": "puerta_trasera",
+	"stage": 1,
+	"elite_chance": 0.1,
+	"kingdom": "perineo",
+	"tint": "a08c70",
+	"roster": ["testiculo", "trompa", "calambre"],
+	"names": ["Testículo Errante", "Trompa Escupidora", "Calambre"],
+	"extra": [
+		{"variant": "hemorroide", "name": "Hemorroide Fronteriza", "type": "tank", "weight": 0.3}
+	],
+	"weights": [0.3, 0.3, 0.3],
+	"needs": []
+}

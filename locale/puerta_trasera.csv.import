@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bibdwom4x7tqx"
+
+[deps]
+
+files=["res://locale/puerta_trasera.es.translation", "res://locale/puerta_trasera.en.translation", "res://locale/puerta_trasera.fr.translation"]
+
+source_file="res://locale/puerta_trasera.csv"
+dest_files=["res://locale/puerta_trasera.es.translation", "res://locale/puerta_trasera.en.translation", "res://locale/puerta_trasera.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

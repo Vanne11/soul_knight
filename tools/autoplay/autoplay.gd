@@ -34,7 +34,8 @@ extends Node
 ## su sala sin recorrer el piso. Al terminar escribe "[J0] jefe=... heroe=... semilla=..." (una linea facil de parsear)
 ## y el bot cierra Godot. Varias peleas en paralelo con --log= y XDG_DATA_HOME distintos; tools/autoplay/tabla_jefes.py
 ## junta los registros (y las lineas "[boss-stats]"/"[boss-dmg]" del jefe, si se guarda la salida: > ruta.out).
-##   --boss=<variante>   cera | boss_cera | afeitadora ... (cualquiera de las dos variantes del piso: original o alternativo)
+##   --boss=<variante>   cera | boss_cera | afeitadora ... (cualquiera de las dos variantes del piso: original o alternativo).
+##                       coprolito (La Puerta Trasera, reino "wip": el bot suma los pisos wip con RunManager.enable_wip())
 ##   --boss-alt=0|1      fuerza original (0) o alternativo (1) de ese piso (BossPicker); sin esto, el de la variante pedida
 ##   --loadout=a,b,c     ids de objetos: el arma que sea (equip_slot de arma) se equipa y el resto va al inventario
 ##                       (sin arma pedida, pistola basica). Ej: --loadout=boomerang_silicona
@@ -568,6 +569,9 @@ func _find_boss_floor(arg: String) -> Dictionary:
 func _setup_boss_fight() -> void:
 	var rm := get_node("/root/RunManager")
 	var f := _find_boss_floor(_boss_arg)
+	if f.is_empty() and not RunManager.wip_enabled:  # jefes de reinos "wip" (Puerta Trasera: coprolito): suma sus pisos a FLOORS
+		RunManager.enable_wip()
+		f = _find_boss_floor(_boss_arg)
 	if f.is_empty():
 		_issue("--boss=%s: no hay ningun piso con ese jefe" % _boss_arg)
 		return

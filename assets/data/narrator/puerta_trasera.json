@@ -1,0 +1,24 @@
+{
+  "_info": "LA PUERTA TRASERA (reino secreto del Perineo, en construccion). Por ahora solo las frases de El Coprolito (src/enemies/bosses/boss_coprolito.gd, _say -> bosscoprolito_*). Claves de traduccion: NARR_PUERTA_TRASERA__<EVENTO>_<n> en locale/puerta_trasera.csv. Humor sobre la situacion, nunca sobre las personas; los datos de salud van al codice (datos_ano.md), no aqui.",
+  "floor_puerta_trasera": [
+    "La Puerta Trasera. Entrada de servicio: se ruega no detenerse en la puerta. Aquí se pregunta todo y se puede salir cuando quieras."
+  ],
+  "floor_puerta_trasera_fondo": [
+    "Más abajo, la excavación. Huele a museo y a algo que lleva mucho tiempo esperando."
+  ],
+  "bosscoprolito_intro": [
+    "EL COPROLITO: Llevo aquí desde el Cretácico. Los dinosaurios se fueron; yo me quedé. Aguantándome."
+  ],
+  "bosscoprolito_phase2": [
+    "EL COPROLITO: ¡Me agrieto! Es la edad. Y la falta de fibra, claro."
+  ],
+  "bosscoprolito_phase3": [
+    "EL COPROLITO: ¡Ya no me aguanto más! Millones de años de «ahora no, después»..."
+  ],
+  "bosscoprolito_death": [
+    "EL COPROLITO: Qué alivio... Debí haber ido antes... Hace unos cuantos millones de años..."
+  ],
+  "bosscoprolito_after": [
+    "Los paleontólogos tomaron nota: la fibra y el agua son más antiguas que cualquier moda."
+  ]
+}
