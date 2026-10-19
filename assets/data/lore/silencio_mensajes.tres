@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "silencio_mensajes"
+title = "Mensajes y vigilancia"
+text = "¿Dónde estás? ¿Con quién? Responde. Estoy esperando. Si respondes, preguntan más. Si no respondes, preguntan más. Sentirte vigilada o vigilado es una señal. Si sientes miedo de no responder, también. No hay respuesta correcta. El problema no eres tú. Puedes pedir ayuda."
+category = 8
+unlock_condition = {"target_id": "silencio_mensajes", "type": 10}
+flavor_text = "El problema no eres tú."

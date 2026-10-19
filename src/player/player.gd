@@ -931,7 +931,7 @@ func _update_animation(dir: Vector2) -> void:
 			anim = "camera"
 		elif _gesture_left > 0.0:
 			anim = "gesture"
-		elif _idle_t > _gesture_in:
+		elif _idle_t > _gesture_in and not Silencio.active():  # sin gestos ni murmullos en el Silencio
 			_gesture_in = RNG.randf_range(GESTURE_EVERY.x, GESTURE_EVERY.y)
 			_idle_t = 0.0
 			_gesture_left = GESTURE_TIME

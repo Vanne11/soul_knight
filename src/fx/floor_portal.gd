@@ -25,6 +25,7 @@ const THEMES := {
 	"perineo": {"art": "mixto", "color": Color("ffc93c")},
 	"palacio": {"art": "censura", "color": Color("b48cff")},
 	"prostata": {"art": "prostata", "color": Color("d8b890")},
+	"silencio": {"art": "censura", "color": Color("9a9aa6")},  # sobrio: casi gris (el reino no se libera)
 }
 const CENTER := Vector2(80, 92)   # centro del portal en el lienzo del arte
 const FRAMES := 8

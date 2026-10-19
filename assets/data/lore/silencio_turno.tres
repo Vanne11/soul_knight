@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "silencio_turno"
+title = "Micromachismo"
+text = "Te interrumpen. Repiten tu idea sin darte el crédito. Hablan por encima de ti. Cada gesto parece pequeño. Juntos reducen tu voz. A eso se le llama micromachismo: una conducta pequeña, normalizada. El término lo propuso Luis Bonino a comienzos de los años noventa."
+category = 8
+unlock_condition = {"target_id": "silencio_turno", "type": 10}
+flavor_text = "Una sola vez no parece nada. Muchas veces sí."

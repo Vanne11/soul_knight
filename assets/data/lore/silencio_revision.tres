@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "silencio_revision"
+title = "Señales de control"
+text = "Revisa tu teléfono. Elige tu ropa. Te aleja de quien quieres. Controla tu dinero. Se enoja si no respondes. Son señales de control. Si pasa mucho, no es cariño. Es control. Puedes hablarlo con alguien de confianza."
+category = 8
+unlock_condition = {"target_id": "silencio_revision", "type": 10}
+flavor_text = "Si pasa mucho, no es cariño. Es control."

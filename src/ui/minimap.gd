@@ -12,7 +12,7 @@ const ROOM_NAMES := {
 	Room.RoomType.TREASURE: "MAP_ROOM_TREASURE", Room.RoomType.REST: "MAP_ROOM_REST",
 	Room.RoomType.TRAP: "MAP_ROOM_TRAP", Room.RoomType.PUZZLE: "MAP_ROOM_PUZZLE", Room.RoomType.SECRET: "MAP_ROOM_SECRET",
 	Room.RoomType.BOSS: "MAP_ROOM_BOSS", Room.RoomType.INTOXICATION: "MAP_ROOM_INTOXICATION", Room.RoomType.MINIBOSS: "MAP_ROOM_MINIBOSS",
-	Room.RoomType.START: "MAP_ROOM_START",
+	Room.RoomType.START: "MAP_ROOM_START", Room.RoomType.SILENCIO: "SIL_MAP_SALA",
 }
 ## Letra dentro de la sala en el mapa (las que no salen aqui no llevan marca).
 const ICONS := {Room.RoomType.SHOP: "$", Room.RoomType.BOSS: "J", Room.RoomType.START: "I",
@@ -215,6 +215,7 @@ func _draw() -> void:
 			draw_string(_font, Vector2(r.position.x, r.get_center().y + fs * 0.35), icon, HORIZONTAL_ALIGNMENT_CENTER, r.size.x, fs, col)
 
 	if current:
+		Silencio.draw_minimap(self, rect_of.call(current.grid_pos), current)  # S4: "Te siguen"
 		var rname: String = tr("MAP_ROOM_ELITE") if current.has_meta("elite_room") else tr(ROOM_NAMES.get(current.room_type, "?"))
 		var rm := get_node_or_null("/root/RunManager")
 		if rm:

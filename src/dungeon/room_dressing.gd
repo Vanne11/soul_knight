@@ -37,7 +37,8 @@ static func build_floor(rooms: Dictionary, floor_n: int, seed_: int) -> void:
 		var room: Room = rooms[pos]
 		if room.get_node_or_null("Dressing") == null:
 			_dress(room, rooms, fl, floor_n, seed_)
-	_graffiti(rooms, floor_n, seed_)
+	if not Silencio.is_floor(floor_n):
+		_graffiti(rooms, floor_n, seed_)  # el guino a Vanessa no entra en el Silencio (sin bromas)
 
 
 static func _tex(kingdom: String, name: String) -> Texture2D:

@@ -109,6 +109,10 @@ static func setup(main_: Node, rooms_: Dictionary, floor_n: int, run_seed: int, 
 	if is_instance_valid(_instance):
 		_instance.get_parent().remove_child(_instance)
 		_instance.free()
+	if Silencio.is_floor(floor_n):
+		current = ""  # Las Tierras del Silencio: sin eventos de piso, ni reloj, ni humor (diseno_E3, regla 1)
+		trial_state = ""
+		return null
 	current = force if force != "" else (test_force if test_force != "" else roll(floor_n, run_seed))
 	trial_state = "offered"
 	var fe := FloorEvents.new()

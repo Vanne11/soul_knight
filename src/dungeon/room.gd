@@ -3,7 +3,9 @@ class_name Room
 
 ## Procedural room with doors, spawn points, and room type logic
 
-enum RoomType { COMBAT = 0, SHOP = 1, LORE = 2, TRAP = 3, PUZZLE = 4, SECRET = 5, BOSS = 6, INTOXICATION = 7, MINIBOSS = 8, START = 9, TREASURE = 10, REST = 11 }
+enum RoomType { COMBAT = 0, SHOP = 1, LORE = 2, TRAP = 3, PUZZLE = 4, SECRET = 5, BOSS = 6, INTOXICATION = 7, MINIBOSS = 8, START = 9, TREASURE = 10, REST = 11,
+	## Sala de situacion de Las Tierras del Silencio (src/silencio/): sin enemigos ni recompensas.
+	SILENCIO = 12 }
 
 enum DoorState { CLOSED = 0, OPEN = 1, LOCKED = 2, SEALED = 3 }
 
