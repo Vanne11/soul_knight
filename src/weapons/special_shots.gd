@@ -8,6 +8,7 @@ extends RefCounted
 
 const PLAYER_BULLET := preload("res://src/player/player_bullet.tscn")
 const BOOMERANG_TEX := preload("res://assets/sprites/projectiles/boomerang.png")
+const TARRO_TEX := preload("res://assets/sprites/projectiles/tarro_masilla.png")
 const BALLOON_TEX := preload("res://assets/sprites/projectiles/water_balloon.png")
 
 
@@ -20,6 +21,8 @@ static func fire(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: Vect
 			_boomerang(p, cd, dmg, aim, origin)
 		"balloon":
 			_balloon(p, cd, dmg, aim, origin)
+		"tarro":
+			_tarro(p, cd, dmg, aim, origin)
 		"catcher":
 			_catcher(p, cd, dmg, aim, origin)
 		"combo":
@@ -124,6 +127,31 @@ static func _balloon(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: 
 		"slow": float(cd.get("puddle_slow", 0.5)),
 	}
 	b.rotation = aim.angle() + RNG.randf_range(-0.03, 0.03)
+	p.get_parent().add_child(b)
+	b.global_position = origin
+
+
+# ---------------------------------------------------------------- tarro de masilla
+## Se lanza en arco; al reventar deja una mancha que pega a los enemigos (ver Masilla).
+static func _tarro(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: Vector2) -> void:
+	var b: PlayerBullet = PLAYER_BULLET.instantiate()
+	b.crit_mult = _crit(p, cd)
+	b.weapon_id = BossDamage.weapon_of(p)
+	b.damage = dmg * b.crit_mult
+	b.speed = float(cd.get("projectile_speed", 260.0)) * p.get_node("/root/PlayerStats").projectile_speed_modifier
+	b.lifetime = float(cd.get("range", 250.0)) / b.speed
+	b.explosion_radius = float(cd.get("explosion_radius", 46.0))
+	b.knockback = 60.0
+	b.water = true  # sin mecha rosa
+	b.skin = TARRO_TEX
+	b.arc = float(cd.get("arc", 22.0))
+	b.putty = {
+		"radius": float(cd.get("putty_radius", 58.0)),
+		"time": float(cd.get("putty_time", 5.0)),
+		"stick": float(cd.get("stick_time", 2.5)),
+		"boss_slow": float(cd.get("boss_slow", 0.75)),
+	}
+	b.rotation = aim.angle()
 	p.get_parent().add_child(b)
 	b.global_position = origin
 
