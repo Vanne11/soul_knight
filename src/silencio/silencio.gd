@@ -5,7 +5,9 @@ extends RefCounted
 ## de genero (E3). Este archivo cubre el piso 1, "Superficie" (aviso de contenido, S1 Turno,
 ## S2 Espacio, S3 Revision y S4 Mensajes) y el piso 2, "Fondo" (S5 Cinco puertas y S6 El pasillo; ver mas
 ## abajo). Diseno aprobado: diseno_E3_silencio.md (secciones 0-4).
-## NO incluye el jefe, la sala de memoria (S7) ni la transformacion del reino (los hacen otros agentes).
+## El piso 2 incluye ademas el jefe "El Pacto de Silencio" (silencio_jefe.gd + boss_pacto_silencio.gd), la sala
+## de memoria S7 (silencio_memoria.gd, con src/core/contemplation_mode.gd) y la transformacion del reino en
+## "Las Tierras de la Voz" (silencio_plaza.gd, Silencio.liberado): ver la seccion "PISO 2" mas abajo.
 ##
 ## REINO INCOMPLETO ("wip": true en assets/data/floors/80_silencio.json): no entra en la ruta normal
 ## (ver la cabecera de run_manager.gd). Se prueba desde F1 > "Ir al Silencio (WIP)".
@@ -26,13 +28,18 @@ extends RefCounted
 ## circle_show(), circle_set(i, on), circle_relight(i), circle_is_on(i), circle_lit(). El estado dura la
 ## partida (se reinicia al empezar otra).
 ##
-## PISO 2 "Fondo" (85_silencio_fondo.json, CHAIN_FONDO): entrada vacia, S5 "Cinco puertas"
-## (silencio_consent.gd), pasillo, S6 A "El pasillo" (silencio_pasillo.gd, con el cambio de tono),
-## S6 B "para ti" (silencio_habitacion.gd), pasillo y la SALA DEL JEFE (clave "jefe"), hoy VACIA
-## (silencio_jefe_hueco.gd): una puerta que avanza. TODO jefe "El Pacto de Silencio" (otro agente) y
-## S7 sala de memoria: el jefe reemplaza a SilencioJefeHueco en _make_sala("jefe"); la S7 se suma como
-## otra sala de la cadena. La salida de S4 abre el portal al piso 2 (main.open_exit).
-## OJO jefe: S6 B vuelve a encender la luz 0 del circulo (el telefono); las otras dos siguen apagadas.
+## PISO 2 "Fondo" (85_silencio_fondo.json, CHAIN_FONDO): entrada vacia, S5 "Cinco puertas" (consentimiento),
+## pasillo, S6 A "El pasillo" (silencio_pasillo.gd, con el cambio de tono), S6 B "para ti"
+## (silencio_habitacion.gd), pasillo, la SALA DEL JEFE (clave "jefe": SilencioJefe, el jefe "El Pacto de
+## Silencio"), S7 la SALA DE MEMORIA (clave "memoria": SilencioMemoria, contemplacion) y la PLAZA DE LA
+## PALABRA (clave "plaza": SilencioPlaza), ya en el reino transformado. La salida del piso (portal) esta en la
+## Plaza. S6 B deja encendida la luz 0 del circulo; el jefe las apaga las 3 al empezar (diseno 5.5) y las
+## va encendiendo (Silencio.circle_set).
+##
+## TRANSFORMACION (7): al cruzar a la Plaza (Silencio.set_liberado) el reino pasa a "Las Tierras de la Voz":
+## luz calida en todas las salas, el nombre del piso cambia (Loc.floor_name), el circulo se enciende entero
+## y la sala de memoria queda como MEMORIAL (velas encendidas y flores del jugador). No hay vuelta a la
+## version oscura. Mapa del mundo: dos estados (ui/world_map.gd, "Las Tierras de la Voz" al estar liberado).
 ##
 ## SONIDO (sin sonidos adecuados en assets/audio, se deja el silencio que permite el diseno): faltan el
 ## murmullo sin palabras y el corte seco de la voz (S1), los pasos de multitud apagados y el golpe sordo
@@ -68,6 +75,10 @@ const GROUP_HUD := "sil_hud"
 ## Estado de la partida (se reinicia con cada partida, ver _sync_run).
 static var circle_shown := false
 static var circle_on: Array = [true, true, true]
+## El reino ya se transformo en "Las Tierras de la Voz" (se cruzo a la Plaza). Dura la partida.
+static var liberado := false
+## Lugares (0..11) de la mesa de la sala de memoria donde el jugador dejo una flor; el Memorial las conserva.
+static var mem_flowers: Array = []
 static var _held_weapon: Item = null
 static var _run_stamp := -1.0
 static var _aviso_stamp := -1.0
@@ -99,6 +110,8 @@ static func _sync_run() -> void:
 		_run_stamp = stamp
 		circle_shown = false
 		circle_on = [true, true, true]
+		liberado = false
+		mem_flowers = []
 		_held_weapon = null
 
 
@@ -142,6 +155,8 @@ static func assign_rooms(gen: DungeonGenerator, plan: Dictionary) -> void:
 
 ## Ambiente (CanvasModulate) de una sala: de gris tibio a negro azulado segun su luz.
 static func ambient(room: Room) -> Color:
+	if liberado and str(room.get_meta("silencio", "")) != "memoria":
+		return Color(1.0, 0.97, 0.9)  # Las Tierras de la Voz: luz calida (la sala de memoria lleva su propia luz)
 	var l: float = room.get_meta("sil_light", 1.0)
 	var t := clampf((l - 0.35) / 0.65, 0.0, 1.0)
 	return Color(l * lerpf(0.78, 1.0, t), l * lerpf(0.86, 0.98, t), l * lerpf(1.0, 0.94, t))
@@ -151,6 +166,7 @@ static func ambient(room: Room) -> Color:
 ## Al terminar de generar un piso (main._generate_dungeon). Dentro del reino: aviso y HUD; fuera, limpia.
 static func setup_floor(main: Node) -> void:
 	_sync_run()
+	ContemplationMode.reset()
 	restore_weapon(main.player)
 	for old in _tree().get_nodes_in_group(GROUP_HUD):
 		old.queue_free()
@@ -200,7 +216,7 @@ static func _make_sala(key: String) -> SilencioSala:
 		"cinco_puertas": return SilencioConsent.new()
 		"pasillo_s6": return SilencioPasillo.new()
 		"habitacion": return SilencioHabitacion.new()
-		"jefe": return SilencioJefeHueco.new()  # TODO: el jefe "El Pacto de Silencio" la reemplaza
+		"jefe": return SilencioJefe.new()  # la arena de "El Pacto de Silencio"
 	return null
 
 
@@ -216,6 +232,21 @@ static func _dress(room: Room) -> void:
 	floor_art.kind = str(room.get_meta("silencio"))
 	room.add_child(floor_art)
 	room.move_child(floor_art, room.floor_tilemap.get_index() + 1)
+
+
+## El reino se transforma en "Las Tierras de la Voz" (se cruzo a la Plaza). Idempotente.
+static func set_liberado(main: Node) -> void:
+	if liberado:
+		return
+	liberado = true
+	circle_show()
+	for i in 3:
+		circle_set(i, true)  # el circulo entero se enciende
+	var hud := main.get_node_or_null("HUD")
+	if hud != null and hud.has_method("_update_floor_label"):
+		hud._update_floor_label()  # el nombre del piso cambia
+	if main._lighting != null and main.current_room != null:
+		main._lighting.paint(main.current_room, false, true)
 
 
 # ------------------------------------------------------------------ pantalla: carteles y avisos

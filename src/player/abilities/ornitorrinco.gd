@@ -101,6 +101,9 @@ func spur() -> void:
 		if to_e.dot(aim) < 0.2:
 			continue
 		hit = true
+		if e.has_method("sound_hit"):  # El Pacto de Silencio: el "Ñic" es sonido (dano de sonido)
+			e.sound_hit(SPUR_DAMAGE * 1.6 * stats.damage_modifier, player)
+			continue
 		BossDamage.tag("", 1.0, "perforante")
 		e.take_damage(SPUR_DAMAGE * stats.damage_modifier, player, aim * 240.0)
 		if not is_instance_valid(e) or float(e.get("current_health")) <= 0.0:

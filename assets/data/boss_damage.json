@@ -248,5 +248,19 @@
 		"line_weak": "BOSSDMG_VENTANILLA_WEAK",
 		"line_resist": "BOSSDMG_VENTANILLA_RESIST",
 		"hint_weapon": "dildo_taser"
+	},
+	"pacto_silencio": {
+		"_nota": "El Pacto de Silencio (diseno_E3 5.2): debil al SONIDO (x1,8) y resiste todo lo demas ('apagado' x0,3: nunca cero). boss_pacto_silencio.gd etiqueta cada golpe: 'sonido' si viene de un anillo de ruido, un pulso, el grito/escudo/pico del heroe o una Voz aliada; 'apagado' el resto. Sin MATCH (sin sellos ni armas del reino). Textos sobrios (sin humor).",
+		"weak": {
+			"sonido": 1.8
+		},
+		"resist": {
+			"apagado": 0.3
+		},
+		"match": {},
+		"line_weak": "SIL_JEFE_DEBIL",
+		"line_resist": "SIL_JEFE_RESISTE",
+		"label_weak": "SIL_JEFE_LBL_DEBIL",
+		"label_resist": "SIL_JEFE_LBL_RESISTE"
 	}
 }

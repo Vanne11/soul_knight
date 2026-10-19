@@ -16,6 +16,8 @@ const GLIDE_LIFT := 7.0
 const SCREAM_CD := 14.0
 const SCREAM_RADIUS := 170.0
 const SCREAM_FLEE := 3.0
+## Dano de sonido del grito contra quien lo oye como sonido (El Pacto de Silencio).
+const SOUND_DAMAGE := 22.0
 
 var gliding := false
 var screams := 0
@@ -76,6 +78,8 @@ func scream() -> void:
 	fx.global_position = player.global_position
 	for e in enemies_near(player.global_position, SCREAM_RADIUS):
 		scare(e, SCREAM_FLEE, player.global_position)
+		if e.has_method("sound_hit"):  # El Pacto de Silencio: el grito es SONIDO (dano x1,8)
+			e.sound_hit(SOUND_DAMAGE * stats.damage_modifier, player)
 	player._attack_anim = 0.4
 	_say("hero_scream_vulvalquiria")
 
