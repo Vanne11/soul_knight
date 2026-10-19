@@ -6,10 +6,10 @@ uid="uid://r2oif8ef0pbe"
 
 [deps]
 
-files=["res://locale/silencio.es.translation", "res://locale/silencio.en.translation", "res://locale/silencio.fr.translation"]
+files=["res://locale/silencio.es.translation", "res://locale/silencio.en.translation", "res://locale/silencio.es_ES.translation", "res://locale/silencio.fr.translation"]
 
 source_file="res://locale/silencio.csv"
-dest_files=["res://locale/silencio.es.translation", "res://locale/silencio.en.translation", "res://locale/silencio.fr.translation"]
+dest_files=["res://locale/silencio.es.translation", "res://locale/silencio.en.translation", "res://locale/silencio.es_ES.translation", "res://locale/silencio.fr.translation"]
 
 [params]
 

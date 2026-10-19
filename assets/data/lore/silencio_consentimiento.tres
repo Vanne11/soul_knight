@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "silencio_consentimiento"
+title = "Consentimiento"
+text = "Consentir es libre, reversible, informado, entusiasta y específico. Libre: sin presión. Reversible: se puede cambiar de idea en cualquier momento, también después de un sí. Informado: se sabe qué se acepta. Entusiasta: un sí con duda no es un sí, y el silencio tampoco. Específico: un sí a una cosa no es un sí a todo. Quien duerme, o está muy borracha o borracho, o drogada o drogado, no puede consentir. Se pregunta. Se escucha. Un no se respeta, y respetarlo es lo normal."
+category = 8
+unlock_condition = {"target_id": "silencio_consentimiento", "type": 10}
+flavor_text = "Se pregunta. Se escucha."

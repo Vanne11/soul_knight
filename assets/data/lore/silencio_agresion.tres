@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "silencio_agresion"
+title = "Señales de agresión"
+text = "Señales de agresión: te humilla, te amenaza, rompe cosas, te impide salir, te obliga a algo que no quieres, te golpea. Es violencia. No es tu culpa. Si piensas irte, planéalo con apoyo: es un momento de riesgo. Para ayudar a otra persona: pregunta, escucha, no la presiones, ofrece ayuda y no decidas por ella o por él. Distraer, buscar a alguien o quedarte cerca después son formas de ayudar. Puedes pedir ayuda."
+category = 8
+unlock_condition = {"target_id": "silencio_agresion", "type": 10}
+flavor_text = "No es tu culpa."
