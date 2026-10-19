@@ -9,7 +9,6 @@ class_name EnemyPelusaEstatica
 
 enum P { CHASE, CHARGE, ZAP, RECOVER }
 
-const FUZZ := Color(0.62, 0.82, 1.0)
 const RING_R := 84.0
 const CHARGE_T := 0.65
 
@@ -25,7 +24,6 @@ func _init() -> void:
 func _ready() -> void:
 	drop_table = [{"item_id": "health_small", "chance": 0.3}]
 	super()
-	animated_sprite.self_modulate = FUZZ
 	add_to_group("pelusa_estatica")
 
 
@@ -80,9 +78,25 @@ func _physics_process(delta: float) -> void:
 			velocity = velocity.lerp(Vector2.ZERO, 8.0 * delta)
 			if p_t <= 0.0:
 				p_state = P.CHASE
-	_update_animation(to_t)
+	_pelusa_anim(to_t)
 	queue_redraw()
 	move_and_slide()
+
+
+## Cuadros propios (tools/gen_afeitadora_art.py): flota, se eriza al cargar, aplasta al descargar.
+func _pelusa_anim(to_t: Vector2) -> void:
+	var anim := &"idle"
+	match p_state:
+		P.CHARGE:
+			anim = &"charge"
+		P.ZAP:
+			anim = &"zap"
+		_:
+			anim = &"walk" if velocity.length() > 10.0 else &"idle"
+	if animated_sprite.animation != anim or not animated_sprite.is_playing():
+		animated_sprite.play(anim)
+	if absf(to_t.x) > 1.0:
+		animated_sprite.flip_h = to_t.x < 0.0
 
 
 func _draw() -> void:
