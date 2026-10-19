@@ -1396,14 +1396,19 @@ func _use_defense(delta: float) -> void:
 			danger = true
 			break
 	_shot_defense(d)
-	if d is DefImplante or d is DefParche:  # pasivas: la guard sigue siendo la del heroe
+	if d is DefImplante or d is DefParche or d is DefAnillo or d is DefPrep or d is DefAppCiclo or d is DefTermometro or d is DefMascarilla or d is DefSosten:  # pasivas: la guard sigue siendo la del heroe
+		return
+	if d is DefPep:  # solo tras un contagio, a la primera
+		if player.get_node("/root/PlayerStats").contagion_time > 0.0 and _def_t <= 0.0:
+			_def_t = 1.0
+			Input.action_press("guard")
 		return
 	if d is DefPastillaDiaDespues:  # tras un golpe, a la primera
 		if player.get_node("/root/PlayerStats").current_health < player.get_node("/root/PlayerStats").max_health and _def_t <= 0.0:
 			_def_t = 1.0
 			Input.action_press("guard")
-	elif d is DefBarrera or d is DefVacuna or d is DefTalco or d is DefToallita or d is DefLatigoSeda or d is DefEsposasPeludas or d is DefBolsaAgua or d is DefPito:
-		if (danger or d is DefBolsaAgua) and _def_t <= 0.0:
+	elif d is DefBarrera or d is DefVacuna or d is DefTalco or d is DefToallita or d is DefLatigoSeda or d is DefEsposasPeludas or d is DefBolsaAgua or d is DefPito or d is DefCondonInterno or d is DefEspermicida or d is DefAutotest:
+		if (danger or d is DefBolsaAgua or d is DefAutotest) and _def_t <= 0.0:
 			_def_t = 1.5
 			Input.action_press("guard")
 	elif danger and not (d is DefDiu):  # el DIU gira solo; "guard" solo lo acelera
@@ -1416,7 +1421,7 @@ var _shot_t := 0.0
 
 func _shot_defense(d) -> void:
 	var dir := _arg("--shot=", "")
-	if dir == "" or _shot_n >= 4 or not (d.guarding or d.cooling):
+	if dir == "" or _shot_n >= 4 or not (d.guarding or d.cooling or d.gauge_visible or d.is_passive()):
 		return
 	var now := Time.get_ticks_msec() / 1000.0
 	if now - _shot_t < 2.5:

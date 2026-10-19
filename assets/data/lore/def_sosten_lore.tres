@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_sosten_lore"
+title = "Soporte para Correr"
+text = "«Sin rebotes ni sustos: a correr.» Dato: hacer deporte hace bien, y un buen sostén deportivo da soporte y comodidad al correr o saltar, si lo quieres usar. Cuidar el cuerpo al moverse incluye ropa cómoda, hidratarse y descansar."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_sosten", "count": 1}
+flavor_text = "Ponte un sostén deportivo."

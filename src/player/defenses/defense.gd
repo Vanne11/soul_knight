@@ -74,6 +74,36 @@ func blocks_status() -> bool:
 	return false
 
 
+## Estado concreto bloqueado (kind de StatusEffects): ademas de blocks_status() general (mascarilla: vapores).
+func blocks_status_kind(_kind: String) -> bool:
+	return false
+
+
+## Inmune a nubes, vapores y esporas (mascarilla). Gancho generico: un peligro de "vapor" futuro solo
+## tiene que estar en el grupo "vapor" / llevar meta "vapor" (try_guard de la mascarilla lo traga) o
+## consultar Defense.cloud_immune(player).
+func blocks_cloud() -> bool:
+	return false
+
+
+## Multiplicadores de retroceso / coste del dash / duracion del dash (sosten deportivo).
+func knockback_mult() -> float:
+	return 1.0
+
+
+func dash_cost_mult() -> float:
+	return 1.0
+
+
+func dash_time_mult() -> float:
+	return 1.0
+
+
+static func cloud_immune(pl: Node) -> bool:
+	var df = pl.get("defense") if pl != null else null
+	return df != null and df.blocks_cloud()
+
+
 ## Anclado: ni empujones, ni succiones, ni correas te mueven (Player.shove, StatusEffects.push/pull).
 func anchored() -> bool:
 	return false

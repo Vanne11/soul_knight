@@ -89,7 +89,7 @@ func apply(kind: String, seconds: float, src: Node = null) -> bool:
 	if "is_dashing" in player and player.is_dashing:
 		return false
 	var df = player.get("defense")
-	if df != null and df.blocks_status():  # Vacuna VPH: inmune a estados un rato
+	if df != null and (df.blocks_status() or df.blocks_status_kind(kind)):  # Vacuna VPH: inmune a estados un rato
 		return false
 	var was := _left.has(kind)
 	_left[kind] = maxf(float(_left.get(kind, 0.0)), seconds)
@@ -127,7 +127,7 @@ func push(v: Vector2) -> void:
 	var df = player.get("defense") if player != null else null
 	if df != null and df.anchored():
 		return  # Tampon Ancla: no te mueves
-	_push = v
+	_push = v * (df.knockback_mult() if df != null else 1.0)
 
 
 func blocks_shoot() -> bool:
