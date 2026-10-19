@@ -68,9 +68,11 @@ var _tele_est := {"attack_tiron": 0.9, "attack_salpicadura": 0.45, "attack_cruz"
 
 
 ## Agrega el animador al jefe si su SpriteFrames tiene variantes por fase o animaciones nuevas.
-static func attach(b: EnemyBoss) -> BossAnimator:
+## `legacy` = true: jefe con el arte de siempre (40x60: idle/walk/attack/hurt/death, sin "release" ni "intro"):
+## solo pone la animacion por codigo (respirar, estirar, inclinarse, sombra, estela) sobre esos cuadros.
+static func attach(b: EnemyBoss, legacy := false) -> BossAnimator:
 	var spr_: AnimatedSprite2D = b.get_node_or_null("AnimatedSprite2D")
-	if spr_ == null or spr_.sprite_frames == null or not spr_.sprite_frames.has_animation("release"):
+	if spr_ == null or spr_.sprite_frames == null or not (legacy or spr_.sprite_frames.has_animation("release")):
 		return null  # sin cuadros nuevos: el jefe sigue con su animacion de siempre
 	var a := BossAnimator.new()
 	a.name = NAME
@@ -102,8 +104,9 @@ func setup(b: EnemyBoss, s: AnimatedSprite2D) -> void:
 				b.connect(sig, _on_telegraph)
 	if b.state == EnemyBoss.State.INTRO:
 		_lift = 260.0
-		spr.play("intro")
-		spr.frame = 0
+		if spr.sprite_frames.has_animation("intro"):
+			spr.play("intro")
+			spr.frame = 0
 	_find_shadow.call_deferred()
 
 
@@ -207,6 +210,9 @@ func _play_seq(list: Array) -> void:
 	_queue.clear()
 	if list.is_empty():
 		return
+	list = list.filter(func(a): return spr.sprite_frames.has_animation(a))  # arte de siempre: sin cuadros nuevos
+	if list.is_empty():
+		return
 	spr.speed_scale = 1.0
 	spr.play(list[0])
 	for i in range(1, list.size()):
@@ -308,7 +314,7 @@ func _pick_animation() -> void:
 	_advance_queue()
 	match st:
 		EnemyBoss.State.INTRO:
-			if spr.animation != &"intro" and spr.animation != &"death":  # la Hoja cae ("death") mientras el jefe sigue en INTRO
+			if spr.animation != &"intro" and spr.animation != &"death" and spr.sprite_frames.has_animation("intro"):  # la Hoja cae ("death") mientras el jefe sigue en INTRO
 				spr.play("intro")
 		EnemyBoss.State.TRANSITION:
 			_variant = ""
