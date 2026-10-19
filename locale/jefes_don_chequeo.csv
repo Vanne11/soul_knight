@@ -1,0 +1,15 @@
+keys,es,en,es_ES,fr
+BOSS_DON_CHEQUEO_NAME,DON CHEQUEO,MR. CHECK-UP,,MONSIEUR BILAN
+CHEQ_PHASE_1,"¡Primero, el chequeo!",Check-up first!,,"D'abord, le bilan !"
+CHEQ_PHASE_2,¡Más boxes! ¡Hoy atendemos a todos!,More exam rooms! We're seeing everyone today!,,Plus de cabines ! On reçoit tout le monde aujourd'hui !
+CHEQ_PHASE_3,¡Sin turno no hay salida!,"No appointment, no way out!",,"Pas de rendez-vous, pas de sortie !"
+CHEQ_BOX,¡Pase al box!,Step into the exam room!,,Entrez en cabine !
+CHEQ_EXIT,SALIDA,EXIT,,SORTIE
+CHEQ_STAMP,¡SELLADO!,STAMPED!,,TAMPONNÉ !
+CHEQ_CALL,¡El que sigue!,"Next, please!",,Au suivant !
+BOSSDMG_CHEQUEO_WEAK,"¡Agua! Me mojó la planilla, tendré que rehacerla.","Water! You soaked my form, now I have to redo it.",,"De l'eau ! Mon formulaire est trempé, je dois le refaire."
+BOSSDMG_CHEQUEO_RESIST,Confeti no es un documento válido.,Confetti is not a valid document.,,Les confettis ne sont pas un document valide.
+BOSS_CH_PLANILLAS_T,¡ROMPE LAS PLANILLAS!,TEAR UP THE FORMS!,,DÉCHIRE LES FORMULAIRES !
+BOSS_CH_PLANILLAS_D,Rompe a tiros las cinco planillas que vagan por la sala.,Shoot the five forms wandering around the room.,,Tire sur les cinq formulaires qui errent dans la salle.
+BOSS_CH_SELLOS_T,¡A SELLAR!,GET IT STAMPED!,,À TAMPONNER !
+BOSS_CH_SELLOS_D,Toca los cuatro sellos antes de que se acabe el tiempo.,Touch the four stamps before time runs out.,,Touche les quatre tampons avant la fin du temps.

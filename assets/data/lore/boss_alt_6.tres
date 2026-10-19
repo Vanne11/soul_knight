@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boss_alt_6"
+title = "Don Chequeo"
+text = "Una nuez de oficina con lentes, corbata gris y una planilla que nunca termina. Te mete en un box de examen, cierra las cortinas y te firma órdenes a cada paso. Su único mensaje: primero hay que hacerse el chequeo. Y tiene un punto: dato real, el control de próstata se hace a tiempo, antes de que haya síntomas. Consulta en tu centro de salud a qué edad se recomienda en tu país; en general, si hay antecedentes familiares conviene empezar antes."
+category = 3
+unlock_condition = {"type": 9, "target_id": "DON CHEQUEO"}
+flavor_text = "Derrota a Don Chequeo."
