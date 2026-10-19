@@ -1,0 +1,115 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_idle_00.png" id="idle0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_idle_01.png" id="idle1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_idle_02.png" id="idle2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_idle_03.png" id="idle3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_walk_00.png" id="walk0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_walk_01.png" id="walk1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_walk_02.png" id="walk2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_walk_03.png" id="walk3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_attack_00.png" id="attack0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_attack_01.png" id="attack1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_attack_02.png" id="attack2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_attack_03.png" id="attack3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_mark_00.png" id="mark0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_mark_01.png" id="mark1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_hurt_00.png" id="hurt0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_hurt_01.png" id="hurt1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_death_00.png" id="death0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_death_01.png" id="death1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_death_02.png" id="death2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_death_03.png" id="death3"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("idle0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("idle1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("idle2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("idle3")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("walk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("attack0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("attack1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("attack2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("attack3")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("mark0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("mark1")
+}],
+"loop": true,
+"name": &"mark",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("hurt0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("hurt1")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("death0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death3")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}]
