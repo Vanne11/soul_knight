@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/codex/orgullo/bandera_nobinaria.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "bandera_nobinaria"
+title = "Bandera No Binaria"
+text = "La creó Kye Rowan en febrero de 2014. Amarillo, géneros fuera del binario hombre y mujer; blanco, varios géneros; morado, mezcla de masculino y femenino; negro, personas agénero. No binario es un paraguas: quien no se siente solo hombre ni solo mujer, o ninguno de los dos. Y sí, existe en muchas culturas desde mucho antes del hashtag."
+category = 7
+sprite = ExtResource("2")
+unlock_condition = {"target_id": "reino_orgullo_entrada", "type": 10}
+flavor_text = "Entre «A» y «B» caben más letras."

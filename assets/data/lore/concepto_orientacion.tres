@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "concepto_orientacion"
+title = "Orientación Sexual y Afectiva"
+text = "Es hacia quién sientes atracción sexual (deseo) y afectiva (enamoramiento, vínculo): hacia personas de otro género, del mismo, de varios, de cualquiera o de ninguno. Es distinta de tu identidad de género y de tu expresión: se puede ser trans y heterosexual, o cis y bisexual, o cualquier combinación."
+category = 7
+unlock_condition = {"target_id": "reino_orgullo_entrada", "type": 10}
+flavor_text = "Lo que sientes por otros no depende de lo que eres."

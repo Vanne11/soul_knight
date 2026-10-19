@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "concepto_pronombres"
+title = "Pronombres"
+text = "Ella, él, elle, o lo que cada persona use. Si no sabes, se pregunta, o se usa su nombre mientras tanto. Equivocarte pasa: se corrige y se sigue. Lo que no se hace es insistir en usar otro. Es la cortesía más barata que existe."
+category = 7
+unlock_condition = {"target_id": "reino_orgullo_entrada", "type": 10}
+flavor_text = "Preguntar sale gratis. Equivocarse a propósito, no."

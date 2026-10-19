@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "concepto_sexo_asignado"
+title = "Sexo Asignado"
+text = "Es lo que se anota en el registro al nacer, normalmente según lo que se ve del cuerpo: mujer o hombre. Es un dato del cuerpo y del papel, no dice quién eres ni a quién quieres. Hay personas intersex, cuyo cuerpo no encaja en esas dos casillas."
+category = 7
+unlock_condition = {"target_id": "reino_orgullo_entrada", "type": 10}
+flavor_text = "Lo que decía el papel. No necesariamente lo que dice la persona."

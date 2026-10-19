@@ -293,10 +293,18 @@ func _open_codex() -> void:
 	text.text = tr("CODEX_HINT")
 	detail.add_child(text)
 	var entries: Array = lore.get_all_entries()
-	entries.sort_custom(func(a, b): return a.unlocked and not b.unlocked if a.unlocked != b.unlocked else Loc.lore_title(a) < Loc.lore_title(b))
+	# Seccion propia "Orgullo": va al final de la lista, con su marca en el nombre
+	var pride: int = LoreEntry.Category.ORGULLO
+	entries.sort_custom(func(a, b):
+		if (a.category == pride) != (b.category == pride):
+			return b.category == pride
+		return a.unlocked and not b.unlocked if a.unlocked != b.unlocked else Loc.lore_title(a) < Loc.lore_title(b))
 	for e in entries:
 		var img: Texture2D = CodexArt.image(e)
-		list.add_item(Loc.lore_title(e) if e.unlocked else "???", CodexArt.thumb(img, 32, not e.unlocked) if img else null)
+		var label: String = Loc.lore_title(e) if e.unlocked else "???"
+		if e.category == pride and e.unlocked:
+			label = tr("ORGULLO_CODEX_TAG") + label
+		list.add_item(label, CodexArt.thumb(img, 32, not e.unlocked) if img else null)
 		# Las bloqueadas NO van deshabilitadas: asi las flechas siguen bajando y se ve cuanto falta.
 		if not e.unlocked:
 			list.set_item_custom_fg_color(list.item_count - 1, Color(0.55, 0.5, 0.6))

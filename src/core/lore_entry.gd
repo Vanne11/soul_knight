@@ -19,5 +19,7 @@ enum Category {
 	ENEMY = 3,
 	LOCATION = 4,
 	MISC = 5,
-	ENDING = 6
+	ENDING = 6,
+	## Reino del Orgullo: banderas, historia, conceptos y mitos (se abren con eventos custom, ver datos_orgullo.md)
+	ORGULLO = 7
 }

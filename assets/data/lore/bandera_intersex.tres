@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/codex/orgullo/bandera_intersex.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "bandera_intersex"
+title = "Bandera Intersex"
+text = "Morgan Carpenter la diseñó en julio de 2013 para Organisation Intersex International Australia (hoy Intersex Human Rights Australia). Amarillo con un círculo morado: ambos colores se eligieron porque no tienen asociación con ningún género. El círculo, sin adornos ni cortes, simboliza lo completo y las posibilidades. Intersex: cuerpos con rasgos sexuales que no encajan en las casillas típicas de hombre o mujer. Es variación corporal, no una orientación ni una identidad."
+category = 7
+sprite = ExtResource("2")
+unlock_condition = {"target_id": "reino_orgullo_entrada", "type": 10}
+flavor_text = "Un círculo entero: nada que arreglar."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "hito_marsha_sylvia"
+title = "Marsha y Sylvia"
+text = "Marsha P. Johnson y Sylvia Rivera fundaron en 1970 STAR, un grupo que ayudaba a jóvenes LGBTIQ+ sin hogar. Del «primer ladrillo» de Stonewall: es un mito. La propia Marsha contó que llegó pasadas las 2 de la madrugada, con los disturbios ya en marcha, y nadie sabe quién lanzó el primer objeto. Lo que sí está claro es lo que hicieron después, y fue mucho."
+category = 7
+unlock_condition = {"target_id": "reino_orgullo_entrada", "type": 10}
+flavor_text = "Del ladrillo se discute; de su trabajo, no."
