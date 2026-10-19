@@ -157,6 +157,7 @@ func _ready() -> void:
 	var hero := _arg("--hero=", "vulvalquiria")
 	_hero = hero
 	RunManager.test_seed = int(_arg("--seed=", "0"))
+	RunManager.route_pick = _arg("--route-pick=", "first")  # eleccion de puerta tras el jefe: first | random | <reino>
 	_collect = _arg("--collect=", "") == "all"
 	_max_secs = float(_arg("--max-secs=", "0"))
 	var fast := _arg("--fast=", "")
@@ -237,6 +238,7 @@ func _ready() -> void:
 	var jump := int(_arg("--floor=", "0"))  # prueba corta: salta (como el menu de depuracion) al piso N de la ruta (p.ej. 9 = La Prostata con Vulvalquiria)
 	if jump > 1:
 		var rm0 := get_node("/root/RunManager")
+		RunManager.extend_to(jump)
 		rm0.current_floor = jump - 1
 		main._advance_to_next_floor()
 		await _wait_s(1.0)
@@ -572,7 +574,7 @@ func _setup_boss_fight() -> void:
 		_issue("--boss=%s: no hay ningun piso con ese jefe" % _boss_arg)
 		return
 	if not RunManager.route_floors.has(f):
-		RunManager.set_route(RunManager.route_regions + [f.region])
+		RunManager.add_region(f.region)
 	var idx := RunManager.route_floors.find(f) + 1
 	var want := _boss_arg.trim_prefix("boss_")
 	var alt_flag := _arg("--boss-alt=", "")
@@ -1085,7 +1087,20 @@ func _things(room: Room) -> Array:
 	out = out.filter(func(n): return n.get_parent() != null and not _used.has(n.get_instance_id()))
 	if out.is_empty():
 		out = generic  # inscripciones, fuente y la escotilla al piso siguiente: al final
+	# Puertas de reino (eleccion de ruta): solo la que toca segun --route-pick.
+	var doors: Array = out.filter(func(n): return _door_region(n) != "")
+	if doors.size() > 1:
+		var regs: Array = doors.map(func(n): return _door_region(n))
+		var want := RunManager.pick_option(regs, RunManager.current_seed)
+		out = doors.filter(func(n): return _door_region(n) == want)
 	return out
+
+
+func _door_region(n: Node) -> String:
+	for ch in n.get_children():
+		if ch.has_meta("door_region"):
+			return str(ch.get_meta("door_region"))
+	return ""
 
 
 ## Plan de piso: la sala sin visitar mas cercana (por el grafo); despues el jefe.

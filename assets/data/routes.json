@@ -1,7 +1,7 @@
 {
-	"_nota": "Orden de reinos por heroe (ids de region de assets/data/floors). Una lista anidada = esos reinos en orden al azar segun la semilla. Para sumar un reino: su JSON en floors/ y su id aqui.",
-	"default": ["selva", "penelandia", "vulvania", "perineo", "prostata", "palacio"],
-	"pitocles": ["penelandia", "selva", "vulvania", "perineo", "prostata", "palacio"],
-	"vulvalquiria": ["vulvania", "selva", "penelandia", "perineo", "prostata", "palacio"],
-	"ornitorrinco": ["selva", ["penelandia", "vulvania"], "perineo", "prostata", "palacio"]
+	"_nota": "Ruta por SELLOS + ELECCION DE PUERTA (ids de region de assets/data/floors). El heroe parte en su reino de 'start' (si ese reino no existe en floors/, usa start.default). Vencer al jefe FINAL (ultimo piso) de un reino de 'body' da 1 sello. Al terminar un reino: si sellos < seals_needed, el jugador ELIGE entre los reinos de 'body' no visitados (en la sala del jefe aparece una puerta por reino); si no, sigue el siguiente reino de 'center' no visitado, en orden. Los reinos que no existen en floors/ se saltan. Para sumar un reino: su JSON en floors/ y su id aqui; no hace falta tocar codigo.",
+	"body": ["selva", "penelandia", "vulvania", "perineo"],
+	"center": ["arcoiria", "utero", "prostata", "silencio", "palacio"],
+	"seals_needed": 2,
+	"start": {"default": "selva", "pitocles": "penelandia", "vulvalquiria": "vulvania", "ornitorrinco": "arcoiria"}
 }

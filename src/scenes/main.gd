@@ -663,7 +663,11 @@ func _complete_floor() -> void:
 	var boss_room := current_room
 	var floor_n: int = _run_manager.current_floor
 	var boss_floor: bool = RunManager.floor_has_boss(floor_n)
-	if floor_n >= RunManager.route_size():
+	if RunManager.award_seal(floor_n):
+		_run_manager.seal_gained.emit(RunManager.seals())
+		Narrator.say("seal_gained")
+		Narrator.toast(tr("SEAL_TOAST_TITLE"), tr("SEAL_TOAST_BODY") % [RunManager.seals(), RunManager.seals_needed()], "ffd75a")
+	if RunManager.is_route_end(floor_n):
 		_run_manager.liberate(floor_n)
 		Narrator.say("victory")
 		get_node("/root/LoreDatabase").custom_event("victory")
@@ -691,12 +695,31 @@ func _complete_floor() -> void:
 		Utero.cycle_blessing(self)  # Dona Regla: ademas, una bendicion de ciclo
 	else:
 		await get_tree().create_timer(1.5).timeout  # guardian vencido: sin mejora, solo la salida
+	var options: Array = RunManager.next_options() if RunManager.route_dynamic and floor_n >= RunManager.route_floors.size() else []
+	if options.size() > 1:
+		# Eleccion diegetica: una puerta por reino elegible, con su nombre y su color.
+		for i in options.size():
+			var region: String = options[i]
+			var door := FloorPortal.create(region, true)
+			door.set_meta("door_region", region)  # el bot (tools/autoplay) elige puerta por aqui
+			var dx := (float(i) - float(options.size() - 1) / 2.0) * 210.0
+			_add_prop(boss_room, boss_room.get_center_position() + Vector2(dx, 150), door,
+				tr("SEAL_DOOR") % Loc.region_name_id(region),
+				func(p, it):
+					it.finish()
+					await door.absorb(p)
+					RunManager.add_region(region)
+					_advance_to_next_floor()
+					FloorPortal.restore(p))
+		return
 	var portal := _hatch_visual()
 	_add_prop(boss_room, boss_room.get_center_position() + Vector2(0, 150), portal,
 		tr("FLOOR_HATCH") % (floor_n + 1),
 		func(p, it):
 			it.finish()
 			await portal.absorb(p)  # el heroe se encoge y gira hacia el centro antes de bajar
+			if options.size() == 1:
+				RunManager.add_region(str(options[0]))
 			_advance_to_next_floor()
 			FloorPortal.restore(p))
 

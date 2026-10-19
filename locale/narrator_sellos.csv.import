@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://c0sk2ho6p8lnn"
+
+[deps]
+
+files=["res://locale/narrator_sellos.es.translation", "res://locale/narrator_sellos.en.translation", "res://locale/narrator_sellos.fr.translation"]
+
+source_file="res://locale/narrator_sellos.csv"
+dest_files=["res://locale/narrator_sellos.es.translation", "res://locale/narrator_sellos.en.translation", "res://locale/narrator_sellos.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

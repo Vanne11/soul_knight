@@ -114,17 +114,25 @@ static func _load_extra_files(floors: Array, ids: Array) -> void:
 				push_warning("RunManager: %s: '%s' no cae en ningun piso" % [file, entry.get("name", "?")])
 
 
-## --- RUTAS: orden de los reinos por heroe (assets/data/routes.json) ---
-## {"<heroe>": [<reino>, ...]} donde cada <reino> es un id de region ("selva", "penelandia"...) o
-## una lista de ids que se juegan en orden AL AZAR segun la semilla de la partida (la del dia
-## incluida). Cada reino aporta sus pisos (etapas) seguidos. Meter un reino nuevo = su JSON en
-## floors/ + su id aqui. "default" se usa con heroes sin ruta propia.
+## --- RUTAS: sellos + eleccion de puerta (assets/data/routes.json) ---
+## "body" = reinos del cuerpo (su jefe final da 1 sello), "center" = reinos del centro en orden,
+## "seals_needed" = sellos para abrir el centro, "start" = reino inicial por heroe (con "default").
+## La ruta NO es una lista fija: se arma sobre la marcha. Al terminar un reino (next_options):
+## sellos < seals_needed -> el jugador elige entre los reinos de body sin visitar; si no, el
+## siguiente reino de center sin visitar. Los reinos sin JSON en floors/ se saltan. Meter un
+## reino nuevo = su JSON en floors/ + su id en routes.json, sin tocar codigo.
 const ROUTES_FILE := "res://assets/data/routes.json"
 static var ROUTES: Dictionary = _load_routes()
-## Pisos (Dictionary de FLOORS) de la ruta activa, en orden; vacia = orden de los archivos.
+## Pisos (Dictionary de FLOORS) de la ruta activa hasta ahora, en orden; vacia = orden de los archivos.
 static var route_floors: Array = []
-## Ids de region de la ruta activa, en orden (para dificultad por posicion).
+## Ids de region de la ruta activa, en orden de visita (para dificultad por posicion).
 static var route_regions: Array = []
+## Reinos que dieron sello en esta partida.
+static var seal_regions: Array = []
+## La ruta se arma por sellos (true) o es una lista fija puesta con set_route (false).
+static var route_dynamic := false
+## Eleccion de puerta del bot (--route-pick): "first", "random" (determinista) o un id de region.
+static var route_pick := "first"
 
 
 static func _load_routes() -> Dictionary:
@@ -132,51 +140,148 @@ static func _load_routes() -> Dictionary:
 	return r if r is Dictionary else {}
 
 
-## Ids de region de la ruta de un heroe para una semilla. Los que no existen en FLOORS se ignoran.
-static func route_for(hero: String, seed_: int) -> Array:
-	var spec: Array = ROUTES.get(hero, ROUTES.get("default", regions()))
+static func _existing(ids: Array) -> Array:
 	var all := regions()
-	var rng := RandomNumberGenerator.new()
-	rng.seed = seed_ * 2654435761 + 97  # propio: no gasta tiradas del RNG de la partida
-	var out: Array = []
-	for step in spec:
-		var group: Array = step.duplicate() if step is Array else [str(step)]
-		for i in range(group.size() - 1, 0, -1):  # Fisher-Yates
-			var j := rng.randi_range(0, i)
-			var t = group[i]
-			group[i] = group[j]
-			group[j] = t
-		for id in group:
-			if id not in all:
-				push_warning("RunManager: la ruta de '%s' nombra un reino sin JSON: %s" % [hero, id])
-			elif id not in out:
-				out.append(id)
-	return out
+	return ids.filter(func(id): return str(id) in all)
 
 
-## Reinos en el orden del mundo/historia (la ruta "default" de routes.json; los que falten van al
-## final, en orden de archivo). Para listarlos al jugador; NO cambia ids ni guardados.
+static func body_regions() -> Array:
+	return _existing(ROUTES.get("body", []))
+
+
+static func center_regions() -> Array:
+	return _existing(ROUTES.get("center", []))
+
+
+static func seals_needed() -> int:
+	return int(ROUTES.get("seals_needed", 2))
+
+
+## Reino inicial del heroe (start.<heroe>; si no existe en FLOORS, start.default).
+static func start_region(hero: String) -> String:
+	var st: Dictionary = ROUTES.get("start", {})
+	var all := regions()
+	var r := str(st.get(hero, st.get("default", "")))
+	if r not in all:
+		r = str(st.get("default", ""))
+	if r not in all:
+		r = all[0] if not all.is_empty() else ""
+	return r
+
+
+static func seals() -> int:
+	return seal_regions.size()
+
+
+## Reinos en el orden del mundo/historia (body y luego center; los que falten van al final, en
+## orden de archivo). Para listarlos al jugador; NO cambia ids ni guardados.
 static func world_order() -> Array:
-	var out := route_for("default", 0)
+	var out: Array = body_regions() + center_regions()
 	for r in regions():
 		if r not in out:
 			out.append(r)
 	return out
 
 
-## Fija la ruta activa (lista de ids de region): sus pisos, por reino y etapa.
-static func set_route(region_ids: Array) -> void:
-	route_regions = region_ids.duplicate()
-	utero_inserted = false  # la ruta se rehace sin el Utero (ver insert_utero)
+static func _add_region_floors(id: String) -> void:
+	route_regions.append(id)
+	for f in FLOORS:
+		if f.region == id:
+			route_floors.append(f)
+
+
+## Empieza la ruta de un heroe: solo su reino inicial; el resto se decide jugando.
+static func begin_route(hero: String, _seed: int = 0) -> void:
+	route_dynamic = true
+	utero_inserted = false
+	route_regions = []
 	route_floors = []
-	for r in region_ids:
-		for f in FLOORS:
-			if f.region == r:
-				route_floors.append(f)
+	seal_regions = []
+	_add_region_floors(start_region(hero))
 
 
 static func set_route_for(hero: String, seed_: int) -> void:
-	set_route(route_for(hero, seed_))
+	begin_route(hero, seed_)
+
+
+## Fija una ruta fija (lista de ids de region): sus pisos, por reino y etapa. Sin sellos ni eleccion.
+static func set_route(region_ids: Array) -> void:
+	route_dynamic = false
+	route_regions = []
+	route_floors = []
+	seal_regions = []
+	utero_inserted = false  # la ruta se rehace sin el Utero (ver insert_utero)
+	for r in region_ids:
+		_add_region_floors(str(r))
+
+
+## Suma un reino (sus pisos) al final de la ruta activa si aun no esta.
+static func add_region(id: String) -> void:
+	if id not in route_regions:
+		_add_region_floors(id)
+
+
+## Reinos entre los que seguir al terminar el ultimo reino de la ruta: [] = fin de la partida,
+## 1 = sigue solo (center), 2+ = el jugador elige (body, sellos insuficientes).
+static func next_options() -> Array:
+	if seals() < seals_needed():
+		var body: Array = body_regions().filter(func(id): return id not in route_regions)
+		if not body.is_empty():
+			return body
+	for id in center_regions():
+		if id not in route_regions:
+			return [id]
+	return []
+
+
+## El piso n es el ultimo de su reino (su jefe es "el final" del reino).
+static func is_region_last_floor(floor_n: int) -> bool:
+	var f := _floor_at(floor_n)
+	var last: Dictionary = {}
+	for x in FLOORS:
+		if x.region == f.region:
+			last = x
+	return last.get("id", "") == f.id
+
+
+## Terminar este piso cierra la partida: es el final de su reino y no queda a donde ir.
+static func is_route_end(floor_n: int) -> bool:
+	if not route_dynamic:
+		return floor_n >= route_size()
+	return floor_n >= route_floors.size() and is_region_last_floor(floor_n) and next_options().is_empty()
+
+
+## Da el sello si el piso es el final de un reino del cuerpo y trae jefe. true si lo dio.
+static func award_seal(floor_n: int) -> bool:
+	if not route_dynamic or not floor_has_boss(floor_n) or not is_region_last_floor(floor_n):
+		return false
+	var r := floor_region(floor_n)
+	if r not in ROUTES.get("body", []) or r in seal_regions:
+		return false
+	seal_regions.append(r)
+	return true
+
+
+## Elige un reino de las opciones segun route_pick: "first", "random" (semilla de la partida,
+## determinista) o un id de region.
+static func pick_option(options: Array, seed_: int) -> String:
+	if route_pick == "random" and options.size() > 1:
+		var rng := RandomNumberGenerator.new()
+		rng.seed = seed_ * 2654435761 + 97 + route_regions.size()
+		return str(options[rng.randi_range(0, options.size() - 1)])
+	if route_pick in options:
+		return route_pick
+	return str(options[0])
+
+
+## Prolonga la ruta (eligiendo con route_pick) hasta tener al menos n pisos. Para saltos de
+## depuracion/pruebas.
+static func extend_to(n: int) -> void:
+	while route_dynamic and route_floors.size() < n:
+		var o := next_options()
+		if o.is_empty():
+			return
+		add_region(pick_option(o, 0))
 
 
 ## --- EL UTERO (nivel secreto de Vulvania, src/utero/utero.gd) ---
@@ -227,9 +332,42 @@ static func insert_utero() -> bool:
 	return true
 
 
-## Cantidad de pisos de la ruta activa (el ultimo trae el jefe final).
+## Cantidad de pisos PLANEADOS de la ruta activa (el ultimo trae el jefe final). Es determinista
+## desde el inicio: los ya armados + los reinos de center que faltan + los reinos de body que
+## faltan para llegar a seals_needed (el inicio cuenta como uno de los sellos si es del cuerpo).
 static func route_size() -> int:
-	return route_floors.size() if not route_floors.is_empty() else FLOORS.size()
+	if route_floors.is_empty():
+		return FLOORS.size()
+	if not route_dynamic:
+		return route_floors.size()
+	var total := route_floors.size()
+	for id in center_regions():
+		if id not in route_regions:
+			total += _region_floor_count(id)
+	var left: Array = body_regions().filter(func(id): return id not in route_regions)
+	var visited_body: int = route_regions.filter(func(id): return id in body_regions()).size()
+	var missing := mini(maxi(seals_needed() - visited_body, 0), left.size())
+	if missing > 0:
+		var sum := 0
+		for id in left:
+			sum += _region_floor_count(id)
+		total += roundi(float(sum) / float(left.size()) * missing)
+	return total
+
+
+static func _region_floor_count(id: String) -> int:
+	return FLOORS.filter(func(f): return f.region == id).size()
+
+
+## Ultimo piso del juego (jefe final): el ultimo piso del ultimo reino de center que existe.
+static func final_floor() -> Dictionary:
+	var c := center_regions()
+	var region: String = c[c.size() - 1] if not c.is_empty() else str(FLOORS[FLOORS.size() - 1].region)
+	var last: Dictionary = FLOORS[FLOORS.size() - 1]
+	for f in FLOORS:
+		if f.region == region:
+			last = f
+	return last
 
 
 static func _as_list(v) -> Array:
@@ -435,6 +573,7 @@ var last_run_victory: bool = false
 
 signal room_cleared_signal
 signal floor_advanced(floor: int)
+signal seal_gained(n: int)
 
 ## Mejoras permanentes: se compran con huesos en el menu y valen para todas las
 ## partidas. player_stats.gd las aplica al empezar; el coste sube con el nivel.
@@ -519,7 +658,7 @@ func start_new_run(seed: int = 0) -> void:
 	last_censura_unlocked = 0
 	
 	utero_used = false  # el Utero se abre una vez por partida
-	set_route_for(character, seed)  # el orden de los reinos depende del heroe (y la semilla)
+	begin_route(character, seed)  # el orden de los reinos depende del heroe (y la semilla)
 	current_floor = starting_floor
 	current_room_index = 0
 	rooms_cleared_this_floor = 0

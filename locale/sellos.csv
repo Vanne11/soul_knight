@@ -1,0 +1,5 @@
+keys,es,en,es_ES,fr
+SEAL_TOAST_TITLE,¡Sello obtenido!,Seal obtained!,,Sceau obtenu !
+SEAL_TOAST_BODY,Sellos %d / %d,Seals %d / %d,,Sceaux %d / %d
+SEAL_DOOR,[b]Puerta a %s[/b]\n[font_size=13]Elige tu camino: no se vuelve.[/font_size]\n[color=#b08d4a][E] Entrar[/color],[b]Door to %s[/b]\n[font_size=13]Choose your path: there's no coming back.[/font_size]\n[color=#b08d4a][E] Enter[/color],,[b]Porte vers %s[/b]\n[font_size=13]Choisis ta voie : pas de retour.[/font_size]\n[color=#b08d4a][E] Entrer[/color]
+SEAL_HUD_TIP,Sellos: %d de %d,Seals: %d of %d,,Sceaux : %d sur %d

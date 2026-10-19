@@ -138,6 +138,7 @@ func _open() -> void:
 	for n in range(1, RunManager.route_size() + 1):
 		floors[tr("DEBUG_FLOOR") % n] = func():
 			_close()
+			RunManager.extend_to(n)  # la ruta se arma por sellos: la prolonga con la 1a opcion
 			rm.current_floor = n - 1
 			main._advance_to_next_floor()
 	_row(box, floors)

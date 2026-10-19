@@ -41,7 +41,7 @@ const TOAST_SECONDS_SHORT := 1.8
 const MIN_GAP_MS := 45000
 const MINOR_CHANCE := 0.3
 ## Eventos que empiezan asi son importantes (ver arriba).
-const MAJOR_PREFIXES := ["boss", "death", "victory", "floor_", "chosen_", "first_run", "run_start", "censura_up", "pz_", "taser_drop"]
+const MAJOR_PREFIXES := ["boss", "death", "victory", "floor_", "chosen_", "first_run", "run_start", "seal_", "censura_up", "pz_", "taser_drop"]
 ## Subconjunto que se muestra aunque haya combate: se cierran solos pasados unos segundos.
 const URGENT_PREFIXES := ["boss", "death", "victory"]
 const COMBAT_LINGER := 3.5
@@ -233,8 +233,8 @@ func _boss_name(final: bool) -> String:
 	var n: int = rm.current_floor
 	var fd: Dictionary = rm.floor_data()
 	if final:
-		n = total
-		fd = RunManager.floor_at(n)
+		fd = RunManager.final_floor()
+		n = total  # el final es el ultimo piso planeado de la ruta
 	elif not RunManager.floor_has_boss(n):
 		# 1a etapa: el jefe del reino es el del piso siguiente de la misma region
 		for i in range(n + 1, total + 1):
