@@ -427,7 +427,8 @@ func menu_opened() -> void:
 		if days >= 3:
 			_speak("menu_days", {"days": days, "deaths": _total_deaths()}, false, true)
 		else:
-			_speak("menu_return", {"deaths": _total_deaths()}, false, true)
+			var d := _total_deaths()  # con 0 o 1 muertes la frase de "{deaths} muertes" sonaba rara
+			_speak("menu_return" if d > 1 else ("menu_return_uno" if d == 1 else "menu_return_cero"), {"deaths": d}, false, true)
 
 
 func _total_deaths() -> int:

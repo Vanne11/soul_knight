@@ -127,6 +127,13 @@
     "Los héroes ya se pelean por quién va primero. Elige rápido, que sudan.",
     "Hola otra vez, {name}. Te extrañábamos. Yo no, pero ellos sí."
   ],
+  "menu_return_cero": [
+    "Volviste. Sin una sola muerte encima. Sospechoso.",
+    "Hola otra vez, {name}. Cero muertes. O eres muy buena gente o no has jugado nada."
+  ],
+  "menu_return_uno": [
+    "Volviste. Con una muerte encima y todo. Eso es fe."
+  ],
   "menu_days": [
     "{days} días sin venir. Hasta los enemigos se preocuparon."
   ],
