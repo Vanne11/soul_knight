@@ -56,6 +56,7 @@
 	"pelusa_perineal": "perineo/pelusa_perineal",
 	"pixel_censura": "palacio/pixel_censura",
 	"prostata": "perineo/prostata",
+	"sintoma": "prostata/sintoma",
 	"psa": "prostata/psa",
 	"ranged": "comunes/ranged",
 	"regla": "utero/regla",

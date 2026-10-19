@@ -41,6 +41,7 @@ MANUAL = {
     "ego_inflado": "comunes/ego_inflado",
     "pastilla": "penelandia/pastilla",
     "pelusa_estatica": "selva/pelusa_estatica",
+    "sintoma": "prostata/sintoma",
     "satelite_cobre": "vulvania/satelite_cobre",
 }
 EXTS = (".gd", ".tscn", ".tres", ".import", ".py", ".json", ".cfg", ".godot")
