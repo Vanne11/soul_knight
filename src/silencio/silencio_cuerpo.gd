@@ -38,6 +38,7 @@ var _veil := 1.0
 var _clip := SIT_CLIP
 var _mat := ShaderMaterial.new()
 var _t := 0.0
+var _cs: CollisionShape2D
 
 
 func _ready() -> void:
@@ -46,6 +47,7 @@ func _ready() -> void:
 	set_collision_layer_value(2, true)
 	collision_mask = 0
 	var cs := CollisionShape2D.new()
+	_cs = cs
 	var sh := CircleShape2D.new()
 	sh.radius = 24.0
 	cs.shape = sh
@@ -148,7 +150,7 @@ func final_exit(to: Vector2, delay: float) -> void:
 	remove_from_group("enemy")
 	_moving = false
 	current_health = 0.0
-	get_node("CollisionShape2D").set_deferred("disabled", true)
+	_cs.set_deferred("disabled", true)
 	exposed = 0.0
 	create_tween().tween_property(self, "_clip", 4.0, 0.5)
 	sprite.carry_light()
