@@ -22,6 +22,7 @@ const ALERT := Color(1.0, 0.3, 0.3)
 const BOT := preload("res://src/enemies/enemy_bot_reporte.tscn")
 const MEMORY_PATH := "user://algoritmo_memoria.json"
 const BASE_SPEED := [120.0, 140.0, 160.0]
+const HP_MULT := 0.7
 const BASE_CAPS := [0.85, 0.7, 0.6]
 const FOOT := Vector2(0, 70)  ## textos bajo los pies: el HUD tapa la cabeza
 
@@ -44,6 +45,9 @@ func _ready() -> void:
 	rest_max = 0.85
 	bullet_speed = 320.0
 	tele_caps = BASE_CAPS.duplicate()
+	max_health *= HP_MULT  # el motor dinamico pega mas: menos vida, como los demas jefes dinamicos
+	current_health = max_health
+	_emit_health()
 	_channels_total = 2
 	_channels_left = 2
 	_ge.boss_charges_changed.emit(_channels_left, _channels_total)

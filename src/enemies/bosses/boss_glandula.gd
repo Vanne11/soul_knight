@@ -21,6 +21,7 @@ const DROP := Color(1.0, 0.92, 0.35)
 const SIZES := [1.0, 1.22, 1.48]
 const SINTOMA := preload("res://src/enemies/enemy_sintoma.tscn")
 const BASE_SPEED := [95.0, 115.0, 135.0]
+const HP_MULT := 0.7
 const BASE_CAPS := [0.9, 0.75, 0.65]
 const PUSH_BASE := 62.0         ## px/s del aro (tu paso es 250)
 const PUSH_PHASE := 22.0
@@ -72,6 +73,9 @@ func _ready() -> void:
 	rest_max = 0.9
 	bullet_speed = 300.0
 	tele_caps = BASE_CAPS.duplicate()
+	max_health *= HP_MULT  # el motor dinamico pega mas: menos vida, como los demas jefes dinamicos
+	current_health = max_health
+	_emit_health()
 	# max 2 curas por pelea
 	_channels_total = 2
 	_channels_left = 2
