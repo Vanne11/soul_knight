@@ -31,7 +31,6 @@ func _init() -> void:
 func _ready() -> void:
 	drop_table = [{"item_id": "health_small", "chance": 0.2}]
 	super()
-	animated_sprite.self_modulate = LEAFG
 	add_to_group("hojita_censora")
 	_orbit_dir = 1.0 if RNG.randf() < 0.5 else -1.0
 	h_t = RNG.randf_range(1.2, 2.4)  # que no planten todas a la vez
@@ -90,6 +89,18 @@ func _physics_process(delta: float) -> void:
 				_orbit_dir = -_orbit_dir
 	_update_animation(to_t)
 	move_and_slide()
+
+
+## Planta y dispara con sus propios cuadros (el swarmer los pisaba con idle/walk cada frame).
+func _update_animation(dir: Vector2) -> void:
+	var a := "plant" if h_state == H.PLANT else ("attack" if h_state == H.AIM else "")
+	if a != "" and animated_sprite.sprite_frames.has_animation(a):
+		if animated_sprite.animation != a:
+			animated_sprite.play(a)
+		if dir.x != 0:
+			animated_sprite.flip_h = dir.x < 0
+		return
+	super(dir)
 
 
 func _patches_alive() -> int:
