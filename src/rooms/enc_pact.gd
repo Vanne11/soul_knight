@@ -82,6 +82,7 @@ func _ask(_pl: Node) -> void:
 			toast(tr("RM_PACT_NO_T"), tr("RM_PACT_NO_D"), "9be88a")
 			_close()
 			return
+	main.get_node("/root/GlobalEvents").game_event.emit("pacto_menor")  # medallas
 	Sound.play("puzzle_solve")
 	toast(tr("RM_PACT_DONE_T"), tr("RM_PACT_DONE_%d" % (pick + 1)), "c08cff")
 	Narrator.say("rm_pact_done")
@@ -116,6 +117,7 @@ func _seal_major(id: String) -> void:
 		var spot := RoomUtil.free_spot(main, room, want, 26.0)
 		c.position = RoomUtil.loot_spot(room, want, [], null, 48.0) if spot == Vector2.INF else spot  # que no caiga en un muro o un hueco
 		room.pickups_node.add_child.call_deferred(c)
+	main.get_node("/root/GlobalEvents").game_event.emit("pacto_mayor")  # medallas
 	Sound.play("puzzle_solve")
 	toast(tr("RM_PACT_MAJOR_T"), tr("RM_PACT_MAJOR_D") % Censura.curse_name(id), "ff5a7a")
 	Narrator.say("pm_done")

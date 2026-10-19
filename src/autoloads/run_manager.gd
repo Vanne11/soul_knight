@@ -506,6 +506,7 @@ func liberate(floor_n: int) -> bool:
 	if r in liberated:
 		return false
 	liberated.append(r)
+	get_node("/root/GlobalEvents").game_event.emit("reino_liberado")  # medallas
 	if desorden_notice and pending_regions().is_empty():
 		desorden_notice = false  # ya no queda ningun desorden
 	save_meta_progression()

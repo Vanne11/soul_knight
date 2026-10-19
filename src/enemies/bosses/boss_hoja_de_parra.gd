@@ -325,6 +325,7 @@ func die(killer: Node = null) -> void:
 
 func _begin_revive() -> void:
 	_reviving = true
+	_ge.game_event.emit("hoja_cae")  # medallas: la Hoja cae (la Parra entera viene despues)
 	_cancel_attack()
 	_gen += 1
 	state = State.INTRO  # invulnerable y quieta mientras dura la secuencia (take_damage lo ignora)
