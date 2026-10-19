@@ -58,9 +58,9 @@ const KINDS := {
 	"barrel": {"col": Vector2(22, 14), "pad": 3, "sr": 12.0, "hp": BREAK_HP},
 	"crate": {"col": Vector2(28, 14), "pad": 3, "sr": 15.0, "hp": BREAK_HP},
 }
-const KING_LIST := ["neutral", "pene", "vulva", "mixto", "censura", "prostata"]
+const KING_LIST := ["neutral", "pene", "vulva", "mixto", "censura", "prostata", "orgullo"]
 ## Peso del barril frente a la caja por reino (anforas en Penelandia, cajas en el Perineo).
-const BARREL_W := {"neutral": 0.5, "pene": 0.75, "vulva": 0.6, "mixto": 0.35, "censura": 0.4, "prostata": 0.3}
+const BARREL_W := {"neutral": 0.5, "pene": 0.75, "vulva": 0.6, "mixto": 0.35, "censura": 0.4, "prostata": 0.3, "orgullo": 0.5}
 
 static var _tex_cache: Dictionary = {}
 
@@ -90,6 +90,8 @@ static func build_floor(rooms: Dictionary, floor_n: int, seed_: int) -> void:
 static func build(room_: Room, kingdom_: String, seed_: int, floor_n: int) -> RoomObstacles:
 	if room_.has_meta("obstacles"):
 		return room_.get_meta("obstacles")
+	if kingdom_ == "silencio":  # el Silencio dibuja su propia sala: nada de otros reinos
+		return null
 	if room_.room_type not in SOLID_ROOMS:
 		return null
 	var o := RoomObstacles.new()

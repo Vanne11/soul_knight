@@ -120,6 +120,8 @@ var _t := 0.0
 static func build(room_: Room, kingdom_: String, run_seed: int, floor_n: int) -> RoomDecor:
 	if room_.has_meta("decor"):
 		return room_.get_meta("decor")
+	if kingdom_ == "silencio":  # el Silencio dibuja su propia sala: nada de otros reinos
+		return null
 	var d := RoomDecor.new()
 	d.name = "Decor"
 	d.room = room_
