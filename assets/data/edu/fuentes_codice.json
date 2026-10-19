@@ -52,6 +52,10 @@
     "perineo_suelo_pelvico": {
       "fuente": "International Urogynecological Association (IUGA), folleto para pacientes sobre el entrenamiento del suelo pélvico",
       "validar": true
+    },
+    "la_matrona": {
+      "fuente": "OMS y Confederación Internacional de Matronas (ICM), definición y rol de la matrona (midwife)",
+      "validar": true
     }
   }
 }

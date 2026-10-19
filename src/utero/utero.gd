@@ -7,7 +7,7 @@ extends RefCounted
 ## COMO SE ENTRA
 ##   Es un reino normal del carril comun (assets/data/routes.json "center"): tras los sellos, (arcoiria)
 ##   > utero > prostata > palacio. Su JSON es assets/data/floors/65_utero.json (region "utero").
-##   La Doctora V. (guino a la autora) te recibe en la sala de inicio, sin cobrar (UteroConsulta).
+##   La Matrona V. (guino a la autora) te recibe en la sala de inicio, sin cobrar (UteroConsulta).
 ##   Al vencer a Dona Regla la ruta sigue como siempre.
 ##
 ## EL PISO: 4 tramos, uno por fase del ciclo, segun la distancia (en puertas) desde la entrada:
@@ -15,7 +15,7 @@ extends RefCounted
 ## Cada sala guarda su fase en el meta "utero_phase". Lo que hace cada fase esta en UteroFx
 ## (tinte, buffs, banner), UteroFolliculos, UteroOvulo y en los ganchos de abajo.
 ##
-## EVENTOS DE CODICE (LoreDatabase.custom_event): utero_consulta (hablas con la Doctora V.),
+## EVENTOS DE CODICE (LoreDatabase.custom_event): utero_consulta (hablas con la Matrona V.),
 ## enter_utero (pisas el Utero; lo usa el codice: loc_utero), utero_fase_menstruacion /
 ## utero_fase_folicular / utero_fase_ovulacion / utero_fase_lutea, utero_ovulo (alcanzas el
 ## ovulo), utero_regla (vences a Dona Regla). Para el codice: boss_regla se desbloquea matando a "DOÑA REGLA".
@@ -110,7 +110,7 @@ static func phase_of(room: Room) -> int:
 ## main._enter_room, antes del director de salas.
 static func on_enter(main: Node, room: Room, entry_door: Door) -> void:
 	if is_utero() and room.room_type == Room.RoomType.START:
-		UteroConsulta.build(main, room)  # la Doctora V. te recibe en la entrada del Utero
+		UteroConsulta.build(main, room)  # la Matrona V. te recibe en la entrada del Utero
 	var f := fx(main)
 	if f != null:
 		f.enter_room(room, entry_door)

@@ -187,6 +187,7 @@ Todas llevan `"validar": true`. Estado de cada cita:
 | OMS, directrices unificadas sobre servicios de pruebas de VIH (2019) | test_vih | REVISAR (E1): título y año por confirmar. |
 | OMS, directrices sobre el tamizaje y tratamiento de lesiones precancerosas del cuello uterino (2021) | pap | REVISAR (E1): título y año por confirmar. |
 | OMS, documento de posición sobre vacunas contra el VPH (2022) | vacuna_vph | REVISAR (E1): título y año por confirmar. |
+| OMS y Confederación Internacional de Matronas (ICM), definición y rol de la matrona (midwife) | la_matrona | REVISAR (Vanessa): título exacto por confirmar. Sin cifras; solo la profesión y los nombres según el país (midwife, sage-femme, matrona, obstetra, partera). Confirmar que "obstetra" y "partera" describen bien las equivalencias regionales. |
 
 ## Textos revisados que no afirman datos (para que Vanessa no los busque)
 

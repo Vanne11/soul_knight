@@ -1,5 +1,5 @@
 {
-	"_nota": "EL UTERO: reino normal del carril comun (routes.json center: arcoiria > utero > prostata), de 1 piso con jefa propia (Dona Regla) como la Prostata. Prefijo 65 a proposito: va DESPUES de 60_prostata en el orden de archivos para no mover los indices canonicos de reino (FLOOR_<n>_NAME, boss<n>_* usan regions().find). La Doctora V. te recibe en la sala de inicio (src/utero/utero_consulta.gd). Ver src/utero/utero.gd.",
+	"_nota": "EL UTERO: reino normal del carril comun (routes.json center: arcoiria > utero > prostata), de 1 piso con jefa propia (Dona Regla) como la Prostata. Prefijo 65 a proposito: va DESPUES de 60_prostata en el orden de archivos para no mover los indices canonicos de reino (FLOOR_<n>_NAME, boss<n>_* usan regions().find). La Matrona V. te recibe en la sala de inicio (src/utero/utero_consulta.gd). Ver src/utero/utero.gd.",
 	"name": "EL ÚTERO",
 	"name_key": "FLOOR_UTERO_NAME",
 	"region": "utero",

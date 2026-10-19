@@ -1,4 +1,4 @@
-"""Genera el arte de la educacion 4a (assets/sprites/edu/): la Dra. Preventina y los props
+"""Genera el arte de la educacion 4a (assets/sprites/edu/): la doctora provisoria (YA NO SE USA: ahora es la matrona, tools/gen_matrona_art.py; se conserva como referencia de diseno) y los props
 del consultorio y de Mito o Verdad (src/edu/consultorio.gd y mito_verdad.gd).
 
 Uso: python3 tools/gen_edu_art.py

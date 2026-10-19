@@ -2,7 +2,7 @@ class_name EduBadge
 extends Node2D
 
 ## Iconito discreto "aqui hay un dato": una chapa dorada con una "i" que flota despacio sobre
-## los objetos educativos (doctora, poster, placa de Mito o Verdad). No bloquea ni interrumpe.
+## los objetos educativos (matrona, poster, placa de Mito o Verdad). No bloquea ni interrumpe.
 
 const R := 7.0
 var _t := 0.0

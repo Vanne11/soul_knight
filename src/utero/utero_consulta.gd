@@ -1,12 +1,13 @@
 class_name UteroConsulta
 extends Node2D
 
-## La CONSULTA DE LA DOCTORA V. (guino a la autora): recepcion de la sala de inicio del Utero.
-## Un cartel colgado, el escritorio de la doctora y su estetoscopio. Hablarle no cuesta nada:
-## te recibe (sin turno, sin cobrar) y suelta una frase. Se dibuja en codigo (sin arte externo).
+## La CONSULTA DE LA MATRONA V. (guino a la autora): recepcion de la sala de inicio del Utero.
+## Un cartel colgado, el escritorio de la matrona y ella misma (sprite de Consultorio.matrona_visual). Hablarle no cuesta nada:
+## te recibe (sin turno, sin cobrar) y suelta una frase. El cartel y el escritorio se dibujan en codigo; la matrona es el sprite de tools/gen_matrona_art.py.
 
 var _sign: Label
 var _sub: Label
+var matrona: AnimatedSprite2D
 
 
 static func build(main: Node, room: Room) -> void:
@@ -16,9 +17,11 @@ static func build(main: Node, room: Room) -> void:
 	var visual := UteroConsulta.new()
 	var pos: Vector2 = room.get_center_position() + Vector2(0, -70)
 	main._add_prop(room, pos, visual, main.tr("UTERO_PROMPT_TALK"), func(_p, _it):
+		Consultorio.matrona_act(visual.matrona, "talk")
 		RoomUtil.popup(visual.global_position + Vector2(0, -80), main.tr("UTERO_DOCTORA_SAYS"), Color("ff8fb0"))
 		Sound.play("puzzle_solve")
-		main.get_node("/root/LoreDatabase").custom_event("utero_consulta"))
+		main.get_node("/root/LoreDatabase").custom_event("utero_consulta")
+		main.get_node("/root/LoreDatabase").custom_event("matrona_consulta"))
 	Narrator.say_first("utero_consulta")
 
 
@@ -37,6 +40,10 @@ func _ready() -> void:
 	_sub.size = Vector2(184, 22)
 	_sub.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(_sub)
+	matrona = Consultorio.matrona_visual()
+	matrona.position = Vector2(72, -10)  # de pie junto al escritorio
+	add_child(matrona)
+	Consultorio.matrona_act(matrona, "wave")  # te saluda al entrar
 	set_meta("tall", true)
 	z_index = 1
 	TallProp.attach(self, Rect2(-100, -162, 200, 176))  # el heroe pasa por detras del escritorio
@@ -52,8 +59,7 @@ func _draw() -> void:
 	draw_rect(Rect2(-100, -162, 200, 56), wood_hi)
 	draw_rect(Rect2(-100, -162, 200, 56), dark, false, 3.0)
 	draw_rect(Rect2(-95, -157, 190, 46), Color("3a1a14"))
-	# escritorio de la doctora
+	# escritorio de la matrona
 	draw_rect(Rect2(-45, -20, 90, 34), wood)
 	draw_rect(Rect2(-45, -20, 90, 34), dark, false, 2.0)
 	draw_rect(Rect2(-36, -28, 24, 8), Color("e9d9b6"))  # papeles
-	draw_arc(Vector2(18, -24), 8.0, PI, TAU, 12, Color("9ad8e8"), 2.0)  # estetoscopio
