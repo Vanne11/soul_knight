@@ -60,7 +60,7 @@ func _ready() -> void:
 	_real_name = enemy_name
 	match its_kind:
 		"clamidia":
-			windup_time = 0.3
+			windup_time = 0.55  # asintomatica pero no traicionera: se revela y avisa antes de embestir
 			recover_time = 0.7
 			lunge_speed = 560.0
 			animated_sprite.self_modulate.a = GHOST_ALPHA
@@ -169,7 +169,10 @@ func _spawn_wart(off: Vector2) -> void:
 func _chase(delta: float) -> void:
 	if its_kind == "sifilis" and _disguised and target and global_position.distance_to(target.global_position) <= lunge_trigger:
 		_reveal()  # sorpresa: se quita el disfraz justo antes de embestir
+	var was_chasing := state == State.CHASE
 	super(delta)
+	if its_kind == "clamidia" and was_chasing and state == State.WINDUP:
+		E3a.icon(self, "alert", windup_time)
 	if its_kind == "gonorrea":
 		_drip_t -= delta
 		if _drip_t <= 0.0 and velocity.length() > 10.0:

@@ -32,7 +32,7 @@ func _setup() -> void:
 			recover_time = 0.95
 			damage *= 1.2
 		"ornitorrinco":
-			windup_time = 0.2
+			windup_time = 0.55
 			lunge_speed = 640.0
 			recover_time = 1.0
 
@@ -45,6 +45,7 @@ func _chase(delta: float) -> void:
 	var d := to.length()
 	if d <= PANIC_RANGE and _attack_timer <= 0.0:
 		_say("huincha_panic", 1.4)
+		E3a.icon(self, "alert", windup_time)
 		state = State.WINDUP
 		_state_timer = windup_time
 		_lunge_dir = to.normalized()
