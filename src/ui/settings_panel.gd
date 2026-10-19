@@ -9,6 +9,8 @@ extends PanelContainer
 signal closed
 
 var _lang_option: OptionButton
+var _controls: ControlsPanel  # pagina de controles (reemplaza a esta mientras esta abierta)
+var _controls_btn: Button
 
 
 func _init() -> void:
@@ -25,6 +27,33 @@ func _ready() -> void:
 
 func _on_settings_changed() -> void:
 	_rebuild_deferred.call_deferred()
+
+
+## ESC / pausa / cancelar en la pagina de controles vuelve a Ajustes (no cierra todo).
+func _unhandled_input(event: InputEvent) -> void:
+	if _controls != null and not event.is_echo() and (event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel")):
+		get_viewport().set_input_as_handled()
+		_close_controls()
+
+
+func _show_controls() -> void:
+	for c in get_children():
+		remove_child(c)
+		c.queue_free()
+	custom_minimum_size = Vector2(920, 0)
+	_controls = ControlsPanel.new()
+	add_child(_controls)
+	_controls.back.connect(_close_controls)
+	_controls.focus_first.call_deferred()
+
+
+func _close_controls() -> void:
+	if _controls == null:
+		return
+	_controls = null
+	custom_minimum_size = Vector2(560, 0)
+	_build()
+	_controls_btn.grab_focus.call_deferred()
 
 
 func focus_first() -> void:
@@ -87,6 +116,13 @@ func _build() -> void:
 	box.add_child(_row(tr("SETTINGS_LANGUAGE"), _lang_option))
 
 	_build_touch_rows(box)
+
+	_controls_btn = Button.new()
+	_controls_btn.text = tr("SETTINGS_CONTROLS")  # antes de juice_button: guarda el texto final
+	_controls_btn.custom_minimum_size = Vector2(0, 46)
+	_controls_btn.pressed.connect(_show_controls)
+	HudStyle.juice_button(_controls_btn)
+	box.add_child(_controls_btn)
 
 	var back := Button.new()
 	back.text = tr("SETTINGS_BACK")  # antes de juice_button: guarda el texto final
@@ -172,7 +208,7 @@ func _on_lang(index: int) -> void:
 
 
 func _rebuild_deferred() -> void:
-	if not is_inside_tree():
+	if not is_inside_tree() or _controls != null:
 		return
 	_build()
 	if _lang_option:
