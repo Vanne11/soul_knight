@@ -26,6 +26,13 @@ var _map_hint: HBoxContainer  # "[M] mapa" con el glifo de la tecla
 
 var _frame := HudStyle.panel_box(0)
 
+## Pestanas del mapa grande: 0 = Piso (este minimapa), 1 = Mundo (world_map.gd, solo lectura).
+const TAB_H := 26.0
+const TAB_W := 92.0
+var _tab := 0
+var _world := WorldMap.new()
+var _tab_hint: HBoxContainer  # glifo de Tab / RB + "pestana"
+
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -34,6 +41,9 @@ func _ready() -> void:
 	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(_label)
 	_build_map_hint()
+	_tab_hint = InputGlyphs.labeled("map_tab", "MAPA_TAB_HINT", HudStyle.CREAM, 16)
+	_tab_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_tab_hint)
 	_resize()
 
 func _resize() -> void:
@@ -50,11 +60,39 @@ func _resize() -> void:
 	_label.position = Vector2(-200, s.y + 4)
 	_label.size = Vector2(s.x + 200, 20)
 	_place_map_hint()
+	if _tab_hint:
+		_tab_hint.visible = _big
+		_tab_hint.size = Vector2(_tab_hint.get_combined_minimum_size().x, 24)
+		_tab_hint.position = Vector2(s.x - _tab_hint.size.x - 10, 4)
+
+func _tab_rect(i: int) -> Rect2:
+	return Rect2(Vector2(8 + i * (TAB_W + 4), 5), Vector2(TAB_W, TAB_H - 5))
+
+func _set_tab(i: int) -> void:
+	_tab = i
+	queue_redraw()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_M:
 		_big = not _big
 		_resize()
+	# mapa grande: cambiar de pestana con Tab, L1/R1 o clic
+	elif _big and event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_TAB:
+		_set_tab(1 - _tab)
+		get_viewport().set_input_as_handled()
+	elif _big and event is InputEventJoypadButton and event.pressed \
+			and event.button_index in [JOY_BUTTON_LEFT_SHOULDER, JOY_BUTTON_RIGHT_SHOULDER]:
+		_set_tab(1 - _tab)
+	elif _big and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var local: Vector2 = event.position - get_global_rect().position
+		for i in 2:
+			if _tab_rect(i).has_point(local):
+				_set_tab(i)
+				get_viewport().set_input_as_handled()
+				return
+		if TouchControls.is_active() and get_global_rect().has_point(event.position):
+			_big = not _big
+			_resize()
 	# con controles tactiles: tocar el mapa lo agranda / achica
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT \
 			and TouchControls.is_active() and get_global_rect().has_point(event.position):
@@ -69,7 +107,33 @@ func _process(delta: float) -> void:
 		target = 0.25
 	modulate.a = move_toward(modulate.a, target, delta * 4.0)
 
+func _draw_tabs() -> void:
+	var names := ["MAPA_TAB_PISO", "MAPA_TAB_MUNDO"]
+	for i in 2:
+		var r := _tab_rect(i)
+		var on := i == _tab
+		draw_rect(r, Color(0.07, 0.06, 0.09, 0.9) if on else Color(0.2, 0.19, 0.23, 0.7))
+		draw_rect(r, HudStyle.GOLD if on else Color(0.5, 0.47, 0.42), false, 2.0)
+		var col := HudStyle.CREAM if on else Color(0.6, 0.58, 0.52)
+		var txt := tr(names[i])
+		draw_string(HudStyle.FONT, r.position + Vector2(2, 17), txt, HORIZONTAL_ALIGNMENT_CENTER, r.size.x, 16, HudStyle.SHADOW)
+		draw_string(HudStyle.FONT, r.position + Vector2(0, 15), txt, HORIZONTAL_ALIGNMENT_CENTER, r.size.x, 16, col)
+
 func _draw() -> void:
+	var tab_top := TAB_H if _big else 0.0
+	if _big and _tab == 1:
+		draw_style_box(_frame, Rect2(Vector2.ZERO, size))
+		_draw_tabs()
+		var rm := get_node_or_null("/root/RunManager")
+		if rm:
+			_world.draw(self, Rect2(Vector2(8, 6 + tab_top), size - Vector2(16, 12 + tab_top)), rm)
+			var cur := WorldMap.current_region(rm)
+			var nm := cur
+			for r in WorldMap.data().get("regions", []):
+				if r.id == cur:
+					nm = WorldMap.region_label(r)
+			_label.text = tr("MAPA_MUNDO_AQUI") % nm
+		return
 	var main := get_tree().get_first_node_in_group("main")
 	if main == null or main.dungeon_generator == null or main.dungeon_generator.rooms.is_empty():
 		return
@@ -97,11 +161,13 @@ func _draw() -> void:
 		var r := Rect2i(pos, gen.room_sizes.get(pos, Vector2i(8, 6)))
 		bounds = r if first else bounds.merge(r)
 		first = false
-	var box := size - Vector2(12, 12)
+	var box := size - Vector2(12, 12 + tab_top)
 	var k: float = minf(box.x / bounds.size.x, box.y / bounds.size.y)
-	var origin := Vector2(6, 6) + (box - Vector2(bounds.size) * k) / 2 - Vector2(bounds.position) * k
+	var origin := Vector2(6, 6 + tab_top) + (box - Vector2(bounds.size) * k) / 2 - Vector2(bounds.position) * k
 
 	draw_style_box(_frame, Rect2(Vector2.ZERO, size))
+	if _big:
+		_draw_tabs()
 	if FloorEvents.hide_map():  # evento "Censura total": sin mapa
 		_label.text = ""
 		draw_rect(Rect2(Vector2(6, 6), size - Vector2(12, 12)), Color(0.05, 0.05, 0.07, 0.9))

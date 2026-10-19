@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://db4k2ct1xx71a"
+
+[deps]
+
+files=["res://locale/mapa_mundo.es.translation", "res://locale/mapa_mundo.en.translation", "res://locale/mapa_mundo.fr.translation"]
+
+source_file="res://locale/mapa_mundo.csv"
+dest_files=["res://locale/mapa_mundo.es.translation", "res://locale/mapa_mundo.en.translation", "res://locale/mapa_mundo.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

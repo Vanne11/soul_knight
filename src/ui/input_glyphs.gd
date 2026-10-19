@@ -20,7 +20,9 @@ extends RefCounted
 const DIR := "res://assets/sprites/ui/glyphs/"
 const SCALE := 2
 ## Acciones que no existen en el InputMap pero tienen tecla fija (mapa: M, ver minimap.gd).
-const FIXED_KEYS := {"map": KEY_M}
+const FIXED_KEYS := {"map": KEY_M, "map_tab": KEY_TAB}
+## Y su boton de mando (pestanas del mapa grande: L1/R1 las cambian, se muestra RB).
+const FIXED_PADS := {"map_tab": JOY_BUTTON_RIGHT_SHOULDER}
 const PAD_ICONS := {
 	JOY_BUTTON_A: "pad_a", JOY_BUTTON_B: "pad_b", JOY_BUTTON_X: "pad_x", JOY_BUTTON_Y: "pad_y",
 	JOY_BUTTON_BACK: "pad_back", JOY_BUTTON_START: "pad_start",
@@ -82,6 +84,10 @@ static func _lookup(action: String, pad: bool) -> Dictionary:
 		var k := InputEventKey.new()
 		k.physical_keycode = FIXED_KEYS[action]
 		events = [k] if not pad else []
+		if pad and FIXED_PADS.has(action):
+			var b := InputEventJoypadButton.new()
+			b.button_index = FIXED_PADS[action]
+			events = [b]
 	elif InputMap.has_action(action):
 		events = InputMap.action_get_events(action)
 	if pad:

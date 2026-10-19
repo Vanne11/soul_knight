@@ -170,7 +170,7 @@ def reino(rid,name,x,y,w,order,calms,boss,guard=(True,False),single=False,slotw=
         for i in range(3): rect("sala sala-especial",hx+i*38,y+80+CH-(i+1)*42,36,(i+1)*42,6,id=f"sala-selva-monte-{i}")
         A(f'<polygon class="estrella" points="{star(hx+95,y+80+CH-3*42-18,20)}"/></g>')
     bx=info["boss"]; by=y+78+p2dy
-    REG.append(dict(id=rid,name=name,x=x,y=y,w=w,h=Hh,boss=(bx,by,slotw,CH+4),pisos=1 if single else 2))
+    REG.append(dict(id=rid,name=name,x=x,y=y,w=w,h=Hh,boss=(bx,by,slotw,CH+4),pisos=1 if single else 2,tx=tx))
     rect("sala-jefe-slot",bx,by,slotw,CH+4,14,id=f"sala-jefe-{rid}")
     boss_sprite(boss,bx+slotw/2,by+(CH+4)/2+2,f"jefe-{rid}",h=bossh)
     if seal: sello(bx+22,by+22,f"sello-{rid}")
@@ -375,7 +375,7 @@ def build_json():
             "role":"body" if rid in routes["body"] else "center",
             "x":gx(r["x"]),"y":gy(r["y"]),"w":gl(r["w"]),"h":gl(r["h"]),
             "color":c[0].lstrip("#") if c[0].startswith("#") else "ffffff","rainbow":rid=="arcoiria",
-            "pisos":r["pisos"],"boss":{"x":gx(bx),"y":gy(by),"w":gl(bw),"h":gl(bh)}})
+            "pisos":r["pisos"],"label_dx":gl(r["tx"]-r["x"]) if r["tx"] else 0,"boss":{"x":gx(bx),"y":gy(by),"w":gl(bw),"h":gl(bh)}})
     pl=lambda pts:[[gx(a),gy(b)] for a,b in pts]
     tun=[
       {"id":"anillo","kind":"anillo","lines":[pl([(RING_L,RT),(1066,RT)]),pl([(2040,RT),(RING_R,RT)]),pl([(RING_L,RT),(RING_L,RING_B),(RING_R,RING_B),(RING_R,RT)]),pl([(1207,1676),(1207,RING_B)]),
