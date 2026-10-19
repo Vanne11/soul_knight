@@ -48,6 +48,10 @@
     "birth_control_lore": {
       "fuente": "OMS, Planificación familiar: un manual mundial para proveedores",
       "validar": true
+    },
+    "perineo_suelo_pelvico": {
+      "fuente": "International Urogynecological Association (IUGA), folleto para pacientes sobre el entrenamiento del suelo pélvico",
+      "validar": true
     }
   }
 }

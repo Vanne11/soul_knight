@@ -49,7 +49,8 @@
     "DOÑA VENTANILLA: Número 37. Pase. Falta un papel. Siempre falta uno."
   ],
   "bossalt4_phase2": [
-    "DOÑA VENTANILLA: ¡Este trámite se hace en otra ventanilla! ¡Que no existe!"
+    "DOÑA VENTANILLA: ¡Este trámite se hace en otra ventanilla! ¡Que no existe!",
+    "DOÑA VENTANILLA: ¿Entrada o salida? Ventanilla equivocada. Esto es frontera: aquí nadie entra ni sale sin timbre."
   ],
   "bossalt4_phase3": [
     "DOÑA VENTANILLA: ¡Hora punta! Cuatro ventanillas cerradas y mil personas esperando."

@@ -71,7 +71,7 @@ const CATALOG := {
 		["mixto_cone", 3.0, "prop", false], ["mixto_sign_stop", 2.0, "prop", true],
 		["mixto_sign_no", 3.0, "prop", false], ["mixto_sign_icon", 2.0, "prop", true],
 		["statue_mixto_m", 0.6, "prop", true], ["statue_mixto_f", 0.6, "prop", true],
-		["mixto_sign_hills", 2.0, "prop", true],
+		["mixto_sign_hills", 2.0, "prop", true], ["mixto_sign_arrows", 2.5, "prop", true],
 	],
 	"censura": [
 		["censura_stamp", 3.0, "flat", false], ["censura_bar_a", 2.5, "flat", false],
