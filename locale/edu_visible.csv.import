@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cfwltg0i3inr7"
+
+[deps]
+
+files=["res://locale/edu_visible.es.translation", "res://locale/edu_visible.en.translation", "res://locale/edu_visible.fr.translation"]
+
+source_file="res://locale/edu_visible.csv"
+dest_files=["res://locale/edu_visible.es.translation", "res://locale/edu_visible.en.translation", "res://locale/edu_visible.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

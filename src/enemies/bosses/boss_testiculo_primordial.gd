@@ -74,7 +74,7 @@ func _hit_source() -> String:
 ## Todo peligro del Testiculo se dibuja como maquina de pinball (rayas oscuras, borde rojo).
 func _add_hazard(z: BossZone) -> BossZone:
 	if z.style == BossZone.Style.NORMAL:
-		z.style = BossZone.Style.HAZARD
+		z.style = BossZone.Style.TOXIC
 	return super(z)
 
 

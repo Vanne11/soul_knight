@@ -1,5 +1,5 @@
 {
-  "_info": "Frases del bloque 4a (educación sexual ligera). Cortas y con humor; lo serio vive en el códice. Eventos: edu_cura, edu_condon, edu_vacuna, edu_vacuna_ya, edu_pobre, edu_mito_ok (acierto en Mito o Verdad), edu_mito_mal (error, sin castigo).",
+  "_info": "Frases del bloque 4a (educación sexual ligera). Cortas y con humor; lo serio vive en el códice. Eventos: edu_cura, edu_condon, edu_vacuna, edu_vacuna_ya, edu_pobre, edu_mito_ok (acierto en Mito o Verdad), edu_mito_mal (error, sin castigo). edu_primer_dato: presentacion del icono de dato, una sola vez en toda la partida guardada (Narrator.say_once_ever).",
   "edu_cura": [
     "DRA. PREVENTINA: Listo. Sin ardor ni picazón. Y sin juicios.",
     "DRA. PREVENTINA: Curado. Receta: una pomada y cero vergüenza."
@@ -26,5 +26,8 @@
   "edu_mito_mal": [
     "Casi. Pasa en las mejores familias... y el Palacio cuenta con ello.",
     "Fallaste, sin castigo. Para eso están los mitos: para caer una vez."
+  ],
+  "edu_primer_dato": [
+    "¿Ves ese iconito dorado con una i? Es un dato de salud. Cortito, con humor y totalmente opcional: nadie te examina."
   ]
 }

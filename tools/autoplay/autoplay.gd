@@ -1073,7 +1073,7 @@ func _things(room: Room) -> Array:
 	var doors: Array = out.filter(func(n): return _door_region(n) != "")
 	if doors.size() > 1:
 		var regs: Array = doors.map(func(n): return _door_region(n))
-		var want := RunManager.pick_option(regs, RunManager.current_seed)
+		var want := RunManager.pick_option(regs, get_node("/root/RunManager").current_seed)
 		out = doors.filter(func(n): return _door_region(n) == want)
 	return out
 

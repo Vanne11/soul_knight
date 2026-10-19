@@ -301,6 +301,18 @@ func say_first(event: String, args: Dictionary = {}, major := true) -> void:
 		say(event, args, major)
 
 
+## Solo la primera vez en la vida de la partida guardada (sobrevive entre runs): presentaciones
+## que no deben repetirse nunca, como el aviso de "aqui hay un dato".
+func say_once_ever(event: String, args: Dictionary = {}) -> void:
+	var seen: Dictionary = _memory.get("said_once", {})
+	if seen.has(event):
+		return
+	seen[event] = true
+	_memory["said_once"] = seen
+	_save_memory()
+	say(event, args, true)
+
+
 func toast(title: String, text: String = "", color := "b08d4a") -> void:
 	var bb := "[color=#%s][b]%s[/b][/color]" % [color, title]
 	if text != "":

@@ -119,6 +119,56 @@ static func on_room_cleared(main: Node, room: Room) -> void:
 		ge.show_floating_text.emit(main.player.global_position + Vector2(0, -74), Loc.tr_or("ARC_FLAG_COMPLETE", "¡BANDERA COMPLETA!"), Color("fff1c4"))
 
 
+# ------------------------------------------------------------------ rincon de ayuda
+## Cartel del arcoiris en la sala de inicio del reino: abre la entrada "Como buscar ayuda" del
+## codice (assets/data/lore/como_buscar_ayuda.tres), universal y siempre opcional.
+static func on_enter_room(main: Node, room: Room) -> void:
+	if not is_arcoiria() or room.room_type != Room.RoomType.START or room.has_meta("arc_ayuda"):
+		return
+	room.set_meta("arc_ayuda", true)
+	var sign_node := Node2D.new()
+	var post := Polygon2D.new()
+	post.polygon = PackedVector2Array([Vector2(-3, -34), Vector2(3, -34), Vector2(3, 18), Vector2(-3, 18)])
+	post.color = Color("6b4a2e")
+	sign_node.add_child(post)
+	var board := Polygon2D.new()
+	board.polygon = PackedVector2Array([Vector2(-22, -52), Vector2(22, -52), Vector2(22, -26), Vector2(-22, -26)])
+	board.color = Color("f4ecd8")
+	sign_node.add_child(board)
+	for i in MAX_STRIPES:
+		var band := Polygon2D.new()
+		var y := -52.0 + i * 4.3
+		band.polygon = PackedVector2Array([Vector2(-22, y), Vector2(22, y), Vector2(22, y + 4.3), Vector2(-22, y + 4.3)])
+		band.color = (STRIPES[i].color as Color)
+		band.modulate = Color(1, 1, 1, 0.9)
+		sign_node.add_child(band)
+	var heart := Label.new()
+	heart.text = "?"
+	heart.add_theme_font_size_override("font_size", 14)
+	heart.add_theme_color_override("font_color", Color("3a2a4a"))
+	heart.position = Vector2(-4, -50)
+	board.add_child(heart)
+	sign_node.set_meta("foot", 18.0)
+	sign_node.set_meta("half_w", 8.0)
+	sign_node.set_meta("tall", true)
+	sign_node.set_meta("top", -52.0)
+	var pos := room.get_center_position() + Vector2(-150, 30)
+	Consultorio._prop(main, room, pos, sign_node,
+		func(): return Loc.tr_or("EDU_AYUDA_PROMPT", "Cartel: ¿dónde buscar ayuda?"),
+		func(_p, _it): _leer_ayuda(), true)
+
+
+## Abre (si hiciera falta) y muestra la entrada de codice "Como buscar ayuda". Sin limite de usos.
+static func _leer_ayuda() -> void:
+	var lore := _tree().root.get_node("LoreDatabase")
+	lore.unlock_entry("como_buscar_ayuda")
+	var entry = lore.get_entry("como_buscar_ayuda")
+	if entry == null:
+		return
+	Sound.play("puzzle_solve")
+	Narrator.say_raw(Loc.tr_or("EDU_AYUDA_SAY", "%s: %s") % [Loc.lore_title(entry), Loc.lore_text(entry)])
+
+
 # ------------------------------------------------------------------ enemigos-prejuicio
 ## Burbuja sobre el enemigo con el texto ARC_<CLAVE> (con %s opcional). Usa la burbuja de la IA si hay.
 static func say(e: Node, key: String, secs := 2.0) -> void:

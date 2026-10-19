@@ -80,7 +80,7 @@ func _hit_source() -> String:
 ## Todo peligro de la Afeitadora se dibuja como maquina (rayas oscuras, borde rojo; nunca blanco).
 func _add_hazard(z: BossZone) -> BossZone:
 	if z.style == BossZone.Style.NORMAL:
-		z.style = BossZone.Style.HAZARD
+		z.style = BossZone.Style.TOXIC
 	return super(z)
 
 

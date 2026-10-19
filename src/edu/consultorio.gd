@@ -23,12 +23,12 @@ static func build(main: Node, room: Room) -> void:
 				var fact := Edu.next_fact()
 				if fact != "":
 					Narrator.say_raw("%s: %s" % [Edu.t("EDU_DOC_NAME"), fact])
-			it.finish())
+			it.finish(), true)
 	_prop(main, room, c + Vector2(-140, -110), _sprite_visual(room, "poster", 40, true, 20.0),
 		func(): return Edu.t("EDU_POSTER_PROMPT"),
 		func(_p, it):
 			Narrator.say_raw(Edu.t("EDU_POSTER_SAY"))
-			it.finish())
+			it.finish(), true)
 	var cp: int = Edu.price(int(cfg.get("preservativo", {}).get("precio", 6)))
 	var secs: float = float(cfg.get("preservativo", {}).get("inmunidad_seg", 150.0))
 	_prop(main, room, c + Vector2(-210, 30), _sprite_visual(room, "box_condon", 34, false, 10.0),
@@ -69,8 +69,10 @@ static func _pay(price: int, player: Node) -> bool:
 	return true
 
 
-static func _prop(main: Node, room: Room, pos: Vector2, visual: Node2D, prompt: Callable, on_use: Callable) -> void:
+static func _prop(main: Node, room: Room, pos: Vector2, visual: Node2D, prompt: Callable, on_use: Callable, badge := false) -> void:
 	var it := PROP.new()
+	it.has_badge = badge
+	it.badge_y = _top_of(visual) - 12.0
 	it.position = pos
 	it.prompt_fn = prompt
 	it.add_child(visual)
@@ -94,6 +96,13 @@ static func dress(room: Room, it: Node2D, visual: Node2D) -> void:
 	if visual.has_meta("tall"):
 		LightKit.mark_caster(it, r, foot + 2.0)
 		TallProp.attach_visual(it, visual)
+
+
+## Y del borde de arriba del visual (Sprite2D / AnimatedSprite2D no centrados): donde flota el icono.
+static func _top_of(visual: Node2D) -> float:
+	if visual.has_meta("top"):
+		return float(visual.get_meta("top"))
+	return float(visual.get("offset").y) if visual.get("offset") != null else -40.0
 
 
 static func tex(file: String) -> Texture2D:

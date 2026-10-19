@@ -11,9 +11,9 @@ enum Shape { CIRCLE, RECT }
 ## WAX: zona de PELIGRO con aspecto de cera caliente (charco irregular, burbujas, vapor, borde
 ## rojizo; nunca blanco, para no confundirla con lo que hay que TOCAR). Reutilizable por cualquier jefe.
 ## VINE: lo mismo para la Parra, con enredadera espinosa (verde oscuro, borde rojizo).
-## HAZARD: peligro generico de metal/maquina (Afeitadora, Testiculo): relleno del color pedido, rayas
-## oscuras y borde rojo sangre; nunca blanco. Conserva su color aunque la sala siga censurada.
-enum Style { NORMAL, BAR, PIXEL, SHIELD, CHANNEL, WAX, VINE, HAZARD }
+## TOXIC: PELIGRO generico con el color del jefe pero borde rojo oscuro y franjas de advertencia
+## (nunca blanco). Lo usan Don Viagra (pastillas) y Ovaria (eclosion).
+enum Style { NORMAL, BAR, PIXEL, SHIELD, CHANNEL, WAX, VINE, TOXIC }
 
 const CENSOR_UNSHADED := preload("res://src/shaders/censor_unshaded.gdshader")
 const GROUP := "boss_hazard"
@@ -102,7 +102,7 @@ func _ready() -> void:
 		_core = VINE_CORE
 		_edge = VINE_EDGE
 		_cool = Color(0.36, 0.42, 0.2)
-	if style == Style.WAX or style == Style.VINE or style == Style.HAZARD:
+	if style == Style.WAX or style == Style.VINE or style == Style.TOXIC:
 		material = null  # el peligro conserva su color aunque la sala siga censurada (gris)
 	if style == Style.PIXEL or style == Style.BAR:
 		z_index = 40  # por encima de actores y balas
@@ -186,10 +186,42 @@ func _draw() -> void:
 			_draw_bar()
 		Style.WAX, Style.VINE:
 			_draw_wax()
-		Style.HAZARD:
-			_draw_hazard()
+		Style.TOXIC:
+			_draw_toxic()
 		_:
 			_draw_normal()
+
+
+const TOXIC_EDGE := Color(0.62, 0.06, 0.1)
+
+
+func _draw_toxic() -> void:
+	var pulse := 0.65 + 0.35 * sin(t * 24.0)
+	var a := 1.0
+	var p := 1.0
+	if phase == 0:
+		p = clampf(t / maxf(warn, 0.01), 0.0, 1.0)
+	elif phase == 2:
+		a = 1.0 - clampf(t / maxf(fade, 0.01), 0.0, 1.0)
+	var base := color.darkened(0.25)
+	var fillc := Color(base, (0.16 + 0.22 * p) if phase == 0 else 0.7 * a)
+	var edge := Color(TOXIC_EDGE, (0.6 + 0.4 * pulse) if phase == 0 else a)
+	if shape == Shape.CIRCLE:
+		draw_circle(Vector2.ZERO, radius, fillc)
+		draw_circle(Vector2.ZERO, radius * (p if phase == 0 else 0.7), Color(color, 0.32 * a))
+		draw_arc(Vector2.ZERO, radius, 0.0, TAU, 48, edge, 4.0)
+		for i in 8:  # franjas de advertencia en el borde
+			var ang := i * TAU / 8.0 + t * 0.6
+			draw_arc(Vector2.ZERO, radius - 6.0, ang, ang + 0.28, 6, Color(0.1, 0.03, 0.05, 0.7 * a), 5.0)
+	else:
+		var r := Rect2(-size * 0.5, size)
+		draw_rect(r, fillc)
+		draw_rect(Rect2(Vector2(-size.x * 0.5, -size.y * 0.5 * p), Vector2(size.x, size.y * p)), Color(color, 0.3 * a))
+		draw_rect(r, edge, false, 4.0)
+		var x := -size.x * 0.5
+		while x < size.x * 0.5 - size.y * 0.5:
+			draw_line(Vector2(x, size.y * 0.5), Vector2(x + size.y * 0.5, -size.y * 0.5), Color(0.1, 0.03, 0.05, 0.28 * a), 5.0)
+			x += 38.0
 
 
 func _draw_normal() -> void:
@@ -352,45 +384,6 @@ func _wax_pts(k: float, wt: float) -> PackedVector2Array:
 			var q := a0.lerp(a1, float(j) / n)
 			pts.append(q + nrm * (4.0 * sin(j * 1.9 + e * 2.3 + _seed + wt)) * k)
 	return pts
-
-
-func _draw_hazard() -> void:
-	var edge := Color(0.62, 0.05, 0.07)
-	var dark := Color(0.12, 0.02, 0.03)
-	var pulse := 0.5 + 0.5 * sin(t * 24.0)
-	var a := 1.0
-	var fillc: Color
-	var edgec: Color
-	var p := 1.0
-	if phase == 0:
-		p = clampf(t / maxf(warn, 0.01), 0.0, 1.0)
-		fillc = Color(color, 0.10 + 0.22 * p)
-		edgec = Color(edge, 0.55 + 0.45 * pulse)
-	else:
-		a = 1.0 if phase == 1 else 1.0 - clampf(t / maxf(fade, 0.01), 0.0, 1.0)
-		fillc = Color(color.darkened(0.2), 0.8 * a)
-		edgec = Color(edge, a)
-	if shape == Shape.CIRCLE:
-		draw_circle(Vector2.ZERO, radius, fillc)
-		if phase == 0:
-			draw_circle(Vector2.ZERO, radius * p, Color(color, 0.3))
-		draw_arc(Vector2.ZERO, radius, 0.0, TAU, 48, edgec, 4.0)
-		draw_arc(Vector2.ZERO, radius * 0.7, 0.0, TAU, 40, Color(dark, 0.35 * a), 2.0)
-		return
-	var r := Rect2(-size * 0.5, size)
-	draw_rect(r, fillc)
-	if phase == 0:
-		draw_rect(Rect2(Vector2(-size.x * 0.5, -size.y * 0.5 * p), Vector2(size.x, size.y * p)), Color(color, 0.3))
-	# rayas oscuras en diagonal (aviso de maquina): recortadas al rectangulo
-	var step := 34.0
-	var x := -size.x * 0.5
-	var h := size.y
-	while x < size.x * 0.5:
-		var x1 := minf(x + h, size.x * 0.5)
-		var dx := x1 - x
-		draw_line(Vector2(x, -h * 0.5), Vector2(x1, -h * 0.5 + dx), Color(dark, 0.28 * a), 5.0)
-		x += step
-	draw_rect(r, edgec, false, 4.0)
 
 
 func _draw_wax() -> void:

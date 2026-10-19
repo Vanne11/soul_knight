@@ -1,36 +1,74 @@
 {
 	"_nota": "Debilidades y resistencias por jefe (clave = nombre del script sin boss_). weak/resist: tipo de dano -> multiplicador. match: heroe -> tipos que, ademas de las armas de su reino, dan golpe MATCH. Solo los jefes con entrada aqui reciben el tratamiento (ver BossDamage.ONLY_TABLE_BOSSES).",
 	"cera": {
-		"weak": {"agua": 1.9, "contundente": 1.5},
-		"resist": {"calor": 0.35},
+		"weak": {
+			"agua": 1.9,
+			"contundente": 1.5
+		},
+		"resist": {
+			"calor": 0.35
+		},
 		"match": {
-			"pitocles": ["contundente"],
-			"vulvalquiria": ["agua"],
-			"ornitorrinco": ["agua", "contundente"]
+			"pitocles": [
+				"contundente"
+			],
+			"vulvalquiria": [
+				"agua"
+			],
+			"ornitorrinco": [
+				"agua",
+				"contundente"
+			]
 		},
 		"line_weak": "BOSSDMG_CERA_WEAK",
 		"line_resist": "BOSSDMG_CERA_RESIST",
 		"hint_weapon": "globos_agua"
 	},
 	"destine": {
-		"weak": {"confeti": 1.9, "agua": 1.25},
-		"resist": {"perforante": 0.75},
+		"weak": {
+			"confeti": 1.9,
+			"agua": 1.25
+		},
+		"resist": {
+			"perforante": 0.75
+		},
 		"match": {
-			"pitocles": ["confeti"],
-			"vulvalquiria": ["confeti"],
-			"ornitorrinco": ["confeti", "agua"]
+			"pitocles": [
+				"confeti"
+			],
+			"vulvalquiria": [
+				"confeti"
+			],
+			"ornitorrinco": [
+				"confeti",
+				"agua"
+			]
 		},
 		"line_weak": "BOSSDMG_DESTINE_WEAK",
 		"line_resist": "BOSSDMG_DESTINE_RESIST",
 		"hint_weapon": "canon_confeti"
 	},
 	"hoja_de_parra": {
-		"weak": {"calor": 1.9, "explosivo": 1.4},
-		"resist": {"agua": 0.35, "latex": 0.6},
+		"weak": {
+			"calor": 1.9,
+			"explosivo": 1.4
+		},
+		"resist": {
+			"agua": 0.35,
+			"latex": 0.6
+		},
 		"match": {
-			"pitocles": ["calor", "explosivo"],
-			"vulvalquiria": ["calor"],
-			"ornitorrinco": ["calor", "explosivo"]
+			"pitocles": [
+				"calor",
+				"explosivo"
+			],
+			"vulvalquiria": [
+				"calor"
+			],
+			"ornitorrinco": [
+				"calor",
+				"explosivo"
+			]
 		},
 		"line_weak": "BOSSDMG_PARRA_WEAK",
 		"line_resist": "BOSSDMG_PARRA_RESIST",
@@ -59,5 +97,106 @@
 		"line_weak": "BOSSDMG_TESTICULO_WEAK",
 		"line_resist": "BOSSDMG_TESTICULO_RESIST",
 		"hint_weapon": "shotgun_pelvic"
+	},
+	"don_viagra": {
+		"weak": {
+			"agua": 1.8,
+			"electrico": 1.4
+		},
+		"resist": {
+			"vibracion": 0.5
+		},
+		"match": {
+			"pitocles": [
+				"electrico"
+			],
+			"vulvalquiria": [
+				"agua"
+			],
+			"ornitorrinco": [
+				"agua",
+				"electrico"
+			]
+		},
+		"line_weak": "BOSSDMG_VIAGRA_WEAK",
+		"line_resist": "BOSSDMG_VIAGRA_RESIST",
+		"hint_weapon": "globos_agua"
+	},
+	"reina_ovaria": {
+		"weak": {
+			"calor": 1.8,
+			"explosivo": 1.3
+		},
+		"resist": {
+			"latex": 0.5,
+			"confeti": 0.7
+		},
+		"match": {
+			"pitocles": [
+				"calor",
+				"explosivo"
+			],
+			"vulvalquiria": [
+				"calor"
+			],
+			"ornitorrinco": [
+				"calor",
+				"explosivo"
+			]
+		},
+		"line_weak": "BOSSDMG_OVARIA_WEAK",
+		"line_resist": "BOSSDMG_OVARIA_RESIST",
+		"hint_weapon": "laser_depilador"
+	},
+	"diu_cosmico": {
+		"weak": {
+			"electrico": 1.9,
+			"vortice": 1.4
+		},
+		"resist": {
+			"latex": 0.5,
+			"perforante": 0.85
+		},
+		"match": {
+			"pitocles": [
+				"electrico"
+			],
+			"vulvalquiria": [
+				"electrico",
+				"vortice"
+			],
+			"ornitorrinco": [
+				"electrico",
+				"vortice"
+			]
+		},
+		"line_weak": "BOSSDMG_DIU_WEAK",
+		"line_resist": "BOSSDMG_DIU_RESIST",
+		"hint_weapon": "dildo_taser"
+	},
+	"regla": {
+		"weak": {
+			"vibracion": 1.9,
+			"calor": 1.3
+		},
+		"resist": {
+			"contundente": 0.6
+		},
+		"match": {
+			"pitocles": [
+				"vibracion"
+			],
+			"vulvalquiria": [
+				"vibracion",
+				"calor"
+			],
+			"ornitorrinco": [
+				"vibracion",
+				"calor"
+			]
+		},
+		"line_weak": "BOSSDMG_REGLA_WEAK",
+		"line_resist": "BOSSDMG_REGLA_RESIST",
+		"hint_weapon": "smg_vibrator"
 	}
 }
