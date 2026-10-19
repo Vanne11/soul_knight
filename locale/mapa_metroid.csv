@@ -1,0 +1,26 @@
+keys,es,en,es_ES,fr
+MM_TITULO,MAPA DEL MUNDO,WORLD MAP,,CARTE DU MONDE
+MM_NIVEL_MUNDO,Mundo,World,,Monde
+MM_NIVEL_REINO,Reino · %s,Realm · %s,,Royaume · %s
+MM_NIVEL_PISO,%s · Piso %d,%s · Floor %d,,%s · Étage %d
+MM_PISO,Piso %d,Floor %d,,Étage %d
+MM_LIBERADO,liberado,freed,,libéré
+MM_VENCIDO,Jefe vencido,Boss beaten,,Boss vaincu
+MM_POR_DISENAR,por diseñar,to be designed,,à concevoir
+MM_SIN_PISO,Sin piso que mostrar,No floor to show,,Aucun étage à afficher
+MM_LEY_TITULO,LEYENDA,LEGEND,,LÉGENDE
+MM_LEY_SELLO,Sello,Seal,,Sceau
+MM_LEY_ASCENSOR,Ascensor,Lift,,Ascenseur
+MM_LEY_RUTA,Tu ruta,Your route,,Ton parcours
+MM_AYUDA,Flechas/WASD mover · Rueda o +/- zoom · L leyenda · Intro ir a tu piso · M/Esc cerrar,Arrows/WASD move · Wheel or +/- zoom · L legend · Enter jump to your floor · M/Esc close,,Flèches/WASD bouger · Molette ou +/- zoom · L légende · Entrée vers ton étage · M/Échap fermer
+MM_AYUDA_PAD,Stick mover · Gatillos zoom · Y leyenda · A ir a tu piso · B cerrar,Stick move · Triggers zoom · Y legend · A jump to your floor · B close,,Stick bouger · Gâchettes zoom · Y légende · A vers ton étage · B fermer
+MM_SALTAR,Cualquier tecla para saltar la animación,Press any key to skip,,Appuie sur une touche pour passer
+MM_BOSS_PALACIO,"Su Pudorosidad, la Hoja de Parra","Her Modesty, the Fig Leaf",,"Sa Pudeur, la Feuille de Vigne"
+MM_BOSS_SILENCIO,El Pacto de Silencio,The Pact of Silence,,Le Pacte du Silence
+MM_BOSS_UTERO,Doña Regla,Lady Period,,Dame Règles
+MM_BOSS_PROSTATA,La Glándula Callada,The Silent Gland,,La Glande Silencieuse
+MM_BOSS_SELVA,Doña Cera Caliente,Lady Hot Wax,,Dame Cire Chaude
+MM_BOSS_PENELANDIA,Testículo Primordial,Primordial Testicle,,Testicule Primordial
+MM_BOSS_ARCOIRIA,La Censura que destiñe,The Censor that Fades,,La Censure qui déteint
+MM_BOSS_VULVANIA,Su Majestad Ovaria II,Her Majesty Ovaria II,,Sa Majesté Ovaria II
+MM_BOSS_PERINEO,El Aduanero Hormonal,The Hormonal Customs Officer,,Le Douanier Hormonal
