@@ -28,7 +28,6 @@ func _init() -> void:
 func _ready() -> void:
 	drop_table = [{"item_id": "health_small", "chance": 0.3}]
 	super()
-	animated_sprite.self_modulate = BALL
 	add_to_group("rebotin")
 
 
@@ -59,7 +58,6 @@ func _physics_process(delta: float) -> void:
 				animated_sprite.offset.x = 0.0
 		R.ROLL:
 			velocity = r_dir * ROLL_SPEED * (1.3 if chan else 1.0)
-			animated_sprite.rotation += delta * 14.0 * (1.0 if r_dir.x >= 0.0 else -1.0)
 			if r_hit_cd <= 0.0 and to_t.length() < 32.0 and target.has_method("receive_hit"):
 				if target.receive_hit(damage):
 					r_hit_cd = 0.9
@@ -84,6 +82,15 @@ func _physics_process(delta: float) -> void:
 		if r_bounces >= 3:
 			_dizzy()
 	_update_animation(to_t)
+
+
+## Poses propias (tools/gen_testiculo_art.py): temblor de carga (attack), bola rodando (walk) y mareado (dizzy).
+func _update_animation(dir: Vector2) -> void:
+	var a := &"attack" if r_state == R.WINDUP else (&"walk" if r_state == R.ROLL else &"dizzy")
+	if animated_sprite.animation != a and animated_sprite.sprite_frames.has_animation(a):
+		animated_sprite.play(a)
+	if dir.x != 0.0:
+		animated_sprite.flip_h = dir.x < 0.0
 
 
 func _dizzy() -> void:
