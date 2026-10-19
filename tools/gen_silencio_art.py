@@ -28,7 +28,7 @@ Piso 2 "Fondo" (S5 Cinco puertas, S6 El pasillo):
   figura_brazo       de pie con un brazo extendido contra la pared (44x52)
   interruptor, telefono          el interruptor lejano y el telefono sin pantalla
 Jefe "El Pacto de Silencio" y sala de memoria (parte 2 del piso Fondo; ver gen_pacto_memoria):
-  pacto_idle_0/1, pacto_attack, pacto_tired, pacto_hurt, pacto_death   la asamblea bajo la cortina (200x168)
+  (el arte del Pacto ya no sale de aqui: tools/gen_pacto_art.py, assets/sprites/silencio/pacto/)
   campana, olla, vidrio          los objetos de ruido del borde de la arena
   nicho_apagado, nicho_encendido, mesa_flores, flor_0..11, panel_mudo, puerta_luz, panel_ayuda   la sala de memoria
   fig_cara_0..5, banco_plaza, farol, fuente    el reino liberado (siluetas con cara simple, paleta calida)
@@ -361,32 +361,6 @@ def _curtain(d, w, drop, sway):
 		d.line([(x0 + 9, drop), (x0 + 9, drop + 62)], fill=CURT_LO)
 
 
-def pacto_frame(name, sway=0, bow=0, drop=46, slump=0, tint=None, standing=False):
-	w, h = 200, 168
-	im, d = canvas(w, h)
-	col = (132, 132, 152, 255) if tint is None else tint
-	if standing:
-		# fin del pacto: se ponen de pie, sin cortina, cada una con una luz en las manos
-		for i in range(7):
-			cx = 22 + i * 26
-			top = 58 + (i % 2) * 6
-			d.ellipse([cx - 6, top, cx + 6, top + 16], fill=(132, 132, 152, 255))
-			d.polygon([(cx - 9, top + 18), (cx + 9, top + 18), (cx + 10, top + 62), (cx + 1, top + 66), (cx + 1, top + 48), (cx - 1, top + 48), (cx - 1, top + 66), (cx - 10, top + 62)], fill=BODY)
-			d.ellipse([cx - 3, top + 34, cx + 3, top + 40], fill=FLAME)
-		shade(im, seed=11)
-		outline(im)
-		im.save(OUT / name)
-		return
-	for i, cx in enumerate([30, 66, 100, 134, 170]):
-		_seated(d, cx, 66 + (i % 2) * 4 + slump, 28, bow, col)
-	for i, cx in enumerate([48, 100, 152]):
-		_seated(d, cx, 92 + slump, 34, bow, col)
-	shade(im, seed=12)
-	_curtain(d, w, drop + slump, sway)
-	outline(im)
-	im.save(OUT / name)
-
-
 def campana():
 	im, d = canvas(26, 36)
 	d.rectangle([12, 0, 13, 6], fill=METAL)
@@ -561,12 +535,6 @@ def fuente():
 
 
 def gen_pacto_memoria():
-	pacto_frame("pacto_idle_0.png", sway=0)
-	pacto_frame("pacto_idle_1.png", sway=1, slump=1)
-	pacto_frame("pacto_attack.png", sway=0, bow=7, drop=52)
-	pacto_frame("pacto_tired.png", sway=1, bow=5, drop=60, slump=6, tint=(58, 58, 70, 255))
-	pacto_frame("pacto_hurt.png", sway=0, tint=(96, 96, 110, 255))
-	pacto_frame("pacto_death.png", standing=True)
 	campana()
 	olla()
 	vidrio()

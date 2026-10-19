@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1bu20hdfg1ka"
-path="res://.godot/imported/pacto_hurt.png-cc7062d9b44b0e095228baa26e01dcc2.ctex"
+uid="uid://d3v3ewpuao5yb"
+path="res://.godot/imported/pacto_sheet_p2.png-324cd54bbd258708da5dd42ea55d9998.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/silencio/pacto_hurt.png"
-dest_files=["res://.godot/imported/pacto_hurt.png-cc7062d9b44b0e095228baa26e01dcc2.ctex"]
+source_file="res://assets/sprites/silencio/pacto/pacto_sheet_p2.png"
+dest_files=["res://.godot/imported/pacto_sheet_p2.png-324cd54bbd258708da5dd42ea55d9998.ctex"]
 
 [params]
 

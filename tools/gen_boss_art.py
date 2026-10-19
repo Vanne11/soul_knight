@@ -127,7 +127,7 @@ def run(name):
     if name == "pacto_silencio":
         raw = g.RAW / "pacto_silencio_v2.png"
         if not raw.exists():
-            g.SCREENS["pacto_silencio_v2"] = ("", ["assets/sprites/silencio/pacto_idle_0.png"])
+            g.SCREENS["pacto_silencio_v2"] = ("", ["assets/sprites/silencio/pacto/pacto_sheet.png"])
             style, g.STYLE = g.STYLE, PACTO
             try:
                 raw = g.generate("pacto_silencio_v2")

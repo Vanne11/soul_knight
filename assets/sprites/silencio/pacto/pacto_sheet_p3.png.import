@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ci24m04gx1157"
-path="res://.godot/imported/pacto_idle_1.png-46b73e79512d447ef32043da08d9081f.ctex"
+uid="uid://dr6mkf3isxk23"
+path="res://.godot/imported/pacto_sheet_p3.png-4ff329c5e8689e8a6cb804cbc6e2a893.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/silencio/pacto_idle_1.png"
-dest_files=["res://.godot/imported/pacto_idle_1.png-46b73e79512d447ef32043da08d9081f.ctex"]
+source_file="res://assets/sprites/silencio/pacto/pacto_sheet_p3.png"
+dest_files=["res://.godot/imported/pacto_sheet_p3.png-4ff329c5e8689e8a6cb804cbc6e2a893.ctex"]
 
 [params]
 
