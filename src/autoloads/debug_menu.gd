@@ -142,6 +142,9 @@ func _open() -> void:
 			rm.current_floor = n - 1
 			main._advance_to_next_floor()
 	_row(box, floors)
+	_row(box, {tr("DEBUG_SILENCIO"): func():
+		_close()
+		_go_silencio(main)})  # reino incompleto (wip): solo se entra desde aqui
 
 	_label(box, tr("DEBUG_DESORDEN_HEAD"))
 	var order := RunManager.world_order()
@@ -182,6 +185,19 @@ func _open() -> void:
 			RunManager.set_route_for(c, rm.current_seed)  # cada heroe, su ruta
 			Transition.change_scene("res://src/scenes/main.tscn")
 	_row(box, chars)
+
+
+## "Ir al Silencio (WIP)": Las Tierras del Silencio estan fuera de la ruta (ver la cabecera de
+## run_manager.gd). Aqui se habilitan, se suman al final de la ruta activa y se salta a su piso 1.
+func _go_silencio(main: Node) -> void:
+	RunManager.enable_wip()
+	RunManager.add_region(Silencio.REGION)
+	var rm := get_node("/root/RunManager")
+	for i in RunManager.route_floors.size():
+		if RunManager.route_floors[i].region == Silencio.REGION:
+			rm.current_floor = i  # _advance_to_next_floor suma 1
+			break
+	main._advance_to_next_floor()
 
 
 ## t = id de EnemyRegistry ("melee", "boss"...).

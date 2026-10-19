@@ -31,10 +31,20 @@ class_name RunManager
 ## peace: true lo pone RunManager.begin_rescue en la copia del piso que se recorre en paz (no va en los JSON).
 ## tint: color de la sala cuando la liberas (antes de eso esta gris: censurada). En el
 ##   JSON va en hex ("7fe0a0") y aqui se convierte a Color.
+## wip: true marca un reino INCOMPLETO (hoy: Las Tierras del Silencio, 80_silencio.json). Sus pisos
+##   NO entran en FLOORS: ni en regions() ni en la ruta (routes.json los nombra y se saltan, como
+##   cualquier reino sin JSON). Esperan en WIP_FLOORS hasta RunManager.enable_wip(), que los suma a
+##   FLOORS en el orden de sus prefijos; solo lo llama la opcion de depuracion F1 "Ir al Silencio
+##   (WIP)" (debug_menu.gd). Para publicar el reino: quitar "wip" del JSON de cada piso.
+## layout: "silencio" (opcional) = el piso no usa el trazado BSP sino la cadena de salas de situacion
+##   de src/silencio/silencio.gd (Silencio.plan_layout), sin enemigos.
 ## FLOORS se carga una vez al cargar el script (static var): mismo Array de Dictionary que
 ## antes era const, accesible igual como RunManager.FLOORS.
 const FLOORS_DIR := "res://assets/data/floors/"
 const FLOORS_EXTRA_DIR := "res://assets/data/floors/extra/"
+## Pisos "wip": true, fuera de FLOORS hasta enable_wip(). Va ANTES que FLOORS: _load_floors lo llena.
+static var WIP_FLOORS: Array = []
+static var wip_enabled := false
 static var FLOORS: Array = _load_floors()
 
 
@@ -76,6 +86,7 @@ static func _load_floors() -> Array:
 		if not f.has("extra"):
 			f.extra = []
 		f.id = _floor_id(file)
+		f.file = file
 		if not f.has("region"):
 			f.region = f.id
 		f.stage = int(f.get("stage", 1))
@@ -83,12 +94,25 @@ static func _load_floors() -> Array:
 		if not f.has("boss"):
 			f.boss = ""
 			f.boss_name = ""
+		if bool(f.get("wip", false)):
+			WIP_FLOORS.append(f)  # reino incompleto: fuera de la ruta hasta enable_wip()
+			continue
 		floors.append(f)
 		ids.append(_floor_id(file))
 	_load_extra_files(floors, ids)
 	if floors.is_empty():
 		push_error("RunManager: no hay pisos en %s" % FLOORS_DIR)
 	return floors
+
+
+## Suma los pisos "wip" a FLOORS (y por tanto a regions() y a la ruta). Solo para depuracion
+## (debug_menu.gd, "Ir al Silencio (WIP)"); dura lo que la sesion.
+static func enable_wip() -> void:
+	if wip_enabled:
+		return
+	wip_enabled = true
+	FLOORS.append_array(WIP_FLOORS)
+	FLOORS.sort_custom(func(a, b): return str(a.file) < str(b.file))
 
 
 ## Bichos extra por bloque: cada assets/data/floors/extra/<bloque>.json es un Array de

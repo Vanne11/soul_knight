@@ -57,6 +57,8 @@ func _show_main() -> void:
 	v.add_child(title)
 	_first_btn = _button(v, tr("PAUSE_RESUME"), close)
 	_button(v, tr("BTREE_TAB"), _show_blessings)
+	if Silencio.active():
+		_button(v, tr("SIL_AYUDA_BOTON"), Silencio.ayuda)  # siempre a mano en el Silencio
 	_button(v, tr("PAUSE_SETTINGS"), _show_settings)
 	_button(v, tr("PAUSE_MENU"), _to_menu)
 	_button(v, tr("PAUSE_QUIT"), func(): get_tree().quit())

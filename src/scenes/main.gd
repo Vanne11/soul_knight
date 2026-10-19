@@ -94,27 +94,28 @@ func _generate_dungeon() -> void:
 	if not peace:
 		FloorEvents.setup(self, dungeon_generator.rooms, _run_manager.current_floor, _run_manager.current_seed)  # evento de piso + contrarreloj (src/run/floor_events.gd)
 	RoomDressing.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # muros 3/4, zocalo, puertas
-	if not peace:
+	if not peace and not Silencio.active():
 		RoomObstacles.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # rocas, columnas, barriles, pinchos
 	_lock_secret_rooms()
 	if not peace:
 		Utero.setup_floor(self)  # El Utero (src/utero): fases del ciclo
 		Arcoiria.setup_floor(self)  # Arcoiria (src/arcoiria): bandera del HUD, poderes de colores, codice del reino
+	Silencio.setup_floor(self)  # Las Tierras del Silencio (src/silencio): aviso, circulo del HUD; fuera del reino, lo limpia
 	
 	# Start player in start room
 	var start_room = _find_start_room()
 	if not peace:
 		Narrator.say_hero("floor_" + str(_run_manager.floor_data().id))  # entrada a region, por heroe (narrator/etapas.json); antes que la pista del arma
 	_weapon_room = null
-	if start_room and not peace and not _has_real_weapon():
-		_hide_weapon_chest(start_room)
+	if start_room and not peace and not Silencio.active() and not _has_real_weapon():
+		_hide_weapon_chest(start_room)  # (en el Silencio no hay cofres ni premios)
 	_pick_hormone_room()
 	_assign_rewards()
 	_coin_mult = _compute_coin_mult()
 	_show_floor_card()
 	if peace and start_room:
 		_build_peace(start_room)
-	elif _run_manager.is_liberated(_run_manager.current_floor) and RunManager.floor_stage(_run_manager.current_floor) == 1:
+	elif _run_manager.is_liberated(_run_manager.current_floor) and RunManager.floor_stage(_run_manager.current_floor) == 1 and not Silencio.active():
 		# Region liberada en otra partida: te recibe con un regalo (al entrar al reino, no en la 2a etapa).
 		get_tree().create_timer(2.6).timeout.connect(func():
 			Narrator.say("liberated_floor")
@@ -167,6 +168,8 @@ func _on_door_entered_room(room: Room, door: Door) -> void:
 
 ## Pista del reino del piso ("explore_pene", "boss_vulva"...); si no existe, la generica.
 func _room_track(room: Room) -> String:
+	if Silencio.active():
+		return ""  # el Silencio no tiene musica
 	if RunManager.floor_is_peace(_run_manager.current_floor) and ResourceLoader.exists(Sound.MUSIC_DIR + "paz.ogg"):
 		return "paz"  # pista alegre de los reinos en paz (si algun dia existe; si no, la del reino)
 	var base := "boss" if room.room_type == Room.RoomType.BOSS and not room.cleared else "explore"
@@ -181,6 +184,7 @@ func _room_track(room: Room) -> String:
 
 func _enter_room(room: Room, entry_door: Door = null) -> void:
 	if current_room:
+		Silencio.on_leave_room(self, current_room)
 		current_room.on_player_exit()
 		# Disable previous room
 		current_room.set_process(false)
@@ -213,12 +217,14 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	_update_camera_limits(room)
 	
 	_lighting.enter_room(room)
-	RoomDecals.build(room, _run_manager.floor_data().kingdom, _run_manager.current_seed, _run_manager.current_floor)  # calcomanias de suelo (una vez por sala)
-	RoomDecor.build(room, _run_manager.floor_data().kingdom, _run_manager.current_seed, _run_manager.current_floor)  # decoracion junto a los muros (una vez por sala)
+	if not Silencio.active():  # el Silencio dibuja su propia sala (Silencio.on_enter_room)
+		RoomDecals.build(room, _run_manager.floor_data().kingdom, _run_manager.current_seed, _run_manager.current_floor)  # calcomanias de suelo (una vez por sala)
+		RoomDecor.build(room, _run_manager.floor_data().kingdom, _run_manager.current_seed, _run_manager.current_floor)  # decoracion junto a los muros (una vez por sala)
 	_paint_room(room, room.cleared or room.room_type in CALM_ROOMS)
 	_label_doors(room)
 	Utero.on_enter(self, room, entry_door)  # fase del ciclo (src/utero), antes de las dinamicas de sala
 	RoomDirector.on_enter(self, room, entry_door)  # dinamicas de sala (src/rooms/room_director.gd)
+	Silencio.on_enter_room(self, room, entry_door)  # sala de situacion del Silencio (src/silencio)
 	if room.room_type in [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]:
 		_build_calm_room(room)
 	if room.room_type == Room.RoomType.SHOP:
@@ -624,6 +630,7 @@ func _pick_hormone_room() -> void:
 ## Las salas nacen grises (censuradas) y recuperan el color al liberarlas.
 func _paint_room(room: Room, colored: bool, animate := false) -> void:
 	# Sin modulate: el arte de cada reino ya trae su color y el shader lo desatura/devuelve.
+	colored = colored and not Silencio.active()  # el Silencio nunca recupera el color (aun)
 	Censor.apply(room, room.floor_tilemap)
 	Censor.apply(room, room.walls_tilemap)
 	room.floor_tilemap.modulate = Color.WHITE
@@ -708,6 +715,13 @@ func _complete_floor() -> void:
 		Utero.cycle_blessing(self)  # Dona Regla: ademas, una bendicion de ciclo
 	else:
 		await get_tree().create_timer(1.5).timeout  # guardian vencido: sin mejora, solo la salida
+	open_exit(boss_room, floor_n)
+
+
+## La salida del piso: una puerta por reino si hay que elegir, o el portal al siguiente piso.
+## `at` = donde se pone, relativo al centro de la sala; `hatch_text` = el cartel del portal (vacio = el de
+## siempre). La usa _complete_floor y, sin jefe ni guardian, el Silencio (src/silencio: salida de S4).
+func open_exit(boss_room: Room, floor_n: int, at := Vector2(0, 150), hatch_text := "") -> void:
 	var options: Array = RunManager.next_options() if RunManager.route_dynamic and floor_n >= RunManager.route_floors.size() else []
 	if options.size() > 1:
 		# Eleccion diegetica: una puerta por reino elegible, con su nombre y su color.
@@ -716,7 +730,7 @@ func _complete_floor() -> void:
 			var door := FloorPortal.create(region, true)
 			door.set_meta("door_region", region)  # el bot (tools/autoplay) elige puerta por aqui
 			var dx := (float(i) - float(options.size() - 1) / 2.0) * 210.0
-			_add_prop(boss_room, boss_room.get_center_position() + Vector2(dx, 150), door,
+			_add_prop(boss_room, boss_room.get_center_position() + at + Vector2(dx, 0), door,
 				tr("SEAL_DOOR") % Loc.region_name_id(region),
 				func(p, it):
 					it.finish()
@@ -726,8 +740,8 @@ func _complete_floor() -> void:
 					FloorPortal.restore(p))
 		return
 	var portal := _hatch_visual()
-	_add_prop(boss_room, boss_room.get_center_position() + Vector2(0, 150), portal,
-		tr("FLOOR_HATCH") % (floor_n + 1),
+	_add_prop(boss_room, boss_room.get_center_position() + at, portal,
+		hatch_text if hatch_text != "" else tr("FLOOR_HATCH") % (floor_n + 1),
 		func(p, it):
 			it.finish()
 			await portal.absorb(p)  # el heroe se encoge y gira hacia el centro antes de bajar
@@ -796,6 +810,8 @@ func _label_doors(room: Room) -> void:
 		door.set_hint(hint[0], hint[1])
 
 func _room_hint(room: Room) -> Array:
+	if room.room_type == Room.RoomType.SILENCIO:
+		return ["", Color.WHITE]
 	if MonteVenus.is_monte(room):
 		return [tr("MONTE_DOOR_HINT"), Color("f06aa0")]
 	if room.has_meta("elite_room") and not room.cleared:

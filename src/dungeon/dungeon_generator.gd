@@ -38,12 +38,17 @@ func generate_floor(floor: int, seed_override: int = 0) -> Node2D:
 	_clear_state()
 	
 	# Trazado (7-12 salas segun piso y semilla): hojas del BSP elegidas + grafo con ramas y ciclos.
-	var plan := _plan_layout()
+	# Las Tierras del Silencio no: una cadena fija de salas de situacion (src/silencio/), sin enemigos.
+	var silent := Silencio.is_floor(floor)
+	var plan := Silencio.plan_layout() if silent else _plan_layout()
 	_create_rooms(plan.rects, dungeon_root)
 	_connect_rooms(plan.edges)
 	_layout_doors()
-	_assign_room_types()
-	_place_special_rooms()
+	if silent:
+		Silencio.assign_rooms(self, plan)
+	else:
+		_assign_room_types()
+		_place_special_rooms()
 	MonteVenus.assign(self)  # Monte de Venus de la Selva (src/dungeon/monte_venus.gd); antes de las formas
 	_assign_room_shapes()
 	_paint_floor_tiles()

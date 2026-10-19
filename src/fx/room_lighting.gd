@@ -109,7 +109,7 @@ func setup_floor(rooms: Dictionary, floor_n: int, seed_: int) -> void:
 
 func _roll_dark(room: Room, floor_n: int) -> bool:
 	match room.room_type:
-		Room.RoomType.START, Room.RoomType.SHOP:
+		Room.RoomType.START, Room.RoomType.SHOP, Room.RoomType.SILENCIO:
 			return false
 		Room.RoomType.BOSS:
 			return true
@@ -144,7 +144,7 @@ func enter_room(room: Room) -> void:
 	LightKit.set_dark(get_tree(), room.is_dark)
 	if not room.is_dark:
 		_hide_all_casts()
-	_apply_ambient(room, false)
+	_apply_ambient(room, room.room_type == Room.RoomType.SILENCIO)  # la luz baja un escalon: no de golpe
 	_apply_colors(room, false)
 
 
@@ -188,6 +188,8 @@ func _apply_ambient(room: Room, animate: bool) -> void:
 			amb = amb * DEEP_AMBIENT_DARK
 	elif deep:
 		amb = DEEP_AMBIENT
+	if room.room_type == Room.RoomType.SILENCIO:
+		amb = Silencio.ambient(room)  # luz propia del reino, por sala (src/silencio/silencio.gd)
 	if _ambient_tween and _ambient_tween.is_valid():
 		_ambient_tween.kill()
 	if animate:
