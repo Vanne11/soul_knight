@@ -1,7 +1,6 @@
 {
-	"_nota": "[NO PUBLICAR SIN REVISION] LA PUERTA TRASERA, piso 1 (reino secreto del Perineo; diseno en ~/Videos/Rogue Reproductive/diseno_puerta_trasera.md; datos en datos_ano.md). REINO INCOMPLETO: \"wip\": true lo deja fuera de FLOORS, de regions() y de la ruta (RunManager.enable_wip). Hoy solo sirve de ancla del jefe El Coprolito (pelea directa del bot: --boss=coprolito, tools/autoplay). Enemigos propios del reino (extra): Fisura Fina, Pujon, Cartel Falso, Aceite Traicionero (piso 2), Todos-lo-Hacen y Polipo Callado; el trio generico queda de relleno. Sala y entrada reales: por hacer. Prefijo 90: despues de 85_silencio_fondo.",
-	"wip": true,
-	"name": "LA PUERTA TRASERA",
+	"_nota": "EL TEMPLO DE ANUBIS (id interno puerta_trasera): desvio OPCIONAL del Perineo, sin sello; entrada secreta por la puerta biologica (lubricante + condones, ver src/dungeon/iris_door.gd y routes.json detours). Datos de salud en datos_ano.md (marcados REVISAR para Vanessa).",
+	"name": "EL TEMPLO DE ANUBIS",
 	"name_key": "FLOOR_PUERTA_TRASERA_NAME",
 	"region": "puerta_trasera",
 	"stage": 1,
@@ -16,6 +15,7 @@
 		{"variant": "pujon", "name": "Pujón", "type": "pujon", "weight": 0.26},
 		{"variant": "cartel", "name": "Cartel Falso", "type": "cartel", "weight": 0.24},
 		{"variant": "todos", "name": "Todos-lo-Hacen", "type": "todos", "weight": 0.14},
+		{"variant": "frasquito", "name": "Frasquito Mágico", "type": "frasquito", "weight": 0.2},
 		{"variant": "polipo", "name": "Pólipo Callado", "type": "polipo", "weight": 0.16}
 	],
 	"weights": [0.1, 0.1, 0.1],

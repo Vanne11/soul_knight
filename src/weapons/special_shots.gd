@@ -231,7 +231,9 @@ static func _lube(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: Vec
 	var cfg := {"radius": float(cd.get("patch_radius", 64.0)), "time": float(cd.get("patch_time", 6.0)),
 		"slip_every": float(cd.get("slip_every", 1.6)), "slip_time": float(cd.get("slip_time", 0.7)),
 		"slip_damage": dmg * float(cd.get("slip_mult", 0.9)), "weapon_id": b.weapon_id}
-	b.burst_cb = func(parent: Node, pos: Vector2) -> void: LubePatch.make(parent, pos, cfg)
+	b.burst_cb = func(parent: Node, pos: Vector2) -> void:
+		LubePatch.make(parent, pos, cfg)
+		IrisDoor.lube_burst(parent.get_tree(), pos)  # la puerta biologica del Perineo (iris_door.gd)
 	p.get_parent().add_child(b)
 	b.global_position = origin
 

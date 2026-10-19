@@ -218,7 +218,7 @@ static func world_order() -> Array:
 
 
 ## DESVIOS (routes.json "detours"): puerta extra opcional desde el jefe final de un reino hacia un reino
-## secreto. {"to": id, "open": bool} o {} si el reino no tiene. "open": false = la puerta se ve SELLADA.
+## secreto. {"to": id, "open": bool} o {} si el reino no tiene. "open": true = la puerta biologica se puede abrir (en secreto); false = queda sellada.
 static func detour_for(region: String) -> Dictionary:
 	var d = ROUTES.get("detours", {}).get(region, {})
 	return d if d is Dictionary else {}
@@ -349,11 +349,7 @@ static func exit_regions(floor_n: int) -> Array:
 	var out: Array = next_options(1 if would_award_seal(floor_n) else 0)
 	if out.is_empty():
 		return out  # fin de la partida: sin desvios
-	# desvio opcional ABIERTO (routes.json "detours"."open": true y reino sin "wip"): una puerta mas, sin sello
-	var det := detour_for(floor_region(floor_n))
-	var to := str(det.get("to", ""))
-	if bool(det.get("open", false)) and to in regions() and to not in route_regions and to not in out:
-		out.append(to)
+	# el desvio opcional (routes.json "detours") NO es una puerta mas: es la puerta biologica de main.gd (condicion secreta)
 	return out
 
 

@@ -3,6 +3,6 @@
 	"body": ["selva", "penelandia", "vulvania", "perineo"],
 	"center": ["arcoiria", "utero", "prostata", "silencio", "palacio"],
 	"seals_needed": 2,
-	"detours": {"perineo": {"to": "puerta_trasera", "open": false}},
+	"detours": {"perineo": {"to": "puerta_trasera", "open": true}},
 	"start": {"default": "selva", "pitocles": "penelandia", "vulvalquiria": "vulvania", "ornitorrinco": "arcoiria"}
 }

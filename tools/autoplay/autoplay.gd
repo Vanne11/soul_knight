@@ -17,6 +17,7 @@ extends Node
 ##   --overlay=0    oculta el rotulo verde del bot (para grabar)
 ##   --enc=none|random|tio|spam|vendedor|mosquito|cunado|notificacion|ex|influencer|chicle|captcha   fuerza (o apaga) el encuentro de los pasillos
 ##   --corridor-hold=0.4   en los pasillos entre reinos se queda quieto al pasar ese avance (0..1); para mirar de cerca a los bichos incomodos
+##   --iris=1   tras vencer al jefe del Perineo, dispara a la puerta biologica y la cruza (secreto: lubricante + condon, ver --loadout)
 ##   --max-secs=N   termina solo tras N s de juego (tiempo de juego, no de reloj; para grabaciones de prueba)
 ##   --quit-on-end  cierra Godot al terminar la partida
 ## VARIAS PARTIDAS A LA VEZ: el juego guarda progreso, codice y narrador en user://; aislalas con
@@ -706,7 +707,7 @@ func _boss_report(result: String) -> void:
 		str(_bm.variant).trim_prefix("boss_"), "(alt)" if _bm.alt else "", _hero, rm.current_seed, weapon, result, t, hits, _bm.dmg_taken,
 		hp_left, _bm.hp_max, _bm.dealt / t, 100.0 * _bm.atk / t, 100.0 * _bm.tired / t, 100.0 * _bm.idle / t, 100.0 * _bm.chan / t,
 		_bm.heals, _bm.cuts, _bm.max_hit, _bm.max_hit_weapon, 1 if DebugMenu.god_mode else 0])
-	if not _manual:
+	if not _manual and _arg("--iris=", "") == "":  # con --iris=1 el bot sigue jugando tras el jefe (puerta biologica)
 		_done = true
 		_release_all()
 		await get_tree().create_timer(0.3, true, false, true).timeout
@@ -913,6 +914,9 @@ func _explore(room: Room) -> void:
 		if player.global_position.distance_to(tp) > 4.0:
 			_steer_to(tp)
 		return
+	# 1a) PUERTA BIOLOGICA (--iris=1): con el piso completo, dispara el lubricante a la puerta del Perineo y la cruza
+	if main.floor_completed and _arg("--iris=", "") != "" and _iris_step():
+		return
 	# 1b) PASILLOS: con el piso completo, la sala del jefe tiene puertas de salida (una por reino destino):
 	# el bot elige segun --route-pick y la cruza empujandola (como un jugador).
 	if main.floor_completed and main.exit_doors.any(func(d): return is_instance_valid(d) and d.state == Door.State.OPEN):
@@ -1097,6 +1101,28 @@ func _things(room: Room) -> Array:
 		var want := RunManager.pick_option(regs, get_node("/root/RunManager").current_seed)
 		out = doors.filter(func(n): return _door_region(n) == want)
 	return out
+
+
+## --iris=1: se para frente a la puerta biologica, le dispara (con lo que lleve en la mano: el lubricante) y, abierta, la cruza.
+func _iris_step() -> bool:
+	var irises := get_tree().get_nodes_in_group("iris_door")
+	if irises.is_empty() or not is_instance_valid(irises[0]):
+		return false
+	var iris: IrisDoor = irises[0]
+	_goal_kind = "iris"
+	if iris.state == IrisDoor.S.OPEN:
+		_goal_text = "cruzar la puerta biologica"
+		_press_move(Vector2.UP)
+		return true
+	var stand: Vector2 = iris.global_position + Vector2(0, 150)
+	if player.global_position.distance_to(stand) > 30.0 and iris.state == IrisDoor.S.CLOSED:
+		_goal_text = "ir frente a la puerta biologica"
+		_steer_to(stand)
+		return true
+	_goal_text = "disparar a la puerta biologica"
+	player.aim_override = (iris.global_position + Vector2(0, 8) - player.global_position).normalized()
+	Input.action_press("attack")
+	return true
 
 
 var _cor_t := 0.0
