@@ -997,6 +997,8 @@ func receive_hit(dmg: float) -> bool:
 	Sound.play("hurt")
 	HitFx.flash(animated_sprite)
 	HitFx.shake(clampf(0.25 + dmg * 0.01, 0.25, 0.6))
+	if dmg >= 15.0 and get_tree().get_first_node_in_group("boss") != null:
+		HitFx.hitstop(HitFx.HITSTOP_BOSS_HURT)  # golpe fuerte de un jefe: pausa de impacto
 	var pride: int = _rm().blessing("orgullo")
 	if pride > 0 and current_weapon and _player_stats.current_health > 0.0:
 		_ring(8, get_weapon_damage() * _player_stats.damage_modifier * pride)

@@ -11,6 +11,10 @@ const TRAUMA_DECAY := 2.2     # trauma por segundo real
 const HITSTOP_SECS := 0.045   # ~3 frames a 60 fps
 const HITSTOP_SCALE := 0.04
 const HITSTOP_COOLDOWN := 0.28
+const HITSTOP_BOSS_HIT := 0.04    # pegarle al jefe: muy corta (el enfriamiento la acota para las rafagas)
+const HITSTOP_BOSS_HURT := 0.08   # el jefe te pega fuerte: un poco mas larga
+const HITSTOP_PHASE := 0.1        # cambio de fase del jefe
+const HITSTOP_HEAVY_MIN := 0.07   # desde aqui la pausa pisa el enfriamiento (es un golpe grande)
 
 static var inst: HitFx = null
 
@@ -43,15 +47,17 @@ static func shake(amount: float) -> void:
 		inst._trauma = minf(1.0, inst._trauma + amount)
 
 
-## Pausa de ~3 frames. Usa Engine.time_scale y se restaura con reloj real; no se acumula.
-static func hitstop() -> void:
-	if inst == null or not Settings.screen_shake:
+## Pausa de ~3 frames (o `secs`). Usa Engine.time_scale y se restaura con reloj real; no se acumula.
+## Respeta la opcion de reducir sacudida y no actua con el juego en pausa (menu, mapa, narrador).
+static func hitstop(secs := HITSTOP_SECS) -> void:
+	if inst == null or not Settings.screen_shake or not inst.is_inside_tree() or inst.get_tree().paused:
 		return
+	secs = minf(secs, 0.12)
 	var now := Time.get_ticks_usec()
-	if now < inst._next_stop_us:
+	if now < inst._next_stop_us and secs < HITSTOP_HEAVY_MIN:
 		return
-	inst._next_stop_us = now + int((HITSTOP_SECS + HITSTOP_COOLDOWN) * 1e6)
-	inst._stop_until_us = now + int(HITSTOP_SECS * 1e6)
+	inst._next_stop_us = now + int((secs + HITSTOP_COOLDOWN) * 1e6)
+	inst._stop_until_us = maxi(inst._stop_until_us, now + int(secs * 1e6))
 	Engine.time_scale = HITSTOP_SCALE
 
 
