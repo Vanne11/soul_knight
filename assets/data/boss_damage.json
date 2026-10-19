@@ -74,6 +74,30 @@
 		"line_resist": "BOSSDMG_PARRA_RESIST",
 		"hint_weapon": "laser_depilador"
 	},
+	"afeitadora": {
+		"weak": {"agua": 1.9, "vibracion": 1.4},
+		"resist": {"electrico": 0.4, "perforante": 0.7},
+		"match": {
+			"pitocles": ["agua"],
+			"vulvalquiria": ["agua"],
+			"ornitorrinco": ["agua", "vibracion"]
+		},
+		"line_weak": "BOSSDMG_AFEITADORA_WEAK",
+		"line_resist": "BOSSDMG_AFEITADORA_RESIST",
+		"hint_weapon": "globos_agua"
+	},
+	"testiculo_primordial": {
+		"weak": {"contundente": 1.9, "explosivo": 1.4},
+		"resist": {"latex": 0.4, "perforante": 0.75},
+		"match": {
+			"pitocles": ["contundente"],
+			"vulvalquiria": ["explosivo"],
+			"ornitorrinco": ["contundente", "explosivo"]
+		},
+		"line_weak": "BOSSDMG_TESTICULO_WEAK",
+		"line_resist": "BOSSDMG_TESTICULO_RESIST",
+		"hint_weapon": "shotgun_pelvic"
+	},
 	"don_viagra": {
 		"weak": {
 			"agua": 1.8,

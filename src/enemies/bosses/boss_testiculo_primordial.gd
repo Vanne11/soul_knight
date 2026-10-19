@@ -1,36 +1,59 @@
 extends EnemyBoss
 
-## TESTICULO PRIMORDIAL (piso 2, Penelandia). Bola de pinball con mala leche:
-## - PINBALL: embestidas encadenadas que rebotan en los muros; cada tramo avisa su
-##   direccion con una franja en el suelo; al final choca y queda AGOTADO;
-## - OLEADA (fase 2+): una pared de espermatozoides cruza la sala con un hueco; el
-##   aviso marca de donde salen y el hueco queda libre;
-## - MITADES (fase 3): se parte en dos mitades que rebotan por la sala dejando estela
-##   mientras el cuerpo, pequeño y desprotegido, queda AGOTADO en el centro.
+## TESTICULO PRIMORDIAL (piso 2, Penelandia) - MOTOR DINAMICO (dynamic = true). Bola de pinball con mala leche.
+## IDENTIDAD: PINBALL CONSTANTE. Incluso en reposo no camina: RUEDA y rebota por la sala (curvandose
+## hacia ti). Sus ataques son ese mismo rebote con aviso:
+## - PINBALL: embestidas encadenadas que rebotan en los muros, cada tramo mas rapido; cada tramo avisa
+##   su direccion con una franja en el suelo; al final queda AGOTADO;
+## - OLEADA (fase 2+): pared de espermatozoides con un hueco (el aviso marca de donde salen);
+## - MITADES (fase 3): se parte en dos mitades que atacan COORDINADAS en pinza: salen de lados opuestos
+##   y sus franjas se cruzan donde estabas; segunda pinza girada 90 grados. El cuerpo, pequeno, queda
+##   AGOTADO en el centro (ventana para pegarle);
+## - REBOTINES: bolitas de pinball con patas (enemy_rebotin.gd): pocas en fase 1, mas en la 3.
+## Combos de 1-2 ataques ligeros en fase 2-3; agotado solo tras pinball, mitades y oleada.
+## Cura (max 2): guardaespaldas o carrera.
 
 const SPERM := Color(1.0, 0.92, 0.75)
+const REBOTIN := preload("res://src/enemies/enemy_rebotin.tscn")
+const BIG := [&"atk_pinball", &"atk_mitades", &"atk_oleada"]
+const HP_MULT := 0.7
+const REBOTIN_CAP := [2, 3, 5]
+const ROLL_SPEED := [135.0, 155.0, 175.0]
 
 var _aim := Vector2.RIGHT
 var _aim_len := 400.0
 var _base_scale := Vector2.ONE
+var _roll_dir := Vector2.ZERO
 
 
 func _ready() -> void:
 	super()
+	dynamic = true
 	fan_tint = SPERM
+	rest_min = 0.4
+	rest_max = 0.75
+	bullet_speed = 290.0
+	tele_caps = [0.85, 0.7, 0.6]
 	move_speed = 90.0
 	keep_min = 200.0
 	keep_max = 330.0
 	_base_scale = animated_sprite.scale
+	max_health *= HP_MULT
+	current_health = max_health
+	_emit_health()
+	_channels_total = 2
+	_channels_left = 2
+	_ge.boss_charges_changed.emit(_channels_left, _channels_total)
+	BossAnimator.attach(self)  # solo actua si el SpriteFrames trae cuadros nuevos
 
 
 func _attack_pool() -> Array:
 	match current_phase:
 		1:
-			return [&"atk_fan", &"atk_pinball", &"atk_pinball"]
+			return [&"atk_fan", &"atk_pinball", &"atk_rebotines", &"atk_pinball"]
 		2:
-			return [&"atk_fan", &"atk_pinball", &"atk_oleada", &"atk_oleada"]
-	return [&"atk_mitades", &"atk_pinball", &"atk_oleada", &"atk_fan", &"atk_mitades"]
+			return [&"atk_fan", &"atk_pinball", &"atk_oleada", &"atk_rebotines", &"atk_oleada"]
+	return [&"atk_mitades", &"atk_pinball", &"atk_oleada", &"atk_fan", &"atk_mitades", &"atk_rebotines"]
 
 
 func _challenges() -> Array:
@@ -41,14 +64,67 @@ func _channel_color() -> Color:
 	return Color(1.0, 0.75, 0.45)
 
 
+func _hit_source() -> String:
+	for g in get_tree().get_nodes_in_group("rebotin"):
+		if is_instance_valid(g) and g.global_position.distance_to(target.global_position) < 50.0:
+			return "rebotin"
+	return "bola"
+
+
+## Todo peligro del Testiculo se dibuja como maquina de pinball (rayas oscuras, borde rojo).
+func _add_hazard(z: BossZone) -> BossZone:
+	if z.style == BossZone.Style.NORMAL:
+		z.style = BossZone.Style.TOXIC
+	return super(z)
+
+
 func _reset_idle() -> void:
 	animated_sprite.scale = _base_scale
+
+
+func _cure_cut_stun() -> float:
+	return 5.0
+
+
+func _combo_len() -> int:
+	match current_phase:
+		2:
+			return RNG.randi_range(0, 1)
+		3:
+			return RNG.randi_range(1, 2)
+	return 0
+
+
+func _combo_next() -> StringName:
+	var light: Array = [&"atk_fan", &"atk_rebotines"]
+	light = light.filter(func(x): return x != _last_attack)
+	return light[RNG.randi_range(0, light.size() - 1)]
+
+
+func _pick_attack() -> StringName:
+	var a := super()
+	if a in BIG:
+		_combo_left = 0
+	return a
+
+
+## PINBALL CONSTANTE: en reposo no camina, rueda. Rebota en los muros y se curva hacia ti (te presiona
+## sin ser un perseguidor: puedes leer su trayectoria).
+func _idle_move(delta: float) -> void:
+	var to_t: Vector2 = target.global_position - global_position
+	if _roll_dir == Vector2.ZERO:
+		_roll_dir = to_t.normalized()
+	if get_slide_collision_count() > 0:
+		_roll_dir = _roll_dir.bounce(get_last_slide_collision().get_normal()).normalized()
+	_roll_dir = _roll_dir.slerp(to_t.normalized(), clampf(0.9 * delta, 0.0, 1.0)).normalized()
+	velocity = _roll_dir * ROLL_SPEED[clampi(current_phase, 1, 3) - 1]
 
 
 # ---------------------------------------------------------------- pinball
 func atk_pinball() -> void:
 	var segs := 2 + current_phase
 	_aim = (target.global_position - global_position).normalized()
+	_roll_dir = Vector2.ZERO
 	for s in segs:
 		var first := s == 0
 		var body := global_position + Vector2(0, -62)
@@ -64,7 +140,7 @@ func atk_pinball() -> void:
 				lane.size.x = maxf(_aim_len, 40.0)
 				lane.global_position = b + _aim * lane.size.x * 0.5
 				lane.rotation = _aim.angle()
-		if not await _tele(0.85 if first else 0.5, Color(2.2, 0.6, 0.6), 3.0, track):
+		if not await _tele(0.85 if first else 0.55, Color(2.2, 0.6, 0.6), 3.0, track):
 			return
 		if is_instance_valid(lane):
 			lane.dismiss()
@@ -73,7 +149,7 @@ func atk_pinball() -> void:
 		var t := 0.0
 		var bounced := false
 		while t < 1.6:
-			velocity = _aim * (470.0 + current_phase * 40.0)
+			velocity = _aim * minf(430.0 + current_phase * 40.0 + s * 45.0, 640.0)
 			if not await _frame():
 				return
 			_strike()
@@ -124,19 +200,19 @@ func atk_oleada() -> void:
 				x2 += spacing
 		# Aviso: las franjas de donde salen. El hueco queda libre.
 		for seg in _segments(pts, horizontal, spacing):
-			var z := BossZone.rect(seg[0], seg[1], 0.0, 0.9, 0.05, 0.0, SPERM)
+			var z := BossZone.rect(seg[0], seg[1], 0.0, 0.8, 0.05, 0.0, SPERM)
 			_add_hazard(z)
 		animated_sprite.play("attack")
 		Sound.play("locked")
-		if not await _wait(0.9):
+		if not await _wait(0.8):
 			return
 		Sound.play("enemy_shoot")
 		for p in pts:
-			var b := _fire_from(p, dir.angle(), 215.0, 0.6, SPERM, 6.0)
+			var b := _fire_from(p, dir.angle(), 270.0, 0.6, SPERM, 6.0)
 			b.scale = Vector2(1.5, 1.5)
 		if not await _wait(1.0):
 			return
-	if not await _wait(1.6):
+	if not await _wait(0.8):
 		return
 	_tire(1.2)
 
@@ -166,33 +242,66 @@ func _segments(pts: Array[Vector2], horizontal: bool, spacing: float) -> Array:
 
 
 # ---------------------------------------------------------------- mitades
+## PINZA: se parte en dos mitades que atacan coordinadas. Salen de lados opuestos y sus franjas de
+## aviso (1 s) se cruzan en el punto donde estabas; ambas parten a la vez. Segunda pinza girada 90
+## grados. Mientras tanto el cuerpo, mas chico, se queda AGOTADO en el centro.
 func atk_mitades() -> void:
-	var a0 := (target.global_position - global_position).angle()
-	var dirs := [a0, a0 + TAU * 0.36]
-	var body := global_position + Vector2(0, -50)
-	for d in dirs:
-		var v := Vector2.RIGHT.rotated(d)
-		_warn_line(body, v, _ray_len(body, v, 900.0), 70.0, 1.1, Color(1.0, 0.35, 0.3))
-	if not await _tele(1.1, Color(2.2, 1.4, 0.6), 4.0):
-		return
 	var tex := animated_sprite.sprite_frames.get_frame_texture("idle", 0)
-	for d in dirs:
-		var h := BossBouncer.new()
-		h.tex = tex
-		h.sprite_scale = 0.8
-		h.dir = Vector2.RIGHT.rotated(d)
-		h.speed = 330.0
-		h.bounces_left = 4
-		h.damage = damage * 0.9
-		h.body_radius = 32.0
-		_spawn_container().add_child(h)
-		h.global_position = global_position
+	var waves := 2
+	var base := RNG.randf() * TAU
+	var tw := minf(1.0, tele_caps[current_phase - 1])
+	for w in waves:
+		var aim_pt := clamp_to_arena(target.global_position, 80.0)
+		if w > 0:
+			base += PI * 0.5
+		var halves: Array = []
+		for k in 2:
+			var d := Vector2.RIGHT.rotated(base + k * PI)
+			var from := clamp_to_arena(aim_pt - d * 330.0, 70.0)
+			var v := (aim_pt - from).normalized()
+			_warn_line(from + Vector2(0, -20), v, _ray_len(from + Vector2(0, -20), v, 900.0), 64.0, tw, Color(0.95, 0.3, 0.25))
+			halves.append([from, v])
+		if w == 0:
+			animated_sprite.scale = _base_scale * 0.72
+		if not await _tele(tw, Color(2.2, 1.4, 0.6), 4.0):
+			return
+		for h in halves:
+			var bn := BossBouncer.new()
+			bn.tex = tex
+			bn.sprite_scale = 0.8
+			bn.dir = h[1]
+			bn.speed = 330.0
+			bn.bounces_left = 3
+			bn.damage = damage * 0.9
+			bn.body_radius = 32.0
+			_spawn_container().add_child(bn)
+			bn.global_position = h[0]
+		Sound.play("crack")
+		HitFx.shake(0.4)
+		if w < waves - 1 and not await _wait(1.8):
+			return
+	# El cuerpo, mas chico, se queda en el centro: ventana para pegarle mientras esquivas las mitades.
+	_tire(3.5)
+
+
+## REBOTINES: bolitas de pinball con patas (pocas en fase 1, mas en la 3). Con el tope lleno, abanico.
+func atk_rebotines() -> void:
+	var room_left: int = REBOTIN_CAP[current_phase - 1] - get_tree().get_nodes_in_group("rebotin").size()
+	var n := mini(current_phase + (1 if current_phase == 3 else 0), room_left)
+	if n <= 0:
+		await atk_fan()
+		return
+	var spots: Array = []
+	for i in n:
+		spots.append(clamp_to_arena(global_position + Vector2.RIGHT.rotated(RNG.randf() * TAU) * RNG.randf_range(120.0, 230.0), 70.0))
+	for p in spots:
+		_add_hazard(BossZone.circle(p, 34.0, 0.6, 0.05, 0.0, SPERM))
+	if not await _tele(0.6, Color(2.2, 1.4, 0.6), 2.0):
+		return
+	_spawn_minions(spots, 14.0, damage * 0.5, tr("ENEMY_REBOTIN_NAME"), REBOTIN)
+	_float_text(tr("TEST_REBOTINES"), SPERM)
 	Sound.play("crack")
-	HitFx.shake(0.4)
-	animated_sprite.scale = _base_scale * 0.72
-	# El cuerpo, mas chico, se queda en el centro: ventana para pegarle
-	# mientras esquivas las mitades.
-	_tire(5.0)
+	await _wait(0.4)
 
 
 # ---------------------------------------------------------------- desafios de la cura
