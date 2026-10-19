@@ -39,6 +39,7 @@ func _ready() -> void:
 	add_child(_sub)
 	set_meta("tall", true)
 	z_index = 1
+	TallProp.attach(self, Rect2(-100, -162, 200, 176))  # el heroe pasa por detras del escritorio
 
 
 func _draw() -> void:

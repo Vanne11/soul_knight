@@ -93,6 +93,7 @@ static func dress(room: Room, it: Node2D, visual: Node2D) -> void:
 	LightKit.add_contact_shadow(it, r + 2.0, foot + 2.0)
 	if visual.has_meta("tall"):
 		LightKit.mark_caster(it, r, foot + 2.0)
+		TallProp.attach_visual(it, visual)
 
 
 static func tex(file: String) -> Texture2D:

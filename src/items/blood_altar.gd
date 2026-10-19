@@ -24,6 +24,7 @@ func _ready() -> void:
 	_spr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(_spr)
 	ActorFx.setup_object(self, _spr)
+	TallProp.attach(self, TallProp.box_of(_spr))
 	ActorFx.add_item_glow(self, _spr, Color("c0283a"), 0.6, 0.5)
 	super()
 

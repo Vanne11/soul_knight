@@ -940,6 +940,7 @@ func _add_prop(room: Room, pos: Vector2, visual: Node2D, text: String, on_use: C
 	it.prompt_text = text
 	it.add_child(visual)
 	_prop_shadow(it, visual)
+	TallProp.attach_visual(it, visual)  # alto: el heroe pasa por detras (src/fx/tall_prop.gd)
 	it.used.connect(on_use.bind(it))
 	room.props_node.add_child.call_deferred(it)
 

@@ -16,6 +16,7 @@ class_name RoomDecor
 ## Lo unico que cambia lo que se ve de los actores son los matorrales/pelos de la Selva, que se
 ## dibujan por ENCIMA (z_index 2) y se vuelven semitransparentes cuando alguien (jugador,
 ## enemigo, bala enemiga, objeto del suelo) esta debajo, para no esconder peligros.
+## Lo que se apoya en el suelo (estatuas, columnas, carteles...) pasa por TallProp: orden por Y.
 ##
 ## Trabaja en la franja de 1 baldosa junto a los muros (y en las esquinas), deja libre la entrada
 ## de cada puerta (y los 96 px donde aparece el jugador) y esquiva las antorchas de
@@ -358,6 +359,7 @@ func _add_item(tex: Texture2D, spot: Dictionary, kind: String, caster: bool, fli
 			LightKit.add_contact_shadow(holder, clampf(w * 0.42, 6.0, 22.0), 0.0)
 			if caster:
 				LightKit.mark_caster(holder, clampf(w * 0.3, 6.0, 14.0), 0.0)
+			TallProp.attach(holder, TallProp.box_of(s))  # el heroe pasa por detras (tall_prop.gd)
 
 
 # ------------------------------------------------------------------ restos de heroes
