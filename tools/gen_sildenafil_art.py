@@ -1,12 +1,12 @@
-"""Arte DEFINITIVO de DON VIAGRA (jefe alternativo del Conducto Deferente, Penelandia) y de la Pastillita azul con Gemini.
-Escribe en assets/sprites/enemies/penelandia/don_viagra/ y penelandia/pastilla/ (carpetas de assets/data/enemy_art.json).
+"""Arte DEFINITIVO de DON SILDENAFIL (jefe alternativo del Conducto Deferente, Penelandia) y de la Pastillita azul con Gemini.
+Escribe en assets/sprites/enemies/penelandia/don_sildenafil/ y penelandia/pastilla/ (carpetas de assets/data/enemy_art.json).
 
-Uso: python3 tools/gen_viagra_art.py gen [hoja ...]     llama a Gemini (una llamada por hoja, solo las que falten; con nombre, la rehace)
-     python3 tools/gen_viagra_art.py build [parte ...]  recorta, pixela, interpola y escribe PNG + .tres (sin args = todo)
-     python3 tools/gen_viagra_art.py preview DIR        hojas de contacto de las poses recortadas
-Hojas (UNA imagen cada una, regla de Nico: nunca cuadro a cuadro), originales en .claude/arte_fuente/viagra/:
-  viagra_a viagra_b viagra_c (sano) + _p2 y _p3 de cada una (dano visible) + pastilla     (10 llamadas; tope 14)
-Partes de build: don (176x184 -> don_viagra_sheet{,_p2,_p3}.png + don_viagra_sprite_frames{,_p2,_p3}.tres)
+Uso: python3 tools/gen_sildenafil_art.py gen [hoja ...]     llama a Gemini (una llamada por hoja, solo las que falten; con nombre, la rehace)
+     python3 tools/gen_sildenafil_art.py build [parte ...]  recorta, pixela, interpola y escribe PNG + .tres (sin args = todo)
+     python3 tools/gen_sildenafil_art.py preview DIR        hojas de contacto de las poses recortadas
+Hojas (UNA imagen cada una, regla de Nico: nunca cuadro a cuadro), originales en .claude/arte_fuente/sildenafil/:
+  sildenafil_a sildenafil_b sildenafil_c (sano) + _p2 y _p3 de cada una (dano visible) + pastilla     (10 llamadas; tope 14)
+Partes de build: don (176x184 -> don_sildenafil_sheet{,_p2,_p3}.png + don_sildenafil_sprite_frames{,_p2,_p3}.tres)
                  pastilla (32x48 -> pastilla_*_NN.png + pastilla_sprite_frames.tres)
 SUBIDON: ademas de idle/walk trae idle_rush/walk_rush (medidor medio) e idle_max/walk_max (medidor al tope);
 BossAnimator las elige leyendo boss._rush. Densidad: 1 pixel de arte = 1 unidad de juego, como Ovaria.
@@ -25,16 +25,16 @@ import gen_parra_art2 as PA  # noqa: E402  (cut_bg estricto para fondo verde)
 from arc2_gemini import STYLE  # noqa: E402
 
 ROOT = GEM.ROOT
-RAW = ROOT / ".claude/arte_fuente/viagra"
+RAW = ROOT / ".claude/arte_fuente/sildenafil"
 GEM.RAW = RAW
-DEST = ROOT / "assets/sprites/enemies/penelandia/don_viagra"
-RES = "res://assets/sprites/enemies/penelandia/don_viagra/"
+DEST = ROOT / "assets/sprites/enemies/penelandia/don_sildenafil"
+RES = "res://assets/sprites/enemies/penelandia/don_sildenafil/"
 OLD_BAK = RAW / "_idle_viejo.png"  # copia del sprite provisorio 80x120 (referencia de diseno)
 CUT.cut_bg = PA.cut_bg
 
 # ------------------------------------------------------------------ prompts
 _DON = (
-    "THE BOSS 'Don Viagra': a big glossy BLUE diamond-shaped (rhombus / lozenge) PILL, the classic little blue "
+    "THE BOSS 'Don Sildenafil': a big glossy BLUE diamond-shaped (rhombus / lozenge) PILL, the classic little blue "
     "diamond pill, standing upright on two stubby legs with dark-blue boots. The diamond body IS head and torso "
     "at once: lighter sky-blue facets on the left, deeper royal-blue facets on the right, a vertical seam down "
     "the middle. A small black TOP HAT with a thin red band sits on the top tip. One eye is a white eye with a "
@@ -61,7 +61,7 @@ _DMG3 = (
 )
 
 PROMPTS = {
-    "viagra_a": (
+    "sildenafil_a": (
         STYLE + "BOSS SPRITE SHEET with exactly 2 rows of 4 large poses (8 poses)." + _ORDER + _DON +
         "Poses left to right, top row: (1) neutral idle, smug, one hand tucked behind the back; (2) walking step, "
         "one boot forward, swaggering; (3) generic ATTACK WIND-UP, leaning back, one fist pulled back, gritted fierce "
@@ -72,7 +72,7 @@ PROMPTS = {
         "tiny blue pills above the head, looking up; (8) PILL-RAIN RELEASE: arms flung upward and open, tiny blue "
         "pills flying up in the air, triumphant."
     ),
-    "viagra_b": (
+    "sildenafil_b": (
         STYLE + "BOSS SPRITE SHEET with exactly 2 rows of 4 large poses (8 poses), the SAME character as the "
         "reference image (approved design), only the pose changes." + _ORDER + _DON +
         "Poses left to right, top row: (1) OVERDOSE WIND-UP: crouched deep, about to jump, knees bent, arms back, "
@@ -85,7 +85,7 @@ PROMPTS = {
         "out, big sweat drops, hat crooked, deflated; (8) STUNNED and dizzy, swirly spiral eyes, tiny stars "
         "circling above, arms limp, hat sliding off."
     ),
-    "viagra_c": (
+    "sildenafil_c": (
         STYLE + "BOSS SPRITE SHEET with exactly 2 rows of 4 large poses (8 poses), the SAME character as the "
         "reference image (approved design), only the pose changes." + _ORDER + _DON +
         "Poses left to right, top row: (1) dramatic INTRO entrance, chin up, arms spread wide, triumphant, "
@@ -101,32 +101,32 @@ PROMPTS = {
         "lying on the ground beside him (a completely NEW pose, do not copy any pose of the reference); (8) the same "
         "lying pose, deflated, a little white flag raised in one hand, a tiny ghost floating up."
     ),
-    "viagra_a_p2": (
+    "sildenafil_a_p2": (
         STYLE + "BOSS SPRITE SHEET with exactly 2 rows of 4 large poses (8 poses). It is the DAMAGED PHASE 2 of the "
         "SAME character as the reference sheet: same poses in the same order and positions, same design, but " + _DMG2 +
         _ORDER + _DON + "Same eight poses as the reference: idle, walking step, attack wind-up, attack release, rush "
         "wind-up, rush release, pill-rain wind-up, pill-rain release."
     ),
-    "viagra_a_p3": (
+    "sildenafil_a_p3": (
         STYLE + "BOSS SPRITE SHEET with exactly 2 rows of 4 large poses (8 poses). It is the PHASE 3 of the SAME "
         "character as the reference sheet: same poses in the same order and positions, same design, but " + _DMG3 +
         _ORDER + _DON + "Same eight poses as the reference: idle (panting with rage), walking step, attack wind-up, "
         "attack release, rush wind-up, rush release, pill-rain wind-up, pill-rain release."
     ),
-    "viagra_b_p2": (
+    "sildenafil_b_p2": (
         STYLE + "BOSS SPRITE SHEET with exactly 2 rows of 4 large poses (8 poses). Two reference images: the FIRST is "
         "the healthy 'pose sheet B' of the character, the SECOND is the same character in his DAMAGED PHASE 2 look. "
         "Redraw EXACTLY the poses of the first reference (same order, same positions, same composition) but with the "
         "damaged look of the second reference: " + _DMG2 + _ORDER + _DON
     ),
-    "viagra_b_p3": (
+    "sildenafil_b_p3": (
         STYLE + "BOSS SPRITE SHEET with exactly 2 rows of 4 large poses (8 poses). Two reference images: the FIRST is "
         "the character design to copy EXACTLY in its HEAVILY DAMAGED, ENRAGED PHASE 3 look (a plain diamond pill body "
         "that IS head and torso at once, NO human anatomy). The SECOND is a pose-layout reference of the same character "
         "in phase 2: redraw EXACTLY its 8 poses (same order, positions and composition) with the phase 3 design of the "
         "first reference, same proportions and same size: " + _DMG3 + _ORDER + _DON
     ),
-    "viagra_c_p2": (
+    "sildenafil_c_p2": (
         STYLE + "BOSS SPRITE SHEET with exactly 2 rows of 4 large poses (8 poses). Two reference images: the FIRST is "
         "the character design to copy EXACTLY (same body, SAME small hat, SAME dark-blue gloved hands, same dark-blue "
         "legs and boots, same size) in his DAMAGED PHASE 2 look. The SECOND only shows the pose layout: redraw its 8 "
@@ -134,7 +134,7 @@ PROMPTS = {
         "frantic and redder, then the four death steps ending with a white flag and a tiny ghost) using the design of the "
         "FIRST reference: " + _DMG2 + _ORDER + _DON
     ),
-    "viagra_c_p3": (
+    "sildenafil_c_p3": (
         STYLE + "BOSS SPRITE SHEET with exactly 2 rows of 4 large poses (8 poses). Two reference images: the FIRST is "
         "the character design to copy EXACTLY (same body, SAME small hat, SAME dark-blue gloved hands, same dark-blue "
         "legs and boots, same size) in his HEAVILY DAMAGED PHASE 3 look. The SECOND only shows the pose layout: redraw "
@@ -146,7 +146,7 @@ PROMPTS = {
         STYLE + "ENEMY SPRITE SHEET with exactly 2 rows of 4 small poses (8 poses), the SAME tiny creature at the "
         "same scale in each cell." + _ORDER +
         "THE ENEMY 'Pastillita' (Little Pill): a small chubby glossy BLUE diamond-shaped pill (a tiny version of Don "
-        "Viagra's body: lighter sky-blue facets on the left, royal-blue facets on the right, vertical seam), two "
+        "Sildenafil's body: lighter sky-blue facets on the left, royal-blue facets on the right, vertical seam), two "
         "small angry-cute eyes, a tiny mischievous grin, two stubby little feet and two tiny stubby arms. No hat, no "
         "monocle. Cute, mischievous and a bit dumb. Poses left to right, top row: (1) idle standing, bouncing "
         "slightly; (2) rolling-walk step A; (3) rolling-walk step B; (4) WARNING: dug into the ground, "
@@ -156,8 +156,8 @@ PROMPTS = {
         "powder and pill shards with a tiny ghost leaving."
     ),
 }
-GEN_ORDER = ["viagra_a", "viagra_b", "viagra_c", "viagra_a_p2", "viagra_b_p2", "viagra_c_p2",
-             "viagra_a_p3", "viagra_b_p3", "viagra_c_p3", "pastilla"]
+GEN_ORDER = ["sildenafil_a", "sildenafil_b", "sildenafil_c", "sildenafil_a_p2", "sildenafil_b_p2", "sildenafil_c_p2",
+             "sildenafil_a_p3", "sildenafil_b_p3", "sildenafil_c_p3", "pastilla"]
 
 
 def _flat(path, k=4):
@@ -173,24 +173,24 @@ def _raw(n):
 
 
 def gen(names):
-    portrait = Image.open(ROOT / "assets/sprites/ui/bosses/don_viagra.png")
+    portrait = Image.open(ROOT / "assets/sprites/ui/bosses/don_sildenafil.png")
     for n in names or GEN_ORDER:
         if (RAW / f"{n}.png").exists() and not names:
             continue
         if n == "pastilla":
             refs = [_flat(OLD_BAK)]
-        elif n == "viagra_a":
+        elif n == "sildenafil_a":
             refs = [_flat(OLD_BAK), portrait]
-        elif n in ("viagra_b", "viagra_c", "viagra_a_p2"):
-            refs = [_raw("viagra_a")]
-        elif n == "viagra_a_p3":
-            refs = [_raw("viagra_a"), _raw("viagra_a_p2")]
-        elif n in ("viagra_c_p2", "viagra_c_p3"):  # el diseno (con su dano) manda; C sana solo da la disposicion
-            refs = [_raw("viagra_a_p2" if n.endswith("p2") else "viagra_a_p3"), _raw("viagra_c")]
+        elif n in ("sildenafil_b", "sildenafil_c", "sildenafil_a_p2"):
+            refs = [_raw("sildenafil_a")]
+        elif n == "sildenafil_a_p3":
+            refs = [_raw("sildenafil_a"), _raw("sildenafil_a_p2")]
+        elif n in ("sildenafil_c_p2", "sildenafil_c_p3"):  # el diseno (con su dano) manda; C sana solo da la disposicion
+            refs = [_raw("sildenafil_a_p2" if n.endswith("p2") else "sildenafil_a_p3"), _raw("sildenafil_c")]
         elif n.endswith("_p2"):  # b_p2: hoja sana + aspecto danado
-            refs = [_raw(n[:-3]), _raw("viagra_a_p2")]
+            refs = [_raw(n[:-3]), _raw("sildenafil_a_p2")]
         else:  # b_p3 / c_p3: diseno p3 + disposicion p2
-            refs = [_raw("viagra_a_p3"), _raw(n[:-3] + "_p2")]
+            refs = [_raw("sildenafil_a_p3"), _raw(n[:-3] + "_p2")]
         GEM.generate(n, PROMPTS[n], aspect="16:9", size="2K", refs=refs)
         print("LLAMADA a Gemini:", n)
 
@@ -268,8 +268,8 @@ def fit(raw, cw, ch, idle_h, ncol=44):
 
 
 DW, DH = 176, 184
-VARIANTS = {"": ("viagra_a", "viagra_b", "viagra_c"), "_p2": ("viagra_a_p2", "viagra_b_p2", "viagra_c_p2"),
-            "_p3": ("viagra_a_p3", "viagra_b_p3", "viagra_c_p3")}
+VARIANTS = {"": ("sildenafil_a", "sildenafil_b", "sildenafil_c"), "_p2": ("sildenafil_a_p2", "sildenafil_b_p2", "sildenafil_c_p2"),
+            "_p3": ("sildenafil_a_p3", "sildenafil_b_p3", "sildenafil_c_p3")}
 
 
 def don_poses(suffix):
@@ -344,9 +344,9 @@ def write_boss(frames, cw, ch, suffix):
     for i, im in enumerate(uniq):
         sheet.alpha_composite(im, ((i % cols) * cw, (i // cols) * ch))
     DEST.mkdir(parents=True, exist_ok=True)
-    sheet.save(DEST / f"don_viagra_sheet{suffix}.png")
+    sheet.save(DEST / f"don_sildenafil_sheet{suffix}.png")
     L = ['[gd_resource type="SpriteFrames" load_steps=%d format=3]' % (len(uniq) + 2), "",
-         f'[ext_resource type="Texture2D" path="{RES}don_viagra_sheet{suffix}.png" id="1_sheet"]', ""]
+         f'[ext_resource type="Texture2D" path="{RES}don_sildenafil_sheet{suffix}.png" id="1_sheet"]', ""]
     for i in range(len(uniq)):
         L += [f'[sub_resource type="AtlasTexture" id="f{i}"]', 'atlas = ExtResource("1_sheet")',
               f"region = Rect2({(i % cols) * cw}, {(i // cols) * ch}, {cw}, {ch})", ""]
@@ -356,14 +356,14 @@ def write_boss(frames, cw, ch, suffix):
         sp, loop = META.get(n, (10.0, False))
         anim.append('{\n"frames": [%s],\n"loop": %s,\n"name": &"%s",\n"speed": %.1f\n}' % (fr, "true" if loop else "false", n, sp))
     L += ["[resource]", "animations = [" + ", ".join(anim) + "]", ""]
-    (DEST / f"don_viagra_sprite_frames{suffix}.tres").write_text("\n".join(L))
+    (DEST / f"don_sildenafil_sprite_frames{suffix}.tres").write_text("\n".join(L))
     print("don", suffix or "_p1", len(uniq), "cuadros")
 
 
 def build_don():
     for suf in VARIANTS:
         write_boss(don_anims(don_poses(suf)), DW, DH, suf)
-    for old in DEST.glob("don_viagra_*_[0-9][0-9].png*"):
+    for old in DEST.glob("don_sildenafil_*_[0-9][0-9].png*"):
         old.unlink()  # cuadros sueltos del arte provisorio (80x120): ahora todo va en la hoja
 
 

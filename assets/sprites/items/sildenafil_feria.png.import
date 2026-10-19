@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hjfuuoulbqw2"
-path="res://.godot/imported/don_viagra.png-9ea289335ad02cbcffc97640c4b7b19d.ctex"
+uid="uid://bojfvk84i2m8r"
+path="res://.godot/imported/sildenafil_feria.png-b30ec4c8c02d8e1aa9ea338b64093c71.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/bosses/don_viagra.png"
-dest_files=["res://.godot/imported/don_viagra.png-9ea289335ad02cbcffc97640c4b7b19d.ctex"]
+source_file="res://assets/sprites/items/sildenafil_feria.png"
+dest_files=["res://.godot/imported/sildenafil_feria.png-b30ec4c8c02d8e1aa9ea338b64093c71.ctex"]
 
 [params]
 

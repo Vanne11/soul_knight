@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = "boss_alt_2"
-title = "Don Viagra"
+title = "Don Sildenafil"
 text = "Pastilla azul con sombrero de copa, monóculo y confianza injustificable: predica que todo se arregla con una dosis. Embiste en cadena y hace llover pastillas. Dato: el sildenafilo se investigó para la angina de pecho; el efecto secundario fue mejor que el principal. Necesita estímulo y receta, y si algo dura más de cuatro horas, urgencias."
 category = 3
-unlock_condition = {"type": 9, "target_id": "DON VIAGRA"}
-flavor_text = "Derrota a Don Viagra."
+unlock_condition = {"type": 9, "target_id": "DON SILDENAFIL"}
+flavor_text = "Derrota a Don Sildenafil."

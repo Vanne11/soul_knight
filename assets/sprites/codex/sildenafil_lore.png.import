@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bojfvk84i2m8r"
-path="res://.godot/imported/viagra_feria.png-f57d072926080350075b03120afacdf9.ctex"
+uid="uid://na7wffnoulfb"
+path="res://.godot/imported/sildenafil_lore.png-e2a028b3144e7242ee69e24f851f6124.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/items/viagra_feria.png"
-dest_files=["res://.godot/imported/viagra_feria.png-f57d072926080350075b03120afacdf9.ctex"]
+source_file="res://assets/sprites/codex/sildenafil_lore.png"
+dest_files=["res://.godot/imported/sildenafil_lore.png-e2a028b3144e7242ee69e24f851f6124.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -23,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

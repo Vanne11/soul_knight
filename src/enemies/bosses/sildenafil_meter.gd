@@ -1,7 +1,7 @@
 extends Node2D
-class_name ViagraMeter
+class_name SildenafilMeter
 
-## Medidor visible del SUBIDON de Don Viagra: barra sobre su cabeza que va de azul a rojo.
+## Medidor visible del SUBIDON de Don Sildenafil: barra sobre su cabeza que va de azul a rojo.
 ## `level` 0..1 lo escribe el jefe. Con el nivel alto la barra tiembla y se tinta de rojo.
 
 var level := 0.0
@@ -27,7 +27,7 @@ func _draw() -> void:
 	draw_rect(Rect2(-w * 0.5, -7, maxf(w * clampf(level, 0.0, 1.0), 4.0), 14), col)
 	draw_rect(Rect2(-w * 0.5 - 2, -9, w + 4, 18), Color(0.8, 0.1, 0.15), false, 2.0)
 	var f := ThemeDB.fallback_font
-	draw_string(f, Vector2(-w * 0.5 + 1, 29), tr("VIAGRA_METER"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(0, 0, 0, 0.9))
-	draw_string(f, Vector2(-w * 0.5, 28), tr("VIAGRA_METER"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(1.0, 0.95, 0.6))
+	draw_string(f, Vector2(-w * 0.5 + 1, 29), tr("SILDENAFIL_METER"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(0, 0, 0, 0.9))
+	draw_string(f, Vector2(-w * 0.5, 28), tr("SILDENAFIL_METER"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(1.0, 0.95, 0.6))
 	if level >= 0.99:
 		draw_string(f, Vector2(w * 0.5 + 6, 6), "!!!", HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color(1.0, 0.3, 0.3))

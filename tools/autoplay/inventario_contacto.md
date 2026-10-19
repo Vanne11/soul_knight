@@ -58,7 +58,7 @@ en gotas; los charcos (`its_puddle`, cera, etc.) y las zonas de jefe (`BossZone`
 | Enemigo | Comportamiento |
 |---|---|
 | Espinilla Reventona (`enemy_espinilla.gd`) | Inmovil. Nunca pega por contacto. Si te acercas a 105 px (o tras 4.5-7 s) se infla 1.1 s (aviso) y revienta en 10 gotas lentas (130 px/s). Es el "pinchudo" mas claro del plan. |
-| Jefes (`enemy_boss.gd` + `bosses/*.gd`) | El cuerpo solo pega en las embestidas (`_strike()` en `enemy_boss.gd:345` y `boss_don_viagra.gd`, `boss_testiculo_primordial.gd`). El resto de sus ataques son proyectiles y `BossZone` (circulo/rect con `warn` 0.8 s por defecto). En reposo no hay dano por contacto. |
+| Jefes (`enemy_boss.gd` + `bosses/*.gd`) | El cuerpo solo pega en las embestidas (`_strike()` en `enemy_boss.gd:345` y `boss_don_sildenafil.gd`, `boss_testiculo_primordial.gd`). El resto de sus ataques son proyectiles y `BossZone` (circulo/rect con `warn` 0.8 s por defecto). En reposo no hay dano por contacto. |
 
 ## Marcas pedidas
 

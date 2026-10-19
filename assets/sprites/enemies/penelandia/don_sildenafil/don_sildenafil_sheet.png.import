@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4rplat74sat7"
-path="res://.godot/imported/don_viagra_sheet_p3.png-1a2828b33455aea099d22e3d631d44ea.ctex"
+uid="uid://cpltaqjwqv08m"
+path="res://.godot/imported/don_sildenafil_sheet.png-1f47a9a68b86e7fa5607889a1cf6b88c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/penelandia/don_viagra/don_viagra_sheet_p3.png"
-dest_files=["res://.godot/imported/don_viagra_sheet_p3.png-1a2828b33455aea099d22e3d631d44ea.ctex"]
+source_file="res://assets/sprites/enemies/penelandia/don_sildenafil/don_sildenafil_sheet.png"
+dest_files=["res://.godot/imported/don_sildenafil_sheet.png-1f47a9a68b86e7fa5607889a1cf6b88c.ctex"]
 
 [params]
 

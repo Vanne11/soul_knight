@@ -12,7 +12,7 @@ enum Shape { CIRCLE, RECT }
 ## rojizo; nunca blanco, para no confundirla con lo que hay que TOCAR). Reutilizable por cualquier jefe.
 ## VINE: lo mismo para la Parra, con enredadera espinosa (verde oscuro, borde rojizo).
 ## TOXIC: PELIGRO generico con el color del jefe pero borde rojo oscuro y franjas de advertencia
-## (nunca blanco). Lo usan Don Viagra (pastillas) y Ovaria (eclosion).
+## (nunca blanco). Lo usan Don Sildenafil (pastillas) y Ovaria (eclosion).
 enum Style { NORMAL, BAR, PIXEL, SHIELD, CHANNEL, WAX, VINE, TOXIC }
 
 const CENSOR_UNSHADED := preload("res://src/shaders/censor_unshaded.gdshader")

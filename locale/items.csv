@@ -81,8 +81,8 @@ ITEM_RELIC_STEROID_NAME,Esteroides Anabólicos,Anabolic Steroids,,Stéroïdes An
 ITEM_RELIC_STEROID_DESC,"+75% vida, +50% daño melee, -30% velocidad, -20% precisión. Hinchado y furioso.","+75% health, +50% melee damage, -30% speed, -20% accuracy. Swollen and furious.",,"+75% PV, +50% dégâts mêlée, -30% vitesse, -20% précision. Gonflé et furieux."
 ITEM_RELIC_TESTOSTERONE_NAME,Testosterona Pura,Pure Testosterone,,Testostérone Pure
 ITEM_RELIC_TESTOSTERONE_DESC,"+100% vida, +50% estamina, regenera 2 de vida/s. Efecto: crece vello en la lengua.","+100% health, +50% stamina, regenerates 2 health/s. Side effect: hair grows on your tongue.",,"+100% PV, +50% endurance, régénère 2 PV/s. Effet secondaire : des poils poussent sur la langue."
-ITEM_RELIC_VIAGRA_NAME,Viagra Vudú,Voodoo Viagra,,Viagra Vaudou
-ITEM_RELIC_VIAGRA_DESC,"+50% daño, +30% tamaño de bala, -20% velocidad. Cuatro horas después, sigues.","+50% damage, +30% bullet size, -20% speed. Four hours later, still going.",,"+50% dégâts, +30% taille des balles, -20% vitesse. Quatre heures plus tard, tu tiens encore."
+ITEM_RELIC_SILDENAFIL_NAME,Sildenafil Vudú,Voodoo Sildenafil,,Sildénafil Vaudou
+ITEM_RELIC_SILDENAFIL_DESC,"+50% daño, +30% tamaño de bala, -20% velocidad. Cuatro horas después, sigues.","+50% damage, +30% bullet size, -20% speed. Four hours later, still going.",,"+50% dégâts, +30% taille des balles, -20% vitesse. Quatre heures plus tard, tu tiens encore."
 ITEM_RIFLE_REPRODUCTIVE_NAME,Fusil Fecundador,Fertilizing Rifle,,Fusil Fécondateur
 ITEM_RIFLE_REPRODUCTIVE_DESC,"Mucho daño, puntería de cirujano, 6 tiros y recarga larga. Cada bala, un posible hijo.","Heavy damage, surgeon aim, 6 shots and a long reload. Every bullet, a potential child.",,"Gros dégâts, visée de chirurgien, 6 tirs et longue recharge. Chaque balle, un enfant possible."
 ITEM_RUM_NAME,Ron de Cañamo,Hemp Rum,,Rhum au Chanvre
@@ -111,8 +111,8 @@ ITEM_UPGRADE_SHIELD_NAME,Látex Reforzado,Reinforced Latex,,Latex Renforcé
 ITEM_UPGRADE_SHIELD_DESC,+15 de escudo máximo. Protección extra. Siempre.,+15 max shield. Extra protection. Always.,,+15 de bouclier max. Protection en plus. Toujours.
 ITEM_UPGRADE_STAMINA_NAME,Pastilla de Aguante,Endurance Pill,,Pilule d'Endurance
 ITEM_UPGRADE_STAMINA_DESC,+25 de estamina máxima. Para dashear más. Solo para eso.,+25 max stamina. To dash more. Only for that.,,+25 d'endurance max. Pour dasher plus. Juste pour ça.
-ITEM_VIAGRA_FERIA_NAME,Viagra Genérica de Feria,Fairground Generic Viagra,,Viagra Générique de Foire
-ITEM_VIAGRA_FERIA_DESC,"+30% de daño durante 20 s, pero +8 de intoxicación. Comprada a un señor con gabardina.","+30% damage for 20 s, but +8 intoxication. Bought from a man in a trench coat.",,"+30% de dégâts pendant 20 s, mais +8 d'intox. Acheté à un type en imper."
+ITEM_SILDENAFIL_FERIA_NAME,Sildenafil Genérico de Feria,Fairground Generic Sildenafil,,Sildénafil Générique de Foire
+ITEM_SILDENAFIL_FERIA_DESC,"+30% de daño durante 20 s, pero +8 de intoxicación. Comprada a un señor con gabardina.","+30% damage for 20 s, but +8 intoxication. Bought from a man in a trench coat.",,"+30% de dégâts pendant 20 s, mais +8 d'intox. Acheté à un type en imper."
 ITEM_VODKA_NAME,Vodka de Patata,Potato Vodka,,Vodka de Patate
 ITEM_VODKA_DESC,"+25 intoxicación, -15% precisión, +20% daño. 'Es agua', dice el ruso. Tu hígado, no.","+25 intoxication, -15% accuracy, +20% damage. 'It's water', says the Russian. Your liver disagrees.",,"+25 intox, -15% précision, +20% dégâts. « C'est de l'eau », dit le Russe. Pas ton foie."
 ITEM_WET_WIPE_NAME,Toallita Húmeda,Wet Wipe,,Lingette Humide

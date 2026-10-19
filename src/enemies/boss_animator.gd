@@ -195,7 +195,7 @@ func _swap_frames(sf: SpriteFrames) -> void:
 			spr.frame = mini(f, sf.get_frame_count(a) - 1)
 
 
-## Jefes con medidor de subidon (Don Viagra: boss._rush 0..1): idle/walk se cambian por idle_rush/walk_rush
+## Jefes con medidor de subidon (Don Sildenafil: boss._rush 0..1): idle/walk se cambian por idle_rush/walk_rush
 ## (medidor medio) o idle_max/walk_max (al tope) si el SpriteFrames las trae, asi el subidon se lee en el cuerpo.
 func _rush_variant(a: StringName) -> StringName:
 	if a != &"idle" and a != &"walk":

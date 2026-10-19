@@ -81,7 +81,7 @@ Regla de menciones: los textos de región, de héroe, de cofre y del final NUNCA
 | Región | Jefe original | Jefe alternativo | Tabú |
 |---|---|---|---|
 | Selva | Doña Cera Caliente | La Afeitadora Eléctrica | vello, depilación obligatoria |
-| Penelandia | El Testículo Primordial | Don Viagra | masculinidad, expectativas, disfunción |
+| Penelandia | El Testículo Primordial | Don Sildenafil | masculinidad, expectativas, disfunción |
 | Vulvania | Su Majestad Ovaria II | El DIU Cósmico | ciclo, anticoncepción |
 | Útero (opcional) | Doña Regla (único) | (sin alternativo) | menstruación |
 | Perineo | El Aduanero Hormonal | La Ventanilla Única | casillas, clasificar a la gente, burocracia de salud |
@@ -91,7 +91,7 @@ Regla de menciones: los textos de región, de héroe, de cofre y del final NUNCA
 - **Doña Cera Caliente**: esteticista que lo deja todo como un azulejo. Chiste: "Esto no duele" (duele). Presentación: "¡Siéntate, cariño, esto no duele nada! MENTIRA. Duele muchísimo." Muere quemándose con su propia cera. Códice: lo del jardín libre.
 - **La Afeitadora Eléctrica**: perfeccionista al ras. Chiste: "cero margen de error" y duda existencial de cabezal. "Bzzz. Cero margen de error. Tú y yo, al ras." Dato (rasurar no engrosa el vello) solo en códice.
 - **El Testículo Primordial**: patriarca del tamaño de un coche, ojo en el centro, ataca con expectativas incumplidas. "Hijo. Llegaste tarde. Ni una llamada." Al morir: "Yo te creé... y yo te abandoné." (frase de muerte solo en narrador). Autoexamen testicular al códice.
-- **Don Viagra**: caballero de pie desde hace cuatro horas. Chiste: aviso legal de farmacia. "Caballero, llevo cuatro horas de pie. Y no es lo que piensa. Bueno, sí." Dato (necesita estímulo y receta) al códice.
+- **Don Sildenafil**: caballero de pie desde hace cuatro horas. Chiste: aviso legal de farmacia. "Caballero, llevo cuatro horas de pie. Y no es lo que piensa. Bueno, sí." Dato (necesita estímulo y receta) al códice.
 - **Su Majestad Ovaria II**: reina con capa morada y corona de oro (sí tiene corona), audiencias una vez al mes. Chiste: "hoy no es el día". "Recibo audiencias una vez al mes. Hoy no es el día." Al caer confiesa que el collar de la Hoja era bisutería (NO "la corona de la Hoja").
 - **El DIU Cósmico**: orbita sin pedir nada. "Llevo años orbitando sin molestar. Y vienes a moverme." Dato (99%, reversible, no protege de ITS) al códice.
 - **El Aduanero Hormonal**: sello gigante, gorra, formulario 27-B. Tabú real: clasificar a la gente. "Pasaporte hormonal, certificado de alergias y el 27-B. Por triplicado." Al caer, el paso queda libre "sin papeles".
@@ -147,7 +147,7 @@ Los textos de final usan `{boss_final}`; vencer al Algoritmo cuenta como vencer 
 6. `its_contagion`: "Te han contagiado algo. Leve y pasajero, pero es la prueba de que las ITS existen y de que el preservativo no es opcional. Para la próxima: protección. Y chequeos periódicos, que muchas ni se notan." → "Te contagiaste algo. El látex tenía razón." (el resto, al códice).
 7. `floor_selva_publica`: "LA SELVA PÚBICA. Una jungla densa, rizada y sin podar desde la censura. Cuidado con las ladillas: son pequeñas, pero tienen sindicato." → "SELVA PÚBICA. Sin podar desde la Censura. Las ladillas están sindicalizadas."
 8. `select_ornitorrinco`: "El Ornitorrinco. Ni la naturaleza sabe qué es. Él tampoco. Pero es inmune a las alergias, y eso ya es más de lo que tienes tú." → "El Ornitorrinco. Ni la naturaleza sabe qué es. Pero no tiene alergias."
-9. `bossalt2_intro`: "DON VIAGRA: Caballero. Llevo cuatro horas de pie esperándole. Y no es lo que usted piensa. Bueno, un poco sí." → "DON VIAGRA: Caballero, llevo cuatro horas de pie. Y no es lo que piensa. Bueno, sí."
+9. `bossalt2_intro`: "DON SILDENAFIL: Caballero. Llevo cuatro horas de pie esperándole. Y no es lo que usted piensa. Bueno, un poco sí." → "DON SILDENAFIL: Caballero, llevo cuatro horas de pie. Y no es lo que piensa. Bueno, sí."
 
 ## 9. Incoherencias resueltas
 | Problema | Decisión canónica |
@@ -183,7 +183,7 @@ Hogar único de cada chiste repetido:
 - Héroes: **Pitocles**, **Vulvalquiria**, **Ornitorrinco** (con mayúscula, "el Ornitorrinco"; título "No especifica").
 - Villana: **Su Pudorosidad, la Hoja de Parra** / "la Hoja". Suceso: **la Gran Censura**. Dificultad: **Pudor**. Lugar: **Palacio de la Censura**, **Archivo Clasificado**.
 - Reinos y etapas: **Selva Púbica**, **Folículo Profundo**, **Penelandia**, **Conducto Deferente**, **Vulvania**, **Trompas de Falopio**, **El Útero**, **El Perineo**, **Aduana Interior**, **La Próstata**.
-- Jefes: **Doña Cera Caliente**, **La Afeitadora Eléctrica**, **El Testículo Primordial** (con tilde), **Don Viagra**, **Su Majestad Ovaria II**, **El DIU Cósmico**, **Doña Regla**, **El Aduanero Hormonal**, **La Ventanilla Única**, **La Glándula Callada**, **El Algoritmo Moderador**.
+- Jefes: **Doña Cera Caliente**, **La Afeitadora Eléctrica**, **El Testículo Primordial** (con tilde), **Don Sildenafil**, **Su Majestad Ovaria II**, **El DIU Cósmico**, **Doña Regla**, **El Aduanero Hormonal**, **La Ventanilla Única**, **La Glándula Callada**, **El Algoritmo Moderador**.
 - Enemigos nuevos de la Próstata: **Goteo Tardío**, **Madrugador Nocturno**, **PSA Sospechoso**.
 - Otros: **Puerta Hormonal**, **Guerra Fría Hormonal**, **Turno** (llave del Útero), **la Doctora V.**, **Hombres que Hablan**, **Cuello Uterino**.
 - Hormonas: **testosterona**, **estrógeno** (con tilde).

@@ -1,7 +1,7 @@
 extends EnemySwarmer
 class_name EnemyPastilla
 
-## PASTILLITA AZUL (esbirro de Don Viagra). Va rodando despacio, AVISA (se clava al piso y brilla
+## PASTILLITA AZUL (esbirro de Don Sildenafil). Va rodando despacio, AVISA (se clava al piso y brilla
 ## 0.6 s con una franja de peligro) y sale rodando en linea recta: REBOTA en los muros hasta 2 veces.
 ## No pega si no la tocas rodando. Ayuda al jefe: mientras hay pastillas vivas, su subidon sube
 ## mas rapido; si la revientas, se lo bajas un poco. Suelta un corazon chico a veces.
@@ -26,7 +26,7 @@ func _init() -> void:
 func _ready() -> void:
 	drop_table = [{"item_id": "health_small", "chance": 0.25}]
 	super()
-	add_to_group("pastilla_viagra")
+	add_to_group("pastilla_sildenafil")
 	p_t = RNG.randf_range(1.2, 2.2)  # que no rueden todas a la vez
 
 

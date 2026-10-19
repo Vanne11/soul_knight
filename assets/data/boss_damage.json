@@ -124,7 +124,7 @@
 		"line_resist": "BOSSDMG_TESTICULO_RESIST",
 		"hint_weapon": "shotgun_pelvic"
 	},
-	"don_viagra": {
+	"don_sildenafil": {
 		"weak": {
 			"agua": 1.8,
 			"electrico": 1.4
@@ -144,8 +144,8 @@
 				"electrico"
 			]
 		},
-		"line_weak": "BOSSDMG_VIAGRA_WEAK",
-		"line_resist": "BOSSDMG_VIAGRA_RESIST",
+		"line_weak": "BOSSDMG_SILDENAFIL_WEAK",
+		"line_resist": "BOSSDMG_SILDENAFIL_RESIST",
 		"hint_weapon": "globos_agua"
 	},
 	"reina_ovaria": {

@@ -1,6 +1,6 @@
 extends BossAltBase
 
-## DON VIAGRA (alternativo de Penelandia, reino 2) - usa el MOTOR DINAMICO (dynamic = true).
+## DON SILDENAFIL (alternativo de Penelandia, reino 2) - usa el MOTOR DINAMICO (dynamic = true).
 ## Pastilla azul con cuatro horas de aguante y cero sentido de la medida.
 ## IDENTIDAD "SUBIDON": un medidor visible sobre su cabeza sube solo mientras no le pegas
 ## (~16 s hasta el tope; el doble de rapido con pastillas vivas). Mas subidon = camina mas rapido,
@@ -22,7 +22,7 @@ const BASE_CAPS := [0.85, 0.7, 0.6]
 const TELE_FLOOR := 0.55
 
 var _rush := 0.0          ## 0..1: el subidon
-var _meter: ViagraMeter = null
+var _meter: SildenafilMeter = null
 var _spit_t := 3.0
 var _spit_warn := 0.0
 
@@ -44,9 +44,9 @@ func _ready() -> void:
 	_channels_total = 2
 	_channels_left = 2
 	_ge.boss_charges_changed.emit(_channels_left, _channels_total)
-	_meter = ViagraMeter.new()
+	_meter = SildenafilMeter.new()
 	add_child(_meter)
-	BossAnimator.attach(self)  # arte definitivo 176x184 (tools/gen_viagra_art.py): cuadros nuevos + animacion por codigo
+	BossAnimator.attach(self)  # arte definitivo 176x184 (tools/gen_sildenafil_art.py): cuadros nuevos + animacion por codigo
 
 
 ## El golpe del ataque ocurre cuando termina el aviso: se avisa al animador para que pase de la pose de carga
@@ -89,7 +89,7 @@ func _combo_len() -> int:
 
 func _on_phase(n: int) -> void:
 	_rush = maxf(_rush, 0.3)  # cada fase arranca con un buen subidon
-	_float_text(tr("VIAGRA_PHASE_%d" % n), BLUE)
+	_float_text(tr("SILDENAFIL_PHASE_%d" % n), BLUE)
 
 
 func _on_death() -> void:
@@ -102,7 +102,7 @@ func _reset_fx() -> void:
 	animated_sprite.visible = true
 
 
-## Toda zona de peligro de Don Viagra se ve como peligro (borde rojo oscuro, franjas).
+## Toda zona de peligro de Don Sildenafil se ve como peligro (borde rojo oscuro, franjas).
 func _add_hazard(z: BossZone) -> BossZone:
 	if z.style == BossZone.Style.NORMAL:
 		z.style = BossZone.Style.TOXIC
@@ -110,7 +110,7 @@ func _add_hazard(z: BossZone) -> BossZone:
 
 
 func _pills() -> int:
-	return get_tree().get_nodes_in_group("pastilla_viagra").size()
+	return get_tree().get_nodes_in_group("pastilla_sildenafil").size()
 
 
 ## Una pastillita reventada: te regala subidon que bajar.

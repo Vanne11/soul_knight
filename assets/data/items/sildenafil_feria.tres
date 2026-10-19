@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1")
-id = "viagra_feria"
-display_name = "Viagra Genérica de Feria"
+id = "sildenafil_feria"
+display_name = "Sildenafil Genérico de Feria"
 description = "+30% de daño durante 20 s, pero +8 de intoxicación. Comprada a un señor con gabardina."
 rarity = 1
 tags = ["consumible", "ofensa", "buff", "intoxicante"]

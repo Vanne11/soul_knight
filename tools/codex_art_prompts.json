@@ -265,9 +265,9 @@
  },
  "boss_alt_2": {
   "refs": [
-   "enemies/don_viagra_idle_00"
+   "enemies/don_sildenafil_idle_00"
   ],
-  "prompt": "Square vintage natural-history bestiary / encyclopedia plate, drawn as a funny cartoon: clean confident ink outlines, soft watercolor shading, warm aged-parchment background with a subtle darker vignette at the edges, a soft ground shadow. One single subject centered, filling about 70% of the frame, whole subject visible. Cute and humorous caricature with big round expressive eyes, bright saturated colors, in the same visual universe as the reference sprites. No text, no letters, no numbers, no captions, no labels, no frame, no border, no watermark. Family-friendly cartoon humor with cheeky innuendo only: nothing explicit, no nudity, no gore, no blood. The boss: Don Viagra, a smug blue diamond-shaped pill gentleman with a mustache and a cape, heroic pose. IMPORTANT: no humans and no animals; the subject is a cute abstract creature or object exactly matching the design, colors and shapes of the reference sprite, just redrawn bigger with more detail and personality. "
+  "prompt": "Square vintage natural-history bestiary / encyclopedia plate, drawn as a funny cartoon: clean confident ink outlines, soft watercolor shading, warm aged-parchment background with a subtle darker vignette at the edges, a soft ground shadow. One single subject centered, filling about 70% of the frame, whole subject visible. Cute and humorous caricature with big round expressive eyes, bright saturated colors, in the same visual universe as the reference sprites. No text, no letters, no numbers, no captions, no labels, no frame, no border, no watermark. Family-friendly cartoon humor with cheeky innuendo only: nothing explicit, no nudity, no gore, no blood. The boss: Don Sildenafil, a smug blue diamond-shaped pill gentleman with a mustache and a cape, heroic pose. IMPORTANT: no humans and no animals; the subject is a cute abstract creature or object exactly matching the design, colors and shapes of the reference sprite, just redrawn bigger with more detail and personality. "
  },
  "boss_alt_3": {
   "refs": [
@@ -317,9 +317,9 @@
   ],
   "prompt": "Square vintage natural-history bestiary / encyclopedia plate, drawn as a funny cartoon: clean confident ink outlines, soft watercolor shading, warm aged-parchment background with a subtle darker vignette at the edges, a soft ground shadow. One single subject centered, filling about 70% of the frame, whole subject visible. Cute and humorous caricature with big round expressive eyes, bright saturated colors, in the same visual universe as the reference sprites. No text, no letters, no numbers, no captions, no labels, no frame, no border, no watermark. Family-friendly cartoon humor with cheeky innuendo only: nothing explicit, no nudity, no gore, no blood. A reinforced menstrual cup shown proudly like a knight's shield, eco-friendly leaf motif, absorbing a cartoon impact with a 'bonk' star. "
  },
- "viagra_lore": {
+ "sildenafil_lore": {
   "refs": [
-   "items/relic_viagra"
+   "items/relic_sildenafil"
   ],
   "prompt": "Square vintage natural-history bestiary / encyclopedia plate, drawn as a funny cartoon: clean confident ink outlines, soft watercolor shading, warm aged-parchment background with a subtle darker vignette at the edges, a soft ground shadow. One single subject centered, filling about 70% of the frame, whole subject visible. Cute and humorous caricature with big round expressive eyes, bright saturated colors, in the same visual universe as the reference sprites. No text, no letters, no numbers, no captions, no labels, no frame, no border, no watermark. Family-friendly cartoon humor with cheeky innuendo only: nothing explicit, no nudity, no gore, no blood. A mystical voodoo blue diamond pill floating with magic purple smoke and a tiny skull charm. Cheeky, nothing explicit. "
  },

@@ -95,7 +95,7 @@ ENTRIES = {
     "boss_4": E("aduanero", "The boss: an orange bean-shaped customs officer with a purple cap, mustache, blue tie, clipboard and a big red rubber stamp raised.", CRE),
     "boss_5": E("hoja_de_parra", "The boss: a giant prim green fig leaf with a face, tiny round glasses and a pearl necklace, thin legs, arms crossed in disapproval.", CRE),
     "boss_alt_1": E("afeitadora", "The boss: an electric shaver creature with spinning blades, mean grin, buzzing, hairs flying.", CRE),
-    "boss_alt_2": E("don_viagra", "The boss: Don Viagra, a smug blue diamond-shaped pill gentleman with a mustache and a cape, heroic pose.", CRE),
+    "boss_alt_2": E("don_sildenafil", "The boss: Don Sildenafil, a smug blue diamond-shaped pill gentleman with a mustache and a cape, heroic pose.", CRE),
     "boss_alt_3": E("diu_cosmico", "The boss: a cosmic IUD, a T-shaped copper device floating among stars and nebula, serene and godlike.", CRE),
     "boss_alt_4": E("prostata", "The boss: a bureaucrat prostate, a walnut-shaped gland in a tie sitting behind a desk with paperwork stamps.", CRE),
     "boss_alt_5": E("algoritmo", "The boss: a moderator algorithm, a cold floating screen-and-gears creature with a blinking red eye that flags everything, bureaucratic menace.", CRE),
@@ -106,7 +106,7 @@ ENTRIES = {
     # --- objetos
     "condom_lore": (["items/relic_condom"], "A shiny golden legendary relic: a glowing condom in its wrapper, sparkling like a holy artifact on a small cushion, flames and slime bouncing off it comically. Wholesome, nothing explicit. "),
     "menstrual_cup_lore": (["items/menstrual_cup"], "A reinforced menstrual cup shown proudly like a knight's shield, eco-friendly leaf motif, absorbing a cartoon impact with a 'bonk' star. "),
-    "viagra_lore": (["items/relic_viagra"], "A mystical voodoo blue diamond pill floating with magic purple smoke and a tiny skull charm. Cheeky, nothing explicit. "),
+    "sildenafil_lore": (["items/relic_sildenafil"], "A mystical voodoo blue diamond pill floating with magic purple smoke and a tiny skull charm. Cheeky, nothing explicit. "),
     "lube_lore": (["items/relic_lube"], "A quantum lubricant bottle floating with swirling galaxy-colored gel, slipping and sliding through space, cheerful sparkles. "),
     # --- lugares (sin referencia: escena)
     "loc_penelandia": ([], "A landscape plate of Penelandia, a blue and gold kingdom of ancient Greek columns and tall elongated towers, all slightly inflated and vertical, banners flying, tiny pink capsule citizens with golden helmets. " + CRE),

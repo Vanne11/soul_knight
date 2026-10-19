@@ -6,7 +6,7 @@ agrandado sobre un fondo del reino.
 
 Uso: python3 tools/gen_boss_alt_art.py [jefe ...]   (sin args = los cinco)
      python3 tools/gen_boss_alt_art.py --no-intro    (solo sprites)
-Jefes: afeitadora don_viagra diu_cosmico prostata algoritmo
+Jefes: afeitadora don_sildenafil diu_cosmico prostata algoritmo
 
 HUECO PARA ILUSTRACION GEMINI: la presentacion carga assets/sprites/ui/bosses/<jefe>.png.
 Para sustituir la de script por una de Gemini basta con generar un PNG pixelado 320x180 con el
@@ -124,8 +124,8 @@ def afeitadora(bob=0, step=0, eyes="angry", mouth="line", atk=0):
     return im
 
 
-# ------------------------------------------------------------------ don viagra
-def don_viagra(bob=0, step=0, eyes="angry", mouth="line", atk=0):
+# ------------------------------------------------------------------ don sildenafil
+def don_sildenafil(bob=0, step=0, eyes="angry", mouth="line", atk=0):
     im, d = new()
     legs(d, bob, step, (15, 23), 51, BLUE_DK)
     # pastilla romboide
@@ -256,7 +256,7 @@ def algoritmo(bob=0, step=0, eyes="angry", mouth="line", atk=0):
 
 BOSSES = {
     "afeitadora": afeitadora,
-    "don_viagra": don_viagra,
+    "don_sildenafil": don_sildenafil,
     "diu_cosmico": diu_cosmico,
     "prostata": prostata,
     "algoritmo": algoritmo,
@@ -266,7 +266,7 @@ BOSSES = {
 # fondo por reino (colores del degradado y de los detalles) + retrato agrandado x6 con sombra.
 BG = {
     "afeitadora": ((18, 52, 38), (60, 150, 100), (200, 230, 150)),
-    "don_viagra": ((20, 36, 80), (70, 120, 210), (230, 240, 255)),
+    "don_sildenafil": ((20, 36, 80), (70, 120, 210), (230, 240, 255)),
     "diu_cosmico": ((30, 12, 56), (120, 60, 160), (255, 190, 120)),
     "prostata": ((60, 40, 36), (170, 130, 100), (240, 220, 160)),
     "algoritmo": ((18, 18, 28), (70, 80, 110), (230, 60, 70)),
@@ -293,7 +293,7 @@ def intro_art(name):
         elif name == "diu_cosmico":
             d.line([(x - s, y), (x + s, y)], fill=acc + (255,))
             d.line([(x, y - s), (x, y + s)], fill=acc + (255,))
-        elif name == "don_viagra":
+        elif name == "don_sildenafil":
             d.ellipse([x, y, x + s * 3, y + s * 3], outline=(220, 235, 255, 255))
         elif name == "prostata":
             d.rectangle([x, y, x + 3 * s, y + 4 * s], fill=(250, 244, 214, 255))

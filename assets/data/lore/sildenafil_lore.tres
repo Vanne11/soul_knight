@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "sildenafil_lore"
+title = "Cuatro Horas Después Sigues Disparando"
+text = "El Sildenafil Vudú no es medicina: es un pacto. Tomas la pastilla y tu arma crece: los proyectiles se hinchan y el daño se dispara. El precio llega después: cuatro horas de erección ininterrumpida, velocidad a la baja, puntería tambaleante y un dolor sordo en la base de todo. Intentas soltar el arma y no puedes. Sigues disparando incluso en el menú."
+category = 2
+unlock_condition = {"type": 1, "target_id": "relic_sildenafil", "count": 1}
+flavor_text = "Equipa el Sildenafil Vudú."

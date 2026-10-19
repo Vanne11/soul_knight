@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1")
-id = "relic_viagra"
-display_name = "Viagra Vudú"
+id = "relic_sildenafil"
+display_name = "Sildenafil Vudú"
 description = "+50% daño, +30% tamaño de bala, -20% velocidad. Cuatro horas después, sigues."
 rarity = 3
 tags = ["reliquia", "pasivo", "ofensa", "masculino"]

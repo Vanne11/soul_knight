@@ -220,7 +220,7 @@ def art_morning_after_pill():
     return _outline(im)
 
 
-def art_viagra_feria():
+def art_sildenafil_feria():
     im, d = _new()
     d.polygon([(12, 3), (21, 12), (12, 21), (3, 12)], fill=_c(70, 150, 255))   # pastilla rombo azul
     d.polygon([(12, 3), (21, 12), (12, 12)], fill=_c(130, 190, 255))
