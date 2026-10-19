@@ -299,7 +299,7 @@ func _build_select() -> void:
 func _card(id: String, parent: Control) -> Button:
 	var data: Dictionary = RunManager.CHARACTERS[id]
 	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(330, 490)
+	panel.custom_minimum_size = Vector2(330, 450)
 	var box := StyleBoxFlat.new()
 	box.bg_color = Color("1a0b26")
 	box.border_color = CARD_COLORS[id]
@@ -309,13 +309,13 @@ func _card(id: String, parent: Control) -> Button:
 	panel.add_theme_stylebox_override("panel", box)
 	parent.add_child(panel)
 	var v := VBoxContainer.new()
-	v.add_theme_constant_override("separation", 8)
+	v.add_theme_constant_override("separation", 6)
 	panel.add_child(v)
 	var portrait := TextureRect.new()
 	var tex_path := "res://assets/sprites/player/%s/portrait.png" % id
 	if ResourceLoader.exists(tex_path):
 		portrait.texture = load(tex_path)
-	portrait.custom_minimum_size = Vector2(128, 128)
+	portrait.custom_minimum_size = Vector2(104, 104)
 	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -345,7 +345,7 @@ func _card(id: String, parent: Control) -> Button:
 ## (Controls) y del dispositivo que esta usando (InputGlyphs): atacar, dash y sus habilidades.
 func _controls_block(id: String) -> Control:
 	var col := VBoxContainer.new()
-	col.add_theme_constant_override("separation", 4)
+	col.add_theme_constant_override("separation", 2)
 	col.alignment = BoxContainer.ALIGNMENT_CENTER
 	col.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var rows: Array = [["attack", "GLYPH_HELP_ATTACK"], ["dash", "GLYPH_HELP_DASH"]]
