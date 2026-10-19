@@ -13,20 +13,28 @@ extends Node2D
 ##                narrador se calla.
 ##   vendado      Venda: pantalla casi a oscuras alrededor del heroe.
 ##   enganchado   La Correa te arrastra hacia su dueno. El dash te suelta.
+##   desteñido    Piso gris de La Censura que destine (Arcoiria): te frena mientras lo pisas (0,6x).
+##   etiquetado   La Etiqueta (Arcoiria) te pega etiquetas: cada una te frena (hasta 3). El dash las
+##                ROMPE y cada etiqueta rota hace dano a los enemigos cercanos (Arcoiria.rip_labels).
 ##
 ## `apply()` devuelve false si estas esquivando (dash): no se aplica nada.
 
 signal applied(kind: String)
 signal ended(kind: String)
 
-const KINDS := ["enrollado", "enjaulado", "esposado", "amordazado", "vendado", "enganchado"]
+const KINDS := ["enrollado", "enjaulado", "esposado", "amordazado", "vendado", "enganchado", "etiquetado", "desteñido"]
 const MASH_ACTIONS := ["attack", "dash", "interact"]
 const MASH_STEP := 0.3
-const SPEED := {"enrollado": 0.3, "enjaulado": 0.45, "esposado": 0.85, "enganchado": 0.9}
+const SPEED := {"enrollado": 0.3, "enjaulado": 0.45, "esposado": 0.85, "enganchado": 0.9, "desteñido": 0.6}
 const TEXT_COLOR := {
 	"enrollado": Color("ffd23a"), "enjaulado": Color("b8b8c8"), "esposado": Color("ff7ac0"),
 	"amordazado": Color("e8322e"), "vendado": Color("8890a8"), "enganchado": Color("ff9a2e"),
+	"etiquetado": Color("ffd23a"), "desteñido": Color("a8a8b8"),
 }
+const LABEL_SLOW := 0.82   ## velocidad que queda por cada etiqueta pegada
+const LABEL_MAX := 3
+const LABEL_SECS := 7.0
+const PUSH_DECAY := 1500.0
 const PULL_SPEED := 300.0
 const TETHER := 130.0
 const BLIND_HALF := 2000.0
@@ -49,6 +57,8 @@ var _left := {}        ## kind -> segundos que faltan
 var _total := {}       ## kind -> segundos totales
 var _src := {}         ## kind -> enemigo que lo causo (cadena, correa)
 var _pull := Vector2.ZERO
+var _push := Vector2.ZERO   ## empujon puntual (El Armario): se apaga solo
+var labels := 0             ## etiquetas pegadas ahora
 var _blind: ColorRect = null
 var _t := 0.0
 
@@ -101,6 +111,19 @@ func time_left(kind: String) -> float:
 	return float(_left.get(kind, 0.0))
 
 
+## La Etiqueta te pega otra etiqueta (hasta LABEL_MAX). false si esquivas.
+func stick_label(src: Node = null) -> bool:
+	if not apply("etiquetado", LABEL_SECS, src):
+		return false
+	labels = mini(labels + 1, LABEL_MAX)
+	return true
+
+
+## Empujon: suma una velocidad que se apaga sola (la camina el jugador en player.gd con pull_velocity).
+func push(v: Vector2) -> void:
+	_push = v
+
+
 func blocks_shoot() -> bool:
 	return active("enjaulado") or active("esposado")
 
@@ -118,12 +141,14 @@ func speed_mult() -> float:
 	for k in SPEED:
 		if active(k):
 			m *= SPEED[k]
+	if active("etiquetado"):
+		m *= pow(LABEL_SLOW, labels)
 	return m
 
 
-## Velocidad extra impuesta (correa, cadena). Player la suma al caminar.
+## Velocidad extra impuesta (correa, cadena, empujon). Player la suma al caminar.
 func pull_velocity() -> Vector2:
-	return _pull
+	return _pull + _push
 
 
 func clear(kind := "") -> void:
@@ -197,6 +222,7 @@ func _physics_process(delta: float) -> void:
 		return
 	_t += delta
 	_pull = Vector2.ZERO
+	_push = _push.move_toward(Vector2.ZERO, PUSH_DECAY * delta)
 	var dashing: bool = "is_dashing" in player and player.is_dashing
 	for k in _left.keys():
 		var dt := delta
@@ -254,6 +280,8 @@ func _draw() -> void:
 		_draw_gag()
 	if active("enganchado"):
 		_draw_leash()
+	if active("etiquetado"):
+		_draw_labels()
 
 
 func _draw_tape() -> void:
@@ -323,3 +351,18 @@ func _draw_leash() -> void:
 		draw_line(prev, p, Color("a0602a"), 2.0)
 		prev = p
 	draw_circle(Vector2(0, -6), 3.5, Color("c8c8d8"))
+
+
+## Etiquetas pegadas en el torso (una por cada una), torcidas y con renglones de "texto".
+func _draw_labels() -> void:
+	var spots := [Vector2(-9, -8), Vector2(7, -14), Vector2(-3, 2)]
+	for i in labels:
+		var c: Vector2 = spots[i]
+		var rot: float = [-0.25, 0.2, -0.1][i]
+		draw_set_transform(c, rot)
+		draw_rect(Rect2(-7, -4.5, 14, 9), Color("23202c"))
+		draw_rect(Rect2(-6, -3.5, 12, 7), Color("ffd23a"))
+		draw_rect(Rect2(-6, -3.5, 4, 7), Color("fff0a0"))
+		draw_line(Vector2(-3, -1), Vector2(4, -1), Color("23202c"), 1.0)
+		draw_line(Vector2(-3, 1.5), Vector2(2, 1.5), Color("23202c"), 1.0)
+	draw_set_transform(Vector2.ZERO, 0.0)

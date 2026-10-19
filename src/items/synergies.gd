@@ -37,6 +37,9 @@ const TABLE := {
 	], "mods": {"damage": 1.08, "fire_rate": 1.08}},
 	"todo_incluido": {"hero": ["ornitorrinco"], "sets": ["pene", "vulva"],
 		"mods": {"damage": 1.12, "crit_chance": 0.06}},
+	# Arcoiria: las seis franjas de la bandera (src/arcoiria/arcoiria_powers.gd)
+	"bandera_completa": {"items": ["bandera_rojo", "bandera_naranja", "bandera_amarillo", "bandera_verde", "bandera_azul", "bandera_violeta"],
+		"mods": {"damage": 1.10, "speed": 1.06, "crit_chance": 0.05}},
 }
 const COLOR := Color("ffd75a")
 

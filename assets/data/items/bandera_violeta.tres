@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "bandera_violeta"
+display_name = "Franja Violeta: Espíritu"
+description = "Espíritu: +8% de daño y un fuego fatuo que busca al enemigo más cercano cada 5 s. Violeta, de lo que no se ve."
+rarity = 2
+tags = ["reliquia", "pasivo", "bandera", "exclusivo"]
+equip_slot = 2
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.08}]
+base_value = 0
+custom_data = {"locale": "arcoiria", "flag_color": "violeta"}

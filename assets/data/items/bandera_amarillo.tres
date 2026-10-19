@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "bandera_amarillo"
+display_name = "Franja Amarilla: Luz"
+description = "Luz: +4% de crítico, tu halo crece y cada 7 s un pulso de luz revela a los enemigos. Amarillo, de sol."
+rarity = 2
+tags = ["reliquia", "pasivo", "bandera", "exclusivo"]
+equip_slot = 2
+effects = [{"type": 0, "stat": "crit_chance", "magnitude": 0.04}]
+base_value = 0
+custom_data = {"locale": "arcoiria", "flag_color": "amarillo"}

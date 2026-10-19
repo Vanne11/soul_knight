@@ -1,0 +1,44 @@
+{
+  "_info": "ARCOIRIA (reino del Orgullo, nombre provisorio; src/arcoiria/). Entrada al reino (general y por heroe: el Ornitorrinco PARTE aqui y es donde 'no corresponde' por fin corresponde), la bandera que se arma y el jefe La Censura que destiñe (bossarcoiria_*). Humor contra el prejuicio y la Censura, nunca contra las personas. Registro latino neutro; Ornitorrinco sin pronombre. Los textos viven en locale/arcoiria.csv (NARR_ARCOIRIA__<EVENTO>_<i>).",
+  "floor_arcoiria": [
+    "ARCOÍRIA. La Gran Censura pasó por aquí con un rodillo gris y no le alcanzó la pintura. Se nota.",
+    "ARCOÍRIA. El reino del Orgullo. Los colores no se explican: se ven, y se defienden."
+  ],
+  "floor_arcoiria_pitocles": [
+    "ARCOÍRIA. Pitocles busca el escalafón y encuentra un arcoíris. Nadie le pregunta a quién obedece. Respira, hoplita."
+  ],
+  "floor_arcoiria_vulvalquiria": [
+    "ARCOÍRIA. Vulvalquiria inspecciona el reino con cara de «¿y esto es todo?». Las banderas flamean. Ella, por una vez, no bosteza."
+  ],
+  "floor_arcoiria_ornitorrinco": [
+    "ARCOÍRIA. El Ornitorrinco no corresponde a ningún casillero, en ningún reino. Aquí es donde más corresponde: nadie le pide que explique qué es.",
+    "El Ornitorrinco parte desde aquí. Pico de pato, cola de castor, sin pronombre y sin disculpas. Por fin un formulario con la casilla «otro»."
+  ],
+  "floor_arcoiria_profunda": [
+    "ARCOÍRIA PROFUNDA. Mientras más hondo, más gris. Alguien viene destiñendo todo con un rodillo."
+  ],
+  "floor_arcoiria_profunda_ornitorrinco": [
+    "ARCOÍRIA PROFUNDA. El gris avanza. El Ornitorrinco no se mimetiza, ni aunque quiera: tiene demasiados colores por dentro."
+  ],
+  "arcoiria_franja": [
+    "Una franja más. La bandera se arma sola cada vez que alguien libera una sala. Y cada color trae su poder."
+  ],
+  "arcoiria_bandera": [
+    "Seis franjas, seis colores, ninguna sobra. Bandera completa. Se la pones a la espalda y el miedo del gris se queda corto."
+  ],
+  "bossarcoiria_intro": [
+    "La Censura que destiñe. Trae un rodillo, un sello y la idea fija de que todo sea del mismo gris. Lo gris se pisa mal; el color se defiende: revienta los orbes."
+  ],
+  "bossarcoiria_phase2": [
+    "Se le acaba la paciencia y la pintura. Ahora destiñe más rápido. Los orbes, por favor: no son decoración."
+  ],
+  "bossarcoiria_phase3": [
+    "Última mano de gris. Se aferra al rodillo como a una norma. Recolorea. Recolorea todo."
+  ],
+  "bossarcoiria_death": [
+    "Cae la Censura que destiñe. El gris se escurre por el piso y debajo, sorpresa: estaba todo ahí, en color. Siempre lo estuvo."
+  ],
+  "bossarcoiria_after": [
+    "Un color no se puede borrar. Se puede esconder un rato. La diferencia es larga."
+  ]
+}

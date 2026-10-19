@@ -1,0 +1,76 @@
+keys,es,en,es_ES,fr
+FLOOR_ARCOIRIA_NAME,ARCOÍRIA,RAINBOWIA,,ARC-EN-CIEL
+FLOOR_ARCOIRIA_PROFUNDA_NAME,ARCOÍRIA PROFUNDA,DEEP RAINBOWIA,,ARC-EN-CIEL PROFOND
+ENEMY_RUMOR_NAME,Rumor Ambulante,Walking Rumor,,Rumeur ambulante
+ENEMY_COMENTARIO_NAME,Comentario Inoportuno,Unwelcome Comment,,Commentaire déplacé
+ENEMY_MIRADA_NAME,Mirada de Reojo,Sideways Glance,,Regard en coin
+ENEMY_FASE_NAME,Es una fase,It's a phase,,C'est juste une phase
+ENEMY_ARMARIO_NAME,El Armario,The Closet,,Le Placard
+ENEMY_HOMBRE_NAME,¿Y quién es el hombre?,So who's the man?,,"Et c'est qui, l'homme ?"
+ENEMY_ETIQUETA_NAME,La Etiqueta,The Label,,L'Étiquette
+BOSS_DESTINE_NAME,LA CENSURA QUE DESTIÑE,THE CENSORSHIP THAT FADES,,LA CENSURE QUI DÉTEINT
+ARC_FASE_NUEVA,¡Es solo una fase!,It's just a phase!,,Ce n'est qu'une phase !
+ARC_FASE_LLENA,(ya pasó),(it passed),,(c'est passé)
+ARC_FASE_ESPERA,Espera...,Wait for it...,,Patience...
+ARC_ARMARIO_ABIERTO,¡Se me abrió la puerta!,My door opened!,,Ma porte s'est ouverte !
+ARC_ARMARIO_EMPUJA,"¡Adentro, adentro!",Get back in!,,"Rentre, rentre !"
+ARC_ARMARIO_TOC,"toc, toc","knock, knock",,"toc, toc"
+ARC_HOMBRE_PARTE,¡Siempre de a dos!,Always in twos!,,Toujours par deux !
+ARC_HOMBRE_JUNTA,¡Juntos otra vez!,Together again!,,Ensemble de nouveau !
+ARC_ETIQUETA_DISPARA,¡Etiqueta nueva!,New label!,,Nouvelle étiquette !
+ARC_ETIQUETAS_ROTAS,¡ETIQUETAS ROTAS!,LABELS TORN OFF!,,ÉTIQUETTES ARRACHÉES !
+E3A_STATE_ETIQUETADO,ETIQUETADO,LABELED,,ÉTIQUETÉ
+E3A_STATE_DESTEÑIDO,DESTEÑIDO,FADED,,DÉTEINT
+ARC_VENCIDO,PREJUICIO ROTO,PREJUDICE BROKEN,,PRÉJUGÉ BRISÉ
+ARC_VERDAD_TITULO,LA VERDAD,THE TRUTH,,LA VÉRITÉ
+ARC_VERDAD_ES_UNA_FASE,La orientación y la identidad no son una moda adolescente: es conocerse a una misma edad cualquiera.,"Orientation and identity aren't a teenage trend: it's getting to know yourself, at any age.",,"L'orientation et l'identité ne sont pas une mode d'ado : c'est apprendre à se connaître, à tout âge."
+ARC_VERDAD_EL_ARMARIO,Nadie le debe su orientación a nadie: salir del clóset es decisión de cada quien.,Nobody owes anyone their orientation: coming out is each person's own choice.,,Personne ne doit son orientation à personne : le coming out est un choix personnel.
+ARC_VERDAD_QUIEN_ES_EL_HOMBRE,Una pareja no es un guion: nadie tiene que «ser el hombre».,"A couple isn't a script: nobody has to ""be the man"".",,Un couple n'est pas un scénario : personne n'a à « être l'homme ».
+ARC_VERDAD_LA_ETIQUETA,"Las etiquetas son herramientas, no obligaciones. Y no se le ponen a otro sin preguntar.","Labels are tools, not obligations. And you don't put one on someone else without asking.",,"Les étiquettes sont des outils, pas des obligations. Et on n'en met pas à quelqu'un sans demander."
+ARC_STRIPE_ROJO,FRANJA ROJA: VIDA,RED STRIPE: LIFE,,BANDE ROUGE : VIE
+ARC_STRIPE_NARANJA,FRANJA NARANJA: SANACIÓN,ORANGE STRIPE: HEALING,,BANDE ORANGE : GUÉRISON
+ARC_STRIPE_AMARILLO,FRANJA AMARILLA: LUZ,YELLOW STRIPE: SUNLIGHT,,BANDE JAUNE : LUMIÈRE
+ARC_STRIPE_VERDE,FRANJA VERDE: NATURALEZA,GREEN STRIPE: NATURE,,BANDE VERTE : NATURE
+ARC_STRIPE_AZUL,FRANJA AZUL: SERENIDAD,BLUE STRIPE: SERENITY,,BANDE BLEUE : SÉRÉNITÉ
+ARC_STRIPE_VIOLETA,FRANJA VIOLETA: ESPÍRITU,VIOLET STRIPE: SPIRIT,,BANDE VIOLETTE : ESPRIT
+ARC_FLAG_COMPLETE,¡BANDERA COMPLETA!,COMPLETE FLAG!,,DRAPEAU COMPLET !
+ARC_RECOLOR,¡COLOR!,COLOR!,,COULEUR !
+ITEM_BANDERA_ROJO_NAME,Franja Roja: Vida,Red Stripe: Life,,Bande rouge : Vie
+ITEM_BANDERA_ROJO_DESC,"Vida: +6 de vida máxima y curas 2 al liberar cada sala. Rojo, el primer color de la bandera.","Life: +6 max health and you heal 2 each time you free a room. Red, the first color of the flag.",,"Vie : +6 de vie max et tu te soignes de 2 à chaque salle libérée. Rouge, la première couleur du drapeau."
+ITEM_BANDERA_NARANJA_NAME,Franja Naranja: Sanación,Orange Stripe: Healing,,Bande orange : Guérison
+ITEM_BANDERA_NARANJA_DESC,"Sanación: si pasas 3 s sin recibir daño, regeneras vida sola. Naranja, de curita y de cariño.","Healing: if you go 3 s without taking damage, you regenerate health on your own. Orange, for bandages and care.",,"Guérison : si tu restes 3 s sans subir de dégâts, ta vie se régénère. Orange, celui du pansement et de la tendresse."
+ITEM_BANDERA_AMARILLO_NAME,Franja Amarilla: Luz,Yellow Stripe: Sunlight,,Bande jaune : Lumière
+ITEM_BANDERA_AMARILLO_DESC,"Luz: +4% de crítico, tu halo crece y cada 7 s un pulso de luz revela a los enemigos. Amarillo, de sol.","Sunlight: +4% crit, your halo grows and every 7 s a pulse of light reveals enemies. Yellow, like the sun.",,"Lumière : +4 % de critique, ton halo grandit et toutes les 7 s une pulsation de lumière révèle les ennemis. Jaune, comme le soleil."
+ITEM_BANDERA_VERDE_NAME,Franja Verde: Naturaleza,Green Stripe: Nature,,Bande verte : Nature
+ITEM_BANDERA_VERDE_DESC,"Naturaleza: si te golpean brotan espinas que hieren a lo que tengas cerca. Verde, de hoja con carácter.","Nature: when you get hit, thorns sprout and hurt whatever is near you. Green, like a leaf with character.",,"Nature : quand on te frappe, des épines jaillissent et blessent ce qui t'entoure. Vert, comme une feuille de caractère."
+ITEM_BANDERA_AZUL_NAME,Franja Azul: Serenidad,Blue Stripe: Serenity,,Bande bleue : Sérénité
+ITEM_BANDERA_AZUL_DESC,"Serenidad: +6 de escudo, se regenera más rápido y se llena al liberar una sala. Azul, de respirar hondo.","Serenity: +6 shield, it regenerates faster and refills when you free a room. Blue, for taking a deep breath.",,"Sérénité : +6 de bouclier, il se régénère plus vite et se remplit à chaque salle libérée. Bleu, comme une grande inspiration."
+ITEM_BANDERA_VIOLETA_NAME,Franja Violeta: Espíritu,Violet Stripe: Spirit,,Bande violette : Esprit
+ITEM_BANDERA_VIOLETA_DESC,"Espíritu: +8% de daño y un fuego fatuo que busca al enemigo más cercano cada 5 s. Violeta, de lo que no se ve.","Spirit: +8% damage and a wisp that seeks the nearest enemy every 5 s. Violet, for what you can't see.",,"Esprit : +8 % de dégâts et un feu follet qui cherche l'ennemi le plus proche toutes les 5 s. Violet, comme ce qu'on ne voit pas."
+SYN_BANDERA_COMPLETA_NAME,Bandera completa,Complete Flag,,Drapeau complet
+SYN_BANDERA_COMPLETA_DESC,"Las seis franjas juntas: +10% de daño, +6% de velocidad y +5% de crítico.","All six stripes together: +10% damage, +6% speed and +5% crit.",,"Les six bandes ensemble : +10 % de dégâts, +6 % de vitesse et +5 % de critique."
+SYN_BANDERA_COMPLETA_COND,Reúne las seis franjas de Arcoiría,Collect all six stripes of Rainbowia,,Réunis les six bandes d'Arc-en-ciel
+ARC_BOSS_PHASE_1,¡Todo gris!,All grey!,,Tout en gris !
+ARC_BOSS_PHASE_2,¡MÁS GRIS!,MORE GREY!,,PLUS DE GRIS !
+ARC_BOSS_PHASE_3,¡GRIS TOTAL!,TOTAL GREY!,,GRIS TOTAL !
+ARC_BOSS_DEATH,¡TODO VUELVE AL COLOR!,EVERYTHING GETS ITS COLOR BACK!,,TOUT REPREND SES COULEURS !
+ARC_BOSS_PINTA,¡Se me cae el color!,I'm dropping the color!,,Je perds la couleur !
+BOSS_CH_COLOR_T,COLOR,COLOR,,COULEUR
+BOSS_CH_COLOR_D,Revienta 3 orbes de color,Pop 3 color orbs,,Fais éclater 3 orbes de couleur
+BOSSDMG_DESTINE_WEAK,"¡Ay, el confeti! ¡Es demasiado color para mí!","Ugh, confetti! That's way too much color for me!",,"Aïe, les confettis ! C'est beaucoup trop de couleur pour moi !"
+BOSSDMG_DESTINE_RESIST,Las balas se pierden en el gris...,The bullets get lost in the grey...,,Les balles se perdent dans le gris...
+NARR_ARCOIRIA__FLOOR_ARCOIRIA_0,ARCOÍRIA. La Gran Censura pasó por aquí con un rodillo gris y no le alcanzó la pintura. Se nota.,ARCOÍRIA. The Great Censorship came through here with a grey roller and ran out of paint. You can tell.,,ARCOÍRIA. La Grande Censure est passée par ici avec un rouleau gris et a manqué de peinture. Ça se voit.
+NARR_ARCOIRIA__FLOOR_ARCOIRIA_1,"ARCOÍRIA. El reino del Orgullo. Los colores no se explican: se ven, y se defienden.","ARCOÍRIA. The kingdom of Pride. Colors aren't explained: they're seen, and they're defended.",,"ARCOÍRIA. Le royaume de la Fierté. Les couleurs ne s'expliquent pas : elles se voient, et elles se défendent."
+NARR_ARCOIRIA__FLOOR_ARCOIRIA_PITOCLES_0,"ARCOÍRIA. Pitocles busca el escalafón y encuentra un arcoíris. Nadie le pregunta a quién obedece. Respira, hoplita.","ARCOÍRIA. Pitocles looks for the chain of command and finds a rainbow. Nobody asks whom he obeys. Breathe, hoplite.",,"ARCOÍRIA. Pitoclès cherche la hiérarchie et trouve un arc-en-ciel. Personne ne lui demande à qui il obéit. Respire, hoplite."
+NARR_ARCOIRIA__FLOOR_ARCOIRIA_VULVALQUIRIA_0,"ARCOÍRIA. Vulvalquiria inspecciona el reino con cara de «¿y esto es todo?». Las banderas flamean. Ella, por una vez, no bosteza.","ARCOÍRIA. Vulvalquiria inspects the kingdom with a ""is that all?"" face. The flags are flying. For once, she isn't yawning.",,"ARCOÍRIA. Vulvalkyrie inspecte le royaume avec une tête de « c'est tout ? ». Les drapeaux flottent. Pour une fois, elle ne bâille pas."
+NARR_ARCOIRIA__FLOOR_ARCOIRIA_ORNITORRINCO_0,"ARCOÍRIA. El Ornitorrinco no corresponde a ningún casillero, en ningún reino. Aquí es donde más corresponde: nadie le pide que explique qué es.","ARCOÍRIA. The Platypus fits in no box, in no kingdom. This is where it fits best: nobody asks it to explain what it is.",,"ARCOÍRIA. L'Ornithorynque n'entre dans aucune case, dans aucun royaume. C'est ici qu'il a le plus sa place : personne ne lui demande d'expliquer ce qu'il est."
+NARR_ARCOIRIA__FLOOR_ARCOIRIA_ORNITORRINCO_1,"El Ornitorrinco parte desde aquí. Pico de pato, cola de castor, sin pronombre y sin disculpas. Por fin un formulario con la casilla «otro».","The Platypus starts here. Duck bill, beaver tail, no pronoun and no apologies. At last, a form with an ""other"" box.",,"L'Ornithorynque part d'ici. Bec de canard, queue de castor, sans pronom et sans excuses. Enfin un formulaire avec la case « autre »."
+NARR_ARCOIRIA__FLOOR_ARCOIRIA_PROFUNDA_0,"ARCOÍRIA PROFUNDA. Mientras más hondo, más gris. Alguien viene destiñendo todo con un rodillo.","DEEP ARCOÍRIA. The deeper you go, the greyer it gets. Someone is bleaching everything with a roller.",,"ARCOÍRIA PROFOND. Plus on descend, plus c'est gris. Quelqu'un décolore tout avec un rouleau."
+NARR_ARCOIRIA__FLOOR_ARCOIRIA_PROFUNDA_ORNITORRINCO_0,"ARCOÍRIA PROFUNDA. El gris avanza. El Ornitorrinco no se mimetiza, ni aunque quiera: tiene demasiados colores por dentro.","DEEP ARCOÍRIA. The grey advances. The Platypus can't blend in, even if it tried: too many colors inside.",,"ARCOÍRIA PROFOND. Le gris avance. L'Ornithorynque ne se fond pas dans le décor, même s'il essaie : trop de couleurs à l'intérieur."
+NARR_ARCOIRIA__ARCOIRIA_FRANJA_0,Una franja más. La bandera se arma sola cada vez que alguien libera una sala. Y cada color trae su poder.,One more stripe. The flag builds itself every time someone frees a room. And each color brings its own power.,,Une bande de plus. Le drapeau se monte tout seul chaque fois que quelqu'un libère une salle. Et chaque couleur apporte son pouvoir.
+NARR_ARCOIRIA__ARCOIRIA_BANDERA_0,"Seis franjas, seis colores, ninguna sobra. Bandera completa. Se la pones a la espalda y el miedo del gris se queda corto.","Six stripes, six colors, none to spare. Complete flag. Put it on your back and the fear of grey falls short.",,"Six bandes, six couleurs, aucune de trop. Drapeau complet. Mets-le sur ton dos et la peur du gris fait pâle figure."
+NARR_ARCOIRIA__BOSSARCOIRIA_INTRO_0,"La Censura que destiñe. Trae un rodillo, un sello y la idea fija de que todo sea del mismo gris. Lo gris se pisa mal; el color se defiende: revienta los orbes.","The Censorship that fades color. It brings a roller, a stamp and a fixed idea: everything the same grey. Grey is bad to step on; color gets defended: pop the orbs.",,"La Censure qui déteint. Elle apporte un rouleau, un tampon et une idée fixe : tout du même gris. Le gris, on le piétine mal ; la couleur, on la défend : fais éclater les orbes."
+NARR_ARCOIRIA__BOSSARCOIRIA_PHASE2_0,"Se le acaba la paciencia y la pintura. Ahora destiñe más rápido. Los orbes, por favor: no son decoración.","She's running out of patience and paint. Now she fades things faster. The orbs, please: they're not decoration.",,"Elle perd patience et peinture. Maintenant elle déteint plus vite. Les orbes, s'il te plaît : ce n'est pas de la déco."
+NARR_ARCOIRIA__BOSSARCOIRIA_PHASE3_0,Última mano de gris. Se aferra al rodillo como a una norma. Recolorea. Recolorea todo.,Last coat of grey. She clings to the roller like it's a rule. Recolor. Recolor everything.,,Dernière couche de gris. Elle s'accroche au rouleau comme à un règlement. Recolore. Recolore tout.
+NARR_ARCOIRIA__BOSSARCOIRIA_DEATH_0,"Cae la Censura que destiñe. El gris se escurre por el piso y debajo, sorpresa: estaba todo ahí, en color. Siempre lo estuvo.","The Censorship that fades color falls. The grey drains off the floor and underneath, surprise: it was all there, in color. It always was.",,"La Censure qui déteint tombe. Le gris s'écoule du sol et dessous, surprise : tout était là, en couleur. Ça l'a toujours été."
+NARR_ARCOIRIA__BOSSARCOIRIA_AFTER_0,Un color no se puede borrar. Se puede esconder un rato. La diferencia es larga.,A color can't be erased. It can be hidden for a while. The difference is long.,,Une couleur ne s'efface pas. On peut la cacher un moment. La différence est grande.
