@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://da7iafuam2pmn"
-path="res://.godot/imported/monte_venus_loma.png-b4a5a160d52e0b6293726c41c4bdc47c.ctex"
+uid="uid://kh4bqlnob6uf"
+path="res://.godot/imported/rim_side_top.png-3575d303160df10afdcc08b05896e7c4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/environment/decor/monte_venus_loma.png"
-dest_files=["res://.godot/imported/monte_venus_loma.png-b4a5a160d52e0b6293726c41c4bdc47c.ctex"]
+source_file="res://assets/sprites/environment/monte/rim_side_top.png"
+dest_files=["res://.godot/imported/rim_side_top.png-3575d303160df10afdcc08b05896e7c4.ctex"]
 
 [params]
 

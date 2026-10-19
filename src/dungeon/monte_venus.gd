@@ -1,28 +1,31 @@
 class_name MonteVenus
 extends RefCounted
 
-## Sala especial MONTE DE VENUS de la Selva Publica: una loma escalonada de cesped y vello, sin
-## combate, con una bandera en la cima. Una sola por partida (en uno de los 2 pisos de la Selva,
-## elegido por la semilla) y la recompensa se recoge una sola vez.
+## Sala especial MONTE DE VENUS de la Selva Publica: una loma de dos mesetas (estilo A Link to the
+## Past) con vello alto, cera de Dona Cera tapando rampas y una bandera en la cima. Sin combate. Una
+## sola por partida (en uno de los 2 pisos de la Selva, elegido por la semilla) y la recompensa se
+## recoge una sola vez.
 ##
 ## Tipo de sala: LORE (sala tranquila ya existente) con la marca meta "monte_venus"; el minimapa
 ## la dibuja con "^" y la puerta lleva su cartel (main._room_hint). Se decide ANTES de poner
 ## formas/obstaculos/decor (DungeonGenerator.generate_floor), asi la sala nace como sala tranquila.
 ##
-## Texto: locale/monte_venus.csv. Frases: assets/data/narrator/monte_venus.json (al subir, una por
-## heroe: monte_subir_<heroe>; en la cima: monte_cima = el dato, monte_cera = guino a Dona Cera).
-## Codice: evento "monte_venus" (assets/data/lore/loc_monte_venus.tres).
-## Arte: tools/gen_monte_venus_art.py -> assets/sprites/environment/decor/monte_venus_*.png
+## La loma (mesetas, paredes con colision, rampas, repisas, vello, cera) es src/dungeon/monte_hill.gd.
+## Aqui: la sala elegida, la bandera de la cima y lo que pasa al subir y al llegar.
+## Texto: locale/monte_venus.csv. Frases: assets/data/narrator/monte_venus.json (al pisar la primera
+## rampa, una por heroe: monte_subir_<heroe>; en la cima: monte_cima = el dato, monte_cera = guino a
+## Dona Cera). Codice: evento "monte_venus" (assets/data/lore/loc_monte_venus.tres).
+## Arte: tools/gen_monte_venus_art2.py -> assets/sprites/environment/monte/
 
 const REGION := "selva"
 const META := "monte_venus"
 const ICON := "^"
 const REWARD := "emergency_briefs"  # "tu madre tenia razon": el vello protege, los calzones tambien
-const DIR := "res://assets/sprites/environment/decor/"
-const HILL_SIZE := Vector2(320, 190)
-const HILL_SUMMIT := Vector2(160, 62)  # la cima dentro del dibujo de la loma
-const FLAG_FOOT := Vector2(7, 69)
-const MIN_TILES := Vector2i(8, 6)
+const FLAG_FOOT := Vector2(15, 62)  # la base del mastil dentro de monte/flag.png
+const REWARD_AT := Vector2(150, 124)  # en la cima, a la izquierda de la bandera (locales de la loma)
+## La loma mide 400x276: con 10x8 baldosas quedan 118 px libres arriba y abajo y 120 a los lados,
+## suficiente para que el heroe aparezca junto a cualquier puerta sin quedar dentro de un muro.
+const MIN_TILES := Vector2i(10, 8)
 const OK_TYPES := [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]
 const FIGHT_TYPES := [Room.RoomType.COMBAT, Room.RoomType.TRAP]
 ## Prueba/capturas: --force-monte=1 la pone en el primer piso de la Selva que se genere.
@@ -94,27 +97,16 @@ static func _candidates(gen: DungeonGenerator) -> Array:
 	return []
 
 
-## Al entrar a la sala (main._build_calm_room): dibuja la loma, la bandera y la zona de subida.
+## Al entrar a la sala (main._build_calm_room): arma la loma, la bandera de la cima y la reaccion del heroe.
 static func build(main: Node, room: Room) -> void:
 	if room.has_meta("monte_built"):
 		return
 	room.set_meta("monte_built", true)
-	var size := RoomUtil.size_of(room)
-	var s := clampf(minf((size.x - 192.0) / HILL_SIZE.x, (size.y - 128.0) / HILL_SIZE.y), 0.6, 1.0)
-	var summit := room.get_center_position() + Vector2(0, -8)
-	# la loma: bajo los actores (el heroe camina "sobre" ella), justo despues de la decoracion
-	var hill := Sprite2D.new()
-	hill.texture = _tex("monte_venus_loma")
-	hill.centered = false
-	hill.scale = Vector2(s, s)
-	hill.position = summit - HILL_SUMMIT * s
-	hill.name = "MonteLoma"
-	room.add_child(hill)
-	var ref := room.get_node_or_null("Decor")
-	room.move_child(hill, (ref.get_index() if ref else room.walls_tilemap.get_index()) + 1)
+	var hill := MonteHill.build(room)
+	var summit := hill.position + hill.summit.get_center() + Vector2(0, 14)
 	# la bandera de la cima: lo que se lee
 	var flag := Sprite2D.new()
-	flag.texture = _tex("monte_venus_bandera")
+	flag.texture = load(MonteHill.DIR + "flag.png")
 	flag.centered = false
 	flag.offset = -FLAG_FOOT
 	flag.set_meta("tall", true)
@@ -126,32 +118,22 @@ static func build(main: Node, room: Room) -> void:
 		if used:
 			return
 		used = true
-		_on_summit(main, room, summit)
+		_on_summit(main, room, hill)
 		it.finish())
-	# zona de subida: al pisar la loma, reaccion del heroe (una vez)
-	var zone := Area2D.new()
-	zone.position = summit + Vector2(0, 40.0 * s)
-	zone.collision_layer = 0
-	zone.collision_mask = 1  # el jugador
-	var cs := CollisionShape2D.new()
-	var shape := CircleShape2D.new()
-	shape.radius = 100.0 * s
-	cs.shape = shape
-	zone.add_child(cs)
-	zone.body_entered.connect(func(body: Node):
-		if body.is_in_group("player") and not room.has_meta("monte_climbed"):
+	# al pisar la primera rampa, reaccion del heroe (una vez)
+	hill.ramp_entered.connect(func():
+		if not room.has_meta("monte_climbed"):
 			room.set_meta("monte_climbed", true)
 			_say_hero("monte_subir"))
-	room.props_node.add_child.call_deferred(zone)
 
 
-static func _on_summit(main: Node, room: Room, summit: Vector2) -> void:
+static func _on_summit(main: Node, room: Room, hill: MonteHill) -> void:
 	room.set_meta("monte_done", true)
 	Sound.play("puzzle_solve")
 	Narrator.say("monte_cima", {}, true)
 	Narrator.say("monte_cera", {}, true)
 	main.get_node("/root/LoreDatabase").custom_event("monte_venus")
-	main._spawn_pickup(room, REWARD, summit + Vector2(0, 54))
+	main._spawn_pickup(room, REWARD, hill.position + REWARD_AT)
 	Narrator.toast(main.tr("MONTE_TOAST_T"), main.tr("MONTE_TOAST_D"), "f06aa0")
 
 
@@ -161,6 +143,3 @@ static func _say_hero(event: String) -> void:
 	if Narrator.has_lines(ev):
 		Narrator.say(ev, {}, true)
 
-
-static func _tex(name: String) -> Texture2D:
-	return load(DIR + name + ".png")

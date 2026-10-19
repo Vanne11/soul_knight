@@ -69,6 +69,17 @@ var _safe_pos := Vector2.ZERO
 var _safe_room: Room = null
 var _fall_mod := Color.WHITE
 var _fall_scale := Vector2.ONE
+## Terreno (src/dungeon/monte_venus.gd): las rampas y el vello frenan al jugador (set_terrain_slow, caduca
+## sola si nadie lo repite) y los saltos de repisa lo llevan en arco hacia abajo (hop), sin danio y
+## atravesando el borde (mascara de colision apagada durante el vuelo).
+const HOP_LIFT := 16.0
+var _terrain_mult := 1.0
+var _terrain_ttl := 0.0
+var _hop_t := 0.0
+var _hop_secs := 0.0
+var _hop_from := Vector2.ZERO
+var _hop_to := Vector2.ZERO
+var _hop_mask := 0
 ## Retroceso visual del arma al disparar (px): solo mueve el sprite, nunca el origen de las balas.
 const RECOIL_KICK := 4.0
 const RECOIL_MAX := 6.0
@@ -171,6 +182,9 @@ func _physics_process(delta: float) -> void:
 	if _falling > 0.0:
 		_fall_step(delta)
 		return
+	if _hop_t > 0.0:
+		_hop_step(delta)
+		return
 	_handle_timers(delta)
 	_handle_movement(delta)
 	_handle_dash(delta)
@@ -181,6 +195,42 @@ func _physics_process(delta: float) -> void:
 	_handle_interaction()
 	move_and_slide()
 	_pit_check()
+
+# ------------------------------------------------------------------ terreno
+func set_terrain_slow(mult: float) -> void:
+	_terrain_mult = mult
+	_terrain_ttl = 0.1
+
+
+func is_hopping() -> bool:
+	return _hop_t > 0.0
+
+
+## Salto en arco hasta `to` (global). false si ya vuela o va en dash.
+func hop(to: Vector2, secs := 0.42) -> bool:
+	if _hop_t > 0.0 or is_dashing or _falling > 0.0:
+		return false
+	_hop_from = global_position
+	_hop_to = to
+	_hop_secs = secs
+	_hop_t = secs
+	_hop_mask = collision_mask
+	collision_mask = 0
+	velocity = Vector2.ZERO
+	Sound.play("dash", 0.2)
+	return true
+
+
+func _hop_step(delta: float) -> void:
+	_hop_t = maxf(0.0, _hop_t - delta)
+	var k := 1.0 - _hop_t / _hop_secs
+	global_position = _hop_from.lerp(_hop_to, k)
+	animated_sprite.position.y = -sin(k * PI) * HOP_LIFT
+	weapon_pivot.position = _hand_position()
+	if _hop_t <= 0.0:
+		collision_mask = _hop_mask
+		animated_sprite.position.y = 0.0
+
 
 # ------------------------------------------------------------------ fosos
 func _gliding() -> bool:
@@ -307,6 +357,9 @@ func _handle_timers(delta: float) -> void:
 		if _dash_refill <= 0.0:
 			_dash_left = dash_charges
 	_camera_left = maxf(0.0, _camera_left - delta)
+	_terrain_ttl = maxf(0.0, _terrain_ttl - delta)
+	if _terrain_ttl <= 0.0:
+		_terrain_mult = 1.0
 	_gesture_left = maxf(0.0, _gesture_left - delta)
 	
 	if _attack_timer > 0.0:
@@ -339,6 +392,7 @@ func _handle_movement(delta: float) -> void:
 		_last_move_direction = input_dir
 	
 	var speed_mult = get_node("/root/PlayerStats").speed_modifier * get_node("/root/PlayerStats").get_intoxication_effects().get("speed", 1.0) * get_node("/root/PlayerStats").contagion_speed_mult()
+	speed_mult *= _terrain_mult
 	if ability:
 		speed_mult *= ability.speed_mult()
 	var st := _status()  # estados de enemigos (status_effects.gd): enrollado, jaula, correa...
