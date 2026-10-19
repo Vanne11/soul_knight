@@ -93,7 +93,7 @@ func _generate_dungeon() -> void:
 	RoomDressing.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # muros 3/4, zocalo, puertas
 	RoomObstacles.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # rocas, columnas, barriles, pinchos
 	_lock_secret_rooms()
-	Utero.setup_floor(self)  # El Utero (src/utero): Consulta en Trompas / fases en el Utero
+	Utero.setup_floor(self)  # El Utero (src/utero): fases del ciclo
 	
 	# Start player in start room
 	var start_room = _find_start_room()
@@ -467,7 +467,6 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 					info.elite = true
 					info.affixes = Affixes.roll(types[t], floor_n)  # 1-2 afijos (src/enemies/affixes)
 					info.drops.append({"item_id": "coin", "chance": ELITE_COIN_CHANCE})
-					Utero.elite_drop(self, info)  # elites de Vulvania: a veces el Turno
 		Utero.data_tweak(room, info)  # El Utero (lutea): enemigos irritables
 		data.append(info)
 	return data
@@ -513,7 +512,6 @@ func _build_shop(room: Room) -> void:
 		return
 	room.set_meta("shop_built", true)
 	var stock := [_random_weapon_id(), _random_loot_id(), _random_loot_id()]
-	stock = Utero.shop_stock(self, stock)  # tienda de Vulvania: el Turno de la Consulta
 	stock[0] = BossDamage.shop_hint(_run_manager.floor_data(), stock[0])  # pista: arma que es debilidad del jefe del piso
 	if _missing_hormones().size() > 0:
 		stock[2] = "hormone_" + _missing_hormones()[0]  # la tienda tambien vende la hormona que te falta
@@ -783,8 +781,6 @@ func _label_doors(room: Room) -> void:
 		door.set_hint(hint[0], hint[1])
 
 func _room_hint(room: Room) -> Array:
-	if room.has_meta("consulta"):
-		return [tr("UTERO_DOOR_HINT"), Color("ff8fb0")]
 	if room.has_meta("elite_room") and not room.cleared:
 		return [tr("DOOR_HINT_ELITE"), Color("ff6a3a")]
 	if room == _weapon_room and not _has_real_weapon():
@@ -855,9 +851,6 @@ func _take_blessing(id: String) -> void:
 
 # ---------------------------------------------------------------- salas tranquilas
 func _build_calm_room(room: Room) -> void:
-	if room.has_meta("consulta"):
-		Utero.build_consulta(self, room)  # Consulta de la Doctora V. (puerta del Cuello Uterino)
-		return
 	if room.has_meta("calm_built"):
 		return
 	room.set_meta("calm_built", true)

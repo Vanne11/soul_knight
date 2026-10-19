@@ -21,8 +21,6 @@ ITEM_TOWEL_MESH_NAME,Toalla de Malla,Mesh Pad,Compresa de Malla,Serviette en Ré
 ITEM_TOWEL_MESH_DESC,"Absorbe 3 golpes, pero roza: 8% más lento mientras dure. Todo tiene su precio.","Absorbs 3 hits, but chafes: 8% slower while it lasts. Everything has a price.",,"Absorbe 3 coups, mais ça frotte : 8 % plus lent tant que ça dure. Tout a un prix."
 ITEM_TOWEL_NIGHT_NAME,Toalla Nocturna,Overnight Pad,Compresa Nocturna,Serviette de Nuit
 ITEM_TOWEL_NIGHT_DESC,Absorbe 3 golpes y recorta 40% el daño por 2 min. Larga como su nombre.,"Absorbs 3 hits and cuts damage by 40% for 2 min. Long, like its name.",,Absorbe 3 coups et réduit les dégâts de 40 % pendant 2 min. Longue comme son nom.
-ITEM_TURNO_NAME,Turno,Appointment Slip,,Ticket
-ITEM_TURNO_DESC,Pase para la Consulta de la Doctora V. (Trompas de Falopio): abre la puerta del Cuello Uterino. Una vez por partida.,Pass for Doctor V.'s clinic (Fallopian Tubes): opens the cervix door. Once per run.,,Laissez-passer pour le Cabinet de la Docteure V. (Trompes de Fallope) : ouvre la porte du Col de l'Utérus. Une fois par partie.
 ITEM_WHIP_NAME,Látigo de Cuero,Leather Whip,,Fouet en Cuir
 ITEM_WHIP_DESC,Abanico de tres chasquidos que atraviesan hasta 2 enemigos. Con palabra de seguridad.,A fan of three cracks that pierce up to 2 enemies. Comes with a safe word.,,Éventail de trois claquements qui traversent jusqu'à 2 ennemis. Avec mot de sécurité.
 PICKUP_SLOT_HINT,Se guarda en una ranura (teclas 1-4 o cruceta).,Stored in a slot (keys 1-4 or d-pad).,,Se range dans un emplacement (touches 1-4 ou croix).

@@ -9,15 +9,8 @@ UTERO_PHASE_3_D,Todos en celo y más rápidos. Alcanza el óvulo.,Everyone in he
 UTERO_PHASE_4,IV · LÚTEA,IV · LUTEAL,,IV · LUTÉALE
 UTERO_PHASE_4_D,Enemigos irritables. El chocolate cura el doble.,Irritable enemies. Chocolate heals double.,,Ennemis irritables. Le chocolat soigne double.
 UTERO_BLESSING_TITLE,BENDICIÓN DE CICLO,CYCLE BLESSING,,BÉNÉDICTION DE CYCLE
-UTERO_DOOR_HINT,CONSULTA,CLINIC,,CABINET
 UTERO_SIGN,CONSULTA DE LA DOCTORA V.,DOCTOR V.'S CLINIC,,CABINET DE LA DOCTEURE V.
-UTERO_SIGN_SUB,Cuello uterino: solo con turno,Cervix: by appointment only,,Col de l'utérus : sur ticket uniquement
-UTERO_PROMPT_DOOR,Puerta del Cuello Uterino,Cervix door,,Porte du Col de l'Utérus
-UTERO_PROMPT_OPEN,Puerta del Cuello Uterino (abierta),Cervix door (open),,Porte du Col de l'Utérus (ouverte)
-UTERO_ALREADY_OPEN,Ya está abierta,Already open,,Déjà ouverte
-UTERO_NEED_TURNO,Falta el Turno,You need an appointment slip,,Il manque le Ticket
-UTERO_OPENED_T,CUELLO UTERINO ABIERTO,CERVIX OPEN,,COL DE L'UTÉRUS OUVERT
-UTERO_OPENED_D,"Cuando caiga la reina, la escotilla baja al Útero.","When the queen falls, the hatch leads down to the uterus.",,"Quand la reine tombera, la trappe descendra vers l'Utérus."
+UTERO_SIGN_SUB,Bienvenida al ciclo: sin turno y sin cobro,Welcome to the cycle: no ticket and no charge,,Bienvenue dans le cycle : sans ticket et sans frais
 UTERO_OVULO_T,¡EL ÓVULO SE SOLTÓ!,THE EGG IS LOOSE!,,L'OVULE S'EST DÉTACHÉ !
 UTERO_OVULO_D,Alcánzalo antes de que se vaya.,Catch it before it leaves.,,Rattrape-le avant qu'il parte.
 UTERO_OVULO_BAR,Óvulo: %d s,Egg: %d s,,Ovule : %d s

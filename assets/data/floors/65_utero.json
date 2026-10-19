@@ -1,10 +1,9 @@
 {
-	"_nota": "EL UTERO: nivel secreto de Vulvania. NO esta en floors/ a proposito: RunManager.insert_utero() lo mete en la ruta (justo despues de Trompas de Falopio) solo si abriste la puerta de la Consulta con un Turno. region = vulvania: escala como el piso del que sales y no cuenta como region nueva. Ver src/utero/utero.gd.",
+	"_nota": "EL UTERO: reino normal del carril comun (routes.json center: arcoiria > utero > prostata), de 1 piso con jefa propia (Dona Regla) como la Prostata. Prefijo 65 a proposito: va DESPUES de 60_prostata en el orden de archivos para no mover los indices canonicos de reino (FLOOR_<n>_NAME, boss<n>_* usan regions().find). La Doctora V. te recibe en la sala de inicio (src/utero/utero_consulta.gd). Ver src/utero/utero.gd.",
 	"name": "EL ÚTERO",
 	"name_key": "FLOOR_UTERO_NAME",
-	"region": "vulvania",
-	"stage": 2,
-	"secret": true,
+	"region": "utero",
+	"stage": 1,
 	"room_count": [8, 9],
 	"elite_chance": 0.2,
 	"kingdom": "vulva",

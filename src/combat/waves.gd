@@ -175,7 +175,7 @@ static func make_plan(pool: Array, floor_n: int, soft: bool, can_ambush: bool) -
 
 
 ## Fila de la curva para el piso n de la ruta. La tabla esta escrita para 10 pisos; con una ruta de
-## otro largo (11 con la Prostata, 12 con el Utero) se estira: el ultimo piso es el 10 de la tabla y
+## otro largo (11 con la Prostata, 12 con el Utero y la Prostata) se estira: el ultimo piso es el 10 de la tabla y
 ## los intermedios se interpolan (con 10 pisos sale la tabla tal cual).
 static func _curve(floor_n: int) -> Dictionary:
 	var total := maxi(RunManager.route_size(), 2)

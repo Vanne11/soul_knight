@@ -1,6 +1,6 @@
 extends Node
 
-## Bot de pruebas: juega una partida completa (11 pisos, 12 con El Utero) para ver si el juego es jugable.
+## Bot de pruebas: juega una partida completa (12 pisos con la Prostata y El Utero) para ver si el juego es jugable.
 ## Uso: godot --path . res://tools/autoplay/autoplay.tscn  [-- --hero=pitocles --seed=123 --fast --floor=9]
 ##   --hero=pitocles|vulvalquiria|ornitorrinco   --seed=N (fija la semilla; RunManager.test_seed)
 ##   --fast / --fast=2.5   Engine.time_scale (1.6x por defecto). OJO: HitFx lo devuelve a 1.0 en cada golpe, casi no acelera.
@@ -8,7 +8,7 @@ extends Node
 ##       (sin esperar al reloj: unas 10 veces mas rapido que el tiempo real; los tiempos del registro son de JUEGO).
 ##   --collect=all   modo "recoger todo" (para el video final): recorre TODAS las salas, abre todos los cofres
 ##       (tambien los de llave y los secretos: acertijos y misiones de llave), recoge objetos y monedas, compra en la
-##       tienda lo que pueda (primero el Turno de Vulvania para entrar al Utero), toma bendiciones y solo despues va
+##       tienda lo que pueda toma bendiciones y solo despues va
 ##       al jefe. Al final de cada piso y de la partida registra un RESUMEN (objetos, cofres, salas, codice).
 ##   --boss-dmg=1   imprime cada golpe a jefes (crudo -> final) y el resumen "[boss-dmg]" al morir
 ##   --boss=main|alt   fuerza el jefe original o el alternativo del reino (main = Dona Cera en el piso 4 de la ruta)
@@ -50,7 +50,7 @@ extends Node
 ##
 ## Dinamicas de sala (src/rooms): --force-dyn=<escort|hold|thief|stealth|clock|challenge|celo|lubricado|
 ## aduanera|apagon|censurada|barriles|antorchas|trampas|pacto|ruleta|mercado> las fuerza en toda sala donde
-## quepan; --force-utero=1 abre El Utero (nivel secreto de Vulvania) al pisar Trompas sin comprar el Turno; --no-god=1 juega sin modo dios (para medir los peligros de sala); --armed=1 empieza con pistola.
+## quepan; --no-god=1 juega sin modo dios (para medir los peligros de sala); --armed=1 empieza con pistola.
 ## PERRO GUARDIAN: si no hay progreso (nada muere ni se recoge, ni salas nuevas, ni dano) durante 90 s abandona el
 ## objetivo y lo anota como PROBLEMA; si una sala no se limpia en 3 min se aleja y vuelve; si el piso pasa de 10 min va
 ## directo al jefe; y como ultimo recurso fuerza la salida (siempre termina). Los PROBLEMA: del registro son cosas a arreglar.
@@ -185,7 +185,6 @@ func _ready() -> void:
 		_loadout.append(id.strip_edges())
 	DebugMenu.god_mode = _arg("--no-god=", "") == ""  # --no-god=1: sin modo dios (mide dificultad y peligros de sala)
 	BossDamage.debug = _arg("--boss-dmg=", "") != ""  # imprime cada golpe a jefes y el resumen al morir (src/enemies/boss_damage.gd)
-	Utero.force = _arg("--force-utero=", "") != ""  # prueba: El Utero se abre solo al pisar Trompas (sin comprar el Turno)
 	RoomDirector.force_kind = _arg("--force-dyn=", "")  # prueba: fuerza esa dinamica de sala en todas las salas donde quepa
 	# para alargar los jefes y ver todos sus desafios: --boss-hp=1,1,12,12,12 (multiplicador por piso)
 	EnemyBoss.test_hp_mults = Array(_arg("--boss-hp=", "1").split(",", false)).map(func(x): return float(x))
@@ -394,7 +393,6 @@ func _physics_process(delta: float) -> void:
 		_floor_t = 0.0
 		_visited.clear()
 		_kq_lost = 0
-		_consulta_giveup = false
 		_skip_rooms.clear()
 		_rush = false
 		_stall_n = 0
@@ -887,8 +885,8 @@ func _explore(room: Room) -> void:
 			if _interact_t <= 0.0:
 				Input.action_press("interact")
 				_interact_t = 0.35
-				if target.get_script().resource_path.ends_with("interactable.gd") and not room.has_meta("consulta"):
-					_used[target.get_instance_id()] = true  # inscripcion, fuente, escotilla: una vez (la puerta del Utero se reintenta)
+				if target.get_script().resource_path.ends_with("interactable.gd"):
+					_used[target.get_instance_id()] = true  # inscripcion, fuente, escotilla, Doctora V.: una vez
 				var it = target.get("_item")
 				if it != null and it.equip_slot == Item.EquipSlot.WEAPON:
 					_wpn_taken[it.id] = true  # recoger-todo: cada arma una vez (la que se suelta al cambiar no se vuelve a coger)
@@ -896,8 +894,6 @@ func _explore(room: Room) -> void:
 				target.set_meta("bot_tries", n)
 				if n > 6:
 					_used[target.get_instance_id()] = true
-					if room.has_meta("consulta"):
-						_consulta_giveup = true
 					_issue("No se pudo usar/recoger %s en sala %s" % [_thing_name(target), Room.RoomType.keys()[room.room_type]])
 		# hasta quedar encima: a 26 px el cuerpo todavia no toca el area del objeto
 		if player.global_position.distance_to(tp) > 4.0:
@@ -957,7 +953,6 @@ func _solve_puzzle(pz: Node2D) -> bool:
 var _quest_room: Room = null
 var _kq_state := ""
 var _kq_lost := 0
-var _consulta_giveup := false
 
 func _quest_step(room: Room) -> bool:
 	_quest_room = null
@@ -997,7 +992,7 @@ func _thing_name(n: Node) -> String:
 	return n.name
 
 
-## Lo mas urgente primero (solo cuenta en la tienda: el Turno del Utero, la hormona que falta, objetos nuevos...).
+## Lo mas urgente primero (solo cuenta en la tienda: la hormona que falta, objetos nuevos...).
 func _thing_prio(n: Node2D) -> float:
 	var path: String = n.get_script().resource_path
 	if not path.ends_with("shop_item.gd"):
@@ -1005,8 +1000,6 @@ func _thing_prio(n: Node2D) -> float:
 	var it = n.get("_item")
 	if it == null:
 		return 0.0
-	if it.id == Utero.TURNO:
-		return 100.0
 	var h: String = str(it.custom_data.get("hormone", ""))
 	if h != "" and h in main._missing_hormones():
 		return 90.0
@@ -1044,12 +1037,6 @@ func _things(room: Room) -> Array:
 	if armed:
 		_wpn_taken[player.current_weapon.id] = true
 	var nodes: Array = room.pickups_node.get_children() + room.props_node.get_children() + room.get_children()
-	# el Turno hay que poder pagarlo: las demas compras dejan esa reserva
-	var reserve := 0
-	if _collect and Utero.turno_obtainable(main):
-		for c in nodes:
-			if c is Node2D and is_instance_valid(c) and c.get_script() != null and c.get_script().resource_path.ends_with("shop_item.gd") and c.get("item_id") == Utero.TURNO and c.visible:
-				reserve = int(c.price)
 	for c in nodes:
 		if not (c is Node2D) or not is_instance_valid(c) or not c.is_visible_in_tree():
 			continue
@@ -1075,14 +1062,9 @@ func _things(room: Room) -> Array:
 			var need: bool = (h != "" and h in missing) or (not armed and it.equip_slot == Item.EquipSlot.WEAPON)
 			if need and rm.coins >= c.price:
 				out.append(c)
-			elif _collect and not need and it.id != Utero.TURNO and rm.coins - reserve >= c.price and not (it.equip_slot == Item.EquipSlot.WEAPON and armed) and "maldito" not in it.tags:
-				out.append(c)
-			elif _collect and it.id == Utero.TURNO and rm.coins >= c.price:
+			elif _collect and not need and rm.coins >= c.price and not (it.equip_slot == Item.EquipSlot.WEAPON and armed) and "maldito" not in it.tags:
 				out.append(c)
 		elif path.ends_with("interactable.gd"):
-			# La puerta del Utero (Consulta de la Doctora V.): solo vale la pena con el Turno en la mano.
-			if room.has_meta("consulta") and (not Utero.owns_turno(main) or RunManager.utero_inserted or _consulta_giveup):
-				continue
 			generic.append(c)
 	out = out.filter(func(n): return n.get_parent() != null and not _used.has(n.get_instance_id()))
 	if out.is_empty():
@@ -1144,12 +1126,6 @@ func _next_room(room: Room) -> Room:
 	var goal = null
 	if _quest_room != null and _quest_room != room and _quest_room.grid_pos in order:
 		goal = _quest_room.grid_pos  # mision de llave: ir a la sala de la llave / del cofre
-	# Con el Turno en la mano: a la Consulta de la Doctora V. (la puerta del Utero)
-	if goal == null and Utero.owns_turno(main) and not RunManager.utero_inserted and not _consulta_giveup:
-		for pos in order:
-			if rooms[pos].has_meta("consulta") and pos != room.grid_pos:
-				goal = pos
-				break
 	# Sin arma: primero la sala del cofre con el arma (el juego la esconde lejos).
 	var wr = main.get("_weapon_room")
 	if goal == null and player.current_weapon == null and wr != null and is_instance_valid(wr) and wr.grid_pos in order and wr.grid_pos != room.grid_pos:

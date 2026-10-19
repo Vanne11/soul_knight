@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "floor_anatomy"
 title = "Mapa de la Gran Censura"
-text = "Seis regiones y una secreta.\n\nPitocles despierta en Penelandia, Vulvalquiria en Vulvania y el Ornitorrinco en la Selva Púbica. Cada uno cruza lo que le toca y todos terminan en el Perineo, la Próstata y el Palacio de la Censura.\n\nLa secreta es El Útero: se entra desde Vulvania, con turno."
+text = "Siete regiones.\n\nPitocles despierta en Penelandia, Vulvalquiria en Vulvania y el Ornitorrinco en la Selva Púbica. Cada uno cruza lo que le toca y todos terminan en el Perineo, el Útero, la Próstata y el Palacio de la Censura.\n\nEl Útero es un reino más: la Doctora V. te recibe sin turno y te explica el ciclo."
 category = 4
 unlock_condition = {"type": 2, "floor": 2}
 flavor_text = "Libera tu primera región."
