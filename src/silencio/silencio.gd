@@ -68,6 +68,8 @@ const CHAIN_FONDO := [
 	["habitacion", 12, 8, 0.4],
 	["pasillo", 8, 5, 0.36],
 	["jefe", 16, 12, 0.35],
+	["memoria", 28, 14, 0.08],  # S7: parte en 8% de luz; cada vela la sube (silencio_memoria.gd)
+	["plaza", 24, 12, 1.0],     # el reino ya transformado
 ]
 const GAP := 4  # tiles libres entre sala y sala (las puertas teletransportan: no hay suelo entre ellas)
 const GROUP_HUD := "sil_hud"
@@ -217,6 +219,8 @@ static func _make_sala(key: String) -> SilencioSala:
 		"pasillo_s6": return SilencioPasillo.new()
 		"habitacion": return SilencioHabitacion.new()
 		"jefe": return SilencioJefe.new()  # la arena de "El Pacto de Silencio"
+		"memoria": return SilencioMemoria.new()  # S7: contemplacion / Memorial
+		"plaza": return SilencioPlaza.new()  # Plaza de la Palabra (el reino ya transformado)
 	return null
 
 
