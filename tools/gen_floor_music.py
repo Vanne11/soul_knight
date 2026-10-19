@@ -10,6 +10,7 @@ Reinos (RunManager.floor_data().kingdom):
   mixto    El Perineo          la menor armonica, oficina tensa, maquina de escribir
   censura  Palacio Censura     mi frigio, frio y rigido, campana de bronce, coro
   prostata La Prostata         sol dorico MUY lento, musica de ascensor, hilo de saxo
+  orgullo  Arcoiria            re jonico (mayor), desfile: metales, campanitas, bongos y platillos
 
 Estructura: cada tema son secciones (A, B, A', C...) de compases con una
 progresion de grados (acordes apilados en la escala) y motivos de un compas en
@@ -27,6 +28,7 @@ PEAK = 0.70          # como el resto de la musica
 
 SCALES = {
     "mixolidio": [0, 2, 4, 5, 7, 9, 10],
+    "jonico": [0, 2, 4, 5, 7, 9, 11],
     "eolia": [0, 2, 3, 5, 7, 8, 10],
     "dorico": [0, 2, 3, 5, 7, 9, 10],
     "frigio_dom": [0, 1, 4, 5, 7, 8, 10],
@@ -234,6 +236,14 @@ PRO_B = (M((1, 2, 7), (4, 3, 4)),
          M((0, 3, 5), (4, 1, 4), (6, 2, 2)),
          M((0, 2, 4), (3, 1, 2), (4, 4, 0)))
 
+# ----- Arcoiria (Reino del Orgullo): desfile, marcha saltarina en mayor
+ORG_A = (M((0, 1, 4), (1, 1, 4), (2, 1, 7), (3, 1, 4), (4, 2, 9), (6, 2, 7)),
+         M((0, 1, 9), (1, 1, 9), (2, 1, 7), (3, 1, 4), (4, 2, 2), (6, 2, 4)),
+         M((0, 1, 4), (1, 1, 2), (2, 1, 0), (3, 1, 2), (4, 4, 0)))
+ORG_B = (M((0, 1, 7), (1, 1, 9), (2, 1, 11), (3, 1, 9), (4, 2, 7), (6, 2, 4)),
+         M((0, 2, 9), (2, 1, 11), (3, 1, 9), (4, 1, 7), (5, 1, 4), (6, 2, 7)),
+         M((0, 1, 4), (1, 1, 7), (2, 1, 4), (3, 1, 2), (4, 4, 0)))
+
 # Perfiles de capas por seccion
 FULL = "mabdp"
 SOFT = "mabd"
@@ -358,6 +368,25 @@ THEMES = {
                         ("C", 8, [3, 4, 5, 4, 3, 4, 5, 6], 0, "mabdph", 2),
                         ("B", 8, [0, 1, 0, 1, 5, 1, 4, 4], 1, "mabdph"),
                         ("A", 8, [0, 1, 0, 1, 0, 1, 5, 4], 0, "mabdph")]),
+    },
+    "orgullo": {
+        "e": dict(tonic=62, scale="jonico", bpm=126, lead="brass", lead2="bell", arp="marimba",
+                  bass="tri", pad="sine", motifs=(ORG_A, ORG_B), swing=0.08, seed=8,
+                  bpat=[0, None, 7, 0, 0, None, 7, None], bass_oct=-24,
+                  drums={"k": "k...k.k.", "s": "..b...b.", "h": "h.hhh.hh"},
+                  secs=[("A", 8, [0, 4, 5, 3, 0, 4, 5, 3], 0, "mabd"),
+                        ("B", 8, [3, 4, 0, 5, 3, 4, 0, 4], 1, "mabdh"),
+                        ("A", 8, [0, 4, 5, 3, 0, 4, 5, 3], 0, "mabdph"),
+                        ("C", 8, [5, 3, 0, 4, 5, 3, 4, 0], 1, "apbmd")]),
+        "b": dict(tonic=62, scale="mixolidio", bpm=152, lead="sqv", lead2="brass", arp="p25",
+                  bass="saw", pad="sine", motifs=(ORG_A, ORG_B), swing=0.0, seed=18,
+                  bpat=[0, 0, 12, 0, 0, 7, 12, 10], bass_oct=-24,
+                  drums={"k": "k.k.k.kk", "s": "..s.b.s.", "h": "hhhhhhhh"},
+                  secs=[("A", 8, [0, 4, 5, 3, 0, 4, 5, 3], 0, "mabd"),
+                        ("B", 8, [3, 4, 0, 5, 3, 4, 0, 4], 1, "mabdh"),
+                        ("A", 8, [0, 4, 5, 3, 0, 4, 5, 3], 0, "mabdph"),
+                        ("C", 8, [5, 3, 0, 4, 5, 3, 4, 0], 1, "mabdph", 2),
+                        ("B", 8, [3, 4, 0, 5, 3, 4, 0, 4], 1, "mabdph")]),
     },
 }
 

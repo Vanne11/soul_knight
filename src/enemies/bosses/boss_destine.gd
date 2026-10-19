@@ -51,6 +51,7 @@ func _ready() -> void:
 	_channels_total = 1
 	_channels_left = 1
 	_ge.boss_charges_changed.emit(_channels_left, _channels_total)
+	BossAnimator.attach(self)  # arte definitivo 156x180 (tools/gen_arcoiria_art2.py): cuadros nuevos + animacion por codigo
 
 
 func _say(suffix: String) -> void:
