@@ -638,11 +638,25 @@ func _draw_region(r: Dictionary, fa: float) -> void:
 		_tx_c("?", rc.position + Vector2(rc.size.x * 0.34, rc.size.y * 0.58), big, Color(gray, 0.75))
 		_rainbow(r, rc)
 		return
-	# visitado / liberado: plantillas de salas (el piso real tapa la del piso actual)
+	# visitado / liberado: TUS salas en los pisos que recorriste (RunManager.floor_maps), el piso actual
+	# en vivo y silueta "?" en los que no pisaste. Un reino liberado en otra partida, sin foto en esta,
+	# muestra la plantilla del SVG.
 	var cur_piso := _piso_idx(r) if id == _wm.cur else -1
 	var pl: Array = r.piso_list
 	for i in pl.size():
-		_draw_cluster(r, pl[i], (1.0 - fa) if i == cur_piso else 1.0, i < cur_piso or (id != _wm.cur and _wm.boss_defeated(id)))
+		var p: Dictionary = pl[i]
+		var key := "%s:%d" % [id, int(p.n)]
+		var done := i < cur_piso or (id != _wm.cur and _wm.boss_defeated(id))
+		if i == cur_piso:
+			var host := get_tree().get_first_node_in_group("main")
+			if host != null and host.dungeon_generator != null and not host.dungeon_generator.rooms.is_empty():
+				_draw_snap(r, p, snapshot(host), 1.0 - fa, false)
+		elif _rm.floor_maps.has(key):
+			_draw_snap(r, p, _rm.floor_maps[key], 1.0, done)
+		elif libd:
+			_draw_cluster(r, p, 1.0, done)
+		else:
+			_draw_unknown_piso(p)
 	if r.has("stairs"):
 		_stairs(r.stairs)
 	if r.has("hill"):
@@ -690,13 +704,30 @@ func _draw_cluster(r: Dictionary, p: Dictionary, a: float, done: bool) -> void:
 		_tx(tr("MM_PISO") % int(p.n), lp, int(clampf(22.0 * _zoom, 12, 30)), Color(1, 1, 1, aa), HORIZONTAL_ALIGNMENT_LEFT, -1, true, false)
 
 
+## Bajada al piso siguiente: una ficha con una escalera de perfil que baja hacia la derecha y una
+## flecha (antes eran 4 barras crecientes y parecía la señal del teléfono).
 func _stairs(st: Dictionary) -> void:
-	var c := _sc(st.x, st.y + 0.0)
-	for i in 4:
-		var rc := Rect2(c + Vector2(-20 + i * 10, 16 - i * 10 - 0) * _zoom - Vector2(0, 0), Vector2(10, 10 + i * 10) * _zoom)
-		rc.position.y = c.y + 16.0 * _zoom - i * 10.0 * _zoom - 0.0
-		_view.draw_rect(rc, FIXED)
-		_view.draw_rect(rc, Color.WHITE, false, maxf(1.0, 2.0 * _zoom))
+	var c := _sc(st.x, st.y + 0.0) + Vector2(0, 6) * _zoom
+	var s := 44.0 * _zoom
+	var box := Rect2(c - Vector2(s, s) * 0.5, Vector2(s, s))
+	_boxr(box, FIXED, Color.WHITE, maxf(1.0, 3.0 * _zoom), 8.0 * _zoom)
+	var n := 4
+	var w := s * 0.64 / n
+	var o := box.position + Vector2(s * 0.18, s * 0.82)  # pie de la escalera (abajo a la izquierda)
+	var pts := PackedVector2Array([o])
+	for k in n:  # peldaños que suben hacia la derecha
+		pts.append(o + Vector2(w * k, -w * (k + 1)))
+		pts.append(o + Vector2(w * (k + 1), -w * (k + 1)))
+	pts.append(o + Vector2(w * n, 0))
+	_view.draw_colored_polygon(pts, INK)
+	var lw := maxf(1.0, 2.0 * _zoom)
+	for k in n:  # canto blanco de cada peldaño
+		_view.draw_line(o + Vector2(w * k, -w * (k + 1)), o + Vector2(w * (k + 1), -w * (k + 1)), Color.WHITE, lw)
+	var ax := box.position.x + s * 0.27  # flecha "bajar" en el hueco de arriba a la izquierda
+	var top := box.position.y + s * 0.16
+	var bot := box.position.y + s * 0.5
+	_view.draw_line(Vector2(ax, top), Vector2(ax, bot - s * 0.06), INK, maxf(1.5, 3.0 * _zoom))
+	_view.draw_colored_polygon(PackedVector2Array([Vector2(ax - s * 0.1, bot - s * 0.1), Vector2(ax + s * 0.1, bot - s * 0.1), Vector2(ax, bot + s * 0.02)]), INK)
 
 
 func _hill(r: Dictionary) -> void:
@@ -984,10 +1015,83 @@ func _draw_hero_marker(fa: float) -> void:
 
 # ------------------------------------------------------------------ piso real
 
-func _kind_of(room: Room) -> String:
+static func _kind_of(room: Room) -> String:
 	if MonteVenus.is_monte(room):
 		return "especial"
 	return str(ROOM_KIND.get(room.room_type, "combate"))
+
+
+## Clave "<reino>:<etapa>" de un piso: la de RunManager.floor_maps y la de piso_list[].n del mapa.
+static func floor_key(floor_n: int) -> String:
+	return "%s:%d" % [RunManager.floor_region(floor_n), RunManager.floor_stage(floor_n)]
+
+
+## Foto compacta del piso actual de main: las salas que conoces (pisadas y sus vecinas) con su tipo y
+## si las pisaste, y los pasillos que ya recorriste. Celdas del generador. La guarda main al bajar de piso.
+static func snapshot(host: Node) -> Dictionary:
+	var gen: DungeonGenerator = host.dungeon_generator
+	var visited: Dictionary = host.visited_rooms
+	var known := {}
+	for pos in visited:
+		known[pos] = true
+		for n in gen.room_graph.get(pos, []):
+			known[n] = true
+	var rooms := []
+	var idx := {}
+	for pos in known:
+		if not gen.rooms.has(pos):
+			continue
+		var sz: Vector2i = gen.room_sizes.get(pos, Vector2i(8, 6))
+		idx[pos] = rooms.size()
+		rooms.append([pos.x, pos.y, sz.x, sz.y, _kind_of(gen.rooms[pos]), visited.has(pos)])
+	var edges := []
+	for pos in idx:
+		for n in gen.room_graph.get(pos, []):
+			if idx.has(n) and (visited.has(pos) or visited.has(n)) and (pos as Vector2i) < (n as Vector2i):
+				edges.append([idx[pos], idx[n]])
+	return {"rooms": rooms, "edges": edges}
+
+
+## Un piso con TUS salas (foto de snapshot) encajado en la celda del piso del SVG.
+func _draw_snap(r: Dictionary, p: Dictionary, snap: Dictionary, a: float, done: bool) -> void:
+	var rooms: Array = snap.get("rooms", [])
+	if a <= 0.01 or rooms.is_empty():
+		return
+	var pc: Dictionary = _d.piso_cell
+	var box := _rc(float(p.x), float(p.y), float(pc.cw), float(pc.ch))
+	var b := Rect2()
+	for i in rooms.size():
+		var q: Array = rooms[i]
+		var rr := Rect2(float(q[0]), float(q[1]), float(q[2]), float(q[3]))
+		b = rr if i == 0 else b.merge(rr)
+	var k := minf(box.size.x / maxf(b.size.x, 1.0), box.size.y / maxf(b.size.y, 1.0))
+	var org := box.position + (box.size - b.size * k) * 0.5 - b.position * k
+	var aa := a * (0.8 if done else 1.0)
+	var rect_of := func(q: Array) -> Rect2:
+		return Rect2(org + Vector2(float(q[0]), float(q[1])) * k, Vector2(float(q[2]), float(q[3])) * k).grow(-k * 0.6)
+	var lw := maxf(1.0, k * 0.5)
+	for e in snap.get("edges", []):
+		_view.draw_line(rect_of.call(rooms[e[0]]).get_center(), rect_of.call(rooms[e[1]]).get_center(), Color(PAPER, aa), lw)
+	for q in rooms:
+		var rc: Rect2 = rect_of.call(q)
+		if bool(q[5]) or str(q[4]) in ["tienda", "jefe"]:
+			_room_big(rc, str(q[4]), r, aa, 0.0, false, false)
+		else:
+			_dashed_rect(rc, Color(0.7, 0.7, 0.8, 0.7 * aa), maxf(1.0, 1.5 * _zoom), 4.0)
+	if _zoom > 0.9:
+		_tx(tr("MM_PISO") % int(p.n), _sc(float(p.x), float(p.y) - 0.2), int(clampf(22.0 * _zoom, 12, 30)), Color(1, 1, 1, aa), HORIZONTAL_ALIGNMENT_LEFT, -1, true, false)
+
+
+## Piso que no pisaste en esta partida: silueta con "?" (el mapa se llena explorando, como en Metroid).
+func _draw_unknown_piso(p: Dictionary) -> void:
+	var pc: Dictionary = _d.piso_cell
+	var box := _rc(float(p.x), float(p.y), float(pc.cw), float(pc.ch))
+	var gray := Color(0.7, 0.7, 0.8)
+	_boxr(box, Color(gray, 0.06), Color(gray, 0.0), 0, 8.0 * _zoom)
+	_dashed_rect(box, Color(gray, 0.55), maxf(1.0, 2.0 * _zoom), 8.0)
+	_tx_c("?", box.get_center() + Vector2(0, 6.0 * _zoom), int(clampf(60.0 * _zoom, 12, 90)), Color(gray, 0.7))
+	if _zoom > 0.9:
+		_tx(tr("MM_PISO") % int(p.n), _sc(float(p.x), float(p.y) - 0.2), int(clampf(22.0 * _zoom, 12, 30)), Color(1, 1, 1, 0.6), HORIZONTAL_ALIGNMENT_LEFT, -1, true, false)
 
 
 func _draw_floor(fa: float) -> void:

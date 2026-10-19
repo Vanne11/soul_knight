@@ -84,6 +84,10 @@ func _setup_camera() -> void:
 	camera.limit_bottom = 720
 
 func _generate_dungeon() -> void:
+	if has_meta("map_key") and get_meta("map_seed", -1) == _run_manager.current_seed and not dungeon_generator.rooms.is_empty():  # foto del piso que dejas (mapa del mundo)
+		_run_manager.floor_maps[get_meta("map_key")] = MapMetroid.snapshot(self)
+	set_meta("map_key", MapMetroid.floor_key(_run_manager.current_floor))
+	set_meta("map_seed", _run_manager.current_seed)
 	var seed = _run_manager.current_seed + _run_manager.current_floor * 7919  # cada piso su propio trazado
 	dungeon_root = dungeon_generator.generate_floor(_run_manager.current_floor, seed)
 	visited_rooms.clear()

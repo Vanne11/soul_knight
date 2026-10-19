@@ -637,6 +637,9 @@ var total_enemies_killed: int = 0
 var total_damage_dealt: float = 0.0
 var total_damage_taken: float = 0.0
 var items_collected: Array[Dictionary] = []
+## Mapa real de cada piso ya dejado en esta partida ("<reino>:<etapa>" -> foto de MapMetroid.snapshot):
+## el mapa del mundo dibuja TUS salas en los pisos recorridos, y silueta en los que no pisaste.
+var floor_maps: Dictionary = {}
 var lore_unlocked: Array[String] = []
 var meta_currency: int = 0
 var unlocked_perks: Array[String] = []
@@ -724,6 +727,7 @@ func start_new_run(seed: int = 0) -> void:
 		seed = test_seed if test_seed != 0 else Time.get_ticks_msec()
 	current_seed = seed
 	RNG.randomize(seed)
+	floor_maps.clear()
 	# Partida del dia (pedida desde el menu): misma semilla para todos, con la Censura elegida en el menu.
 	daily_mode = daily_requested
 	daily_requested = false
