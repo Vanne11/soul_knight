@@ -300,6 +300,7 @@ func _build_boss_bar() -> void:
 	_boss_bar.set_color(Color("c8283a"))
 	box.visible = false
 	add_child(box)
+	_boss_bar.set_marks([0.66, 0.33] as Array[float])  # fases del jefe (EnemyBoss.PHASE2_AT / PHASE3_AT)
 
 ## Curas que le quedan al jefe (cada intento de canalizar gasta una).
 func _on_boss_charges_changed(left: int, total: int) -> void:

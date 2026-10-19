@@ -112,6 +112,8 @@ func _ready() -> void:
 	_floor = RunManager.region_index(get_node("/root/RunManager").current_floor) + 1  # reino 1..5 (el jefe es de la 2a etapa)
 	_canon = RunManager.canon_region_index(get_node("/root/RunManager").current_floor) + 1
 	hurtbox.area_entered.connect(_on_hurtbox_entered)
+	telegraph_started.connect(_on_telegraph_sound)
+	channel_started.connect(func(_c): _warn_sound(&"cura"))
 	hitbox.add_to_group("enemy_attack")
 	hitbox.monitorable = false
 	hitbox.monitoring = true
@@ -282,6 +284,29 @@ func _wait(secs: float) -> bool:
 			return false
 		left -= s
 	return true
+
+
+## Sonido de aviso segun el tipo de ataque (embestida, zona, proyectiles, cura). Volumen moderado.
+const WARN_CHARGE := ["charge", "embiste", "persigue", "pinball", "zigzag", "tiron", "rodillo", "empuje", "latigazo", "golpes"]
+const WARN_SHOTS := ["abanico", "fan", "rafaga", "oleada", "ondas", "orbitas", "rebotines", "notificaciones", "pelusas", "documentos", "cuchillas", "hilos", "bots", "ticket", "timbres"]
+
+
+func _on_telegraph_sound(_secs: float) -> void:
+	if _last_attack == &"atk_canalizar":
+		return  # lo avisa channel_started
+	var n := String(_last_attack).trim_prefix("atk_")
+	if n in WARN_CHARGE:
+		_warn_sound(&"embestida")
+	elif n in WARN_SHOTS:
+		_warn_sound(&"proyectil")
+	else:
+		_warn_sound(&"zona")
+
+
+func _warn_sound(kind: StringName) -> void:
+	if state == State.DEAD:
+		return
+	Sound.play("aviso_" + String(kind), 0.03)
 
 
 ## Un frame de fisica. false = ataque cancelado.
@@ -943,6 +968,7 @@ func take_damage(amount: float, source: Node = null, _kb: Vector2 = Vector2.ZERO
 	_emit_health()
 	HitFx.flash(animated_sprite)
 	HitFx.shake(0.18)  # golpe al jefe: sacudida corta
+	HitFx.hitstop(HitFx.HITSTOP_BOSS_HIT)
 	_ge.enemy_damaged.emit(self, amount, source)
 	BossDamage.popup(self, amount, state == State.TIRED)
 	if current_health <= 0.0:
@@ -976,7 +1002,10 @@ func _enter_phase(n: int) -> void:
 	state = State.TRANSITION
 	_timer = 1.8
 	invuln = false
-	HitFx.shake(0.55)
+	HitFx.shake(0.9)  # cambio de fase: sacudida marcada (la opcion "Sacudida de pantalla" la apaga)
+	HitFx.hitstop(HitFx.HITSTOP_PHASE)
+	Sound.play("crack", 0.02)
+	_float_text(tr("BOSS_PHASE_%d" % n), Color("ff7a4a"), Vector2(0, -190))
 	animated_sprite.modulate = Color(1.8, 0.5, 0.5)
 	_say("phase%d" % n)
 	_clear_bullets()

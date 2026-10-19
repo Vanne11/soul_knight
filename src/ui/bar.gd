@@ -25,6 +25,8 @@ var _gloss: TextureRect
 var _icon: TextureRect
 var _icon_name := ""
 var label: Label
+var _marks: Array[float] = []
+var _mark_rects: Array[ColorRect] = []
 
 
 func _ready() -> void:
@@ -99,8 +101,26 @@ func _layout() -> void:
 	_apply()
 
 
+## Marcas verticales a esos porcentajes (0-1) de la barra: fases del jefe (0.66, 0.33).
+func set_marks(fracs: Array[float]) -> void:
+	_marks = fracs
+	for m in _mark_rects:
+		m.queue_free()
+	_mark_rects.clear()
+	for i in fracs.size():
+		var m := ColorRect.new()
+		m.color = Color(1, 0.93, 0.7, 0.95)
+		m.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(m)
+		_mark_rects.append(m)
+	_apply()
+
+
 func _apply() -> void:
 	var r := _inner()
+	for i in _mark_rects.size():
+		_mark_rects[i].position = Vector2(r.position.x + floorf(r.size.x * _marks[i] / 2.0) * 2.0 - 1.0, r.position.y - 3.0)
+		_mark_rects[i].size = Vector2(2.0, r.size.y + 6.0)
 	# de a 2 px: el relleno nunca corta un pixel de arte por la mitad
 	var w := floorf(r.size.x * _pct / 2.0) * 2.0
 	var cw := floorf(r.size.x * _chip_pct / 2.0) * 2.0
