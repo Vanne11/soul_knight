@@ -42,6 +42,7 @@ MANUAL = {
     "pastilla": "penelandia/pastilla",
     "pelusa_estatica": "selva/pelusa_estatica",
     "satelite_cobre": "vulvania/satelite_cobre",
+    "timbre": "perineo/timbre",
 }
 EXTS = (".gd", ".tscn", ".tres", ".import", ".py", ".json", ".cfg", ".godot")
 
