@@ -14,12 +14,15 @@ const MAX_INFLATE := 2.4
 const GROW_RATE := 0.17          ## por segundo
 const HIT_DEFLATE := 0.3         ## lo que baja con cada golpe (la verdad)
 const POP_RADIUS := 120.0
+const POP_WARN := 0.7            ## aviso antes de reventar (un golpe tuyo lo desinfla y lo cancela)
 const HERO_GROW := {"pitocles": 1.8, "vulvalquiria": 0.55, "ornitorrinco": 0.8}
 var inflate := 1.0
 var _base_scale := Vector2.ONE
 var _base_speed := 120.0
 var _stage_said := 0
 var _grow_mult := 1.0
+var _pop_t := -1.0
+var _pop_zone: BossZone = null
 
 
 func _setup() -> void:
@@ -45,9 +48,39 @@ func _physics_process(delta: float) -> void:
 	if target != null and global_position.distance_to(target.global_position) < detection_range * 1.4:
 		inflate = minf(MAX_INFLATE, inflate + GROW_RATE * _grow_mult * delta)
 	_apply_inflate()
-	if inflate >= MAX_INFLATE and state not in [State.WINDUP, State.LUNGE]:
-		_pop()
+	_update_pop_warning(delta)
 	super._physics_process(delta)
+
+
+## Al llegar al maximo no revienta de golpe: tiembla, parpadea y marca su radio durante POP_WARN.
+func _update_pop_warning(delta: float) -> void:
+	if _pop_t < 0.0:
+		if inflate >= MAX_INFLATE and state not in [State.WINDUP, State.LUNGE]:
+			_pop_t = POP_WARN
+			E3a.icon(self, "alert", POP_WARN)
+			_pop_zone = BossZone.circle(global_position, POP_RADIUS, POP_WARN, 0.01, 0.0)
+			_pop_zone.follow = self
+			_pop_zone.fade = 0.1
+			get_parent().add_child(_pop_zone)
+		return
+	if inflate < MAX_INFLATE:  # la verdad lo desinfla: aviso cancelado
+		_cancel_pop_warning()
+		return
+	_pop_t -= delta
+	animated_sprite.modulate = Color(2, 2, 2) if int(_pop_t * 16.0) % 2 == 0 else Color(1.6, 0.4, 0.4)
+	animated_sprite.offset.x = RNG.randf_range(-1.5, 1.5)
+	if _pop_t <= 0.0:
+		_cancel_pop_warning()
+		_pop()
+
+
+func _cancel_pop_warning() -> void:
+	_pop_t = -1.0
+	animated_sprite.offset.x = 0.0
+	animated_sprite.modulate = Color.WHITE
+	if is_instance_valid(_pop_zone):
+		_pop_zone.dismiss()
+	_pop_zone = null
 
 
 func _apply_inflate() -> void:

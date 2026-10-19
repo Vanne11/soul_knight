@@ -23,5 +23,17 @@
 		"line_weak": "BOSSDMG_DESTINE_WEAK",
 		"line_resist": "BOSSDMG_DESTINE_RESIST",
 		"hint_weapon": "canon_confeti"
+	},
+	"hoja_de_parra": {
+		"weak": {"calor": 1.9, "explosivo": 1.4},
+		"resist": {"agua": 0.35, "latex": 0.6},
+		"match": {
+			"pitocles": ["calor", "explosivo"],
+			"vulvalquiria": ["calor"],
+			"ornitorrinco": ["calor", "explosivo"]
+		},
+		"line_weak": "BOSSDMG_PARRA_WEAK",
+		"line_resist": "BOSSDMG_PARRA_RESIST",
+		"hint_weapon": "laser_depilador"
 	}
 }

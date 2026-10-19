@@ -1,0 +1,23 @@
+keys,es,en,es_ES,fr
+BOSS_PARRA_NAME,LA PARRA ENTERA,THE WHOLE VINE,,LA PARRA ENTERA
+HOJITA_NAME,Hojita censora,Little censor leaf,,Feuillette censeuse
+PARRA_FALSE_WIN,¡VICTORIA!,VICTORY!,,VICTOIRE !
+PARRA_NOT_A_LEAF,¿Creíste que era solo una hoja?,Did you think I was just a leaf?,,Tu croyais que ce n'était qu'une feuille ?
+PARRA_REVIVES,¡LA PARRA ENTERA!,THE WHOLE VINE!,,LA VIGNE ENTIÈRE !
+PARRA_SEEN_YOU,Ya te vi pelear. Ahora te censuro mejor.,I've seen you fight. Now I censor you better.,,Je t'ai vu te battre. Maintenant je te censure mieux.
+PARRA_BANDS_START,Las enredaderas se apoderan de la sala...,The vines are taking over the room...,,Les vignes envahissent la salle...
+PARRA_BANDS,¡Otra enredadera por el borde!,Another vine creeps along the edge!,,Une autre vigne sur le bord !
+PARRA_PAT_DASH,¡PATRÓN DETECTADO: SIEMPRE ESQUIVAS %s!,PATTERN DETECTED: YOU ALWAYS DODGE %s!,,MOTIF DÉTECTÉ : TU ESQUIVES TOUJOURS %s !
+PARRA_PAT_DASH_Q1,Ahí mismo te dejé una raíz. Con cariño.,I left a root right there. With love.,,J'ai laissé une racine juste là. Avec amour.
+PARRA_PAT_DASH_Q2,Censurar tu lado favorito: gratis.,Censoring your favourite side: free of charge.,,Censurer ton côté préféré : gratuit.
+PARRA_PAT_ORBIT,¡PATRÓN DETECTADO: SIEMPRE ME RODEAS %s!,PATTERN DETECTED: YOU ALWAYS CIRCLE ME %s!,,MOTIF DÉTECTÉ : TU ME CONTOURNES TOUJOURS %s !
+PARRA_PAT_ORBIT_Q1,Me adelanto. Soy una hoja con visión.,I'm cutting ahead. A leaf with vision.,,Je prends les devants. Une feuille visionnaire.
+PARRA_PAT_ORBIT_Q2,"Das vueltas; yo, mejor: me enredo.",You go in circles; I do better: I tangle.,,"Tu tournes en rond ; moi, je m'enroule."
+PARRA_CUT_BONUS,¡Cura cortada! Hasta una parra se marchita.,Heal cut! Even a vine can wilt.,,Soin coupé ! Même une vigne peut se faner.
+PARRA_RAGE,¡SE PONE ROJA DE LA VERGÜENZA!,SHE'S TURNING RED WITH SHAME!,,ELLE ROUGIT DE HONTE !
+PARRA_BROTES,¡BROTES CENSORES!,CENSOR SPROUTS!,,POUSSES CENSEURES !
+PARRA_CENSOR_ZONE,Ya sé dónde te quedas: te lo censuro.,I know where you linger: I'm censoring it.,,Je sais où tu traînes : je le censure.
+PARRA_FIRMA,¡ESTRANGULAMIENTO!,STRANGLEHOLD!,,ÉTRANGLEMENT !
+HOJA_FIRMA,¡CENSURA TOTAL!,TOTAL CENSORSHIP!,,CENSURE TOTALE !
+BOSSDMG_PARRA_WEAK,"¡Ay, el calor! ¡Me hace pasa, no parra!","Ow, the heat! I'm turning into a raisin!",,"Aïe, la chaleur ! Je deviens un raisin sec !"
+BOSSDMG_PARRA_RESIST,"Mmm, riego... gracias, qué amable.","Mmm, watering... thanks, how kind.",,"Mmm, de l'arrosage... merci, c'est gentil."
