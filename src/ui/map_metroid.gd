@@ -231,9 +231,13 @@ func _input(event: InputEvent) -> void:
 	if _closing:
 		get_viewport().set_input_as_handled()
 		return
+	if (event.is_action_pressed("map") or event.is_action_pressed("pause")) and not event.is_echo():
+		_close()  # la misma tecla/boton que lo abre (reasignable)
+		get_viewport().set_input_as_handled()
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		var k: int = event.physical_keycode
-		if k == KEY_M or k == KEY_ESCAPE:
+		if k == KEY_ESCAPE:
 			_close()
 		elif _intro:
 			_skip_intro()
@@ -248,7 +252,7 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 	elif event is InputEventJoypadButton and event.pressed:
 		var b: int = event.button_index
-		if b == JOY_BUTTON_B or b == JOY_BUTTON_BACK or b == JOY_BUTTON_START:
+		if b == JOY_BUTTON_B or event.is_action_pressed("pause"):
 			_close()
 		elif _intro:
 			_skip_intro()
@@ -348,14 +352,8 @@ func _run_intro() -> void:
 func _poll_input(delta: float) -> void:
 	var mv := Vector2(
 		Input.get_axis("ui_left", "ui_right"), Input.get_axis("ui_up", "ui_down"))
-	if Input.is_physical_key_pressed(KEY_A):
-		mv.x -= 1.0
-	if Input.is_physical_key_pressed(KEY_D):
-		mv.x += 1.0
-	if Input.is_physical_key_pressed(KEY_W):
-		mv.y -= 1.0
-	if Input.is_physical_key_pressed(KEY_S):
-		mv.y += 1.0
+	# las acciones de movimiento del jugador (reasignables: Controls)
+	mv += Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("move_up", "move_down"))
 	for pad in Input.get_connected_joypads():
 		var s := Vector2(Input.get_joy_axis(pad, JOY_AXIS_LEFT_X), Input.get_joy_axis(pad, JOY_AXIS_LEFT_Y))
 		if s.length() > 0.25:
@@ -1238,7 +1236,7 @@ func _draw_ui(fa: float) -> void:
 	# barra inferior de ayuda
 	_view.draw_rect(Rect2(0, vs.y - 28, vs.x, 28), Color(INK, 0.92))
 	var hint := tr("MM_SALTAR") if _intro else (tr("MM_AYUDA_PAD") if Input.get_connected_joypads().size() > 0 else tr("MM_AYUDA"))
-	_tx_c(hint, Vector2(vs.x * 0.5, vs.y - 14), 12, Color("bed0f5"), false, false)
+	_tx_c(InputGlyphs.localize_text(hint), Vector2(vs.x * 0.5, vs.y - 14), 12, Color("bed0f5"), false, false)
 	if _legend and not _intro:
 		_draw_legend()
 

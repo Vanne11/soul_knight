@@ -21,6 +21,7 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	InputGlyphs.watcher().device_changed.connect(func(_p): _refresh())
+	InputGlyphs.watcher().bindings_changed.connect(_refresh)
 	_refresh()
 
 

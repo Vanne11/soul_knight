@@ -52,10 +52,8 @@ func _open_map() -> void:
 	MapMetroid.open(get_tree().root)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_M:
-		_open_map()
-	elif event is InputEventJoypadButton and event.pressed and event.button_index == JOY_BUTTON_BACK:
-		_open_map()  # Select/Back: L1/R1 no (son usar objeto y guardia)
+	if event.is_action_pressed("map") and not event.is_echo():
+		_open_map()  # accion "map" (Controls): M / Select-Back por defecto
 	# con controles tactiles: tocar el minimapa abre el mapa
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT \
 			and TouchControls.is_active() and get_global_rect().has_point(event.position):

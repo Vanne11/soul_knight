@@ -40,7 +40,7 @@ MENU_UPGRADE_BUY,%s — %s   [%d/%d]   %d huesos,%s — %s   [%d/%d]   %d bones,
 CODEX_TITLE,CÓDICE  (%.0f%% descubierto),CODEX  (%.0f%% discovered),,CODEX  (%.0f%% découvert)
 CODEX_HINT,"Elige una entrada. Las que faltan se descubren jugando: inscripciones, objetos, enemigos y jefes.","Pick an entry. The missing ones are discovered by playing: inscriptions, items, enemies and bosses.",,"Choisis une entrée. Les manquantes se découvrent en jouant : inscriptions, objets, ennemis et boss."
 CODEX_LOCKED,Todavía sin descubrir. Sigue jugando: algo por ahí te la debe.,Not discovered yet. Keep playing: something out there owes you this one.,,Pas encore découvert. Continue de jouer : quelque chose par là te la doit.
-INTRO_HINT,[cualquier tecla] seguir      [ESC] saltar la historia,[any key] continue      [ESC] skip the story,,[une touche] continuer      [ÉCHAP] passer l'histoire
+INTRO_HINT,[cualquier tecla] seguir      [ESC] saltar la historia,[any key] continue      [ESC] skip the story,,[une touche] continuer      [ESC] passer l'histoire
 INTRO_CHOOSE_TITLE,ELIGE A TU HÉROE,CHOOSE YOUR HERO,,CHOISIS TON HÉROS
 INTRO_REPLAY,Ver la historia otra vez,Watch the story again,,Revoir l'histoire
 INTRO_CHOOSE_BTN,ELEGIR,CHOOSE,,CHOISIR

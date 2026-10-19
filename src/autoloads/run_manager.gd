@@ -367,13 +367,13 @@ static func _as_list(v) -> Array:
 ## hormone: la que llevas de serie. La del reino contrario te da alergia (salvo al ornitorrinco).
 const CHARACTERS := {
 	"pitocles": {"name": "PITOCLES", "title": "Héroe de Penelandia", "kingdom": "pene", "hormone": "testosterona",
-		"perk": "Escudo (clic der./K): bloquea de frente y, con parry a tiempo, devuelve la bala. Su dash aturde. Más duro, más lento.",
+		"perk": "Escudo: bloquea de frente y, con parry a tiempo, devuelve la bala. Su dash aturde. Más duro, más lento.",
 		"bio": "Hoplita veterano de la Guerra Fría Hormonal. Lleva penacho rojo porque dijeron que da autoridad. No la da."},
 	"vulvalquiria": {"name": "VULVALQUIRIA", "title": "Heroína de Vulvania", "kingdom": "vulva", "hormone": "estrogeno",
-		"perk": "Más rápida, con doble dash y alas (clic der./K) que planean. Grito (F): los enemigos huyen. Menos vida, mejores esquivas.",
+		"perk": "Más rápida, con doble dash y alas que planean. Grito: los enemigos huyen. Menos vida, mejores esquivas.",
 		"bio": "Guerrera de los fiordos de Vulvania. Cero batallas perdidas, sin contar las que abandonó. Va por la Hoja con trenzas y sin paciencia."},
 	"ornitorrinco": {"name": "ORNITORRINCO", "title": "No especifica", "kingdom": "ninguno", "hormone": "",
-		"perk": "Electrorrecepción: ve lo invisible. Huevo-trampa (F) y espolón venenoso (clic der./K). Sin alergias, sin reino.",
+		"perk": "Electrorrecepción: ve lo invisible. Huevo-trampa y espolón venenoso. Sin alergias, sin reino.",
 		"bio": "Pico de pato, cola de castor, pone huevos y es mamífero. Nadie sabe qué es. Salvar el mundo tampoco estaba en el formulario."},
 }
 

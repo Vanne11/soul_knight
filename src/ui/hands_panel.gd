@@ -235,5 +235,5 @@ func _update_left() -> void:
 
 
 func _unhandled_input(e: InputEvent) -> void:
-	if e is InputEventKey and e.pressed and not e.echo and e.physical_keycode == KEY_H and is_instance_valid(_help):
+	if e.is_action_pressed("help") and not e.is_echo() and is_instance_valid(_help):
 		_help.show_help("manual")
