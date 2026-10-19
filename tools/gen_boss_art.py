@@ -65,6 +65,12 @@ BOSSES = {
                   "antenna and a single giant red eye on its screen, tiny arms and legs, scanning the room with a red laser, "
                   "in a dark data-center hall of the Censorship Palace with server racks with blank blinking lights, flying grey pixel "
                   "squares and red prohibition symbols. Low camera angle, cold and creepy but funny. "),
+    "don_chequeo": ("A dramatic boss reveal: DON CHEQUEO, the boss from the reference, a walnut-shaped male bureaucrat "
+                    "creature with glasses, a grey tie, an ID badge and a clipboard with medical forms, pointing sternly at "
+                    "a small examination booth with a curtain behind him, standing in a dim prostate-clinic waiting room "
+                    "with rows of beige plastic chairs, a red take-a-number dispenser, a glowing number display showing only "
+                    "digits, old magazines and tired patients waiting. Low camera angle, strict but funny: it is time for "
+                    "your check-up. "),
     "glandula": ("A dramatic boss reveal: the boss from the reference, a huge pink-brown walnut-shaped gland creature with a sealed "
                  "stitched mouth, tired heavy-lidded eyes with dark circles and a paper waiting-number ticket on its side, "
                  "sitting perfectly silent and calm in the middle of a dim hospital waiting room with rows of beige plastic chairs, "
@@ -80,6 +86,7 @@ REFS = {
     "reina_ovaria": [ART + "ovaria/reina_a.png"],
     "testiculo_primordial": [ART + "testiculo/test_a.png"],
     "don_sildenafil": [ART + "sildenafil/sildenafil_a.png"],
+    "don_chequeo": ["tools/_intro_raw/prostata_v2.png"],  # la nuez de la Ventanilla vieja (rama nuez-ventanilla-guardada)
     "hoja_de_parra": [ART + "parra/hoja_a.png"],
     "destine": [ART + "arcoiria/boss_a.png"],
 }
