@@ -10,10 +10,13 @@ class_name BossZone
 enum Shape { CIRCLE, RECT }
 ## WAX: zona de PELIGRO con aspecto de cera caliente (charco irregular, burbujas, vapor, borde
 ## rojizo; nunca blanco, para no confundirla con lo que hay que TOCAR). Reutilizable por cualquier jefe.
-enum Style { NORMAL, BAR, PIXEL, SHIELD, CHANNEL, WAX }
+## VINE: lo mismo para la Parra, con enredadera espinosa (verde oscuro, borde rojizo).
+enum Style { NORMAL, BAR, PIXEL, SHIELD, CHANNEL, WAX, VINE }
 
 const CENSOR_UNSHADED := preload("res://src/shaders/censor_unshaded.gdshader")
 const GROUP := "boss_hazard"
+## PIXEL: radio alrededor del heroe donde la censura no pixela (el heroe siempre se ve).
+const HERO_CLEAR := 46.0
 
 signal went_active
 
@@ -42,6 +45,9 @@ var p_time := 0.0
 var p_break := 1.0
 var label := ""
 var label2 := ""
+## PIXEL: radio sin pixelar alrededor del heroe y opacidad de los pixeles (0..1).
+var hero_clear := HERO_CLEAR
+var opacity := 0.94
 
 var phase := 0  # 0 aviso, 1 activa, 2 desvanece
 var t := 0.0
@@ -49,6 +55,10 @@ var _hit := false
 var _mat := ShaderMaterial.new()
 var _room: Node = null
 var _seed := 0.0
+var _hot := WAX_HOT
+var _core := WAX_CORE
+var _edge := WAX_EDGE
+var _cool := Color(0.86, 0.68, 0.4)
 
 
 static func circle(pos: Vector2, r: float, warn_: float, active_: float, dmg: float, col := Color(1.0, 0.3, 0.25)) -> BossZone:
@@ -85,7 +95,12 @@ func _ready() -> void:
 		n = n.get_parent()
 	_room = n
 	_sync_censor()
-	if style == Style.WAX:
+	if style == Style.VINE:
+		_hot = VINE_HOT
+		_core = VINE_CORE
+		_edge = VINE_EDGE
+		_cool = Color(0.36, 0.42, 0.2)
+	if style == Style.WAX or style == Style.VINE:
 		material = null  # el peligro conserva su color aunque la sala siga censurada (gris)
 	if style == Style.PIXEL or style == Style.BAR:
 		z_index = 40  # por encima de actores y balas
@@ -167,7 +182,7 @@ func _draw() -> void:
 			_draw_channel()
 		Style.BAR:
 			_draw_bar()
-		Style.WAX:
+		Style.WAX, Style.VINE:
 			_draw_wax()
 		_:
 			_draw_normal()
@@ -256,12 +271,15 @@ func _draw_pixel() -> void:
 	else:
 		var a := 1.0 if phase == 1 else 1.0 - clampf(t / maxf(fade, 0.01), 0.0, 1.0)
 		var frame := floorf(t * 7.0)
+		var hero := get_tree().get_first_node_in_group("player") as Node2D
 		for i in nx:
 			for j in ny:
+				var cs := Vector2(minf(cell, size.x - i * cell), minf(cell, size.y - j * cell))
+				if hero != null and (global_position + r.position + Vector2(i, j) * cell + cs * 0.5).distance_to(hero.global_position + Vector2(0, -18)) < hero_clear:
+					continue  # el heroe nunca queda censurado: hueco de pixeles alrededor
 				var v := fposmod(sin(float(i) * 12.9898 + float(j) * 78.233 + frame * 3.17 + _seed) * 43758.5453, 1.0)
 				var g := 0.22 + 0.62 * v
-				var cs := Vector2(minf(cell, size.x - i * cell), minf(cell, size.y - j * cell))
-				draw_rect(Rect2(r.position + Vector2(i, j) * cell, cs), Color(g, g, g, 0.94 * a))
+				draw_rect(Rect2(r.position + Vector2(i, j) * cell, cs), Color(g, g, g, opacity * a))
 		draw_rect(r, Color(1, 1, 1, 0.6 * a), false, 2.0)
 
 
@@ -304,6 +322,9 @@ func _draw_channel() -> void:
 const WAX_HOT := Color(1.0, 0.6, 0.1)
 const WAX_CORE := Color(1.0, 0.86, 0.32)
 const WAX_EDGE := Color(0.5, 0.1, 0.04)
+const VINE_HOT := Color(0.2, 0.55, 0.16)
+const VINE_CORE := Color(0.5, 0.82, 0.25)
+const VINE_EDGE := Color(0.42, 0.06, 0.1)
 
 
 ## Contorno irregular (no un circulo perfecto) de la zona, escalado por `k`; ondula con `wt`.
@@ -340,25 +361,25 @@ func _draw_wax() -> void:
 		var p := clampf(t / maxf(warn, 0.01), 0.0, 1.0)
 		var full := _wax_pts(1.0, wt * 0.5)
 		# la cera se va derramando: crece desde el centro hasta el contorno de aviso
-		draw_colored_polygon(_wax_pts(0.2 + 0.8 * p, wt * 0.5), Color(WAX_HOT, 0.28 + 0.4 * p))
-		draw_colored_polygon(full, Color(WAX_HOT, 0.08 + 0.12 * p))
+		draw_colored_polygon(_wax_pts(0.2 + 0.8 * p, wt * 0.5), Color(_hot, 0.28 + 0.4 * p))
+		draw_colored_polygon(full, Color(_hot, 0.08 + 0.12 * p))
 		var closed := full.duplicate()
 		closed.append(full[0])
-		draw_polyline(closed, Color(WAX_EDGE.lerp(Color(1.0, 0.25, 0.08), pulse), 0.75 + 0.25 * pulse), 4.0)
+		draw_polyline(closed, Color(_edge.lerp(Color(1.0, 0.25, 0.08), pulse), 0.75 + 0.25 * pulse), 4.0)
 		return
 	if phase == 1:
 		var pts := _wax_pts(1.0, wt * 2.0)
-		draw_colored_polygon(pts, Color(WAX_HOT, 0.88))
-		draw_colored_polygon(_wax_pts(0.62, wt * 3.0), Color(WAX_CORE, 0.8))
+		draw_colored_polygon(pts, Color(_hot, 0.88))
+		draw_colored_polygon(_wax_pts(0.62, wt * 3.0), Color(_core, 0.8))
 		var closed := pts.duplicate()
 		closed.append(pts[0])
-		draw_polyline(closed, WAX_EDGE, 4.0)
+		draw_polyline(closed, _edge, 4.0)
 		var ext := Vector2(radius, radius) if shape == Shape.CIRCLE else size * 0.5
 		# burbujas que revientan
 		for i in 7:
 			var life := fposmod(t * 1.3 + i * 0.37, 1.0)
 			var bp := Vector2(sin(i * 12.9 + _seed) * ext.x * 0.7, cos(i * 7.3 + _seed) * ext.y * 0.7)
-			draw_arc(bp, 3.0 + 9.0 * life, 0.0, TAU, 12, Color(WAX_EDGE, 0.8 * (1.0 - life)), 2.0)
+			draw_arc(bp, 3.0 + 9.0 * life, 0.0, TAU, 12, Color(_edge, 0.8 * (1.0 - life)), 2.0)
 		# vapor
 		for i in 4:
 			var life := fposmod(t * 0.8 + i * 0.25, 1.0)
@@ -368,11 +389,11 @@ func _draw_wax() -> void:
 	# se enfria: opaca y con grietas
 	var a := 1.0 - clampf(t / maxf(fade, 0.01), 0.0, 1.0)
 	var cp := _wax_pts(1.0, 0.0)
-	draw_colored_polygon(cp, Color(0.86, 0.68, 0.4, 0.85 * a))
+	draw_colored_polygon(cp, Color(_cool, 0.85 * a))
 	var ex := Vector2(radius, radius) if shape == Shape.CIRCLE else size * 0.5
 	for i in 5:
 		var a0 := _seed + i * 1.7
-		draw_line(Vector2(cos(a0), sin(a0)) * ex * 0.15, Vector2(cos(a0 + 0.5), sin(a0 + 0.5)) * ex * 0.8, Color(WAX_EDGE, 0.8 * a), 2.0)
+		draw_line(Vector2(cos(a0), sin(a0)) * ex * 0.15, Vector2(cos(a0 + 0.5), sin(a0 + 0.5)) * ex * 0.8, Color(_edge, 0.8 * a), 2.0)
 	var closed2 := cp.duplicate()
 	closed2.append(cp[0])
-	draw_polyline(closed2, Color(WAX_EDGE, a), 3.0)
+	draw_polyline(closed2, Color(_edge, a), 3.0)
