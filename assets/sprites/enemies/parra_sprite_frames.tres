@@ -1,80 +1,604 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" load_steps=37 format=3]
 
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_idle_00.png" id="1_idle"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_idle_01.png" id="2_idle"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_attack_00.png" id="3_attack"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_attack_01.png" id="4_attack"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_attack_02.png" id="5_attack"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_hurt_00.png" id="6_hurt"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_hurt_01.png" id="7_hurt"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_death_00.png" id="8_death"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_death_01.png" id="9_death"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_death_02.png" id="10_death"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_death_03.png" id="11_death"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_sheet.png" id="1_sheet"]
+
+[sub_resource type="AtlasTexture" id="f0"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 0, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f1"]
+atlas = ExtResource("1_sheet")
+region = Rect2(240, 0, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f2"]
+atlas = ExtResource("1_sheet")
+region = Rect2(480, 0, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f3"]
+atlas = ExtResource("1_sheet")
+region = Rect2(720, 0, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f4"]
+atlas = ExtResource("1_sheet")
+region = Rect2(960, 0, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f5"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1200, 0, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f6"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 264, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f7"]
+atlas = ExtResource("1_sheet")
+region = Rect2(240, 264, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f8"]
+atlas = ExtResource("1_sheet")
+region = Rect2(480, 264, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f9"]
+atlas = ExtResource("1_sheet")
+region = Rect2(720, 264, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f10"]
+atlas = ExtResource("1_sheet")
+region = Rect2(960, 264, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f11"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1200, 264, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f12"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 528, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f13"]
+atlas = ExtResource("1_sheet")
+region = Rect2(240, 528, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f14"]
+atlas = ExtResource("1_sheet")
+region = Rect2(480, 528, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f15"]
+atlas = ExtResource("1_sheet")
+region = Rect2(720, 528, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f16"]
+atlas = ExtResource("1_sheet")
+region = Rect2(960, 528, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f17"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1200, 528, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f18"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 792, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f19"]
+atlas = ExtResource("1_sheet")
+region = Rect2(240, 792, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f20"]
+atlas = ExtResource("1_sheet")
+region = Rect2(480, 792, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f21"]
+atlas = ExtResource("1_sheet")
+region = Rect2(720, 792, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f22"]
+atlas = ExtResource("1_sheet")
+region = Rect2(960, 792, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f23"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1200, 792, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f24"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 1056, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f25"]
+atlas = ExtResource("1_sheet")
+region = Rect2(240, 1056, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f26"]
+atlas = ExtResource("1_sheet")
+region = Rect2(480, 1056, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f27"]
+atlas = ExtResource("1_sheet")
+region = Rect2(720, 1056, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f28"]
+atlas = ExtResource("1_sheet")
+region = Rect2(960, 1056, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f29"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1200, 1056, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f30"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 1320, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f31"]
+atlas = ExtResource("1_sheet")
+region = Rect2(240, 1320, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f32"]
+atlas = ExtResource("1_sheet")
+region = Rect2(480, 1320, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f33"]
+atlas = ExtResource("1_sheet")
+region = Rect2(720, 1320, 240, 264)
+
+[sub_resource type="AtlasTexture" id="f34"]
+atlas = ExtResource("1_sheet")
+region = Rect2(960, 1320, 240, 264)
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_idle")
+"texture": SubResource("f0")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_idle")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 3.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_attack")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_attack")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_attack")
-}],
-"loop": false,
-"name": &"attack",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("6_hurt")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_hurt")
-}],
-"loop": false,
-"name": &"hurt",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("8_death")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_death")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_death")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_death")
-}],
-"loop": false,
-"name": &"death",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_idle")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_idle")
+"texture": SubResource("f1")
 }],
 "loop": true,
 "name": &"walk",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f1")
+}],
+"loop": false,
+"name": &"intro",
 "speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f2")
+}, {
+"duration": 1.0,
+"texture": SubResource("f3")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f2")
+}, {
+"duration": 1.0,
+"texture": SubResource("f3")
+}],
+"loop": false,
+"name": &"attack_latigazo",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("f5")
+}],
+"loop": false,
+"name": &"release",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("f5")
+}],
+"loop": false,
+"name": &"release_latigazo",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f6")
+}, {
+"duration": 1.0,
+"texture": SubResource("f7")
+}],
+"loop": false,
+"name": &"attack_raices",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f8")
+}, {
+"duration": 1.0,
+"texture": SubResource("f8")
+}, {
+"duration": 1.0,
+"texture": SubResource("f9")
+}],
+"loop": false,
+"name": &"release_raices",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f10")
+}, {
+"duration": 1.0,
+"texture": SubResource("f11")
+}],
+"loop": false,
+"name": &"attack_estrangula",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f11")
+}, {
+"duration": 1.0,
+"texture": SubResource("f12")
+}, {
+"duration": 1.0,
+"texture": SubResource("f11")
+}],
+"loop": false,
+"name": &"release_estrangula",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f13")
+}, {
+"duration": 1.0,
+"texture": SubResource("f14")
+}],
+"loop": false,
+"name": &"attack_brotes",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f14")
+}, {
+"duration": 1.0,
+"texture": SubResource("f15")
+}],
+"loop": false,
+"name": &"release_brotes",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f16")
+}, {
+"duration": 1.0,
+"texture": SubResource("f17")
+}, {
+"duration": 1.0,
+"texture": SubResource("f18")
+}, {
+"duration": 1.0,
+"texture": SubResource("f19")
+}, {
+"duration": 1.0,
+"texture": SubResource("f20")
+}, {
+"duration": 1.0,
+"texture": SubResource("f20")
+}],
+"loop": false,
+"name": &"death",
+"speed": 3.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f21")
+}, {
+"duration": 1.0,
+"texture": SubResource("f22")
+}],
+"loop": true,
+"name": &"tired",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f23")
+}, {
+"duration": 1.0,
+"texture": SubResource("f24")
+}, {
+"duration": 1.0,
+"texture": SubResource("f23")
+}, {
+"duration": 1.0,
+"texture": SubResource("f25")
+}],
+"loop": true,
+"name": &"channel",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f16")
+}, {
+"duration": 1.0,
+"texture": SubResource("f16")
+}, {
+"duration": 1.0,
+"texture": SubResource("f26")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f27")
+}],
+"loop": false,
+"name": &"recover_in",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f27")
+}, {
+"duration": 1.0,
+"texture": SubResource("f28")
+}, {
+"duration": 1.0,
+"texture": SubResource("f27")
+}, {
+"duration": 1.0,
+"texture": SubResource("f29")
+}],
+"loop": true,
+"name": &"recover",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f16")
+}, {
+"duration": 1.0,
+"texture": SubResource("f21")
+}],
+"loop": false,
+"name": &"stun_in",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f30")
+}, {
+"duration": 1.0,
+"texture": SubResource("f31")
+}],
+"loop": false,
+"name": &"brake",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f0")
+}],
+"loop": false,
+"name": &"blink",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f32")
+}, {
+"duration": 1.0,
+"texture": SubResource("f33")
+}, {
+"duration": 1.0,
+"texture": SubResource("f0")
+}],
+"loop": false,
+"name": &"idle_stir",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f34")
+}, {
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f34")
+}, {
+"duration": 1.0,
+"texture": SubResource("f0")
+}],
+"loop": false,
+"name": &"idle_impatient",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f2")
+}, {
+"duration": 1.0,
+"texture": SubResource("f3")
+}],
+"loop": false,
+"name": &"attack_tiron",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f2")
+}, {
+"duration": 1.0,
+"texture": SubResource("f3")
+}],
+"loop": false,
+"name": &"attack_salpicadura",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f2")
+}, {
+"duration": 1.0,
+"texture": SubResource("f3")
+}],
+"loop": false,
+"name": &"attack_cruz",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f2")
+}, {
+"duration": 1.0,
+"texture": SubResource("f3")
+}],
+"loop": false,
+"name": &"attack_embestida",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("f5")
+}],
+"loop": false,
+"name": &"release_spit",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("f5")
+}],
+"loop": true,
+"name": &"spitting",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("f5")
+}],
+"loop": true,
+"name": &"cross_spin",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("f5")
+}],
+"loop": true,
+"name": &"charge",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f21")
+}, {
+"duration": 1.0,
+"texture": SubResource("f22")
+}],
+"loop": true,
+"name": &"drag",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f21")
+}, {
+"duration": 1.0,
+"texture": SubResource("f22")
+}],
+"loop": true,
+"name": &"stuck",
+"speed": 9.0
 }]

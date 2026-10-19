@@ -34,8 +34,8 @@ func start() -> void:
 	var spr := AnimatedSprite2D.new()
 	spr.sprite_frames = load("res://assets/sprites/enemies/hoja_de_parra_sprite_frames.tres")
 	spr.play("idle")
-	spr.scale = Vector2(0.62, 0.62)
-	spr.offset = Vector2(0, -52)
+	spr.scale = Vector2(0.42, 0.42)  # cuadros de 156x180 (arte definitivo): mismo tamano en pantalla que los de 80x120 a 0.62
+	spr.offset = Vector2(0, -90)
 	_it.add_child(spr)
 	TallProp.attach_visual(_it, spr, true)
 	ActorFx.add_glow(_it, Color(0.5, 1.0, 0.55), 0.8, 1.0).position = Vector2(0, -30)

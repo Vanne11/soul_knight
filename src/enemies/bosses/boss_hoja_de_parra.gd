@@ -78,6 +78,7 @@ func _ready() -> void:
 	_ge.boss_charges_changed.emit(_channels_left, _channels_total)
 	notebook.pattern_detected.connect(_on_pattern)
 	telegraph_started.connect(_on_telegraph)
+	BossAnimator.attach(self)  # arte definitivo 156x180 (tools/gen_parra_art2.py): cuadros nuevos + animacion por codigo
 
 
 func _attack_pool() -> Array:
@@ -394,17 +395,14 @@ func _become_parra() -> void:
 	enemy_name = tr("BOSS_PARRA_NAME")
 	tele_caps = [0.7, 0.6, 0.5]
 	move_speed = 0.0
-	animated_sprite.sprite_frames = PARRA_FRAMES
-	animated_sprite.scale = Vector2(1.45, 1.45)
-	animated_sprite.offset = Vector2(0, -84)
 	animated_sprite.flip_h = false
-	animated_sprite.play("idle")
 	$CollisionShape2D.scale = Vector2(1.5, 1.0)
 	$Hurtbox.position = Vector2(0, -120)
 	$Hurtbox.scale = Vector2(1.7, 1.7)
 	var shadow := get_node_or_null("ContactShadow") as Node2D
 	if shadow != null:
 		shadow.scale *= 1.7
+	(get_node(BossAnimator.NAME) as BossAnimator).rebase(PARRA_FRAMES)  # arte de 240x264 a escala 1 (tools/gen_parra_art2.py)
 	# enraizada en el centro de la sala
 	var c := _on_floor(arena().get_center())
 	create_tween().tween_property(self, "global_position", c, 0.9)

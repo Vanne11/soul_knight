@@ -90,14 +90,7 @@ func setup(b: EnemyBoss, s: AnimatedSprite2D) -> void:
 		_base_scale = s.scale / 1.5
 		s.scale = _base_scale
 		s.offset = Vector2(0, -t0.get_height() * 0.5)
-	_sets = [s.sprite_frames]
-	var base := s.sprite_frames.resource_path
-	for n in ["_p2", "_p3"]:
-		var p := base.replace(".tres", n + ".tres")
-		if base != "" and ResourceLoader.exists(p):
-			_sets.append(load(p))
-		else:
-			_sets.append(_sets[-1])
+	_load_sets(s.sprite_frames)
 	_level = 0
 	_prev_hp = b.current_health
 	for sig in ["attack_released", "telegraph_started", "channel_started", "channel_ended"]:
@@ -112,6 +105,32 @@ func setup(b: EnemyBoss, s: AnimatedSprite2D) -> void:
 		spr.play("intro")
 		spr.frame = 0
 	_find_shadow.call_deferred()
+
+
+## Reune el SpriteFrames y sus variantes por fase (<base>_p2.tres, <base>_p3.tres; sin ellas repite el anterior).
+func _load_sets(sf: SpriteFrames) -> void:
+	_sets = [sf]
+	var base := sf.resource_path
+	for n in ["_p2", "_p3"]:
+		var p := base.replace(".tres", n + ".tres")
+		if base != "" and ResourceLoader.exists(p):
+			_sets.append(load(p))
+		else:
+			_sets.append(_sets[-1])
+
+
+## Cambio de forma del jefe (la Hoja se vuelve la Parra): otro SpriteFrames de alta densidad, a escala 1 y con
+## los pies en y=0. Llamar DESPUES de reescalar la sombra del jefe, porque el animador la recuerda.
+func rebase(sf: SpriteFrames) -> void:
+	_load_sets(sf)
+	_level = 0
+	_variant = ""
+	_queue.clear()
+	_base_scale = Vector2.ONE
+	spr.sprite_frames = sf
+	spr.offset = Vector2(0, -sf.get_frame_texture("idle", 0).get_height() * 0.5)
+	spr.play("idle")
+	_find_shadow()
 
 
 func _find_shadow() -> void:
@@ -248,7 +267,8 @@ func _release() -> void:
 		"attack_tiron":
 			_play_seq([&"release", &"drag"])  # si falla, el estado TIRED lo cambia por "stuck"
 		_:
-			_play_seq([&"release"])
+			var own := StringName("release_" + v.trim_prefix("attack_"))  # cada ataque puede traer su propio golpe
+			_play_seq([own if spr.sprite_frames.has_animation(own) else &"release"])
 
 
 func _on_state_change(from: int, to: int) -> void:
@@ -288,7 +308,7 @@ func _pick_animation() -> void:
 	_advance_queue()
 	match st:
 		EnemyBoss.State.INTRO:
-			if spr.animation != &"intro":
+			if spr.animation != &"intro" and spr.animation != &"death":  # la Hoja cae ("death") mientras el jefe sigue en INTRO
 				spr.play("intro")
 		EnemyBoss.State.TRANSITION:
 			_variant = ""
@@ -311,7 +331,7 @@ func _pick_animation() -> void:
 					if _zero_frames >= 2:
 						_release()
 			# tras soltar, la animacion de golpe se queda en su ultimo cuadro hasta que acabe el ataque
-			if _variant == "" and spr.animation not in SPECIAL_ATTACK_ANIMS and not spr.animation.begins_with("attack"):
+			if _variant == "" and spr.animation not in SPECIAL_ATTACK_ANIMS and not spr.animation.begins_with("attack") and not spr.animation.begins_with("release"):
 				spr.speed_scale = clampf(speed / 90.0, 0.6, 1.7) if speed > 12.0 else 1.0
 				_play(&"walk" if speed > 12.0 else &"idle")
 
