@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_diu_cobre_lore"
+title = "Largo Plazo"
+text = "«Se pone una vez y se olvida durante años. Eso sí, nunca lo olvides de más.» Dato: el DIU de cobre es un dispositivo en forma de T que un profesional de salud coloca dentro del útero. No tiene hormonas: el cobre dificulta que los espermatozoides lleguen y fecunden. Es de largo plazo (los años dependen del modelo), se puede retirar cuando quieras y no protege de las ITS."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_diu_cobre", "count": 1}
+flavor_text = "Usa un DIU de cobre."

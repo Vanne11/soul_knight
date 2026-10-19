@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_diafragma_lore"
+title = "Barrera con Retorno"
+text = "«Cubre el cuello del útero y devuelve el golpe. Una barrera con carácter.» Dato: el diafragma es una copa baja de silicona que se coloca dentro de la vagina, cubriendo el cuello uterino, antes de la relación; se usa con espermicida, se ajusta a cada persona con ayuda de un profesional de salud y se retira pasado el tiempo que indique. Previene el embarazo, pero NO protege de las ITS."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_diafragma", "count": 1}
+flavor_text = "Usa un diafragma."

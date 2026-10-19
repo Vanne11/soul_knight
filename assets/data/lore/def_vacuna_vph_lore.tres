@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_vacuna_vph_lore"
+title = "Prevenir por Adelantado"
+text = "«Se pone antes, no después. Aquí dura 20 segundos; en la vida real dura mucho más y no hace falta cronómetro.» Dato: la vacuna contra el VPH protege de los tipos del virus que más se asocian al cáncer de cuello uterino y, según la vacuna, a las verrugas genitales. Funciona mejor antes de la exposición, no trata una infección que ya existe y no reemplaza el tamizaje (Papanicolau o prueba de VPH) en quienes corresponda. Pregunta en un centro de salud qué esquema te toca."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_vacuna_vph", "count": 1}
+flavor_text = "Usa una vacuna VPH."
