@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://q4147wffo4ik"
+
+[deps]
+
+files=["res://locale/tarro_masilla.es.translation", "res://locale/tarro_masilla.en.translation", "res://locale/tarro_masilla.fr.translation"]
+
+source_file="res://locale/tarro_masilla.csv"
+dest_files=["res://locale/tarro_masilla.es.translation", "res://locale/tarro_masilla.en.translation", "res://locale/tarro_masilla.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
