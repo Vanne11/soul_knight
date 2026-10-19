@@ -1,6 +1,7 @@
 # Godot
 .godot/
 *.translation
+*.translation-*
 export_presets.cfg
 /build/
 /export/
