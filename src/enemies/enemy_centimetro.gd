@@ -73,6 +73,18 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
+## Pose propia del aviso (se inclina y brilla) y del golpe (baja la regla); el resto lo anima el padre.
+func _update_animation(dir: Vector2) -> void:
+	var pose := &"aim" if c_state == C.AIM else (&"strike" if c_state == C.RECOVER and c_t > 0.6 else &"")
+	if pose != &"" and animated_sprite != null and animated_sprite.sprite_frames.has_animation(pose):
+		if animated_sprite.animation != pose:
+			animated_sprite.play(pose)
+		if dir.x != 0:
+			animated_sprite.flip_h = dir.x < 0
+		return
+	super(dir)
+
+
 func _start_aim(to_t: Vector2) -> void:
 	c_state = C.AIM
 	c_t = 0.75
