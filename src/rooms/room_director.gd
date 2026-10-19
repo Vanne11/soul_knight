@@ -100,6 +100,21 @@ func _reset_floor() -> void:
 	extra_started.clear()
 	owns.clear()
 	_build_plan()
+	# Los scripts de las dinamicas arrastran escenas y texturas: cargarlos al entrar a la sala
+	# congelaba hasta 100 ms. Se cargan ahora, junto con la generacion del piso.
+	for k in plan.values() + plan2.values():
+		if KINDS.has(k):
+			_script_for(str(k))
+
+
+static var _scripts: Dictionary = {}
+
+
+static func _script_for(kind: String) -> GDScript:
+	var path: String = DIR + str(KINDS[kind].script)
+	if not _scripts.has(path):
+		_scripts[path] = load(path)
+	return _scripts[path]
 
 
 func _build_plan() -> void:
@@ -309,7 +324,7 @@ func _launch(room: Room, kind: String, entry_door: Door, main_one := true) -> vo
 	var info: Dictionary = KINDS[kind]
 	if info.cat == "objective":
 		room.set_meta("dynamic", kind)  # las oleadas (src/combat/waves.gd) no se mezclan con un objetivo
-	var dyn: RoomDynamic = load(DIR + str(info.script)).new()
+	var dyn: RoomDynamic = _script_for(kind).new()
 	dyn.main = main
 	dyn.room = room
 	dyn.director = self

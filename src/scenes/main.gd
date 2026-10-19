@@ -138,6 +138,7 @@ func _generate_dungeon() -> void:
 		get_tree().create_timer(2.6).timeout.connect(func():
 			Narrator.say("liberated_floor")
 			_offer_blessing(_floor_kingdom(), tr("FLOOR_REMEMBERS") % Loc.region_name(_run_manager.current_floor)))
+	_warm_floor()
 	if start_room:
 		_enter_room(start_room)
 	else:
@@ -145,6 +146,29 @@ func _generate_dungeon() -> void:
 		var rooms = dungeon_generator.rooms.values()
 		if rooms.size() > 0:
 			_enter_room(rooms[0])
+
+## Trabajo pesado que antes se hacia al cruzar cada puerta (tirones de 20-100 ms): ahora va aqui,
+## mientras el piso se genera. Arte de los bichos del piso y calcomanias de suelo de todas las salas
+## (cada sala tiene su propia semilla: salen identicas). Los Decals quedan quietos hasta entrar.
+func _warm_floor() -> void:
+	var fd: Dictionary = _run_manager.floor_data()
+	var variants: Array = fd.get("roster", []) + fd.get("alt_roster", [])
+	for x in fd.get("extra", []):
+		variants.append(x.variant)
+	if fd.has("miniboss"):
+		variants.append(fd.miniboss.variant)
+	var paths: Array = variants.map(func(v): return _frames_path(str(v)))
+	if RunManager.floor_has_boss(_run_manager.current_floor):
+		var bv := BossPicker.pick(fd, _run_manager.current_seed, _run_manager.current_floor)
+		paths += [_frames_path(bv.variant), EnemyBoss.script_path(bv.variant)]
+	Room.warm(paths, true)
+	Affixes.warm()
+	if Silencio.active():
+		return
+	for room in dungeon_generator.rooms.values():
+		var d := RoomDecals.build(room, fd.kingdom, _run_manager.current_seed, _run_manager.current_floor)
+		if d and room != current_room:
+			d.set_process(false)
 
 ## PLAN 6: al entrar a un reino TOMADO por la copia de seguridad (1a etapa), el aviso: ya no es paz,
 ## el jefe que lo tomo lo espera (BossPicker lo fuerza). Al vencerlo el reino queda liberado de nuevo.
@@ -828,7 +852,7 @@ func open_exit(boss_room: Room, floor_n: int, at := Vector2(0, 150), hatch_text 
 			await portal.absorb(p)  # el heroe se encoge y gira hacia el centro antes de bajar
 			if options.size() == 1:
 				RunManager.add_region(str(options[0]))
-			_advance_to_next_floor()
+			await _descend()
 			FloorPortal.restore(p))
 
 
@@ -1348,13 +1372,21 @@ func _build_peace(room: Room) -> void:
 		func(p, it):
 			it.finish()
 			await portal.absorb(p)
-			_advance_to_next_floor()
+			await _descend()
 			FloorPortal.restore(p))
 
 ## Portal de salida (src/fx/floor_portal.gd): arte y luz del reino; gris si el reino sigue censurado.
 func _hatch_visual() -> FloorPortal:
 	var floor_n: int = _run_manager.current_floor
 	return FloorPortal.create(RunManager.floor_region(floor_n), _run_manager.is_liberated(floor_n))
+
+## Bajada por la escotilla: generar el piso congela 0.5-1 s; a oscuras se lee como carga y no
+## como el juego pegado con la imagen del heroe encogido.
+func _descend() -> void:
+	await _fade_to(1.0, 0.25)
+	_advance_to_next_floor()
+	await get_tree().process_frame  # ese frame trae el delta largo de la generacion: si no, el fundido salta
+	_fade_to(0.0, 0.4)
 
 func _advance_to_next_floor() -> void:
 	# Antes llamaba a RunManager.next_floor(), que no existe: el juego reventaba aqui.
