@@ -1,0 +1,111 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_idle_00.png" id="idle0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_idle_01.png" id="idle1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_walk_00.png" id="walk0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_walk_01.png" id="walk1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_walk_02.png" id="walk2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_walk_03.png" id="walk3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_attack_00.png" id="attack0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_attack_01.png" id="attack1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_attack_02.png" id="attack2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_attack_03.png" id="attack3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_strike_00.png" id="strike0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_strike_01.png" id="strike1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_hurt_00.png" id="hurt0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_hurt_01.png" id="hurt1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_death_00.png" id="death0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_death_01.png" id="death1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_death_02.png" id="death2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_death_03.png" id="death3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/cartel/cartel_death_04.png" id="death4"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("idle0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("idle1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("walk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("attack0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("attack1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("attack2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("attack3")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("strike0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("strike1")
+}],
+"loop": true,
+"name": &"strike",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("hurt0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("hurt1")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("death0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death4")
+}],
+"loop": false,
+"name": &"death",
+"speed": 7.0
+}]
