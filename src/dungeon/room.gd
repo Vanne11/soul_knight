@@ -11,7 +11,12 @@ enum RoomType { COMBAT = 0, SHOP = 1, LORE = 2, TRAP = 3, PUZZLE = 4, SECRET = 5
 
 enum DoorState { CLOSED = 0, OPEN = 1, LOCKED = 2, SEALED = 3 }
 
-const ITEM_PICKUP_SCENE := preload("res://src/items/item_pickup.tscn")
+## Carga diferida a proposito: item_pickup.gd usa RoomUtil, que usa Room; con preload aqui el ciclo
+## dejaba una PackedScene VACIA en quien la precargara primero (enemigos sin botin, "node count is 0").
+const ITEM_PICKUP_PATH := "res://src/items/item_pickup.tscn"
+var ITEM_PICKUP_SCENE: PackedScene:
+	get:
+		return load(ITEM_PICKUP_PATH)
 
 @export var room_type: RoomType = 0
 @export var grid_pos: Vector2i = Vector2i.ZERO
