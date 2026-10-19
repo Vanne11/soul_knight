@@ -64,7 +64,10 @@ func _ready() -> void:
 	_build_story()
 	_build_select()
 	_slides = Narrator.get_lines("intro_slides")
-	_next_slide()
+	if get_node("/root/RunManager").rescue_requested:
+		_show_select()  # post-juego "Desordenes": la historia ya se conoce, directo a elegir heroe
+	else:
+		_next_slide()
 
 
 func _make_art() -> TextureRect:
@@ -238,6 +241,11 @@ func _build_select() -> void:
 		var dl := HudStyle.pixel_label(tr("CENSURA_DAILY_NOTICE") % RunManager.daily_date(), 16, Color("ffc93c"), true)
 		dl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		_select.add_child(dl)
+	var rm: RunManager = get_node("/root/RunManager")
+	if rm.rescue_requested:  # post-juego: mision de rescate de los reinos en desorden
+		var rl := HudStyle.pixel_label(tr("DESORDEN_ELEGIR") if rm.rescue_swap_from != "" else tr("DESORDEN_RUTA"), 16, Color("ffc93c"), true)
+		rl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_select.add_child(rl)
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 24)
@@ -246,6 +254,9 @@ func _build_select() -> void:
 	var cards: Array[Button] = []
 	for id in ORDER:
 		var btn := _card(id, row)
+		if rm.rescue_requested and id == rm.rescue_swap_from:
+			btn.disabled = true  # quien acaba de ganar no vuelve a ir
+			continue
 		cards.append(btn)
 		if first_btn == null:
 			first_btn = btn

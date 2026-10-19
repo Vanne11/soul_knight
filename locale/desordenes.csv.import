@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://3104ttq84a6u"
+
+[deps]
+
+files=["res://locale/desordenes.es.translation", "res://locale/desordenes.en.translation", "res://locale/desordenes.fr.translation"]
+
+source_file="res://locale/desordenes.csv"
+dest_files=["res://locale/desordenes.es.translation", "res://locale/desordenes.en.translation", "res://locale/desordenes.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

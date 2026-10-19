@@ -3,7 +3,8 @@ extends RefCounted
 
 ## Pestana "Mundo" del mapa grande (ver minimap.gd): dibuja assets/data/world_map.json (sale de
 ## tools/gen_world_map.py, en celdas de cuadricula) con _draw, sin sprites. Solo LEE el estado de
-## la ruta (RunManager: route_regions, seal_regions, seals(), next_options()); no decide nada.
+## la ruta (RunManager: route_regions, seal_regions, seals(), next_options()) y los reinos liberados
+## de forma permanente (RunManager.liberated: color pleno; los pendientes, en gris con alerta); no decide nada.
 
 const FILE := "res://assets/data/world_map.json"
 const GRAY := Color(0.42, 0.42, 0.48)
@@ -26,6 +27,7 @@ var _cur := ""
 var _back := ""
 var _center: Array = []
 var _body: Array = []
+var _lib: Array = []
 var _blink := true
 var _pulse := 0.0
 var _o := Vector2.ZERO
@@ -96,6 +98,7 @@ func _refresh(rm: Node) -> void:
 	_back = str(_route.back()) if not _route.is_empty() else _cur
 	_center = RunManager.ROUTES.get("center", [])
 	_body = RunManager.ROUTES.get("body", [])
+	_lib = rm.liberated
 
 
 func _pt(x: float, y: float) -> Vector2:
@@ -123,6 +126,21 @@ func _reached(id: String) -> bool:
 	return false
 
 
+## "Desorden": reino que existe, no esta liberado y no lo pisas ahora. Solo se marca cuando ya
+## liberaste alguno (en la primera partida todo esta por liberar y las alertas serian ruido).
+func _is_disorder(id: String) -> bool:
+	return not _lib.is_empty() and id in _exist and id not in _lib and not _visited(id)
+
+
+## Icono de alerta: triangulo ambar con "!".
+func _alert(ci: CanvasItem, c: Vector2) -> void:
+	var tri := PackedVector2Array([c + Vector2(0, -10), c + Vector2(-10, 8), c + Vector2(10, 8)])
+	ci.draw_colored_polygon(tri, Color(FIXED, 0.55 + 0.4 * _pulse))
+	ci.draw_polyline(PackedVector2Array([tri[0], tri[1], tri[2], tri[0]]), INK, 1.5)
+	ci.draw_line(c + Vector2(0, -4), c + Vector2(0, 2), INK, 2.0)
+	ci.draw_rect(Rect2(c + Vector2(-1, 4), Vector2(2, 2)), INK)
+
+
 func _is_missing(id: String) -> bool:
 	return id not in _exist
 
@@ -139,7 +157,11 @@ func _draw_region(ci: CanvasItem, r: Dictionary) -> void:
 		if r.rainbow:
 			_rainbow_strip(ci, rc)
 		return
-	if _visited(id):
+	if id in _lib:
+		# liberado de forma permanente (en esta u otra partida): color pleno
+		ci.draw_rect(rc, Color(col, 0.6))
+		ci.draw_rect(rc, col, false, 3.0)
+	elif _visited(id):
 		ci.draw_rect(rc, Color(col, 0.28))
 		ci.draw_rect(rc, col, false, 2.0)
 	else:
@@ -147,6 +169,8 @@ func _draw_region(ci: CanvasItem, r: Dictionary) -> void:
 		ci.draw_rect(rc, GRAY, false, 2.0)
 		if id in _opts:
 			ci.draw_rect(rc.grow(2), Color(1, 1, 1, 0.25 + 0.45 * _pulse), false, 2.0)
+		if _is_disorder(id):
+			_alert(ci, Vector2(rc.end.x - 14, rc.position.y + 16))
 	if r.rainbow:
 		_rainbow_strip(ci, rc)
 
@@ -160,8 +184,10 @@ func _draw_name(ci: CanvasItem, r: Dictionary) -> void:
 	var pos := rc.position + Vector2(5 + float(r.get("label_dx", 0.0)) * _s.x, 17)
 	if _is_missing(id):
 		_text(ci, region_label(r), pos, -1, 16, Color(col, 0.7))
-	elif _visited(id):
+	elif _visited(id) or id in _lib:
 		_text(ci, region_label(r), pos, -1, 16, Color.WHITE)
+	elif _is_disorder(id):
+		_text(ci, region_label(r), pos, -1, 16, Color(0.78, 0.78, 0.84))  # desorden: se lee el nombre (a que volver)
 	elif id in _opts:
 		_text(ci, region_label(r), pos, -1, 16, Color(0.85, 0.85, 0.9))
 	else:
@@ -319,6 +345,8 @@ func _draw_hud(ci: CanvasItem, rect: Rect2) -> void:
 	var lx := rect.position.x + 4
 	var ly := rect.position.y + 6
 	var items := [["hero", "MAPA_LEY_AQUI"], ["fija", "MAPA_LEY_FIJA"], ["choice", "MAPA_LEY_ELECCION"], ["lock", "MAPA_LEY_CANDADO"]]
+	if not _lib.is_empty():  # post-juego: liberados vs desorden (ver _is_disorder)
+		items += [["freed", "DESORDEN_MAPA_LIBRE"], ["alert", "DESORDEN_MAPA_DESORDEN"]]
 	for i in items.size():
 		var c := Vector2(lx + 8, ly + 8 + i * 20)
 		match items[i][0]:
@@ -334,4 +362,9 @@ func _draw_hud(ci: CanvasItem, rect: Rect2) -> void:
 				ci.draw_rect(Rect2(c - Vector2(7, 5), Vector2(14, 10)), INK, false, 1.0)
 			"lock":
 				_lock(ci, c + Vector2(0, -1), false, 1.0)
+			"freed":
+				ci.draw_rect(Rect2(c - Vector2(7, 5), Vector2(14, 10)), Color(TUNNEL, 0.6))
+				ci.draw_rect(Rect2(c - Vector2(7, 5), Vector2(14, 10)), TUNNEL, false, 2.0)
+			"alert":
+				_alert(ci, c)
 		_text(ci, tr_(items[i][1]), Vector2(lx + 22, ly + 14 + i * 20), -1, 16, Color(0.85, 0.82, 0.74))

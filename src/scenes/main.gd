@@ -89,23 +89,31 @@ func _generate_dungeon() -> void:
 	visited_rooms.clear()
 	add_child(dungeon_root)
 	_lighting.setup_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)
-	FloorEvents.setup(self, dungeon_generator.rooms, _run_manager.current_floor, _run_manager.current_seed)  # evento de piso + contrarreloj (src/run/floor_events.gd)
+	# Tramo en paz de la run de rescate (reino ya liberado): una plaza sin combates ni trampas.
+	var peace := RunManager.floor_is_peace(_run_manager.current_floor)
+	if not peace:
+		FloorEvents.setup(self, dungeon_generator.rooms, _run_manager.current_floor, _run_manager.current_seed)  # evento de piso + contrarreloj (src/run/floor_events.gd)
 	RoomDressing.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # muros 3/4, zocalo, puertas
-	RoomObstacles.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # rocas, columnas, barriles, pinchos
+	if not peace:
+		RoomObstacles.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # rocas, columnas, barriles, pinchos
 	_lock_secret_rooms()
-	Utero.setup_floor(self)  # El Utero (src/utero): fases del ciclo
+	if not peace:
+		Utero.setup_floor(self)  # El Utero (src/utero): fases del ciclo
 	
 	# Start player in start room
 	var start_room = _find_start_room()
-	Narrator.say_hero("floor_" + str(_run_manager.floor_data().id))  # entrada a region, por heroe (narrator/etapas.json); antes que la pista del arma
+	if not peace:
+		Narrator.say_hero("floor_" + str(_run_manager.floor_data().id))  # entrada a region, por heroe (narrator/etapas.json); antes que la pista del arma
 	_weapon_room = null
-	if start_room and not _has_real_weapon():
+	if start_room and not peace and not _has_real_weapon():
 		_hide_weapon_chest(start_room)
 	_pick_hormone_room()
 	_assign_rewards()
 	_coin_mult = _compute_coin_mult()
 	_show_floor_card()
-	if _run_manager.is_liberated(_run_manager.current_floor) and RunManager.floor_stage(_run_manager.current_floor) == 1:
+	if peace and start_room:
+		_build_peace(start_room)
+	elif _run_manager.is_liberated(_run_manager.current_floor) and RunManager.floor_stage(_run_manager.current_floor) == 1:
 		# Region liberada en otra partida: te recibe con un regalo (al entrar al reino, no en la 2a etapa).
 		get_tree().create_timer(2.6).timeout.connect(func():
 			Narrator.say("liberated_floor")
@@ -158,6 +166,8 @@ func _on_door_entered_room(room: Room, door: Door) -> void:
 
 ## Pista del reino del piso ("explore_pene", "boss_vulva"...); si no existe, la generica.
 func _room_track(room: Room) -> String:
+	if RunManager.floor_is_peace(_run_manager.current_floor) and ResourceLoader.exists(Sound.MUSIC_DIR + "paz.ogg"):
+		return "paz"  # pista alegre de los reinos en paz (si algun dia existe; si no, la del reino)
 	var base := "boss" if room.room_type == Room.RoomType.BOSS and not room.cleared else "explore"
 	if base == "boss" and not RunManager.floor_has_boss(_run_manager.current_floor):
 		base = "explore"  # el guardian de la 1a etapa no es jefe: sin musica de jefe
@@ -667,7 +677,10 @@ func _complete_floor() -> void:
 		Narrator.toast(tr("SEAL_TOAST_TITLE"), tr("SEAL_TOAST_BODY") % [RunManager.seals(), RunManager.seals_needed()], "ffd75a")
 	if RunManager.is_route_end(floor_n):
 		_run_manager.liberate(floor_n)
+		_run_manager.note_desordenes()  # reinos que quedan sin liberar: aviso permanente + panel en game_over
 		Narrator.say("victory")
+		if not _run_manager.pending_regions().is_empty():
+			Narrator.say_raw(tr("DESORDEN_NARR") % DesordenPanel.pending_names(_run_manager))
 		get_node("/root/LoreDatabase").custom_event("victory")
 		_run_manager.end_run(true)
 		var end_wait := 4.0
@@ -939,6 +952,36 @@ func _disc(radius: float, color: Color) -> Polygon2D:
 	p.polygon = pts
 	p.color = color
 	return p
+
+## Plaza de un reino liberado, recorrido en paz (run de rescate, RunManager.begin_rescue): UNA sala
+## ya a color, sin enemigos, monedas ni cofres (no se puede farmear). Dos carteles que celebran
+## (texto corto por reino en desordenes.csv) y el portal al siguiente tramo.
+func _build_peace(room: Room) -> void:
+	room.set_meta("calm_built", true)
+	var region := RunManager.floor_region(_run_manager.current_floor)
+	var center := room.get_center_position()
+	var key := "DESORDEN_PAZ_%s_" % region.to_upper()
+	if tr(key + "0") == key + "0":
+		key = "DESORDEN_PAZ_GENERICO_"  # reino sin textos propios (uno nuevo): frases genericas
+	Narrator.toast(tr("DESORDEN_PAZ_TITULO"), Loc.region_name_id(region), "7fe0a0")
+	get_tree().create_timer(1.2).timeout.connect(func(): Narrator.say_raw(tr(key + "0")))
+	for i in 2:
+		var board := Polygon2D.new()  # cartel: tabla con poste
+		board.polygon = PackedVector2Array([Vector2(-26, -34), Vector2(26, -34), Vector2(26, -6), Vector2(4, -6), Vector2(4, 24), Vector2(-4, 24), Vector2(-4, -6), Vector2(-26, -6)])
+		board.color = Color("d8b86a")
+		board.set_meta("tall", true)
+		var text := tr(key + str(i + 1))
+		_add_prop(room, center + Vector2(-110 + i * 220, -60), board, tr("DESORDEN_CARTEL"),
+			func(_p, _it):
+				Narrator.say_raw(text)
+				Sound.play("puzzle_solve"))  # se puede releer: sin it.finish()
+	var portal := _hatch_visual()
+	_add_prop(room, center + Vector2(0, 110), portal, tr("DESORDEN_PAZ_PORTAL"),
+		func(p, it):
+			it.finish()
+			await portal.absorb(p)
+			_advance_to_next_floor()
+			FloorPortal.restore(p))
 
 ## Portal de salida (src/fx/floor_portal.gd): arte y luz del reino; gris si el reino sigue censurado.
 func _hatch_visual() -> FloorPortal:
