@@ -93,6 +93,7 @@ func music(track: String, loop := true, fade := MUSIC_FADE) -> void:
 	if track == _music_name:
 		return
 	_music_name = track
+	print("[musica] %s" % track)
 	if _fade:
 		_fade.kill()
 	var old := _music[_cur]
