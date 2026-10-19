@@ -1,0 +1,18 @@
+{
+  "_info": "MONTE DE VENUS (sala especial de la Selva Publica; src/dungeon/monte_venus.gd). monte_subir_<heroe>: reaccion al subir la loma; monte_cima: el dato educativo; monte_cera: guino a Dona Cera. Sin burla a los cuerpos; Ornitorrinco sin pronombre. Textos en locale/monte_venus.csv.",
+  "monte_subir_pitocles": [
+    "Pitocles sube la loma con pose de conquistador. La cumbre mide metro y medio y tiene vello. Igual la celebra."
+  ],
+  "monte_subir_vulvalquiria": [
+    "Vulvalquiria sube con paso de quien conoce el terreno. «Monte de Venus», lee en el cartel. «Por fin alguien lo nombra con estilo.»"
+  ],
+  "monte_subir_ornitorrinco": [
+    "Ornitorrinco sube a cuatro patas, olfatea el césped y asiente: terreno conocido, aunque de otra especie. Nadie pregunta."
+  ],
+  "monte_cima": [
+    "Dato de cima: todas las personas tienen monte del pubis, la almohadilla de grasa sobre el hueso púbico. En las mujeres se llama monte de Venus y suele ser más prominente, porque los estrógenos acumulan más grasa ahí. En la pubertad se cubre de vello, que protege la piel de roces y suciedad."
+  ],
+  "monte_cera": [
+    "DOÑA CERA CALIENTE (nota clavada en el mástil, con tachones): «Odio esta colina. La depilo y vuelve a crecer. Es un monte de convicciones.»"
+  ]
+}

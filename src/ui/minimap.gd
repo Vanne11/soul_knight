@@ -197,6 +197,8 @@ func _draw() -> void:
 		var icon: String = ICONS.get(room.room_type, "")
 		if not visited.has(pos) and not revealed and room.room_type not in [Room.RoomType.SHOP, Room.RoomType.BOSS]:
 			icon = "?"
+		if MonteVenus.is_monte(room) and (visited.has(pos) or revealed):
+			icon = MonteVenus.ICON  # la loma: sala tranquila con marca propia
 		if room.has_meta("elite_room"):
 			icon = "E"  # la sala elite se conoce desde la puerta (su cartel lo dice)
 		if room.room_type == Room.RoomType.BOSS:

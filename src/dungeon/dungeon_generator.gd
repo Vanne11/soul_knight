@@ -44,6 +44,7 @@ func generate_floor(floor: int, seed_override: int = 0) -> Node2D:
 	_layout_doors()
 	_assign_room_types()
 	_place_special_rooms()
+	MonteVenus.assign(self)  # Monte de Venus de la Selva (src/dungeon/monte_venus.gd); antes de las formas
 	_assign_room_shapes()
 	_paint_floor_tiles()
 	

@@ -781,6 +781,8 @@ func _label_doors(room: Room) -> void:
 		door.set_hint(hint[0], hint[1])
 
 func _room_hint(room: Room) -> Array:
+	if MonteVenus.is_monte(room):
+		return [tr("MONTE_DOOR_HINT"), Color("f06aa0")]
 	if room.has_meta("elite_room") and not room.cleared:
 		return [tr("DOOR_HINT_ELITE"), Color("ff6a3a")]
 	if room == _weapon_room and not _has_real_weapon():
@@ -854,6 +856,9 @@ func _build_calm_room(room: Room) -> void:
 	if room.has_meta("calm_built"):
 		return
 	room.set_meta("calm_built", true)
+	if MonteVenus.is_monte(room):
+		MonteVenus.build(self, room)  # Monte de Venus de la Selva (src/dungeon/monte_venus.gd)
+		return
 	var center := room.get_center_position()
 	match room.room_type:
 		Room.RoomType.TREASURE:
