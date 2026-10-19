@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "como_buscar_ayuda"
 title = "Cómo Buscar Ayuda"
-text = "Si hay peligro, llama ya al número de emergencias de tu país. Si necesitas hablar, busca la línea de ayuda de tu país: las hay para violencia, para diversidad y para salud. Cuéntaselo a alguien de confianza, que cargar solo pesa el doble. Y ante cualquier duda de salud, ve a un centro de salud: ahí no se juzga, se atiende."
+text = "Si hay peligro, llama ya al número de emergencias de tu país. Si necesitas hablar, busca la línea de ayuda de tu país: las hay para violencia, para diversidad y para salud. Cuéntaselo a alguien de confianza, que cargarlo a solas pesa el doble. Y ante cualquier duda de salud, ve a un centro de salud: ahí no se juzga, se atiende."
 category = 5
 unlocked = true
 flavor_text = "Siempre disponible. Ningún héroe va solo."
