@@ -38,6 +38,8 @@ var rest_min := 0.8
 var rest_max := 1.3
 ## Velocidad de las balas del abanico base.
 var bullet_speed := 230.0
+## Tope del aviso por fase en modo dinamico (cada jefe lo ajusta).
+var tele_caps := [0.65, 0.5, 0.4]
 ## Ataques que le quedan encadenar antes de volver al reposo.
 var _combo_left := 0
 
@@ -272,9 +274,11 @@ func _wait(secs: float) -> bool:
 	var g := _gen
 	var left := secs
 	while left > 0.0:
+		if not is_inside_tree():
+			return false  # el arbol se libera (fin de partida): la corrutina se rinde
 		var s := minf(left, 0.5)
 		await get_tree().create_timer(s, true, true).timeout
-		if g != _gen or state != State.ATTACK:
+		if g != _gen or state != State.ATTACK or not is_inside_tree():
 			return false
 		left -= s
 	return true
@@ -283,15 +287,17 @@ func _wait(secs: float) -> bool:
 ## Un frame de fisica. false = ataque cancelado.
 func _frame() -> bool:
 	var g := _gen
+	if not is_inside_tree():
+		return false
 	await get_tree().physics_frame
-	return g == _gen and state == State.ATTACK
+	return g == _gen and state == State.ATTACK and is_inside_tree()
 
 
 ## Aviso del jefe: parpadea y tiembla durante `secs`. `on_frame(restante)` se llama
 ## cada frame (para seguir al jugador con las lineas de aviso). false = cancelado.
 func _tele(secs: float, col := Color(2.0, 2.0, 0.9), shake := 2.0, on_frame := Callable()) -> bool:
 	if dynamic:
-		secs = minf(secs, [0.65, 0.5, 0.4][clampi(current_phase, 1, 3) - 1])
+		secs = minf(secs, tele_caps[clampi(current_phase, 1, 3) - 1])
 	telegraph_started.emit(secs)
 	animated_sprite.play("attack")
 	var left := secs

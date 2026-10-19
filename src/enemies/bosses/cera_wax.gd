@@ -177,14 +177,17 @@ func _physics_process(delta: float) -> void:
 	queue_redraw()
 
 
+var _burned := false
+
 func _burn_check() -> void:
 	if damage <= 0.0 or kind == Kind.EDGE:
 		return
 	var p := get_tree().get_first_node_in_group("player")
 	if p == null or not p.has_method("receive_hit"):
 		return
-	if p.global_position.distance_to(global_position) <= radius + 8.0:
-		p.receive_hit(damage)
+	# quema UNA vez por charco: pisarlo duele, pero no se castiga dos veces el mismo error
+	if not _burned and p.global_position.distance_to(global_position) <= radius + 8.0:
+		_burned = p.receive_hit(damage)
 
 
 func _try_solid(delta: float) -> void:

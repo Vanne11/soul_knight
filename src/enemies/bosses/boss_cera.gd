@@ -18,11 +18,12 @@ extends EnemyBoss
 ## - ESBIRROS: gotitas de cera (enemy_gota_cera.gd), oleadas segun fase.
 
 const WAX := Color(1.0, 0.78, 0.3)
-const MAX_PUDDLES := 8
+const MAX_PUDDLES := 6
 const GOTA := preload("res://src/enemies/enemy_gota_cera.tscn")
 const SOLID_CAP := [4, 6, 8]
 const EDGE_W := 52.0
 const BIG := [&"atk_cruz", &"atk_oleada"]
+const HP_MULT := 0.65
 
 var notebook := BossNotebook.new()
 var _aim := Vector2.RIGHT
@@ -70,9 +71,14 @@ func _ready() -> void:
 	fan_tint = WAX
 	keep_min = 110.0
 	keep_max = 150.0
-	rest_min = 0.35
-	rest_max = 0.65
-	bullet_speed = 330.0
+	rest_min = 0.45
+	rest_max = 0.8
+	bullet_speed = 290.0
+	tele_caps = [0.85, 0.7, 0.6]
+	# Balance (meta del PLAN 3: 60-120 s y 3-8 golpes al bot sin modo dios): vida x0.65
+	max_health *= HP_MULT
+	current_health = max_health
+	_emit_health()
 	move_speed = 120.0
 	# max 2 curas por pelea (antes = numero de piso)
 	_channels_total = 2
@@ -154,7 +160,7 @@ func _cl(p: Vector2, margin := 50.0) -> Vector2:
 
 
 func _ts(x: float) -> float:
-	return minf(x, [0.65, 0.5, 0.4][clampi(current_phase, 1, 3) - 1])
+	return minf(x, tele_caps[clampi(current_phase, 1, 3) - 1])
 
 
 ## Donde estara el jugador cuando llegue una bala de velocidad `spd` (prediccion).
@@ -199,9 +205,9 @@ func _tick(delta: float) -> void:
 		var moved := global_position.distance_to(_last_pos)
 		if moved > 0.3 and moved < 60.0 and not _channeling:
 			_drip_dist += moved
-			if _drip_dist >= 200.0:
+			if _drip_dist >= 320.0:
 				_drip_dist = 0.0
-				_puddle(global_position + Vector2(0, 6), 0.55, 3.5)
+				_puddle(global_position + Vector2(0, 6), 0.6, 2.5)
 	_last_pos = global_position
 	# escupitajo suelto con aviso corto (solo en reposo: en ataque ya tiene sus avisos)
 	if state == State.IDLE:
@@ -211,13 +217,13 @@ func _tick(delta: float) -> void:
 			animated_sprite.modulate = Color(2.2, 1.6, 0.8) if int(_spit_warn * 24.0) % 2 == 0 else Color.WHITE
 			if _spit_warn <= 0.0:
 				animated_sprite.modulate = Color.WHITE
-				var spd: float = [260.0, 340.0, 380.0][RNG.randi_range(0, 2)]
+				var spd: float = [240.0, 280.0, 310.0][RNG.randi_range(0, 2)]
 				var ang := (_lead(spd) - _muzzle()).angle()
 				_fire(ang, spd, 0.5)
 				_threat_hold = 1.5
-				_spit_t = RNG.randf_range(3.4, 4.6) / (1.0 + 0.2 * (current_phase - 1))
+				_spit_t = RNG.randf_range(4.2, 5.6) / (1.0 + 0.2 * (current_phase - 1))
 		elif _spit_t <= 0.0:
-			_spit_warn = 0.3
+			_spit_warn = 0.45
 
 
 func _idle_move(delta: float) -> void:
@@ -279,7 +285,7 @@ func _pick_attack() -> StringName:
 
 
 func _combo_len() -> int:
-	return RNG.randi_range(0, 1) if current_phase == 2 else (RNG.randi_range(1, 2) if current_phase >= 3 else 0)
+	return RNG.randi_range(0, 1) if current_phase >= 2 else 0
 
 
 func _combo_next() -> StringName:
@@ -566,14 +572,14 @@ func atk_abanico() -> void:
 	_add_hazard(line)
 	var track := func(left: float):
 		if left > 0.2:
-			_lock_ang = (_lead(340.0) - _muzzle()).angle()
+			_lock_ang = (_lead(300.0) - _muzzle()).angle()
 		if is_instance_valid(line):
 			line.global_position = _muzzle() + Vector2.RIGHT.rotated(_lock_ang) * 150.0
 			line.rotation = _lock_ang
 	if not await _tele(0.65, Color(2.2, 1.6, 0.6), 2.0, track):
 		return
 	_walk = 0.3
-	var volleys := 1 + (current_phase + 1) / 2
+	var volleys := 1 + current_phase / 2
 	for v in volleys:
 		_fire_fan(3 + current_phase / 2 + (1 if current_phase == 3 else 0))
 		if v < volleys - 1 and not await _wait(0.4):
@@ -588,15 +594,15 @@ func atk_rafaga() -> void:
 	_add_hazard(line)
 	var track := func(left: float):
 		if left > 0.2:
-			_lock_ang = (_lead(380.0) - _muzzle()).angle()
+			_lock_ang = (_lead(320.0) - _muzzle()).angle()
 		if is_instance_valid(line):
 			line.global_position = _muzzle() + Vector2.RIGHT.rotated(_lock_ang) * 150.0
 			line.rotation = _lock_ang
 	if not await _tele(0.5, Color(2.2, 1.6, 0.6), 2.0, track):
 		return
 	_walk = 0.2
-	for i in 3 + (current_phase + 1) / 2:
-		var spd := 380.0 if i % 2 == 0 else 300.0
+	for i in 3 + current_phase / 3:
+		var spd := 320.0 if i % 2 == 0 else 260.0
 		_fire(_lock_ang + RNG.randf_range(-0.04, 0.04), spd, 0.5)
 		if not await _wait(0.2):
 			return
@@ -615,7 +621,7 @@ func atk_cortina() -> void:
 	var lat := (target.global_position - center).dot(perp)
 	var side := 1.0 if RNG.randf() < 0.5 else -1.0
 	var gap_c := clampf(lat + side * RNG.randf_range(150.0, 230.0), -half + 70.0, half - 70.0)
-	var gap_h := 58.0
+	var gap_h := 90.0
 	var warn := _ts(0.5) + 0.05
 	var seg := func(a: float, b: float):
 		if b - a < 10.0:
@@ -627,7 +633,7 @@ func atk_cortina() -> void:
 	if not await _tele(0.5, Color(2.2, 1.6, 0.6), 2.5):
 		bot_safe = null
 		return
-	var spd := 340.0 + 15.0 * current_phase
+	var spd := 290.0 + 10.0 * current_phase
 	var x := -half
 	while x <= half:
 		if absf(x - gap_c) > gap_h:
@@ -642,11 +648,11 @@ func atk_cortina() -> void:
 func atk_tiron() -> void:
 	_walk = 0.0
 	_aim = (target.global_position - _muzzle()).normalized()
-	var lane := BossZone.rect(_muzzle(), Vector2(500, 70), 0.0, _ts(0.9) + 0.05, 0.05, 0.0, WAX)
+	var lane := BossZone.rect(_muzzle(), Vector2(500, 60), 0.0, _ts(0.9) + 0.05, 0.05, 0.0, WAX)
 	_add_hazard(lane)
 	var track := func(left: float):
-		if left > 0.2:
-			_aim = (_lead(700.0, 0.5) - _muzzle()).normalized()
+		if left > 0.35:
+			_aim = (_lead(700.0, 0.25) - _muzzle()).normalized()
 		_aim_len = _ray_len(_muzzle(), _aim, 620.0)
 		if is_instance_valid(lane):
 			lane.size.x = _aim_len
@@ -655,7 +661,7 @@ func atk_tiron() -> void:
 	if not await _tele(0.9, Color(2.2, 1.6, 0.6), 2.5, track):
 		return
 	var hit: bool = is_instance_valid(lane) and lane.contains(target.global_position)
-	var strike := BossZone.rect(_muzzle() + _aim * _aim_len * 0.5, Vector2(_aim_len, 70), _aim.angle(), 0.0, 0.2, 0.0, Color.WHITE)
+	var strike := BossZone.rect(_muzzle() + _aim * _aim_len * 0.5, Vector2(_aim_len, 60), _aim.angle(), 0.0, 0.2, 0.0, Color.WHITE)
 	_add_hazard(strike)
 	if is_instance_valid(lane):
 		lane.dismiss()
@@ -677,10 +683,11 @@ func atk_tiron() -> void:
 		target.move_and_collide(to_b.normalized() * minf(1100.0 / 60.0, dist - 105.0))
 	if target.has_method("receive_hit"):
 		target.receive_hit(damage * 0.35)
-	var slap := BossZone.circle(global_position, 135.0, _ts(0.5), 0.2, damage, WAX)
+	# el manotazo da tiempo de escapar tras el arrastre (antes casi siempre pegaba dos veces)
+	var slap := BossZone.circle(global_position, 120.0, 0.7, 0.2, damage, WAX)
 	_add_hazard(slap)
 	slap.follow = self
-	if not await _tele(0.5, Color(2.2, 0.6, 0.6), 3.0):
+	if not await _tele(0.7, Color(2.2, 0.6, 0.6), 3.0):
 		return
 	await _wait(0.2)
 
@@ -690,7 +697,7 @@ func atk_salpicadura() -> void:
 	_walk = 0.45
 	if not await _tele(0.45, Color(2.2, 1.6, 0.6)):
 		return
-	var n := mini(1 + current_phase, 3)
+	var n := mini(current_phase, 2) + (1 if current_phase == 3 else 0)
 	for i in n:
 		var p: Vector2 = _lead(250.0) if i % 2 == 0 else target.global_position + Vector2(RNG.randf_range(-90, 90), RNG.randf_range(-90, 90))
 		_puddle(p, 0.8, 4.5)
@@ -724,8 +731,8 @@ func atk_embiste() -> void:
 	_add_hazard(lane)
 	_charge_dir = (target.global_position - global_position).normalized()
 	var track := func(left: float):
-		if left > 0.2:
-			_charge_dir = (_lead(450.0, 0.6) - global_position).normalized()
+		if left > 0.35:
+			_charge_dir = (_lead(450.0, 0.3) - global_position).normalized()
 		if is_instance_valid(lane):
 			var ln := _ray_len(global_position + Vector2(0, -50), _charge_dir, 700.0)
 			lane.size.x = ln
@@ -738,7 +745,7 @@ func atk_embiste() -> void:
 	var t := 0.0
 	var wall := false
 	while t < 0.7:
-		velocity = _charge_dir * (470.0 + current_phase * 40.0)
+		velocity = _charge_dir * (420.0 + current_phase * 30.0)
 		if not await _frame():
 			return
 		_strike()
@@ -765,7 +772,7 @@ func atk_cruz() -> void:
 	for k in 2:
 		var z := BossZone.rect(c, Vector2(reach, 46), ang + k * PI * 0.5, _ts(0.95) + 0.05, 1.9, damage, WAX)
 		z.spin = sp
-		z.one_hit = false
+		z.one_hit = true  # cada tira pega una vez (antes repetia mientras siguieras encima)
 		z.fade = 0.4
 		_add_hazard(z)
 	if not await _tele(0.95, Color(2.2, 1.6, 0.6), 2.5):
@@ -784,7 +791,7 @@ func atk_oleada() -> void:
 		return
 	var a := _inner()
 	var horiz := a.size.x >= a.size.y
-	var spd := 280.0 + 20.0 * (current_phase - 2)
+	var spd := 250.0 + 20.0 * (current_phase - 2)
 	for k in (1 if current_phase < 3 else 2):
 		var tp: Vector2 = target.global_position
 		var from_start := (tp.x > a.get_center().x) if horiz else (tp.y > a.get_center().y)
@@ -792,7 +799,7 @@ func atk_oleada() -> void:
 			from_start = not from_start
 		var cross_lo := a.position.y if horiz else a.position.x
 		var cross_hi := a.end.y if horiz else a.end.x
-		var gap_half := 75.0
+		var gap_half := 95.0
 		var pc := (tp.y if horiz else tp.x)
 		var gap_c := clampf(pc + (1.0 if RNG.randf() < 0.5 else -1.0) * RNG.randf_range(130.0, 210.0), cross_lo + gap_half + 20.0, cross_hi - gap_half - 20.0)
 		bot_safe = Vector2(tp.x, gap_c) if horiz else Vector2(gap_c, tp.y)
@@ -854,14 +861,14 @@ func _defend(dt: float) -> void:
 	velocity = (c - global_position).limit_length(60.0) * 1.0
 	if _def_t > 0.0:
 		return
-	_def_t = [2.0, 1.6, 1.3][current_phase - 1]
+	_def_t = [3.0, 2.6, 2.2][current_phase - 1]
 	var pick := RNG.randi_range(0, 2 if current_phase >= 2 else 1)
 	match pick:
 		0:
 			# barrido: abanico corto hacia la ruta entre tu y la tira
 			var mid: Vector2 = target.global_position.lerp(_strip_pos, 0.5)
 			var base := (mid - _muzzle()).angle()
-			var spd: float = [300.0, 340.0, 360.0][current_phase - 1]
+			var spd: float = [260.0, 290.0, 310.0][current_phase - 1]
 			for i in 3:
 				_fire(base + (i - 1) * 0.2, spd, 0.5)
 		1:
