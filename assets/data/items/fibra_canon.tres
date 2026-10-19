@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "fibra_canon"
+display_name = "Fibra Cañón"
+description = "Dispara granos de avena en abanico. Fibra y agua: el combo que tu intestino siempre quiso."
+rarity = 2
+tags = ["arma", "pt_arma"]
+equip_slot = 1
+effects = [{"type": 0, "stat": "damage", "magnitude": 1.0}]
+base_value = 380
+custom_data = {"dmg_type": "fibra", "affinity": "neutral", "base_damage": 16, "fire_rate": 0.95, "projectile_speed": 400, "spread": 0.16, "pellets": 8, "range": 230, "falloff_start": 70, "falloff_end": 220, "falloff_min": 0.3, "knockback_mult": 1.4, "skin": "res://assets/sprites/projectiles/fibra_canon.png", "bullet_color": "f2d27a"}

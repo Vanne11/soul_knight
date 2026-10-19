@@ -78,10 +78,28 @@ func get_random_item(rarity: int = -1, tags: Array[String] = []) -> Variant:
 			pool.append_array(arr)
 	
 	pool = pool.filter(func(it): return not ("exclusivo" in it.tags))
+	pool = _pt_weighted(pool)
 	if pool.is_empty():
 		return null
 	
 	return pool[RNG.randi_range(0, pool.size() - 1)]
+
+## Armas de LA PUERTA TRASERA (tag "pt_arma"): dentro del reino salen el triple de veces; en el resto del juego son raras
+## (cada una entra al sorteo solo ~1 de cada 5 veces que le toca).
+func _pt_weighted(pool: Array) -> Array:
+	var rm := get_node_or_null("/root/RunManager")
+	var inside: bool = rm != null and String(rm.floor_data().get("region", "")) == "puerta_trasera"
+	var out: Array = []
+	for it in pool:
+		if "pt_arma" in it.tags:
+			if inside:
+				out.append_array([it, it, it])
+			elif RNG.randf() < 0.2:
+				out.append(it)
+		else:
+			out.append(it)
+	return out if not out.is_empty() else pool
+
 
 func get_items_by_tag(tag: String) -> Array:
 	return _items_by_tag[tag] if _items_by_tag.has(tag) else []

@@ -10,6 +10,8 @@ const PLAYER_BULLET := preload("res://src/player/player_bullet.tscn")
 const BOOMERANG_TEX := preload("res://assets/sprites/projectiles/boomerang.png")
 const TARRO_TEX := preload("res://assets/sprites/projectiles/tarro_masilla.png")
 const BALLOON_TEX := preload("res://assets/sprites/projectiles/water_balloon.png")
+const GLOBO_TEX := preload("res://assets/sprites/projectiles/globocondon.png")
+const LUBE_TEX := preload("res://assets/sprites/projectiles/lubricante_agua.png")
 
 
 ## Devuelve la espera (s) hasta el siguiente disparo si es distinta de fire_rate; -1 = normal.
@@ -25,6 +27,12 @@ static func fire(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: Vect
 			_tarro(p, cd, dmg, aim, origin)
 		"catcher":
 			_catcher(p, cd, dmg, aim, origin)
+		"ducha":
+			_ducha(p, cd, dmg, aim, origin)
+		"globocondon":
+			_globocondon(p, cd, dmg, aim, origin)
+		"lube":
+			_lube(p, cd, dmg, aim, origin)
 		"combo":
 			return _combo(p, cd, dmg, aim, origin)
 	return -1.0
@@ -152,6 +160,78 @@ static func _tarro(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: Ve
 		"boss_slow": float(cd.get("boss_slow", 0.75)),
 	}
 	b.rotation = aim.angle()
+	p.get_parent().add_child(b)
+	b.global_position = origin
+
+
+# ---------------------------------------------------------------- Ducha Anal (LA PUERTA TRASERA)
+## Chorro de agua a presion en cono corto: cada tic pega poco, EMPUJA y LIMPIA los charcos de aceite y las grietas de la zona.
+## Dato (PT-26): hace gracia, pero las duchas internas frecuentes irritan; con higiene normal basta.
+static func _ducha(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: Vector2) -> void:
+	var reach := float(cd.get("range", 175.0))
+	var half := float(cd.get("cone", 0.28))
+	var kb := float(cd.get("push", 55.0))
+	var mult := _crit(p, cd)
+	var wid := BossDamage.weapon_of(p)
+	var length := _wall_dist(p, origin, aim, reach)
+	for e in _enemies():
+		var rel: Vector2 = e.global_position - origin
+		if rel.length() > length + 12.0:
+			continue
+		if rel.length() > 16.0 and absf(angle_diff(rel.angle(), aim.angle())) > half + 12.0 / maxf(rel.length(), 24.0):
+			continue
+		BossDamage.tag(wid, mult)
+		var per := dmg * mult
+		e.take_damage(per, p, aim * kb)
+		_heal(p, per)
+	PtHazard.clean(p_tree(), origin + aim * length * 0.5, length * 0.5)
+	var fx := WaterJetFx.new()
+	fx.length = length
+	fx.spread = half
+	fx.rotation = aim.angle()
+	p.get_parent().add_child(fx)
+	fx.global_position = origin
+
+
+# ---------------------------------------------------------------- Globocondon (LA PUERTA TRASERA)
+## El condon-globo vuela, revienta al tocar y deja una burbuja de latex que atrapa a los enemigos (ver CondomBubble).
+static func _globocondon(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: Vector2) -> void:
+	var b: PlayerBullet = PLAYER_BULLET.instantiate()
+	b.crit_mult = _crit(p, cd)
+	b.weapon_id = BossDamage.weapon_of(p)
+	b.damage = dmg * b.crit_mult
+	b.speed = float(cd.get("projectile_speed", 290.0)) * p.get_node("/root/PlayerStats").projectile_speed_modifier
+	b.lifetime = float(cd.get("range", 270.0)) / b.speed
+	b.explosion_radius = float(cd.get("explosion_radius", 34.0))
+	b.knockback = 40.0
+	b.water = true
+	b.skin = GLOBO_TEX
+	b.rotation = aim.angle()
+	var cfg := {"radius": float(cd.get("bubble_radius", 54.0)), "time": float(cd.get("bubble_time", 3.6)),
+		"boss_slow": float(cd.get("boss_slow", 0.7)), "pop_damage": dmg * float(cd.get("pop_mult", 1.6)), "weapon_id": b.weapon_id}
+	b.burst_cb = func(parent: Node, pos: Vector2) -> void: CondomBubble.make(parent, pos, cfg)
+	p.get_parent().add_child(b)
+	b.global_position = origin
+
+
+# ---------------------------------------------------------------- Lubricante a base de agua (LA PUERTA TRASERA)
+static func _lube(p: Node, cd: Dictionary, dmg: float, aim: Vector2, origin: Vector2) -> void:
+	var b: PlayerBullet = PLAYER_BULLET.instantiate()
+	b.crit_mult = _crit(p, cd)
+	b.weapon_id = BossDamage.weapon_of(p)
+	b.damage = dmg * b.crit_mult
+	b.speed = float(cd.get("projectile_speed", 250.0)) * p.get_node("/root/PlayerStats").projectile_speed_modifier
+	b.lifetime = float(cd.get("range", 240.0)) / b.speed
+	b.explosion_radius = float(cd.get("explosion_radius", 30.0))
+	b.knockback = 30.0
+	b.water = true
+	b.skin = LUBE_TEX
+	b.arc = float(cd.get("arc", 18.0))
+	b.rotation = aim.angle()
+	var cfg := {"radius": float(cd.get("patch_radius", 64.0)), "time": float(cd.get("patch_time", 6.0)),
+		"slip_every": float(cd.get("slip_every", 1.6)), "slip_time": float(cd.get("slip_time", 0.7)),
+		"slip_damage": dmg * float(cd.get("slip_mult", 0.9)), "weapon_id": b.weapon_id}
+	b.burst_cb = func(parent: Node, pos: Vector2) -> void: LubePatch.make(parent, pos, cfg)
 	p.get_parent().add_child(b)
 	b.global_position = origin
 
