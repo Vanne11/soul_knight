@@ -6,10 +6,10 @@ uid="uid://dgqca6kl2xyws"
 
 [deps]
 
-files=["res://locale/jefes_viagra_ovaria.es.translation", "res://locale/jefes_viagra_ovaria.en.translation"]
+files=["res://locale/jefes_viagra_ovaria.es.translation", "res://locale/jefes_viagra_ovaria.en.translation", "res://locale/jefes_viagra_ovaria.es_ES.translation", "res://locale/jefes_viagra_ovaria.fr.translation"]
 
 source_file="res://locale/jefes_viagra_ovaria.csv"
-dest_files=["res://locale/jefes_viagra_ovaria.es.translation", "res://locale/jefes_viagra_ovaria.en.translation"]
+dest_files=["res://locale/jefes_viagra_ovaria.es.translation", "res://locale/jefes_viagra_ovaria.en.translation", "res://locale/jefes_viagra_ovaria.es_ES.translation", "res://locale/jefes_viagra_ovaria.fr.translation"]
 
 [params]
 
