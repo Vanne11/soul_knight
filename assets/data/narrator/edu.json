@@ -1,23 +1,23 @@
 {
   "_info": "Frases del bloque 4a (educación sexual ligera). Cortas y con humor; lo serio vive en el códice. Eventos: edu_cura, edu_condon, edu_vacuna, edu_vacuna_ya, edu_pobre, edu_mito_ok (acierto en Mito o Verdad), edu_mito_mal (error, sin castigo). edu_primer_dato: presentacion del icono de dato, una sola vez en toda la partida guardada (Narrator.say_once_ever).",
   "edu_cura": [
-    "DRA. PREVENTINA: Listo. Sin ardor ni picazón. Y sin juicios.",
-    "DRA. PREVENTINA: Curado. Receta: una pomada y cero vergüenza."
+    "MATRONA PREVENTINA: Listo. Sin ardor ni picazón. Y sin juicios.",
+    "MATRONA PREVENTINA: Curado. Receta: una pomada y cero vergüenza."
   ],
   "edu_condon": [
-    "DRA. PREVENTINA: Buen criterio. Antes, no después del susto.",
-    "DRA. PREVENTINA: Barato, eficaz y sin efectos secundarios. Salvo madurar."
+    "MATRONA PREVENTINA: Buen criterio. Antes, no después del susto.",
+    "MATRONA PREVENTINA: Barato, eficaz y sin efectos secundarios. Salvo madurar."
   ],
   "edu_vacuna": [
-    "DRA. PREVENTINA: ¡Pinchacito! El VPH Verrugón ya no te saca ni una verruga.",
-    "DRA. PREVENTINA: Vacunado. Oficialmente, un héroe con carnet."
+    "MATRONA PREVENTINA: ¡Pinchacito! El VPH Verrugón ya no te saca ni una verruga.",
+    "MATRONA PREVENTINA: Vacunado. Oficialmente, un héroe con carnet."
   ],
   "edu_vacuna_ya": [
-    "DRA. PREVENTINA: Ya estás vacunado. Dos veces no, ni insistiendo."
+    "MATRONA PREVENTINA: Ya estás vacunado. Dos veces no, ni insistiendo."
   ],
   "edu_pobre": [
-    "DRA. PREVENTINA: La salud es gratis; los preservativos, no. Vuelve con monedas.",
-    "DRA. PREVENTINA: Te faltan monedas. Yo no fío, pero prevenir sale barato."
+    "MATRONA PREVENTINA: La salud es gratis; los preservativos, no. Vuelve con monedas.",
+    "MATRONA PREVENTINA: Te faltan monedas. Yo no fío, pero prevenir sale barato."
   ],
   "edu_mito_ok": [
     "¡Correcto! Se nota que alguien no se creyó el cuento.",

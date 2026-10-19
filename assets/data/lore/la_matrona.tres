@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "la_matrona"
+title = "La matrona"
+text = "Profesional de la salud sexual y reproductiva: te acompaña con anticoncepción, infecciones de transmisión sexual, ciclo menstrual, embarazo y parto, sin juicios y sin cobrar vergüenza. La OMS y la Confederación Internacional de Matronas (ICM) la consideran clave para la salud de mujeres y familias. El nombre cambia según el país: en inglés se dice midwife, en francés sage-femme, en español matrona; en otros países de Latinoamérica se dice obstetra o partera (partera suele sonar a oficio tradicional). Aquí atiende como la Matrona Preventina y como la Matrona V., guiño a la autora."
+category = 1
+unlock_condition = {"type": 10, "target_id": "matrona_consulta"}
+flavor_text = "Habla con la matrona."

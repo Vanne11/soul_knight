@@ -1,7 +1,7 @@
 keys,es,en,es_ES,fr
 EDU_FACT_LABEL,¿SABÍAS QUE...?,DID YOU KNOW...?,,TU SAVAIS QUE... ?
 EDU_SOURCE_LABEL,Fuente: %s,Source: %s,,Source : %s
-EDU_DOC_NAME,DRA. PREVENTINA,DR. PREVENTINA,,DRE PRÉVENTINE
+EDU_DOC_NAME,MATRONA PREVENTINA,MIDWIFE PREVENTINA,,SAGE-FEMME PRÉVENTINE
 EDU_DOC_PROMPT_SICK,Consultorio: curar el contagio (gratis),Clinic: cure the infection (free),Centro de salud: curar el contagio (gratis),Cabinet : soigner l'infection (gratuit)
 EDU_DOC_PROMPT_OK,Consultorio: consulta rápida (un dato),Clinic: quick check-up (a tip),Centro de salud: consulta rápida (un dato),Cabinet : consultation express (un conseil)
 EDU_CONDOM_PROMPT,Preservativos de bolsillo: inmunidad al contagio un rato (%d $),Pocket condoms: infection immunity for a while (%d $),,Capotes de poche : immunité à l'infection un moment (%d $)

@@ -1,7 +1,7 @@
 class_name Consultorio
 extends RefCounted
 
-## Consultorio de la Dra. Preventina en las salas de descanso: cura el contagio (gratis),
+## Consultorio de la Matrona Preventina en las salas de descanso: cura el contagio (gratis),
 ## vende prevencion (preservativo de bolsillo y vacuna VPH) y un poster con guiño. Todo se
 ## usa con E y solo si quieres; nada se impone. Lo construye Main._build_calm_room (REST).
 
@@ -12,9 +12,12 @@ const ART := "res://assets/sprites/edu/"  # arte de tools/gen_edu_art.py
 static func build(main: Node, room: Room) -> void:
 	var c := room.get_center_position()
 	var cfg := Edu.consultorio_cfg()
-	_prop(main, room, c + Vector2(-140, -30), _doctor_visual(room),
+	var doc := matrona_visual()
+	_prop(main, room, c + Vector2(-140, -30), doc,
 		func(): return Edu.t("EDU_DOC_PROMPT_SICK" if Edu.ps().contagion_time > 0.0 else "EDU_DOC_PROMPT_OK"),
 		func(_p, it):
+			matrona_act(doc, "talk")
+			main.get_node("/root/LoreDatabase").custom_event("matrona_consulta")
 			if Edu.ps().contagion_time > 0.0:
 				Edu.ps().clear_contagion()
 				Sound.play("room_clear")
@@ -36,6 +39,7 @@ static func build(main: Node, room: Room) -> void:
 		func(p, it):
 			if not _pay(cp, p):
 				return
+			matrona_act(doc, "give")
 			Edu.ps().apply_item_effect({"type": 18, "duration": secs})
 			Narrator.say("edu_condon")
 			it.finish())
@@ -57,7 +61,7 @@ static func build(main: Node, room: Room) -> void:
 			it.finish())
 
 
-## Cobra; si no alcanza, la Dra. lo dice con gracia y no pasa nada.
+## Cobra; si no alcanza, la Matrona lo dice con gracia y no pasa nada.
 static func _pay(price: int, player: Node) -> bool:
 	if Edu.rm().coins < price:
 		Sound.play("poor")
@@ -125,20 +129,39 @@ static func _sprite_visual(_room: Room, file: String, _height: int, flat: bool, 
 	return s
 
 
-## La doctora: idle de 4 cuadros (respira, brilla el espejo, parpadea) con tiempos desiguales.
-static func _doctor_visual(_room: Room) -> Node2D:
+## La matrona (antes la doctora): idle con parpadeo y anotaciones en su ficha, y poses que se
+## disparan al interactuar (talk al hablar, give al entregar, wave al saludar). Arte: tools/gen_matrona_art.py.
+## Lo usa tambien la Consulta del Utero (la Matrona V.).
+static func matrona_visual() -> AnimatedSprite2D:
 	var sf := SpriteFrames.new()
 	sf.add_animation("idle")
 	sf.set_animation_loop("idle", true)
 	sf.set_animation_speed("idle", 1.0)
-	for e in [[0, 3.2], [1, 1.0], [0, 2.4], [2, 0.8], [0, 3.6], [3, 0.3]]:
-		sf.add_frame("idle", tex("doctora_idle_%d" % e[0]), e[1])
+	for e in [["idle", 3.2], ["blink", 0.25], ["idle", 2.4], ["write", 1.4], ["idle", 3.6], ["blink", 0.25]]:
+		sf.add_frame("idle", tex("matrona_" + e[0]), e[1])
+	var poses := {"talk": ["talk_a", "talk_b", "talk_a", "talk_b", "talk_a", "idle"],
+		"give": ["give", "give", "give", "idle"], "wave": ["wave", "wave", "wave", "idle"]}
+	for anim in poses:
+		sf.add_animation(anim)
+		sf.set_animation_loop(anim, false)
+		sf.set_animation_speed(anim, 1.0)
+		for f in poses[anim]:
+			sf.add_frame(anim, tex("matrona_" + f), 0.22 if anim == "talk" else 0.4)
 	var a := AnimatedSprite2D.new()
 	a.sprite_frames = sf
 	a.centered = false
-	a.offset = Vector2(-22, 24 - 62)
+	a.offset = Vector2(-24, 24 - 64)
 	a.set_meta("foot", 24.0)
-	a.set_meta("half_w", 16.0)
+	a.set_meta("half_w", 17.0)
 	a.set_meta("tall", true)
+	a.animation_finished.connect(func():
+		if a.animation != "idle":
+			a.play("idle"))
 	a.play("idle")
 	return a
+
+
+## Dispara una pose de la matrona (talk / give / wave); vuelve sola al idle.
+static func matrona_act(v: AnimatedSprite2D, anim: String) -> void:
+	if is_instance_valid(v):
+		v.play(anim)
