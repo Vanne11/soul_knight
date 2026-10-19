@@ -404,6 +404,8 @@ func _handle_movement(delta: float) -> void:
 	velocity = input_dir * move_speed * speed_mult
 	if st != null:
 		velocity += st.pull_velocity()
+	if ContemplationMode.active:
+		velocity = velocity.limit_length(ContemplationMode.WALK_SPEED)  # sala de memoria: se camina despacio
 	
 	_update_animation(input_dir)
 
@@ -413,6 +415,8 @@ func _status() -> StatusEffects:
 	return n if n is StatusEffects else null
 
 func _handle_dash(delta: float) -> void:
+	if ContemplationMode.active:
+		return  # contemplacion: ni dash ni disparo
 	var st := _status()
 	if st != null and st.blocks_dash():
 		return
@@ -449,6 +453,8 @@ func _start_dash() -> void:
 	
 
 func _handle_attack(delta: float) -> void:
+	if ContemplationMode.active:
+		return
 	if ability and not ability.can_attack():
 		return
 	var st := _status()

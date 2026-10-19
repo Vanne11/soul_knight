@@ -500,7 +500,7 @@ func atk_canalizar() -> void:
 	_reset_fx()
 	_clear_hazards()
 	if _chan_ok:
-		_float_text(tr("BOSS_CHAN_BREAK"), Color("ffe08a"))
+		_float_text(_chan_label("BREAK"), Color("ffe08a"))
 		Sound.play("crack")
 		_st_cuts += 1
 		_stun(_cure_cut_stun())
@@ -508,10 +508,15 @@ func atk_canalizar() -> void:
 	else:
 		current_health = minf(max_health, current_health + max_health * CHANNEL_HEAL)
 		_emit_health()
-		_float_text(tr("BOSS_CHAN_DONE"), col)
+		_float_text(_chan_label("DONE"), col)
 		HitFx.shake(0.3)
 		_on_cure_done()
 	channel_ended.emit(_chan_ok)
+
+
+## Texto flotante al cortar ("BREAK") o completar ("DONE") la cura; cada jefe puede cambiarlo.
+func _chan_label(kind: String) -> String:
+	return tr("BOSS_CHAN_" + kind)
 
 
 ## Ganchos de la cura (el jefe dinamico los usa para premiar/castigar): aturdido al cortarla,
@@ -606,7 +611,7 @@ func _body_center() -> Vector2:
 
 
 # --- apagon (oscuridad total salvo tu halo): comun al Aduanero y a la Hoja de Parra
-func _blackout_start(halo: float, tint: Color) -> void:
+func _blackout_start(halo: float, tint: Color, amount := 0.97) -> void:
 	if is_instance_valid(_blackout):
 		return
 	_blackout = CanvasLayer.new()
@@ -625,7 +630,7 @@ func _blackout_start(halo: float, tint: Color) -> void:
 	var host: Node = main if main else get_tree().current_scene
 	host.add_child(_blackout)
 	host.move_child(_blackout, mini(1, host.get_child_count() - 1))
-	create_tween().tween_property(_blackout_mat, "shader_parameter/amount", 0.97, 0.5)
+	create_tween().tween_property(_blackout_mat, "shader_parameter/amount", amount, 0.5)
 
 
 func _blackout_update(boss_world: Vector2, boss_glow: float) -> void:

@@ -60,6 +60,12 @@ func set_hint(text: String) -> void:
 	_hint.text = text.replace("[E]", InputGlyphs.text("interact"))
 
 
+## Contemplacion (sala de memoria): el HUD se oculta; solo queda el boton "Como buscar ayuda".
+func set_contemplation(on: bool) -> void:
+	_circle.visible = not on
+	_hint.visible = not on
+
+
 ## Pone al dia el circulo con Silencio.circle_on (fade_in: aparece por primera vez).
 func circle_refresh(fade_in: bool) -> void:
 	if fade_in:

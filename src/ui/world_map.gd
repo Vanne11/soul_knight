@@ -54,7 +54,9 @@ static func current_region(rm: Node) -> String:
 
 
 ## Nombre del reino: el de siempre si existe en FLOORS (Loc.region_name_id) o la clave de mapa_mundo.csv.
-static func region_label(r: Dictionary) -> String:
+static func region_label(r: Dictionary, voz := false) -> String:
+	if voz and r.has("name_key_lib"):
+		return Loc.tr_or(str(r.name_key_lib), str(r.get("name_lib", r.name)))  # estado "liberado" (Las Tierras de la Voz)
 	if str(r.id) in RunManager.regions():
 		return Loc.region_name_id(str(r.id))
 	return Loc.tr_or(str(r.name_key), str(r.name))
@@ -141,6 +143,12 @@ func _alert(ci: CanvasItem, c: Vector2) -> void:
 	ci.draw_rect(Rect2(c + Vector2(-1, 4), Vector2(2, 2)), INK)
 
 
+## El reino tiene dos estados (diseno_E3 7.5): "silencio" y "liberado". Hoy solo Las Tierras del Silencio: al
+## transformarse (Silencio.liberado en esta partida, o liberado de forma permanente) pasa a "Las Tierras de la Voz".
+func _voz(r: Dictionary) -> bool:
+	return r.has("color_lib") and str(r.id) == Silencio.REGION and (Silencio.REGION in _lib or Silencio.liberado)
+
+
 func _is_missing(id: String) -> bool:
 	return id not in _exist
 
@@ -148,7 +156,8 @@ func _is_missing(id: String) -> bool:
 func _draw_region(ci: CanvasItem, r: Dictionary) -> void:
 	var id := str(r.id)
 	var rc := _rect(r.x, r.y, r.w, r.h)
-	var col := Color(str(r.color))
+	var voz := _voz(r)
+	var col := Color(str(r.color_lib if voz else r.color))
 	if _is_missing(id):
 		# silueta punteada con "?": existe en el diseno pero aun no en el juego
 		ci.draw_rect(rc, Color(col, 0.07))
@@ -157,7 +166,7 @@ func _draw_region(ci: CanvasItem, r: Dictionary) -> void:
 		if r.rainbow:
 			_rainbow_strip(ci, rc)
 		return
-	if id in _lib:
+	if id in _lib or voz:
 		# liberado de forma permanente (en esta u otra partida): color pleno
 		ci.draw_rect(rc, Color(col, 0.6))
 		ci.draw_rect(rc, col, false, 3.0)
@@ -184,8 +193,8 @@ func _draw_name(ci: CanvasItem, r: Dictionary) -> void:
 	var pos := rc.position + Vector2(5 + float(r.get("label_dx", 0.0)) * _s.x, 17)
 	if _is_missing(id):
 		_text(ci, region_label(r), pos, -1, 16, Color(col, 0.7))
-	elif _visited(id) or id in _lib:
-		_text(ci, region_label(r), pos, -1, 16, Color.WHITE)
+	elif _visited(id) or id in _lib or _voz(r):
+		_text(ci, region_label(r, _voz(r)), pos, -1, 16, Color.WHITE)
 	elif _is_disorder(id):
 		_text(ci, region_label(r), pos, -1, 16, Color(0.78, 0.78, 0.84))  # desorden: se lee el nombre (a que volver)
 	elif id in _opts:
@@ -308,12 +317,34 @@ func _draw_overlays(ci: CanvasItem, r: Dictionary) -> void:
 	if id in RunManager.seal_regions:
 		var b: Dictionary = r.boss
 		_seal(ci, _pt(b.x + 0.7, b.y + 0.6) + Vector2(0, 2), 8.0)
+	# Las Tierras del Silencio / de la Voz: ventana cerrada (gris) o faro encendido con una vela pequena (el Memorial)
+	if r.has("color_lib") and not _is_missing(id) and (_visited(id) or id in _lib):
+		_silencio_icon(ci, rc, _voz(r))
 	# el heroe: punto parpadeante en su reino actual
 	if id == _cur:
 		var p := rc.get_center() + Vector2(0, 8)
 		ci.draw_circle(p, 7.0, INK)
 		ci.draw_circle(p, 5.5, Color("f2ead6") if _blink else GOLD)
 		ci.draw_circle(p, 2.0, INK)
+
+
+## Icono del reino del Silencio: ventana cerrada (estado "silencio") o faro encendido con una vela pequena
+## debajo (estado "liberado": el Memorial). Sin cifras ni texto del tema (diseno_E3 7.5).
+func _silencio_icon(ci: CanvasItem, rc: Rect2, voz: bool) -> void:
+	var c := Vector2(rc.end.x - 26, rc.position.y + 30)
+	if not voz:
+		ci.draw_rect(Rect2(c + Vector2(-9, -11), Vector2(18, 22)), INK)
+		ci.draw_rect(Rect2(c + Vector2(-7, -9), Vector2(14, 18)), Color(0.32, 0.32, 0.4))
+		ci.draw_line(c + Vector2(0, -9), c + Vector2(0, 9), INK, 2.0)  # postigos cerrados
+		ci.draw_line(c + Vector2(-7, 0), c + Vector2(7, 0), INK, 1.5)
+		return
+	var warm := Color("ffd98a")
+	ci.draw_colored_polygon(PackedVector2Array([c + Vector2(-5, 11), c + Vector2(5, 11), c + Vector2(2, -4), c + Vector2(-2, -4)]), Color(0.94, 0.9, 0.82))
+	ci.draw_rect(Rect2(c + Vector2(-4, -10), Vector2(8, 6)), warm)  # la luz del faro
+	ci.draw_circle(c + Vector2(0, -7), 8.0, Color(warm, 0.22 + 0.12 * _pulse))
+	var v := c + Vector2(0, 24)  # la vela del Memorial
+	ci.draw_rect(Rect2(v + Vector2(-2, -3), Vector2(4, 7)), Color(0.94, 0.9, 0.82))
+	ci.draw_circle(v + Vector2(0, -5), 2.2, warm)
 
 
 func _seal(ci: CanvasItem, c: Vector2, rad: float) -> void:

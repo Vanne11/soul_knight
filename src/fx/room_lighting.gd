@@ -176,6 +176,10 @@ func _tint_now() -> Color:
 	return Color.WHITE
 
 
+## Segundos de la transicion de la luz ambiente (la sala de memoria del Silencio la alarga a 3 s por vela).
+var ambient_secs := 1.2
+
+
 func _apply_ambient(room: Room, animate: bool) -> void:
 	_tint = _tint_now()
 	var amb := Color.WHITE
@@ -194,7 +198,7 @@ func _apply_ambient(room: Room, animate: bool) -> void:
 		_ambient_tween.kill()
 	if animate:
 		_ambient_tween = create_tween()
-		_ambient_tween.tween_property(_ambient, "color", amb, 1.2)
+		_ambient_tween.tween_property(_ambient, "color", amb, ambient_secs)
 	else:
 		_ambient.color = amb
 

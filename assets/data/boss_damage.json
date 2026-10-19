@@ -75,24 +75,50 @@
 		"hint_weapon": "laser_depilador"
 	},
 	"afeitadora": {
-		"weak": {"agua": 1.9, "vibracion": 1.4},
-		"resist": {"electrico": 0.4, "perforante": 0.7},
+		"weak": {
+			"agua": 1.9,
+			"vibracion": 1.4
+		},
+		"resist": {
+			"electrico": 0.4,
+			"perforante": 0.7
+		},
 		"match": {
-			"pitocles": ["agua"],
-			"vulvalquiria": ["agua"],
-			"ornitorrinco": ["agua", "vibracion"]
+			"pitocles": [
+				"agua"
+			],
+			"vulvalquiria": [
+				"agua"
+			],
+			"ornitorrinco": [
+				"agua",
+				"vibracion"
+			]
 		},
 		"line_weak": "BOSSDMG_AFEITADORA_WEAK",
 		"line_resist": "BOSSDMG_AFEITADORA_RESIST",
 		"hint_weapon": "globos_agua"
 	},
 	"testiculo_primordial": {
-		"weak": {"contundente": 1.9, "explosivo": 1.4},
-		"resist": {"latex": 0.4, "perforante": 0.75},
+		"weak": {
+			"contundente": 1.9,
+			"explosivo": 1.4
+		},
+		"resist": {
+			"latex": 0.4,
+			"perforante": 0.75
+		},
 		"match": {
-			"pitocles": ["contundente"],
-			"vulvalquiria": ["explosivo"],
-			"ornitorrinco": ["contundente", "explosivo"]
+			"pitocles": [
+				"contundente"
+			],
+			"vulvalquiria": [
+				"explosivo"
+			],
+			"ornitorrinco": [
+				"contundente",
+				"explosivo"
+			]
 		},
 		"line_weak": "BOSSDMG_TESTICULO_WEAK",
 		"line_resist": "BOSSDMG_TESTICULO_RESIST",
@@ -298,5 +324,19 @@
 		"line_weak": "BOSSDMG_ALGORITMO_WEAK",
 		"line_resist": "BOSSDMG_ALGORITMO_RESIST",
 		"hint_weapon": "canon_confeti"
+	},
+	"pacto_silencio": {
+		"_nota": "El Pacto de Silencio (diseno_E3 5.2): debil al SONIDO (x1,8) y resiste todo lo demas ('apagado' x0,3: nunca cero). boss_pacto_silencio.gd etiqueta cada golpe: 'sonido' si viene de un anillo de ruido, un pulso, el grito/escudo/pico del heroe o una Voz aliada; 'apagado' el resto. Sin MATCH (sin sellos ni armas del reino). Textos sobrios (sin humor).",
+		"weak": {
+			"sonido": 1.8
+		},
+		"resist": {
+			"apagado": 0.3
+		},
+		"match": {},
+		"line_weak": "SIL_JEFE_DEBIL",
+		"line_resist": "SIL_JEFE_RESISTE",
+		"label_weak": "SIL_JEFE_LBL_DEBIL",
+		"label_resist": "SIL_JEFE_LBL_RESISTE"
 	}
 }

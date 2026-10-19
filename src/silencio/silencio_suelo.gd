@@ -15,7 +15,9 @@ const TONES := {
 	"cinco_puertas": Color("767379"),  # pasillo de las cinco puertas: gris tibio, mas frio que arriba
 	"pasillo_s6": Color("6a6a73"),     # el pasillo largo: la luz ya es casi nada
 	"habitacion": Color("726b66"),     # habitacion: tibia y apagada
-	"jefe": Color("65646d"),           # sala del jefe (vacia por ahora)
+	"jefe": Color("65646d"),           # sala del jefe: gris azulado, mas frio
+	"memoria": Color("6a686b"),        # sala de memoria: piedra gris
+	"plaza": Color("b9a47c"),          # Plaza de la Palabra: ocre claro (el reino ya transformado)
 }
 const TILE := 64.0
 

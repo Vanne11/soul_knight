@@ -11,6 +11,9 @@ const POSES := {
 	"pie_a": "figura_pie_a", "pie_b": "figura_pie_b", "pie_c": "figura_pie_c",
 	"sentada": "figura_sentada", "espalda": "figura_espalda",
 	"dormida": "figura_dormida", "encogida": "figura_encogida", "brazo": "figura_brazo",
+	# el reino liberado (Plaza de la Palabra): la misma figura con cara simple y color
+	"cara_0": "fig_cara_0", "cara_1": "fig_cara_1", "cara_2": "fig_cara_2",
+	"cara_3": "fig_cara_3", "cara_4": "fig_cara_4", "cara_5": "fig_cara_5",
 }
 
 var sprite := Sprite2D.new()

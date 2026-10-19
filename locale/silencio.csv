@@ -125,3 +125,40 @@ LORE_SILENCIO_CONSENTIMIENTO_FLAVOR,Se pregunta. Se escucha.,You ask. You listen
 LORE_SILENCIO_AGRESION_TITLE,Señales de agresión,Signs of aggression,,Signes d'agression
 LORE_SILENCIO_AGRESION_TEXT,"Señales de agresión: te humilla, te amenaza, rompe cosas, te impide salir, te obliga a algo que no quieres, te golpea. Es violencia. No es tu culpa. Si piensas irte, planéalo con apoyo: es un momento de riesgo. Para ayudar a otra persona: pregunta, escucha, no la presiones, ofrece ayuda y no decidas por ella o por él. Distraer, buscar a alguien o quedarte cerca después son formas de ayudar. Puedes pedir ayuda.","Signs of aggression: humiliates you, threatens you, breaks things, stops you from leaving, forces you to do something you do not want, hits you. It is violence. It is not your fault. If you are thinking of leaving, plan it with support: it is a time of risk. To help another person: ask, listen, do not pressure, offer help and do not decide for them. Distracting, finding someone or staying close afterwards are ways to help. You can ask for help.",,"Signes d'agression : t'humilie, te menace, casse des objets, t'empêche de sortir, te force à faire ce que tu ne veux pas, te frappe. C'est de la violence. Ce n'est pas ta faute. Si tu penses partir, prépare-le avec un soutien : c'est un moment à risque. Pour aider une autre personne : demande, écoute, ne fais pas pression, propose de l'aide et ne décide pas à sa place. Faire diversion, aller chercher quelqu'un ou rester près ensuite sont des façons d'aider. Tu peux demander de l'aide."
 LORE_SILENCIO_AGRESION_FLAVOR,No es tu culpa.,It is not your fault.,,Ce n'est pas ta faute.
+SIL_JEFE_NOMBRE,El Pacto de Silencio,The Pact of Silence,,Le Pacte du Silence
+SIL_JEFE_F1,Nadie oyó.,Nobody heard.,,Personne n'a entendu.
+SIL_JEFE_F2,Nadie vio.,Nobody saw.,,Personne n'a vu.
+SIL_JEFE_F3,Nadie dijo.,Nobody spoke.,,Personne n'a rien dit.
+SIL_JEFE_CURA,El pacto se cierra.,The pact closes.,,Le pacte se referme.
+SIL_JEFE_CORTE,Alguien habló.,Someone spoke.,,Quelqu'un a parlé.
+SIL_JEFE_FIN,Se rompió el silencio.,The silence broke.,,Le silence s'est brisé.
+SIL_JEFE_PISTA,"Golpea las campanas, las ollas y el vidrio.","Strike the bells, the pots and the glass.",,"Frappe les cloches, les casseroles et la vitre."
+SIL_JEFE_DEBIL,El ruido lo alcanza.,Noise reaches it.,,Le bruit l'atteint.
+SIL_JEFE_RESISTE,El silencio lo protege.,Silence protects it.,,Le silence le protège.
+SIL_JEFE_LBL_DEBIL,RUIDO,NOISE,,BRUIT
+SIL_JEFE_LBL_RESISTE,APAGADO,MUFFLED,,ÉTOUFFÉ
+BOSS_CH_RUIDO_T,El pacto se cierra.,The pact closes.,,Le pacte se referme.
+BOSS_CH_RUIDO_D,Golpea tres objetos de ruido.,Strike three noise objects.,,Frappe trois objets bruyants.
+SIL_JEFE_COMPLETA,El pacto se cerró.,The pact closed.,,Le pacte s'est refermé.
+SIL_MEM_UMBRAL,Esta sala no es para jugar. Puedes salir cuando quieras.,This room is not for playing. You can leave whenever you want.,,Cette salle n'est pas faite pour jouer. Tu peux sortir quand tu veux.
+SIL_MEM_VELA,[E] Encender vela,[E] Light a candle,,[E] Allumer une bougie
+SIL_MEM_FLOR,[E] Dejar flor,[E] Leave a flower,,[E] Déposer une fleur
+SIL_MEM_DATO_1,"En 2024, cerca de 50.000 mujeres y niñas murieron a manos de su pareja o de un familiar.","In 2024, around 50,000 women and girls died at the hands of their partner or a family member.",,"En 2024, environ 50 000 femmes et filles sont mortes aux mains de leur partenaire ou d'un membre de leur famille."
+SIL_MEM_DATO_2,Cerca de 137 cada día.,Around 137 every day.,,Environ 137 chaque jour.
+SIL_MEM_FUENTE,"Fuente: ONU Mujeres y UNODC, 2025.","Source: UN Women and UNODC, 2025.",,"Source : ONU Femmes et ONUDC, 2025."
+SIL_MEM_MEMORIAL,Memorial. Entra cuando quieras.,Memorial. Come in whenever you want.,,Mémorial. Entre quand tu veux.
+FLOOR_VOZ_NAME,LAS TIERRAS DE LA VOZ,THE LANDS OF VOICE,,LES TERRES DE LA VOIX
+MAPA_REINO_VOZ,VOZ,VOICE,,VOIX
+SIL_LIB_NOMBRE,Las Tierras de la Voz,The Lands of Voice,,Les Terres de la Voix
+SIL_LIB_PLAZA,Plaza de la Palabra,Square of the Word,,Place de la Parole
+SIL_LIB_TURNO,Habla. Te esperan.,Speak. They are waiting for you.,,Parle. On t'attend.
+SIL_LIB_CEDER,Ahora le toca a otra persona.,Now it is someone else's turn.,,C'est au tour de quelqu'un d'autre.
+SIL_LIB_VOZ_1,Tu voz cuenta.,Your voice counts.,,Ta voix compte.
+SIL_LIB_VOZ_2,Hay lugar para todas y todos.,There is room for everyone.,,Il y a de la place pour tout le monde.
+SIL_LIB_VOZ_3,Estamos aquí.,We are here.,,Nous sommes là.
+SIL_LIB_FUENTE,[E] Beber,[E] Drink,,[E] Boire
+SIL_LIB_FUENTE_OK,Descansas.,You rest.,,Tu te reposes.
+SIL_LIB_MEMORIAL_PUERTA,[E] Entrar al Memorial,[E] Enter the Memorial,,[E] Entrer dans le Mémorial
+SIL_LIB_SALIDA,[E] Seguir,[E] Go on,,[E] Continuer
+SIL_LIB_PLAZA_HINT,Mantén [E]: hablar,Hold [E]: speak,,Maintiens [E] : parler
+SIL_LIB_ESPERA,Esperas.,You wait.,,Tu attends.

@@ -216,7 +216,7 @@ static func popup(boss: Node, amount: float, tired: bool) -> void:
 			Callable(BossDamage, "_stun_match").bind(boss, MATCH_STUN).call_deferred()
 		elif now - float(st["lbl_w"]) >= WEAK_LABEL_CD:
 			st["lbl_w"] = now
-			_styled(pos + Vector2(0, -30), boss.tr("BOSSDMG_WEAK"), COL_WEAK, 16)
+			_styled(pos + Vector2(0, -30), boss.tr(String(e.get("label_weak", "BOSSDMG_WEAK"))), COL_WEAK, 16)
 		if not st["said_w"] and e.has("line_weak"):
 			st["said_w"] = true
 			boss._float_text(boss.tr(String(e["line_weak"])), Color("ffe08a"), Vector2(0, -215))
@@ -224,7 +224,7 @@ static func popup(boss: Node, amount: float, tired: bool) -> void:
 		_styled(pos, "%.0f" % amount, COL_RESIST, 12)
 		if now - float(st["lbl_r"]) >= RESIST_LABEL_CD:
 			st["lbl_r"] = now
-			_styled(pos + Vector2(0, -22), boss.tr("BOSSDMG_RESIST"), COL_RESIST, 12)
+			_styled(pos + Vector2(0, -22), boss.tr(String(e.get("label_resist", "BOSSDMG_RESIST"))), COL_RESIST, 12)
 		if not st["said_r"] and e.has("line_resist"):
 			st["said_r"] = true
 			boss._float_text(boss.tr(String(e["line_resist"])), Color("cfd6e6"), Vector2(0, -215))

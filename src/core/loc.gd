@@ -105,6 +105,8 @@ static func floor_name(floor_or_fd, short := false) -> String:
 	# El nombre depende del reino y la etapa, no del lugar en la ruta del heroe: indice FIJO del reino.
 	var fd: Dictionary = floor_or_fd if floor_or_fd is Dictionary else RunManager.floor_at(int(floor_or_fd))
 	var fb: String = fd.get("name", "")
+	if fd.get("region", "") == "silencio" and Silencio.liberado:
+		return tr_or("FLOOR_VOZ_NAME", "LAS TIERRAS DE LA VOZ")  # el reino ya se transformo (provisorio)
 	if short:
 		fb = fb.replace("EL PALACIO DE LA ", "PALACIO ")
 	if fd.get("name_key", "") != "":  # pisos con nombre propio (El Utero): no el canonico de su region
