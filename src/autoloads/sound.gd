@@ -126,7 +126,12 @@ func music(track: String, loop := true, fade := MUSIC_FADE) -> void:
 ## F2 silencia todo (los volumenes finos estan en Ajustes).
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F2:
-		AudioServer.set_bus_mute(0, not AudioServer.is_bus_mute(0))
+		var muted := not AudioServer.is_bus_mute(0)
+		AudioServer.set_bus_mute(0, muted)
+		# antes no avisaba: apretarlo sin querer (esta junto a F1) dejaba el juego mudo sin explicacion
+		var n := get_node_or_null("/root/Narrator")
+		if n and n.has_method("toast"):
+			n.toast(tr("SOUND_MUTED_F2") if muted else tr("SOUND_UNMUTED_F2"))
 
 
 ## Al cerrar, soltar la pista: si no, Godot avisa de que el stream sigue en uso.

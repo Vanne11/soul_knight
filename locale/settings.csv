@@ -16,3 +16,5 @@ SETTINGS_FX_2,Desactivados,Off,,Désactivés
 SETTINGS_SHAKE,Sacudida de pantalla,Screen shake,,Secousses d'écran
 SETTINGS_LANGUAGE,Idioma,Language,,Langue
 SETTINGS_BACK,VOLVER,BACK,,RETOUR
+SOUND_MUTED_F2,"Sonido apagado (F2 para volver a encenderlo)","Sound off (F2 to turn it back on)",,"Son coupé (F2 pour le rallumer)"
+SOUND_UNMUTED_F2,Sonido encendido,Sound on,,Son allumé

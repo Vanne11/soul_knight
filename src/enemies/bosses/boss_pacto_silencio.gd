@@ -687,6 +687,7 @@ func atk_nadie_dijo() -> void:
 	for o in _noise():
 		o.loud = true
 	if not await _tele_wait(0.85):
+		_audio(false)  # interrumpido: el sonido siempre vuelve
 		return
 	var c0 := arena().get_center()
 	var libres := _libres(4)
@@ -707,6 +708,7 @@ func atk_nadie_dijo() -> void:
 			wave += 1
 			next += 3.2
 		if not await _frame():
+			_audio(false)  # interrumpido: el sonido siempre vuelve
 			return
 		t += 1.0 / 60.0
 	_audio(false)
