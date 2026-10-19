@@ -295,6 +295,11 @@ if __name__ == "__main__":
         parts = args or ["enemigos"]
         if "enemigos" in parts:
             build_enemigos()
+        if any(p in parts for p in ("iconos", "suelo", "muros", "decor")):
+            import arc2_world as W
+            for p, fn in (("iconos", W.build_iconos), ("suelo", W.build_suelo), ("muros", W.build_muros), ("decor", W.build_decor)):
+                if p in parts:
+                    fn()
         if "jefe" in parts:
             import arc2_boss
             arc2_boss.build()

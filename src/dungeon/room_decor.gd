@@ -80,6 +80,13 @@ const CATALOG := {
 		["statue_censura_f", 1.2, "prop", true], ["statue_censura_mosaic_m", 1.0, "prop", true],
 		["statue_censura_mosaic_f", 1.0, "prop", true],
 	],
+	"orgullo": [
+		["orgullo_banderin", 3.0, "hang", false], ["orgullo_guirnalda", 2.5, "hang", false],
+		["orgullo_maceta", 3.0, "prop", false], ["orgullo_farol", 2.5, "prop", true],
+		["orgullo_mural", 2.0, "prop", true], ["orgullo_carro", 1.5, "prop", true],
+		["orgullo_sombrilla", 2.0, "flat", false], ["orgullo_tambor", 2.0, "prop", false],
+		["orgullo_regalos", 2.0, "prop", false],
+	],
 	"prostata": [
 		["prostata_chairs", 4.0, "prop", false], ["prostata_magazines", 3.0, "prop", false],
 		["prostata_dispenser", 2.5, "prop", true], ["prostata_poster", 3.0, "prop", false],
