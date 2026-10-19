@@ -1,0 +1,27 @@
+keys,es,en,es_ES,fr
+SINTOMA_NAME,Síntoma,Symptom,,Symptôme
+GLAN_GROW_2,La glándula crece. La sala se achica.,The gland grows. The room shrinks.,,La glande grossit. La salle rétrécit.
+GLAN_GROW_3,"Sigue creciendo. Un chequeo a tiempo habría dejado más espacio.","It keeps growing. A timely check-up would have left more room.",,"Elle grossit encore. Un bilan à temps aurait laissé plus de place."
+GLAN_PRESS,Presión constante: no te pegues al muro.,Constant pressure: don't back into the wall.,,Pression constante : ne vous collez pas au mur.
+BOSSDMG_GLANDULA_WEAK,"Una vibración suave... ¡qué alivio!","A gentle vibration... what a relief!",,"Une douce vibration... quel soulagement !"
+BOSSDMG_GLANDULA_RESIST,"Golpes a ciegas no sirven. Hay que ir con criterio.","Blind blows don't help. You need to go in with a plan.",,"Les coups à l'aveugle ne servent à rien. Il faut une méthode."
+BOT_NAME,Bot de reporte,Report bot,,Bot de signalement
+ALG_BOTS,"Se activan los bots de reporte.","The report bots switch on.",,"Les bots de signalement s'activent."
+ALG_PREDICT,PREDICCIÓN: ya sé dónde vas a estar.,PREDICTION: I already know where you'll be.,,PRÉDICTION : je sais déjà où vous serez.
+ALG_PAT_DASH,¡PATRÓN DETECTADO: SIEMPRE ESQUIVAS %s!,PATTERN DETECTED: YOU ALWAYS DODGE %s!,,MOTIF DÉTECTÉ : VOUS ESQUIVEZ TOUJOURS %s !
+ALG_PAT_DASH_Q1,Cambia de hábito o te espero ahí.,Change your habit or I'll wait for you there.,,Changez d'habitude ou je vous attends là.
+ALG_PAT_DASH_Q2,Tu esquive ya está en mi base de datos.,Your dodge is already in my database.,,Votre esquive est déjà dans ma base de données.
+ALG_PAT_ORBIT,¡PATRÓN DETECTADO: SIEMPRE ME RODEAS %s!,PATTERN DETECTED: YOU ALWAYS CIRCLE ME %s!,,MOTIF DÉTECTÉ : VOUS ME CONTOURNEZ TOUJOURS %s !
+ALG_PAT_ORBIT_Q1,Te corto el paso. Es política de la comunidad.,I'm cutting you off. It's community policy.,,Je vous coupe la route. C'est la politique de la communauté.
+ALG_PAT_ORBIT_Q2,Date la vuelta al revés. Si te atreves.,Try going around the other way. If you dare.,,Tournez dans l'autre sens. Si vous osez.
+ALG_DIR_IZQ,A LA IZQUIERDA,TO THE LEFT,,À GAUCHE
+ALG_DIR_DER,A LA DERECHA,TO THE RIGHT,,À DROITE
+ALG_DIR_ARRIBA,HACIA ARRIBA,UPWARDS,,VERS LE HAUT
+ALG_DIR_ABAJO,HACIA ABAJO,DOWNWARDS,,VERS LE BAS
+ALG_DIR_HORARIO,EN SENTIDO HORARIO,CLOCKWISE,,DANS LE SENS HORAIRE
+ALG_DIR_ANTIHORARIO,AL REVÉS DEL RELOJ,COUNTERCLOCKWISE,,DANS LE SENS ANTIHORAIRE
+ALG_MEM_DASH,La última vez esquivaste siempre %s. Lo tengo anotado.,Last time you always dodged %s. I wrote it down.,,La dernière fois vous avez toujours esquivé %s. C'est noté.
+ALG_MEM_ZONE,La última vez te escondiste siempre en el mismo rincón. Ya no hay rincón.,Last time you always hid in the same corner. There is no corner now.,,La dernière fois vous vous êtes toujours caché au même coin. Il n'y a plus de coin.
+ALG_MEM_ORBIT,La última vez me rodeaste siempre %s. Qué previsible.,Last time you always circled me %s. How predictable.,,La dernière fois vous m'avez toujours contourné %s. Si prévisible.
+BOSSDMG_ALGORITMO_WEAK,"¡Confeti! Demasiados datos a la vez, se me satura el sistema.","Confetti! Too much data at once, my system is overloaded.",,"Des confettis ! Trop de données d'un coup, mon système sature."
+BOSSDMG_ALGORITMO_RESIST,"Disparos repetitivos: ya los tengo clasificados.","Repetitive shots: already classified.",,"Des tirs répétitifs : déjà classés."
