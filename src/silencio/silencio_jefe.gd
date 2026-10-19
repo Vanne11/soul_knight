@@ -10,8 +10,8 @@ extends SilencioSala
 ## diseno 5.5 pide las 3 apagadas en la fase 1) y sale una pista corta ("Golpea las campanas, las ollas y el
 ## vidrio."). El jefe nace 1,2 s despues.
 ##
-## MUERTE sin violencia: el manto se levanta, las siluetas se ponen de pie y salen en silencio, cada una
-## con una luz; el ambiente vuelve de golpe (primera vez en el reino); cartel "Se rompio el silencio.".
+## MUERTE sin violencia: las siluetas se ponen de pie y salen en silencio, cada una
+## con una luz (las mueve el jefe); el ambiente vuelve de golpe (primera vez en el reino); cartel "Se rompio el silencio.".
 ## SIN botin, SIN logro, SIN sello, SIN recompensa a elegir (el jefe no emite enemy_killed, asi que
 ## main._complete_floor no corre). Se abren las puertas: la de la derecha lleva a la sala de memoria (S7).
 ## Si el reino no es "wip" (publicado), aqui se libera (RunManager.liberate); en pruebas wip no, para no
@@ -30,6 +30,11 @@ var _won := false
 
 
 func build() -> void:
+	# el escenario fijo (cortina, haz de luz y sillas): decorado centrado, detras de todo; el jefe lo usa
+	var esc := SilencioEscenario.new()
+	esc.position = SPAWN_AT
+	room.props_node.add_child(esc)
+	_decor.append(esc)
 	# tendedero: una cuerda corta sobre cada olla, con dos postes
 	for n in NOISE:
 		var p: Vector2 = n[1]
@@ -102,7 +107,7 @@ func stop() -> void:
 
 
 ## El jefe cayo (sin violencia): el manto se levanta y las siluetas salen con su luz.
-func _victory(at: Vector2) -> void:
+func _victory(_at: Vector2) -> void:
 	if _won:
 		return
 	_won = true
@@ -112,40 +117,6 @@ func _victory(at: Vector2) -> void:
 	# el ambiente vuelve de golpe, por primera vez en el reino
 	room.set_meta("sil_light", 0.66)
 	main._lighting.paint(room, false, false)
-	var base := at - room.global_position
-	# el bloque se levanta (animacion "death" del jefe) y, cuando queda la cortina alzada sobre las sillas vacias,
-	# las 7 siluetas salen, cada una con una luz
-	await get_tree().create_timer(1.3).timeout
-	if not is_inside_tree():
-		return
-	var exit_x := size_px().x - 70.0
-	for i in 7:
-		var e := SilencioEnte.make(base + SilencioEnte.SEATS[i])
-		e.modulate.a = 0.0
-		room.props_node.add_child(e)
-		_decor.append(e)
-		e.carry_light()
-		var l := LightKit.make_light(Color(1.0, 0.86, 0.55), 0.3, 0.9, false)
-		l.remove_from_group(LightKit.GROUP_DARK)
-		l.position = Vector2(0, -22)
-		l.enabled = true
-		e.add_child(l)
-		create_tween().tween_property(e, "modulate:a", 1.0, 0.6)
-		_leave(e, Vector2(exit_x - i * 22.0, size_px().y * 0.5 + (i - 3) * 38.0), 0.8 + i * 0.5)
+	# las siluetas (los cuerpos del jefe) se levantan y salen cada una con su luz: lo hace el jefe (SilencioCuerpo.final_exit)
 	if not RunManager.wip_enabled:
 		get_node("/root/RunManager").liberate(int(get_node("/root/RunManager").current_floor))
-
-
-## La silueta espera su turno, camina sin prisa hacia la salida y se desvanece.
-func _leave(f: SilencioEnte, to: Vector2, delay: float) -> void:
-	await get_tree().create_timer(delay).timeout
-	if not is_instance_valid(f):
-		return
-	var secs := f.position.distance_to(to) / 55.0
-	f.go_to(to, secs, &"light")
-	await get_tree().create_timer(maxf(0.1, secs - 1.0)).timeout
-	if not is_instance_valid(f):
-		return
-	var tw := create_tween()
-	tw.tween_property(f, "modulate:a", 0.0, 1.2)
-	tw.tween_callback(f.queue_free)

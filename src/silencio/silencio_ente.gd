@@ -3,10 +3,9 @@ extends AnimatedSprite2D
 
 ## UNA silueta suelta de la asamblea del Pacto de Silencio (sin rostro, sin genero, sin humor).
 ## Arte: assets/sprites/silencio/pacto/ente_sprite_frames.tres (tools/gen_pacto_art.py, hoja "ente").
-## El nodo esta en los PIES. Es solo imagen: no choca ni daña; el dano lo sigue recibiendo el jefe
-## (ver boss_pacto_silencio.gd, "SEPARARSE"). Se usa en dos sitios:
-##  - boss_pacto_silencio.gd: las 7 siluetas que se separan del bloque y vuelven a juntarse;
-##  - silencio_jefe.gd: las 7 que salen en silencio, cada una con una luz, al morir el Pacto.
+## El nodo esta en los PIES. Es solo imagen: no choca ni daña. Lo usa SilencioCuerpo (cada una de las 7 siluetas del
+## jefe, que reciben el golpe y se lo pasan a la unica vida del Pacto; ver boss_pacto_silencio.gd). SEATS = las 7 sillas
+## del escenario fijo (SilencioEscenario), local al centro del escenario.
 
 const FRAMES := "res://assets/sprites/silencio/pacto/ente_sprite_frames.tres"
 const POSES := [&"idle", &"turn", &"lean", &"bow", &"away", &"ears"]
