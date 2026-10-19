@@ -357,6 +357,8 @@ func ch_ventanillas() -> void:
 		if p.distance_to(global_position) < 130.0 or pts.any(func(q): return q.distance_to(p) < 170.0):
 			continue
 		pts.append(p)
+	while pts.size() < 4:  # sala chica: relleno sin separacion (si no, faltaban ventanillas y fallaba el indice)
+		pts.append(arena_point(100.0))
 	var seq: Array = [1, 2, 3, 4]
 	for i in range(3, 0, -1):
 		var j := RNG.randi_range(0, i)
