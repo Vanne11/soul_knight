@@ -1,0 +1,36 @@
+keys,es,en,es_ES,fr
+SETTINGS_CONTROLS,CONTROLES,CONTROLS,,CONTRÔLES
+CTRL_TITLE,CONTROLES,CONTROLS,,CONTRÔLES
+CTRL_TAB_KB,TECLADO / RATÓN,KEYBOARD / MOUSE,,CLAVIER / SOURIS
+CTRL_TAB_PAD,MANDO,GAMEPAD,,MANETTE
+CTRL_MOVE_UP,Mover arriba,Move up,,Aller en haut
+CTRL_MOVE_DOWN,Mover abajo,Move down,,Aller en bas
+CTRL_MOVE_LEFT,Mover a la izquierda,Move left,,Aller à gauche
+CTRL_MOVE_RIGHT,Mover a la derecha,Move right,,Aller à droite
+CTRL_ATTACK,Atacar / disparar,Attack / shoot,,Attaquer / tirer
+CTRL_GUARD,"Guardia (escudo, alas, espolón)","Guard (shield, wings, spur)",,"Garde (bouclier, ailes, éperon)"
+CTRL_ABILITY,Habilidad del héroe,Hero ability,,Capacité du héros
+CTRL_DASH,Dash / esquivar,Dash / dodge,,Dash / esquive
+CTRL_INTERACT,Interactuar,Interact,,Interagir
+CTRL_USE_ITEM,Usar objeto,Use item,,Utiliser l'objet
+CTRL_SLOT_1,Ranura de objeto 1,Item slot 1,,Emplacement d'objet 1
+CTRL_SLOT_2,Ranura de objeto 2,Item slot 2,,Emplacement d'objet 2
+CTRL_SLOT_3,Ranura de objeto 3,Item slot 3,,Emplacement d'objet 3
+CTRL_SLOT_4,Ranura de objeto 4,Item slot 4,,Emplacement d'objet 4
+CTRL_MAP,Mapa,Map,,Carte
+CTRL_HELP,Ayuda de teclas,Controls help,,Aide des touches
+CTRL_PAUSE,Pausa,Pause,,Pause
+CTRL_EMPTY,—,—,,—
+CTRL_STICK,+ STICK IZQ.,+ LEFT STICK,,+ STICK G.
+CTRL_CONFLICT,¡CONFLICTO!,CONFLICT!,,CONFLIT !
+CTRL_UNASSIGNED,SIN ASIGNAR,UNASSIGNED,,NON ASSIGNÉ
+CTRL_IDLE,Elige una casilla y pulsa la tecla o el botón nuevo. Se guarda solo.,"Pick a slot, then press the new key or button. It saves by itself.",,"Choisis une case, puis appuie sur la nouvelle touche ou le bouton. C'est sauvegardé tout seul."
+CTRL_LISTEN_KB,Pulsa una tecla o botón del ratón para «%s» · SUPR vacía · ESC cancela (%d),"Press a key or mouse button for ""%s"" · DEL clears · ESC cancels (%d)",,Appuie sur une touche ou un bouton de souris pour « %s » · SUPPR vide · ÉCHAP annule (%d)
+CTRL_LISTEN_PAD,Pulsa un botón o gatillo del mando para «%s» · SUPR (teclado) vacía · ESC cancela (%d),"Press a gamepad button or trigger for ""%s"" · DEL (keyboard) clears · ESC cancels (%d)",,Appuie sur un bouton ou une gâchette pour « %s » · SUPPR (clavier) vide · ÉCHAP annule (%d)
+CTRL_CANCELLED,Cancelado. No cambió nada.,Cancelled. Nothing changed.,,Annulé. Rien n'a changé.
+CTRL_SAVED,«%s» ahora usa %s.,"""%s"" now uses %s.",,« %s » utilise maintenant %s.
+CTRL_STOLEN,«%s» ahora usa %s. Se la quité a «%s»: asígnale otra.,"""%s"" now uses %s. I took it from ""%s"": give it another one.",,« %s » utilise maintenant %s. Je l'ai retirée à « %s » : donne-lui-en une autre.
+CTRL_CLEARED,«%s»: casilla vaciada.,"""%s"": slot cleared.",,« %s » : case vidée.
+CTRL_RESTORE_KB,Restaurar teclado,Restore keyboard,,Rétablir le clavier
+CTRL_RESTORE_PAD,Restaurar mando,Restore gamepad,,Rétablir la manette
+CTRL_RESTORED,Controles restaurados por defecto.,Controls restored to default.,,Contrôles rétablis par défaut.

@@ -132,7 +132,7 @@ func _build_story() -> void:
 	_hint.offset_left = -300
 	_hint.offset_right = 300
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_hint.text = tr("INTRO_HINT")
+	_hint.text = InputGlyphs.localize_text(tr("INTRO_HINT"))  # [ESC] = la tecla de pausa del jugador
 	_hint.add_theme_color_override("font_color", Color("b48cff"))
 	add_child(_hint)
 
@@ -299,7 +299,7 @@ func _build_select() -> void:
 func _card(id: String, parent: Control) -> Button:
 	var data: Dictionary = RunManager.CHARACTERS[id]
 	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(330, 420)
+	panel.custom_minimum_size = Vector2(330, 450)
 	var box := StyleBoxFlat.new()
 	box.bg_color = Color("1a0b26")
 	box.border_color = CARD_COLORS[id]
@@ -309,13 +309,13 @@ func _card(id: String, parent: Control) -> Button:
 	panel.add_theme_stylebox_override("panel", box)
 	parent.add_child(panel)
 	var v := VBoxContainer.new()
-	v.add_theme_constant_override("separation", 8)
+	v.add_theme_constant_override("separation", 6)
 	panel.add_child(v)
 	var portrait := TextureRect.new()
 	var tex_path := "res://assets/sprites/player/%s/portrait.png" % id
 	if ResourceLoader.exists(tex_path):
 		portrait.texture = load(tex_path)
-	portrait.custom_minimum_size = Vector2(128, 128)
+	portrait.custom_minimum_size = Vector2(104, 104)
 	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -329,6 +329,7 @@ func _card(id: String, parent: Control) -> Button:
 		l.add_theme_font_size_override("font_size", pair[1])
 		l.add_theme_color_override("font_color", pair[2])
 		v.add_child(l)
+	v.add_child(_controls_block(id))
 	var btn := Button.new()
 	btn.text = tr("INTRO_CHOOSE_BTN")
 	btn.custom_minimum_size = Vector2(0, 44)
@@ -338,6 +339,22 @@ func _card(id: String, parent: Control) -> Button:
 	HudStyle.juice_button(btn)
 	v.add_child(btn)
 	return btn
+
+
+## Los controles del heroe con los GLIFOS de la tecla/boton que el jugador tiene asignados
+## (Controls) y del dispositivo que esta usando (InputGlyphs): atacar, dash y sus habilidades.
+func _controls_block(id: String) -> Control:
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 2)
+	col.alignment = BoxContainer.ALIGNMENT_CENTER
+	col.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	var rows: Array = [["attack", "GLYPH_HELP_ATTACK"], ["dash", "GLYPH_HELP_DASH"]]
+	rows.append_array(AbilityGauge.HINTS.get(id, []))
+	for r in rows:
+		var line := InputGlyphs.labeled(r[0], r[1], HudStyle.CREAM, 16)
+		line.alignment = BoxContainer.ALIGNMENT_CENTER
+		col.add_child(line)
+	return col
 
 
 func _show_select() -> void:

@@ -19,14 +19,13 @@ extends RefCounted
 
 const DIR := "res://assets/sprites/ui/glyphs/"
 const SCALE := 2
-## Acciones que no existen en el InputMap pero tienen tecla fija (mapa: M, ver minimap.gd).
-const FIXED_KEYS := {"map": KEY_M, "map_tab": KEY_TAB}
 const PAD_ICONS := {
 	JOY_BUTTON_A: "pad_a", JOY_BUTTON_B: "pad_b", JOY_BUTTON_X: "pad_x", JOY_BUTTON_Y: "pad_y",
 	JOY_BUTTON_BACK: "pad_back", JOY_BUTTON_START: "pad_start",
 	JOY_BUTTON_LEFT_SHOULDER: "pad_lb", JOY_BUTTON_RIGHT_SHOULDER: "pad_rb",
 	JOY_BUTTON_DPAD_UP: "pad_dpad_up", JOY_BUTTON_DPAD_DOWN: "pad_dpad_down",
 	JOY_BUTTON_DPAD_LEFT: "pad_dpad_left", JOY_BUTTON_DPAD_RIGHT: "pad_dpad_right",
+	JOY_BUTTON_LEFT_STICK: "pad_ls", JOY_BUTTON_RIGHT_STICK: "pad_rs",
 }
 const PAD_NAMES := {
 	JOY_BUTTON_A: "A", JOY_BUTTON_B: "B", JOY_BUTTON_X: "X", JOY_BUTTON_Y: "Y",
@@ -34,6 +33,7 @@ const PAD_NAMES := {
 	JOY_BUTTON_LEFT_SHOULDER: "LB", JOY_BUTTON_RIGHT_SHOULDER: "RB",
 	JOY_BUTTON_DPAD_UP: "D-UP", JOY_BUTTON_DPAD_DOWN: "D-DOWN",
 	JOY_BUTTON_DPAD_LEFT: "D-LEFT", JOY_BUTTON_DPAD_RIGHT: "D-RIGHT",
+	JOY_BUTTON_LEFT_STICK: "L3", JOY_BUTTON_RIGHT_STICK: "R3", JOY_BUTTON_GUIDE: "GUIDE",
 }
 ## Teclas con nombre propio (clave de teclas.csv); el resto sale de OS.get_keycode_string.
 const KEY_NAMES := {
@@ -77,35 +77,41 @@ static func glyph(action: String, pad := is_pad()) -> Dictionary:
 
 
 static func _lookup(action: String, pad: bool) -> Dictionary:
-	var events: Array = []
-	if FIXED_KEYS.has(action):
-		var k := InputEventKey.new()
-		k.physical_keycode = FIXED_KEYS[action]
-		events = [k] if not pad else []
-	elif InputMap.has_action(action):
-		events = InputMap.action_get_events(action)
-	if pad:
-		for e in events:
-			if e is InputEventJoypadButton:
-				var t := _tex(PAD_ICONS.get(e.button_index, ""))
-				return {"kind": "tex", "tex": t, "label": PAD_NAMES.get(e.button_index, "?")} if t \
-					else {"kind": "key", "tex": null, "label": PAD_NAMES.get(e.button_index, "?")}
-		for e in events:
-			if e is InputEventJoypadMotion and e.axis in [JOY_AXIS_TRIGGER_LEFT, JOY_AXIS_TRIGGER_RIGHT]:
-				var lt: bool = e.axis == JOY_AXIS_TRIGGER_LEFT
-				return {"kind": "tex", "tex": _tex("pad_lt" if lt else "pad_rt"), "label": "LT" if lt else "RT"}
-	else:
-		for e in events:
-			if e is InputEventMouseButton:
-				var which := ""
-				match e.button_index:
-					MOUSE_BUTTON_LEFT: which = "left"
-					MOUSE_BUTTON_RIGHT: which = "right"
-				if which != "":
-					return {"kind": "tex", "tex": _tex("mouse_" + which), "label": tr_key("GLYPH_MOUSE_" + which.to_upper())}
-			elif e is InputEventKey:
-				return {"kind": "key", "tex": null, "label": key_name(e)}
-	return {"kind": "none", "tex": null, "label": ""}
+	var events: Array = InputMap.action_get_events(action) if InputMap.has_action(action) else []
+	for e in events:
+		var g := event_glyph(e)
+		if not g.is_empty() and g.pad == pad:
+			return g
+	return {"kind": "none", "tex": null, "label": "", "pad": pad}
+
+
+## Glifo de un evento concreto (tecla, raton, boton o gatillo del mando); {} si no tiene.
+static func event_glyph(e: InputEvent) -> Dictionary:
+	if e is InputEventJoypadButton:
+		var name: String = PAD_NAMES.get(e.button_index, "B%d" % e.button_index)
+		var t := _tex(PAD_ICONS.get(e.button_index, ""))
+		return {"kind": "tex" if t else "key", "tex": t, "label": name, "pad": true}
+	if e is InputEventJoypadMotion and e.axis in [JOY_AXIS_TRIGGER_LEFT, JOY_AXIS_TRIGGER_RIGHT]:
+		var lt: bool = e.axis == JOY_AXIS_TRIGGER_LEFT
+		return {"kind": "tex", "tex": _tex("pad_lt" if lt else "pad_rt"), "label": "LT" if lt else "RT", "pad": true}
+	if e is InputEventMouseButton:
+		var which := ""
+		match e.button_index:
+			MOUSE_BUTTON_LEFT: which = "left"
+			MOUSE_BUTTON_RIGHT: which = "right"
+			MOUSE_BUTTON_MIDDLE: which = "middle"
+		if which != "":
+			return {"kind": "tex", "tex": _tex("mouse_" + which), "label": tr_key("GLYPH_MOUSE_" + which.to_upper()), "pad": false}
+		return {"kind": "key", "tex": null, "label": "M%d" % e.button_index, "pad": false}
+	if e is InputEventKey:
+		return {"kind": "key", "tex": null, "label": key_name(e), "pad": false}
+	return {}
+
+
+## Glifo de un codigo de Controls ("k:65", "b:0"...).
+static func code_glyph(code: String) -> Dictionary:
+	var e := Controls.event_from(code)
+	return event_glyph(e) if e != null else {}
 
 
 static func tr_key(key: String) -> String:
@@ -146,7 +152,7 @@ static func text(action: String, pad := is_pad()) -> String:
 	var g := glyph(action, pad)
 	if g.kind == "none":
 		return ""
-	if g.tex != null and g.label in ["A", "B", "X", "Y", "LB", "RB", "LT", "RT", "START", "BACK"]:
+	if g.pad:
 		return "(%s)" % g.label
 	return "[%s]" % g.label
 
@@ -163,11 +169,48 @@ static func bbcode(action: String, pad := is_pad(), height := 20) -> String:
 	return "[bgcolor=#e8dcc0][color=#0d0b0f] %s [/color][/bgcolor]" % g.label
 
 
-## Sustituye "[E]" (la forma vieja de los textos) por el glifo de "interact".
+## Marcas de los textos traducidos -> accion. "[E]" es la forma vieja de los CSV; las demas
+## son nuevas: poner la marca y listo, el jugador ve SU tecla/boton.
+const TOKENS := {
+	"[E]": "interact", "[M]": "map", "[ESC]": "pause", "[F]": "ability", "[K]": "guard",
+	"[H]": "help", "[SPACE]": "dash", "[Q]": "use_item", "[ATK]": "attack",
+	"[MOVE]": ["move_up", "move_left", "move_down", "move_right"],
+	"[SLOTS]": ["slot_1", "slot_2", "slot_3", "slot_4"],
+}
+
+
+## Sustituye las marcas ("[E]", "[M]", "[ESC]"...) por el glifo de la accion, en BBCode
+## (RichTextLabel).
 static func localize(txt: String) -> String:
-	if txt.contains("[E]"):
-		return txt.replace("[E]", bbcode("interact"))
-	return txt
+	return _subst(txt, false)
+
+
+## Igual que localize pero en texto plano para Labels: "[R]" / "(A)".
+static func localize_text(txt: String) -> String:
+	return _subst(txt, true)
+
+
+## Una sola pasada (lo ya sustituido no se vuelve a mirar: la tecla "M" tambien se escribe "[M]").
+static func _subst(txt: String, plain: bool) -> String:
+	if not txt.contains("["):
+		return txt
+	var out := ""
+	var i := 0
+	while i < txt.length():
+		var hit := ""
+		if txt[i] == "[":
+			for t in TOKENS:
+				if txt.substr(i, t.length()) == t:
+					hit = t
+					break
+		if hit != "":
+			var acts: Array = TOKENS[hit] if TOKENS[hit] is Array else [TOKENS[hit]]
+			out += " ".join(acts.map(func(a): return text(a) if plain else bbcode(a)))
+			i += hit.length()
+		else:
+			out += txt[i]
+			i += 1
+	return out
 
 
 ## HBox "glifo + etiqueta" para el HUD (clave de teclas.csv ya traducida por el Label).
@@ -190,6 +233,8 @@ static func labeled(action: String, label_key: String, color := Color("fff1d6"),
 ## Vigilante: ultimo dispositivo usado.
 class Watcher extends Node:
 	signal device_changed(pad: bool)
+	## Cambio de teclas asignadas (Controls): los glifos vivos se redibujan.
+	signal bindings_changed
 	var pad := false
 
 	func _init() -> void:

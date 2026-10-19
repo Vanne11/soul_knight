@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cpx86uemqi0dp"
+
+[deps]
+
+files=["res://locale/controles.es.translation", "res://locale/controles.en.translation", "res://locale/controles.fr.translation"]
+
+source_file="res://locale/controles.csv"
+dest_files=["res://locale/controles.es.translation", "res://locale/controles.en.translation", "res://locale/controles.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

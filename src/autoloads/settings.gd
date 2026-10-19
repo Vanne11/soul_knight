@@ -98,6 +98,7 @@ func load_settings() -> void:
 
 func save_settings() -> void:
 	var cfg := ConfigFile.new()
+	cfg.load(PATH)  # conserva lo que no es de aqui (los controles reasignados: [controls], ver Controls)
 	cfg.set_value("audio", "music", music_volume)
 	cfg.set_value("audio", "sfx", sfx_volume)
 	cfg.set_value("video", "fullscreen", fullscreen)

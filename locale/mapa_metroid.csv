@@ -12,7 +12,7 @@ MM_LEY_TITULO,LEYENDA,LEGEND,,LÉGENDE
 MM_LEY_SELLO,Sello,Seal,,Sceau
 MM_LEY_ASCENSOR,Ascensor,Lift,,Ascenseur
 MM_LEY_RUTA,Tu ruta,Your route,,Ton parcours
-MM_AYUDA,Flechas/WASD mover · Rueda o +/- zoom · L leyenda · Intro ir a tu piso · M/Esc cerrar,Arrows/WASD move · Wheel or +/- zoom · L legend · Enter jump to your floor · M/Esc close,,Flèches/WASD bouger · Molette ou +/- zoom · L légende · Entrée vers ton étage · M/Échap fermer
+MM_AYUDA,[MOVE] mover · Rueda o +/- zoom · L leyenda · Intro ir a tu piso · [M]/[ESC] cerrar,[MOVE] move · Wheel or +/- zoom · L legend · Enter jump to your floor · [M]/[ESC] close,,[MOVE] bouger · Molette ou +/- zoom · L légende · Entrée vers ton étage · [M]/[ESC] fermer
 MM_AYUDA_PAD,Stick mover · Gatillos zoom · Y leyenda · A ir a tu piso · B cerrar,Stick move · Triggers zoom · Y legend · A jump to your floor · B close,,Stick bouger · Gâchettes zoom · Y légende · A vers ton étage · B fermer
 MM_SALTAR,Cualquier tecla para saltar la animación,Press any key to skip,,Appuie sur une touche pour passer
 MM_BOSS_PALACIO,"Su Pudorosidad, la Hoja de Parra","Her Modesty, the Fig Leaf",,"Sa Pudeur, la Feuille de Vigne"

@@ -23,7 +23,7 @@ ITEM_TOWEL_NIGHT_NAME,Toalla Nocturna,Overnight Pad,Compresa Nocturna,Serviette 
 ITEM_TOWEL_NIGHT_DESC,Absorbe 3 golpes y recorta 40% el daño por 2 min. Larga como su nombre.,"Absorbs 3 hits and cuts damage by 40% for 2 min. Long, like its name.",,Absorbe 3 coups et réduit les dégâts de 40 % pendant 2 min. Longue comme son nom.
 ITEM_WHIP_NAME,Látigo de Cuero,Leather Whip,,Fouet en Cuir
 ITEM_WHIP_DESC,Abanico de tres chasquidos que atraviesan hasta 2 enemigos. Con palabra de seguridad.,A fan of three cracks that pierce up to 2 enemies. Comes with a safe word.,,Éventail de trois claquements qui traversent jusqu'à 2 ennemis. Avec mot de sécurité.
-PICKUP_SLOT_HINT,Se guarda en una ranura (teclas 1-4 o cruceta).,Stored in a slot (keys 1-4 or d-pad).,,Se range dans un emplacement (touches 1-4 ou croix).
+PICKUP_SLOT_HINT,Se guarda en una ranura ([SLOTS]).,Stored in a slot ([SLOTS]).,,Se range dans un emplacement ([SLOTS]).
 PICKUP_CURSE_HINT,Maldito: ocupa una ranura hasta que lo quites con una llave.,Cursed: takes a slot until you remove it with a key.,,Maudit : occupe un emplacement jusqu'à ce que tu le retires avec une clé.
 FX_SLOT_FULL,Sin ranura libre: se usa al instante,No free slot: used right away,,Aucun emplacement libre : utilisé sur-le-champ
 FX_CAGE_NO_HORMONE,La jaula no deja pasar hormonas,The cage won't let hormones through,,La cage ne laisse pas passer les hormones

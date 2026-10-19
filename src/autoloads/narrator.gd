@@ -324,7 +324,7 @@ func toast(title: String, text: String = "", color := "b08d4a") -> void:
 
 func prompt(owner: Object, text: String) -> void:
 	prompt_owner = owner
-	_prompt_label.text = text
+	_prompt_label.text = InputGlyphs.localize(text)  # "[E]" -> la tecla/boton de interactuar del jugador
 	_prompt.visible = true
 
 

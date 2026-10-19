@@ -122,9 +122,21 @@ def mouse(which):
     rect(im, 7, 1, 9, 6, GREY_HI)
     if which == "left":
         rect(im, 2, 1, 4, 6, GOLD)
+    elif which == "middle":  # rueda
+        rect(im, 5, 1, 6, 6, GOLD)
     else:
         rect(im, 7, 1, 9, 6, GOLD)
     im.save(OUT / f"mouse_{which}.png")
+
+
+def stick(which):
+    """Pulsar el stick (L3/R3): disco gris con la capucha y la letra."""
+    im = img(14, 14)
+    disc(im, 14, GREY, GREY_HI, GREY_LO)
+    for (x, y) in [(3, 3), (10, 3), (3, 10), (10, 10)]:
+        im.putpixel((x, y), GREY_LO)
+    text(im, "L" if which == "ls" else "R", 5, 4, GOLD)
+    im.save(OUT / f"pad_{which}.png")
 
 
 def keycap():
@@ -210,6 +222,9 @@ def main():
     small_pill("back")
     mouse("left")
     mouse("right")
+    mouse("middle")
+    stick("ls")
+    stick("rs")
     keycap()
     act_icons()
     print("glifos en", OUT)

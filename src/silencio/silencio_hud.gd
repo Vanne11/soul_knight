@@ -55,9 +55,9 @@ func _ready() -> void:
 	_alpha = 1.0 if Silencio.circle_shown else 0.0
 
 
-## Texto de ayuda de la sala ("" lo quita). [E] se cambia por la tecla (o boton) de "interact".
+## Texto de ayuda de la sala ("" lo quita). Las marcas ([E]...) se cambian por la tecla o boton del jugador (InputGlyphs).
 func set_hint(text: String) -> void:
-	_hint.text = text.replace("[E]", InputGlyphs.text("interact"))
+	_hint.text = InputGlyphs.localize_text(text)
 
 
 ## Contemplacion (sala de memoria): el HUD se oculta; solo queda el boton "Como buscar ayuda".
