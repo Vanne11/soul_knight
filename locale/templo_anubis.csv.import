@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://tbr3rxpj5c4q"
+
+[deps]
+
+files=["res://locale/templo_anubis.es.translation", "res://locale/templo_anubis.en.translation", "res://locale/templo_anubis.fr.translation"]
+
+source_file="res://locale/templo_anubis.csv"
+dest_files=["res://locale/templo_anubis.es.translation", "res://locale/templo_anubis.en.translation", "res://locale/templo_anubis.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "templo_puerta"
+title = "Atrás, con delicadeza"
+text = "Una puerta de tejido que solo se abre con paciencia, un poco de agua y lo que corresponde. Nadie lo explica, y está bien así. Dato: los condones de látex y el lubricante van juntos; que el lubricante sea a base de agua o de silicona, nunca aceites con el látex. Con lubricante y con calma, se cuida el tejido."
+category = 4
+unlock_condition = {"type": 10, "target_id": "templo_anubis_puerta", "count": 1}
+flavor_text = "Descubre cómo se abre una puerta."

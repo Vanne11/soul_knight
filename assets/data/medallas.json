@@ -538,6 +538,18 @@
       "icono": "secreta"
     },
     {
+      "id": "secreta_anubis",
+      "nombre_key": "MEDAL_SECRETA_ANUBIS_NAME",
+      "desc_key": "MEDAL_SECRETA_ANUBIS_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "evento",
+        "id": "templo_anubis_puerta"
+      },
+      "oculta": true,
+      "icono": "secreta"
+    },
+    {
       "id": "humor_muerte",
       "nombre_key": "MEDAL_HUMOR_MUERTE_NAME",
       "desc_key": "MEDAL_HUMOR_MUERTE_DESC",

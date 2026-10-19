@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "templo_entrada"
+title = "El Templo de Anubis"
+text = "Ruinas egipcias bajo el Perineo, con estatuas de chacal, jeroglíficos que no dicen nada y momias de papel higiénico: alguien excavó aquí hace millones de años y se olvidó de ir al baño. Pregunta todo lo que quieras; la salida siempre está abierta."
+category = 4
+unlock_condition = {"type": 2, "region": "puerta_trasera"}
+flavor_text = "Entra al Templo de Anubis."
