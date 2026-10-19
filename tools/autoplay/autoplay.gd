@@ -38,6 +38,7 @@ extends Node
 ##                       coprolito (La Puerta Trasera, reino "wip": el bot suma los pisos wip con RunManager.enable_wip())
 ##   --boss-alt=0|1      fuerza original (0) o alternativo (1) de ese piso (BossPicker); sin esto, el de la variante pedida
 ##   --loadout=a,b,c     ids de objetos: el arma que sea (equip_slot de arma) se equipa y el resto va al inventario
+##                       (una defensa de mano izquierda, p.ej. def_diafragma, se equipa y el bot usa su "guard" al haber proyectiles)
 ##                       (sin arma pedida, pistola basica). Ej: --loadout=boomerang_silicona
 ##   --hp-bonus=N        +N de vida maxima al saltar al jefe (el salto se salta las mejoras de los pisos previos: con la vida base
 ##                       25 los heroes caen en segundos; ~40 se parece a llegar con 2-3 recompensas de jefe y corazones)
@@ -737,6 +738,7 @@ func _fight(enemies: Array, delta: float) -> void:
 		_explore(main.current_room)
 		return
 	player.aim_override = to_t
+	_use_defense(delta)
 	if _line_clear(pp, t.global_position):
 		Input.action_press("attack")
 	if t.is_in_group("boss") and _boss_evade(t, (to_t.normalized().orthogonal() * _strafe * 0.8) if to_t.length() < KEEP_NEAR * 1.6 else to_t.normalized()):
@@ -1316,8 +1318,49 @@ func _press_move(dir: Vector2) -> void:
 		Input.action_press("move_up", minf(1.0, -dir.y * 1.4))
 
 
+## Defensa de MANO IZQUIERDA (src/player/defenses/): el bot usa la "guard" real. Las de mantener se suben mientras
+## haya un proyectil enemigo a menos de 170 px (la copa se vacia al soltar); las de pulsar (barrera, vacuna)
+## se pulsan, como mucho cada 1,5 s, cuando hay peligro cerca. Sin defensa no hace nada (el bot no usa la guard del heroe).
+var _def_t := 0.0
+
+func _use_defense(delta: float) -> void:
+	var d = player.defense
+	if d == null or d.spent:
+		return
+	_def_t -= delta
+	var danger := false
+	for a in get_tree().get_nodes_in_group("enemy_attack"):
+		if is_instance_valid(a) and a is Node2D and a.global_position.distance_to(player.global_position) < 170.0:
+			danger = true
+			break
+	_shot_defense(d)
+	if d is DefBarrera or d is DefVacuna:
+		if danger and _def_t <= 0.0:
+			_def_t = 1.5
+			Input.action_press("guard")
+	elif danger and not (d is DefDiu):  # el DIU gira solo; "guard" solo lo acelera
+		Input.action_press("guard")
+
+
+## --shot=<carpeta>: guarda hasta 4 capturas SOLO de la ventana del juego mientras la defensa esta en uso (pruebas visuales).
+var _shot_n := 0
+var _shot_t := 0.0
+
+func _shot_defense(d) -> void:
+	var dir := _arg("--shot=", "")
+	if dir == "" or _shot_n >= 4 or not d.guarding:
+		return
+	var now := Time.get_ticks_msec() / 1000.0
+	if now - _shot_t < 2.5:
+		return
+	_shot_t = now
+	_shot_n += 1
+	DirAccess.make_dir_recursive_absolute(dir)
+	get_viewport().get_texture().get_image().save_png("%s/%s_%d.png" % [dir, d.item.id, _shot_n])
+
+
 func _release_all() -> void:
-	for a in ["move_left", "move_right", "move_up", "move_down", "attack", "dash"]:
+	for a in ["move_left", "move_right", "move_up", "move_down", "attack", "dash", "guard"]:
 		if Input.is_action_pressed(a):
 			Input.action_release(a)
 

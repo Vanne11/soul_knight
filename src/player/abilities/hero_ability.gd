@@ -28,6 +28,11 @@ func setup(p: Player) -> void:
 	_ge = p.get_node("/root/GlobalEvents")
 
 
+## "guard" mantenido Y sin una defensa de mano izquierda que la reemplace (src/player/defenses/).
+func guard_held() -> bool:
+	return Input.is_action_pressed("guard") and not (player != null and player.hero_guard_replaced())
+
+
 func speed_mult() -> float:
 	return 1.0
 
