@@ -133,6 +133,9 @@ func _apply_slow() -> void:
 	var ps := get_node("/root/PlayerStats")
 	if ps.has_item_immunity("slow"):
 		return
+	var pl := get_tree().get_first_node_in_group("player")
+	if pl != null and pl.get("defense") != null and pl.defense.floor_clean():
+		return  # toallita: la cera resbala
 	if not ps.has_meta("gota_on"):
 		ps.speed_modifier *= SLOW
 		ps.set_meta("gota_on", true)

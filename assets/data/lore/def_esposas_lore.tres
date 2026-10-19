@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_esposas_lore"
+title = "Con Permiso"
+text = "«Se ponen con permiso y se sacan al instante. Palabra de seguridad: “kiwi”.» Dato: el consentimiento también vale en el juego erótico: se pregunta, se acuerda antes y se puede retirar en cualquier momento. Un «sí» de antes no obliga a seguir: parar siempre es válido."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_esposas", "count": 1}
+flavor_text = "Usa unas esposas peludas."

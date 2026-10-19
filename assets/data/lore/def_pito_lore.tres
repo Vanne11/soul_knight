@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_pito_lore"
+title = "Haz Ruido"
+text = "«¡Falta! Y quien se pasa de la raya, a la banca.» Dato: ante el acoso en la calle, hacer ruido y pedir ayuda es una respuesta válida. Los testigos que reaccionan importan: acercarse, preguntar «¿estás bien?», acompañar o avisar a alguien cambia la situación, y nadie debería enfrentarla solo. Cómo buscar ayuda: contarlo a una persona de confianza y, si hay peligro o el acoso continúa, llamar a la línea de ayuda o de emergencias de tu zona."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_pito", "count": 1}
+flavor_text = "Usa un pito de emergencia."
