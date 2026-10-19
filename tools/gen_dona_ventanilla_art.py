@@ -67,8 +67,9 @@ _DMG3 = (
     "It is the HEAVILY DAMAGED, ENRAGED PHASE 3 of the SAME character as the reference sheet: same poses in the same order, same design, "
     "but frantic and furious: the glass is shattered with big cracks and a missing corner, most curlers have fallen off and the hair "
     "is a messy frizzy tangle, the shutter hangs bent and half off one side, the red dispenser is broken and sparking, the cat-eye "
-    "glasses bent, papers shredded, deep dents in the beige panels, bloodshot wide angry eyes with tiny pupils, gritted teeth, a "
-    "faint red rage aura. "
+    "glasses bent, papers shredded, deep dents in the beige panels, bloodshot wide angry eyes with tiny pupils, gritted teeth. "
+    "NO aura, NO glow, NO colored circle or halo behind her (Nico: the orange halo looked bad): plain empty background "
+    "around the character, the damage is shown ONLY on her body. "
 )
 _POSES_A = (
     "Poses left to right, top row: (1) neutral IDLE standing, one hand holding the rubber stamp, bored half-lidded stare, chewing gum; "
@@ -90,7 +91,7 @@ _POSES_B = (
     "the glass face, a grid shape of 3x3 boxes drawn glowing in the air around her; (6) CUBICLES RELEASE: the shutter slammed "
     "completely shut over the glass (blank grey slats), both fists slammed on the counter, the grid boxes snapping shut with sparks; "
     "(7) CHARGE WIND-UP: tilted forward like a bull about to ram, the booth leaning, shutter half-down like angry brows, curlers "
-    "bristling, a red-orange glow; (8) CHARGE: stretched long, running forward horizontally to the right at full speed, papers "
+    "bristling, no glow and no aura; (8) CHARGE: stretched long, running forward horizontally to the right at full speed, papers "
     "flying behind, long speed lines."
 )
 _POSES_C = (
@@ -170,7 +171,7 @@ def boss_poses(suffix):
     raw = dict(idle=a[0], w1=a[1], w2=a[2], intro=a[3], turw=a[4], turr=a[5], papw=a[6], papr=a[7],
                tikw=b[0], tikr=b[1], colw=b[2], colr=b[3], cubw=b[4], cubr=b[5], chw=b[6], chr=b[7],
                belw=c[0], channel=c[1], tired=c[2], stun=c[3], hurt=c[4], x1=c[5], x2=c[6], x3=c[7])
-    return T.fit(raw, TW, TH, 150)
+    return T.fit(raw, TW, TH, 150, ncolors=60)
 
 
 def boss_anims(P):
