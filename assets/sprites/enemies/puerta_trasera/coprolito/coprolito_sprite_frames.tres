@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=54 format=3]
+[gd_resource type="SpriteFrames" load_steps=58 format=3]
 
 [ext_resource type="Texture2D" path="res://assets/sprites/enemies/puerta_trasera/coprolito/coprolito_sheet.png" id="1_sheet"]
 
@@ -210,6 +210,22 @@ region = Rect2(352, 1472, 176, 184)
 atlas = ExtResource("1_sheet")
 region = Rect2(528, 1472, 176, 184)
 
+[sub_resource type="AtlasTexture" id="f52"]
+atlas = ExtResource("1_sheet")
+region = Rect2(704, 1472, 176, 184)
+
+[sub_resource type="AtlasTexture" id="f53"]
+atlas = ExtResource("1_sheet")
+region = Rect2(880, 1472, 176, 184)
+
+[sub_resource type="AtlasTexture" id="f54"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 1656, 176, 184)
+
+[sub_resource type="AtlasTexture" id="f55"]
+atlas = ExtResource("1_sheet")
+region = Rect2(176, 1656, 176, 184)
+
 [resource]
 animations = [{
 "frames": [{
@@ -231,16 +247,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("f0")
-}, {
-"duration": 1.0,
 "texture": SubResource("f3")
 }, {
 "duration": 1.0,
-"texture": SubResource("f0")
+"texture": SubResource("f4")
 }, {
 "duration": 1.0,
-"texture": SubResource("f3")
+"texture": SubResource("f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("f4")
 }],
 "loop": true,
 "name": &"walk",
@@ -248,13 +264,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("f4")
+"texture": SubResource("f6")
 }, {
 "duration": 1.0,
-"texture": SubResource("f4")
+"texture": SubResource("f6")
 }, {
 "duration": 1.0,
-"texture": SubResource("f5")
+"texture": SubResource("f7")
 }, {
 "duration": 1.0,
 "texture": SubResource("f0")
@@ -268,10 +284,10 @@ animations = [{
 "texture": SubResource("f0")
 }, {
 "duration": 1.0,
-"texture": SubResource("f6")
+"texture": SubResource("f8")
 }, {
 "duration": 1.0,
-"texture": SubResource("f7")
+"texture": SubResource("f9")
 }],
 "loop": false,
 "name": &"attack",
@@ -282,10 +298,10 @@ animations = [{
 "texture": SubResource("f0")
 }, {
 "duration": 1.0,
-"texture": SubResource("f6")
+"texture": SubResource("f8")
 }, {
 "duration": 1.0,
-"texture": SubResource("f7")
+"texture": SubResource("f9")
 }],
 "loop": false,
 "name": &"attack_fan",
@@ -293,13 +309,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("f8")
-}, {
-"duration": 1.0,
-"texture": SubResource("f9")
-}, {
-"duration": 1.0,
 "texture": SubResource("f10")
+}, {
+"duration": 1.0,
+"texture": SubResource("f11")
+}, {
+"duration": 1.0,
+"texture": SubResource("f12")
 }],
 "loop": false,
 "name": &"release",
@@ -307,13 +323,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("f8")
-}, {
-"duration": 1.0,
-"texture": SubResource("f9")
-}, {
-"duration": 1.0,
 "texture": SubResource("f10")
+}, {
+"duration": 1.0,
+"texture": SubResource("f11")
+}, {
+"duration": 1.0,
+"texture": SubResource("f12")
 }],
 "loop": false,
 "name": &"release_fan",
@@ -324,13 +340,13 @@ animations = [{
 "texture": SubResource("f0")
 }, {
 "duration": 1.0,
-"texture": SubResource("f11")
-}, {
-"duration": 1.0,
-"texture": SubResource("f12")
-}, {
-"duration": 1.0,
 "texture": SubResource("f13")
+}, {
+"duration": 1.0,
+"texture": SubResource("f14")
+}, {
+"duration": 1.0,
+"texture": SubResource("f15")
 }],
 "loop": false,
 "name": &"attack_temblor",
@@ -338,13 +354,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("f14")
+"texture": SubResource("f16")
 }, {
 "duration": 1.0,
-"texture": SubResource("f15")
+"texture": SubResource("f17")
 }, {
 "duration": 1.0,
-"texture": SubResource("f14")
+"texture": SubResource("f16")
 }],
 "loop": false,
 "name": &"release_temblor",
@@ -355,10 +371,10 @@ animations = [{
 "texture": SubResource("f0")
 }, {
 "duration": 1.0,
-"texture": SubResource("f16")
+"texture": SubResource("f18")
 }, {
 "duration": 1.0,
-"texture": SubResource("f17")
+"texture": SubResource("f19")
 }],
 "loop": false,
 "name": &"attack_fosiles",
@@ -366,16 +382,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("f8")
+"texture": SubResource("f20")
 }, {
 "duration": 1.0,
-"texture": SubResource("f9")
+"texture": SubResource("f21")
 }, {
 "duration": 1.0,
-"texture": SubResource("f8")
+"texture": SubResource("f20")
 }, {
 "duration": 1.0,
-"texture": SubResource("f18")
+"texture": SubResource("f22")
 }],
 "loop": false,
 "name": &"release_fosiles",
@@ -386,47 +402,19 @@ animations = [{
 "texture": SubResource("f0")
 }, {
 "duration": 1.0,
-"texture": SubResource("f19")
-}, {
-"duration": 1.0,
-"texture": SubResource("f20")
-}, {
-"duration": 1.0,
-"texture": SubResource("f21")
-}, {
-"duration": 1.0,
-"texture": SubResource("f20")
-}],
-"loop": false,
-"name": &"attack_tapon",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("f22")
-}, {
-"duration": 1.0,
 "texture": SubResource("f23")
-}, {
-"duration": 1.0,
-"texture": SubResource("f22")
-}],
-"loop": false,
-"name": &"release_tapon",
-"speed": 14.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("f0")
 }, {
 "duration": 1.0,
 "texture": SubResource("f24")
 }, {
 "duration": 1.0,
 "texture": SubResource("f25")
+}, {
+"duration": 1.0,
+"texture": SubResource("f24")
 }],
 "loop": false,
-"name": &"attack_llamar",
+"name": &"attack_tapon",
 "speed": 12.0
 }, {
 "frames": [{
@@ -440,7 +428,7 @@ animations = [{
 "texture": SubResource("f26")
 }],
 "loop": false,
-"name": &"release_llamar",
+"name": &"release_tapon",
 "speed": 14.0
 }, {
 "frames": [{
@@ -454,7 +442,7 @@ animations = [{
 "texture": SubResource("f29")
 }],
 "loop": false,
-"name": &"attack_embestida",
+"name": &"attack_llamar",
 "speed": 12.0
 }, {
 "frames": [{
@@ -466,9 +454,37 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("f30")
+}],
+"loop": false,
+"name": &"release_llamar",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
 }, {
 "duration": 1.0,
 "texture": SubResource("f32")
+}, {
+"duration": 1.0,
+"texture": SubResource("f33")
+}],
+"loop": false,
+"name": &"attack_embestida",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f34")
+}, {
+"duration": 1.0,
+"texture": SubResource("f35")
+}, {
+"duration": 1.0,
+"texture": SubResource("f34")
+}, {
+"duration": 1.0,
+"texture": SubResource("f36")
 }],
 "loop": false,
 "name": &"release_embestida",
@@ -476,16 +492,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("f30")
+"texture": SubResource("f34")
 }, {
 "duration": 1.0,
-"texture": SubResource("f31")
+"texture": SubResource("f35")
 }, {
 "duration": 1.0,
-"texture": SubResource("f30")
+"texture": SubResource("f34")
 }, {
 "duration": 1.0,
-"texture": SubResource("f32")
+"texture": SubResource("f36")
 }],
 "loop": false,
 "name": &"charge",
@@ -493,10 +509,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("f33")
+"texture": SubResource("f37")
 }, {
 "duration": 1.0,
-"texture": SubResource("f34")
+"texture": SubResource("f38")
 }],
 "loop": true,
 "name": &"tired",
@@ -504,39 +520,11 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("f35")
+"texture": SubResource("f39")
 }],
 "loop": false,
 "name": &"recover_in",
 "speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("f35")
-}, {
-"duration": 1.0,
-"texture": SubResource("f36")
-}, {
-"duration": 1.0,
-"texture": SubResource("f35")
-}, {
-"duration": 1.0,
-"texture": SubResource("f37")
-}],
-"loop": true,
-"name": &"recover",
-"speed": 7.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("f38")
-}, {
-"duration": 1.0,
-"texture": SubResource("f33")
-}],
-"loop": false,
-"name": &"stun_in",
-"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -552,18 +540,46 @@ animations = [{
 "texture": SubResource("f41")
 }],
 "loop": true,
+"name": &"recover",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f42")
+}, {
+"duration": 1.0,
+"texture": SubResource("f37")
+}],
+"loop": false,
+"name": &"stun_in",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f43")
+}, {
+"duration": 1.0,
+"texture": SubResource("f44")
+}, {
+"duration": 1.0,
+"texture": SubResource("f43")
+}, {
+"duration": 1.0,
+"texture": SubResource("f45")
+}],
+"loop": true,
 "name": &"channel",
 "speed": 9.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("f38")
-}, {
-"duration": 1.0,
-"texture": SubResource("f38")
+"texture": SubResource("f42")
 }, {
 "duration": 1.0,
 "texture": SubResource("f42")
+}, {
+"duration": 1.0,
+"texture": SubResource("f46")
 }],
 "loop": false,
 "name": &"hurt",
@@ -574,7 +590,7 @@ animations = [{
 "texture": SubResource("f0")
 }, {
 "duration": 1.0,
-"texture": SubResource("f43")
+"texture": SubResource("f47")
 }],
 "loop": false,
 "name": &"brake",
@@ -593,10 +609,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("f44")
+"texture": SubResource("f48")
 }, {
 "duration": 1.0,
-"texture": SubResource("f45")
+"texture": SubResource("f49")
 }, {
 "duration": 1.0,
 "texture": SubResource("f0")
@@ -607,13 +623,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("f46")
+"texture": SubResource("f50")
 }, {
 "duration": 1.0,
 "texture": SubResource("f0")
 }, {
 "duration": 1.0,
-"texture": SubResource("f46")
+"texture": SubResource("f50")
 }, {
 "duration": 1.0,
 "texture": SubResource("f0")
@@ -624,25 +640,25 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("f38")
-}, {
-"duration": 1.0,
-"texture": SubResource("f47")
-}, {
-"duration": 1.0,
-"texture": SubResource("f48")
-}, {
-"duration": 1.0,
-"texture": SubResource("f49")
-}, {
-"duration": 1.0,
-"texture": SubResource("f50")
+"texture": SubResource("f42")
 }, {
 "duration": 1.0,
 "texture": SubResource("f51")
 }, {
 "duration": 1.0,
-"texture": SubResource("f51")
+"texture": SubResource("f52")
+}, {
+"duration": 1.0,
+"texture": SubResource("f53")
+}, {
+"duration": 1.0,
+"texture": SubResource("f54")
+}, {
+"duration": 1.0,
+"texture": SubResource("f55")
+}, {
+"duration": 1.0,
+"texture": SubResource("f55")
 }],
 "loop": false,
 "name": &"death",
