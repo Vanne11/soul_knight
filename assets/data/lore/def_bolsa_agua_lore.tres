@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_bolsa_agua_lore"
+title = "Calorcito"
+text = "«Cura todo… lo que el calorcito pueda curar.» Dato: el calor local ayuda a aliviar los cólicos menstruales. Se usa con una funda o un paño, sin dormirse encima y sin que esté demasiado caliente, para evitar quemaduras."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_bolsa_agua", "count": 1}
+flavor_text = "Usa una bolsa de agua caliente."

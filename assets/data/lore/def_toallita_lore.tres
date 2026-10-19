@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_toallita_lore"
+title = "Solo por Fuera"
+text = "«Limpia charcos, cera y mala fama. Solo por fuera.» Dato: las toallitas húmedas sirven para una limpieza externa de la piel o de las manos. No son para «lavados» internos: la vagina se limpia sola, y esos lavados no hacen falta y pueden irritar."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_toallita", "count": 1}
+flavor_text = "Usa una toallita húmeda."

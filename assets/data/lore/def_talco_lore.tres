@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_talco_lore"
+title = "Polvo de Confusión"
+text = "«Un estornudo, una nube y nadie sabe dónde está.» Dato: el talco se usa sobre la piel seca para reducir la humedad y el roce. Conviene no respirar el polvo y no aplicarlo en los genitales."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_talco", "count": 1}
+flavor_text = "Usa talco."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_parche_lore"
+title = "Se Pega y Se Cambia"
+text = "«Se pega, se olvida y se cambia cuando toca.» Dato: el parche anticonceptivo es un parche que se pega sobre la piel y libera hormonas. Se cambia con la frecuencia que indique el profesional de salud o el prospecto, y no protege de las ITS."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_parche", "count": 1}
+flavor_text = "Usa un parche anticonceptivo."

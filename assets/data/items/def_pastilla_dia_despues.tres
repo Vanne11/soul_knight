@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_pastilla_dia_despues"
+display_name = "Pastilla del Día Después"
+description = "Defensa de mano izquierda."
+rarity = 3
+tags = ["defensa_mano", "utilidad", "emergencia", "uso_unico"]
+equip_slot = 4
+effects = []
+base_value = 420
+custom_data = {"defense": "pastilla", "affinity": "neutral"}

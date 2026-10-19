@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_parche"
+display_name = "Parche Anticonceptivo"
+description = "Defensa de mano izquierda."
+rarity = 2
+tags = ["defensa_mano", "utilidad", "regeneracion", "pasivo"]
+equip_slot = 4
+effects = []
+base_value = 380
+custom_data = {"defense": "parche", "affinity": "neutral"}

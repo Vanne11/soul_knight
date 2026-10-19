@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_latigo_seda_lore"
+title = "Palabra de Seguridad"
+text = "«Palabra de seguridad: “piña”. Si se dice, se detiene todo.» Dato: en el juego erótico entre personas adultas el consentimiento también cuenta: se acuerda antes, se elige una palabra de seguridad y cualquiera puede parar cuando quiera, sin dar explicaciones."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_latigo_seda", "count": 1}
+flavor_text = "Usa un látigo de seda."
