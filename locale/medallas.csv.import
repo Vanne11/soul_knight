@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://0nbcikjdsh2"
+
+[deps]
+
+files=["res://locale/medallas.es.translation", "res://locale/medallas.en.translation", "res://locale/medallas.fr.translation"]
+
+source_file="res://locale/medallas.csv"
+dest_files=["res://locale/medallas.es.translation", "res://locale/medallas.en.translation", "res://locale/medallas.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

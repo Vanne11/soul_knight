@@ -87,6 +87,7 @@ func unlock_entry(entry_id: String) -> bool:
 func custom_event(event_id: String) -> void:
 	_bump("custom", event_id)
 	_check_all()
+	get_node("/root/GlobalEvents").game_event.emit(event_id)  # medallas
 
 func _on_run_started(_seed: int) -> void:
 	_floor_reached = 1
