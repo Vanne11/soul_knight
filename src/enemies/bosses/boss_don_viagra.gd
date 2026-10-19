@@ -46,7 +46,16 @@ func _ready() -> void:
 	_ge.boss_charges_changed.emit(_channels_left, _channels_total)
 	_meter = ViagraMeter.new()
 	add_child(_meter)
-	BossAnimator.attach(self)  # solo actua si el SpriteFrames trae cuadros nuevos
+	BossAnimator.attach(self)  # arte definitivo 176x184 (tools/gen_viagra_art.py): cuadros nuevos + animacion por codigo
+
+
+## El golpe del ataque ocurre cuando termina el aviso: se avisa al animador para que pase de la pose de carga
+## (attack_<x>) a la de golpe (release_<x>) justo en ese momento.
+func _tele(secs: float, col := Color(2.0, 2.0, 0.9), shake := 2.0, on_frame := Callable()) -> bool:
+	var ok: bool = await super(secs, col, shake, on_frame)
+	if ok:
+		attack_released.emit(_last_attack)
+	return ok
 
 
 func _attack_pool() -> Array:

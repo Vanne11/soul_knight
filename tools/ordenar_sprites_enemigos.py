@@ -39,6 +39,7 @@ MANUAL = {
     "cria_ovarica": "vulvania/cria_ovarica",
     "parra": "palacio/hoja_de_parra",
     "ego_inflado": "comunes/ego_inflado",
+    "pastilla": "penelandia/pastilla",
 }
 EXTS = (".gd", ".tscn", ".tres", ".import", ".py", ".json", ".cfg", ".godot")
 

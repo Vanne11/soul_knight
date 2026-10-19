@@ -195,7 +195,20 @@ func _swap_frames(sf: SpriteFrames) -> void:
 			spr.frame = mini(f, sf.get_frame_count(a) - 1)
 
 
+## Jefes con medidor de subidon (Don Viagra: boss._rush 0..1): idle/walk se cambian por idle_rush/walk_rush
+## (medidor medio) o idle_max/walk_max (al tope) si el SpriteFrames las trae, asi el subidon se lee en el cuerpo.
+func _rush_variant(a: StringName) -> StringName:
+	if a != &"idle" and a != &"walk":
+		return a
+	var r = boss.get("_rush")
+	if r == null:
+		return a
+	var v := StringName(String(a) + ("_max" if float(r) >= 0.8 else "_rush")) if float(r) >= 0.4 else a
+	return v if spr.sprite_frames.has_animation(v) else a
+
+
 func _play(a: StringName, scale := 1.0) -> void:
+	a = _rush_variant(a)
 	if not spr.sprite_frames.has_animation(a):
 		return
 	if spr.animation != a:
@@ -358,6 +371,11 @@ func _idle_life(speed: float) -> void:
 	var a := spr.animation
 	if a in [&"blink", &"idle_stir", &"idle_impatient"] and spr.is_playing():
 		return
+	if a == &"idle" or a == &"idle_rush" or a == &"idle_max":
+		var want := _rush_variant(&"idle")  # el medidor cambio de tramo: se cambia de variante
+		if a != want:
+			spr.play(want)
+		a = &"idle"  # idle_rush / idle_max cuentan como idle (se sigue respirando y parpadeando)
 	if a != &"idle":
 		if not _queue.is_empty() and not spr.is_playing():
 			return
