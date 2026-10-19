@@ -1,0 +1,80 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_idle_00.png" id="1_idle"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_idle_01.png" id="2_idle"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_attack_00.png" id="3_attack"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_attack_01.png" id="4_attack"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_attack_02.png" id="5_attack"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_hurt_00.png" id="6_hurt"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_hurt_01.png" id="7_hurt"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_death_00.png" id="8_death"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_death_01.png" id="9_death"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_death_02.png" id="10_death"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/parra_death_03.png" id="11_death"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_idle")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_idle")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_attack")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_attack")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_attack")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_hurt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_hurt")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_death")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_death")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_death")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_death")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_idle")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_idle")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 3.0
+}]
