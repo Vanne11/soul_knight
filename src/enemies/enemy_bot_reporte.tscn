@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://src/enemies/enemy_bot_reporte.gd" id="1"]
-[ext_resource type="SpriteFrames" path="res://assets/sprites/enemies/comunes/swarmer/swarmer_sprite_frames.tres" id="2"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/enemies/palacio/bot_reporte/bot_reporte_sprite_frames.tres" id="2"]
 
 [sub_resource type="RectangleShape2D" id="3"]
 size = Vector2(30, 20)
@@ -24,8 +24,8 @@ shape = SubResource("90")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2")
 animation = "idle"
-offset = Vector2(0, -9)
-scale = Vector2(1.4, 1.4)
+offset = Vector2(0, -23)
+scale = Vector2(1, 1)
 
 [node name="Hurtbox" type="Area2D" parent="."]
 position = Vector2(0, 0)

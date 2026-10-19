@@ -43,6 +43,7 @@ MANUAL = {
     "pelusa_estatica": "selva/pelusa_estatica",
     "satelite_cobre": "vulvania/satelite_cobre",
     "funcionario": "perineo/funcionario",
+    "bot_reporte": "palacio/bot_reporte",
 }
 EXTS = (".gd", ".tscn", ".tres", ".import", ".py", ".json", ".cfg", ".godot")
 
