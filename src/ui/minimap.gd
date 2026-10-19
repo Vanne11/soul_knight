@@ -31,7 +31,7 @@ const TAB_H := 26.0
 const TAB_W := 92.0
 var _tab := 0
 var _world := WorldMap.new()
-var _tab_hint: HBoxContainer  # glifo de Tab / RB + "pestana"
+var _tab_hint: HBoxContainer  # glifo de Tab + "pestana"
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -76,13 +76,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_M:
 		_big = not _big
 		_resize()
-	# mapa grande: cambiar de pestana con Tab, L1/R1 o clic
+	# mapa grande: cambiar de pestana con Tab o clic (L1/R1 no: son usar objeto y guardia)
 	elif _big and event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_TAB:
 		_set_tab(1 - _tab)
 		get_viewport().set_input_as_handled()
-	elif _big and event is InputEventJoypadButton and event.pressed \
-			and event.button_index in [JOY_BUTTON_LEFT_SHOULDER, JOY_BUTTON_RIGHT_SHOULDER]:
-		_set_tab(1 - _tab)
 	elif _big and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var local: Vector2 = event.position - get_global_rect().position
 		for i in 2:
