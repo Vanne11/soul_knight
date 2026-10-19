@@ -83,30 +83,31 @@ func voice(ch: String, base_pitch := 1.0, vol_offset_db := 0.0) -> void:
 ## Cambia de tema con un fundido corto (FADE s de bajada y FADE de subida).
 ## Si ya suena esa pista no hace nada (no reinicia). El volumen del jugador
 ## lo ajusta el bus "Music"; aqui solo se mueve volume_db del player.
-func music(track: String) -> void:
+## loop=false para jingles de una sola vez (ej. "studio_jingle").
+func music(track: String, loop := true) -> void:
 	if track == _music_name:
 		return
 	_music_name = track
 	if _fade:
 		_fade.kill()
 	if not _music.playing:
-		_start_track(track)
+		_start_track(track, loop)
 		return
 	# Si hay pista sonando: baja, cambia y sube
 	_fade = create_tween()  # el nodo es ALWAYS: el fundido sigue en pausa
 	_fade.tween_property(_music, "volume_db", FADE_DB, MUSIC_FADE)
-	_fade.tween_callback(_start_track.bind(track))
+	_fade.tween_callback(_start_track.bind(track, loop))
 	if track != "":
 		_fade.tween_property(_music, "volume_db", MUSIC_DB, MUSIC_FADE)
 
 
-func _start_track(track: String) -> void:
+func _start_track(track: String, loop := true) -> void:
 	if track == "" or not ResourceLoader.exists(MUSIC_DIR + track + ".ogg"):
 		_music.stop()
 		_music.volume_db = MUSIC_DB
 		return
 	var s: AudioStreamOggVorbis = load(MUSIC_DIR + track + ".ogg")
-	s.loop = true
+	s.loop = loop
 	_music.stream = s
 	_music.volume_db = FADE_DB
 	_music.play()

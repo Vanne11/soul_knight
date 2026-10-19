@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dvav0nqjo01bb"
+
+[deps]
+
+files=["res://locale/edad.es.translation", "res://locale/edad.en.translation", "res://locale/edad.es_ES.translation", "res://locale/edad.fr.translation"]
+
+source_file="res://locale/edad.csv"
+dest_files=["res://locale/edad.es.translation", "res://locale/edad.en.translation", "res://locale/edad.es_ES.translation", "res://locale/edad.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
