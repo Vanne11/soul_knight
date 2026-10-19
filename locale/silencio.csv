@@ -1,0 +1,63 @@
+keys,es,en,es_ES,fr
+FLOOR_SILENCIO_NAME,LAS TIERRAS DEL SILENCIO,THE LANDS OF SILENCE,,LES TERRES DU SILENCE
+SIL_MAP_SALA,Sala,Room,,Salle
+SIL_CODEX_TAG,Silencio · ,Silence · ,,Silence · 
+DEBUG_SILENCIO,Ir al Silencio (WIP),Go to Silence (WIP),,Aller au Silence (WIP)
+SIL_AVISO_TITULO,Las Tierras del Silencio,The Lands of Silence,,Les Terres du Silence
+SIL_AVISO_1,"Este reino trata de violencia de género: control, agresión y femicidio.","This realm is about gender-based violence: control, aggression and femicide.",,"Ce royaume parle de violence de genre : contrôle, agression et féminicide."
+SIL_AVISO_2,No hay bromas aquí. Puedes pausar o salir del juego cuando quieras.,There are no jokes here. You can pause or quit the game whenever you want.,,"Ici, pas de blagues. Tu peux faire pause ou quitter le jeu quand tu veux."
+SIL_AVISO_3,"Si estás en peligro ahora, llama a emergencias de tu país.","If you are in danger right now, call your country's emergency number.",,"Si tu es en danger maintenant, appelle les urgences de ton pays."
+SIL_CONTINUAR,Continuar,Continue,,Continuer
+SIL_AYUDA_BOTON,Cómo buscar ayuda,How to find help,,Comment chercher de l'aide
+SIL_VOLVER,Volver,Back,,Retour
+SIL_CERRAR,Cerrar,Close,,Fermer
+SIL_VOZ,VOZ,VOICE,,VOIX
+SIL_S1_HINT,Mantén [E]: hablar,Hold [E]: speak,,Maintiens [E] : parler
+SIL_S1_IDEA,Propongo dividir el trabajo en dos partes.,I suggest splitting the work into two parts.,,Je propose de diviser le travail en deux parties.
+SIL_S1_CORTA_1,"Espera, déjame terminar esto primero.","Wait, let me finish this first.",,"Attends, laisse-moi finir ça d'abord."
+SIL_S1_CORTA_2,Eso ya lo hablamos. Sigamos.,We already covered that. Moving on.,,On en a déjà parlé. Continuons.
+SIL_S1_CORTA_3,"Perdona, una cosa rápida antes.","Sorry, one quick thing first.",,"Pardon, juste un point rapide avant."
+SIL_S1_REPITE_1,Podríamos repartir el trabajo en dos.,We could split the work in two.,,On pourrait répartir le travail en deux.
+SIL_S1_REPITE_2,¿Y si lo hacemos en dos tramos?,What if we do it in two stages?,,Et si on le faisait en deux étapes ?
+SIL_S1_REPITE_3,"Mi propuesta: dos partes, una por equipo.","My proposal: two parts, one per team.",,"Ma proposition : deux parties, une par équipe."
+SIL_S1_BUENA,Buena idea,Good idea,,Bonne idée
+SIL_S1_CARTEL_1,Te interrumpen. Repiten tu idea. La aplauden.,They interrupt you. They repeat your idea. They applaud it.,,On t'interrompt. On répète ton idée. On l'applaudit.
+SIL_S1_CARTEL_2,"Esto se llama micromachismo: una conducta pequeña, normalizada, que reduce tu voz.","This is called micromachismo: a small, normalized behavior that reduces your voice.",,"Cela s'appelle du micromachisme : un comportement petit, normalisé, qui réduit ta voix."
+SIL_S1_CARTEL_3,Una sola vez no parece nada. Muchas veces sí.,"Once, it seems like nothing. Many times, it is.",,"Une seule fois, cela ne semble rien. Plusieurs fois, si."
+SIL_S2_PANEL,Elige: A o B,Choose: A or B,,Choisis : A ou B
+SIL_S2_YA_LO_DECIDIMOS,Ya lo decidimos,We already decided,,On a déjà décidé
+SIL_S2_SENTARTE,[E] Sentarte,[E] Sit down,,[E] T'asseoir
+SIL_S2_CARTEL_1,Te quitan espacio. Deciden por ti.,They take your space. They decide for you.,,On te prend ta place. On décide pour toi.
+SIL_S2_CARTEL_2,Nadie dijo que no pudieras pasar. Pasar costó más.,Nobody said you could not pass. Passing cost more.,,Personne n'a dit que tu ne pouvais pas passer. Passer a coûté plus.
+SIL_S3_INVENTARIO,INVENTARIO,INVENTORY,,INVENTAIRE
+SIL_S3_PREGUNTA,¿Para qué lo quieres? ¿Quién te lo dio?,What do you want it for? Who gave it to you?,,Pourquoi tu en as besoin ? Qui te l'a donné ?
+SIL_S3_VACIO,(vacío),(empty),,(vide)
+SIL_S3_GUARDADO,Guardado,Kept,,Gardé
+SIL_S3_DEVUELVEN,Guardan tu arma. Te la devuelven al salir.,They keep your weapon. They give it back when you leave.,,Ils gardent ton arme. Ils te la rendent à la sortie.
+SIL_S3_CERRAR,Esc: cerrar,Esc: close,,Échap : fermer
+SIL_S3_HABLAR,[E] Hablar,[E] Talk,,[E] Parler
+SIL_S3_CARTEL_1,Revisa tus cosas. Decide con quién hablas.,They go through your things. They decide who you talk to.,,On fouille tes affaires. On décide avec qui tu parles.
+SIL_S3_CARTEL_2,"Señales de control: revisa tu teléfono, elige tu ropa, te aleja de quien quieres, controla tu dinero, se enoja si no respondes.","Signs of control: checks your phone, picks your clothes, keeps you away from the people you love, controls your money, gets angry if you do not answer.",,"Signes de contrôle : regarde ton téléphone, choisit tes vêtements, t'éloigne de ceux que tu aimes, contrôle ton argent, se met en colère si tu ne réponds pas."
+SIL_S3_CARTEL_3,"Si pasa mucho, no es cariño. Es control.","If it happens a lot, it is not affection. It is control.",,"Si cela arrive souvent, ce n'est pas de l'affection. C'est du contrôle."
+SIL_S4_MSG_1,¿Dónde estás?,Where are you?,,Où es-tu ?
+SIL_S4_MSG_2,¿Con quién?,Who are you with?,,Avec qui ?
+SIL_S4_MSG_3,Responde.,Answer.,,Réponds.
+SIL_S4_MSG_4,Estoy esperando.,I am waiting.,,J'attends.
+SIL_S4_HINT,[E]: responder,[E]: answer,,[E] : répondre
+SIL_S4_TE_SIGUEN,Te siguen,You are followed,,On te suit
+SIL_S4_SALIDA,[E] Salir,[E] Leave,,[E] Sortir
+SIL_S4_CARTEL_1,"Si respondes, preguntan más. Si no respondes, preguntan más.","If you answer, they ask more. If you do not answer, they ask more.",,"Si tu réponds, on demande plus. Si tu ne réponds pas, on demande plus."
+SIL_S4_CARTEL_2,No hay respuesta correcta. El problema no eres tú.,There is no right answer. You are not the problem.,,"Il n'y a pas de bonne réponse. Le problème, ce n'est pas toi."
+SIL_S4_CARTEL_3,"Si sientes miedo de no responder, es una señal.","If you are afraid of not answering, it is a sign.",,"Si tu as peur de ne pas répondre, c'est un signe."
+LORE_SILENCIO_TURNO_TITLE,Micromachismo,Micromachismo,,Micromachisme
+LORE_SILENCIO_TURNO_TEXT,"Te interrumpen. Repiten tu idea sin darte el crédito. Hablan por encima de ti. Cada gesto parece pequeño. Juntos reducen tu voz. A eso se le llama micromachismo: una conducta pequeña, normalizada. El término lo propuso Luis Bonino a comienzos de los años noventa.","They interrupt you. They repeat your idea without giving you credit. They talk over you. Each gesture seems small. Together they reduce your voice. This is called micromachismo: a small, normalized behavior. The term was proposed by Luis Bonino in the early nineties.",,"On t'interrompt. On répète ton idée sans te donner le crédit. On parle par-dessus toi. Chaque geste semble petit. Ensemble, ils réduisent ta voix. C'est ce qu'on appelle le micromachisme : un comportement petit, normalisé. Le terme a été proposé par Luis Bonino au début des années quatre-vingt-dix."
+LORE_SILENCIO_TURNO_FLAVOR,Una sola vez no parece nada. Muchas veces sí.,"Once, it seems like nothing. Many times, it is.",,"Une seule fois, cela ne semble rien. Plusieurs fois, si."
+LORE_SILENCIO_ESPACIO_TITLE,Espacio y decisiones,Space and decisions,,Espace et décisions
+LORE_SILENCIO_ESPACIO_TEXT,Ocupar más espacio. No ceder el paso. Decidir por otra persona «por su bien». Son micromachismos. Nadie te dice que no puedes pasar. Pasar cuesta más. Y quien decide por ti no te está cuidando: te está quitando la decisión.,"Taking up more space. Not giving way. Deciding for someone else ""for their own good"". These are micromachismos. Nobody tells you that you cannot pass. Passing costs more. And whoever decides for you is not looking after you: they are taking the decision away.",,Occuper plus de place. Ne pas céder le passage. Décider pour une autre personne « pour son bien ». Ce sont des micromachismes. Personne ne te dit que tu ne peux pas passer. Passer coûte plus. Et celui ou celle qui décide pour toi ne prend pas soin de toi : il ou elle te retire la décision.
+LORE_SILENCIO_ESPACIO_FLAVOR,Nadie dijo que no pudieras pasar. Pasar costó más.,Nobody said you could not pass. Passing cost more.,,Personne n'a dit que tu ne pouvais pas passer. Passer a coûté plus.
+LORE_SILENCIO_REVISION_TITLE,Señales de control,Signs of control,,Signes de contrôle
+LORE_SILENCIO_REVISION_TEXT,"Revisa tu teléfono. Elige tu ropa. Te aleja de quien quieres. Controla tu dinero. Se enoja si no respondes. Son señales de control. Si pasa mucho, no es cariño. Es control. Puedes hablarlo con alguien de confianza.","Checks your phone. Picks your clothes. Keeps you away from the people you love. Controls your money. Gets angry if you do not answer. These are signs of control. If it happens a lot, it is not affection. It is control. You can talk about it with someone you trust.",,"Regarde ton téléphone. Choisit tes vêtements. T'éloigne de ceux que tu aimes. Contrôle ton argent. Se met en colère si tu ne réponds pas. Ce sont des signes de contrôle. Si cela arrive souvent, ce n'est pas de l'affection. C'est du contrôle. Tu peux en parler avec une personne de confiance."
+LORE_SILENCIO_REVISION_FLAVOR,"Si pasa mucho, no es cariño. Es control.","If it happens a lot, it is not affection. It is control.",,"Si cela arrive souvent, ce n'est pas de l'affection. C'est du contrôle."
+LORE_SILENCIO_MENSAJES_TITLE,Mensajes y vigilancia,Messages and surveillance,,Messages et surveillance
+LORE_SILENCIO_MENSAJES_TEXT,"¿Dónde estás? ¿Con quién? Responde. Estoy esperando. Si respondes, preguntan más. Si no respondes, preguntan más. Sentirte vigilada o vigilado es una señal. Si sientes miedo de no responder, también. No hay respuesta correcta. El problema no eres tú. Puedes pedir ayuda.","Where are you? Who are you with? Answer. I am waiting. If you answer, they ask more. If you do not answer, they ask more. Feeling watched is a sign. So is being afraid of not answering. There is no right answer. You are not the problem. You can ask for help.",,"Où es-tu ? Avec qui ? Réponds. J'attends. Si tu réponds, on demande plus. Si tu ne réponds pas, on demande plus. Te sentir surveillé ou surveillée est un signe. Avoir peur de ne pas répondre aussi. Il n'y a pas de bonne réponse. Le problème, ce n'est pas toi. Tu peux demander de l'aide."
+LORE_SILENCIO_MENSAJES_FLAVOR,El problema no eres tú.,You are not the problem.,,"Le problème, ce n'est pas toi."

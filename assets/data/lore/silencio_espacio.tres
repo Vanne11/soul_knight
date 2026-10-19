@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "silencio_espacio"
+title = "Espacio y decisiones"
+text = "Ocupar más espacio. No ceder el paso. Decidir por otra persona «por su bien». Son micromachismos. Nadie te dice que no puedes pasar. Pasar cuesta más. Y quien decide por ti no te está cuidando: te está quitando la decisión."
+category = 8
+unlock_condition = {"target_id": "silencio_espacio", "type": 10}
+flavor_text = "Nadie dijo que no pudieras pasar. Pasar costó más."

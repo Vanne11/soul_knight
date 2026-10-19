@@ -21,5 +21,8 @@ enum Category {
 	MISC = 5,
 	ENDING = 6,
 	## Reino del Orgullo: banderas, historia, conceptos y mitos (se abren con eventos custom, ver datos_orgullo.md)
-	ORGULLO = 7
+	ORGULLO = 7,
+	## Las Tierras del Silencio (violencia de genero): una entrada corta por sala, sin cifras
+	## (se abren con eventos custom silencio_*, ver src/silencio/silencio.gd)
+	SILENCIO = 8
 }
