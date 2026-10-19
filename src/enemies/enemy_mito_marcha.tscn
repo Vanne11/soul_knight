@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://src/enemies/enemy_mito_marcha.gd" id="1"]
-[ext_resource type="SpriteFrames" path="res://assets/sprites/enemies/mito_marcha_sprite_frames.tres" id="2"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/enemies/penelandia/mito_marcha/mito_marcha_sprite_frames.tres" id="2"]
 
 [sub_resource type="RectangleShape2D" id="3"]
 size = Vector2(26, 38)

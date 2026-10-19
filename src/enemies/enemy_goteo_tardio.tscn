@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://src/enemies/prostata/enemy_goteo_tardio.gd" id="1"]
-[ext_resource type="SpriteFrames" path="res://assets/sprites/enemies/goteo_tardio_sprite_frames.tres" id="2"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/enemies/prostata/goteo_tardio/goteo_tardio_sprite_frames.tres" id="2"]
 
 [sub_resource type="RectangleShape2D" id="3"]
 size = Vector2(26, 42)

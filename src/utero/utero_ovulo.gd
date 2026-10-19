@@ -13,7 +13,7 @@ const DASH := 400.0
 const CATCH_DIST := 36.0
 const STEPS := 16
 const LOOK := 70.0
-const FRAMES := "res://assets/sprites/enemies/ovulo_sprite_frames.tres"
+const FRAMES := "res://assets/sprites/enemies/vulvania/ovulo/ovulo_sprite_frames.tres"
 
 var egg: CharacterBody2D
 var _spr: AnimatedSprite2D

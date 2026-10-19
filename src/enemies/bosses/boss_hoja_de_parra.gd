@@ -19,7 +19,7 @@ extends EnemyBoss
 const LEAFG := Color(0.55, 0.9, 0.45)
 const INK := Color(0.9, 0.9, 0.95)
 const HOJITA := preload("res://src/enemies/enemy_hojita_censora.tscn")
-const PARRA_FRAMES := preload("res://assets/sprites/enemies/parra_sprite_frames.tres")
+const PARRA_FRAMES := preload("res://assets/sprites/enemies/palacio/hoja_de_parra/parra_sprite_frames.tres")
 ## Balance (sin medir con el bot, ver notas): la Hoja vale ~1.7 Cera y la Parra un 30% mas que la Hoja.
 const HP_MULT := 0.5
 const PARRA_HP_MULT := 1.3

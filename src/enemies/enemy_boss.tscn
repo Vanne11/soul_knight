@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://src/enemies/enemy_boss.gd" id="1"]
-[ext_resource type="SpriteFrames" path="res://assets/sprites/enemies/boss_sprite_frames.tres" id="2"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/enemies/comunes/boss/boss_sprite_frames.tres" id="2"]
 
 [sub_resource type="RectangleShape2D" id="body"]
 size = Vector2(100, 120)

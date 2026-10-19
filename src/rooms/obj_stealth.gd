@@ -213,7 +213,7 @@ class _Guard extends Node2D:
 
 	func _ready() -> void:
 		_spr = AnimatedSprite2D.new()
-		_spr.sprite_frames = load("res://assets/sprites/enemies/sello_sprite_frames.tres")
+		_spr.sprite_frames = load("res://assets/sprites/enemies/palacio/sello/sello_sprite_frames.tres")
 		_spr.play("walk")
 		_spr.offset = Vector2(0, -22)
 		add_child(_spr)

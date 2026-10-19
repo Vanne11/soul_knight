@@ -68,7 +68,7 @@ func _spawn() -> void:
 	e.max_health = 18.0 + 9.0 * depth()
 	e.damage = 0.0
 	e.move_speed = FLEE_SPEED
-	var frames := "res://assets/sprites/enemies/ladilla_sprite_frames.tres"
+	var frames := "res://assets/sprites/enemies/selva/ladilla/ladilla_sprite_frames.tres"
 	e.get_node("AnimatedSprite2D").sprite_frames = load(frames)
 	e.get_node("AnimatedSprite2D").scale *= 1.3
 	thief = e

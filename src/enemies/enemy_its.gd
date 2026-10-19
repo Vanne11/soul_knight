@@ -156,7 +156,7 @@ func _spawn_wart(off: Vector2) -> void:
 	e.max_health = maxf(6.0, max_health * 0.15)
 	e.damage = damage * 0.5
 	e.move_speed = move_speed * 2.0
-	e.get_node("AnimatedSprite2D").sprite_frames = load("res://assets/sprites/enemies/verruguita_sprite_frames.tres")
+	e.get_node("AnimatedSprite2D").sprite_frames = load("res://assets/sprites/enemies/comunes/its/verruguita/verruguita_sprite_frames.tres")
 	e.add_to_group("verruguita")
 	var room := find_owning_room()
 	if room != null:
@@ -259,7 +259,7 @@ func _go_latent(amount: float) -> void:
 	await get_tree().create_timer(0.5).timeout
 	animated_sprite.visible = false
 	_residue = Sprite2D.new()
-	_residue.texture = load("res://assets/sprites/enemies/herpes_residuo.png")
+	_residue.texture = load("res://assets/sprites/enemies/comunes/its/herpes/herpes_residuo.png")
 	_residue.position = Vector2(0, 8)
 	add_child(_residue)
 	_latent = true

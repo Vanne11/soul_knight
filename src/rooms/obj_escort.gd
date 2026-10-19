@@ -105,7 +105,7 @@ func _build_egg() -> void:
 	cs.shape = sh
 	egg.add_child(cs)
 	spr = AnimatedSprite2D.new()
-	spr.sprite_frames = load("res://assets/sprites/enemies/ovulo_sprite_frames.tres")
+	spr.sprite_frames = load("res://assets/sprites/enemies/vulvania/ovulo/ovulo_sprite_frames.tres")
 	spr.play("idle")
 	spr.offset = Vector2(0, -22)
 	spr.scale = Vector2(0.9, 0.9)
@@ -138,7 +138,7 @@ func _build_trompa() -> void:
 	_trompa = _Goal.new()
 	_trompa.position = goal
 	var t := AnimatedSprite2D.new()
-	t.sprite_frames = load("res://assets/sprites/enemies/trompa_sprite_frames.tres")
+	t.sprite_frames = load("res://assets/sprites/enemies/vulvania/trompa/trompa_sprite_frames.tres")
 	t.play("idle")
 	t.offset = Vector2(0, -22)
 	t.flip_h = goal.x < start_pos.x

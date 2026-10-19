@@ -1,0 +1,511 @@
+[gd_resource type="SpriteFrames" load_steps=31 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hoja_de_parra_sheet.png" id="1_sheet"]
+
+[sub_resource type="AtlasTexture" id="f0"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 0, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f1"]
+atlas = ExtResource("1_sheet")
+region = Rect2(156, 0, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f2"]
+atlas = ExtResource("1_sheet")
+region = Rect2(312, 0, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f3"]
+atlas = ExtResource("1_sheet")
+region = Rect2(468, 0, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f4"]
+atlas = ExtResource("1_sheet")
+region = Rect2(624, 0, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f5"]
+atlas = ExtResource("1_sheet")
+region = Rect2(780, 0, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f6"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 180, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f7"]
+atlas = ExtResource("1_sheet")
+region = Rect2(156, 180, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f8"]
+atlas = ExtResource("1_sheet")
+region = Rect2(312, 180, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f9"]
+atlas = ExtResource("1_sheet")
+region = Rect2(468, 180, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f10"]
+atlas = ExtResource("1_sheet")
+region = Rect2(624, 180, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f11"]
+atlas = ExtResource("1_sheet")
+region = Rect2(780, 180, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f12"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 360, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f13"]
+atlas = ExtResource("1_sheet")
+region = Rect2(156, 360, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f14"]
+atlas = ExtResource("1_sheet")
+region = Rect2(312, 360, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f15"]
+atlas = ExtResource("1_sheet")
+region = Rect2(468, 360, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f16"]
+atlas = ExtResource("1_sheet")
+region = Rect2(624, 360, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f17"]
+atlas = ExtResource("1_sheet")
+region = Rect2(780, 360, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f18"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 540, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f19"]
+atlas = ExtResource("1_sheet")
+region = Rect2(156, 540, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f20"]
+atlas = ExtResource("1_sheet")
+region = Rect2(312, 540, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f21"]
+atlas = ExtResource("1_sheet")
+region = Rect2(468, 540, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f22"]
+atlas = ExtResource("1_sheet")
+region = Rect2(624, 540, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f23"]
+atlas = ExtResource("1_sheet")
+region = Rect2(780, 540, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f24"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 720, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f25"]
+atlas = ExtResource("1_sheet")
+region = Rect2(156, 720, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f26"]
+atlas = ExtResource("1_sheet")
+region = Rect2(312, 720, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f27"]
+atlas = ExtResource("1_sheet")
+region = Rect2(468, 720, 156, 180)
+
+[sub_resource type="AtlasTexture" id="f28"]
+atlas = ExtResource("1_sheet")
+region = Rect2(624, 720, 156, 180)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("f2")
+}, {
+"duration": 1.0,
+"texture": SubResource("f1")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("f3")
+}, {
+"duration": 1.0,
+"texture": SubResource("f4")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("f6")
+}],
+"loop": false,
+"name": &"release",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("f7")
+}, {
+"duration": 1.0,
+"texture": SubResource("f8")
+}],
+"loop": false,
+"name": &"attack_tapar",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("f7")
+}, {
+"duration": 1.0,
+"texture": SubResource("f8")
+}],
+"loop": false,
+"name": &"attack_escudo",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f9")
+}, {
+"duration": 1.0,
+"texture": SubResource("f10")
+}, {
+"duration": 1.0,
+"texture": SubResource("f11")
+}, {
+"duration": 1.0,
+"texture": SubResource("f12")
+}, {
+"duration": 1.0,
+"texture": SubResource("f13")
+}, {
+"duration": 1.0,
+"texture": SubResource("f13")
+}],
+"loop": false,
+"name": &"death",
+"speed": 3.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f14")
+}, {
+"duration": 1.0,
+"texture": SubResource("f14")
+}, {
+"duration": 1.0,
+"texture": SubResource("f14")
+}, {
+"duration": 1.0,
+"texture": SubResource("f1")
+}],
+"loop": false,
+"name": &"intro",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("f15")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f16")
+}, {
+"duration": 1.0,
+"texture": SubResource("f17")
+}],
+"loop": true,
+"name": &"tired",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f8")
+}, {
+"duration": 1.0,
+"texture": SubResource("f18")
+}, {
+"duration": 1.0,
+"texture": SubResource("f8")
+}, {
+"duration": 1.0,
+"texture": SubResource("f19")
+}],
+"loop": true,
+"name": &"channel",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f9")
+}, {
+"duration": 1.0,
+"texture": SubResource("f9")
+}, {
+"duration": 1.0,
+"texture": SubResource("f20")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f21")
+}],
+"loop": false,
+"name": &"recover_in",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f21")
+}, {
+"duration": 1.0,
+"texture": SubResource("f22")
+}, {
+"duration": 1.0,
+"texture": SubResource("f21")
+}, {
+"duration": 1.0,
+"texture": SubResource("f23")
+}],
+"loop": true,
+"name": &"recover",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f9")
+}, {
+"duration": 1.0,
+"texture": SubResource("f16")
+}],
+"loop": false,
+"name": &"stun_in",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f24")
+}, {
+"duration": 1.0,
+"texture": SubResource("f25")
+}],
+"loop": false,
+"name": &"brake",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("f1")
+}],
+"loop": false,
+"name": &"blink",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f26")
+}, {
+"duration": 1.0,
+"texture": SubResource("f27")
+}, {
+"duration": 1.0,
+"texture": SubResource("f1")
+}],
+"loop": false,
+"name": &"idle_stir",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f28")
+}, {
+"duration": 1.0,
+"texture": SubResource("f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("f28")
+}, {
+"duration": 1.0,
+"texture": SubResource("f1")
+}],
+"loop": false,
+"name": &"idle_impatient",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("f3")
+}, {
+"duration": 1.0,
+"texture": SubResource("f4")
+}],
+"loop": false,
+"name": &"attack_tiron",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("f3")
+}, {
+"duration": 1.0,
+"texture": SubResource("f4")
+}],
+"loop": false,
+"name": &"attack_salpicadura",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("f3")
+}, {
+"duration": 1.0,
+"texture": SubResource("f4")
+}],
+"loop": false,
+"name": &"attack_cruz",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("f3")
+}, {
+"duration": 1.0,
+"texture": SubResource("f4")
+}],
+"loop": false,
+"name": &"attack_embestida",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("f6")
+}],
+"loop": false,
+"name": &"release_spit",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("f6")
+}],
+"loop": true,
+"name": &"spitting",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("f6")
+}],
+"loop": true,
+"name": &"cross_spin",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("f6")
+}],
+"loop": true,
+"name": &"charge",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f16")
+}, {
+"duration": 1.0,
+"texture": SubResource("f17")
+}],
+"loop": true,
+"name": &"drag",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("f16")
+}, {
+"duration": 1.0,
+"texture": SubResource("f17")
+}],
+"loop": true,
+"name": &"stuck",
+"speed": 9.0
+}]

@@ -32,7 +32,7 @@ func start() -> void:
 	_it.position = spot
 	_it.set("prompt_text", tr("RM_PACT_PROMPT"))
 	var spr := AnimatedSprite2D.new()
-	spr.sprite_frames = load("res://assets/sprites/enemies/hoja_de_parra_sprite_frames.tres")
+	spr.sprite_frames = load("res://assets/sprites/enemies/palacio/hoja_de_parra/hoja_de_parra_sprite_frames.tres")
 	spr.play("idle")
 	spr.scale = Vector2(0.42, 0.42)  # cuadros de 156x180 (arte definitivo): mismo tamano en pantalla que los de 80x120 a 0.62
 	spr.offset = Vector2(0, -90)

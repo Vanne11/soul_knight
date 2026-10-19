@@ -141,11 +141,14 @@ def main() -> None:
     for name, d in moves:
         (EN / d).mkdir(parents=True, exist_ok=True)
         src, dst = EN / name, EN / d / name
-        r = subprocess.run(["git", "mv", "-k", str(src), str(dst)], cwd=ROOT)
+        subprocess.run(["git", "mv", "-k", str(src), str(dst)], cwd=ROOT)
         if not dst.exists():
             src.rename(dst)  # archivo sin seguimiento en git
-        if not name.endswith(".import"):
-            renames[REL + name] = REL + d + "/" + name
+    # Toda ruta plana que ya no existe en la raíz apunta a donde quedó el archivo (también lo
+    # movido en corridas anteriores: así se arreglan ramas que llegan con rutas viejas).
+    for p in EN.rglob("*"):
+        if p.is_file() and p.parent != EN and not p.name.endswith(".import") and not (EN / p.name).exists():
+            renames[REL + p.name] = REL + str(p.relative_to(EN))
     pat = re.compile(re.escape(REL) + r"[A-Za-z0-9_.\-]+")
     changed = 0
     for f in text_files():

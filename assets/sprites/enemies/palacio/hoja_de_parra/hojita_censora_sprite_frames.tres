@@ -1,0 +1,103 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_idle_00.png" id="idle0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_idle_01.png" id="idle1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_walk_00.png" id="walk0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_walk_01.png" id="walk1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_walk_02.png" id="walk2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_walk_03.png" id="walk3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_plant_00.png" id="plant0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_plant_01.png" id="plant1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_plant_02.png" id="plant2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_attack_00.png" id="attack0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_attack_01.png" id="attack1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_hurt_00.png" id="hurt0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_hurt_01.png" id="hurt1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_death_00.png" id="death0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_death_01.png" id="death1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_death_02.png" id="death2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/palacio/hoja_de_parra/hojita_censora_death_03.png" id="death3"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("idle0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("idle1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("walk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("plant0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("plant1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("plant2")
+}],
+"loop": false,
+"name": &"plant",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("attack0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("attack1")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("hurt0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("hurt1")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("death0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death3")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}]

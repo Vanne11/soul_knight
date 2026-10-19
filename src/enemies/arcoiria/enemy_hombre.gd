@@ -16,9 +16,9 @@ const MERGE_HEAL := 0.25         ## de la vida maxima del entero
 const SEEK_MULT := 1.35
 const TOUCH_CD := 0.9
 const TOUCH_MULT := 0.7
-const FRAMES_L := "res://assets/sprites/enemies/hombre_l_sprite_frames.tres"
-const FRAMES_R := "res://assets/sprites/enemies/hombre_r_sprite_frames.tres"
-const FRAMES_WHOLE := "res://assets/sprites/enemies/hombre_sprite_frames.tres"
+const FRAMES_L := "res://assets/sprites/enemies/arcoiria/hombre/hombre_l_sprite_frames.tres"
+const FRAMES_R := "res://assets/sprites/enemies/arcoiria/hombre/hombre_r_sprite_frames.tres"
+const FRAMES_WHOLE := "res://assets/sprites/enemies/arcoiria/hombre/hombre_sprite_frames.tres"
 
 var half := ""                   ## "" = entero, "l" o "r" = mitad suelta
 var partner: EnemyHombre = null

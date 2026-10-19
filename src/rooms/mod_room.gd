@@ -211,7 +211,7 @@ func _customs() -> void:
 	if spot == Vector2.INF:
 		spot = center() + Vector2(0, -90)
 	var npc := AnimatedSprite2D.new()
-	npc.sprite_frames = load("res://assets/sprites/enemies/aduanero_sprite_frames.tres")
+	npc.sprite_frames = load("res://assets/sprites/enemies/perineo/aduanero/aduanero_sprite_frames.tres")
 	npc.play("idle")
 	npc.scale = Vector2(0.55, 0.55)
 	npc.position = spot

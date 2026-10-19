@@ -7,8 +7,8 @@ Uso: python3 tools/gen_parra_art2.py gen [hoja ...]     llama a Gemini (una llam
 Hojas (una imagen cada una, regla de Nico: nunca cuadro a cuadro), originales en .claude/arte_fuente/parra/:
   hoja_a hoja_b parra_a parra_b hojita        (5 llamadas; prompts en parra_prompts.py)
 Partes de build:
-  hoja     156x180, cuadros de BossAnimator -> assets/sprites/enemies/hoja_de_parra_sheet.png + hoja_de_parra_sprite_frames.tres
-  parra    224x256, cuadros de BossAnimator -> assets/sprites/enemies/parra_sheet.png + parra_sprite_frames.tres
+  hoja     156x180, cuadros de BossAnimator -> assets/sprites/enemies/palacio/hoja_de_parra/hoja_de_parra_sheet.png + hoja_de_parra_sprite_frames.tres
+  parra    224x256, cuadros de BossAnimator -> assets/sprites/enemies/palacio/hoja_de_parra/parra_sheet.png + parra_sprite_frames.tres
   hojita   32x48 -> assets/sprites/enemies/hojita_censora_<anim>_NN.png + hojita_censora_sprite_frames.tres
 Densidad: 1 pixel de arte = 1 unidad de juego (como el heroe de 32x48); reduccion con contornos conservados,
 paleta corta por personaje y SIN ampliar (NEAREST).

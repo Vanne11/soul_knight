@@ -8,7 +8,7 @@ class_name EnemyMitoMarcha
 const BACK_TIME := 0.55
 const BACK_SPEED := 300.0
 const MAX_MINIS := 4
-const MINI_FRAMES := "res://assets/sprites/enemies/espermatozoide_sprite_frames.tres"
+const MINI_FRAMES := "res://assets/sprites/enemies/penelandia/espermatozoide/espermatozoide_sprite_frames.tres"
 var _retreat_t := 0.0
 
 

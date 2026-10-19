@@ -5,7 +5,7 @@ extends Node2D
 ##   godot --audio-driver Dummy --screen 2 --path . res://tools/preview/boss_anim_preview.tscn -- --out=/ruta/ [--boss=cera]
 ## Despues tools/preview/contact_sheet.py arma las hojas de contacto.
 
-const FRAMES := "res://assets/sprites/enemies/boss_cera_sprite_frames.tres"
+const FRAMES := "res://assets/sprites/enemies/selva/boss_cera/boss_cera_sprite_frames.tres"
 const SCRIPT := "res://src/enemies/bosses/boss_cera.gd"
 
 var out := "user://preview/"
