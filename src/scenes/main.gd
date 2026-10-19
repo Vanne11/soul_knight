@@ -227,6 +227,7 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	Silencio.on_enter_room(self, room, entry_door)  # sala de situacion del Silencio (src/silencio)
 	if room.room_type in [Room.RoomType.TREASURE, Room.RoomType.REST, Room.RoomType.LORE]:
 		_build_calm_room(room)
+	Arcoiria.on_enter_room(self, room)  # rincon "Como buscar ayuda" en la sala de inicio del reino
 	if room.room_type == Room.RoomType.SHOP:
 		_build_shop(room)
 	if room.room_type == Room.RoomType.PUZZLE and not room.cleared:

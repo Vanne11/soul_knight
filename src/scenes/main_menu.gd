@@ -325,10 +325,13 @@ func _open_codex() -> void:
 	text.text = tr("CODEX_HINT")
 	detail.add_child(text)
 	var entries: Array = lore.get_all_entries()
-	# Secciones propias "Orgullo" y "Silencio": van al final de la lista, con su marca en el nombre
+	# Secciones propias "Orgullo", "Silencio" y "Educacion": van al final de la lista, con su marca en el nombre
 	var pride: int = LoreEntry.Category.ORGULLO
 	var silence: int = LoreEntry.Category.SILENCIO
-	var tail := func(e) -> int: return 2 if e.category == silence else (1 if e.category == pride else 0)
+	var tail := func(e) -> int:
+		if Edu.is_codex_entry(e.id):
+			return 3
+		return 2 if e.category == silence else (1 if e.category == pride else 0)
 	entries.sort_custom(func(a, b):
 		if tail.call(a) != tail.call(b):
 			return tail.call(a) < tail.call(b)
@@ -336,7 +339,9 @@ func _open_codex() -> void:
 	for e in entries:
 		var img: Texture2D = CodexArt.image(e)
 		var label: String = Loc.lore_title(e) if e.unlocked else "???"
-		if e.category == pride and e.unlocked:
+		if Edu.is_codex_entry(e.id) and e.unlocked:
+			label = tr("EDU_CODEX_TAG") + label
+		elif e.category == pride and e.unlocked:
 			label = tr("ORGULLO_CODEX_TAG") + label
 		elif e.category == silence and e.unlocked:
 			label = tr("SIL_CODEX_TAG") + label

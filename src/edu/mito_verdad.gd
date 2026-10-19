@@ -32,15 +32,17 @@ static func build(main: Node, room: Room) -> void:
 			if is_instance_valid(p):
 				p.finish()
 	props.append(_prop(main, room, c + Vector2(125, -40), Consultorio._sprite_visual(room, "placa", 50, false, 20.0, true),
-		func(): return Edu.t("EDU_MV_ASK") % q.pregunta, Callable()))
+		func(): return Edu.t("EDU_MV_ASK") % q.pregunta, Callable(), true))
 	props.append(_prop(main, room, c + Vector2(90, 40), Consultorio._sprite_visual(room, "piedra_verdad", 26, false, 8.0),
 		func(): return Edu.t("EDU_MV_TRUE"), func(_p, _it): answer.call(true)))
 	props.append(_prop(main, room, c + Vector2(160, 40), Consultorio._sprite_visual(room, "piedra_mito", 26, false, 8.0),
 		func(): return Edu.t("EDU_MV_MYTH"), func(_p, _it): answer.call(false)))
 
 
-static func _prop(main: Node, room: Room, pos: Vector2, visual: Node2D, prompt: Callable, on_use: Callable) -> Node:
+static func _prop(main: Node, room: Room, pos: Vector2, visual: Node2D, prompt: Callable, on_use: Callable, badge := false) -> Node:
 	var it := PROP.new()
+	it.has_badge = badge
+	it.badge_y = Consultorio._top_of(visual) - 12.0
 	it.position = pos
 	it.prompt_fn = prompt
 	it.add_child(visual)
