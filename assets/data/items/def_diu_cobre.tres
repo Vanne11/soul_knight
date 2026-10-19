@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_diu_cobre"
+display_name = "DIU de Cobre"
+description = "Defensa de mano izquierda."
+rarity = 3
+tags = ["defensa_mano", "utilidad", "orbital"]
+equip_slot = 4
+effects = []
+base_value = 460
+custom_data = {"defense": "diu", "affinity": "neutral"}

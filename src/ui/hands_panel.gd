@@ -5,6 +5,8 @@ extends PanelContainer
 ##  - MANO DER.: el arma actual (icono, nombre, municion o calor) + glifo de "attack"; sin arma, puno.
 ##  - MANO IZQ.: escudo/alas/espolon ("guard") y grito/huevo ("ability") segun el heroe, cada uno con
 ##    su glifo; el que tiene recarga (AbilityGauge) se apaga y muestra su barrita mientras recarga.
+##    Si llevas una DEFENSA de mano izquierda, su fila (icono del objeto, glifo "guard", nombre y barra de
+##    durabilidad/recarga) REEMPLAZA a la fila "guard" del heroe; la "ability" sigue.
 ## El dash no va aqui: su glifo y cargas van junto a la barra de estamina (dash_hint.gd).
 ## Los iconos son act_*.png en assets/sprites/ui/glyphs (tools/gen_input_glyphs.py): cambiar un PNG basta.
 ## Solo LEE al jugador (arma, _ammo, _heat, _dash_left...). Textos: locale/teclas.csv.
@@ -32,7 +34,12 @@ var _w_name: Label
 var _w_ammo: Label
 var _w_heat: ColorRect
 var _w_sig := ""
-var _acts: Array = []  # {icon, bar, action}
+var _acts: Array = []  # {icon, bar, action, row}
+var _d_row: HBoxContainer  # defensa de MANO IZQUIERDA (src/player/defenses/): reemplaza a la fila "guard" del heroe
+var _d_icon: TextureRect
+var _d_name: Label
+var _d_bar: ColorRect
+var _d_sig := ""
 var _help: KeyHelp
 var _lift := 0.0  # px que sube el panel para no quedar bajo las cajas del narrador
 
@@ -117,9 +124,8 @@ func _build_right(v: Control) -> void:
 func _build_left(v: Control) -> void:
 	var rm := get_node("/root/RunManager")
 	var hints: Array = AbilityGauge.HINTS.get(rm.character, [])
-	if hints.is_empty():
-		return
 	_title(v, "GLYPH_HAND_L")
+	_build_defense_row(v)
 	var main_action := AbilityGauge.main_action(rm.character)
 	for h in hints:
 		var r := _row()
@@ -143,7 +149,34 @@ func _build_left(v: Control) -> void:
 		col.add_child(bar)
 		r.add_child(col)
 		v.add_child(r)
-		_acts.append({"icon": ic, "bar": bar, "action": h[0], "main": h[0] == main_action})
+		_acts.append({"icon": ic, "bar": bar, "action": h[0], "main": h[0] == main_action, "row": r})
+
+
+func _build_defense_row(v: Control) -> void:
+	_d_row = _row()
+	_d_icon = _icon(20)
+	_d_row.add_child(_d_icon)
+	var g := InputGlyph.new()
+	g.action = "guard"
+	_d_row.add_child(g)
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 2)
+	col.alignment = BoxContainer.ALIGNMENT_CENTER
+	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_d_name = HudStyle.pixel_label("", TXT, HudStyle.CREAM)
+	_d_name.custom_minimum_size.x = NAME_W - 20.0
+	_d_name.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_d_name.max_lines_visible = 2
+	_d_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	col.add_child(_d_name)
+	_d_bar = ColorRect.new()
+	_d_bar.custom_minimum_size = Vector2(BAR_W, 3)
+	_d_bar.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	_d_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	col.add_child(_d_bar)
+	_d_row.add_child(col)
+	_d_row.visible = false
+	v.add_child(_d_row)
 
 
 func _process(delta: float) -> void:
@@ -222,7 +255,33 @@ func _update_weapon() -> void:
 		_w_heat.visible = false
 
 
+func _update_defense() -> void:
+	var df: Defense = _player.defense
+	var replaced := _player.hero_guard_replaced()
+	for a in _acts:
+		if a.action == "guard":
+			a.row.visible = not replaced
+	_d_row.visible = df != null
+	if df == null:
+		_d_sig = ""
+		return
+	var v: float = df.gauge_value if df.gauge_visible else (0.0 if df.spent else 1.0)
+	var sig := "%s|%d|%s|%s|%s" % [df.item.id, int(v * 30.0), df.spent, df.cooling, df.gauge_color.to_html()]
+	if sig == _d_sig:
+		return
+	_d_sig = sig
+	_d_icon.texture = df.icon()
+	_d_name.text = Loc.item_name(df.item)
+	_d_bar.visible = not df.spent
+	_d_bar.custom_minimum_size.x = maxf(2.0, BAR_W * clampf(v, 0.0, 1.0))
+	_d_bar.color = df.gauge_color
+	var off: bool = df.spent or df.cooling
+	_d_icon.modulate = DIM if off else Color.WHITE
+	_d_name.add_theme_color_override("font_color", DIM if df.spent else HudStyle.CREAM)
+
+
 func _update_left() -> void:
+	_update_defense()
 	var ab: HeroAbility = _player.ability
 	for a in _acts:
 		var cooling := false

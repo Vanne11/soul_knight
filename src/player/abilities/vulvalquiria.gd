@@ -49,7 +49,7 @@ func _physics_process(delta: float) -> void:
 	gauge_visible = _cd > 0.0
 	gauge_value = 1.0 - _cd / SCREAM_CD
 	# planeo
-	var want: bool = Input.is_action_pressed("guard") and not player.is_dashing \
+	var want: bool = guard_held() and not player.is_dashing \
 			and player.velocity.length() > 10.0 and stats.current_stamina > 1.0 and not Narrator.ate_input()
 	if want:
 		if not stats.use_stamina(GLIDE_DRAIN * delta):

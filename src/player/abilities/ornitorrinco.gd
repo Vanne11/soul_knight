@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 	_electro(delta)
 	if Input.is_action_just_pressed("ability") and _egg_cd <= 0.0 and not Narrator.ate_input():
 		lay_egg()
-	if Input.is_action_pressed("guard") and _spur_cd <= 0.0 and not Narrator.ate_input() and not player.is_dashing:
+	if guard_held() and _spur_cd <= 0.0 and not Narrator.ate_input() and not player.is_dashing:
 		spur()
 
 

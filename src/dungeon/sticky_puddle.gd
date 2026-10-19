@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 	if room == null or main == null or main.current_room != room:
 		return
 	var pl := get_tree().get_first_node_in_group("player") as CharacterBody2D
-	if pl != null and not pl.is_dashing and not (pl.ability != null and pl.ability.get("gliding") == true) and _inside(pl.global_position):
+	if pl != null and not pl.is_dashing and not (pl.defense != null and pl.defense.floor_clean()) and not (pl.ability != null and pl.ability.get("gliding") == true) and _inside(pl.global_position):
 		pl.move_and_collide(-pl.velocity * SLOW * delta)
 		if not pl.has_meta("sticky_" + kingdom):
 			pl.set_meta("sticky_" + kingdom, true)  # el nombre sale la primera vez de la partida

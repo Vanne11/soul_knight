@@ -31,6 +31,39 @@ var _idle_t := 0.0
 var _gesture_in := 7.0
 const GESTURE_EVERY := Vector2(6.0, 12.0)
 const GESTURE_TIME := 2.4
+## Defensa de MANO IZQUIERDA que llevas (src/player/defenses/): reemplaza a la "guard" del heroe.
+var defense: Defense = null
+var current_defense: Item = null
+const DEFENSES := {
+	"condon": preload("res://src/player/defenses/condon_escudo.gd"),
+	"diafragma": preload("res://src/player/defenses/diafragma.gd"),
+	"toalla": preload("res://src/player/defenses/toalla_nocturna.gd"),
+	"copa": preload("res://src/player/defenses/copa_menstrual.gd"),
+	"diu": preload("res://src/player/defenses/diu_cobre.gd"),
+	"barrera": preload("res://src/player/defenses/barrera_latex.gd"),
+	"vacuna": preload("res://src/player/defenses/vacuna_vph.gd"),
+	"implante": preload("res://src/player/defenses/implante.gd"),
+	"tampon_ancla": preload("res://src/player/defenses/tampon_ancla.gd"),
+	"suspensorio": preload("res://src/player/defenses/suspensorio.gd"),
+	"parche": preload("res://src/player/defenses/parche.gd"),
+	"talco": preload("res://src/player/defenses/talco.gd"),
+	"toallita": preload("res://src/player/defenses/toallita.gd"),
+	"bolsa_agua": preload("res://src/player/defenses/bolsa_agua.gd"),
+	"pastilla": preload("res://src/player/defenses/pastilla_dia_despues.gd"),
+	"pito": preload("res://src/player/defenses/pito.gd"),
+	"latigo": preload("res://src/player/defenses/latigo_seda.gd"),
+	"esposas": preload("res://src/player/defenses/esposas_peludas.gd"),
+	"condon_interno": preload("res://src/player/defenses/condon_interno.gd"),
+	"anillo": preload("res://src/player/defenses/anillo.gd"),
+	"prep": preload("res://src/player/defenses/prep.gd"),
+	"pep": preload("res://src/player/defenses/pep.gd"),
+	"autotest": preload("res://src/player/defenses/autotest.gd"),
+	"app_ciclo": preload("res://src/player/defenses/app_ciclo.gd"),
+	"termometro": preload("res://src/player/defenses/termometro.gd"),
+	"espermicida": preload("res://src/player/defenses/espermicida.gd"),
+	"mascarilla": preload("res://src/player/defenses/mascarilla.gd"),
+	"sosten": preload("res://src/player/defenses/sosten.gd"),
+}
 const HERO_ABILITIES := {
 	"pitocles": preload("res://src/player/abilities/pitocles.gd"),
 	"vulvalquiria": preload("res://src/player/abilities/vulvalquiria.gd"),
@@ -198,6 +231,8 @@ func _physics_process(delta: float) -> void:
 
 # ------------------------------------------------------------------ terreno
 func set_terrain_slow(mult: float) -> void:
+	if defense != null and defense.floor_clean():
+		return  # toallita: suelo limpio
 	_terrain_mult = mult
 	_terrain_ttl = 0.1
 
@@ -395,6 +430,8 @@ func _handle_movement(delta: float) -> void:
 	speed_mult *= _terrain_mult
 	if ability:
 		speed_mult *= ability.speed_mult()
+	if defense:
+		speed_mult *= defense.speed_mult()
 	var st := _status()  # estados de enemigos (status_effects.gd): enrollado, jaula, correa...
 	if st != null:
 		var slow: float = st.speed_mult()
@@ -421,14 +458,14 @@ func _handle_dash(delta: float) -> void:
 	if st != null and st.blocks_dash():
 		return
 	if Input.is_action_just_pressed("dash") and not Narrator.ate_input() and not is_dashing and _dash_cooldown_timer <= 0.0 and _dash_left > 0:
-		if get_node("/root/PlayerStats").use_stamina(dash_stamina_cost * get_node("/root/PlayerStats").dash_cost_modifier):
+		if get_node("/root/PlayerStats").use_stamina(dash_stamina_cost * get_node("/root/PlayerStats").dash_cost_modifier * (defense.dash_cost_mult() if defense != null else 1.0)):
 			_start_dash()
 		else:
 			get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("FX_NO_STAMINA"), Color.YELLOW)
 
 func _start_dash() -> void:
 	is_dashing = true
-	_dash_timer = dash_duration
+	_dash_timer = dash_duration * (defense.dash_time_mult() if defense != null else 1.0)
 	var full_cd: float = dash_cooldown * pow(0.7, _rm().blessing("escurridiza"))
 	if _dash_left >= dash_charges:
 		_dash_refill = full_cd  # arranca la recarga de todas las cargas
@@ -456,6 +493,8 @@ func _handle_attack(delta: float) -> void:
 	if ContemplationMode.active:
 		return
 	if ability and not ability.can_attack():
+		return
+	if defense and not defense.can_attack():
 		return
 	var st := _status()
 	if st != null and st.blocks_shoot():
@@ -819,9 +858,9 @@ func _dash_cut() -> void:
 
 ## Empujon externo (Pujon de la Puerta Trasera, Ducha...): fija la velocidad `secs` s sin que el input la pise.
 func shove(vel: Vector2, secs := 0.2) -> void:
-	if is_dashing:
+	if is_dashing or (defense != null and defense.anchored()):
 		return
-	velocity = vel
+	velocity = vel * (defense.knockback_mult() if defense != null else 1.0)
 	_sneeze_push = maxf(_sneeze_push, secs)
 
 
@@ -989,7 +1028,10 @@ func _on_intoxication_changed(level: float, tier: int) -> void:
 func _on_hurtbox_entered(area: Area2D) -> void:
 	if not area.is_in_group("enemy_attack"):
 		return
-	if ability and ability.try_guard(area, float(area.damage) if "damage" in area else 10.0):
+	var area_dmg := float(area.damage) if "damage" in area else 10.0
+	if defense and defense.try_guard(area, area_dmg):
+		return
+	if ability and ability.try_guard(area, area_dmg):
 		return
 	if area.has_method("on_hit"):
 		area.on_hit()  # los proyectiles desaparecen aunque no hagan daño
@@ -1002,6 +1044,11 @@ func receive_hit(dmg: float) -> bool:
 		if is_dashing and dmg > 0.0:
 			_show_dodge()
 		return false
+	if defense and dmg > 0.0:  # defensa de mano izquierda: absorbe (todo o parte) tambien el cuerpo a cuerpo
+		dmg = defense.filter_hit(dmg)
+		if dmg <= 0.0:
+			_iframes = HIT_IFRAMES * 0.6
+			return false
 	_iframes = HIT_IFRAMES
 	_player_stats.take_damage(dmg)
 	Sound.play("hurt")
@@ -1046,6 +1093,27 @@ func equip_weapon(item: Item) -> void:
 	Synergies.of(self).refresh()
 	print("Equipped: %s" % item.display_name)
 
+## La guard del heroe (escudo, alas, espolon) solo funciona sin defensa de mano izquierda util.
+func hero_guard_replaced() -> bool:
+	return defense != null and defense.replaces_hero_guard()
+
+## Pone una defensa en la mano izquierda. Quita la anterior (su nodo; soltarla al suelo es cosa de quien llama).
+func equip_defense(item: Item) -> void:
+	if defense != null and is_instance_valid(defense):
+		defense.on_removed()
+		defense.queue_free()
+	defense = null
+	current_defense = item
+	var script = DEFENSES.get(String(item.custom_data.get("defense", "")))
+	if script != null:
+		defense = script.new()
+		defense.name = "Defense"
+		add_child(defense)
+		defense.setup(self, item)
+	if not collected_items.has(item.id):
+		collected_items.append(item.id)
+	print("Equipped defense: %s" % item.display_name)
+
 func has_item(item_id: String) -> bool:
 	# Locked doors probe this before opening.
 	return collected_items.has(item_id)
@@ -1079,6 +1147,11 @@ func add_item_to_inventory(item_id: String) -> void:
 			if current_weapon and current_weapon != item:
 				_drop_weapon(current_weapon.id)
 			equip_weapon(item)
+		elif item.equip_slot == Item.EquipSlot.OFFHAND:
+			# la defensa de mano izquierda se cambia como un arma; una gastada (condon roto) no vuelve al suelo
+			if current_defense and current_defense != item and not (defense != null and defense.spent):
+				_drop_weapon(current_defense.id)
+			equip_defense(item)
 		get_node("/root/RunManager").record_item_collected(item_id)
 		get_node("/root/GlobalEvents").item_picked_up.emit(item, 1)
 		
@@ -1087,7 +1160,7 @@ func add_item_to_inventory(item_id: String) -> void:
 		var boost := affinity_boost(item)
 		if boost > 1.0:
 			_global_events.show_floating_text.emit(global_position + Vector2(0, -46), tr("FX_AFFINITY_FIT"), Color("ffd75a"))
-		for effect in ([] if item.equip_slot == Item.EquipSlot.WEAPON else item.effects):
+		for effect in ([] if item.equip_slot in [Item.EquipSlot.WEAPON, Item.EquipSlot.OFFHAND] else item.effects):
 			apply_item_effect(effect, boost)
 
 func _on_player_died() -> void:

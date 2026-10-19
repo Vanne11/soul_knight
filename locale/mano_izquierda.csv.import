@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dobbfdyqo6f0r"
+
+[deps]
+
+files=["res://locale/mano_izquierda.es.translation", "res://locale/mano_izquierda.en.translation", "res://locale/mano_izquierda.fr.translation"]
+
+source_file="res://locale/mano_izquierda.csv"
+dest_files=["res://locale/mano_izquierda.es.translation", "res://locale/mano_izquierda.en.translation", "res://locale/mano_izquierda.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_condon_escudo_lore"
+title = "Uno por Vez"
+text = "«Nunca dos veces el mismo. Nunca.» Dato: el condón se usa una sola vez, se pone antes de cualquier contacto genital y se revisa que no esté vencido. Protege a la vez del embarazo y de muchas ITS; en las que se pasan de piel a piel (como el VPH o el herpes) reduce el riesgo, pero no lo elimina. Si se rompe o se sale, la burbuja se acaba. En el juego y en la vida: se cambia por otro."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_condon_escudo", "count": 1}
+flavor_text = "Usa un condón escudo."

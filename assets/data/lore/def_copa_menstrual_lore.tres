@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_copa_menstrual_lore"
+title = "Reutilizable de Verdad"
+text = "«Se vacía, se lava y vuelve a la pelea. Como tú, pero con silicona médica.» Dato: la copa menstrual recoge el flujo en vez de absorberlo, es reutilizable, se vacía y se lava siguiendo las instrucciones del fabricante, y se suele hervir entre ciclos. No es un método anticonceptivo ni protege de ITS. Lo que recoges aquí lo devuelves con intereses."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_copa_menstrual", "count": 1}
+flavor_text = "Usa una copa menstrual de mano."

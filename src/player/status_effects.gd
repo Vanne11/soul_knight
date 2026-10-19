@@ -93,6 +93,9 @@ func apply(kind: String, seconds: float, src: Node = null) -> bool:
 		return false
 	if "is_dashing" in player and player.is_dashing:
 		return false
+	var df = player.get("defense")
+	if df != null and (df.blocks_status() or df.blocks_status_kind(kind)):  # Vacuna VPH: inmune a estados un rato
+		return false
 	var was := _left.has(kind)
 	_left[kind] = maxf(float(_left.get(kind, 0.0)), seconds)
 	_total[kind] = maxf(float(_total.get(kind, 0.0)), seconds)
@@ -126,7 +129,10 @@ func stick_label(src: Node = null) -> bool:
 
 ## Empujon: suma una velocidad que se apaga sola (la camina el jugador en player.gd con pull_velocity).
 func push(v: Vector2) -> void:
-	_push = v
+	var df = player.get("defense") if player != null else null
+	if df != null and df.anchored():
+		return  # Tampon Ancla: no te mueves
+	_push = v * (df.knockback_mult() if df != null else 1.0)
 
 
 func blocks_shoot() -> bool:
@@ -153,6 +159,9 @@ func speed_mult() -> float:
 
 ## Velocidad extra impuesta (correa, cadena, empujon). Player la suma al caminar.
 func pull_velocity() -> Vector2:
+	var df = player.get("defense") if player != null else null
+	if df != null and df.anchored():
+		return Vector2.ZERO
 	return _pull + _push
 
 

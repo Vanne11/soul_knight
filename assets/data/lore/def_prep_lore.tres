@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_prep_lore"
+title = "Antes de la Exposición"
+text = "«Prevenir es llegar antes que el problema.» Dato: la PrEP es la prevención del VIH antes de la exposición: se toma con indicación y seguimiento de un profesional de salud. Protege solo del VIH, no de otras ITS ni del embarazo, así que el condón sigue siendo útil. En el juego te cubre de todo para que sea divertido: es una licencia."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_prep", "count": 1}
+flavor_text = "Toma PrEP."

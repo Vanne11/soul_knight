@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_pito"
+display_name = "Pito de Emergencia"
+description = "Defensa de mano izquierda."
+rarity = 2
+tags = ["defensa_mano", "utilidad", "sonido", "control"]
+equip_slot = 4
+effects = []
+base_value = 360
+custom_data = {"defense": "pito", "affinity": "neutral"}

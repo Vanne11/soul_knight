@@ -34,6 +34,9 @@ func _connects(p: Node) -> bool:
 		return false
 	if "_iframes" in p and float(p._iframes) > 0.0:
 		return false
+	var df = p.get("defense")
+	if df != null and (df.blocking or df.blocks_status()):
+		return false
 	var ab = p.get("ability")
 	if ab != null and "guarding" in ab and ab.guarding:
 		return false

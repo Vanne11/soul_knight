@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_implante_lore"
+title = "Póntelo y Olvídate"
+text = "«Póntelo y olvídate… por un buen rato.» Dato: el implante subdérmico es una varilla pequeña que un profesional de salud coloca bajo la piel del brazo. Protege del embarazo durante varios años, según el modelo, se puede retirar cuando quieras y no protege de las ITS."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_implante", "count": 1}
+flavor_text = "Usa un implante subdérmico."

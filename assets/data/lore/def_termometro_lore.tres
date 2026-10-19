@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_termometro_lore"
+title = "Tomar la Temperatura"
+text = "«Treinta y siete y medio... y subiendo. Cuidado.» Dato: el método de la temperatura basal consiste en medir la temperatura cada mañana para notar cambios del ciclo. Pide mucha constancia, tiene límites como método anticonceptivo y no protege de las ITS."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_termometro", "count": 1}
+flavor_text = "Toma la temperatura."

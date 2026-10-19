@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "def_anillo_lore"
+title = "El Aro Que No Cuenta Cuentos"
+text = "«Mantén las distancias, por favor.» Dato: el anillo vaginal es un método hormonal: un aro flexible que libera hormonas y se cambia según la indicación del profesional de salud (el esquema depende del producto). No protege de las ITS, por eso se puede combinar con condón."
+category = 2
+unlock_condition = {"type": 4, "target_id": "def_anillo", "count": 1}
+flavor_text = "Lleva un anillo vaginal."
