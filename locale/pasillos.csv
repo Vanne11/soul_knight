@@ -1,0 +1,10 @@
+keys,es,en,es_ES,fr
+PAS_DOOR_HINT,%s,%s,,%s
+PAS_DOOR_SEALS,SELLOS %d/%d,SEALS %d/%d,,SCEAUX %d/%d
+PAS_DOOR_USE,"[b]Pasillo a %s[/b]\n[font_size=13]Se cruza corriendo. No hay vuelta atras.[/font_size]","[b]Corridor to %s[/b]\n[font_size=13]You can run through. No turning back.[/font_size]",,"[b]Couloir vers %s[/b]\n[font_size=13]On peut courir. Pas de retour.[/font_size]"
+PAS_SEALED,Esto está sellado.,This is sealed.,,C'est scellé.
+PAS_SEALED_TOUCH,Sellada.,Sealed.,,Scellée.
+PAS_TRANSIT,EN TRÁNSITO,IN TRANSIT,,EN TRANSIT
+PAS_BAR_FROM,%s,%s,,%s
+PAS_SIGN,>>>,>>>,,>>>
+PAS_BEHIND,Atrás: sin vuelta.,Behind you: no way back.,,Derrière: pas de retour.

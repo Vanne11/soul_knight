@@ -73,6 +73,9 @@ func _draw() -> void:
 	var main := get_tree().get_first_node_in_group("main")
 	if main == null or main.dungeon_generator == null or main.dungeon_generator.rooms.is_empty():
 		return
+	if main.corridor_active:
+		_draw_corridor(main)  # pasillo entre reinos: el minimapa muestra el tramo, no un piso
+		return
 	var gen: DungeonGenerator = main.dungeon_generator
 	var visited: Dictionary = main.visited_rooms
 	var current: Room = main.current_room
@@ -161,6 +164,18 @@ func _draw() -> void:
 			rname = "%s · %s" % [Loc.floor_name(rm.floor_data(), true), rname]  # nombre de la etapa
 		_label.text = rname
 		_place_map_hint()
+
+## Pasillo entre reinos: los dos reinos unidos por una barra con la ficha del heroe (corridor_bar.gd).
+func _draw_corridor(main: Node) -> void:
+	var c: Dictionary = main._corridor
+	draw_style_box(_frame, Rect2(Vector2.ZERO, size))
+	var from_r := str(c.get("from", ""))
+	var to_r := str(c.get("to", ""))
+	CorridorBar.draw_bar(self, Rect2(Vector2(10, size.y * 0.5 - 22), Vector2(size.x - 20, 44)), Loc.region_name_id(from_r), Loc.region_name_id(to_r),
+		RunManager.region_tint(from_r), RunManager.region_tint(to_r), main.corridor_progress(), true)
+	_label.text = tr("PAS_TRANSIT")
+	_place_map_hint()
+
 
 ## Glifo de "map" + "mapa" a la derecha del nombre de la sala (en mando no hay tecla: se esconde).
 func _build_map_hint() -> void:

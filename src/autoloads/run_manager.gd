@@ -210,10 +210,50 @@ static func seals() -> int:
 ## orden de archivo). Para listarlos al jugador; NO cambia ids ni guardados.
 static func world_order() -> Array:
 	var out: Array = body_regions() + center_regions()
+	var optional := detour_regions()
 	for r in regions():
-		if r not in out:
+		if r not in out and r not in optional:  # los desvios opcionales no cuentan como reino obligatorio
 			out.append(r)
 	return out
+
+
+## DESVIOS (routes.json "detours"): puerta extra opcional desde el jefe final de un reino hacia un reino
+## secreto. {"to": id, "open": bool} o {} si el reino no tiene. "open": false = la puerta se ve SELLADA.
+static func detour_for(region: String) -> Dictionary:
+	var d = ROUTES.get("detours", {}).get(region, {})
+	return d if d is Dictionary else {}
+
+
+## Ids de los reinos de desvio (no entran en la ruta base ni en el final verdadero).
+static func detour_regions() -> Array:
+	var out: Array = []
+	for k in ROUTES.get("detours", {}):
+		out.append(str(ROUTES.detours[k].get("to", "")))
+	return out
+
+
+## Reino "padre" de un desvio (donde esta su puerta) o "" si no es desvio.
+static func detour_parent(region: String) -> String:
+	for k in ROUTES.get("detours", {}):
+		if str(ROUTES.detours[k].get("to", "")) == region:
+			return str(k)
+	return ""
+
+
+## Estilo (kingdom de los JSON de piso) del reino: tilesets, puertas y decoracion. Mira tambien los pisos wip.
+static func region_kingdom(region: String) -> String:
+	for f in FLOORS + WIP_FLOORS:
+		if f.region == region:
+			return str(f.get("kingdom", "neutral"))
+	return "neutral"
+
+
+## Color de acento (tint) del reino.
+static func region_tint(region: String) -> Color:
+	for f in FLOORS + WIP_FLOORS:
+		if f.region == region and f.has("tint"):
+			return f.tint
+	return Color.WHITE
 
 
 static func _add_region_floors(id: String) -> void:
@@ -469,6 +509,10 @@ static func region_index(floor_n: int) -> int:
 	var played: Array = route_regions
 	if not peace_regions.is_empty():
 		played = route_regions.filter(func(x): return x not in peace_regions)  # los tramos en paz no suben la dificultad
+	var parent := detour_parent(r)
+	if parent != "":
+		r = parent  # un desvio opcional tiene la dificultad del reino donde esta su puerta
+	played = played.filter(func(x): return x not in detour_regions())  # y no sube la de los reinos que siguen
 	var i: int = played.find(r) if not route_floors.is_empty() else regions().find(r)
 	return maxi(i, 0)
 

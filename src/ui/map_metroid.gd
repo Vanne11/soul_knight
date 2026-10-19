@@ -1017,10 +1017,31 @@ func _draw_routes(over := false) -> void:
 		_view.draw_colored_polygon(PackedVector2Array([Vector2(fx, c.y - 40 * k), Vector2(fx + 28 * k, c.y - 30 * k), Vector2(fx, c.y - 20 * k)]), Color("eb2828"))
 
 
+## En un pasillo entre reinos: la ficha sale del jefe del reino de origen, hacia el destino (sobre el mapa del mundo).
+func _corridor_marker(main: Node) -> Vector2:
+	var c: Dictionary = main._corridor
+	var ra := WorldMap.region_data(str(c.get("from", "")))
+	var rb := WorldMap.region_data(str(c.get("to", "")))
+	if ra.is_empty() or rb.is_empty():
+		return _piso_center(WorldMap.region_data(_wm.cur))
+	var ca := _piso_center(ra)
+	var cb := _piso_center(rb)
+	var pa := _s(ca)
+	var pb := _s(cb)
+	var col := Color("ffc93c")
+	_view.draw_line(pa, pb, INK, maxf(4.0, 10.0 * _zoom))
+	_view.draw_dashed_line(pa, pb, col, maxf(2.5, 5.0 * _zoom), maxf(6.0, 14.0 * _zoom))
+	return ca.lerp(cb, main.corridor_progress())
+
+
 func _draw_hero_marker(fa: float) -> void:
-	if fa > 0.6 or not _have_target:
+	var main := get_tree().get_first_node_in_group("main")
+	var transit: bool = main != null and main.get("corridor_active") == true
+	if (fa > 0.6 and not transit) or not _have_target:
 		return
 	var p := _s(_piso_center(WorldMap.region_data(_wm.cur)))
+	if transit:
+		p = _s(_corridor_marker(main))
 	var rad := clampf(26.0 * _zoom, 8, 30)
 	_view.draw_circle(p, rad * (1.0 + 0.3 * _pulse), Color(GOLD, 0.25))
 	_view.draw_circle(p, rad * 0.5 + 2.0, INK)
@@ -1119,6 +1140,11 @@ func _draw_floor(fa: float) -> void:
 	var col := _col(str(r.color_lib if _wm.voz(r) else r.color))
 	_boxr(panel, Color(INK, 0.97 * fa), Color(col, fa), maxf(2.0, 4.0 * _zoom), 18.0 * _zoom)
 	var main := get_tree().get_first_node_in_group("main")
+	if main != null and main.get("corridor_active") == true:
+		var cc: Dictionary = main._corridor
+		_tx_c("%s  >>>  %s" % [Loc.region_name_id(str(cc.get("from", ""))), Loc.region_name_id(str(cc.get("to", "")))], panel.get_center() + Vector2(0, -14), 22, Color(1, 1, 1, fa), true, true)
+		_tx_c(tr("PAS_TRANSIT"), panel.get_center() + Vector2(0, 18), 16, Color(GOLD, fa), true, false)
+		return
 	if main == null or main.dungeon_generator == null or main.dungeon_generator.rooms.is_empty():
 		_tx_c(tr("MM_SIN_PISO"), panel.get_center(), 16, Color(1, 1, 1, fa), false, false)
 		return

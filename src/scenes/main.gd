@@ -13,8 +13,20 @@ var floor_completed: bool = false
 ## grid_pos -> true de las salas pisadas este piso (las pinta el minimapa).
 var visited_rooms: Dictionary = {}
 var _transition_lock: float = 0.0
+## PASILLOS entre reinos (ver open_exit / _begin_corridor): puertas de salida de la sala del jefe, y el
+## estado del pasillo mientras se recorre (current_room es entonces la sala del pasillo).
+const DOOR_SCENE := preload("res://src/dungeon/door.tscn")
+var exit_doors: Array = []
+var corridor_active := false
+var _corridor: Dictionary = {}   # {from, to, dir, add, fl, seed}
+var _corridor_bar: CorridorBar = null
+var _fade: ColorRect = null
+var _fade_layer: CanvasLayer = null
+var _exit_busy := false
 
 func _process(delta: float) -> void:
+	if corridor_active:
+		_corridor_step()
 	if _transition_lock > 0.0:
 		_transition_lock -= delta
 		if _transition_lock <= 0.0:
@@ -784,33 +796,209 @@ func _complete_floor() -> void:
 ## `at` = donde se pone, relativo al centro de la sala; `hatch_text` = el cartel del portal (vacio = el de
 ## siempre). La usa _complete_floor y, sin jefe ni guardian, el Silencio (src/silencio: salida de S4).
 func open_exit(boss_room: Room, floor_n: int, at := Vector2(0, 150), hatch_text := "") -> void:
-	var options: Array = RunManager.next_options() if RunManager.route_dynamic and floor_n >= RunManager.route_floors.size() else []
-	if options.size() > 1:
-		# Eleccion diegetica: una puerta por reino elegible, con su nombre y su color.
-		for i in options.size():
-			var region: String = options[i]
-			var door := FloorPortal.create(region, true)
-			door.set_meta("door_region", region)  # el bot (tools/autoplay) elige puerta por aqui
-			var dx := (float(i) - float(options.size() - 1) / 2.0) * 210.0
-			_add_prop(boss_room, boss_room.get_center_position() + at + Vector2(dx, 0), door,
-				tr("SEAL_DOOR") % Loc.region_name_id(region),
-				func(p, it):
-					it.finish()
-					await door.absorb(p)
-					RunManager.add_region(region)
-					_advance_to_next_floor()
-					FloorPortal.restore(p))
+	var already := floor_n < RunManager.route_floors.size()
+	var options: Array = _exit_regions(floor_n)
+	if hatch_text == "" and not options.is_empty():
+		# PASILLOS: puertas en las paredes de la sala, hacia donde cae cada reino en el mapa del mundo.
+		var region := RunManager.floor_region(floor_n)
+		var detour: Dictionary = RunManager.detour_for(region) if not RunManager.rescue_mode else {}
+		_build_exit_doors(boss_room, floor_n, options, detour)
 		return
+	# FloorPortal: solo la escotilla entre las etapas de un reino (y la salida del Silencio); el portal de
+	# eleccion de reino ya no se usa (depuracion F1 y casos especiales).
 	var portal := _hatch_visual()
 	_add_prop(boss_room, boss_room.get_center_position() + at, portal,
 		hatch_text if hatch_text != "" else tr("FLOOR_HATCH") % (floor_n + 1),
 		func(p, it):
 			it.finish()
 			await portal.absorb(p)  # el heroe se encoge y gira hacia el centro antes de bajar
-			if options.size() == 1:
+			if options.size() == 1 and not already:
 				RunManager.add_region(str(options[0]))
 			_advance_to_next_floor()
 			FloorPortal.restore(p))
+
+
+## Reinos a los que se puede ir al terminar este piso: el siguiente de la ruta si ya esta armada (rescate,
+## saltos de depuracion) o las opciones por sellos (next_options) si la ruta es dinamica. [] = misma region.
+func _exit_regions(floor_n: int) -> Array:
+	if floor_n < RunManager.route_floors.size():
+		var nf: Dictionary = RunManager.floor_at(floor_n + 1)
+		if str(nf.region) != RunManager.floor_region(floor_n) and not RunManager.floor_is_peace(floor_n + 1):
+			return [str(nf.region)]
+		return []
+	return RunManager.next_options() if RunManager.route_dynamic else []
+
+
+## Puertas de salida del jefe: una por reino destino, en la pared que le toca (Pasillos.direction); dos del
+## mismo lado se separan. Cada una lleva el estilo del reino destino y su nombre; el desvio sellado (Puerta
+## Trasera) es un iris biologico que no abre. Cruzar una = _begin_corridor.
+func _build_exit_doors(room: Room, floor_n: int, regions: Array, detour: Dictionary) -> void:
+	var from := RunManager.floor_region(floor_n)
+	var items: Array = []
+	for r in regions:
+		var d := Pasillos.direction(from, str(r))
+		items.append({"region": str(r), "dir": d, "along": Pasillos.along(from, str(r), d), "sealed": false})
+	if not detour.is_empty():
+		items.append({"region": str(detour.get("to", "")), "dir": "down", "along": 0.0, "sealed": not bool(detour.get("open", false))})
+	var size_px := Vector2(dungeon_generator.room_sizes.get(room.grid_pos, Vector2i(8, 6))) * 64.0
+	var taken: Array = room.doors.values().map(func(dd): return dd.position)
+	var inward := {"up": Vector2.DOWN, "down": Vector2.UP, "left": Vector2.RIGHT, "right": Vector2.LEFT}
+	var ok := func(pos: Vector2, dir: String) -> bool:
+		return room.is_walkable(pos + (inward[dir] as Vector2) * 40.0, 18.0)
+	for it in Pasillos.layout(items, taken, size_px, ok):
+		if it.sealed:
+			var iris := IrisDoor.new()
+			iris.wall_dir = it.dir
+			iris.position = it.pos - (inward[it.dir] as Vector2) * 30.0
+			iris.set_meta("exit_region", it.region)
+			room.props_node.add_child.call_deferred(iris)
+			continue
+		var door: Door = DOOR_SCENE.instantiate()
+		door.direction = Pasillos.dir_index(it.dir)
+		door.set_meta("door_kingdom", RunManager.region_kingdom(it.region))
+		door.set_meta("exit_region", it.region)
+		door.name = "Exit_" + str(it.region)
+		door.position = it.pos
+		room.doors_node.add_child(door)
+		door.room = room
+		exit_doors.append(door)
+		door.set_state(Door.State.OPEN)
+		var text := Loc.region_name_id(str(it.region))
+		if str(it.region) in RunManager.center_regions():
+			text += "\n" + tr("PAS_DOOR_SEALS") % [RunManager.seals(), RunManager.seals_needed()]
+		var tint := RunManager.region_tint(str(it.region)).lerp(Color.WHITE, 0.35)
+		door.set_hint(text, tint)
+		var em := Polygon2D.new()  # emblema del reino: rombo de su color sobre la puerta
+		em.polygon = PackedVector2Array([Vector2(0, -9), Vector2(9, 0), Vector2(0, 9), Vector2(-9, 0)])
+		em.color = RunManager.region_tint(str(it.region))
+		em.position = (inward[it.dir] as Vector2) * 82.0
+		var rim := Polygon2D.new()
+		rim.polygon = PackedVector2Array([Vector2(0, -12), Vector2(12, 0), Vector2(0, 12), Vector2(-12, 0)])
+		rim.color = Color("0d0b0f")
+		rim.position = em.position
+		door.add_child(rim)
+		door.add_child(em)
+		door.player_interacted.connect(_on_exit_door_used.bind(door))
+
+
+func _on_exit_door_used(door: Door) -> void:
+	if corridor_active or _exit_busy:
+		return
+	_exit_busy = true
+	_begin_corridor(RunManager.floor_region(_run_manager.current_floor), str(door.get_meta("exit_region")), door.get_direction_name())
+
+
+## Fundido a negro (alfa 1) o de vuelta (0). Capa propia sobre el HUD, bajo la cortinilla de escenas.
+func _fade_to(alpha: float, time: float) -> void:
+	if _fade == null:
+		_fade_layer = CanvasLayer.new()
+		_fade_layer.layer = 90
+		_fade = ColorRect.new()
+		_fade.color = Color.BLACK
+		_fade.set_anchors_preset(Control.PRESET_FULL_RECT)
+		_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_fade.modulate.a = 0.0
+		_fade_layer.add_child(_fade)
+		add_child(_fade_layer)
+	var tw := create_tween()
+	tw.tween_property(_fade, "modulate:a", alpha, time)
+	await tw.finished
+
+
+## Cruza la puerta de un reino: fundido, el piso se reemplaza por el pasillo de transicion (sala alargada
+## que mezcla los dos reinos) y el heroe aparece en su extremo de salida. Al llegar al final (_corridor_step)
+## entra al reino nuevo.
+func _begin_corridor(from_r: String, to_r: String, dir: String) -> void:
+	var rm := _run_manager
+	var fl: int = rm.current_floor
+	_corridor = {"from": from_r, "to": to_r, "dir": dir, "add": fl >= RunManager.route_floors.size(), "fl": fl,
+		"seed": rm.current_seed + fl * 7919, "switched": false}
+	if has_meta("map_key") and get_meta("map_seed", -1) == rm.current_seed and not dungeon_generator.rooms.is_empty():
+		rm.floor_maps[get_meta("map_key")] = MapMetroid.snapshot(self)  # foto del piso que dejas (mapa del mundo)
+	set_meta("map_seed", -1)  # el pasillo no es un piso: _generate_dungeon no vuelve a fotografiar
+	player.set_physics_process(false)
+	player.velocity = Vector2.ZERO
+	await _fade_to(1.0, 0.35)
+	if current_room:
+		current_room.on_player_exit()
+	if dungeon_root:
+		dungeon_root.queue_free()
+	exit_doors.clear()
+	var room := Corridor.build(from_r, to_r, dir, int(_corridor.seed))
+	dungeon_root = Node2D.new()
+	dungeon_root.name = "Corridor_%s_%s" % [from_r, to_r]
+	add_child(dungeon_root)
+	dungeon_root.add_child(room)
+	dungeon_generator.rooms = {Vector2i.ZERO: room}
+	dungeon_generator.room_sizes = {Vector2i.ZERO: Corridor.size_for(dir)}
+	dungeon_generator.room_graph = {Vector2i.ZERO: []}
+	dungeon_generator.main_path = []
+	dungeon_generator.elite_rooms = []
+	current_room = room
+	visited_rooms.clear()
+	visited_rooms[Vector2i.ZERO] = true
+	room.cleared = true
+	await get_tree().process_frame  # la sala entra al arbol (@onready)
+	Corridor.finish_setup(room, int(_corridor.seed), fl)
+	_lighting.setup_floor(dungeon_generator.rooms, fl, int(_corridor.seed))
+	_lighting.enter_room(room)
+	_paint_room(room, true)
+	Sound.music("explore_" + from_r)
+	player.global_position = room.global_position + Corridor.start_pos(dir)
+	player.velocity = Vector2.ZERO
+	_update_camera_limits(room)
+	camera.reset_smoothing()
+	_corridor_bar = CorridorBar.new()
+	_corridor_bar.from_name = Loc.region_name_id(from_r)
+	_corridor_bar.to_name = Loc.region_name_id(to_r)
+	_corridor_bar.color_a = RunManager.region_tint(from_r)
+	_corridor_bar.color_b = RunManager.region_tint(to_r)
+	var bar_layer := CanvasLayer.new()
+	bar_layer.name = "CorridorBarLayer"
+	bar_layer.layer = 30
+	bar_layer.add_child(_corridor_bar)
+	add_child(bar_layer)
+	corridor_active = true
+	player.set_physics_process(true)
+	await _fade_to(0.0, 0.35)
+	_exit_busy = false
+
+
+## Avance 0..1 del heroe por el pasillo actual.
+func corridor_progress() -> float:
+	if not corridor_active or current_room == null:
+		return 0.0
+	return Corridor.progress(str(_corridor.dir), player.global_position - current_room.global_position)
+
+
+func _corridor_step() -> void:
+	if _corridor.is_empty() or _exit_busy:
+		return
+	var p := corridor_progress()
+	if _corridor_bar:
+		_corridor_bar.set_value(p)
+	if p >= 0.5 and not _corridor.switched:
+		_corridor.switched = true
+		Sound.music("explore_" + str(_corridor.to))  # a mitad de camino suena ya el reino nuevo
+	if p >= 0.965:
+		_finish_corridor()
+
+
+## Fin del pasillo: fundido, el reino nuevo entra a la ruta (si hace falta) y se genera su primer piso
+## (el cartel con su nombre sale solo: _show_floor_card).
+func _finish_corridor() -> void:
+	_exit_busy = true
+	var c := _corridor
+	player.velocity = Vector2.ZERO
+	player.set_physics_process(false)
+	await _fade_to(1.0, 0.4)
+	if c.add:
+		RunManager.add_region(str(c.to))
+	_advance_to_next_floor()
+	player.set_physics_process(true)
+	await get_tree().create_timer(0.1).timeout
+	await _fade_to(0.0, 0.5)
+	_exit_busy = false
 
 ## [texto, stat, cantidad] (apply_stat_mod, valores fijos que se suman).
 const BOSS_REWARDS := [
@@ -1071,6 +1259,7 @@ func _hatch_visual() -> FloorPortal:
 
 func _advance_to_next_floor() -> void:
 	# Antes llamaba a RunManager.next_floor(), que no existe: el juego reventaba aqui.
+	_end_corridor_state()
 	_run_manager.advance_floor()
 	rooms_cleared_this_floor = 0
 	floor_completed = false
@@ -1078,6 +1267,16 @@ func _advance_to_next_floor() -> void:
 	if dungeon_root:
 		dungeon_root.queue_free()
 	_generate_dungeon()
+
+## Limpia lo del pasillo (barra de progreso, puertas de salida) antes de generar el siguiente piso.
+func _end_corridor_state() -> void:
+	corridor_active = false
+	_corridor = {}
+	exit_doors.clear()
+	if _corridor_bar and is_instance_valid(_corridor_bar):
+		_corridor_bar.get_parent().queue_free()
+	_corridor_bar = null
+
 
 func _show_floor_card() -> void:
 	var layer := CanvasLayer.new()

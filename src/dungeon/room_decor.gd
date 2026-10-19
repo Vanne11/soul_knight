@@ -115,6 +115,7 @@ var _size := Vector2.ZERO
 var _under: Node2D   # a ras de suelo y de pared, bajo los actores
 var _over: Node2D    # matorrales: sobre los actores
 var _avoid: Array[Rect2] = []  # entradas de puertas y sitio de aparicion
+var _extra_avoid: Array[Rect2] = []  # zonas vedadas que pasa quien construye (pasillos)
 var _taken: Array[Rect2] = []
 var _torches: Array[Vector2] = []
 var _anims: Array[Dictionary] = []
@@ -124,7 +125,9 @@ var _t := 0.0
 
 
 ## Construye (una sola vez) la decoracion de la sala. Llamar al entrar a ella.
-static func build(room_: Room, kingdom_: String, run_seed: int, floor_n: int) -> RoomDecor:
+## `avoid` (opcional): zonas locales donde NO se pone nada (el pasillo mezcla dos reinos: cada pasada
+## decora solo su mitad).
+static func build(room_: Room, kingdom_: String, run_seed: int, floor_n: int, avoid: Array = []) -> RoomDecor:
 	if room_.has_meta("decor"):
 		return room_.get_meta("decor")
 	if kingdom_ == "silencio":  # el Silencio dibuja su propia sala: nada de otros reinos
@@ -136,7 +139,9 @@ static func build(room_: Room, kingdom_: String, run_seed: int, floor_n: int) ->
 	d.floor_n = floor_n
 	d.run_seed = run_seed
 	room_.set_meta("decor", d)
-	d._rng.seed = hash([run_seed, floor_n, room_.grid_pos.x, room_.grid_pos.y, "decor"])
+	d._rng.seed = hash([run_seed, floor_n, room_.grid_pos.x, room_.grid_pos.y, "decor"]) if avoid.is_empty() else hash([run_seed, floor_n, kingdom_, "decor_mix"])
+	for a in avoid:
+		d._extra_avoid.append(a)
 	room_.add_child(d)
 	# justo sobre el vestido de muros (si existe), bajo puertas y actores
 	var dress := room_.get_node_or_null("Dressing")
@@ -196,6 +201,7 @@ func _populate() -> void:
 
 
 func _collect_avoid() -> void:
+	_avoid.append_array(_extra_avoid)
 	for door in room.doors.values():
 		_avoid.append(Rect2(door.position - Vector2(95, 95), Vector2(190, 190)))
 	# antorchas de room_lighting.gd: centros de baldosa de los 4 muros, sin esquinas

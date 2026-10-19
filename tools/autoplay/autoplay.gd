@@ -864,6 +864,10 @@ func _line_clear(a: Vector2, b: Vector2) -> bool:
 
 # ------------------------------------------------------------------ explorar
 func _explore(room: Room) -> void:
+	if main.corridor_active:
+		_corridor_walk(room)  # pasillo entre reinos: se corre hasta el fondo
+		_goal_kind = "corridor"
+		return
 	if room.room_type == Room.RoomType.PUZZLE and room.has_meta("puzzle") and not room.has_meta("bot_skip_puzzle") and _solve_puzzle(room.get_meta("puzzle")):
 		_goal_kind = "puzzle"
 		return
@@ -905,6 +909,11 @@ func _explore(room: Room) -> void:
 		# hasta quedar encima: a 26 px el cuerpo todavia no toca el area del objeto
 		if player.global_position.distance_to(tp) > 4.0:
 			_steer_to(tp)
+		return
+	# 1b) PASILLOS: con el piso completo, la sala del jefe tiene puertas de salida (una por reino destino):
+	# el bot elige segun --route-pick y la cruza empujandola (como un jugador).
+	if main.floor_completed and not main.exit_doors.is_empty():
+		_exit_door_step()
 		return
 	# 2) siguiente sala
 	var next := _next_room(room)
@@ -1083,6 +1092,33 @@ func _things(room: Room) -> Array:
 		var want := RunManager.pick_option(regs, get_node("/root/RunManager").current_seed)
 		out = doors.filter(func(n): return _door_region(n) == want)
 	return out
+
+
+const _OUT := {"up": Vector2.UP, "down": Vector2.DOWN, "left": Vector2.LEFT, "right": Vector2.RIGHT}
+
+## Cruza la puerta de salida que toca (RunManager.pick_option sobre los reinos de las puertas abiertas).
+func _exit_door_step() -> void:
+	var doors: Array = main.exit_doors.filter(func(d): return is_instance_valid(d))
+	if doors.is_empty():
+		return
+	var regs: Array = doors.map(func(d): return str(d.get_meta("exit_region")))
+	var want := RunManager.pick_option(regs, get_node("/root/RunManager").current_seed)
+	var door: Door = doors[regs.find(want)]
+	var out: Vector2 = _OUT[door.get_direction_name()]
+	_goal_text = "puerta de salida a %s (%s)" % [want, door.get_direction_name()]
+	_goal_kind = "exit_door"
+	var stand: Vector2 = door.global_position - out * 70.0
+	if player.global_position.distance_to(stand) > 22.0 and player.global_position.distance_to(door.global_position) > 70.0:
+		_steer_to(stand)
+	else:
+		_press_move(out)  # empujar la puerta (Door.PUSH_TIME)
+
+
+## Dentro del pasillo: derecho hacia la salida (la sala es un rectangulo libre).
+func _corridor_walk(room: Room) -> void:
+	var dir: String = str(room.get_meta("corridor_dir", "right"))
+	_goal_text = "pasillo %s -> %s (%s) %d%%" % [room.get_meta("corridor_from", "?"), room.get_meta("corridor_to", "?"), dir, int(main.corridor_progress() * 100.0)]
+	_press_move(_OUT[dir])
 
 
 func _door_region(n: Node) -> String:
