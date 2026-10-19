@@ -169,6 +169,8 @@ func _make_box(half_width: int) -> PanelContainer:
 
 
 func say(event: String, args: Dictionary = {}, major := false) -> void:
+	if Silencio.active():
+		return  # Las Tierras del Silencio: el narrador no habla (diseno_E3, regla 1)
 	major = major or is_major(event)
 	var urgent := _has_prefix(event, URGENT_PREFIXES)
 	if not major:
@@ -266,6 +268,8 @@ static func _nice_name(boss_name: String) -> String:
 ## Mete la frase en la cola (maximo 3). Las de combate van delante de las demas y cortan la que
 ## este en pantalla si esa no lo es.
 func _enqueue(text: String, urgent := false) -> void:
+	if Silencio.active():
+		return
 	if urgent:
 		_urgent[text] = true
 		var at := 0
@@ -285,6 +289,8 @@ func _enqueue(text: String, urgent := false) -> void:
 
 ## Texto ya escrito (inscripciones de lore). "HABLANTE: texto" pone el nombre.
 func say_raw(line: String) -> void:
+	if Silencio.active():
+		return
 	if not _in_combat():
 		_queue.append(line)
 
@@ -359,6 +365,14 @@ func _in_combat() -> bool:
 	if main == null or main.current_room == null or get_node("/root/PlayerStats").current_health <= 0.0:
 		return false
 	return main.current_room.enemies_spawned.any(func(e): return is_instance_valid(e) and e.current_health > 0.0)
+
+
+## Al cruzar al reino del Silencio: lo que el narrador tenia pendiente se descarta y la caja se cierra.
+func hush() -> void:
+	_queue.clear()
+	_urgent.clear()
+	_showing = false
+	_panel.visible = false
 
 
 func is_talking() -> bool:
@@ -629,6 +643,8 @@ func _on_intox(_level: float, tier: int) -> void:
 
 
 func _on_lore_unlocked(entry_id: String) -> void:
+	if Silencio.active():
+		return  # sin el panel dorado del codice: la entrada se abre igual y se lee en el menu
 	var entry = get_node("/root/LoreDatabase").get_entry(entry_id)
 	if entry:
 		_codex_toast.show_entry(entry)  # panel con imagen (antes: toast de una linea)
