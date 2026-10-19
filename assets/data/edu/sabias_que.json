@@ -18,7 +18,7 @@
     },
     {
       "id": "vph_vacuna",
-      "fuente": "OMS, nota descriptiva sobre VPH y cáncer cervicouterino; MINSAL, Programa Nacional de Inmunizaciones",
+      "fuente": "OMS, nota descriptiva sobre VPH y cáncer cervicouterino",
       "validar": true
     },
     {
@@ -48,7 +48,7 @@
     },
     {
       "id": "test_vih",
-      "fuente": "MINSAL, Chile",
+      "fuente": "OMS, directrices unificadas sobre servicios de pruebas de VIH (2019)",
       "validar": true
     },
     {
@@ -68,7 +68,7 @@
     },
     {
       "id": "pap",
-      "fuente": "MINSAL, Chile; OMS",
+      "fuente": "OMS, directrices sobre el tamizaje y tratamiento de lesiones precancerosas del cuello uterino (2021)",
       "validar": true
     },
     {

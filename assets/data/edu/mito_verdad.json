@@ -16,7 +16,7 @@
     {
       "id": "vacuna_vph",
       "respuesta": "verdad",
-      "fuente": "OMS; MINSAL, Programa Nacional de Inmunizaciones",
+      "fuente": "OMS",
       "validar": true
     },
     {
