@@ -24,21 +24,47 @@
     "y": 1.76,
     "w": 5.0,
     "h": 2.88
+   },
+   "sala": "b48cff",
+   "ico": "2a1050",
+   "boss_variant": "hoja_de_parra",
+   "boss_pend": false,
+   "boss_seal": false,
+   "boss_name": "",
+   "boss_name_key": "MM_BOSS_PALACIO",
+   "piso_list": [
+    {
+     "n": 1,
+     "x": 16.38,
+     "y": 1.8,
+     "t": "T1",
+     "calm": "lore",
+     "guard": true
+    },
+    {
+     "n": 2,
+     "x": 21.34,
+     "y": 1.8,
+     "t": "T2",
+     "calm": "cofre",
+     "guard": false
+    }
+   ],
+   "stairs": {
+    "x": 20.74,
+    "y": 3.2
    }
   },
   {
    "id": "silencio",
    "name": "SILENCIO",
-   "name_key": "MAPA_REINO_SILENCIO",
+   "name_key": "FLOOR_9_SHORT",
    "role": "center",
    "x": 13.4,
    "y": 6.4,
    "w": 19.96,
    "h": 8.0,
    "color": "8a8a9c",
-   "color_lib": "e0b070",
-   "name_lib": "VOZ",
-   "name_key_lib": "MAPA_REINO_VOZ",
    "rainbow": false,
    "pisos": 2,
    "label_dx": 0,
@@ -47,12 +73,44 @@
     "y": 9.76,
     "w": 3.4,
     "h": 2.88
-   }
+   },
+   "sala": "16161c",
+   "ico": "e6e6ee",
+   "boss_variant": "pacto_silencio",
+   "boss_pend": true,
+   "boss_seal": false,
+   "boss_name": "El Pacto de Silencio",
+   "boss_name_key": "MM_BOSS_SILENCIO",
+   "piso_list": [
+    {
+     "n": 1,
+     "x": 13.88,
+     "y": 8.0,
+     "t": "T1",
+     "calm": "descanso",
+     "guard": true
+    },
+    {
+     "n": 2,
+     "x": 25.4,
+     "y": 9.8,
+     "t": "T2",
+     "calm": "lore",
+     "guard": false
+    }
+   ],
+   "stairs": {
+    "x": 18.24,
+    "y": 9.4
+   },
+   "color_lib": "e0b070",
+   "name_lib": "VOZ",
+   "name_key_lib": "MAPA_REINO_VOZ"
   },
   {
    "id": "utero",
    "name": "ÚTERO",
-   "name_key": "MAPA_REINO_UTERO",
+   "name_key": "FLOOR_7_SHORT",
    "role": "center",
    "x": 13.6,
    "y": 15.2,
@@ -67,7 +125,24 @@
     "y": 16.76,
     "w": 3.4,
     "h": 2.88
-   }
+   },
+   "sala": "a8264a",
+   "ico": "ffe6ea",
+   "boss_variant": "regla",
+   "boss_pend": false,
+   "boss_seal": false,
+   "boss_name": "Doña Regla",
+   "boss_name_key": "MM_BOSS_UTERO",
+   "piso_list": [
+    {
+     "n": 1,
+     "x": 14.08,
+     "y": 16.8,
+     "t": "T1",
+     "calm": "descanso",
+     "guard": false
+    }
+   ]
   },
   {
    "id": "prostata",
@@ -87,7 +162,24 @@
     "y": 16.76,
     "w": 3.4,
     "h": 2.88
-   }
+   },
+   "sala": "d8b890",
+   "ico": "3a2a10",
+   "boss_variant": "glandula",
+   "boss_pend": false,
+   "boss_seal": false,
+   "boss_name": "La Glándula Callada",
+   "boss_name_key": "MM_BOSS_PROSTATA",
+   "piso_list": [
+    {
+     "n": 1,
+     "x": 25.24,
+     "y": 16.8,
+     "t": "T1",
+     "calm": "lore",
+     "guard": false
+    }
+   ]
   },
   {
    "id": "selva",
@@ -107,6 +199,41 @@
     "y": 22.96,
     "w": 3.4,
     "h": 2.88
+   },
+   "sala": "7fe0a0",
+   "ico": "10301c",
+   "boss_variant": "boss_cera",
+   "boss_pend": false,
+   "boss_seal": true,
+   "boss_name": "Doña Cera Caliente",
+   "boss_name_key": "MM_BOSS_SELVA",
+   "hill": {
+    "x": 29.72,
+    "y": 22.92,
+    "w": 2.28,
+    "h": 2.52
+   },
+   "piso_list": [
+    {
+     "n": 1,
+     "x": 17.4,
+     "y": 23.0,
+     "t": "T1",
+     "calm": "lore",
+     "guard": true
+    },
+    {
+     "n": 2,
+     "x": 25.64,
+     "y": 23.0,
+     "t": "T2",
+     "calm": "cofre",
+     "guard": false
+    }
+   ],
+   "stairs": {
+    "x": 21.76,
+    "y": 24.4
    }
   },
   {
@@ -127,12 +254,42 @@
     "y": 28.76,
     "w": 3.4,
     "h": 2.88
-   }
+   },
+   "sala": "6ec6ff",
+   "ico": "0b2a40",
+   "boss_variant": "testiculo_primordial",
+   "boss_pend": false,
+   "boss_seal": true,
+   "boss_name": "Testículo Primordial",
+   "boss_name_key": "MM_BOSS_PENELANDIA",
+   "piso_list": [
+    {
+     "n": 1,
+     "x": 5.98,
+     "y": 28.8,
+     "t": "T1",
+     "calm": "cofre",
+     "guard": true
+    },
+    {
+     "n": 2,
+     "x": 10.94,
+     "y": 28.8,
+     "t": "T2",
+     "calm": "lore",
+     "guard": false
+    }
+   ],
+   "stairs": {
+    "x": 10.34,
+    "y": 30.2
+   },
+   "hero_x": 2.48
   },
   {
    "id": "arcoiria",
    "name": "ARCOÍRIA",
-   "name_key": "MAPA_REINO_ARCOIRIA",
+   "name_key": "FLOOR_8_SHORT",
    "role": "center",
    "x": 19.34,
    "y": 27.2,
@@ -147,7 +304,37 @@
     "y": 28.76,
     "w": 3.4,
     "h": 2.88
-   }
+   },
+   "sala": "ffffff",
+   "ico": "10142a",
+   "boss_variant": "destine",
+   "boss_pend": true,
+   "boss_seal": false,
+   "boss_name": "La Censura que destiñe",
+   "boss_name_key": "MM_BOSS_ARCOIRIA",
+   "piso_list": [
+    {
+     "n": 1,
+     "x": 27.04,
+     "y": 28.8,
+     "t": "T1",
+     "calm": "descanso",
+     "guard": true
+    },
+    {
+     "n": 2,
+     "x": 32.0,
+     "y": 28.8,
+     "t": "T2",
+     "calm": "cofre",
+     "guard": false
+    }
+   ],
+   "stairs": {
+    "x": 31.4,
+    "y": 30.2
+   },
+   "hero_x": 23.54
   },
   {
    "id": "vulvania",
@@ -167,7 +354,37 @@
     "y": 28.76,
     "w": 3.4,
     "h": 2.88
-   }
+   },
+   "sala": "ff7ac0",
+   "ico": "401030",
+   "boss_variant": "reina_ovaria",
+   "boss_pend": false,
+   "boss_seal": true,
+   "boss_name": "Su Majestad Ovaria II",
+   "boss_name_key": "MM_BOSS_VULVANIA",
+   "piso_list": [
+    {
+     "n": 1,
+     "x": 44.9,
+     "y": 28.8,
+     "t": "T1",
+     "calm": "descanso",
+     "guard": true
+    },
+    {
+     "n": 2,
+     "x": 49.86,
+     "y": 28.8,
+     "t": "T2",
+     "calm": "lore",
+     "guard": false
+    }
+   ],
+   "stairs": {
+    "x": 49.26,
+    "y": 30.2
+   },
+   "hero_x": 41.4
   },
   {
    "id": "perineo",
@@ -187,6 +404,35 @@
     "y": 34.56,
     "w": 3.4,
     "h": 2.88
+   },
+   "sala": "ffc93c",
+   "ico": "3a2a00",
+   "boss_variant": "aduanero",
+   "boss_pend": false,
+   "boss_seal": true,
+   "boss_name": "El Aduanero Hormonal",
+   "boss_name_key": "MM_BOSS_PERINEO",
+   "piso_list": [
+    {
+     "n": 1,
+     "x": 21.68,
+     "y": 34.6,
+     "t": "T1",
+     "calm": "lore",
+     "guard": true
+    },
+    {
+     "n": 2,
+     "x": 26.64,
+     "y": 34.6,
+     "t": "T2",
+     "calm": "cofre",
+     "guard": false
+    }
+   ],
+   "stairs": {
+    "x": 26.04,
+    "y": 36.0
    }
   }
  ],
@@ -511,5 +757,195 @@
   "y": 17.4,
   "w": 2.4,
   "h": 11.36
- }
+ },
+ "piso_cell": {
+  "unit": 0.88,
+  "pitch": 0.96,
+  "w": 4,
+  "h": 3,
+  "cw": 3.76,
+  "ch": 2.8
+ },
+ "templates": {
+  "T1": [
+   [
+    0,
+    1,
+    "inicio"
+   ],
+   [
+    1,
+    0,
+    "calma"
+   ],
+   [
+    1,
+    1,
+    "combate"
+   ],
+   [
+    1,
+    2,
+    "tienda"
+   ],
+   [
+    2,
+    0,
+    "combate"
+   ],
+   [
+    2,
+    1,
+    "minijefe"
+   ],
+   [
+    2,
+    2,
+    "antro"
+   ],
+   [
+    3,
+    1,
+    "jefe"
+   ],
+   [
+    3,
+    2,
+    "trampa"
+   ]
+  ],
+  "T2": [
+   [
+    0,
+    1,
+    "inicio"
+   ],
+   [
+    0,
+    2,
+    "trampa"
+   ],
+   [
+    1,
+    0,
+    "calma"
+   ],
+   [
+    1,
+    1,
+    "combate"
+   ],
+   [
+    1,
+    2,
+    "antro"
+   ],
+   [
+    2,
+    0,
+    "combate"
+   ],
+   [
+    2,
+    1,
+    "minijefe"
+   ],
+   [
+    2,
+    2,
+    "tienda"
+   ],
+   [
+    3,
+    0,
+    "secreta"
+   ],
+   [
+    3,
+    1,
+    "jefe"
+   ],
+   [
+    3,
+    2,
+    "acertijo"
+   ]
+  ]
+ },
+ "starts": [
+  {
+   "hero": "pitocles",
+   "x": 4.22,
+   "y": 28.88
+  },
+  {
+   "hero": "ornitorrinco",
+   "x": 25.28,
+   "y": 28.88
+  },
+  {
+   "hero": "vulvalquiria",
+   "x": 43.14,
+   "y": 28.88
+  }
+ ],
+ "heroes": {
+  "pitocles": "ff4646",
+  "vulvalquiria": "ff82d2",
+  "ornitorrinco": "28d7be"
+ },
+ "eje_routes": [
+  [
+   [
+    23.4,
+    28.6
+   ],
+   [
+    23.4,
+    18.2
+   ],
+   [
+    21.76,
+    18.2
+   ]
+  ],
+  [
+   [
+    19.7,
+    15.2
+   ],
+   [
+    19.7,
+    14.8
+   ],
+   [
+    26.0,
+    14.8
+   ],
+   [
+    26.0,
+    15.32
+   ]
+  ],
+  [
+   [
+    31.02,
+    15.24
+   ],
+   [
+    31.02,
+    14.32
+   ]
+  ],
+  [
+   [
+    30.36,
+    6.44
+   ],
+   [
+    30.36,
+    5.52
+   ]
+  ]
+ ]
 }

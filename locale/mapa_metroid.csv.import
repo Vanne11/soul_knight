@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://criakdc4vttqa"
+
+[deps]
+
+files=["res://locale/mapa_metroid.es.translation", "res://locale/mapa_metroid.en.translation", "res://locale/mapa_metroid.fr.translation"]
+
+source_file="res://locale/mapa_metroid.csv"
+dest_files=["res://locale/mapa_metroid.es.translation", "res://locale/mapa_metroid.en.translation", "res://locale/mapa_metroid.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

@@ -19,10 +19,22 @@ def gx(v): return round((v-GRID_X0)/UNIT,2)
 def gy(v): return round((v-GRID_Y0)/UNIT,2)
 def gl(v): return round(v/UNIT,2)
 REG=[]; DOORS=[]; TUNNELS=[]
+PISOS=[]; STAIRS={}; STARTS=[]  # extra para el mapa metroidvania del juego (src/ui/map_metroid.gd)
+def _sprite(p):
+    # el arte de enemigos vive en enemies/<reino>/<enemigo>/ (indice assets/data/enemy_art.json)
+    if p.startswith("enemies/") and not Path(R+p).exists():
+        idx=json.loads((ROOT/"assets/data/enemy_art.json").read_text(encoding="utf8"))
+        name=p.split("/")[-1]
+        for v in sorted(idx,key=len,reverse=True):
+            if name.startswith(v+"_"): return R+"enemies/"+idx[v]+"/"+name
+    return R+p
 def b64(p,h=None,scale=None,crop=None):
     if JSON_ONLY: return "",1,1
     from PIL import Image
-    im=Image.open(R+p).convert("RGBA")
+    f=_sprite(p)
+    if not Path(f).exists() and f.endswith("_idle_00.png") and Path(f.replace("_idle_00.png","_sheet.png")).exists():
+        f=f.replace("_idle_00.png","_sheet.png"); crop=crop or (0,0,156,180)  # solo hay hoja: 1er cuadro (156x180)
+    im=Image.open(f).convert("RGBA")
     if crop: im=im.crop(crop)
     im=im.crop(im.getbbox()); sc=scale if scale else h/im.height
     im=im.resize((max(1,int(im.width*sc)),max(1,int(im.height*sc))),Image.NEAREST)
@@ -109,6 +121,7 @@ T1={(0,1):"inicio",(1,1):"combate",(2,1):"minijefe",(3,1):"jefe",(1,0):"calma",(
 T2={(0,1):"inicio",(1,1):"combate",(2,1):"minijefe",(3,1):"jefe",(1,0):"calma",(2,0):"combate",(3,0):"secreta",(1,2):"antro",(2,2):"tienda",(3,2):"acertijo",(0,2):"trampa"}
 GL={"inicio":"▶","combate":"⚔","minijefe":"☠","jefe":"★","tienda":"$","acertijo":"?","cofre":"◆","descanso":"♥","trampa":"!","lore":"≡","secreta":"✦","antro":"~"}
 def cluster(rid,n,x,y,T,calm,guardian):
+    PISOS.append(dict(rid=rid,n=n,x=x,y=y,t="T1" if T is T1 else "T2",calm=calm,guard=bool(guardian)))
     A(f'<g id="{rid}-piso-{n}" class="piso">')
     A(f'<g id="{rid}-p{n}-conexiones">')
     for (c,r) in sorted(T):
@@ -122,6 +135,7 @@ def cluster(rid,n,x,y,T,calm,guardian):
         text("ico",x+c*P+U/2,y+r*P+U/2+9,GL[tt],"middle")
     A('</g>')
 def stairs(cx,cy,rid):
+    STAIRS[rid]=(cx,cy)
     A(f'<g id="{rid}-escalera">')
     for i in range(4): rect("escalera",cx-20+i*10,cy+16-i*10,10,10+i*10)
     A('</g>')
@@ -170,7 +184,7 @@ def reino(rid,name,x,y,w,order,calms,boss,guard=(True,False),single=False,slotw=
         for i in range(3): rect("sala sala-especial",hx+i*38,y+80+CH-(i+1)*42,36,(i+1)*42,6,id=f"sala-selva-monte-{i}")
         A(f'<polygon class="estrella" points="{star(hx+95,y+80+CH-3*42-18,20)}"/></g>')
     bx=info["boss"]; by=y+78+p2dy
-    REG.append(dict(id=rid,name=name,x=x,y=y,w=w,h=Hh,boss=(bx,by,slotw,CH+4),pisos=1 if single else 2,tx=tx))
+    REG.append(dict(id=rid,name=name,x=x,y=y,w=w,h=Hh,boss=(bx,by,slotw,CH+4),pisos=1 if single else 2,tx=tx,pend=(boss=="pend"),bossname=bossname,bsub=bsub,seal=seal,hill=info.get("hill"),hero=info.get("hero")))
     rect("sala-jefe-slot",bx,by,slotw,CH+4,14,id=f"sala-jefe-{rid}")
     boss_sprite(boss,bx+slotw/2,by+(CH+4)/2+2,f"jefe-{rid}",h=bossh)
     if seal: sello(bx+22,by+22,f"sello-{rid}")
@@ -235,6 +249,7 @@ text("t-blanco",1400,1005,"") ; A('</g>')
 
 # ---------- reinos
 A('<g id="reinos">')
+BOSSV={'palacio':'hoja_de_parra','utero':'regla','prostata':'glandula','selva':'boss_cera','penelandia':'testiculo_primordial','vulvania':'reina_ovaria','perineo':'aduanero','silencio':'pacto_silencio','arcoiria':'destine'}
 TSEL=("enemies/boss_cera_sheet.png",(0,0,156,180))
 reino("palacio","PALACIO",1025,140,750,["P","P","boss"],["lore","cofre"],("enemies/hoja_de_parra_idle_00.png",None),slotw=250,bossh=215)
 reino("silencio","SILENCIO",900,450,998,["P",328,"P","boss"],["descanso","lore"],"pend",Hh=400,p2dy=90,bossname="El Pacto de Silencio",bsub="por diseñar",pillcy=450+400-44)
@@ -253,6 +268,7 @@ A('<g id="inicios">')
 def inicio(hid,sp,x,y,nm):
     href,w,h=b64(sp,scale=2); image(href,w,h,x,y+h/2-4,id=f"sprite-{hid}")
     A(f'<g id="inicio-{hid}"><line class="flag-mastil" x1="{x+w/2+8}" y1="{y-10}" x2="{x+w/2+8}" y2="{y+50}"/><polygon class="flag" points="{x+w/2+10},{y-10} {x+w/2+44},{y+3} {x+w/2+10},{y+16}"/></g>')
+    STARTS.append(dict(hero=hid,x=x,y=y,w=w,h=h))
     pill(x,y+h+34,["INICIO",nm],cls="pill-inicio",id=f"pill-inicio-{hid}")
 inicio("pitocles","player/pitocles/idle_00.png",330+24+87,1490+84,"Pitocles")
 inicio("ornitorrinco","player/ornitorrinco/idle_00.png",1197+24+170+16+87,1490+84,"Ornitorrinco")
@@ -376,6 +392,16 @@ def build_json():
             "x":gx(r["x"]),"y":gy(r["y"]),"w":gl(r["w"]),"h":gl(r["h"]),
             "color":c[0].lstrip("#") if c[0].startswith("#") else "ffffff","rainbow":rid=="arcoiria",
             "pisos":r["pisos"],"label_dx":gl(r["tx"]-r["x"]) if r["tx"] else 0,"boss":{"x":gx(bx),"y":gy(by),"w":gl(bw),"h":gl(bh)}})
+        # --- extra del mapa del juego: colores de sala, jefe, pisos con sus salas de plantilla, sello, monte, inicio
+        e=regs[-1]
+        e["sala"]=(c[1].lstrip("#") if c[1].startswith("#") else "ffffff"); e["ico"]=c[2].lstrip("#")
+        e["boss_variant"]=BOSSV.get(rid,""); e["boss_pend"]=bool(r["pend"]); e["boss_seal"]=bool(r["seal"])
+        bn=r["bossname"]; e["boss_name"]=" ".join(bn) if isinstance(bn,list) else (bn or ""); e["boss_name_key"]="MM_BOSS_"+rid.upper()
+        if r["hill"] is not None: e["hill"]={"x":gx(r["hill"]),"y":gy(r["y"]+80+CH-3*42-18),"w":gl(3*38),"h":gl(3*42)}
+        e["piso_list"]=[{"n":q["n"],"x":gx(q["x"]),"y":gy(q["y"]),"t":q["t"],"calm":q["calm"],"guard":q["guard"]} for q in PISOS if q["rid"]==rid]
+        if rid in STAIRS: e["stairs"]={"x":gx(STAIRS[rid][0]),"y":gy(STAIRS[rid][1])}
+        if r["hero"] is not None: e["hero_x"]=gx(r["hero"])
+        if rid=="silencio": e.update({"color_lib":"e0b070","name_lib":"VOZ","name_key_lib":"MAPA_REINO_VOZ"})
     pl=lambda pts:[[gx(a),gy(b)] for a,b in pts]
     tun=[
       {"id":"anillo","kind":"anillo","lines":[pl([(RING_L,RT),(1066,RT)]),pl([(2040,RT),(RING_R,RT)]),pl([(RING_L,RT),(RING_L,RING_B),(RING_R,RING_B),(RING_R,RT)]),pl([(1207,1676),(1207,RING_B)]),
@@ -383,10 +409,16 @@ def build_json():
          pl([(RING_L,1625),(334,1625)]),pl([(RING_R,1625),(2930,1625)]),pl([(1497,RING_B),(1497,2046)])]},
       {"id":"eje","kind":"eje","lines":[pl([(1223,890),(1223,870),(1530,870),(1530,890)]),pl([(1781,890),(1781,850)]),pl([(1748,450),(1748,410)])]},
     ]
+    tpl={k:[[c,rr,t] for (c,rr),t in sorted(T.items())] for k,T in (("T1",T1),("T2",T2))}
+    heroes={"pitocles":"ff4646","vulvalquiria":"ff82d2","ornitorrinco":"28d7be"}
+    eje=[pl([(1400,1560),(1400,1040),(1318,1040)]),pl([(1215,890),(1215,870),(1530,870),(1530,896)]),pl([(1781,892),(1781,846)]),pl([(1748,452),(1748,406)])]
     return {"_nota":"Generado por tools/gen_world_map.py (no editar a mano). Coordenadas en celdas de cuadricula; y crece hacia abajo.",
         "grid":{"w":gl(3030-GRID_X0),"h":gl(2125-GRID_Y0),"unit_px":UNIT},
         "regions":regs,"doors":DOORS,"tunnels":tun,
-        "elevator":{"x":gx(1340),"y":gy(1000),"w":gl(120),"h":gl(568)}}
+        "elevator":{"x":gx(1340),"y":gy(1000),"w":gl(120),"h":gl(568)},
+        "piso_cell":{"unit":gl(U),"pitch":gl(P),"w":4,"h":3,"cw":gl(CW),"ch":gl(CH)},"templates":tpl,
+        "starts":[{"hero":q["hero"],"x":gx(q["x"]),"y":gy(q["y"])} for q in STARTS],
+        "heroes":heroes,"eje_routes":eje}
 JSON_OUT.write_text(json.dumps(build_json(),ensure_ascii=False,indent=1)+"\n",encoding="utf8"); print("json ->",JSON_OUT)
 if not JSON_ONLY:
     Path(OUT).parent.mkdir(parents=True,exist_ok=True)
