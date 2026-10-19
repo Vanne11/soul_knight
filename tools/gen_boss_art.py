@@ -41,6 +41,26 @@ BOSSES = {
                 "roller dripping grey paint and a CENSURADO stamp, standing in a rainbow plaza that he is painting grey: half "
                 "the colorful bunting, flags and tiles behind him are already drained to grey. Low camera angle, menacing but "
                 "funny. "),
+    "afeitadora": ("A dramatic boss reveal: the boss from the reference, a blue electric shaver creature with a grey metal "
+                   "foil head, angry little eyes, a green power light and a dangling power cord with a plug, buzzing with "
+                   "electric sparks and flying hair clippings, standing in the rainy Pubic Jungle at night among tall grass "
+                   "that it has shaved into a bald clearing. Low camera angle, aggressive and funny. "),
+    "diu_cosmico": ("A dramatic boss reveal: the boss from the reference, a T-shaped copper IUD creature with orange copper "
+                    "arms raised, a violet gem on top, a small stern face and thin legs, floating in a cosmic purple space "
+                    "inside the Fallopian tubes with stars, swirling gravity rings and copper satellites orbiting it. Low "
+                    "camera angle, mystic and funny. "),
+    "regla": ("A dramatic boss reveal: the boss from the reference, Mrs. Ruler: a strict short lady creature with a hair bun, "
+              "big round glasses and a red dress, holding a giant two-meter wooden measuring ruler and a calendar, standing "
+              "inside the warm red Uterus chamber with soft walls, floating calendar pages and little clocks. Low camera "
+              "angle, punctual and strict, funny. Respectful: no blood. "),
+    "prostata": ("A dramatic boss reveal: the boss from the reference, a walnut-shaped bureaucrat creature "
+                 "with glasses, a grey tie, an ID badge and papers in hand, standing behind a single office service window "
+                 "with a red take-a-number ticket dispenser and a glowing number display showing only the digits 001, piles of forms "
+                 "flying like snow in a beige customs office. Low camera angle, bureaucratic menace, funny. "),
+    "algoritmo": ("A dramatic boss reveal: the boss from the reference, a smartphone creature with an "
+                  "antenna and a single giant red eye on its screen, tiny arms and legs, scanning the room with a red laser, "
+                  "in a dark data-center hall of the Censorship Palace with server racks with blank blinking lights, flying grey pixel "
+                  "squares and red prohibition symbols. Low camera angle, cold and creepy but funny. "),
     "glandula": ("A dramatic boss reveal: the boss from the reference, a huge pink-brown walnut-shaped gland creature with a sealed "
                  "stitched mouth, tired heavy-lidded eyes with dark circles and a paper waiting-number ticket on its side, "
                  "sitting perfectly silent and calm in the middle of a dim hospital waiting room with rows of beige plastic chairs, "
@@ -63,9 +83,48 @@ NEW_LOOK = ("The boss MUST look exactly like the character in the attached refer
             "outfit and accessories; it is a sheet of poses of ONE character): draw it once, big, in a single heroic pose. ")
 
 
+def _old_refs(name: str) -> list:
+    """Jefes sin arte nuevo: su caratula vieja y su sprite idle como referencia del diseño."""
+    import json
+    idx = json.loads((g.ROOT / "assets/data/enemy_art.json").read_text())
+    refs = []
+    card = f"assets/sprites/ui/bosses/{name}.png"
+    if (g.ROOT / card).exists():
+        refs.append(card)
+    spr = f"assets/sprites/enemies/{idx.get(name, '')}/{name}_idle_00.png"
+    if (g.ROOT / spr).exists():
+        refs.append(spr)
+    return refs
+
+
+## El Pacto de Silencio (reino sin humor, diseno_E3_silencio.md): sobria, sin chiste ni caricatura.
+PACTO = ("Wide 16:9 retro pixel art illustration in the style of a serious 16-bit game cutscene: chunky pixels, dark "
+         "outlines, very limited cold palette, solemn and quiet tone, NOT funny, no cartoon faces. No text, no letters, no "
+         "UI. Full-bleed scene, no borders. A circle of seven faceless dark grey silhouettes sitting in chairs under a huge "
+         "heavy curtain that hangs from the darkness above and swallows all sound; the silhouettes look down or away. Around "
+         "the edge of the round room: two hanging bells, two cooking pots on a line and one large pane of glass, faintly lit. "
+         "One thin cold beam of light from above. Grey stone floor. No weapons, no blood, no violence. Feeling: everyone "
+         "knows and no one speaks. Dark vignette at the bottom third. ")
+
+
 def run(name):
+    if name == "pacto_silencio":
+        raw = g.RAW / "pacto_silencio_v2.png"
+        if not raw.exists():
+            g.SCREENS["pacto_silencio_v2"] = ("", ["assets/sprites/silencio/pacto_idle_0.png"])
+            style, g.STYLE = g.STYLE, PACTO
+            try:
+                raw = g.generate("pacto_silencio_v2")
+            finally:
+                g.STYLE = style
+        g.pixelate(raw, name)
+        (g.ROOT / f"assets/sprites/ui/screens/{name}.png").replace(g.ROOT / f"assets/sprites/ui/bosses/{name}.png")
+        print("ok", name)
+        return
+    if name not in REFS and _old_refs(name):
+        REFS[name] = _old_refs(name)
     if name in REFS:
-        prompt = NEW_LOOK + BOSSES[name] + g.CREATURES + "Do not write the boss name or any text. Dark vignette at the bottom third. "
+        prompt = NEW_LOOK + BOSSES[name] + g.CREATURES + "ABSOLUTELY NO text, words, letters, signs with writing or labels anywhere in the image. Dark vignette at the bottom third. "
         g.SCREENS[name] = (prompt, REFS[name])
         raw = g.RAW / f"{name}_v2.png"
         if not raw.exists():
@@ -78,7 +137,7 @@ def run(name):
         print("ok", name)
         return
     g.SHEETS[name] = ["enemies/%s_idle_00" % name]
-    prompt = BOSSES[name] + g.CREATURES + "Do not write the boss name or any text. Dark vignette at the bottom third. "
+    prompt = BOSSES[name] + g.CREATURES + "ABSOLUTELY NO text, words, letters, signs with writing or labels anywhere in the image. Dark vignette at the bottom third. "
     g.SCREENS[name] = (prompt, ["sheet:" + name])
     raw = g.RAW / f"{name}.png"
     if not raw.exists():
@@ -93,5 +152,5 @@ def run(name):
 
 
 if __name__ == "__main__":
-    for n in sys.argv[1:] or BOSSES:
+    for n in sys.argv[1:] or list(BOSSES) + ["pacto_silencio"]:
         run(n)
