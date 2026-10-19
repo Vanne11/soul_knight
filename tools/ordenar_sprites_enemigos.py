@@ -48,6 +48,8 @@ MANUAL = {
     "don_chequeo_timbre": "prostata/don_chequeo_timbre",
     "timbre": "perineo/timbre",
     "bot_reporte": "palacio/bot_reporte",
+    "coprolito": "puerta_trasera/coprolito",
+    "guijarro": "puerta_trasera/guijarro",
 }
 EXTS = (".gd", ".tscn", ".tres", ".import", ".py", ".json", ".cfg", ".godot")
 

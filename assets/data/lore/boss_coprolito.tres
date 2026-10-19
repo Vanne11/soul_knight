@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "boss_coprolito"
+title = "El Coprolito"
+text = "Fósil antiquísimo, pétreo y solemne, con monóculo y barba de musgo: «Llevo aquí desde el Cretácico». Se agrieta, atora la sala con tapones de roca y hace temblar el suelo. Dato: si tu cuerpo avisa, ve al baño; aguantarse una y otra vez puede endurecer la caca y dejarte estreñida o estreñido. Fibra (frutas, verduras, legumbres, integrales), agua y movimiento ayudan. Lo normal varía de persona a persona; si es persistente, duele mucho o hay sangre, consulta."
+category = 3
+unlock_condition = {"type": 9, "target_id": "EL COPROLITO"}
+flavor_text = "Derrota a El Coprolito."

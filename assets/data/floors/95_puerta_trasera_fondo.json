@@ -1,0 +1,20 @@
+{
+	"_nota": "[NO PUBLICAR SIN REVISION] LA PUERTA TRASERA, piso 2 \"Excavacion\" (jefe: El Coprolito, tema: no aguantarse, fibra y agua, estrenimiento). REINO INCOMPLETO: \"wip\": true, igual que 90_puerta_trasera.json (fuera de FLOORS y de la ruta hasta RunManager.enable_wip). Para publicar el reino: quitar \"wip\" de ambos pisos y enchufar la entrada desde el Perineo (ver el diseno).",
+	"wip": true,
+	"name": "LA PUERTA TRASERA",
+	"name_key": "FLOOR_PUERTA_TRASERA_NAME",
+	"region": "puerta_trasera",
+	"stage": 2,
+	"elite_chance": 0.15,
+	"kingdom": "perineo",
+	"tint": "a08c70",
+	"roster": ["testiculo", "trompa", "calambre"],
+	"names": ["Testículo Errante", "Trompa Escupidora", "Calambre"],
+	"extra": [
+		{"variant": "hemorroide", "name": "Hemorroide Fronteriza", "type": "tank", "weight": 0.3}
+	],
+	"weights": [0.3, 0.3, 0.3],
+	"boss": "coprolito",
+	"boss_name": "EL COPROLITO",
+	"needs": []
+}
