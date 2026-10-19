@@ -35,5 +35,29 @@
 		"line_weak": "BOSSDMG_PARRA_WEAK",
 		"line_resist": "BOSSDMG_PARRA_RESIST",
 		"hint_weapon": "laser_depilador"
+	},
+	"diu_cosmico": {
+		"weak": {"electrico": 1.9, "vortice": 1.4},
+		"resist": {"latex": 0.5, "perforante": 0.85},
+		"match": {
+			"pitocles": ["electrico"],
+			"vulvalquiria": ["electrico", "vortice"],
+			"ornitorrinco": ["electrico", "vortice"]
+		},
+		"line_weak": "BOSSDMG_DIU_WEAK",
+		"line_resist": "BOSSDMG_DIU_RESIST",
+		"hint_weapon": "dildo_taser"
+	},
+	"regla": {
+		"weak": {"vibracion": 1.9, "calor": 1.3},
+		"resist": {"contundente": 0.6},
+		"match": {
+			"pitocles": ["vibracion"],
+			"vulvalquiria": ["vibracion", "calor"],
+			"ornitorrinco": ["vibracion", "calor"]
+		},
+		"line_weak": "BOSSDMG_REGLA_WEAK",
+		"line_resist": "BOSSDMG_REGLA_RESIST",
+		"hint_weapon": "smg_vibrator"
 	}
 }
