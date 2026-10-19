@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ene_frasquito"
+title = "Frasquito Mágico"
+text = "Un frasquito que suelta vapores y marea a quien los respira. Dato: los «poppers» son nitritos que se inhalan; dilatan los vasos sanguíneos y bajan la presión, y por eso dan mareo, dolor de cabeza y a veces desmayo. Riesgos: sobre la piel pueden quemar; no se deben tragar; son inflamables (lejos de llamas y cigarrillos); y están contraindicados con problemas del corazón, presión baja o glaucoma. La alerta clave: NUNCA se mezclan con sildenafil (Viagra), tadalafilo u otros medicamentos para la erección: juntos pueden bajar la presión de forma peligrosa. Si hay dolor de pecho, mareo fuerte o desmayo, pide ayuda médica de inmediato. Ante dudas, pregunta en tu centro de salud."
+category = 3
+unlock_condition = {"type": 0, "target_id": "Frasquito Mágico", "count": 3}
+flavor_text = "Mata 3 frasquitos mágicos."

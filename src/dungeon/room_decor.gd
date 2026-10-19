@@ -88,6 +88,13 @@ const CATALOG := {
 		["orgullo_sombrilla", 2.0, "flat", false], ["orgullo_tambor", 2.0, "prop", false],
 		["orgullo_regalos", 2.0, "prop", false],
 	],
+	# EL TEMPLO DE ANUBIS (reino de la Puerta Trasera, kingdom "perineo" en los JSON): ruinas egipcias de excavacion
+	"perineo": [
+		["anubis_sarcofago", 3.0, "prop", true], ["anubis_column", 3.5, "prop", true],
+		["anubis_stele", 3.0, "prop", true], ["anubis_momia", 2.5, "prop", true],
+		["anubis_amphora", 3.5, "prop", false], ["anubis_column_fallen", 2.5, "flat", false],
+		["anubis_inscripcion", 1.8, "prop", false], ["anubis_statue", 1.0, "prop", true],
+	],
 	"prostata": [
 		["prostata_chairs", 4.0, "prop", false], ["prostata_magazines", 3.0, "prop", false],
 		["prostata_dispenser", 2.5, "prop", true], ["prostata_poster", 3.0, "prop", false],

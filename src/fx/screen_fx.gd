@@ -107,7 +107,7 @@ func _process(delta: float) -> void:
 	if dust_k < 1.0:
 		_ambient_mat.set_shader_parameter("rays", _rays * dust_k)
 
-	var amount: float = _intox_pct * [1.0, 0.4, 0.0][Settings.screen_fx]
+	var amount: float = maxf(_intox_pct, StatusEffects.dizzy) * [1.0, 0.4, 0.0][Settings.screen_fx]  # intoxicacion o vapores del Frasquito
 	LightKit.intox_wobble = amount
 	var shader_on: bool = amount > 0.01 and Settings.Q_INTOX_SHADER[q]
 	_intox_rect.visible = shader_on

@@ -27,6 +27,7 @@ func _ready() -> void:
 	drop_table = [{"item_id": "health_small", "chance": 0.25}]
 	super()
 	add_to_group("pastilla_sildenafil")
+	TemploAnubis.met_sildenafil()  # guiño del Frasquito Magico (templo_anubis.gd)
 	p_t = RNG.randf_range(1.2, 2.2)  # que no rueden todas a la vez
 
 

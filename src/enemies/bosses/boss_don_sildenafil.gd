@@ -29,6 +29,7 @@ var _spit_warn := 0.0
 
 func _ready() -> void:
 	super()
+	TemploAnubis.met_sildenafil()  # guiño del Frasquito Magico (templo_anubis.gd)
 	dynamic = true
 	fan_tint = BLUE
 	move_speed = BASE_SPEED[0]

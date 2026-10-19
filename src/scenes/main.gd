@@ -582,6 +582,8 @@ func _build_shop(room: Room) -> void:
 	room.set_meta("shop_built", true)
 	var stock := [_random_weapon_id(), _random_loot_id(), _random_loot_id()]
 	stock[0] = BossDamage.shop_hint(_run_manager.floor_data(), stock[0])  # pista: arma que es debilidad del jefe del piso
+	if _run_manager.floor_data().get("region", "") == "perineo" and not player.collected_items.has("lubricante_agua") and RNG.randf() < 0.55:
+		stock[0] = "lubricante_agua"  # la tienda del Perineo a veces lo ofrece (secreto de la puerta biologica, sin decir nada)
 	if _missing_hormones().size() > 0:
 		stock[2] = "hormone_" + _missing_hormones()[0]  # la tienda tambien vende la hormona que te falta
 	# Mejoras permanentes: siempre la de vida y otra al azar.
@@ -792,9 +794,20 @@ func _complete_floor() -> void:
 		_game_controller.get_player_stats().apply_stat_mod(pick[1], pick[2])
 		Sound.play("puzzle_solve")
 		Utero.cycle_blessing(self)  # Dona Regla: ademas, una bendicion de ciclo
+		_templo_reward(boss_room)  # El Coprolito: reliquia y bendicion propias del Templo de Anubis
 	else:
 		await get_tree().create_timer(1.5).timeout  # guardian vencido: sin mejora, solo la salida
 	open_exit(boss_room, floor_n)
+
+
+## Recompensa propia del Templo de Anubis al vencer a El Coprolito: el Anj de Anubis (reliquia) y una bendicion.
+func _templo_reward(boss_room: Room) -> void:
+	if _run_manager.floor_region(_run_manager.current_floor) != "puerta_trasera":
+		return
+	get_node("/root/LoreDatabase").custom_event("templo_anubis_coprolito")
+	_spawn_pickup(boss_room, "ankh_anubis", boss_room.get_center_position() + Vector2(0, -90))
+	Narrator.toast(tr("TA_REWARD_TOAST"), "", "ffd75a")
+	_offer_blessing(_floor_kingdom(), tr("TA_BLESSING_TITLE"))
 
 
 ## La salida del piso: una puerta por reino si hay que elegir, o el portal al siguiente piso.
@@ -841,10 +854,10 @@ func _arm_exit_doors() -> void:
 			text += "\n" + tr("PAS_DOOR_SEALS") % [RunManager.seals() + (1 if RunManager.would_award_seal(_run_manager.current_floor) else 0), RunManager.seals_needed()]
 		door.set_hint(text, RunManager.region_tint(region).lerp(Color.WHITE, 0.35))
 		_add_emblem(door, RunManager.region_tint(region))
-	# desvio opcional (hoy: la entrada de servicio del Perineo -> Puerta Trasera): sellada hasta nuevo aviso
+	# desvio opcional (la entrada de servicio del Perineo -> Templo de Anubis): puerta biologica con su condicion secreta
 	var detour: Dictionary = RunManager.detour_for(RunManager.floor_region(_run_manager.current_floor)) if not exit_doors.is_empty() and not RunManager.rescue_mode else {}
-	if detour.is_empty() or bool(detour.get("open", false)):
-		return  # (abierto: pendiente, ver routes.json "detours"; hoy no hay ninguno abierto)
+	if detour.is_empty():
+		return
 	var size_px := Vector2(dungeon_generator.room_sizes.get(boss.grid_pos, Vector2i(8, 6))) * 64.0
 	var taken: Array = boss.doors.values().map(func(dd): return dd.position)
 	var inward := {"up": Vector2.DOWN, "down": Vector2.UP, "left": Vector2.RIGHT, "right": Vector2.LEFT}
@@ -853,9 +866,13 @@ func _arm_exit_doors() -> void:
 	for it in Pasillos.layout([{"region": str(detour.get("to", "")), "dir": "up", "along": 0.0}], taken, size_px, ok):
 		var iris := IrisDoor.new()
 		iris.wall_dir = it.dir
-		iris.position = it.pos + (inward[it.dir] as Vector2) * (18.0 if it.dir == "up" else -6.0)  # en la pared norte la camara corta su borde: se asoma al suelo
+		iris.position = it.pos + (inward[it.dir] as Vector2) * (50.0 if it.dir == "up" else -6.0)  # en la pared norte la camara corta su borde: se baja al suelo para que se vea entera
 		iris.set_meta("exit_region", it.region)
+		iris.can_open = bool(detour.get("open", false)) and str(detour.get("to", "")) in RunManager.regions()
 		boss.props_node.add_child(iris)
+		iris.entered.connect(_on_iris_entered.bind(iris))
+		if it.dir == "up":
+			TemploAnubis.flank(iris, boss.props_node)  # dos estatuas de Anubis, inscripcion muda y graffiti
 
 
 ## Emblema del reino: rombo de su color junto al cartel de la puerta.
@@ -876,6 +893,8 @@ func _add_emblem(door: Door, tint: Color) -> void:
 
 ## Vencido el jefe: las puertas de salida se ABREN (animacion de la puerta + sonido). false si el piso no las tiene.
 func _open_exit_doors(boss_room: Room) -> bool:
+	for n in get_tree().get_nodes_in_group("iris_door"):
+		n.armed = true  # vencido el jefe, la puerta biologica ya puede abrirse (con su condicion secreta)
 	var doors := exit_doors.filter(func(d): return is_instance_valid(d))
 	if doors.is_empty():
 		return false
@@ -891,6 +910,14 @@ func _on_exit_door_used(door: Door) -> void:
 		return
 	_exit_busy = true
 	_begin_corridor(RunManager.floor_region(_run_manager.current_floor), str(door.get_meta("exit_region")), door.get_direction_name())
+
+
+## La puerta biologica abierta: tobogan al Templo de Anubis.
+func _on_iris_entered(iris: IrisDoor) -> void:
+	if corridor_active or _exit_busy:
+		return
+	_exit_busy = true
+	_begin_corridor(RunManager.floor_region(_run_manager.current_floor), str(iris.get_meta("exit_region")), "up")
 
 
 ## Fundido a negro (alfa 1) o de vuelta (0). Capa propia sobre el HUD, bajo la cortinilla de escenas.

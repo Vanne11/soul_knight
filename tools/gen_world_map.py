@@ -260,8 +260,8 @@ reino("penelandia","PENELANDIA",330,1490,845,["hero","P","P","boss"],["cofre","l
 reino("arcoiria","ARCOÍRIA",1197,1490,845,["boss","hero","P","P"],["descanso","cofre"],"pend",tx=1530,bossname="La Censura que destiñe",bsub="por diseñar",pilldx=24)
 reino("vulvania","VULVANIA",2090,1490,845,["boss","hero","P","P"],["descanso","lore"],("enemies/reina_ovaria_idle_00.png",None),tx=2310,bossname=["Su Majestad","Ovaria II"],seal=True)
 reino("perineo","PERINEO",1290,1780,670,["P","P","boss"],["lore","cofre"],("enemies/aduanero_idle_00.png",None),bossname=["El Aduanero","Hormonal"],seal=True,pilldx=-24)
-# DESVIO SECRETO (routes.json "detours"): la Puerta Trasera cuelga bajo el Perineo (su entrada de servicio, hoy sellada).
-reino("puerta_trasera","LA PUERTA TRASERA",1290,2200,670,["P","P","boss"],["lore","cofre"],"pend",bossname="El Coprolito",bsub="secreto · sellada")
+# DESVIO SECRETO (routes.json "detours"): el Templo de Anubis (id puerta_trasera) cuelga bajo el Perineo (su entrada de servicio: la puerta biologica, secreta).
+reino("puerta_trasera","EL TEMPLO DE ANUBIS",1290,2200,670,["P","P","boss"],["lore","cofre"],"pend",bossname="El Coprolito",bsub="secreto · puerta biológica")
 A('</g>')
 # monte de venus etiqueta
 pill(1781,1236,["Monte de Venus"],sub="sala especial (idea)",id="nombre-monte-de-venus")

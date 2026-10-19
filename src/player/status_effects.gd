@@ -14,6 +14,8 @@ extends Node2D
 ##   vendado      Venda: pantalla casi a oscuras alrededor del heroe.
 ##   enganchado   La Correa te arrastra hacia su dueno. El dash te suelta.
 ##   desteñido    Piso gris de La Censura que destine (Arcoiria): te frena mientras lo pisas (0,6x).
+##   mareado      Vapores del Frasquito Magico (templo de Anubis): la pantalla ondula (ScreenFx lee `dizzy`) y
+##                el control se vuelve torpe (un vaiven lateral suave y -15 % de velocidad). Se pasa solo.
 ##   etiquetado   La Etiqueta (Arcoiria) te pega etiquetas: cada una te frena (hasta 3). El dash las
 ##                ROMPE y cada etiqueta rota hace dano a los enemigos cercanos (Arcoiria.rip_labels).
 ##
@@ -22,14 +24,14 @@ extends Node2D
 signal applied(kind: String)
 signal ended(kind: String)
 
-const KINDS := ["enrollado", "enjaulado", "esposado", "amordazado", "vendado", "enganchado", "etiquetado", "desteñido"]
+const KINDS := ["enrollado", "enjaulado", "esposado", "amordazado", "vendado", "enganchado", "etiquetado", "desteñido", "mareado"]
 const MASH_ACTIONS := ["attack", "dash", "interact"]
 const MASH_STEP := 0.3
-const SPEED := {"enrollado": 0.3, "enjaulado": 0.45, "esposado": 0.85, "enganchado": 0.9, "desteñido": 0.6}
+const SPEED := {"enrollado": 0.3, "enjaulado": 0.45, "esposado": 0.85, "enganchado": 0.9, "desteñido": 0.6, "mareado": 0.85}
 const TEXT_COLOR := {
 	"enrollado": Color("ffd23a"), "enjaulado": Color("b8b8c8"), "esposado": Color("ff7ac0"),
 	"amordazado": Color("e8322e"), "vendado": Color("8890a8"), "enganchado": Color("ff9a2e"),
-	"etiquetado": Color("ffd23a"), "desteñido": Color("a8a8b8"),
+	"etiquetado": Color("ffd23a"), "desteñido": Color("a8a8b8"), "mareado": Color("d4ee5a"),
 }
 const LABEL_SLOW := 0.82   ## velocidad que queda por cada etiqueta pegada
 const LABEL_MAX := 3
@@ -51,6 +53,9 @@ void fragment() {
 	COLOR = vec4(0.02, 0.0, 0.04, a);
 }
 """
+
+## Mareo actual 0..1 (lo lee ScreenFx para ondular la pantalla).
+static var dizzy := 0.0
 
 var player: Node2D = null
 var _left := {}        ## kind -> segundos que faltan
@@ -166,6 +171,10 @@ func clear(kind := "") -> void:
 			_end(k)
 
 
+func _exit_tree() -> void:
+	dizzy = 0.0
+
+
 func _begin(kind: String) -> void:
 	var ge := get_node_or_null("/root/GlobalEvents")
 	var label := Loc.tr_or("E3A_STATE_" + kind.to_upper(), kind.to_upper())
@@ -192,6 +201,8 @@ func _end(kind: String) -> void:
 			_blind = null
 		"enganchado":
 			_pull = Vector2.ZERO
+		"mareado":
+			dizzy = 0.0
 	ended.emit(kind)
 	queue_redraw()
 
@@ -258,10 +269,13 @@ func _physics_process(delta: float) -> void:
 			var to2: Vector2 = src.global_position - player.global_position
 			if to2.length() > 42.0:
 				_pull += to2.normalized() * PULL_SPEED
+		if k == "mareado":
+			_pull += Vector2(sin(_t * 2.3), cos(_t * 1.7)) * 60.0 * clampf(float(_left[k]), 0.0, 1.0)
 		if k == "amordazado":
 			_hush_narrator()
 		if float(_left[k]) <= 0.0:
 			_end(k)
+	dizzy = clampf(time_left("mareado") / 0.8, 0.0, 1.0) * 0.6 if active("mareado") else 0.0
 	if _blind != null and is_instance_valid(_blind):
 		var left := time_left("vendado")
 		var tot := maxf(float(_total.get("vendado", 1.0)), 0.1)

@@ -166,6 +166,10 @@ C.append(M("secreta_utero", "secreta", "destape", {"tipo": "evento", "id": "ente
            ("Primera consulta", "First Appointment", "Première consultation"),
            ("Entra al Útero.", "Enter the Womb.", "Entre dans l'Utérus."), True))
 
+C.append(M("secreta_anubis", "secreta", "destape", {"tipo": "evento", "id": "templo_anubis_puerta"},
+           ("Siempre con protección", "Always Protected", "Toujours protégé·e"),
+           ("Abre la puerta trasera del Perineo.", "Open the Perineum's back door.", "Ouvre la porte de derrière du Périnée."), True))
+
 # Humor
 C.append(M("humor_muerte", "humor", "sonrojo", {"tipo": "contador", "nombre": "muertes", "n": 1},
            ("Rojo de vergüenza", "Red with Embarrassment", "Rouge de honte"),

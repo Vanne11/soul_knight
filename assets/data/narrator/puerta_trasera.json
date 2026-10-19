@@ -1,7 +1,10 @@
 {
-  "_info": "LA PUERTA TRASERA (reino secreto del Perineo, en construccion). Por ahora solo las frases de El Coprolito (src/enemies/bosses/boss_coprolito.gd, _say -> bosscoprolito_*). Claves de traduccion: NARR_PUERTA_TRASERA__<EVENTO>_<n> en locale/puerta_trasera.csv. Humor sobre la situacion, nunca sobre las personas; los datos de salud van al codice (datos_ano.md), no aqui.",
+  "_info": "EL TEMPLO DE ANUBIS (id interno puerta_trasera, reino secreto del Perineo). Evento templo_puerta: al abrirse la puerta biologica (iris_door.gd). Por ahora solo las frases de El Coprolito (src/enemies/bosses/boss_coprolito.gd, _say -> bosscoprolito_*). Claves de traduccion: NARR_PUERTA_TRASERA__<EVENTO>_<n> en locale/puerta_trasera.csv. Humor sobre la situacion, nunca sobre las personas; los datos de salud van al codice (datos_ano.md), no aqui.",
   "floor_puerta_trasera": [
-    "La Puerta Trasera. Entrada de servicio: se ruega no detenerse en la puerta. Aquí se pregunta todo y se puede salir cuando quieras."
+    "El Templo de Anubis. Entrada de servicio: se ruega no detenerse en la puerta. Aquí se pregunta todo y se puede salir cuando quieras."
+  ],
+  "templo_puerta": [
+    "Algo, allá atrás, se abrió con muchísima delicadeza. Nadie dijo cómo."
   ],
   "floor_puerta_trasera_fondo": [
     "Más abajo, la excavación. Huele a museo y a algo que lleva mucho tiempo esperando."

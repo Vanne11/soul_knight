@@ -1,33 +1,45 @@
 class_name IrisDoor
 extends "res://src/items/interactable.gd"
 
-## "Puerta biologica" SELLADA (la entrada de servicio del Perineo, camino a la Puerta Trasera): un iris
-## organico rosado-carne con pliegues radiales que convergen al centro, como una compuerta de iris de
-## ciencia ficcion pero de tejido. Dibujado por codigo (contorno oscuro, caricaturesco). Va en una pared.
+## "Puerta biologica" de la entrada de servicio del Perineo, camino al TEMPLO DE ANUBIS (reino secreto "puerta_trasera"):
+## un iris organico en la pared NORTE de la sala del jefe del Perineo, flanqueado por dos estatuas de Anubis
+## (templo_anubis.gd). Arte: assets/sprites/environment/iris_door/ (AnimatedSprite2D: idle, shake, open, opened);
+## si faltara, cae al dibujo por codigo de siempre (_draw), que se conserva como respaldo.
 ##
-## Cerrada: "respira" (pulso lento de escala y brillo). Al acercarte sale el aviso "Esto esta sellado."
-## (cuadro de proximidad, como cualquier interactuable) y se va al alejarte; al tocarla tiembla, suena
-## sordo y flota "Sellada.". No tiene ningun uso (no es una puerta de verdad: no cruza).
-##
-## Para ABRIRLA en el futuro: open() anima los pliegues (se retraen y el hueco crece); despues main.gd
-## la cambia por una Door normal hacia el pasillo (hoy lo decide routes.json "detours"."open").
+## SECRETO (decision de Nico): se abre SOLO si el heroe le DISPARA con el Lubricante a Base de Agua y ademas LLEVA
+## CONDONES (TemploAnubis.has_condoms). Con lubricante sin condones tiembla y no se abre, sin explicar por que.
+## Nada lo explica: solo guiños (graffiti, frases de la Matrona y de Dona Ventanilla, codice criptico).
+## Hasta que no vences al jefe (armed) tampoco se abre. Abierta, hace "boca de pez" y al cruzarla (E o caminando
+## hacia ella) emite `entered`: main.gd te manda por el tobogan al reino (routes.json "detours").
+## "can_open" false (routes.json "open": false) la deja sellada para siempre.
 
-const R := 34.0           # radio del iris, px
-const FOLDS := 14         # pliegues radiales
+signal opened
+signal entered
+
+enum S { CLOSED, OPENING, OPEN }
+const FRAMES := "res://assets/sprites/environment/iris_door/iris_door_sprite_frames.tres"
+const SPRITE_SCALE := 1.4
+const LUBE_R := 84.0      # un disparo de lubricante que revienta a esta distancia "le da" a la puerta
+const R := 34.0           # radio del iris dibujado por codigo (respaldo), px
+const FOLDS := 14         # pliegues radiales (respaldo)
 const TOUCH_R := 40.0     # a esta distancia del centro "la tocas"
 const FLESH := Color("e9928f")
 const FLESH_LIGHT := Color("f6b6ac")
 const FLESH_DARK := Color("b8605f")
 const LINE := Color("4a1a24")
 
-## 0 cerrada .. 1 abierta (los pliegues se retraen).
+## 0 cerrada .. 1 abierta (solo el respaldo dibujado por codigo la usa).
 var open_amount := 0.0
 var wall_dir := "down"    # pared donde esta ("up", "down", "left", "right")
+var armed := false        # main.gd la arma al vencer al jefe: antes de eso no se abre
+var can_open := true      # false: sellada para siempre (routes.json "detours"."open": false)
+var state := S.CLOSED
 
 var _t := 0.0
 var _shake := 0.0
 var _touch_cd := 0.0
 var _tween: Tween
+var _spr: AnimatedSprite2D = null
 
 
 func _ready() -> void:
@@ -41,20 +53,32 @@ func _ready() -> void:
 	collision_layer = 0
 	collision_mask = 1
 	super._ready()
+	add_to_group("iris_door")
 	z_index = 1
 	var mat := CanvasItemMaterial.new()
 	mat.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED  # se lee tambien en la sala a oscuras
 	material = mat
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	if ResourceLoader.exists(FRAMES):
+		_spr = AnimatedSprite2D.new()
+		_spr.sprite_frames = load(FRAMES)
+		_spr.scale = Vector2.ONE * SPRITE_SCALE
+		_spr.use_parent_material = true
+		add_child(_spr)
+		_spr.play("idle")
+		_spr.animation_finished.connect(_on_anim_done)
 
 
 func _inward() -> Vector2:
 	return {"down": Vector2.UP, "up": Vector2.DOWN, "left": Vector2.RIGHT, "right": Vector2.LEFT}[wall_dir]
 
 
-## E no hace nada: la puerta esta sellada (el cuadro de proximidad solo avisa).
+## E: cerrada no hace nada (solo tiembla); abierta, la cruzas.
 func _use(_player: Node) -> void:
-	_touch()
+	if state == S.OPEN:
+		_enter()
+	else:
+		_touch()
 
 
 func refresh_prompt() -> void:
@@ -67,30 +91,90 @@ func _process(delta: float) -> void:
 	_t += delta
 	_touch_cd -= delta
 	_shake = maxf(_shake - delta * 2.2, 0.0)
-	if _player != null and is_instance_valid(_player) and open_amount < 0.05:
-		if (_player as Node2D).global_position.distance_to(global_position) < TOUCH_R + 14.0 and _touch_cd <= 0.0:
+	if _player != null and is_instance_valid(_player):
+		var d := (_player as Node2D).global_position.distance_to(global_position)
+		if state == S.CLOSED and d < TOUCH_R + 14.0 and _touch_cd <= 0.0:
 			_touch()
-	queue_redraw()
+		elif state == S.OPEN and d < TOUCH_R + 6.0:
+			_enter()
+	if _spr == null:
+		queue_redraw()
 
 
-func _touch() -> void:
-	if _touch_cd > 0.0 or open_amount > 0.05:
+## Un tiron de la puerta: tiembla (y si `msg`, flota "Sellada."). Sin explicar nunca por que no se abre.
+func _touch(msg := true) -> void:
+	if _touch_cd > 0.0 or state != S.CLOSED:
 		return
 	_touch_cd = 1.4
 	_shake = 1.0
 	Sound.play("locked")
-	get_node("/root/GlobalEvents").show_floating_text.emit(global_position + _inward() * 36.0, tr("PAS_SEALED_TOUCH"), Color("ff8f8f"))
+	if _spr != null:
+		_spr.play("shake")
+	if msg:
+		get_node("/root/GlobalEvents").show_floating_text.emit(global_position + _inward() * 36.0, tr("PAS_SEALED_TOUCH"), Color("ff8f8f"))
 
 
-## Animacion de apertura (los pliegues se retraen). Para cuando se decida la condicion.
+func _on_anim_done() -> void:
+	if _spr == null:
+		return
+	match _spr.animation:
+		&"shake":
+			_spr.play("idle")
+		&"open":
+			state = S.OPEN
+			_spr.play("opened")
+			prompt_text = tr("TA_IRIS_ENTER")
+			if _player:
+				refresh_prompt()
+			Narrator.say("templo_puerta")
+			opened.emit()
+
+
+## Un disparo de LUBRICANTE revento cerca de las puertas biologicas (lo llama special_shots.gd). Abre si hay condones.
+static func lube_burst(tree: SceneTree, pos: Vector2) -> void:
+	for n in tree.get_nodes_in_group("iris_door"):
+		if is_instance_valid(n) and n is IrisDoor and (n as Node2D).global_position.distance_to(pos) < LUBE_R:
+			(n as IrisDoor).hit_lube()
+
+
+func hit_lube() -> void:
+	if state != S.CLOSED:
+		return
+	if armed and can_open and TemploAnubis.has_condoms(get_tree()):
+		open()
+	else:
+		_touch(false)  # tiembla y nada mas
+
+
+## Animacion de apertura: boca de pez (el arte) o, sin arte, los pliegues se retraen.
 func open(time := 1.4) -> void:
+	if state != S.CLOSED:
+		return
+	state = S.OPENING
+	Sound.play("door")
+	get_tree().create_timer(0.5).timeout.connect(func(): Sound.play("suck"))
+	get_node("/root/LoreDatabase").custom_event("templo_anubis_puerta")  # codice criptico
+	if _spr != null:
+		_spr.play("open")
+		return
 	if _tween and _tween.is_valid():
 		_tween.kill()
 	_tween = create_tween()
 	_tween.tween_property(self, "open_amount", 1.0, time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_tween.finished.connect(func():
+		state = S.OPEN
+		prompt_text = tr("TA_IRIS_ENTER")
+		opened.emit())
+
+
+func _enter() -> void:
+	if state == S.OPEN:
+		entered.emit()
 
 
 func _draw() -> void:
+	if _spr != null:
+		return
 	var breathe := 1.0 + 0.035 * sin(_t * 1.7) + 0.012 * sin(_t * 4.1)
 	var off := Vector2.ZERO
 	if _shake > 0.0:

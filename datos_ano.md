@@ -74,9 +74,17 @@ Advertencia de método: no tengo acceso a internet en este entorno. Las fuentes 
 | PT-33 `LORE_PT_NO_OBLIGADO_TEXT` | Códice, cartel de entrada | “No es obligatorio ni es una prueba de nada. Se puede hacer, probar o dejarlo; las dos opciones son normales.” | UNESCO (2018) | ✅ No promueve ni desalienta. | [ ] Vanessa | sí |
 | PT-34 `LORE_PT_PLACER_TEXT` | Códice (previsto) | “El ano tiene muchas terminaciones nerviosas. A algunas personas les gusta, a otras no, y ambas cosas son normales.” | Fuentes de sexología (p. ej., Kinsey Institute); NHS | ⚠️ REVISAR: afirmación anatómica aceptada, pero no tengo una cita literal verificada. | [ ] Vanessa | sí |
 
+## G. Poppers (reducción de daños) — Templo de Anubis
+
+| id / clave | dónde se ve | afirmación exacta (es) | fuente sugerida | estado y nota | Vanessa | universal sí/no |
+|---|---|---|---|---|---|---|
+| PT-35 `LORE_ENE_FRASQUITO_TEXT` | Códice, enemigo Frasquito Mágico (se abre al matar 3) | “Los «poppers» son nitritos que se inhalan; dilatan los vasos sanguíneos y bajan la presión, y por eso dan mareo, dolor de cabeza y a veces desmayo. Sobre la piel pueden quemar; no se deben tragar; son inflamables; y están contraindicados con problemas del corazón, presión baja o glaucoma. NUNCA se mezclan con sildenafil (Viagra), tadalafilo u otros medicamentos para la erección: juntos pueden bajar la presión de forma peligrosa. Si hay dolor de pecho, mareo fuerte o desmayo, pide ayuda médica de inmediato.” | CDC; NHS (*Poppers*); Drugs.ie / Energy Control (reducción de daños); prospectos de sildenafil y tadalafilo (contraindicación con nitratos) | ⚠️ REVISAR: la contraindicación con inhibidores de la PDE5 está en los prospectos (nitratos); confirmar la lista de contraindicaciones (corazón, presión baja, glaucoma) y el tono sobrio, sin moralina. | [ ] Vanessa | sí |
+| PT-36 `PT_POPPER_SILDENAFIL` | Aviso flotante del Frasquito si ya te cruzaste con Don Sildenafil en la partida | “¡Popper + Sildenafil = NO!” | ídem PT-35 | ⚠️ REVISAR: guiño con Don Sildenafil; mantener solo como alerta de seguridad. | [ ] Vanessa | sí |
+| PT-37 `LORE_TEMPLO_PUERTA_TEXT` | Códice críptico al abrir la puerta biológica | “Los condones de látex y el lubricante van juntos; el lubricante debe ser a base de agua o de silicona, nunca aceites con el látex.” | OMS; CDC (PT-21) | ✅ (repite PT-21) | [ ] Vanessa | sí |
+
 ## Conteo
 
-Total: **34 datos**; **13** con REVISAR y 21 ✅. Por tema: A 12, B 7, C 7, D 2, E 2, F 4.
+Total: **37 datos**; **15** con REVISAR y 22 ✅ (PT-35 a PT-37: poppers y puerta biológica). Por tema: G 3, A 12, B 7, C 7, D 2, E 2, F 4.
 
 Datos que dependen del país (“universal: no”): tamizaje colorrectal (PT-29), tamizaje anal (PT-17) y condón interno (PT-24). Todos los textos del juego dicen “pregunta en tu centro de salud”, sin nombrar instituciones nacionales.
 
