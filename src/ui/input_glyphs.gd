@@ -20,7 +20,7 @@ extends RefCounted
 const DIR := "res://assets/sprites/ui/glyphs/"
 const SCALE := 2
 ## Acciones que no existen en el InputMap pero tienen tecla fija (mapa: M, ver minimap.gd).
-const FIXED_KEYS := {"map": KEY_M}
+const FIXED_KEYS := {"map": KEY_M, "map_tab": KEY_TAB}
 const PAD_ICONS := {
 	JOY_BUTTON_A: "pad_a", JOY_BUTTON_B: "pad_b", JOY_BUTTON_X: "pad_x", JOY_BUTTON_Y: "pad_y",
 	JOY_BUTTON_BACK: "pad_back", JOY_BUTTON_START: "pad_start",

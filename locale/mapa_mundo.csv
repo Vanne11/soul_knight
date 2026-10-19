@@ -1,0 +1,13 @@
+keys,es,en,es_ES,fr
+MAPA_TAB_PISO,Piso,Floor,,Étage
+MAPA_TAB_MUNDO,Mundo,World,,Monde
+MAPA_TAB_HINT,pestaña,tab,,onglet
+MAPA_SELLOS,Sellos %d/%d,Seals %d/%d,,Sceaux %d/%d
+MAPA_MUNDO_AQUI,Mundo · %s,World · %s,,Monde · %s
+MAPA_LEY_AQUI,Estás aquí,You are here,,Tu es ici
+MAPA_LEY_FIJA,Puerta fija,Fixed door,,Porte fixe
+MAPA_LEY_ELECCION,Elección,Your pick,,Au choix
+MAPA_LEY_CANDADO,2 sellos,2 seals,,2 sceaux
+MAPA_REINO_ARCOIRIA,ARCOÍRIA,RAINBOWIA,,ARC-EN-CIEL
+MAPA_REINO_SILENCIO,SILENCIO,SILENCE,,SILENCE
+MAPA_REINO_UTERO,ÚTERO,WOMB,,UTÉRUS
