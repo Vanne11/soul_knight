@@ -60,7 +60,9 @@ func set_state(new_state: State) -> void:
 func _update_visuals() -> void:
 	var file := "door_%s_%s.png" % [get_direction_name(), _STATE_NAMES[state]]
 	# juego de puertas del reino del piso (tools/gen_door_art.py), con respaldo a las genericas
-	var path := "res://assets/sprites/environment/doors/%s/%s" % [get_node("/root/RunManager").floor_data().get("kingdom", "neutral"), file]
+	# las puertas de salida del jefe (pasillos) llevan el estilo del reino de DESTINO (meta "door_kingdom")
+	var kd: String = str(get_meta("door_kingdom", get_node("/root/RunManager").floor_data().get("kingdom", "neutral")))
+	var path := "res://assets/sprites/environment/doors/%s/%s" % [kd, file]
 	if not ResourceLoader.exists(path):
 		path = "res://assets/sprites/environment/" + file
 	if ResourceLoader.exists(path):
@@ -107,7 +109,8 @@ func try_open(player: Node) -> bool:
 			return false
 	
 	if state == State.SEALED:
-		get_node("/root/GlobalEvents").show_floating_text.emit(global_position, tr("DOOR_SEALED"), Color.RED)
+		var msg := tr("PAS_DOOR_WAIT") if has_meta("exit_region") else tr("DOOR_SEALED")  # puerta de salida del jefe
+		get_node("/root/GlobalEvents").show_floating_text.emit(global_position, msg, Color.RED)
 		return false
 	
 	if state == State.CLOSED:

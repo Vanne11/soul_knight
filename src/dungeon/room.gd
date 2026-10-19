@@ -5,7 +5,9 @@ class_name Room
 
 enum RoomType { COMBAT = 0, SHOP = 1, LORE = 2, TRAP = 3, PUZZLE = 4, SECRET = 5, BOSS = 6, INTOXICATION = 7, MINIBOSS = 8, START = 9, TREASURE = 10, REST = 11,
 	## Sala de situacion de Las Tierras del Silencio (src/silencio/): sin enemigos ni recompensas.
-	SILENCIO = 12 }
+	SILENCIO = 12,
+	## Pasillo de transicion entre reinos (src/dungeon/corridor.gd): sin enemigos ni recompensas.
+	CORRIDOR = 13 }
 
 enum DoorState { CLOSED = 0, OPEN = 1, LOCKED = 2, SEALED = 3 }
 
@@ -232,6 +234,8 @@ func _on_door_state_changed(direction: String, state: int) -> void:
 
 func all_doors_open() -> bool:
 	for door in doors.values():
+		if door.has_meta("hold_sealed"):
+			continue  # puerta de salida del jefe (pasillos): no cuenta para limpiar la sala
 		if door.state != DoorState.OPEN:
 			return false
 	return true
@@ -246,7 +250,7 @@ func seal_doors() -> void:
 
 func unseal_doors() -> void:
 	for door in doors.values():
-		if door.state == DoorState.SEALED:
+		if door.state == DoorState.SEALED and not door.has_meta("hold_sealed"):
 			door.set_state(DoorState.OPEN)
 
 func _add_enemy_deferred(enemy: Node2D, pos: Vector2) -> void:

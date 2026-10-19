@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "pest_notificacion"
+title = "Aviso Insistente"
+text = "Lento pero impredecible: reaparece justo detrás de ti con un ding-ding y desaparece cuando lo miras. Se cura solo con el modo «No molestar», que este reino no incluye."
+category = 3
+unlock_condition = {"type": 10, "target_id": "pest_notificacion"}
+flavor_text = "Encuéntralo en un pasillo entre reinos."

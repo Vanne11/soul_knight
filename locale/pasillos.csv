@@ -1,0 +1,90 @@
+keys,es,en,es_ES,fr
+PAS_DOOR_HINT,%s,%s,,%s
+PAS_DOOR_SEALS,SELLOS %d/%d,SEALS %d/%d,,SCEAUX %d/%d
+PAS_SEALED,Esto está sellado.,This is sealed.,,C'est scellé.
+PAS_SEALED_TOUCH,Sellada.,Sealed.,,Scellée.
+PAS_TRANSIT,EN TRÁNSITO,IN TRANSIT,,EN TRANSIT
+PAS_DOOR_WAIT,Sellada hasta vencer al jefe.,Sealed until the boss falls.,,Scellée jusqu'à la chute du boss.
+PAS_ENC_APPEARED,¡Ha aparecido un %s salvaje!,A wild %s appeared!,,Un %s sauvage apparaît !
+PAS_ENC_DEFEATED,¡Vencido!,Defeated!,,Vaincu !
+PAS_ENC_CHICLE_STUCK,¡Se te pegó!,It stuck to you!,,Ça colle !
+PAS_ENC_CHICLE_FREE,¡Despegado!,Scraped off!,,Décollé !
+PAS_ENC_NOTIFICACION_DING,¡Ding-ding!,Ding-ding!,,Ding-ding !
+PAS_ENC_CAPTCHA_Q,¿Eres humano?,Are you human?,,Es-tu humain·e ?
+PAS_ENC_CAPTCHA_OK,Verificado,Verified,,Vérifié
+PAS_ENC_SPAM_STICKER_0,¡¡99+ mensajes!!,99+ messages!!,,99+ messages !!
+PAS_ENC_SPAM_STICKER_1,"Buen día, familia",Good day family,,Bonne journée la famille
+PAS_ENC_SPAM_STICKER_2,Reenviado x40,Forwarded x40,,Transféré x40
+PAS_ENC_SPAM_STICKER_3,Cadena de oración,Chain letter,,Chaîne à suivre
+PAS_ENC_TIO_NAME,Tío Preguntón,Nosy Uncle,,Tonton Curieux
+PAS_ENC_TIO_SAY0,¿Y la pareja pa' cuándo?,And when are you bringing a plus-one?,,"Et le/la partenaire, c'est pour quand ?"
+PAS_ENC_TIO_SAY1,"¿Y ese trabajo, es estable?",Is that job at least stable?,,"Et ce travail, il est stable ?"
+PAS_ENC_TIO_SAY2,Antes las cosas eran distintas…,Things were different in my day…,,"De mon temps, c'était différent…"
+LORE_PEST_TIO_TITLE,Tío Preguntón,Nosy Uncle,,Tonton Curieux
+LORE_PEST_TIO_TEXT,"Aparece en toda reunión familiar y en los pasillos que no le corresponden. Pregunta cosas que no pediste saber, te empuja con cariño y no se cansa: lo único que lo detiene es llegar al final del pasillo. Consejo: sonríe, di «bien, bien» y sigue caminando.","He shows up at every family gathering and in hallways that aren't his. He asks things you never wanted to be asked, nudges you affectionately and never tires: the only thing that stops him is reaching the end of the corridor. Tip: smile, say ""fine, fine"" and keep walking.",,"Il apparaît à tous les repas de famille et dans des couloirs qui ne sont pas les siens. Il pose des questions qu'on ne lui demandait pas, te pousse affectueusement et ne se lasse jamais : seule la fin du couloir l'arrête. Conseil : souris, dis « ça va, ça va » et continue."
+LORE_PEST_TIO_FLAVOR,Encuéntralo en un pasillo entre reinos.,Meet it in a corridor between realms.,,Rencontre-le dans un couloir entre royaumes.
+PAS_ENC_SPAM_NAME,Spam del Grupo Familiar,Family Group Spam,,Spam du Groupe Familial
+PAS_ENC_SPAM_SAY0,Cadena de 40 corazones. Reenviado muchas veces.,40-heart chain. Forwarded many times.,,Chaîne de 40 cœurs. Transféré plusieurs fois.
+PAS_ENC_SPAM_SAY1,"¡Buenos días, familia!","Good morning, family!",,Bonjour la famille !
+PAS_ENC_SPAM_SAY2,Foto de un café con letras brillantes.,Photo of a coffee with glittery letters.,,Photo d'un café avec des lettres brillantes.
+LORE_PEST_SPAM_TITLE,Spam del Grupo Familiar,Family Group Spam,,Spam du Groupe Familial
+LORE_PEST_SPAM_TEXT,"Un enjambre de stickers, cadenas y buenos días que te tapan la pantalla. No hace daño; hace ruido visual. Nadie sabe quién lo creó ni cómo salirse del grupo.","A swarm of stickers, chain messages and good-mornings that cover your screen. It doesn't hurt; it just makes visual noise. Nobody knows who created it or how to leave the group.",,"Un essaim d'autocollants, de chaînes et de bonjours qui te couvrent l'écran. Il ne fait pas mal ; il fait du bruit visuel. Personne ne sait qui l'a créé ni comment quitter le groupe."
+LORE_PEST_SPAM_FLAVOR,Encuéntralo en un pasillo entre reinos.,Meet it in a corridor between realms.,,Rencontre-le dans un couloir entre royaumes.
+PAS_ENC_VENDEDOR_NAME,Vendedor de Planes de Salud,Health Plan Salesperson,,Vendeur de Mutuelles
+PAS_ENC_VENDEDOR_SAY0,¿Ya pensó en su plan de salud?,Have you thought about your health plan?,,Vous avez pensé à votre mutuelle ?
+PAS_ENC_VENDEDOR_SAY1,"Solo firme aquí, aquí y aquí.","Just sign here, here and here.",,"Signez ici, ici et ici."
+PAS_ENC_VENDEDOR_SAY2,Cobertura total (excepto lo que usted necesite).,Full coverage (except what you need).,,Couverture totale (sauf ce dont vous avez besoin).
+LORE_PEST_VENDEDOR_TITLE,Vendedor de Planes de Salud,Health Plan Salesperson,,Vendeur de Mutuelles
+LORE_PEST_VENDEDOR_TEXT,Corre rápido y se pega a ti con un folleto que frena a cualquiera. Siempre tiene una oferta que vence hoy. Moraleja del reino: lee la letra chica.,Runs fast and sticks to you with a brochure that slows anyone down. He always has an offer that expires today. Moral of the realm: read the fine print.,,Il court vite et se colle à toi avec une brochure qui ralentit tout le monde. Il a toujours une offre qui expire aujourd'hui. Morale du royaume : lis les petites lignes.
+LORE_PEST_VENDEDOR_FLAVOR,Encuéntralo en un pasillo entre reinos.,Meet it in a corridor between realms.,,Rencontre-le dans un couloir entre royaumes.
+PAS_ENC_MOSQUITO_NAME,Mosquito Moral,Moral Mosquito,,Moustique Moral
+PAS_ENC_MOSQUITO_SAY0,Zzz… ¿seguro que lo hiciste bien?,Zzz… are you sure you did it right?,,Zzz… tu es sûr·e d'avoir bien fait ?
+PAS_ENC_MOSQUITO_SAY1,Zzzz… eso no se hace.,Zzzz… that's just not done.,,Zzzz… ça ne se fait pas.
+PAS_ENC_MOSQUITO_SAY2,Zzz… tu conciencia me manda.,Zzz… your conscience sent me.,,Zzz… ta conscience m'envoie.
+LORE_PEST_MOSQUITO_TITLE,Mosquito Moral,Moral Mosquito,,Moustique Moral
+LORE_PEST_MOSQUITO_TEXT,"Pequeño, veloz y zumbón: te pica donde más duele, que es la duda. Es casi imposible de aplastar y totalmente inofensivo. Casi.","Small, fast and buzzing: it bites where it hurts most, which is doubt. Nearly impossible to swat and totally harmless. Almost.",,"Petit, rapide et bourdonnant : il pique là où ça fait le plus mal, le doute. Presque impossible à écraser et totalement inoffensif. Presque."
+LORE_PEST_MOSQUITO_FLAVOR,Encuéntralo en un pasillo entre reinos.,Meet it in a corridor between realms.,,Rencontre-le dans un couloir entre royaumes.
+PAS_ENC_CUNADO_NAME,Cuñado Experto,Know-It-All Brother-in-Law,,Beau-frère Expert
+PAS_ENC_CUNADO_SAY0,"Yo te explico, que sé de esto.","Let me explain, I know about this.",,"Je t'explique, je m'y connais."
+PAS_ENC_CUNADO_SAY1,"Mira, es muy simple…","Look, it's very simple…",,"Regarde, c'est très simple…"
+PAS_ENC_CUNADO_SAY2,Yo lo habría hecho distinto.,I would have done it differently.,,"Moi, je l'aurais fait autrement."
+LORE_PEST_CUNADO_TITLE,Cuñado Experto,Know-It-All Brother-in-Law,,Beau-frère Expert
+LORE_PEST_CUNADO_TEXT,"Sabe de todo, no sabe de nada y te lo explica con el dedo en alto mientras te empuja hacia atrás. Su especialidad: opinar sin que nadie le pregunte.","He knows everything, knows nothing and explains it with a raised finger while pushing you backwards. His specialty: giving opinions nobody asked for.",,"Il sait tout, ne sait rien et te l'explique le doigt levé en te poussant en arrière. Sa spécialité : donner son avis sans que personne demande."
+LORE_PEST_CUNADO_FLAVOR,Encuéntralo en un pasillo entre reinos.,Meet it in a corridor between realms.,,Rencontre-le dans un couloir entre royaumes.
+PAS_ENC_NOTIFICACION_NAME,Aviso Insistente,Insistent Alert,,Alerte Insistante
+PAS_ENC_NOTIFICACION_SAY0,¡Ding-ding!,Ding-ding!,,Ding-ding !
+PAS_ENC_NOTIFICACION_SAY1,Tienes 1 aviso sin leer.,You have 1 unread alert.,,Tu as 1 alerte non lue.
+PAS_ENC_NOTIFICACION_SAY2,¡Ding-ding-ding!,Ding-ding-ding!,,Ding-ding-ding !
+LORE_PEST_NOTIFICACION_TITLE,Aviso Insistente,Insistent Alert,,Alerte Insistante
+LORE_PEST_NOTIFICACION_TEXT,"Lento pero impredecible: reaparece justo detrás de ti con un ding-ding y desaparece cuando lo miras. Se cura solo con el modo «No molestar», que este reino no incluye.","Slow but unpredictable: it reappears right behind you with a ding-ding and vanishes when you look. Only cured by ""Do Not Disturb"", which this realm doesn't include.",,"Lent mais imprévisible : il réapparaît juste derrière toi avec un ding-ding et disparaît quand tu le regardes. Seul le mode « Ne pas déranger » le guérit, que ce royaume n'inclut pas."
+LORE_PEST_NOTIFICACION_FLAVOR,Encuéntralo en un pasillo entre reinos.,Meet it in a corridor between realms.,,Rencontre-le dans un couloir entre royaumes.
+PAS_ENC_EX_NAME,Ex Nocturno,Late-Night Ex,,Ex Nocturne
+PAS_ENC_EX_SAY0,¿Despierta/o?,Awake?,,Tu dors ?
+PAS_ENC_EX_SAY1,Hola… ¿hablamos?,Hey… can we talk?,,Salut… on se parle ?
+PAS_ENC_EX_SAY2,Solo pasaba a saludar a las 3 am.,Just stopping by to say hi at 3 am.,,Je passais juste dire bonjour à 3 h du matin.
+LORE_PEST_EX_TITLE,Ex Nocturno,Late-Night Ex,,Ex Nocturne
+LORE_PEST_EX_TEXT,"Se pega a tu ritmo y no se va: da igual cuánto corras, siempre está a tres pasos escribiendo «...». Solo se le saca llegando al final del pasillo. Y bloqueándolo, pero eso no se puede en pixel art.","It matches your pace and never leaves: no matter how fast you run, it's always three steps behind typing ""..."". Only reaching the end of the corridor shakes it off. And blocking it, but that can't be done in pixel art.",,"Il se cale sur ton rythme et ne part pas : peu importe la vitesse, il est toujours à trois pas en train d'écrire « … ». Seule la fin du couloir le sème. Et le bloquer, mais ça ne se fait pas en pixel art."
+LORE_PEST_EX_FLAVOR,Encuéntralo en un pasillo entre reinos.,Meet it in a corridor between realms.,,Rencontre-le dans un couloir entre royaumes.
+PAS_ENC_INFLUENCER_NAME,Influencer de Cremas,Skincare Influencer,,Influenceur de Crèmes
+PAS_ENC_INFLUENCER_SAY0,¡Mi crema cambió mi vida! Código: BRILLO10.,My cream changed my life! Code: GLOW10.,,Ma crème a changé ma vie ! Code : BRILLO10.
+PAS_ENC_INFLUENCER_SAY1,Hidrata tu autoestima.,Moisturise your self-esteem.,,Hydrate ton estime de toi.
+PAS_ENC_INFLUENCER_SAY2,¡Suscríbete a mi niebla!,Subscribe to my mist!,,Abonne-toi à ma brume !
+LORE_PEST_INFLUENCER_TITLE,Influencer de Cremas,Skincare Influencer,,Influenceur de Crèmes
+LORE_PEST_INFLUENCER_TEXT,"Va dejando una niebla brillante, rosa y perfumada que no deja ver nada. No daña, pero tampoco se ve. Su secreto de belleza: ocho filtros y mucha luz.","Leaves behind a glittery, pink, perfumed mist you can't see through. It doesn't hurt, but you can't see either. Its beauty secret: eight filters and lots of light.",,"Laisse derrière lui une brume brillante, rose et parfumée où l'on n'y voit rien. Il ne fait pas mal, mais on ne voit rien non plus. Son secret de beauté : huit filtres et beaucoup de lumière."
+LORE_PEST_INFLUENCER_FLAVOR,Encuéntralo en un pasillo entre reinos.,Meet it in a corridor between realms.,,Rencontre-le dans un couloir entre royaumes.
+PAS_ENC_CHICLE_NAME,Chicle Pegado,Stuck Chewing Gum,,Chewing-gum Collé
+PAS_ENC_CHICLE_SAY0,(se pega),(sticks),,(se colle)
+PAS_ENC_CHICLE_SAY1,Chicle: ni un paso más.,Gum: not one step further.,,Chewing-gum : plus un pas.
+PAS_ENC_CHICLE_SAY2,"Rasca, rasca… no sale.","Scrape, scrape… it won't come off.",,"Gratte, gratte… ça ne part pas."
+LORE_PEST_CHICLE_TITLE,Chicle Pegado,Stuck Chewing Gum,,Chewing-gum Collé
+LORE_PEST_CHICLE_TEXT,Se te pega a la suela y te frena hasta que lo raspas: un buen dash lo despega. Lleva ahí desde 1998 y no piensa irse por las buenas.,It sticks to your sole and slows you until you scrape it off: a good dash pulls it free. It has been there since 1998 and won't leave without a fight.,,Il se colle à ta semelle et te ralentit jusqu'à ce que tu le gratte : un bon dash le décolle. Il est là depuis 1998 et ne partira pas de bon gré.
+LORE_PEST_CHICLE_FLAVOR,Encuéntralo en un pasillo entre reinos.,Meet it in a corridor between realms.,,Rencontre-le dans un couloir entre royaumes.
+PAS_ENC_CAPTCHA_NAME,Captcha Humano,Human Captcha,,Captcha Humain
+PAS_ENC_CAPTCHA_SAY0,¿Eres humano? Marca la casilla.,Are you human? Tick the box.,,Es-tu humain·e ? Coche la case.
+PAS_ENC_CAPTCHA_SAY1,Selecciona todos los semáforos.,Select all the traffic lights.,,Sélectionne tous les feux.
+PAS_ENC_CAPTCHA_SAY2,Verificando que no seas un bot…,Checking that you're not a bot…,,Vérification que tu n'es pas un bot…
+LORE_PEST_CAPTCHA_TITLE,Captcha Humano,Human Captcha,,Captcha Humain
+LORE_PEST_CAPTCHA_TEXT,"Te obliga a quedarte quieto un segundo para demostrar que no eres un robot. Eres un héroe de pixel art, pero ni modo: la casilla manda.","Makes you stand still for a second to prove you're not a robot. You're a pixel-art hero, but too bad: the checkbox rules.",,"Il t'oblige à rester immobile une seconde pour prouver que tu n'es pas un robot. Tu es un héros en pixel art, mais tant pis : la case décide."
+LORE_PEST_CAPTCHA_FLAVOR,Encuéntralo en un pasillo entre reinos.,Meet it in a corridor between realms.,,Rencontre-le dans un couloir entre royaumes.
+PAS_ENC_APPEARED_MANY,"¡Ha aparecido un %s salvaje con su pandilla!","A wild %s and its gang appeared!",,"Un %s sauvage et sa bande apparaissent !"
+PAS_ENC_BORED,"Se aburrieron y se fueron.","They got bored and left.",,"Ils se sont lassés et sont partis."

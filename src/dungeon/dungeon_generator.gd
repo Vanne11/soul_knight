@@ -49,6 +49,7 @@ func generate_floor(floor: int, seed_override: int = 0) -> Node2D:
 	else:
 		_assign_room_types()
 		_place_special_rooms()
+		_add_exit_doors()
 	MonteVenus.assign(self)  # Monte de Venus de la Selva (src/dungeon/monte_venus.gd); antes de las formas
 	_assign_room_shapes()
 	_paint_floor_tiles()
@@ -669,6 +670,41 @@ func _place_special_rooms() -> void:
 					var sp := Node2D.new()
 					sp.position = Vector2(ssize.x * 32, ssize.y * 32) + off
 					room.get_node("SpawnPoints").add_child(sp)
+
+## PASILLOS entre reinos: en las paredes de la sala del jefe final de un reino se crean las puertas de salida,
+## una por reino destino (RunManager.exit_regions), en la pared que le toca segun el mapa del mundo
+## (Pasillos.direction). Van en room.doors (asi formas, obstaculos y decoracion las respetan) con target_pos
+## invalido y la meta "exit_region"; main.gd las sella al entrar al piso y las abre al vencer al jefe.
+func _add_exit_doors() -> void:
+	var regions: Array = RunManager.exit_regions(current_floor)
+	if regions.is_empty():
+		return
+	var boss: Room = null
+	for r in rooms.values():
+		if r.room_type == Room.RoomType.BOSS:
+			boss = r
+	if boss == null:
+		return
+	var from := RunManager.floor_region(current_floor)
+	var items: Array = []
+	for r in regions:
+		var d := "up" if str(r) in RunManager.detour_regions() else Pasillos.direction(from, str(r))  # el desvio (Puerta Trasera) va en la pared norte
+		items.append({"region": str(r), "dir": d, "along": Pasillos.along(from, str(r), d)})
+	var size_px := Vector2(room_sizes.get(boss.grid_pos, Vector2i(8, 6))) * 64.0
+	var taken: Array = boss.doors.values().map(func(dd): return dd.position)
+	for it in Pasillos.layout(items, taken, size_px, func(_p, _d): return true):
+		var door: Door = door_scene.instantiate()
+		door.direction = Pasillos.dir_index(it.dir)
+		door.name = "Exit_" + str(it.region)
+		door.position = it.pos
+		door.target_pos = Vector2i(-99999, -99999)  # no lleva a ninguna sala del piso
+		door.set_meta("exit_region", str(it.region))
+		door.set_meta("door_kingdom", RunManager.region_kingdom(str(it.region)))
+		door.set_meta("hold_sealed", true)  # Room.unseal_doors no la abre: la abre main.gd al vencer al jefe
+		boss.get_node("Doors").add_child(door)
+		boss.doors[door.name] = door
+		door.room = boss
+
 
 func _add_spawn_points(room: Room) -> void:
 	var count = RNG.randi_range(2, 4) + RunManager.depth_i(current_floor)

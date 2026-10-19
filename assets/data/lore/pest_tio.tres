@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "pest_tio"
+title = "Tío Preguntón"
+text = "Aparece en toda reunión familiar y en los pasillos que no le corresponden. Pregunta cosas que no pediste saber, te empuja con cariño y no se cansa: lo único que lo detiene es llegar al final del pasillo. Consejo: sonríe, di «bien, bien» y sigue caminando."
+category = 3
+unlock_condition = {"type": 10, "target_id": "pest_tio"}
+flavor_text = "Encuéntralo en un pasillo entre reinos."

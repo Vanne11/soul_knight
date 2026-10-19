@@ -15,6 +15,8 @@ extends Node
 ##   --weapon=<id> --dmg-mult=N --crit=1   pruebas de dano: arma inicial, multiplicador de dano, critico siempre
 ##   --log=<ruta>   registro propio (varias partidas en paralelo; por defecto .claude/autoplay.log)
 ##   --overlay=0    oculta el rotulo verde del bot (para grabar)
+##   --enc=none|random|tio|spam|vendedor|mosquito|cunado|notificacion|ex|influencer|chicle|captcha   fuerza (o apaga) el encuentro de los pasillos
+##   --corridor-hold=0.4   en los pasillos entre reinos se queda quieto al pasar ese avance (0..1); para mirar de cerca a los bichos incomodos
 ##   --max-secs=N   termina solo tras N s de juego (tiempo de juego, no de reloj; para grabaciones de prueba)
 ##   --quit-on-end  cierra Godot al terminar la partida
 ## VARIAS PARTIDAS A LA VEZ: el juego guarda progreso, codice y narrador en user://; aislalas con
@@ -158,6 +160,7 @@ func _ready() -> void:
 	var hero := _arg("--hero=", "vulvalquiria")
 	_hero = hero
 	RunManager.test_seed = int(_arg("--seed=", "0"))
+	CorridorEncounter.force = _arg("--enc=", "")  # encuentros de los pasillos: none (nunca) | random | <tipo> (siempre); sin esto ~30%
 	RunManager.route_pick = _arg("--route-pick=", "first")  # eleccion de puerta tras el jefe: first | random | <reino>
 	_collect = _arg("--collect=", "") == "all"
 	_max_secs = float(_arg("--max-secs=", "0"))
@@ -714,7 +717,7 @@ func _boss_report(result: String) -> void:
 func _alive_enemies(room: Room) -> Array:
 	var out := []
 	for e in get_tree().get_nodes_in_group("enemy"):
-		if is_instance_valid(e) and e is Node2D and e.is_visible_in_tree() and room.is_ancestor_of(e):
+		if is_instance_valid(e) and e is Node2D and e.is_visible_in_tree() and room.is_ancestor_of(e) and not e.has_meta("corridor_pest"):  # (los bichos de los pasillos se esquivan: se corre al final)
 			if e.get("current_health") == null or e.current_health > 0.0:
 				out.append(e)
 	return out
@@ -864,6 +867,10 @@ func _line_clear(a: Vector2, b: Vector2) -> bool:
 
 # ------------------------------------------------------------------ explorar
 func _explore(room: Room) -> void:
+	if main.corridor_active:
+		_corridor_walk(room)  # pasillo entre reinos: se corre hasta el fondo
+		_goal_kind = "corridor"
+		return
 	if room.room_type == Room.RoomType.PUZZLE and room.has_meta("puzzle") and not room.has_meta("bot_skip_puzzle") and _solve_puzzle(room.get_meta("puzzle")):
 		_goal_kind = "puzzle"
 		return
@@ -905,6 +912,11 @@ func _explore(room: Room) -> void:
 		# hasta quedar encima: a 26 px el cuerpo todavia no toca el area del objeto
 		if player.global_position.distance_to(tp) > 4.0:
 			_steer_to(tp)
+		return
+	# 1b) PASILLOS: con el piso completo, la sala del jefe tiene puertas de salida (una por reino destino):
+	# el bot elige segun --route-pick y la cruza empujandola (como un jugador).
+	if main.floor_completed and main.exit_doors.any(func(d): return is_instance_valid(d) and d.state == Door.State.OPEN):
+		_exit_door_step()
 		return
 	# 2) siguiente sala
 	var next := _next_room(room)
@@ -963,6 +975,8 @@ var _kq_lost := 0
 
 func _quest_step(room: Room) -> bool:
 	_quest_room = null
+	if main.floor_completed:
+		return false  # jefe vencido: ya no hay mision de llave que valga (la sala del pasillo/salida manda)
 	var kq = main.get_node_or_null("KeyQuests")
 	if kq == null or not kq.ready_ok or player.current_weapon == null:
 		return false  # sin arma no hay custodios que valgan: primero el arma
@@ -1083,6 +1097,54 @@ func _things(room: Room) -> Array:
 		var want := RunManager.pick_option(regs, get_node("/root/RunManager").current_seed)
 		out = doors.filter(func(n): return _door_region(n) == want)
 	return out
+
+
+var _cor_t := 0.0
+var _cor_p := 0.0
+var _cor_stuck := 0.0
+const _OUT := {"up": Vector2.UP, "down": Vector2.DOWN, "left": Vector2.LEFT, "right": Vector2.RIGHT}
+
+## Cruza la puerta de salida que toca (RunManager.pick_option sobre los reinos de las puertas abiertas).
+func _exit_door_step() -> void:
+	var doors: Array = main.exit_doors.filter(func(d): return is_instance_valid(d) and d.state == Door.State.OPEN)
+	if doors.is_empty():
+		return
+	var regs: Array = doors.map(func(d): return str(d.get_meta("exit_region")))
+	var want := RunManager.pick_option(regs, get_node("/root/RunManager").current_seed)
+	var door: Door = doors[regs.find(want)]
+	var out: Vector2 = _OUT[door.get_direction_name()]
+	_goal_text = "puerta de salida a %s (%s)" % [want, door.get_direction_name()]
+	_goal_kind = "exit_door"
+	var stand: Vector2 = door.global_position - out * 70.0
+	if player.global_position.distance_to(stand) > 22.0 and player.global_position.distance_to(door.global_position) > 70.0:
+		_steer_to(stand)
+	else:
+		_press_move(out)  # empujar la puerta (Door.PUSH_TIME)
+
+
+## Dentro del pasillo: derecho hacia la salida (la sala es un rectangulo libre).
+func _corridor_walk(room: Room) -> void:
+	var dir: String = str(room.get_meta("corridor_dir", "right"))
+	_goal_text = "pasillo %s -> %s (%s) %d%%" % [room.get_meta("corridor_from", "?"), room.get_meta("corridor_to", "?"), dir, int(main.corridor_progress() * 100.0)]
+	if _arg("--corridor-hold=", "") != "" and main.corridor_progress() >= float(_arg("--corridor-hold=", "1")):
+		return  # prueba: se queda quieto (para ver de cerca a los bichos incomodos)
+	# bichos y burbujas de los encuentros: si el avance se atasca, se revientan a tiros y se esquivan con dash
+	_cor_t += get_physics_process_delta_time()
+	if _cor_t >= 0.5:
+		var pr: float = main.corridor_progress()
+		_cor_stuck = _cor_stuck + 0.5 if pr - _cor_p < 0.004 else 0.0
+		_cor_p = pr
+		_cor_t = 0.0
+	var goal_pos: Vector2 = room.global_position + Corridor.end_pos(room)
+	if _cor_stuck >= 1.0:
+		player.aim_override = (goal_pos - player.global_position).normalized()
+		Input.action_press("attack")
+		if _dash_cd <= 0.0:
+			_press_move((goal_pos - player.global_position).normalized())
+			Input.action_press("dash")
+			_dash_cd = 1.0
+			return
+	_steer_to(room.global_position + Corridor.end_pos(room))  # camino estrecho con curvas: BFS sobre el suelo del pasillo
 
 
 func _door_region(n: Node) -> String:

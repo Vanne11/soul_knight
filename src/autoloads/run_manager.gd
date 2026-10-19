@@ -210,10 +210,50 @@ static func seals() -> int:
 ## orden de archivo). Para listarlos al jugador; NO cambia ids ni guardados.
 static func world_order() -> Array:
 	var out: Array = body_regions() + center_regions()
+	var optional := detour_regions()
 	for r in regions():
-		if r not in out:
+		if r not in out and r not in optional:  # los desvios opcionales no cuentan como reino obligatorio
 			out.append(r)
 	return out
+
+
+## DESVIOS (routes.json "detours"): puerta extra opcional desde el jefe final de un reino hacia un reino
+## secreto. {"to": id, "open": bool} o {} si el reino no tiene. "open": false = la puerta se ve SELLADA.
+static func detour_for(region: String) -> Dictionary:
+	var d = ROUTES.get("detours", {}).get(region, {})
+	return d if d is Dictionary else {}
+
+
+## Ids de los reinos de desvio (no entran en la ruta base ni en el final verdadero).
+static func detour_regions() -> Array:
+	var out: Array = []
+	for k in ROUTES.get("detours", {}):
+		out.append(str(ROUTES.detours[k].get("to", "")))
+	return out
+
+
+## Reino "padre" de un desvio (donde esta su puerta) o "" si no es desvio.
+static func detour_parent(region: String) -> String:
+	for k in ROUTES.get("detours", {}):
+		if str(ROUTES.detours[k].get("to", "")) == region:
+			return str(k)
+	return ""
+
+
+## Estilo (kingdom de los JSON de piso) del reino: tilesets, puertas y decoracion. Mira tambien los pisos wip.
+static func region_kingdom(region: String) -> String:
+	for f in FLOORS + WIP_FLOORS:
+		if f.region == region:
+			return str(f.get("kingdom", "neutral"))
+	return "neutral"
+
+
+## Color de acento (tint) del reino.
+static func region_tint(region: String) -> Color:
+	for f in FLOORS + WIP_FLOORS:
+		if f.region == region and f.has("tint"):
+			return f.tint
+	return Color.WHITE
 
 
 static func _add_region_floors(id: String) -> void:
@@ -258,8 +298,8 @@ static func add_region(id: String) -> void:
 
 ## Reinos entre los que seguir al terminar el ultimo reino de la ruta: [] = fin de la partida,
 ## 1 = sigue solo (center), 2+ = el jugador elige (body, sellos insuficientes).
-static func next_options() -> Array:
-	if seals() < seals_needed():
+static func next_options(extra_seals := 0) -> Array:
+	if seals() + extra_seals < seals_needed():
 		var body: Array = body_regions().filter(func(id): return id not in route_regions)
 		if not body.is_empty():
 			return body
@@ -284,6 +324,37 @@ static func is_route_end(floor_n: int) -> bool:
 	if not route_dynamic:
 		return floor_n >= route_size()
 	return floor_n >= route_floors.size() and is_region_last_floor(floor_n) and next_options().is_empty()
+
+
+## true si vencer al jefe de este piso DARIA un sello (mismas condiciones que award_seal, sin darlo).
+static func would_award_seal(floor_n: int) -> bool:
+	if not route_dynamic or not floor_has_boss(floor_n) or not is_region_last_floor(floor_n):
+		return false
+	var r := floor_region(floor_n)
+	return r in ROUTES.get("body", []) and r not in seal_regions
+
+
+## PASILLOS: reinos a los que llevan las puertas de la sala del jefe de este piso (el jefe FINAL de un
+## reino). Existen desde que entras a la sala (selladas) y se abren al vencerlo; por eso cuenta el sello que
+## ese jefe va a dar. Siguiente de la ruta si ya esta armada (rescate, saltos de depuracion) o las opciones por
+## sellos. [] = no hay puertas de reino (etapa 1, tramo en paz, Silencio: escotilla de siempre).
+static func exit_regions(floor_n: int) -> Array:
+	if not floor_has_boss(floor_n) or not is_region_last_floor(floor_n) or floor_is_peace(floor_n) or Silencio.is_floor(floor_n):
+		return []
+	if floor_n < route_floors.size():
+		var nf: Dictionary = floor_at(floor_n + 1)
+		return [str(nf.region)] if str(nf.region) != floor_region(floor_n) and not floor_is_peace(floor_n + 1) else []
+	if not route_dynamic:
+		return []
+	var out: Array = next_options(1 if would_award_seal(floor_n) else 0)
+	if out.is_empty():
+		return out  # fin de la partida: sin desvios
+	# desvio opcional ABIERTO (routes.json "detours"."open": true y reino sin "wip"): una puerta mas, sin sello
+	var det := detour_for(floor_region(floor_n))
+	var to := str(det.get("to", ""))
+	if bool(det.get("open", false)) and to in regions() and to not in route_regions and to not in out:
+		out.append(to)
+	return out
 
 
 ## Da el sello si el piso es el final de un reino del cuerpo y trae jefe. true si lo dio.
@@ -469,6 +540,10 @@ static func region_index(floor_n: int) -> int:
 	var played: Array = route_regions
 	if not peace_regions.is_empty():
 		played = route_regions.filter(func(x): return x not in peace_regions)  # los tramos en paz no suben la dificultad
+	var parent := detour_parent(r)
+	if parent != "":
+		r = parent  # un desvio opcional tiene la dificultad del reino donde esta su puerta
+	played = played.filter(func(x): return x not in detour_regions())  # y no sube la de los reinos que siguen
 	var i: int = played.find(r) if not route_floors.is_empty() else regions().find(r)
 	return maxi(i, 0)
 

@@ -109,7 +109,7 @@ func setup_floor(rooms: Dictionary, floor_n: int, seed_: int) -> void:
 
 func _roll_dark(room: Room, floor_n: int) -> bool:
 	match room.room_type:
-		Room.RoomType.START, Room.RoomType.SHOP, Room.RoomType.SILENCIO:
+		Room.RoomType.START, Room.RoomType.SHOP, Room.RoomType.SILENCIO, Room.RoomType.CORRIDOR:
 			return false
 		Room.RoomType.BOSS:
 			return true

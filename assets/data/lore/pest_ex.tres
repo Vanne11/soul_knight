@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "pest_ex"
+title = "Ex Nocturno"
+text = "Se pega a tu ritmo y no se va: da igual cuánto corras, siempre está a tres pasos escribiendo «...». Solo se le saca llegando al final del pasillo. Y bloqueándolo, pero eso no se puede en pixel art."
+category = 3
+unlock_condition = {"type": 10, "target_id": "pest_ex"}
+flavor_text = "Encuéntralo en un pasillo entre reinos."

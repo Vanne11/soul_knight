@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dpdnntjud8tg3"
+
+[deps]
+
+files=["res://locale/pasillos.es.translation", "res://locale/pasillos.en.translation", "res://locale/pasillos.fr.translation"]
+
+source_file="res://locale/pasillos.csv"
+dest_files=["res://locale/pasillos.es.translation", "res://locale/pasillos.en.translation", "res://locale/pasillos.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
