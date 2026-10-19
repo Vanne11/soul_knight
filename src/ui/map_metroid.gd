@@ -48,7 +48,7 @@ var _prev_paused := false
 var _t := 0.0
 var _intro := true
 var _closing := false
-var _legend := true
+var _legend := false  # arranca oculta: tapaba el titulo del reino al hacer zoom (L la muestra)
 var _blink := true
 var _pulse := 0.0
 
