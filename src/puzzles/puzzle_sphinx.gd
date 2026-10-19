@@ -25,6 +25,7 @@ func build() -> void:
 	_count = clampi(3 + depth / 3, 3, 5)
 	_sphinx = make_sprite("sphinx", Vector2(0, -56), 0)
 	LightKit.add_contact_shadow(_sphinx, 34.0, 24.0).position = Vector2(0, 26)
+	TallProp.attach(_sphinx, TallProp.own_rect(_sphinx))  # el heroe pasa por detras de la esfinge
 	_it = Area2D.new()
 	_it.set_script(INTERACTABLE)
 	_it.prompt_text = tr("PZ_SPH_ASK")

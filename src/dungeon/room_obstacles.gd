@@ -58,9 +58,9 @@ const KINDS := {
 	"barrel": {"col": Vector2(22, 14), "pad": 3, "sr": 12.0, "hp": BREAK_HP},
 	"crate": {"col": Vector2(28, 14), "pad": 3, "sr": 15.0, "hp": BREAK_HP},
 }
-const KING_LIST := ["neutral", "pene", "vulva", "mixto", "censura", "prostata"]
+const KING_LIST := ["neutral", "pene", "vulva", "mixto", "censura", "prostata", "orgullo"]
 ## Peso del barril frente a la caja por reino (anforas en Penelandia, cajas en el Perineo).
-const BARREL_W := {"neutral": 0.5, "pene": 0.75, "vulva": 0.6, "mixto": 0.35, "censura": 0.4, "prostata": 0.3}
+const BARREL_W := {"neutral": 0.5, "pene": 0.75, "vulva": 0.6, "mixto": 0.35, "censura": 0.4, "prostata": 0.3, "orgullo": 0.5}
 
 static var _tex_cache: Dictionary = {}
 
@@ -90,6 +90,8 @@ static func build_floor(rooms: Dictionary, floor_n: int, seed_: int) -> void:
 static func build(room_: Room, kingdom_: String, seed_: int, floor_n: int) -> RoomObstacles:
 	if room_.has_meta("obstacles"):
 		return room_.get_meta("obstacles")
+	if kingdom_ == "silencio":  # el Silencio dibuja su propia sala: nada de otros reinos
+		return null
 	if room_.room_type not in SOLID_ROOMS:
 		return null
 	var o := RoomObstacles.new()
@@ -115,16 +117,6 @@ func _process(_delta: float) -> void:
 	elif c != _colored:
 		_colored = c
 		Censor.set_colored(room, c, true)
-	# Profundidad: si el jugador esta detras (mas arriba) y a su lado, el obstaculo lo tapa.
-	var pl := get_tree().get_first_node_in_group("player") as Node2D
-	if pl == null:
-		return
-	var pp := to_local(pl.global_position)
-	for p in _props:
-		if not is_instance_valid(p):
-			continue
-		var d := p.position - Vector2(pp.x, pp.y + 12.0)
-		p.z_index = 2 if (d.y > 0.0 and d.y < p.sprite_h and absf(d.x) < p.sprite_w * 0.5 + 12.0) else 0
 
 
 # ------------------------------------------------------------------ arte
@@ -534,6 +526,7 @@ func _spawn_prop(kind: String, foot: Vector2, flip: bool) -> void:
 	p.add_child(occ)
 	p.occluder = occ
 	add_child(p)
+	TallProp.attach(p, TallProp.box_of(s))  # profundidad: el heroe pasa por detras (src/fx/tall_prop.gd)
 	_props.append(p)
 
 

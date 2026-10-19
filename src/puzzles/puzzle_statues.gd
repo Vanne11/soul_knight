@@ -63,6 +63,7 @@ func build() -> void:
 		spr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		spr.position = Vector2(0, -9)
 		body.add_child(spr)
+		TallProp.attach(body, TallProp.box_of(spr))  # el heroe pasa por detras de la estatua
 		body.position = _cpos(c)
 		add_child(body)
 		_nodes.append(body)

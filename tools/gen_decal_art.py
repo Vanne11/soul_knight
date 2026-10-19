@@ -191,6 +191,18 @@ def rug(k):
                 wput(im, i, (-i + off) % T, dk)
         for cx, cy in ((8, 8), (24, 24), (8, 24), (24, 8)):
             wput(im, cx, cy, C("e0c8c4")); wput(im, cx + 1, cy, C("c8aca8")); wput(im, cx, cy + 1, C("c8aca8"))
+    elif k == "orgullo":  # camino crema con losas pastel y una cinta de arcoiris cosida al centro
+        pas = [C("f4b8c8"), C("b8e0d0"), C("b8c8f0"), C("f6e0a0"), C("d8c0f0")]
+        im.paste(C("f0e4c8"), (0, 0, T, T))
+        blobs(im, rng, [C("e8dabc"), C("f6ecd4")], 40, 3, 2)
+        for i, cx in enumerate(range(0, T, 8)):
+            c = pas[i % len(pas)]
+            for y in range(T):
+                for x in range(cx + 1, cx + 7):
+                    if (y // 8 + i) % 2 == 0:
+                        wput(im, x, y, c)
+        for i in range(T):
+            wput(im, i, 0, C("d8c8a4")); wput(im, i, 8, C("d8c8a4")); wput(im, i, 16, C("d8c8a4")); wput(im, i, 24, C("d8c8a4"))
     else:  # censura: alfombra roja con rombos y botones dorados
         base, dk, lt = C("96202e"), C("7e1826"), C("a82c3a")
         im.paste(base, (0, 0, T, T))
@@ -266,6 +278,19 @@ def patch(k, v):
                     wput(im, x, y, C("5e4634"))
             for _ in range(5):
                 walk(im, rng, rng.randrange(T), rng.randrange(T), 12, C("7a5c44"), (1, 0))
+    elif k == "orgullo":
+        if v == "a":  # losas crema con juntas
+            im.paste(C("f2e8cc"), (0, 0, T, T))
+            blobs(im, rng, [C("f8f0da"), C("e8dcbc")], 40, 4, 2)
+            for i in range(T):
+                wput(im, i, 15, C("d4c4a0")); wput(im, 15, i, C("d4c4a0"))
+        else:  # damero pastel rosa y menta
+            for cy in range(2):
+                for cx in range(2):
+                    im.paste(C("f4c4d0") if (cx + cy) % 2 == 0 else C("c4e8d8"), (cx * 16, cy * 16, cx * 16 + 16, cy * 16 + 16))
+            blobs(im, rng, [C("fbd8e0"), C("d4f0e4")], 30, 3, 2)
+            for i in range(T):
+                wput(im, i, 15, C("d4c4a0")); wput(im, 15, i, C("d4c4a0"))
     else:
         if v == "a":  # marmol gris claro con cruz de juntas
             im.paste(C("dadae2"), (0, 0, T, T))
@@ -396,6 +421,29 @@ def scatter(k, n):
                 if (x - 7) ** 2 / 24 + (y - 6) ** 2 / 9 <= 1:
                     im.putpixel((x, y), C("d68aa0", 235))
         im.putpixel((5, 4), C("f0b8c8", 235))
+        return im
+    if k == "orgullo":
+        confeti = [C("f2708a", 235), C("f6c84a", 235), C("5ac88a", 235), C("5a8ae6", 235), C("a86ae0", 235)]
+        if n == 0:  # confeti suelto
+            im = new(40, 24)
+            for _ in range(16):
+                x, y = rng.randrange(1, 38), rng.randrange(1, 22)
+                c = rng.choice(confeti)
+                im.putpixel((x, y), c); im.putpixel((x + 1, y), c)
+                if rng.random() < 0.5:
+                    im.putpixel((x, y + 1), c)
+            return im
+        if n == 1:  # petalos caidos
+            im = new(34, 22)
+            for _ in range(7):
+                x, y = rng.randrange(1, 30), rng.randrange(1, 19)
+                petal(im, rng, x, y, rng.choice([C("f4a0c0", 235), C("f6d070", 235), C("c4a0f0", 235)]), C("fbe0ea", 235))
+            return im
+        im = new(44, 12)  # serpentina enrollada
+        c = rng.choice(confeti)
+        for x in range(2, 42):
+            y = 6 + int(round(3 * math.sin(x / 4.0)))
+            im.putpixel((x, y), c); im.putpixel((x, y + 1), shade(c, 0.85))
         return im
     # censura
     if n == 0:  # gotas de tinta
@@ -685,7 +733,7 @@ def glass():
 
 
 def main():
-    for k in (sys.argv[1:] or ("neutral", "pene", "vulva", "mixto", "censura", "prostata")):
+    for k in (sys.argv[1:] or ("neutral", "pene", "vulva", "mixto", "censura", "prostata", "orgullo")):
         rug(k)
         patch(k, "a")
         patch(k, "b")

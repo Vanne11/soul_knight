@@ -217,6 +217,7 @@ func _customs() -> void:
 	npc.position = spot
 	npc.offset = Vector2(0, -40)
 	add_child(npc)
+	TallProp.attach_visual(npc, npc, true)
 	var opts: Array = []
 	var can_pay: bool = rm().coins >= n
 	if can_pay:

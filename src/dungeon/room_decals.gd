@@ -26,6 +26,7 @@ const RING := {
 	"mixto": [Color(0.19, 0.17, 0.18, 0.55), Color(0.78, 0.63, 0.24, 0.85)],
 	"censura": [Color(0.2, 0.04, 0.08, 0.6), Color(0.84, 0.69, 0.31, 0.9)],
 	"prostata": [Color(0.22, 0.16, 0.15, 0.5), Color(0.8, 0.66, 0.6, 0.85)],
+	"orgullo": [Color(0.62, 0.5, 0.36, 0.45), Color(0.96, 0.72, 0.8, 0.85)],
 }
 ## Liquidos por reino (con su peso). El dudoso sale poco: es un chiste, no una plaga.
 const PUDDLES := {
@@ -35,6 +36,7 @@ const PUDDLES := {
 	"mixto": [["aceite", 0.5], ["water", 0.35], ["dudoso", 0.15]],
 	"censura": [["tinta", 0.65], ["water", 0.35]],
 	"prostata": [["water", 0.7], ["dudoso", 0.3]],
+	"orgullo": [["water", 1.0]],
 }
 const WET_PATCHES := {"patch_neutral_b": "mud", "patch_mixto_a": "arena", "patch_censura_b": "tinta"}
 const STAMPS := {"mixto": "stamp_mixto", "censura": "stamp_censura"}
@@ -61,6 +63,8 @@ var _colored := false
 static func build(room_: Room, kingdom_: String, run_seed: int, floor_n: int) -> RoomDecals:
 	if room_.has_meta("decals"):
 		return room_.get_meta("decals")
+	if kingdom_ == "silencio":  # el Silencio dibuja su propia sala: nada de otros reinos
+		return null
 	var d := RoomDecals.new()
 	d.name = "Decals"
 	d.room = room_

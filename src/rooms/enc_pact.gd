@@ -37,6 +37,7 @@ func start() -> void:
 	spr.scale = Vector2(0.62, 0.62)
 	spr.offset = Vector2(0, -52)
 	_it.add_child(spr)
+	TallProp.attach_visual(_it, spr, true)
 	ActorFx.add_glow(_it, Color(0.5, 1.0, 0.55), 0.8, 1.0).position = Vector2(0, -30)
 	_it.connect("used", _ask)
 	room.props_node.add_child.call_deferred(_it)
