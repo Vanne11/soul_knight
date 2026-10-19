@@ -57,11 +57,15 @@ func _draw_tick() -> void:
 func _draw_body() -> void:
 	if not guarding:
 		return
-	var c := Vector2(0, 26)
-	draw_circle(c, 11.0, Color(0.2, 0.3, 0.6, 0.35))
-	draw_line(c + Vector2(0, -8), c + Vector2(0, 8), Color.BLACK, 4.0)
-	draw_line(c + Vector2(-6, -3), c + Vector2(6, -3), Color.BLACK, 4.0)
-	draw_arc(c + Vector2(0, 2), 8.0, 0.2, PI - 0.2, 10, Color.BLACK, 4.0)
-	draw_line(c + Vector2(0, -8), c + Vector2(0, 8), Color("8fb4ff"), 2.0)
-	draw_line(c + Vector2(-6, -3), c + Vector2(6, -3), Color("8fb4ff"), 2.0)
-	draw_arc(c + Vector2(0, 2), 8.0, 0.2, PI - 0.2, 10, Color("8fb4ff"), 2.0)
+	# anclaje sobrio: aro sutil en los pies (elipse achatada) y un tampon chiquito en la mano izquierda
+	var pulse := 0.5 + 0.15 * sin(_t * 5.0)
+	draw_set_transform(Vector2(0, 14), 0.0, Vector2(1.0, 0.4))
+	draw_arc(Vector2.ZERO, 12.0, 0.0, TAU, 20, Color(0.4, 0.6, 1.0, pulse * 0.45), 2.5)
+	draw_arc(Vector2.ZERO, 12.0, 0.0, TAU, 20, Color(0.7, 0.85, 1.0, pulse), 1.0)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	var a: float = player._aim.angle()
+	var f := Vector2.from_angle(a)
+	var hand: Vector2 = f * 9.0 + f.rotated(-PI * 0.5) * 8.0
+	draw_line(hand - f * 3.5, hand + f * 3.5, Color(0, 0, 0, 0.85), 4.0)
+	draw_line(hand - f * 3.0, hand + f * 3.0, Color(0.97, 0.97, 1.0), 2.5)
+	draw_line(hand - f * 3.0, hand - f * 6.0 + f.rotated(PI * 0.5) * 1.5, Color(0.8, 0.85, 1.0), 1.0)

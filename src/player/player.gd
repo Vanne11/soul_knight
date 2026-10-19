@@ -50,6 +50,7 @@ const DEFENSES := {
 	"toallita": preload("res://src/player/defenses/toallita.gd"),
 	"bolsa_agua": preload("res://src/player/defenses/bolsa_agua.gd"),
 	"pastilla": preload("res://src/player/defenses/pastilla_dia_despues.gd"),
+	"pito": preload("res://src/player/defenses/pito.gd"),
 	"latigo": preload("res://src/player/defenses/latigo_seda.gd"),
 	"esposas": preload("res://src/player/defenses/esposas_peludas.gd"),
 }

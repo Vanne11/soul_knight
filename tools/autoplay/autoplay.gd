@@ -1402,7 +1402,7 @@ func _use_defense(delta: float) -> void:
 		if player.get_node("/root/PlayerStats").current_health < player.get_node("/root/PlayerStats").max_health and _def_t <= 0.0:
 			_def_t = 1.0
 			Input.action_press("guard")
-	elif d is DefBarrera or d is DefVacuna or d is DefTalco or d is DefToallita or d is DefLatigoSeda or d is DefEsposasPeludas or d is DefBolsaAgua:
+	elif d is DefBarrera or d is DefVacuna or d is DefTalco or d is DefToallita or d is DefLatigoSeda or d is DefEsposasPeludas or d is DefBolsaAgua or d is DefPito:
 		if (danger or d is DefBolsaAgua) and _def_t <= 0.0:
 			_def_t = 1.5
 			Input.action_press("guard")
@@ -1416,7 +1416,7 @@ var _shot_t := 0.0
 
 func _shot_defense(d) -> void:
 	var dir := _arg("--shot=", "")
-	if dir == "" or _shot_n >= 4 or not d.guarding:
+	if dir == "" or _shot_n >= 4 or not (d.guarding or d.cooling):
 		return
 	var now := Time.get_ticks_msec() / 1000.0
 	if now - _shot_t < 2.5:

@@ -26,7 +26,8 @@ GEM.RAW = RAW
 T.RAW = RAW
 
 IDS = ("def_implante", "def_tampon_ancla", "def_suspensorio", "def_parche", "def_talco",
-       "def_toallita", "def_bolsa_agua", "def_pastilla_dia_despues", "def_latigo_seda", "def_esposas")
+       "def_toallita", "def_bolsa_agua", "def_pastilla_dia_despues", "def_latigo_seda", "def_esposas",
+       "def_pito")  # el 11.o (pito) no esta en la hoja: se pinta por codigo
 ICON_PX = (24, 24)
 
 PROMPT = STYLE.replace("Characters face RIGHT in a three-quarter top-down game view. ", "") + (
@@ -146,6 +147,13 @@ def _code_icon(wid):
             d.ellipse((cx - 5, 8, cx + 5, 20), fill=(255, 130, 190, 255), outline=K)
             d.ellipse((cx - 2, 12, cx + 2, 16), fill=(0, 0, 0, 0), outline=K)
         d.line((10, 14, 13, 14), fill=(210, 210, 225, 255), width=2)
+    elif wid == "def_pito":
+        d.line((12, 5, 12, 2), fill=(200, 60, 60, 255), width=1)
+        d.ellipse((3, 8, 17, 21), fill=(245, 200, 60, 255), outline=K)
+        d.ellipse((7, 12, 13, 18), fill=(40, 30, 20, 255))
+        d.rectangle((14, 9, 22, 14), fill=(245, 200, 60, 255), outline=K)
+        d.arc((1, 1, 10, 10), 180, 360, fill=(200, 60, 60, 255), width=2)
+        d.line((6, 10, 8, 11), fill=(255, 245, 190, 255))
     return im
 
 
