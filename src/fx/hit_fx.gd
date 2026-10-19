@@ -25,6 +25,7 @@ var _t := 0.0
 var _last_us := 0
 var _stop_until_us := 0
 var _next_stop_us := 0
+var _stopping := false  # solo restauramos time_scale si el hitstop lo puso (utero_fx tambien lo toca)
 
 
 func _ready() -> void:
@@ -58,6 +59,7 @@ static func hitstop(secs := HITSTOP_SECS) -> void:
 		return
 	inst._next_stop_us = now + int((secs + HITSTOP_COOLDOWN) * 1e6)
 	inst._stop_until_us = maxi(inst._stop_until_us, now + int(secs * 1e6))
+	inst._stopping = true
 	Engine.time_scale = HITSTOP_SCALE
 
 
@@ -86,7 +88,8 @@ func _process(_delta: float) -> void:
 	var now := Time.get_ticks_usec()
 	var dt := minf((now - _last_us) / 1e6, 0.1)  # tiempo real, no afectado por time_scale
 	_last_us = now
-	if Engine.time_scale != 1.0 and now >= _stop_until_us:
+	if _stopping and now >= _stop_until_us:
+		_stopping = false
 		Engine.time_scale = 1.0
 	if camera == null or not is_instance_valid(camera):
 		return

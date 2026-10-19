@@ -1,0 +1,591 @@
+{
+  "_nota": "Generado por tools/gen_medallas.py; condiciones en src/autoloads/medallas.gd",
+  "medallas": [
+    {
+      "id": "jefe_cera",
+      "nombre_key": "MEDAL_JEFE_CERA_NAME",
+      "desc_key": "MEDAL_JEFE_CERA_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "cera"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_afeitadora",
+      "nombre_key": "MEDAL_JEFE_AFEITADORA_NAME",
+      "desc_key": "MEDAL_JEFE_AFEITADORA_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "afeitadora"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_testiculo_primordial",
+      "nombre_key": "MEDAL_JEFE_TESTICULO_PRIMORDIAL_NAME",
+      "desc_key": "MEDAL_JEFE_TESTICULO_PRIMORDIAL_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "testiculo_primordial"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_don_sildenafil",
+      "nombre_key": "MEDAL_JEFE_DON_SILDENAFIL_NAME",
+      "desc_key": "MEDAL_JEFE_DON_SILDENAFIL_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "don_sildenafil"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_reina_ovaria",
+      "nombre_key": "MEDAL_JEFE_REINA_OVARIA_NAME",
+      "desc_key": "MEDAL_JEFE_REINA_OVARIA_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "reina_ovaria"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_diu_cosmico",
+      "nombre_key": "MEDAL_JEFE_DIU_COSMICO_NAME",
+      "desc_key": "MEDAL_JEFE_DIU_COSMICO_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "diu_cosmico"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_aduanero",
+      "nombre_key": "MEDAL_JEFE_ADUANERO_NAME",
+      "desc_key": "MEDAL_JEFE_ADUANERO_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "aduanero"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_prostata",
+      "nombre_key": "MEDAL_JEFE_PROSTATA_NAME",
+      "desc_key": "MEDAL_JEFE_PROSTATA_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "prostata"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_hoja_de_parra",
+      "nombre_key": "MEDAL_JEFE_HOJA_DE_PARRA_NAME",
+      "desc_key": "MEDAL_JEFE_HOJA_DE_PARRA_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "evento",
+        "id": "hoja_cae"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_parra_entera",
+      "nombre_key": "MEDAL_JEFE_PARRA_ENTERA_NAME",
+      "desc_key": "MEDAL_JEFE_PARRA_ENTERA_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "parra_entera"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_algoritmo",
+      "nombre_key": "MEDAL_JEFE_ALGORITMO_NAME",
+      "desc_key": "MEDAL_JEFE_ALGORITMO_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "algoritmo"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_glandula",
+      "nombre_key": "MEDAL_JEFE_GLANDULA_NAME",
+      "desc_key": "MEDAL_JEFE_GLANDULA_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "glandula"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_don_chequeo",
+      "nombre_key": "MEDAL_JEFE_DON_CHEQUEO_NAME",
+      "desc_key": "MEDAL_JEFE_DON_CHEQUEO_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "don_chequeo"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_regla",
+      "nombre_key": "MEDAL_JEFE_REGLA_NAME",
+      "desc_key": "MEDAL_JEFE_REGLA_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "regla"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_destine",
+      "nombre_key": "MEDAL_JEFE_DESTINE_NAME",
+      "desc_key": "MEDAL_JEFE_DESTINE_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "destine"
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_cera_intacto",
+      "nombre_key": "MEDAL_JEFE_CERA_INTACTO_NAME",
+      "desc_key": "MEDAL_JEFE_CERA_INTACTO_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "cera",
+        "sin_dano": true
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_parra_entera_intacto",
+      "nombre_key": "MEDAL_JEFE_PARRA_ENTERA_INTACTO_NAME",
+      "desc_key": "MEDAL_JEFE_PARRA_ENTERA_INTACTO_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "parra_entera",
+        "sin_dano": true
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_destine_intacto",
+      "nombre_key": "MEDAL_JEFE_DESTINE_INTACTO_NAME",
+      "desc_key": "MEDAL_JEFE_DESTINE_INTACTO_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "destine",
+        "sin_dano": true
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_cera_pudor",
+      "nombre_key": "MEDAL_JEFE_CERA_PUDOR_NAME",
+      "desc_key": "MEDAL_JEFE_CERA_PUDOR_DESC",
+      "nivel": "sin_pudor",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "cera",
+        "pudor_min": 5
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_parra_entera_pudor",
+      "nombre_key": "MEDAL_JEFE_PARRA_ENTERA_PUDOR_NAME",
+      "desc_key": "MEDAL_JEFE_PARRA_ENTERA_PUDOR_DESC",
+      "nivel": "sin_pudor",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "parra_entera",
+        "pudor_min": 5
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefe_destine_pudor",
+      "nombre_key": "MEDAL_JEFE_DESTINE_PUDOR_NAME",
+      "desc_key": "MEDAL_JEFE_DESTINE_PUDOR_DESC",
+      "nivel": "sin_pudor",
+      "condicion": {
+        "tipo": "jefe",
+        "id": "destine",
+        "pudor_min": 5
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "jefes_intocable",
+      "nombre_key": "MEDAL_JEFES_INTOCABLE_NAME",
+      "desc_key": "MEDAL_JEFES_INTOCABLE_DESC",
+      "nivel": "sin_pudor",
+      "condicion": {
+        "tipo": "jefes_sin_dano",
+        "n": 5
+      },
+      "oculta": false,
+      "icono": "jefe"
+    },
+    {
+      "id": "reinos_3",
+      "nombre_key": "MEDAL_REINOS_3_NAME",
+      "desc_key": "MEDAL_REINOS_3_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "reinos",
+        "n": 3
+      },
+      "oculta": false,
+      "icono": "reino"
+    },
+    {
+      "id": "reinos_6",
+      "nombre_key": "MEDAL_REINOS_6_NAME",
+      "desc_key": "MEDAL_REINOS_6_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "reinos",
+        "n": 6
+      },
+      "oculta": false,
+      "icono": "reino"
+    },
+    {
+      "id": "reinos_8",
+      "nombre_key": "MEDAL_REINOS_8_NAME",
+      "desc_key": "MEDAL_REINOS_8_DESC",
+      "nivel": "sin_pudor",
+      "condicion": {
+        "tipo": "reinos",
+        "n": 8
+      },
+      "oculta": false,
+      "icono": "reino"
+    },
+    {
+      "id": "final_primero",
+      "nombre_key": "MEDAL_FINAL_PRIMERO_NAME",
+      "desc_key": "MEDAL_FINAL_PRIMERO_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "victoria"
+      },
+      "oculta": false,
+      "icono": "heroe"
+    },
+    {
+      "id": "final_pitocles",
+      "nombre_key": "MEDAL_FINAL_PITOCLES_NAME",
+      "desc_key": "MEDAL_FINAL_PITOCLES_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "victoria",
+        "heroe": "pitocles"
+      },
+      "oculta": false,
+      "icono": "heroe"
+    },
+    {
+      "id": "final_vulvalquiria",
+      "nombre_key": "MEDAL_FINAL_VULVALQUIRIA_NAME",
+      "desc_key": "MEDAL_FINAL_VULVALQUIRIA_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "victoria",
+        "heroe": "vulvalquiria"
+      },
+      "oculta": false,
+      "icono": "heroe"
+    },
+    {
+      "id": "final_ornitorrinco",
+      "nombre_key": "MEDAL_FINAL_ORNITORRINCO_NAME",
+      "desc_key": "MEDAL_FINAL_ORNITORRINCO_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "victoria",
+        "heroe": "ornitorrinco"
+      },
+      "oculta": false,
+      "icono": "heroe"
+    },
+    {
+      "id": "final_trio",
+      "nombre_key": "MEDAL_FINAL_TRIO_NAME",
+      "desc_key": "MEDAL_FINAL_TRIO_DESC",
+      "nivel": "sin_pudor",
+      "condicion": {
+        "tipo": "victoria_heroes",
+        "n": 3
+      },
+      "oculta": false,
+      "icono": "heroe"
+    },
+    {
+      "id": "final_pudor5",
+      "nombre_key": "MEDAL_FINAL_PUDOR5_NAME",
+      "desc_key": "MEDAL_FINAL_PUDOR5_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "victoria",
+        "pudor_min": 5
+      },
+      "oculta": false,
+      "icono": "heroe"
+    },
+    {
+      "id": "final_pudor10",
+      "nombre_key": "MEDAL_FINAL_PUDOR10_NAME",
+      "desc_key": "MEDAL_FINAL_PUDOR10_DESC",
+      "nivel": "sin_pudor",
+      "condicion": {
+        "tipo": "victoria",
+        "pudor_min": 10
+      },
+      "oculta": false,
+      "icono": "heroe"
+    },
+    {
+      "id": "codice_25",
+      "nombre_key": "MEDAL_CODICE_25_NAME",
+      "desc_key": "MEDAL_CODICE_25_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "codice",
+        "pct": 25
+      },
+      "oculta": false,
+      "icono": "codice"
+    },
+    {
+      "id": "codice_50",
+      "nombre_key": "MEDAL_CODICE_50_NAME",
+      "desc_key": "MEDAL_CODICE_50_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "codice",
+        "pct": 50
+      },
+      "oculta": false,
+      "icono": "codice"
+    },
+    {
+      "id": "codice_100",
+      "nombre_key": "MEDAL_CODICE_100_NAME",
+      "desc_key": "MEDAL_CODICE_100_DESC",
+      "nivel": "sin_pudor",
+      "condicion": {
+        "tipo": "codice",
+        "pct": 100
+      },
+      "oculta": false,
+      "icono": "codice"
+    },
+    {
+      "id": "acertijos_1",
+      "nombre_key": "MEDAL_ACERTIJOS_1_NAME",
+      "desc_key": "MEDAL_ACERTIJOS_1_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "contador",
+        "nombre": "acertijos",
+        "n": 1
+      },
+      "oculta": false,
+      "icono": "acertijo"
+    },
+    {
+      "id": "acertijos_10",
+      "nombre_key": "MEDAL_ACERTIJOS_10_NAME",
+      "desc_key": "MEDAL_ACERTIJOS_10_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "contador",
+        "nombre": "acertijos",
+        "n": 10
+      },
+      "oculta": false,
+      "icono": "acertijo"
+    },
+    {
+      "id": "acertijos_30",
+      "nombre_key": "MEDAL_ACERTIJOS_30_NAME",
+      "desc_key": "MEDAL_ACERTIJOS_30_DESC",
+      "nivel": "sin_pudor",
+      "condicion": {
+        "tipo": "contador",
+        "nombre": "acertijos",
+        "n": 30
+      },
+      "oculta": false,
+      "icono": "acertijo"
+    },
+    {
+      "id": "pacto_menor",
+      "nombre_key": "MEDAL_PACTO_MENOR_NAME",
+      "desc_key": "MEDAL_PACTO_MENOR_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "evento",
+        "id": "pacto_menor"
+      },
+      "oculta": false,
+      "icono": "pacto"
+    },
+    {
+      "id": "pacto_mayor",
+      "nombre_key": "MEDAL_PACTO_MAYOR_NAME",
+      "desc_key": "MEDAL_PACTO_MAYOR_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "evento",
+        "id": "pacto_mayor"
+      },
+      "oculta": false,
+      "icono": "pacto"
+    },
+    {
+      "id": "dia_jugar",
+      "nombre_key": "MEDAL_DIA_JUGAR_NAME",
+      "desc_key": "MEDAL_DIA_JUGAR_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "evento",
+        "id": "dia_jugar"
+      },
+      "oculta": false,
+      "icono": "dia"
+    },
+    {
+      "id": "dia_ganar",
+      "nombre_key": "MEDAL_DIA_GANAR_NAME",
+      "desc_key": "MEDAL_DIA_GANAR_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "victoria",
+        "dia": true
+      },
+      "oculta": false,
+      "icono": "dia"
+    },
+    {
+      "id": "secreta_monte",
+      "nombre_key": "MEDAL_SECRETA_MONTE_NAME",
+      "desc_key": "MEDAL_SECRETA_MONTE_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "evento",
+        "id": "monte_venus"
+      },
+      "oculta": true,
+      "icono": "secreta"
+    },
+    {
+      "id": "secreta_utero",
+      "nombre_key": "MEDAL_SECRETA_UTERO_NAME",
+      "desc_key": "MEDAL_SECRETA_UTERO_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "evento",
+        "id": "enter_utero"
+      },
+      "oculta": true,
+      "icono": "secreta"
+    },
+    {
+      "id": "humor_muerte",
+      "nombre_key": "MEDAL_HUMOR_MUERTE_NAME",
+      "desc_key": "MEDAL_HUMOR_MUERTE_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "contador",
+        "nombre": "muertes",
+        "n": 1
+      },
+      "oculta": false,
+      "icono": "humor"
+    },
+    {
+      "id": "humor_muertes_20",
+      "nombre_key": "MEDAL_HUMOR_MUERTES_20_NAME",
+      "desc_key": "MEDAL_HUMOR_MUERTES_20_DESC",
+      "nivel": "destape",
+      "condicion": {
+        "tipo": "contador",
+        "nombre": "muertes",
+        "n": 20
+      },
+      "oculta": false,
+      "icono": "humor"
+    },
+    {
+      "id": "humor_partidas_10",
+      "nombre_key": "MEDAL_HUMOR_PARTIDAS_10_NAME",
+      "desc_key": "MEDAL_HUMOR_PARTIDAS_10_DESC",
+      "nivel": "sonrojo",
+      "condicion": {
+        "tipo": "contador",
+        "nombre": "partidas",
+        "n": 10
+      },
+      "oculta": false,
+      "icono": "humor"
+    },
+    {
+      "id": "desnudo_integral",
+      "nombre_key": "MEDAL_DESNUDO_INTEGRAL_NAME",
+      "desc_key": "MEDAL_DESNUDO_INTEGRAL_DESC",
+      "nivel": "platino",
+      "condicion": {
+        "tipo": "todas"
+      },
+      "oculta": false,
+      "icono": "final"
+    }
+  ]
+}

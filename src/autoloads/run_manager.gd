@@ -507,6 +507,7 @@ func liberate(floor_n: int) -> bool:
 		return false
 	liberated.append(r)
 	taken.erase(r)  # si estaba tomado (copia de seguridad), vuelve a ser libre
+	get_node("/root/GlobalEvents").game_event.emit("reino_liberado")  # medallas
 	if desorden_notice and pending_regions().is_empty():
 		desorden_notice = false  # ya no queda ningun desorden
 	save_meta_progression()
@@ -591,6 +592,7 @@ static func final_region() -> String:
 ## El Algoritmo cae: la copia de seguridad se destruye. Los reinos tomados vuelven a ser libres.
 func defeat_algoritmo() -> void:
 	algoritmo_vencido = true
+	get_node("/root/GlobalEvents").game_event.emit("algoritmo_vencido")  # medallas
 	copia_restaurada = false
 	for r in taken.keys():
 		if r not in liberated:
@@ -614,6 +616,7 @@ func resolve_victory(floor_n: int, was_liberated: bool) -> String:
 		if not final_verdadero:
 			final_verdadero = true
 			true_ending_reached.emit()
+			get_node("/root/GlobalEvents").game_event.emit("final_verdadero")  # medallas
 	derrotas_seguidas = 0
 	last_ending = kind
 	note_desordenes()

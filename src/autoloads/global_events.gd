@@ -50,5 +50,8 @@ signal lore_unlocked(entry_id: String)
 signal lore_unlock_requested(entry_id: String)
 
 # System signals
+## Evento suelto del juego para las MEDALLAS (src/autoloads/medallas.gd): puzzle_solved, reino_liberado,
+## hoja_cae, pacto_menor, pacto_mayor y todo LoreDatabase.custom_event (monte_venus, enter_utero...).
+signal game_event(id: String)
 signal game_paused(paused: bool)
 signal settings_changed()

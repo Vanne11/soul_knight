@@ -616,6 +616,7 @@ func _build_puzzle(room: Room) -> void:
 
 func _on_puzzle_solved(room: Room) -> void:
 	Narrator.say("puzzle_solved")
+	get_node("/root/GlobalEvents").game_event.emit("puzzle_solved")  # medallas
 	unlock_secret_rooms()
 	room.room_cleared()  # pinta la sala y da la recompensa normal
 

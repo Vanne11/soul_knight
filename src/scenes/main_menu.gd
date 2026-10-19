@@ -42,7 +42,14 @@ func _create_ui() -> void:
 	daily_btn = _menu_button(vbox, tr("CENSURA_DAILY_BTN"), _on_daily)
 	daily_btn.tooltip_text = tr("CENSURA_DAILY_TIP")
 	continue_btn = _menu_button(vbox, tr("MENU_UPGRADES"), _open_upgrades)
-	lore_btn = _menu_button(vbox, tr("MENU_CODEX"), _open_codex)
+	# Codice y Medallas comparten fila (asi la columna no crece y no pisa el selector de Censura)
+	var lore_row := HBoxContainer.new()
+	lore_row.add_theme_constant_override("separation", 10)
+	vbox.add_child(lore_row)
+	lore_btn = _menu_button(lore_row, tr("MENU_CODEX"), _open_codex)
+	lore_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var medal_btn := _menu_button(lore_row, tr("MEDAL_MENU_BTN"), _open_medals)
+	medal_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	settings_btn = _menu_button(vbox, tr("SETTINGS_TITLE"), _open_settings)
 	quit_btn = _menu_button(vbox, tr("MENU_QUIT"), _on_quit)
 	start_btn.grab_focus.call_deferred()
@@ -292,6 +299,13 @@ func _fill_upgrades(info: Label, rows: VBoxContainer) -> void:
 			rm.buy_meta(id)
 			_fill_upgrades(info, rows))
 		rows.add_child(b)
+
+## Medallas (logros): grilla con las ganadas y las bloqueadas (src/ui/medal_screen.gd).
+func _open_medals() -> void:
+	var m = get_node("/root/Medallas")
+	var box := _window(tr("MEDAL_TITLE") % [m.won_count(), m.total()])
+	MedalScreen.build(box)
+
 
 ## Codice: lo que has descubierto (inscripciones, objetos, enemigos...). Lo demas, "???".
 ## Cada entrada lleva su imagen: el objeto, el bicho, el heroe o la ilustracion

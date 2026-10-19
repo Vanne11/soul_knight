@@ -30,7 +30,10 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS  # la musica sigue en pausa
 	for file in ResourceLoader.list_directory(SFX_DIR):
 		if file.ends_with(".wav"):
-			_sfx[file.get_basename()] = load(SFX_DIR + file)
+			var w := load(SFX_DIR + file) as AudioStreamWAV
+			if w != null:
+				w.loop_mode = AudioStreamWAV.LOOP_DISABLED  # un efecto es de un solo disparo, nunca en bucle
+			_sfx[file.get_basename()] = w
 	for i in VOICES:
 		var p := AudioStreamPlayer.new()
 		p.volume_db = SFX_DB
@@ -63,6 +66,7 @@ func play(sfx_name: String, pitch_jitter := 0.06) -> void:
 	p.stream = _sfx[sfx_name]
 	p.volume_db = SFX_DB  # la voz puede haberlo bajado en este reproductor
 	p.pitch_scale = 1.0 + randf_range(-pitch_jitter, pitch_jitter)
+	p.stream_paused = false
 	p.play()
 
 
@@ -125,5 +129,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func _exit_tree() -> void:
 	if _fade:
 		_fade.kill()
+	for p in _players:
+		p.stop()
+		p.stream = null
 	_music.stop()
 	_music.stream = null
