@@ -37,6 +37,9 @@ def cut_bg(im: Image.Image) -> Image.Image:
     return Image.fromarray(out, "RGBA")
 
 
+MASKS = {}
+
+
 def components(alpha: np.ndarray, gap: int = 14, minsize: int = 400):
     """Cajas de las poses: componentes del alfa tras dilatar `gap` px (junta efectos sueltos con su pose)."""
     h, w = alpha.shape
@@ -64,6 +67,7 @@ def components(alpha: np.ndarray, gap: int = 14, minsize: int = 400):
                 box = (min(xs) * s, min(ys) * s, (max(xs) + 1) * s, (max(ys) + 1) * s)
                 if small[min(ys):max(ys) + 1, min(xs):max(xs) + 1].sum() * s * s >= minsize:
                     boxes.append(box)
+                    MASKS[box] = (lab == n)
     return boxes
 
 
@@ -86,6 +90,12 @@ def cells(path, gap: int = 14, row_tol: float = 0.5):
     for _, bs in rows:
         for b in sorted(bs, key=lambda b: b[0]):
             c = im.crop(b)
+            mk = MASKS.get(b)
+            if mk is not None:  # solo los pixeles de ESTA pose (las cajas de poses vecinas se pisan)
+                full = np.array(Image.fromarray(mk[b[1] // 4:b[3] // 4, b[0] // 4:b[2] // 4].astype(np.uint8) * 255).resize(c.size, Image.NEAREST)) > 0
+                ca = np.array(c)
+                ca[:, :, 3] = np.where(full, ca[:, :, 3], 0)
+                c = Image.fromarray(ca, 'RGBA')
             out.append((len(out), c, b))
     return im, out
 
@@ -100,3 +110,20 @@ def debug(path, dest, gap: int = 14):
         d.text((b[0] + 4, b[1] + 2), str(i), fill=(255, 255, 255, 255))
     bg.convert("RGB").save(dest)
     return cs
+
+
+def main_blob(im, gap: int = 24):
+    """Se queda solo con la pose mas grande de un recorte por caja (quita pedazos de las poses vecinas)."""
+    w, h = im.size
+    pad = Image.new("RGBA", (w + (-w) % 4, h + (-h) % 4), (0, 0, 0, 0))
+    pad.paste(im, (0, 0))
+    al = np.array(pad)[:, :, 3]
+    MASKS.clear()
+    boxes = components(al, gap, minsize=50)
+    if not boxes:
+        return im
+    best = max(boxes, key=lambda b: MASKS[b].sum())
+    full = np.array(Image.fromarray(MASKS[best].astype(np.uint8) * 255).resize(pad.size, Image.NEAREST)) > 0
+    a = np.array(pad)
+    a[:, :, 3] = np.where(full, a[:, :, 3], 0)
+    return Image.fromarray(a, "RGBA").crop((0, 0, w, h))

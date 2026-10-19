@@ -295,5 +295,11 @@ if __name__ == "__main__":
         parts = args or ["enemigos"]
         if "enemigos" in parts:
             build_enemigos()
+        if "jefe" in parts:
+            import arc2_boss
+            arc2_boss.build()
         if "preview" in parts:
-            preview_enemigos(args[args.index("preview") + 1] if len(args) > args.index("preview") + 1 else ".")
+            import arc2_boss
+            dd = args[args.index("preview") + 1] if len(args) > args.index("preview") + 1 else "."
+            preview_enemigos(dd)
+            arc2_boss.preview(dd)
