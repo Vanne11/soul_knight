@@ -27,6 +27,11 @@ var damage := 6.0
 var harden := true
 var hp := 36.0
 var boss: Node = null
+## Cera de adorno (Monte de Venus): nace dura, sin quema ni jefe, y se dibuja con arte propio.
+var start_solid := false
+var skin: Texture2D = null
+var skin_broken: Texture2D = null
+var skin_crumbs: Texture2D = null
 
 var phase := Ph.WARN
 var t := 0.0
@@ -50,6 +55,17 @@ static func puddle(b: Node, pos: Vector2, r: float, warn_: float, burn_: float, 
 	w.damage = dmg
 	w.harden = harden_
 	w.position = pos
+	return w
+
+
+## Bloque ya endurecido (sin aviso ni quema): obstaculo que se rompe a golpes y disparos. `radius` es el
+## ancho que tapa; las texturas (sano, roto, escombros) tienen el pie en el centro de la base.
+static func hardened(pos: Vector2, r: float, skin_: Texture2D, broken_: Texture2D, crumbs_: Texture2D) -> WaxBlock:
+	var w := puddle(null, pos, r, 0.0, 0.0, 0.0)
+	w.start_solid = true
+	w.skin = skin_
+	w.skin_broken = broken_
+	w.skin_crumbs = crumbs_
 	return w
 
 
@@ -106,6 +122,9 @@ func _ready() -> void:
 		n = n.get_parent()
 	_room = n
 	z_index = 2
+	if start_solid:
+		phase = Ph.SOLID
+		collision_layer = 1
 	if boss != null and is_instance_valid(boss) and boss is CharacterBody2D:
 		(boss as CharacterBody2D).add_collision_exception_with(self)  # la jefa se desliza por su cera
 
@@ -249,6 +268,9 @@ func _blob(r: float, col: Color, grow := 0.0) -> void:
 
 
 func _draw() -> void:
+	if skin != null:
+		_draw_skin()
+		return
 	var pulse := 0.65 + 0.35 * sin(t * 24.0)
 	var white := Color(1, 1, 1)
 	if kind == Kind.EDGE:
@@ -289,6 +311,19 @@ func _draw() -> void:
 		Ph.CRUMBLE:
 			var a := 1.0 - clampf(t / 0.5, 0.0, 1.0)
 			_blob(radius * (0.7 + 0.3 * a), Color(WAX_SOLID, 0.7 * a))
+
+
+## Arte propio (hardened): sano, roto cuando le queda menos de la mitad y escombros al deshacerse.
+func _draw_skin() -> void:
+	var tex := skin
+	var a := 1.0
+	if phase == Ph.SOLID and hp < _hp_max * 0.5 and skin_broken != null:
+		tex = skin_broken
+	elif phase == Ph.CRUMBLE:
+		tex = skin_crumbs if skin_crumbs != null else skin_broken
+		a = 1.0 - clampf(t / 0.5, 0.0, 1.0)
+	var flash := Color(1, 1, 1, a) if _flash <= 0.0 else Color(2.2, 2.2, 2.2, a)
+	draw_texture(tex, Vector2(-tex.get_width() * 0.5, radius * 0.5 - tex.get_height()), flash)
 
 
 func _draw_edge(pulse: float) -> void:

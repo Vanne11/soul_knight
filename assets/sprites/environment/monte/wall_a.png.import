@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cclol858x3p51"
-path="res://.godot/imported/monte_venus_bandera.png-635418b030525dc9c4a590c04f4811e0.ctex"
+uid="uid://6pja0o5bc7ti"
+path="res://.godot/imported/wall_a.png-f9a60c16b88861060eb3f448775b0a8f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/environment/decor/monte_venus_bandera.png"
-dest_files=["res://.godot/imported/monte_venus_bandera.png-635418b030525dc9c4a590c04f4811e0.ctex"]
+source_file="res://assets/sprites/environment/monte/wall_a.png"
+dest_files=["res://.godot/imported/wall_a.png-f9a60c16b88861060eb3f448775b0a8f.ctex"]
 
 [params]
 
