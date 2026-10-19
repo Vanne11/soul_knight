@@ -2,7 +2,7 @@
  "_nota": "Generado por tools/gen_world_map.py (no editar a mano). Coordenadas en celdas de cuadricula; y crece hacia abajo.",
  "grid": {
   "w": 56.0,
-  "h": 39.9,
+  "h": 46.3,
   "unit_px": 50
  },
  "regions": [
@@ -433,6 +433,55 @@
    "stairs": {
     "x": 26.04,
     "y": 36.0
+   }
+  },
+  {
+   "id": "puerta_trasera",
+   "name": "LA PUERTA TRASERA",
+   "name_key": "MAPA_REINO_PUERTA_TRASERA",
+   "role": "secret",
+   "x": 21.2,
+   "y": 41.4,
+   "w": 13.4,
+   "h": 5.4,
+   "color": "a08c70",
+   "rainbow": false,
+   "pisos": 2,
+   "label_dx": 0,
+   "boss": {
+    "x": 30.72,
+    "y": 42.96,
+    "w": 3.4,
+    "h": 2.88
+   },
+   "sala": "a08c70",
+   "ico": "2a2010",
+   "boss_variant": "coprolito",
+   "boss_pend": true,
+   "boss_seal": false,
+   "boss_name": "El Coprolito",
+   "boss_name_key": "MM_BOSS_PUERTA_TRASERA",
+   "piso_list": [
+    {
+     "n": 1,
+     "x": 21.68,
+     "y": 43.0,
+     "t": "T1",
+     "calm": "lore",
+     "guard": true
+    },
+    {
+     "n": 2,
+     "x": 26.64,
+     "y": 43.0,
+     "t": "T2",
+     "calm": "cofre",
+     "guard": false
+    }
+   ],
+   "stairs": {
+    "x": 26.04,
+    "y": 44.4
    }
   }
  ],

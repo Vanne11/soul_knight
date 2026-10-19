@@ -13,7 +13,7 @@ ARGS=_ap.parse_args(); JSON_ONLY=ARGS.json_only
 JSON_OUT=ROOT/"assets/data/world_map.json"
 R=str(ROOT/"assets/sprites")+"/"
 OUT=ARGS.svg
-W,H=3200,2200
+W,H=3200,2520
 UNIT=50; GRID_X0,GRID_Y0=230,130   # px del SVG -> celdas: (px-origen)/UNIT
 def gx(v): return round((v-GRID_X0)/UNIT,2)
 def gy(v): return round((v-GRID_Y0)/UNIT,2)
@@ -63,7 +63,7 @@ def star(cx,cy,r):
     return " ".join(pts)
 
 KC={"selva":"#7fe0a0","penelandia":"#6ec6ff","vulvania":"#ff7ac0","perineo":"#ffc93c","prostata":"#d8b890","palacio":"#b48cff"}
-RC={"selva":("#7fe0a0","#7fe0a0","#10301c"),"penelandia":("#6ec6ff","#6ec6ff","#0b2a40"),"vulvania":("#ff7ac0","#ff7ac0","#401030"),"perineo":("#ffc93c","#ffc93c","#3a2a00"),"prostata":("#d8b890","#d8b890","#3a2a10"),"palacio":("#b48cff","#b48cff","#2a1050"),"utero":("#e0485a","#a8264a","#ffe6ea"),"silencio":("#8a8a9c","#16161c","#e6e6ee"),"arcoiria":("#ffffff","url(#arcoiris)","#10142a")}
+RC={"selva":("#7fe0a0","#7fe0a0","#10301c"),"penelandia":("#6ec6ff","#6ec6ff","#0b2a40"),"vulvania":("#ff7ac0","#ff7ac0","#401030"),"perineo":("#ffc93c","#ffc93c","#3a2a00"),"prostata":("#d8b890","#d8b890","#3a2a10"),"palacio":("#b48cff","#b48cff","#2a1050"),"utero":("#e0485a","#a8264a","#ffe6ea"),"silencio":("#8a8a9c","#16161c","#e6e6ee"),"arcoiria":("#ffffff","url(#arcoiris)","#10142a"),"puerta_trasera":("#a08c70","#a08c70","#2a2010")}
 REINOS="\n".join(f".reino-{k} .reino-fondo{{fill:{c};stroke:{c}}} .reino-{k} .sala{{fill:{sa}}} .reino-{k} .ico{{fill:{ic}}}" for k,(c,sa,ic) in RC.items())
 REINOS+="\n.reino-silencio .sala{stroke:#d4d4e0} .reino-utero .sala{stroke:#ffd6dc}"
 css=f"""
@@ -249,7 +249,7 @@ text("t-blanco",1400,1005,"") ; A('</g>')
 
 # ---------- reinos
 A('<g id="reinos">')
-BOSSV={'palacio':'hoja_de_parra','utero':'regla','prostata':'glandula','selva':'boss_cera','penelandia':'testiculo_primordial','vulvania':'reina_ovaria','perineo':'aduanero','silencio':'pacto_silencio','arcoiria':'destine'}
+BOSSV={'palacio':'hoja_de_parra','utero':'regla','prostata':'glandula','selva':'boss_cera','penelandia':'testiculo_primordial','vulvania':'reina_ovaria','perineo':'aduanero','silencio':'pacto_silencio','arcoiria':'destine','puerta_trasera':'coprolito'}
 TSEL=("enemies/boss_cera_sheet.png",(0,0,156,180))
 reino("palacio","PALACIO",1025,140,750,["P","P","boss"],["lore","cofre"],("enemies/hoja_de_parra_idle_00.png",None),slotw=250,bossh=215)
 reino("silencio","SILENCIO",900,450,998,["P",328,"P","boss"],["descanso","lore"],"pend",Hh=400,p2dy=90,bossname="El Pacto de Silencio",bsub="por diseñar",pillcy=450+400-44)
@@ -260,6 +260,8 @@ reino("penelandia","PENELANDIA",330,1490,845,["hero","P","P","boss"],["cofre","l
 reino("arcoiria","ARCOÍRIA",1197,1490,845,["boss","hero","P","P"],["descanso","cofre"],"pend",tx=1530,bossname="La Censura que destiñe",bsub="por diseñar",pilldx=24)
 reino("vulvania","VULVANIA",2090,1490,845,["boss","hero","P","P"],["descanso","lore"],("enemies/reina_ovaria_idle_00.png",None),tx=2310,bossname=["Su Majestad","Ovaria II"],seal=True)
 reino("perineo","PERINEO",1290,1780,670,["P","P","boss"],["lore","cofre"],("enemies/aduanero_idle_00.png",None),bossname=["El Aduanero","Hormonal"],seal=True,pilldx=-24)
+# DESVIO SECRETO (routes.json "detours"): la Puerta Trasera cuelga bajo el Perineo (su entrada de servicio, hoy sellada).
+reino("puerta_trasera","LA PUERTA TRASERA",1290,2200,670,["P","P","boss"],["lore","cofre"],"pend",bossname="El Coprolito",bsub="secreto · sellada")
 A('</g>')
 # monte de venus etiqueta
 pill(1781,1236,["Monte de Venus"],sub="sala especial (idea)",id="nombre-monte-de-venus")
@@ -387,8 +389,8 @@ def build_json():
         rid=r["id"]; c=RC[rid]
         bx,by,bw,bh=r["boss"]
         regs.append({"id":rid,"name":r["name"],
-            "name_key":("FLOOR_%d_SHORT"%(order.index(rid)+1)) if rid in order else "MAPA_REINO_"+rid.upper(),
-            "role":"body" if rid in routes["body"] else "center",
+            "name_key":("FLOOR_%d_SHORT"%(order.index(rid)+1)) if (rid in order and rid!="puerta_trasera") else "MAPA_REINO_"+rid.upper(),
+            "role":"body" if rid in routes["body"] else ("secret" if rid=="puerta_trasera" else "center"),
             "x":gx(r["x"]),"y":gy(r["y"]),"w":gl(r["w"]),"h":gl(r["h"]),
             "color":c[0].lstrip("#") if c[0].startswith("#") else "ffffff","rainbow":rid=="arcoiria",
             "pisos":r["pisos"],"label_dx":gl(r["tx"]-r["x"]) if r["tx"] else 0,"boss":{"x":gx(bx),"y":gy(by),"w":gl(bw),"h":gl(bh)}})
@@ -413,7 +415,7 @@ def build_json():
     heroes={"pitocles":"ff4646","vulvalquiria":"ff82d2","ornitorrinco":"28d7be"}
     eje=[pl([(1400,1560),(1400,1040),(1318,1040)]),pl([(1215,890),(1215,870),(1530,870),(1530,896)]),pl([(1781,892),(1781,846)]),pl([(1748,452),(1748,406)])]
     return {"_nota":"Generado por tools/gen_world_map.py (no editar a mano). Coordenadas en celdas de cuadricula; y crece hacia abajo.",
-        "grid":{"w":gl(3030-GRID_X0),"h":gl(2125-GRID_Y0),"unit_px":UNIT},
+        "grid":{"w":gl(3030-GRID_X0),"h":gl(2445-GRID_Y0),"unit_px":UNIT},
         "regions":regs,"doors":DOORS,"tunnels":tun,
         "elevator":{"x":gx(1340),"y":gy(1000),"w":gl(120),"h":gl(568)},
         "piso_cell":{"unit":gl(U),"pitch":gl(P),"w":4,"h":3,"cw":gl(CW),"ch":gl(CH)},"templates":tpl,
