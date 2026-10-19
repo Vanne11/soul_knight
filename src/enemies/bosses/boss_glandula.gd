@@ -80,13 +80,22 @@ func _ready() -> void:
 	_channels_total = 2
 	_channels_left = 2
 	_ge.boss_charges_changed.emit(_channels_left, _channels_total)
-	_anim = BossAnimator.attach(self, true)  # arte de siempre, animacion por codigo
+	_anim = BossAnimator.attach(self)  # arte definitivo 176x184 (tools/gen_glandula_art.py): cuadros nuevos + animacion por codigo
 	_base_scale = animated_sprite.scale
 	_ring = PressureRing.new()
 	_ring.show_behind_parent = true
 	_ring.color = NUT
 	add_child(_ring)
 	_to_center()
+
+
+## El golpe del ataque ocurre cuando termina el aviso: se avisa al animador para que pase de la pose de carga
+## (attack_<x>) a la de golpe (release_<x>) justo en ese momento.
+func _tele(secs: float, col := Color(2.0, 2.0, 0.9), shake := 2.0, on_frame := Callable()) -> bool:
+	var ok: bool = await super(secs, col, shake, on_frame)
+	if ok:
+		attack_released.emit(_last_attack)
+	return ok
 
 
 ## Nace en el centro de la sala (el punto de aparicion de jefes queda pegado al muro de arriba y

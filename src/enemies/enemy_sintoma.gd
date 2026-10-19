@@ -24,7 +24,6 @@ func _init() -> void:
 func _ready() -> void:
 	drop_table = [{"item_id": "health_small", "chance": 0.35}]
 	super()
-	animated_sprite.self_modulate = DROP
 	add_to_group("sintoma_glandula")
 	_dir = 1.0 if RNG.randf() < 0.5 else -1.0
 	s_t = RNG.randf_range(1.3, 2.3)
@@ -67,8 +66,23 @@ func _physics_process(delta: float) -> void:
 				s_state = S.DRIFT
 				s_t = RNG.randf_range(2.2, 3.2)
 				_dir = -_dir
-	_update_animation(to_t)
+	_sintoma_anim(to_t)
 	move_and_slide()
+
+
+## Cuadros propios (tools/gen_glandula_art.py): ronda, avisa hinchandose y brilla, escupe las gotas.
+func _sintoma_anim(to_t: Vector2) -> void:
+	var anim := &"walk"
+	if s_state == S.WINDUP:
+		anim = &"attack"
+	elif s_state == S.REST and s_t > 0.55:
+		anim = &"shoot"
+	elif velocity.length() < 10.0:
+		anim = &"idle"
+	if animated_sprite.animation != anim or not animated_sprite.is_playing():
+		animated_sprite.play(anim)
+	if absf(to_t.x) > 1.0:
+		animated_sprite.flip_h = to_t.x < 0.0
 
 
 func _gotas() -> void:
