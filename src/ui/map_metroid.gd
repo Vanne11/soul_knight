@@ -441,9 +441,9 @@ func _seal(c: Vector2, rad: float) -> void:
 	_star(c, rad * 0.65, Color("ffe146"))
 
 
-func _alert(c: Vector2, s: float) -> void:
+func _alert(c: Vector2, s: float, tone := FIXED) -> void:
 	var tri := PackedVector2Array([c + Vector2(0, -s), c + Vector2(-s, s * 0.8), c + Vector2(s, s * 0.8)])
-	_view.draw_colored_polygon(tri, Color(FIXED, 0.55 + 0.4 * _pulse))
+	_view.draw_colored_polygon(tri, Color(tone, 0.55 + 0.4 * _pulse))
 	_view.draw_polyline(PackedVector2Array([tri[0], tri[1], tri[2], tri[0]]), INK, 1.5)
 	_view.draw_line(c + Vector2(0, -s * 0.4), c + Vector2(0, s * 0.2), INK, maxf(1.5, s * 0.2))
 
@@ -628,11 +628,16 @@ func _draw_region(r: Dictionary, fa: float) -> void:
 		_boxr(rc, Color(col, 0.2), col, bw, rad)
 	else:
 		var gray := Color(0.42, 0.42, 0.5)
-		_boxr(rc, Color(gray, 0.16), Color(gray, 0.0), 0, rad)
-		_dashed_rect(rc, Color(gray, 0.8), bw, 8.0)
+		var tomado := _wm.is_taken(id)  # plan 6: lo tomo la copia de seguridad del Algoritmo: tono rojo + alerta
+		if tomado:
+			gray = Color(0.8, 0.2, 0.26)
+		_boxr(rc, Color(gray, 0.3 if tomado else 0.16), Color(gray, 0.0), 0, rad)
+		_dashed_rect(rc, Color(gray, 0.9 if tomado else 0.8), bw, 8.0)
 		if id in _wm.opts:
 			_boxr(rc.grow(3), Color(1, 1, 1, 0.0), Color(1, 1, 1, 0.25 + 0.5 * _pulse), 2, rad)
-		if _wm.is_disorder(id):
+		if tomado:
+			_alert(Vector2(rc.end.x - 24.0 * _zoom - 8, rc.position.y + 22.0 * _zoom + 8), clampf(30.0 * _zoom, 10, 28), SEAL_RED)
+		elif _wm.is_disorder(id):
 			_alert(Vector2(rc.end.x - 24.0 * _zoom - 8, rc.position.y + 22.0 * _zoom + 8), clampf(24.0 * _zoom, 8, 22))
 		var big := int(clampf(110.0 * _zoom, 28, 200))
 		_tx_c("?", rc.position + Vector2(rc.size.x * 0.34, rc.size.y * 0.58), big, Color(gray, 0.75))
@@ -803,16 +808,19 @@ func _draw_boss(r: Dictionary) -> void:
 	var vis := _wm.visited(id)
 	var libd := id in _wm.lib or _wm.voz(r)
 	var missing := _wm.is_missing(id)
-	var defeated := _wm.boss_defeated(id)
+	var tomado := _wm.is_taken(id)  # plan 6: el retrato es el del jefe que lo tomo
+	var defeated := _wm.boss_defeated(id) and not tomado
 	var bw := maxf(2.0, 4.0 * _zoom)
 	var frame := Color.WHITE
-	if defeated:
+	if tomado:
+		frame = SEAL_RED
+	elif defeated:
 		frame = Color("78d28c")
 	elif not vis and not libd:
 		frame = Color(0.6, 0.6, 0.72)
 	_boxr(rc, Color(INK, 0.6), frame, bw, 14.0 * _zoom)
-	var tex := _boss_tex(str(r.boss_variant))
-	var known := (vis or libd) and not missing
+	var tex := _boss_tex(str(_wm.taken[id].variant) if tomado else str(r.boss_variant))
+	var known := (vis or libd or tomado) and not missing
 	if tex != null:
 		var inner := rc.grow(-rc.size.x * 0.1)
 		var sz := tex.get_size()
@@ -848,6 +856,8 @@ func _draw_boss(r: Dictionary) -> void:
 		var name_s := tr(str(r.boss_name_key)) if known else "?"
 		if name_s == str(r.boss_name_key):
 			name_s = str(r.boss_name)
+		if tomado:
+			name_s = Loc.enemy_name(str(_wm.taken[id].name))
 		if bool(r.boss_pend) and known:
 			name_s += " · " + tr("MM_POR_DISENAR")
 		var fs := int(clampf(18.0 * _zoom, 11, 22))
@@ -881,6 +891,8 @@ func _draw_title(r: Dictionary) -> void:
 	var c := Color.WHITE
 	if _wm.is_missing(id):
 		c = Color(col, 0.8)
+	elif _wm.is_taken(id):
+		c = Color("ff7a7a")
 	elif _wm.visited(id) or id in _wm.lib or voz:
 		c = Color.WHITE
 	elif _wm.is_disorder(id) or id in _wm.opts:
@@ -889,6 +901,9 @@ func _draw_title(r: Dictionary) -> void:
 		txt = "???"
 		c = Color(0.62, 0.62, 0.72)
 	_tx(txt, pos, fs, c, HORIZONTAL_ALIGNMENT_LEFT, -1, true, true)
+	if _wm.is_taken(id) and _zoom > 0.4:
+		var wt := HudStyle.FONT_BOLD.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+		_tx(tr("P6_MM_TOMADO"), pos + Vector2(wt + 10, 0), maxi(10, fs / 2), Color("ff5a5a"), HORIZONTAL_ALIGNMENT_LEFT, -1, true, false)
 	if id in _wm.lib and not _wm.is_missing(id) and _zoom > 0.4:
 		var w := HudStyle.FONT_BOLD.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
 		_tx(tr("MM_LIBERADO"), pos + Vector2(w + 10, 0), maxi(10, fs / 2), Color("78d28c"), HORIZONTAL_ALIGNMENT_LEFT, -1, true, false)

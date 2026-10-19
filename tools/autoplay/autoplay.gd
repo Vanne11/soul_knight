@@ -560,7 +560,8 @@ func _find_boss_floor(arg: String) -> Dictionary:
 	for f in RunManager.FLOORS:
 		var b := str(f.get("boss", "")).trim_prefix("boss_")
 		var a := str(f.get("boss_alt", "")).trim_prefix("boss_")
-		if want != "" and (want == b or (a != "" and want == a)):
+		var sb := str(f.get("secret_boss", "")).trim_prefix("boss_")  # el Algoritmo (plan 6)
+		if want != "" and (want == b or (a != "" and want == a) or (sb != "" and want == sb)):
 			return f
 	return {}
 
@@ -576,7 +577,9 @@ func _setup_boss_fight() -> void:
 	var idx := RunManager.route_floors.find(f) + 1
 	var want := _boss_arg.trim_prefix("boss_")
 	var alt_flag := _arg("--boss-alt=", "")
-	if alt_flag != "":
+	if str(f.get("secret_boss", "")).trim_prefix("boss_") == want and want != "":
+		BossPicker.force = "secret"  # el Algoritmo ya no es alternativo: es el jefe secreto del Archivo
+	elif alt_flag != "":
 		BossPicker.force = "alt" if alt_flag != "0" else "main"
 	else:
 		var is_alt: bool = str(f.get("boss_alt", "")) != "" and want == str(f.boss_alt).trim_prefix("boss_") and want != str(f.boss).trim_prefix("boss_")

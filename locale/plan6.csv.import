@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://b7kyt38fxeejr"
+
+[deps]
+
+files=["res://locale/plan6.es.translation", "res://locale/plan6.en.translation", "res://locale/plan6.fr.translation"]
+
+source_file="res://locale/plan6.csv"
+dest_files=["res://locale/plan6.es.translation", "res://locale/plan6.en.translation", "res://locale/plan6.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

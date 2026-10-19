@@ -97,6 +97,13 @@ const CATALOG := {
 ## Restos de heroes anteriores (todos los reinos). El sentado va de espaldas al muro de arriba.
 const HEROES := ["hero_0", "hero_1", "hero_2", "hero_3"]
 
+## PLAN 6: sprite de resto de TU heroe (el que termino el juego sin vencer al Algoritmo), por heroe, y su
+## color de tinte. Aparece una vez por piso (clave semilla:piso) entre los restos de heroes anteriores.
+const GHOST_SPRITE := {"pitocles": "hero_0", "vulvalquiria": "hero_2", "ornitorrinco": "hero_3"}
+const GHOST_TINT := {"pitocles": Color("9fd8ff"), "vulvalquiria": Color("ffb0d6"), "ornitorrinco": Color("c4f06a")}
+const GHOST_CHANCE := 0.45
+static var _ghost_done: Dictionary = {}
+
 static var _cache: Dictionary = {}
 
 var room: Room
@@ -330,7 +337,7 @@ func _build_props(n: int, calm: bool) -> void:
 		_add_item(tex, spot, kind, bool(it[3]), _rng.randf() < 0.5 and not is_statue and kind != "hang")
 
 
-func _add_item(tex: Texture2D, spot: Dictionary, kind: String, caster: bool, flip := false) -> void:
+func _add_item(tex: Texture2D, spot: Dictionary, kind: String, caster: bool, flip := false) -> Node2D:
 	var w := float(tex.get_width())
 	var h := float(tex.get_height())
 	var holder := Node2D.new()
@@ -362,10 +369,13 @@ func _add_item(tex: Texture2D, spot: Dictionary, kind: String, caster: bool, fli
 			if caster:
 				LightKit.mark_caster(holder, clampf(w * 0.3, 6.0, 14.0), 0.0)
 			TallProp.attach(holder, TallProp.box_of(s))  # el heroe pasa por detras (tall_prop.gd)
+	return holder
 
 
 # ------------------------------------------------------------------ restos de heroes
 func _build_heroes(calm: bool) -> void:
+	if _build_ghost():
+		return
 	var chance := 0.85 if room.room_type == Room.RoomType.LORE else (0.55 if calm else 0.3)
 	if room.room_type == Room.RoomType.BOSS or room.room_type == Room.RoomType.START:
 		chance = 0.1
@@ -388,6 +398,43 @@ func _build_heroes(calm: bool) -> void:
 			if not bs.is_empty():
 				_taken.append(bs.rect)
 				_add_item(b, bs, "flat", false, _rng.randf() < 0.5)
+
+
+## Resto de TU heroe de la partida anterior (RunManager.heroe_resto): el mismo sprite de heroe caido, con
+## su color y un cartelito "NOMBRE · donde cayo". Una vez por piso, nunca en la sala del jefe ni en la inicial.
+## true si lo puso (entonces no se sortea otro resto en esta sala).
+func _build_ghost() -> bool:
+	var rm := room.get_node_or_null("/root/RunManager")
+	if rm == null or rm.heroe_resto.is_empty() or room.room_type in [Room.RoomType.BOSS, Room.RoomType.START]:
+		return false
+	var key := "%s:%s" % [run_seed, floor_n]
+	if _ghost_done.has(key) or _rng.randf() >= GHOST_CHANCE:
+		return false
+	var hero := str(rm.heroe_resto.get("hero", ""))
+	var tex := _tex(str(GHOST_SPRITE.get(hero, "hero_0")))
+	if tex == null:
+		return false
+	var spot := _find_spot(tex, 0.0, false)
+	if spot.is_empty():
+		return false
+	_ghost_done[key] = true
+	_taken.append(spot.rect)
+	var holder := _add_item(tex, spot, "prop", false, false)
+	var spr := holder.get_child(0) as Sprite2D
+	if spr != null:
+		spr.modulate = GHOST_TINT.get(hero, Color.WHITE)
+	var where := Loc.region_name_id(str(rm.heroe_resto.get("region", "")))
+	var tag := Label.new()
+	tag.text = "%s\n%s" % [Loc.char_field(hero, "name"), where]
+	tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	tag.add_theme_font_size_override("font_size", 8)
+	tag.add_theme_color_override("font_color", Color("fff1d6"))
+	tag.add_theme_color_override("font_outline_color", Color("1a0b26"))
+	tag.add_theme_constant_override("outline_size", 3)
+	tag.size = Vector2(120, 20)
+	tag.position = Vector2(-60, 2)
+	holder.add_child(tag)
+	return true
 
 
 # ------------------------------------------------------------------ telaranas

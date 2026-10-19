@@ -17,5 +17,6 @@
 	"weights": [0.3, 0.25, 0.45],
 	"boss": "regla",
 	"boss_name": "DOÑA REGLA",
+	"boss_returns": true,
 	"needs": []
 }

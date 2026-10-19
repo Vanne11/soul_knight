@@ -117,6 +117,7 @@ func _generate_dungeon() -> void:
 	_assign_rewards()
 	_coin_mult = _compute_coin_mult()
 	_show_floor_card()
+	_announce_taken()
 	if peace and start_room:
 		_build_peace(start_room)
 	elif _run_manager.is_liberated(_run_manager.current_floor) and RunManager.floor_stage(_run_manager.current_floor) == 1 and not Silencio.active():
@@ -131,6 +132,20 @@ func _generate_dungeon() -> void:
 		var rooms = dungeon_generator.rooms.values()
 		if rooms.size() > 0:
 			_enter_room(rooms[0])
+
+## PLAN 6: al entrar a un reino TOMADO por la copia de seguridad (1a etapa), el aviso: ya no es paz,
+## el jefe que lo tomo lo espera (BossPicker lo fuerza). Al vencerlo el reino queda liberado de nuevo.
+func _announce_taken() -> void:
+	var fd: Dictionary = _run_manager.floor_data()
+	var tk := RunManager.taken_boss(str(fd.get("region", "")))
+	if tk.is_empty() or RunManager.floor_stage(_run_manager.current_floor) != 1:
+		return
+	var line := tr("P6_TOMADO_AVISO") % [_nice_name(Loc.region_name_id(str(fd.region))), _nice_name(Loc.enemy_name(str(tk.name)))]
+	Narrator.toast(tr("P6_TOMADO_TITLE"), line, "ff4040")
+	get_tree().create_timer(3.2).timeout.connect(func(): Narrator.say_raw(line))
+
+func _nice_name(boss_name: String) -> String:
+	return Narrator._nice_name(boss_name)
 
 func _find_start_room() -> Room:
 	for room in dungeon_generator.rooms.values():
@@ -226,7 +241,7 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	if not Silencio.active():  # el Silencio dibuja su propia sala (Silencio.on_enter_room)
 		RoomDecals.build(room, _run_manager.floor_data().kingdom, _run_manager.current_seed, _run_manager.current_floor)  # calcomanias de suelo (una vez por sala)
 		RoomDecor.build(room, _run_manager.floor_data().kingdom, _run_manager.current_seed, _run_manager.current_floor)  # decoracion junto a los muros (una vez por sala)
-	_paint_room(room, room.cleared or room.room_type in CALM_ROOMS)
+	_paint_room(room, room.cleared or (room.room_type in CALM_ROOMS and not room.has_meta("secret_boss")))
 	_label_doors(room)
 	Utero.on_enter(self, room, entry_door)  # fase del ciclo (src/utero), antes de las dinamicas de sala
 	RoomDirector.on_enter(self, room, entry_door)  # dinamicas de sala (src/rooms/room_director.gd)
@@ -326,7 +341,7 @@ func _frames_path(variant: String) -> String:
 func _spawn_room_enemies(room: Room) -> void:
 	if RoomDirector.takes_over(room):
 		return  # la dinamica de la sala (aguantar, sigilo) crea sus propios enemigos
-	if room.cleared or room.room_type not in [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION, Room.RoomType.TRAP, Room.RoomType.MINIBOSS, Room.RoomType.BOSS]:
+	if room.cleared or (room.room_type not in [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION, Room.RoomType.TRAP, Room.RoomType.MINIBOSS, Room.RoomType.BOSS] and not room.has_meta("secret_boss")):
 		return
 	if not room.enemies_spawned.is_empty():
 		# Ya huiste de aqui desarmado: los enemigos siguen dentro. Con arma, ya no hay huida.
@@ -384,6 +399,8 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 		count = 1 if fd.has("miniboss") else 2  # minijefe propio del piso (datos) o dos gigantes
 	elif room.room_type == Room.RoomType.BOSS:
 		count = 1 if has_boss else GUARDIAN_ESCORTS + 1
+	elif room.has_meta("secret_boss"):
+		count = 1
 	
 	# Must stay typed: Room.spawn_enemies() expects Array[Dictionary].
 	var data: Array[Dictionary] = []
@@ -415,6 +432,17 @@ func _generate_enemy_data_for_room(room: Room) -> Array[Dictionary]:
 				w *= ITS_INTOX_WEIGHT_MULT
 			weights = weights + [w]
 		match room.room_type:
+			Room.RoomType.SECRET when room.has_meta("secret_boss"):
+				# PLAN 6: el Algoritmo Moderador, jefe secreto y opcional del Archivo (piso con "secret_boss").
+				var sv := str(room.get_meta("secret_boss"))
+				var region_s: int = RunManager.region_index(_run_manager.current_floor) + 1
+				info.enemy_type = "boss"
+				info.health = EnemyBoss.health_for_floor(region_s) * Censura.mult("boss_health")
+				info.script = EnemyBoss.script_path(sv)
+				info.damage = 12.0 + region_s * 4.0
+				info.name = str(fd.get("secret_boss_name", sv))
+				info.frames = _frames_path(sv)
+				info.drops = [{"item_id": "health_large", "chance": 1.0}]
 			Room.RoomType.BOSS when has_boss:
 				var region_n: int = RunManager.region_index(_run_manager.current_floor) + 1  # el jefe escala por reino, como antes
 				info.enemy_type = "boss"
@@ -655,6 +683,8 @@ func _on_room_cleared(room: Room) -> void:
 		room.reward = "bendicion"  # ya la compraste en la tienda: algo a cambio
 		room.reward_kingdom = _floor_kingdom()
 	_paint_room(room, true, true)
+	if room.has_meta("secret_boss"):
+		_on_secret_boss_cleared(room)
 	Utero.on_room_cleared(self, room)  # premios de cada fase del Utero
 	Arcoiria.on_room_cleared(self, room)  # franja de la bandera de Arcoiria (y curas de los poderes)
 	if room == _hormone_room:
@@ -677,6 +707,18 @@ func _on_room_cleared(room: Room) -> void:
 		Sound.play("room_clear")
 		RoomUtil.coins(self, room, maxi(1, roundi(COINS_PER_ROOM_CLEAR * _coin_mult)), room.get_center_position() + Vector2(0, 60))
 
+## PLAN 6: cae el Algoritmo Moderador (jefe secreto del Archivo). Marca la bandera persistente
+## (RunManager.defeat_algoritmo: ya no hay copia de seguridad), da botin y una bendicion.
+func _on_secret_boss_cleared(room: Room) -> void:
+	_run_manager.defeat_algoritmo()
+	get_node("/root/LoreDatabase").custom_event("copia_seguridad")  # codice
+	Narrator.toast(tr("P6_ALG_TOAST_TITLE"), tr("P6_ALG_TOAST_BODY"), "7fd0ff")
+	Narrator.say_raw(tr("P6_ALG_VENCIDO"))
+	_spawn_chest(room, "weapon")
+	RoomUtil.coins(self, room, 10 + 2 * RunManager.depth_i(_run_manager.current_floor), room.get_center_position() + Vector2(0, 70))
+	get_tree().create_timer(2.5).timeout.connect(func():
+		_offer_blessing(_floor_kingdom(), tr("P6_ALG_BLESSING")))
+
 var _boss_fall_pos := Vector2.ZERO  # donde cayo el ultimo jefe (la notita de Vane aparece ahi)
 
 func _complete_floor() -> void:
@@ -693,14 +735,26 @@ func _complete_floor() -> void:
 		Narrator.say("seal_gained")
 		Narrator.toast(tr("SEAL_TOAST_TITLE"), tr("SEAL_TOAST_BODY") % [RunManager.seals(), RunManager.seals_needed()], "ffd75a")
 	if RunManager.is_route_end(floor_n):
+		var was_liberated := _run_manager.is_liberated(floor_n)
 		_run_manager.liberate(floor_n)
-		_run_manager.note_desordenes()  # reinos que quedan sin liberar: aviso permanente + panel en game_over
+		var ending := _run_manager.resolve_victory(floor_n, was_liberated)  # PLAN 6: copia de seguridad / completo / verdadero
 		Narrator.say("victory")
-		if not _run_manager.pending_regions().is_empty():
+		match ending:
+			"copia":
+				get_node("/root/LoreDatabase").custom_event("copia_seguridad")  # codice
+				Narrator.say_raw(tr("P6_COPIA_NARR"))
+				Narrator.say_raw(tr("P6_TOMADOS_NARR") % DesordenPanel.taken_names(_run_manager))
+				if "silencio" in _run_manager.liberated:
+					Narrator.say_raw(tr("P6_SILENCIO_PAZ"))  # sin humor: el Silencio no vuelve
+			"completo":
+				Narrator.say_raw(tr("P6_COMPLETO_NARR"))
+			"verdadero":
+				Narrator.say_raw(tr("P6_VERDADERO_NARR"))  # pista de musica pendiente: "final_verdadero" (ver Sound, otro agente)
+		if ending not in ["verdadero", "copia"] and not _run_manager.pending_regions().is_empty():
 			Narrator.say_raw(tr("DESORDEN_NARR") % DesordenPanel.pending_names(_run_manager))
 		get_node("/root/LoreDatabase").custom_event("victory")
 		_run_manager.end_run(true)
-		var end_wait := 4.0
+		var end_wait := 8.0 if ending in ["copia", "verdadero"] else 4.0
 		if VaneWinks.drop_note(boss_room, _boss_fall_pos):  # guiño a Vanessa: la notita bajo el jefe final
 			end_wait = 10.0  # tiempo de encontrarla
 		if _run_manager.last_censura_unlocked > 0:  # Censura: ganar abre el nivel siguiente (ver RunManager.end_run)
@@ -1067,7 +1121,8 @@ func _floor_card_line(layer: CanvasLayer, text: String, offset_top: int, size: i
 func _on_enemy_killed(enemy: Node, killer: Node) -> void:
 	if enemy.is_in_group("boss"):
 		_boss_fall_pos = (enemy as Node2D).global_position if enemy is Node2D else player.global_position
-		_complete_floor()
+		if current_room == null or not current_room.has_meta("secret_boss"):
+			_complete_floor()  # (el jefe secreto no cierra el piso: ver _on_secret_boss_cleared)
 	if killer == player:
 		var regen: int = _run_manager.blessing("regla")
 		if regen > 0:

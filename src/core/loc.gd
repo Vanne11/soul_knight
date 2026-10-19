@@ -158,6 +158,8 @@ static func _build_enemy_keys() -> void:
 			_enemy_keys[f.boss_name] = "BOSS_%s_NAME" % String(f.boss).trim_prefix("boss_").to_upper()
 		if str(f.get("boss_alt_name", "")) != "":
 			_enemy_keys[f.boss_alt_name] = "BOSS_%s_NAME" % String(f.boss_alt).trim_prefix("boss_").to_upper()
+		if str(f.get("secret_boss_name", "")) != "":  # jefe secreto (el Algoritmo, plan 6)
+			_enemy_keys[f.secret_boss_name] = "BOSS_%s_NAME" % String(f.secret_boss).trim_prefix("boss_").to_upper()
 
 
 ## Nombre visible (en espanol, tal cual en los datos) de enemigo o jefe -> traducido.

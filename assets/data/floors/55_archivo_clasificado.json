@@ -14,8 +14,8 @@
 	"weights": [0.35, 0.3, 0.35],
 	"boss": "hoja_de_parra",
 	"boss_name": "SU PUDOROSIDAD, LA HOJA DE PARRA",
-	"boss_alt": "algoritmo",
-	"boss_alt_name": "EL ALGORITMO MODERADOR",
+	"secret_boss": "algoritmo",
+	"secret_boss_name": "EL ALGORITMO MODERADOR",
 	"needs": [],
 	"miniboss": {"type": "gran_candado", "variant": "gran_candado", "name": "El Gran Candado"}
 }

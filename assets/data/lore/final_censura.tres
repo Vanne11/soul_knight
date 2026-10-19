@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = "final_censura"
 title = "Final: Al Descubierto"
-text = "Cae la Hoja, o su versión en la nube: es la misma. El color vuelve a todo de golpe. La Selva Púbica crece como quiere, Penelandia y Vulvania se miran sin estornudar y el Perineo se llena de gente cruzando sin papeles. Nadie sabe qué hacer con tanta libertad, así que todos hacen lo de siempre, pero a color. En el suelo, una hoja cualquiera."
+text = "Cae la Hoja de Parra (y, si lo buscaste, el Algoritmo también). El color vuelve a todo de golpe. La Selva Púbica crece como quiere, Penelandia y Vulvania se miran sin estornudar y el Perineo se llena de gente cruzando sin papeles. Nadie sabe qué hacer con tanta libertad, así que todos hacen lo de siempre, pero a color. En el suelo, una hoja cualquiera."
 category = 6
 unlock_condition = {"type": 10, "target_id": "victory"}
 flavor_text = "Derrota a la Hoja de Parra."

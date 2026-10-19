@@ -43,6 +43,10 @@ func _ready() -> void:
 
 	# titulo: dos capas (sombra dura + color) que caen desde arriba y rebotan
 	var title_text: String = tr("GAMEOVER_VICTORY_TITLE") if victory else tr(INSULTS[RNG.randi_range(0, INSULTS.size() - 1)])
+	if victory and rm.last_ending == "copia":  # plan 6: ganaste sin vencer al Algoritmo
+		title_text = tr("P6_COPIA_TITLE")
+	elif victory and rm.last_ending == "verdadero":
+		title_text = tr("P6_VERDADERO_TITLE")  # pista de musica pendiente: "final_verdadero" (Sound lo anade el otro agente)
 	var title := Control.new()
 	title.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -62,6 +66,10 @@ func _ready() -> void:
 
 	if victory:  # final propio del heroe (historia.md, seccion 7), bajo el titulo
 		var ending: String = Narrator.get_line("ending_" + str(rm.character))
+		match rm.last_ending:  # plan 6: el final depende de lo que quedo vivo
+			"copia": ending = tr("P6_COPIA_END")
+			"verdadero": ending = tr("P6_VERDADERO_END")
+			"completo": ending += "\n" + tr("P6_COMPLETO_END")
 		if ending != "":
 			var sub := HudStyle.pixel_label(ending, 18, HudStyle.CREAM, true)
 			sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

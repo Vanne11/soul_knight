@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntry" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/lore_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "copia_seguridad"
+title = "La copia de seguridad"
+text = "Cuando cae la Hoja, queda el Algoritmo Moderador, que guarda una copia de seguridad de todo lo censurado. Si nadie lo encuentra, la restaura: los jefes vuelven a sus reinos y el color se apaga otra vez. Tiene su lógica: los derechos ganados se pueden perder, y lo que se arregló una vez hay que volver a cuidarlo. Por eso se marcha cada año. Solo el Silencio no vuelve: ahí no hay nada que restaurar, solo respeto. Dato: los filtros automáticos también se reinstalan solos; hace falta criterio humano."
+category = 0
+unlock_condition = {"type": 10, "target_id": "copia_seguridad"}
+flavor_text = "Termina el juego sin vencer al Algoritmo, o véncelo para destruirla."
