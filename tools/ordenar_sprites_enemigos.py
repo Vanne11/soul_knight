@@ -36,6 +36,7 @@ MANUAL = {
     "hombre_l": "arcoiria/hombre",
     "hombre_r": "arcoiria/hombre",
     "hojita_censora": "palacio/hoja_de_parra",
+    "cria_ovarica": "vulvania/cria_ovarica",
     "parra": "palacio/hoja_de_parra",
     "ego_inflado": "comunes/ego_inflado",
 }

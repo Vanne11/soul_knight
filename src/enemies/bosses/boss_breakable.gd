@@ -9,6 +9,13 @@ class_name BossBreakable
 enum Kind { EGG, LEAF, FAKE }
 
 const CENSOR_UNSHADED := preload("res://src/shaders/censor_unshaded.gdshader")
+## Arte del huevo de Ovaria (tools/gen_ovaria_art.py): normal, a punto de eclosionar, roto y Ovulo Real (con corona).
+const EGG_TEX := preload("res://assets/sprites/enemies/vulvania/reina_ovaria/reina_ovaria_huevo_normal.png")
+const EGG_HATCH_TEX := preload("res://assets/sprites/enemies/vulvania/reina_ovaria/reina_ovaria_huevo_hatch.png")
+const EGG_BROKEN_TEX := preload("res://assets/sprites/enemies/vulvania/reina_ovaria/reina_ovaria_huevo_broken.png")
+const EGG_ROYAL_TEX := preload("res://assets/sprites/enemies/vulvania/reina_ovaria/reina_ovaria_huevo_royal.png")
+## Segundos finales en que el huevo muestra el cascaron agrietado.
+const HATCH_LOOK := 1.4
 
 signal broken(b: BossBreakable)
 signal expired(b: BossBreakable)
@@ -29,6 +36,8 @@ var show_bar := false
 var tex: Texture2D = null
 var tex_scale := Vector2.ONE
 var tex_flip := false
+## EGG: Ovulo Real (usa el sprite con corona; el nodo va escalado, el dibujo lo compensa para conservar el pixel 1:1).
+var royal := false
 
 var _t := 0.0
 var _flash := 0.0
@@ -36,6 +45,7 @@ var _dead := false
 var _mat := ShaderMaterial.new()
 var _room: Node = null
 var _contact_hit := false
+var _popped := false
 
 
 func _ready() -> void:
@@ -115,6 +125,7 @@ func die(_killer: Node = null) -> void:
 
 
 func _pop() -> void:
+	_popped = true
 	set_deferred("collision_layer", 0)
 	var tw := create_tween().set_parallel(true)
 	tw.tween_property(self, "scale", Vector2(1.5, 1.5), 0.15)
@@ -136,17 +147,17 @@ func _draw() -> void:
 		wob = Vector2(sin(_t * 60.0) * 2.5, 0.0)
 	var flash := _flash > 0.0
 	if kind == Kind.EGG:
-		var pts := PackedVector2Array()
-		for i in 24:
-			var a := i * TAU / 24.0
-			pts.append(wob + Vector2(cos(a) * 19.0, sin(a) * 25.0 - 8.0))
-		draw_colored_polygon(pts, Color.WHITE if flash else Color(1.0, 0.86, 0.88))
-		pts.append(pts[0])
-		draw_polyline(pts, Color(0.35, 0.1, 0.2), 3.0)
-		draw_circle(wob + Vector2(-6, -18), 5.0, Color(1, 1, 1, 0.8))
-		# nucleo que late mas rapido al acercarse la eclosion
-		var beat := 0.6 + 0.4 * sin(_t * (6.0 + 14.0 * (1.0 - clampf(remaining() / maxf(life, 0.01), 0.0, 1.0))))
-		draw_circle(wob + Vector2(0, -6), 8.0 * beat, Color(0.85, 0.15, 0.3))
+		var tex_egg: Texture2D = EGG_TEX
+		if royal:
+			tex_egg = EGG_ROYAL_TEX
+		elif _popped:
+			tex_egg = EGG_BROKEN_TEX
+		elif urgent and remaining() < HATCH_LOOK:
+			tex_egg = EGG_HATCH_TEX
+		var inv := Vector2.ONE / scale  # el sprite se dibuja a 1 pixel de arte = 1 pixel de pantalla aunque el nodo escale
+		draw_set_transform(wob + Vector2(0, -8), 0.0, inv)
+		draw_texture(tex_egg, -tex_egg.get_size() * 0.5, Color(1.8, 1.8, 1.8) if flash else Color.WHITE)
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		if life > 0.0:
 			var frac := clampf(remaining() / life, 0.0, 1.0)
 			draw_arc(Vector2(0, -8), 32.0, -PI * 0.5, -PI * 0.5 + TAU * frac, 32, Color(1, 1, 1, 0.9), 4.0)

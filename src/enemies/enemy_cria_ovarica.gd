@@ -26,7 +26,6 @@ func _init() -> void:
 func _ready() -> void:
 	drop_table = [{"item_id": "health_small", "chance": 0.25}]
 	super()
-	animated_sprite.self_modulate = PINK
 	add_to_group("cria_ovarica")
 	_dir = 1.0 if RNG.randf() < 0.5 else -1.0
 	c_t = RNG.randf_range(1.0, 2.0)
@@ -79,6 +78,18 @@ func _physics_process(delta: float) -> void:
 					_reabsorb(b)
 	_update_animation(to_t)
 	move_and_slide()
+
+
+## Poses propias: carga (attack) durante el aviso y llanto (cry) al soltar el lagrimon.
+func _update_animation(dir: Vector2) -> void:
+	if c_state == C.WINDUP or (c_state == C.RECOVER and c_t > 0.45):
+		var a := &"attack" if c_state == C.WINDUP else &"cry"
+		if animated_sprite.animation != a and animated_sprite.sprite_frames.has_animation(a):
+			animated_sprite.play(a)
+		if dir.x != 0.0:
+			animated_sprite.flip_h = dir.x < 0.0
+		return
+	super(dir)
 
 
 func _cry() -> void:

@@ -44,7 +44,16 @@ func _ready() -> void:
 	_channels_total = 2
 	_channels_left = 2
 	_ge.boss_charges_changed.emit(_channels_left, _channels_total)
-	BossAnimator.attach(self)  # solo actua si el SpriteFrames trae cuadros nuevos
+	BossAnimator.attach(self)  # arte definitivo 176x184 (tools/gen_ovaria_art.py): cuadros nuevos + animacion por codigo
+
+
+## El golpe del ataque ocurre cuando termina el aviso: se avisa al animador para que pase de la pose de carga
+## (attack_<x>) a la de golpe (release_<x>) justo en ese momento.
+func _tele(secs: float, col := Color(2.0, 2.0, 0.9), shake := 2.0, on_frame := Callable()) -> bool:
+	var ok: bool = await super(secs, col, shake, on_frame)
+	if ok:
+		attack_released.emit(_last_attack)
+	return ok
 
 
 func _attack_pool() -> Array:
@@ -267,6 +276,7 @@ func ch_guardian() -> void:
 	e.life = -1.0
 	e.show_bar = true
 	e.color = PINK
+	e.royal = true
 	e.scale = Vector2(2.3, 2.3)
 	var st := {"shoot": 1.2}
 	e.tick_cb = func(n, dt):
