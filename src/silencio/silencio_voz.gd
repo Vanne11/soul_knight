@@ -19,6 +19,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	var sala := get_parent() as SilencioSala
+	visible = sala == null or sala.inside  # la barra no te sigue a otras salas (S1 Turno, Plaza de la Palabra)
 	if target != null:
 		global_position = target.global_position + Vector2(0, 30)
 	cut = maxf(0.0, cut - delta * 1.4)
