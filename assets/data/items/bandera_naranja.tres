@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "bandera_naranja"
+display_name = "Franja Naranja: Sanación"
+description = "Sanación: si pasas 3 s sin recibir daño, regeneras vida sola. Naranja, de curita y de cariño."
+rarity = 2
+tags = ["reliquia", "pasivo", "bandera", "exclusivo"]
+equip_slot = 2
+effects = []
+base_value = 0
+custom_data = {"locale": "arcoiria", "flag_color": "naranja"}

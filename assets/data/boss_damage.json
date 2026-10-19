@@ -11,5 +11,17 @@
 		"line_weak": "BOSSDMG_CERA_WEAK",
 		"line_resist": "BOSSDMG_CERA_RESIST",
 		"hint_weapon": "globos_agua"
+	},
+	"destine": {
+		"weak": {"confeti": 1.9, "agua": 1.25},
+		"resist": {"perforante": 0.75},
+		"match": {
+			"pitocles": ["confeti"],
+			"vulvalquiria": ["confeti"],
+			"ornitorrinco": ["confeti", "agua"]
+		},
+		"line_weak": "BOSSDMG_DESTINE_WEAK",
+		"line_resist": "BOSSDMG_DESTINE_RESIST",
+		"hint_weapon": "canon_confeti"
 	}
 }

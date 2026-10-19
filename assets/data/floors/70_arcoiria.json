@@ -1,0 +1,20 @@
+{
+	"_nota": "ARCOIRIA (nombre provisorio; Vanessa pone el definitivo): reino del ORGULLO, 2 pisos (70 y 75) de la ruta (routes.json center; el Ornitorrinco parte aqui). Prefijos 70/75 a proposito: van DESPUES de 65_utero en el orden de archivos y no mueven los indices canonicos de reino. Al liberar cada sala se suma una franja de la bandera (src/arcoiria/arcoiria.gd). Textos: locale/arcoiria.csv.",
+	"name": "ARCOÍRIA",
+	"name_key": "FLOOR_ARCOIRIA_NAME",
+	"region": "arcoiria",
+	"stage": 1,
+	"elite_chance": 0.1,
+	"kingdom": "orgullo",
+	"tint": "f09ad8",
+	"roster": ["rumor", "comentario", "mirada"],
+	"names": ["Rumor Ambulante", "Comentario Inoportuno", "Mirada de Reojo"],
+	"extra": [
+		{"variant": "fase", "name": "Es una fase", "type": "fase", "weight": 0.22},
+		{"variant": "armario", "name": "El Armario", "type": "armario", "weight": 0.2},
+		{"variant": "hombre", "name": "¿Y quién es el hombre?", "type": "hombre", "weight": 0.2},
+		{"variant": "etiqueta", "name": "La Etiqueta", "type": "etiqueta", "weight": 0.22}
+	],
+	"weights": [0.22, 0.2, 0.2],
+	"needs": []
+}

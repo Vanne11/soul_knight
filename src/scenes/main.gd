@@ -99,6 +99,7 @@ func _generate_dungeon() -> void:
 	_lock_secret_rooms()
 	if not peace:
 		Utero.setup_floor(self)  # El Utero (src/utero): fases del ciclo
+		Arcoiria.setup_floor(self)  # Arcoiria (src/arcoiria): bandera del HUD, poderes de colores, codice del reino
 	
 	# Start player in start room
 	var start_room = _find_start_room()
@@ -640,6 +641,7 @@ func _on_room_cleared(room: Room) -> void:
 		room.reward_kingdom = _floor_kingdom()
 	_paint_room(room, true, true)
 	Utero.on_room_cleared(self, room)  # premios de cada fase del Utero
+	Arcoiria.on_room_cleared(self, room)  # franja de la bandera de Arcoiria (y curas de los poderes)
 	if room == _hormone_room:
 		# Garantia: en cada piso hay al menos un arma antes del jefe.
 		if not _has_real_weapon():
