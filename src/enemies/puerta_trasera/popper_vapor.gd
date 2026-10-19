@@ -21,6 +21,7 @@ func _ready() -> void:
 	z_index = 3
 	_seed = randf() * 6.28
 	add_to_group("popper_vapor")
+	add_to_group("vapor")  # gancho de la defensa Mascarilla
 
 
 func _radius() -> float:
@@ -35,7 +36,7 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 		return
 	var pl := get_tree().get_first_node_in_group("player") as Node2D
-	if pl != null and pl.global_position.distance_to(global_position) < _radius() + 8.0:
+	if pl != null and pl.global_position.distance_to(global_position) < _radius() + 8.0 and not Defense.cloud_immune(pl):  # la Mascarilla te protege
 		StatusEffects.of(pl).apply("mareado", dizzy_secs)
 	queue_redraw()
 
