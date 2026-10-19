@@ -15,6 +15,7 @@ const BAND := 72
 @onready var intox_label: Label = $Band/Row/IntoxicationLabel
 @onready var _purse: HBoxContainer = $Band/Row/Info/Purse
 var _coin_label: Label
+var _seals: SealCounter
 var _horm_box: HBoxContainer
 var _contagion_label: Label  # contagio de ITS (picazon / ardor)
 ## Estados temporales de objetos (regeneracion, buffs, guardia...): lista bajo la franja.
@@ -47,6 +48,9 @@ func _ready() -> void:
 	_horm_box.add_theme_constant_override("separation", 2)
 	_horm_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_purse.add_child(_horm_box)
+	_seals = SealCounter.new()
+	_seals.mouse_filter = Control.MOUSE_FILTER_STOP
+	_purse.add_child(_seals)
 	_contagion_label = HudStyle.pixel_label("", 14, Color("c8e04a"))
 	_contagion_label.visible = false
 	_purse.add_child(_contagion_label)
@@ -75,6 +79,7 @@ func _ready() -> void:
 	_events.coins_changed.connect(func(_c): _update_floor_label())
 	_events.hormones_changed.connect(_update_floor_label)
 	_events.blessings_changed.connect(_update_blessings)
+	_runs.seal_gained.connect(func(_n): _update_floor_label())
 	_build_boss_bar()
 	_build_blessings()
 	_build_key_hints()
@@ -186,6 +191,8 @@ func _update_floor_label() -> void:
 	floor_label.text = tr("HUD_FLOOR") % [n, Loc.floor_name(fd)]
 	floor_label.add_theme_color_override("font_color", fd.get("tint", HudStyle.CREAM))
 	_coin_label.text = str(_runs.coins)
+	_seals.set_seals(RunManager.seals(), RunManager.seals_needed())
+	_seals.visible = RunManager.route_dynamic
 	# hormonas conseguidas: su frasco, a tamano real del arte del objeto
 	for c in _horm_box.get_children():
 		c.queue_free()

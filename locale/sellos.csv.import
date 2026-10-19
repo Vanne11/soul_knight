@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://di88pyv5unxqa"
+
+[deps]
+
+files=["res://locale/sellos.es.translation", "res://locale/sellos.en.translation", "res://locale/sellos.fr.translation"]
+
+source_file="res://locale/sellos.csv"
+dest_files=["res://locale/sellos.es.translation", "res://locale/sellos.en.translation", "res://locale/sellos.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

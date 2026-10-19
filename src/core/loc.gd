@@ -126,6 +126,14 @@ static func region_name(floor_n: int, short := false) -> String:
 	return floor_name(floor_n, short)
 
 
+## Nombre de un reino por su id de region (el de su 1a etapa).
+static func region_name_id(region: String) -> String:
+	for f in RunManager.FLOORS:
+		if f.region == region:
+			return floor_name(f, true)
+	return region
+
+
 ## Nombres de invocaciones de jefes y minijefes (se asignan por codigo, no estan en floors/*.json):
 ## nombre en espanol -> clave en locale/sueltos.csv.
 const SUMMON_NAME_KEYS := {
