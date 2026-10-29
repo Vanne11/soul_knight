@@ -13,8 +13,8 @@ COPRO_ALIVIO,¡Alivio!,What a relief!,,Quel soulagement !
 COPRO_CALL,"¡Guijarros, a mí!","Pebbles, to me!",,"Galets, à moi !"
 BOSS_CH_FIBRA_T,¡A COMER FIBRA!,EAT YOUR FIBRE!,,MANGE DES FIBRES !
 BOSS_CH_FIBRA_D,Rompe a tiros las cinco galletas integrales que vagan por la sala.,Shoot the five wholegrain biscuits wandering around the room.,,Tire sur les cinq biscuits complets qui errent dans la salle.
-BOSS_CH_AGUA_T,¡A BEBER AGUA!,DRINK SOME WATER!,,BOIS DE L'EAU !
-BOSS_CH_AGUA_D,Toca los cuatro vasos de agua antes de que se acabe el tiempo.,Touch the four glasses of water before time runs out.,,Touche les quatre verres d'eau avant la fin du temps.
+BOSS_CH_VASOS_T,¡A BEBER AGUA!,DRINK SOME WATER!,,BOIS DE L'EAU !
+BOSS_CH_VASOS_D,Toca los cuatro vasos de agua antes de que se acabe el tiempo.,Touch the four glasses of water before time runs out.,,Touche les quatre verres d'eau avant la fin du temps.
 BOSSDMG_COPRO_WEAK,"¡Agua! Por fin algo de hidratación. Me ablanda todo.","Water! Finally some hydration. It softens everything.",,"De l'eau ! Enfin de l'hydratation. Ça m'amollit tout."
 BOSSDMG_COPRO_RESIST,"El calor no me hace nada: yo ya pasé por cosas peores.","Heat does nothing to me: I've been through worse.",,"La chaleur ne me fait rien : j'en ai vu d'autres."
 LORE_BOSS_COPROLITO_TITLE,El Coprolito,The Coprolite,,Le Coprolithe

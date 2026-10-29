@@ -317,6 +317,8 @@ func _grey_screen(on: bool) -> void:
 # ---------------------------------------------------------------- la segunda forma
 ## La Hoja "muere": NO emite la muerte (la sala no se libera). Cae, victoria falsa, corazones y revive.
 func die(killer: Node = null) -> void:
+	if _reviving:
+		return  # la secuencia ya esta en marcha
 	if form == 1 and state != State.DEAD:
 		_begin_revive()
 		return

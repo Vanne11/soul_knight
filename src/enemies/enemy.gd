@@ -204,10 +204,13 @@ func _reset_color() -> void:
 		animated_sprite.modulate = Color.WHITE
 
 func die(killer: Node = null) -> void:
+	if state == State.DEAD:
+		return  # ya muriendo (0.5 s de animacion): el jefe mata a sus esbirros y repetia botin y conteo
 	if ai != null:
 		ai.on_death()
 	state = State.DEAD
-	animated_sprite.modulate = Color.WHITE
+	if animated_sprite:
+		animated_sprite.modulate = Color.WHITE
 	set_collision_layer_value(1, false)
 	set_collision_mask_value(1, false)
 	set_collision_mask_value(7, false)  # huecos (capa 64): el cuerpo sigue la misma regla que con los muros

@@ -244,6 +244,8 @@ func _reset_color() -> void:
 		animated_sprite.modulate = Color.WHITE
 
 func die(killer: Node = null) -> void:
+	if state == State.DEAD:
+		return
 	if ai != null:
 		ai.on_death()
 	state = State.DEAD

@@ -203,6 +203,8 @@ func _end(kind: String) -> void:
 			_pull = Vector2.ZERO
 		"mareado":
 			dizzy = 0.0
+		"etiquetado":
+			labels = 0  # si no, la proxima etiqueta empezaba ya con el frenado de 3
 	ended.emit(kind)
 	queue_redraw()
 
@@ -252,6 +254,9 @@ func _physics_process(delta: float) -> void:
 				if Input.is_action_just_pressed(a):
 					dt += MASH_STEP
 		if k == "enganchado" and dashing:
+			dt += 99.0
+		if k == "etiquetado" and dashing and labels > 0:
+			Arcoiria.rip_labels(player, labels)  # el dash las rompe: anillo de dano por etiqueta
 			dt += 99.0
 		var src_v = _src.get(k, null)  # sin tipo: asignar un nodo ya liberado a una var Node da error
 		var src: Node = src_v if is_instance_valid(src_v) else null

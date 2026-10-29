@@ -255,8 +255,18 @@ func _setup_spawn_points() -> void:
 			spawn_points.append(child.global_position)
 
 func _on_door_state_changed(direction: String, state: int) -> void:
-	if state == DoorState.OPEN and all_doors_open():
+	if state == DoorState.OPEN and all_doors_open() and not _has_pending_threat():
 		room_cleared()
+
+## Desarmado las puertas no se sellan (puedes huir): abrirlas todas desde dentro no debe dar la
+## sala por limpia (borraba a los bichos vivos y soltaba la recompensa), ni un puzzle sin resolver.
+func _has_pending_threat() -> bool:
+	for e in enemies_spawned:
+		if is_instance_valid(e) and not e.is_queued_for_deletion():
+			var hp = e.get("current_health")
+			if hp != null and hp > 0.0:
+				return true
+	return has_meta("puzzle") and not get_meta("puzzle").done
 
 func all_doors_open() -> bool:
 	for door in doors.values():

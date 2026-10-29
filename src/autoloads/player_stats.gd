@@ -228,6 +228,8 @@ func active_statuses() -> Array:
 func take_damage(amount: float) -> float:
 	if DebugMenu.god_mode:
 		return 0.0
+	if current_health <= 0.0:
+		return 0.0  # ya muerto: un tic de ardor o un charco repetia player_died (muertes fantasma en el menu)
 	if guard_hits > 0 and amount > 0.0:
 		guard_hits -= 1
 		status_changed.emit()
@@ -368,17 +370,20 @@ func apply_stat_mod(stat: String, value: float) -> void:
 		"max_health": 
 			var old_max = max_health
 			max_health *= value
-			current_health = current_health * (max_health / old_max)
+			if old_max > 0.0:
+				current_health = current_health * (max_health / old_max)
 			health_changed.emit(current_health, max_health)
 		"max_shields":
 			var old_max = max_shields
 			max_shields *= value
-			current_shields = current_shields * (max_shields / old_max)
+			if old_max > 0.0:  # escudo base 0 (Vulvalquiria, Ornitorrinco): 0/0 dejaba NaN para siempre
+				current_shields = current_shields * (max_shields / old_max)
 			shields_changed.emit(current_shields, max_shields)
 		"max_stamina":
 			var old_max = max_stamina
 			max_stamina *= value
-			current_stamina = current_stamina * (max_stamina / old_max)
+			if old_max > 0.0:
+				current_stamina = current_stamina * (max_stamina / old_max)
 			stamina_changed.emit(current_stamina, max_stamina)
 		# Mejoras de la tienda: suman (no multiplican) y rellenan lo ganado.
 		"max_health_flat":

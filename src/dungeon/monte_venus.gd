@@ -52,21 +52,63 @@ static func target_stage() -> int:
 	return pick + 1
 
 
+## true si el Monte sale en este piso (el de la Selva que eligio la semilla, o --force-monte).
+static func wants_floor(f: int) -> bool:
+	if RunManager.floor_region(f) != REGION:
+		return false
+	var rank := 0  # 1er o 2do piso de la Selva en la ruta
+	for i in range(1, f + 1):
+		if RunManager.floor_region(i) == REGION:
+			rank += 1
+	return force or rank == target_stage() or (rank == 2 and _deferred_seed == _rm().current_seed)
+
+
+## Semilla de la partida cuyo Monte no cupo en el 1er piso de la Selva: pasa al 2do.
+static var _deferred_seed := -1
+
+
+## Al planear el piso del Monte (DungeonGenerator._plan_layout, antes de crear las salas): agranda
+## hasta 3 salas (sin contar el inicio) a 11x8 si su hoja del BSP da. Sin esto la unica sala
+## grande solia ser la del jefe y el Monte se perdia en ~2 de cada 3 partidas.
+const WIDE := Vector2i(11, 8)
+static func widen(rects: Array, leaves: Array, pad: int) -> void:
+	var big := 0
+	var options := []
+	for i in range(1, rects.size()):
+		var r: Rect2 = rects[i]
+		if r.size.x >= WIDE.x and r.size.y >= WIDE.y:
+			big += 1
+			continue
+		var avail: Vector2 = leaves[i].rect.size - Vector2(pad, pad) * 2.0
+		if avail.x >= WIDE.x and avail.y >= WIDE.y:
+			options.append(i)
+	options.sort_custom(func(a, b): return leaves[a].rect.get_area() > leaves[b].rect.get_area())
+	for i in options.slice(0, maxi(3 - big, 0)):
+		var leaf_rect: Rect2 = leaves[i].rect
+		var r: Rect2 = rects[i]
+		var w := maxf(r.size.x, WIDE.x)
+		var h := maxf(r.size.y, WIDE.y)
+		var x0 := leaf_rect.position.x + pad
+		var y0 := leaf_rect.position.y + pad
+		var x := clampf(r.position.x, x0, x0 + leaf_rect.size.x - pad * 2 - w)
+		var y := clampf(r.position.y, y0, y0 + leaf_rect.size.y - pad * 2 - h)
+		rects[i] = Rect2(x, y, w, h)
+
+
 ## Al generar un piso (DungeonGenerator, tras los tipos y antes de las formas): si toca, convierte
 ## una sala en el Monte de Venus. Como las formas solo van en salas de combate, queda rectangular.
 static func assign(gen: DungeonGenerator) -> void:
 	var rm := _rm()
 	var f: int = gen.current_floor
-	if RunManager.floor_region(f) != REGION:
-		return
-	var rank := 0  # 1er o 2do piso de la Selva en la ruta
-	for i in range(1, f + 1):
-		if RunManager.floor_region(i) == REGION:
-			rank += 1
-	if not force and rank != target_stage():
+	if not wants_floor(f):
 		return
 	var cands := _candidates(gen)
 	if cands.is_empty():
+		cands = _swap_candidate(gen)
+	if cands.is_empty():
+		if _deferred_seed != rm.current_seed and f < RunManager.route_size() and RunManager.floor_region(f + 1) == REGION:
+			_deferred_seed = rm.current_seed  # segundo intento en el piso siguiente de la Selva
+			return
 		push_warning("Monte de Venus: no hay sala donde ponerlo en este piso")
 		return
 	var rng := RandomNumberGenerator.new()
@@ -94,6 +136,28 @@ static func _candidates(gen: DungeonGenerator) -> Array:
 	for t in tiers:
 		if not t.is_empty():
 			return t
+	return []
+
+
+## Ultimo recurso: una sala grande que quedo de tienda, antro o puzzle (tipos que el generador
+## reparte entre combates cualesquiera) le pasa su tipo a un combate y queda libre para el Monte.
+static func _swap_candidate(gen: DungeonGenerator) -> Array:
+	var fights := gen.rooms.values().filter(func(r: Room): return r.room_type in [Room.RoomType.COMBAT, Room.RoomType.INTOXICATION, Room.RoomType.TRAP]).size()
+	if fights < 3:
+		return []
+	var combats: Array = gen.rooms.values().filter(func(r: Room): return r.room_type == Room.RoomType.COMBAT and not r.has_meta("elite_room"))
+	if combats.is_empty():
+		return []
+	for t in [Room.RoomType.INTOXICATION, Room.RoomType.SHOP, Room.RoomType.PUZZLE]:
+		for r: Room in gen.rooms.values():
+			var sz: Vector2i = gen.room_sizes.get(r.grid_pos, Vector2i.ZERO)
+			if r.room_type != t or sz.x < MIN_TILES.x or sz.y < MIN_TILES.y or r.has_meta("elite_room"):
+				continue
+			var other: Room = combats[0]
+			other.room_type = t
+			other.required_intoxication_tier = r.required_intoxication_tier
+			r.required_intoxication_tier = 0
+			return [r]
 	return []
 
 

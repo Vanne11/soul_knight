@@ -251,6 +251,8 @@ func _plan_layout() -> Dictionary:
 		var rects := []
 		for leaf in chosen:
 			rects.append(_get_room_rect_in_leaf(leaf))
+		if MonteVenus.wants_floor(current_floor):
+			MonteVenus.widen(rects, chosen, room_padding)  # salas grandes para que quepa el Monte
 		var pos: Array = rects.map(func(r): return Vector2i(r.position))
 		var edges := _plan_edges(pos)
 		var score := _layout_score(pos, edges)

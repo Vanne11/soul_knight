@@ -95,7 +95,7 @@ func _tapones() -> int:
 
 
 func _challenges() -> Array:
-	return [&"ch_fibra", &"ch_agua"]
+	return [&"ch_fibra", &"ch_vasos"]
 
 
 func _channel_color() -> Color:
@@ -307,5 +307,5 @@ func ch_fibra() -> void:
 
 
 ## AGUA: cuatro vasos de agua repartidos; tocalos todos antes de que se acabe el tiempo.
-func ch_agua() -> void:
+func ch_vasos() -> void:
 	await _ch_touch(_spread_points(4, 160.0), "cup", {"limit": 12.0})
