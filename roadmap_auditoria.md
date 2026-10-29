@@ -82,7 +82,13 @@ Leyenda: [x] arreglado · [ ] pendiente · [-] movido a diseño.
   contrario (la tercera la cambia Equilibrio si ya la mereces): la elección se siente repetida.
   Idea a decidir: un set propio del Ornitorrinco ("ninguno": electrorrecepción, huevo, espolón, veneno)
   que le salga a él en vez del "contrario" (o en una sala propia), y variar el reparto (3-0, 2-1, 1-1-1).
-- [ ] D2 Requisito de intoxicación: el generador pone `required_intoxication_tier` 1-2 al antro y 2 a la
+- [x] D2 Requisito de intoxicación: el generador pone `required_intoxication_tier` 1-2 al antro y 2 a la
   secreta, pero nadie lo aplica (`Room.can_enter()` sin llamador; `Door.try_open` solo lo mira en puertas
   LOCKED y la puerta nunca recibe el valor). Hoy se entra siempre. Decidir: aplicarlo (el antro pide estar
-  "entonado") o borrar la configuración muerta. No se tocó.
+  "entonado") o borrar la configuración muerta.
+  -> Nico (2026-10-29): se entra entonado. El antro pide ACHISPADO (nivel 1): `main._lock_antro_rooms()`
+  pone candado de intoxicación a sus puertas, solo si el antro no corta el paso (el resto del piso se
+  alcanza sin cruzarlo). Junto a cada puerta, por fuera, una botella "de la previa" (DrunkBottle, +50)
+  que vuelve si te la tomaste y sigues sobrio. El generador prefiere el antro en una rama sin salida
+  fuera del camino al jefe. Medido (2400 pisos): 70% de los antros con candado; el resto queda abierto.
+  La secreta sigue abriéndose solo con el puzzle (su tier 2 no se usa).

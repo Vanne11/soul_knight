@@ -578,10 +578,17 @@ func _assign_room_types() -> void:
 		candidates[i].room_type = calm[i % calm.size()]
 	# Del combate que queda: un antro (enemigos que sueltan alcohol) y alguna trampa.
 	var fights := candidates.slice(n_calm)
+	# el antro se entra entonado (main._lock_antro_rooms): mejor en una rama, fuera del camino al jefe
+	var side: Array = fights.filter(func(r): return r.grid_pos not in main_path)
+	var dead: Array = side.filter(func(r): return room_graph[r.grid_pos].size() == 1)
+	var antro = dead[0] if not dead.is_empty() else (side[0] if not side.is_empty() else null)
+	if antro != null:
+		fights.erase(antro)
+		fights.push_front(antro)
 	for i in fights.size():
 		if i == 0:
 			fights[i].room_type = Room.RoomType.INTOXICATION
-			fights[i].required_intoxication_tier = RNG.randi_range(1, 2)
+			fights[i].required_intoxication_tier = 1  # ACHISPADO (main.ANTRO_TIER)
 		elif RNG.randf() < 0.15:
 			fights[i].room_type = Room.RoomType.TRAP
 

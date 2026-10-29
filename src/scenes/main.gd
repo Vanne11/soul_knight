@@ -116,6 +116,8 @@ func _generate_dungeon() -> void:
 	if not peace and not Silencio.active():
 		RoomObstacles.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # rocas, columnas, barriles, pinchos
 	_lock_secret_rooms()
+	if not peace and not Silencio.active():
+		_lock_antro_rooms()
 	if not peace:
 		Utero.setup_floor(self)  # El Utero (src/utero): fases del ciclo
 		Arcoiria.setup_floor(self)  # Arcoiria (src/arcoiria): bandera del HUD, poderes de colores, codice del reino
@@ -265,6 +267,7 @@ func _enter_room(room: Room, entry_door: Door = null) -> void:
 	room.cleared_callback = _on_room_cleared.bind(room)
 	room.on_player_enter()
 	_connect_room_doors(room)
+	_restock_previa(room)
 	
 	# Enable current room
 	room.set_process(true)
@@ -633,6 +636,83 @@ func _lock_secret_rooms() -> void:
 		return
 	for door in _doors_to_secret_rooms():
 		door.set_state(Door.State.LOCKED)
+
+# ---------------------------------------------------------------- antro: se entra entonado
+## Al antro se entra ACHISPADO: sus puertas nacen con candado de intoxicacion (Door.try_open ya lo
+## comprueba). Solo si el antro no corta el paso (el resto del piso se alcanza sin cruzarlo). Del lado de
+## fuera, junto a cada puerta, una botella "de la previa" (DrunkBottle, +50); vuelve si te la tomaste
+## y sigues sobrio, asi nunca queda cerrado para siempre.
+const ANTRO_TIER := 1
+var _previa: Array = []  # [puerta con candado, sala donde esta, botella]
+
+func _lock_antro_rooms() -> void:
+	_previa.clear()
+	for antro: Room in dungeon_generator.rooms.values():
+		if antro.room_type != Room.RoomType.INTOXICATION or not _antro_optional(antro):
+			continue
+		for room: Room in dungeon_generator.rooms.values():
+			for door: Door in room.doors.values():
+				if door.target_pos != antro.grid_pos or door.state == Door.State.LOCKED:
+					continue
+				door.required_intoxication_tier = ANTRO_TIER
+				door.set_state(Door.State.LOCKED)
+				_previa.append([door, room, null])  # la botella se pone al entrar a esa sala (_restock_previa)
+
+## true si todas las salas (salvo el antro y las secretas, que ya van cerradas) se alcanzan sin pasar por el.
+func _antro_optional(antro: Room) -> bool:
+	var start: Room = null
+	for r: Room in dungeon_generator.rooms.values():
+		if r.room_type == Room.RoomType.START:
+			start = r
+	if start == null or start == antro:
+		return false
+	var seen := {start.grid_pos: true}
+	var queue := [start.grid_pos]
+	while not queue.is_empty():
+		var cur = queue.pop_front()
+		for nb in dungeon_generator.room_graph.get(cur, []):
+			if seen.has(nb) or nb == antro.grid_pos:
+				continue
+			seen[nb] = true
+			queue.append(nb)
+	for r: Room in dungeon_generator.rooms.values():
+		if r != antro and r.room_type != Room.RoomType.SECRET and not seen.has(r.grid_pos):
+			return false
+	return true
+
+func _place_previa(room: Room, door: Door) -> DrunkBottle:
+	var inward := Vector2(0, 110)
+	var side := Vector2(60, 0)
+	match door.get_direction_name():
+		"down":
+			inward = Vector2(0, -110)
+		"left":
+			inward = Vector2(110, 0)
+			side = Vector2(0, 60)
+		"right":
+			inward = Vector2(-110, 0)
+			side = Vector2(0, 60)
+	var prefer := door.position + inward + side  # a un lado de la puerta: tomarla es elegir, no tropezar
+	var spot := RoomUtil.free_spot(self, room, prefer, 18.0, false)
+	var b := DrunkBottle.new()
+	b.position = spot if spot != Vector2.INF else room.nearest_walkable(prefer, 18.0)
+	room.pickups_node.add_child(b)
+	return b
+
+func _restock_previa(room: Room) -> void:
+	if not _previa.any(func(p): return p[1] == room):
+		return
+	# unos fotogramas: la fisica registra los obstaculos (RoomUtil.free_spot los consulta)
+	for _i in 2:
+		await get_tree().physics_frame
+	if current_room != room:
+		return
+	for p in _previa:
+		var door: Door = p[0]
+		if p[1] != room or not is_instance_valid(door) or door.state != Door.State.LOCKED:
+			continue
+		if not is_instance_valid(p[2]) and _game_controller.get_player_stats().intoxication_tier < ANTRO_TIER:
+			p[2] = _place_previa(room, door)
 
 func unlock_secret_rooms() -> void:
 	for door in _doors_to_secret_rooms():
