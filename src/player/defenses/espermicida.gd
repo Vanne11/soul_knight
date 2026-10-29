@@ -35,8 +35,8 @@ func _release(e) -> void:
 		return
 	if e.has_meta("dmg_taken_mult"):
 		e.remove_meta("dmg_taken_mult")
-	e.set("move_speed", float(e.get("move_speed")) / SLOW)
-	e.set("lunge_speed", float(e.get("lunge_speed")) / SLOW)
+	SlowStack.clear(e, "espermicida")
+	SlowStack.clear(e, "espermicida", "lunge_speed")
 
 
 func _release_all() -> void:
@@ -79,8 +79,8 @@ func _apply() -> void:
 		var id: int = e.get_instance_id()
 		now[id] = e
 		if not _in.has(id):
-			e.set("move_speed", float(e.get("move_speed")) * SLOW)
-			e.set("lunge_speed", float(e.get("lunge_speed")) * SLOW)
+			SlowStack.set_factor(e, "espermicida", SLOW)
+			SlowStack.set_factor(e, "espermicida", SLOW, "lunge_speed")
 		e.set_meta("dmg_taken_mult", WEAK_MULT)
 	for id in _in:
 		if not now.has(id):

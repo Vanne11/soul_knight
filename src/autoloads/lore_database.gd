@@ -36,17 +36,39 @@ func _load_progress() -> void:
 	if file:
 		var data = JSON.parse_string(file.get_as_text())
 		file.close()
-		_unlocked_ids.assign(data.get("unlocked", []))
-		_counters = data.get("counters", {})
+		if not data is Dictionary:  # archivo corrupto (cierre a medio guardar): se empieza de cero
+			push_warning("lore_progress.json ilegible: se ignora")
+			return
+		var ids = data.get("unlocked", [])
+		var counters = data.get("counters", {})
+		for id in (ids if ids is Array else []):
+			_unlocked_ids.append(str(id))
+		_counters = counters if counters is Dictionary else {}
 		for id in _unlocked_ids:
 			if _entries.has(id):
 				_entries[id].unlocked = true
 
 func _save_progress() -> void:
+	_save_queued = false
 	var file = FileAccess.open("user://lore_progress.json", FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify({"unlocked": _unlocked_ids, "counters": _counters}))
 		file.close()
+
+
+## Los contadores cambian con cada kill e item: se guardan como mucho cada 3 s (antes una
+## escritura a disco por bicho muerto, con tirones en combate) y al cerrar el juego.
+var _save_queued := false
+func _queue_save() -> void:
+	if _save_queued:
+		return
+	_save_queued = true
+	get_tree().create_timer(3.0, true).timeout.connect(func(): if _save_queued: _save_progress())
+
+
+func _exit_tree() -> void:
+	if _save_queued:
+		_save_progress()
 
 func get_entry(entry_id: String) -> Variant:
 	return _entries[entry_id] if _entries.has(entry_id) else null
@@ -122,7 +144,7 @@ func _on_item_used(item: Variant) -> void:
 func _bump(kind: String, target: String, n: int = 1) -> void:
 	for key in ["%s:%s" % [kind, target], "%s:*" % kind]:
 		_counters[key] = int(_counters.get(key, 0)) + n
-	_save_progress()
+	_queue_save()
 
 func _check_all() -> void:
 	for entry in _entries.values():

@@ -350,11 +350,15 @@ func choose(title: String, options: Array) -> void:
 	get_tree().paused = true
 
 
+func choice_open() -> bool:
+	return _choice != null and _choice.visible
+
+
 func _pick_choice(i: int) -> void:
 	if not _choice.visible:
 		return
 	_choice.visible = false
-	get_tree().paused = false
+	PauseMenu.release(get_tree(), self)
 	_ate_input_ms = Time.get_ticks_msec()  # el clic no dispara
 	chosen.emit(i)
 

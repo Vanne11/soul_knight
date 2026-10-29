@@ -24,6 +24,7 @@ PZ_KEY_SLIP_SOBER,¡Se te escurre!,It slips away!,,Elle t'échappe !
 PZ_KEY_LOST_SLIP,¡Se te cayó!,You dropped it!,,Elle a glissé !
 PZ_KEY_LOST_SHATTER,¡Se rompió!,It shattered!,,Elle s'est brisée !
 PZ_KEY_LOST_DRY,Se secó,It dried up,,Séchée
+PZ_KEY_LOST_SPENT,La gastaste en la maldición,Spent on the curse,,Dépensée pour la malédiction
 PZ_KEY_BACK,"La llave vuelve a su sitio, custodiada.","The key returns to its place, guarded.",,"La clé retourne à sa place, sous bonne garde."
 PZ_CHEST_CRYSTAL,Cofre de cristal,Crystal chest,,Coffre de cristal
 PZ_CHEST_CRYSTAL_LOCKED,El candado brilla igual que cierta llave.,The padlock glimmers like a certain key.,,Le cadenas brille exactement comme une certaine clé.

@@ -179,4 +179,5 @@ func _on_body_entered(body: Node) -> void:
 			return
 	elif body.has_method("hit_by_bullet"):  # barriles y cajas rompibles (RoomObstacles)
 		body.hit_by_bullet(damage, Vector2.RIGHT.rotated(rotation))
+	_done = true  # queue_free es diferido: otro cuerpo en el mismo paso de fisica recibia el golpe entero
 	queue_free()

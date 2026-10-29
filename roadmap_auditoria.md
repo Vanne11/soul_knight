@@ -29,21 +29,29 @@ Leyenda: [x] arreglado · [ ] pendiente.
   -> `labels = 0` al terminar; el dash las rompe con su anillo de daño.
 
 ## Media
-- [ ] M1 Bendición / elección del narrador se abre sobre el menú de pausa y al elegir despausa el
+- [x] M1 Bendición / elección del narrador se abre sobre el menú de pausa y al elegir despausa el
   juego detrás. `main.gd` (timers de recompensa), `blessing_picker.gd:215`, `narrator.gd:357`
-- [ ] M2 `lore_progress.json` corrupto deja el códice muerto (sin `is Dictionary`); además se
+  -> `PauseMenu.release()`: solo despausa si no queda otra pantalla que pausa (pausa, bendición, elección).
+- [x] M2 `lore_progress.json` corrupto deja el códice muerto (sin `is Dictionary`); además se
   reescribe en cada kill (microtirones). `src/autoloads/lore_database.gd`
-- [ ] M3 Jaula maldita + Censura de escudo: al liberarla `max_shields` queda negativo.
+  -> valida el JSON (ilegible = se ignora) y guarda como mucho cada 3 s + al cerrar.
+- [x] M3 Jaula maldita + Censura de escudo: al liberarla `max_shields` queda negativo.
   `src/items/item_slots.gd:191`, `player_stats.gd` `max_shields_flat`
-- [ ] M4 Un solo E acciona dos interactuables pegados en el mismo frame (premios del cofre con
+  -> guarda lo que de verdad sumó (con Censura) y el escudo nunca baja de 0.
+- [x] M4 Un solo E acciona dos interactuables pegados en el mismo frame (premios del cofre con
   llave). `src/items/interactable.gd` `_handoff`
-- [ ] M5 Lentitudes de espermicida/charco/masilla se pisan: enemigo lento para siempre.
+  -> un E se usa una sola vez por fotograma.
+- [x] M5 Lentitudes de espermicida/charco/masilla se pisan: enemigo lento para siempre.
   `src/weapons/puddle.gd`, `masilla.gd`, `lube_patch.gd`, `src/player/defenses/espermicida.gd`
-- [ ] M6 Ladrona que escapa a la sala de la misión de llave nunca aparece (monedas perdidas, cartel
+  -> `src/weapons/slow_stack.gd`: cada fuente pone y quita su factor (producto); respeta si la IA recalcula.
+- [x] M6 Ladrona que escapa a la sala de la misión de llave nunca aparece (monedas perdidas, cartel
   miente). `src/rooms/obj_thief.gd:216`, `room_director.gd`
-- [ ] M7 Bala sin perforación daña a dos enemigos en el mismo frame. `src/player/player_bullet.gd`
-- [ ] M8 Liberarse de una maldición con la llave de la misión deja la misión trabada.
+  -> la ladrona no huye a salas bloqueadas (hormona / misión de llave); si sale por ahí, se pierde con el aviso correcto.
+- [x] M7 Bala sin perforación daña a dos enemigos en el mismo frame. `src/player/player_bullet.gd`
+  -> `_done = true` al impactar.
+- [x] M8 Liberarse de una maldición con la llave de la misión deja la misión trabada.
   `src/items/item_slots.gd:269`, `key_quests.gd`
+  -> se gasta primero otra llave; si era la de la misión, vuelve a su sitio (`lose("spent")`, texto PZ_KEY_LOST_SPENT).
 
 ## Baja
 - [ ] B1 Narrador arrastra la cola de frases a la partida siguiente (`narrator.gd` `_on_run_started`).

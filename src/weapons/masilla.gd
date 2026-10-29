@@ -9,7 +9,7 @@ extends Node2D
 const STUCK_SPEED := 0.04
 const FREE_SLOW := 0.6
 
-static var _users: Dictionary = {}  # enemigo -> [manchas que lo afectan, velocidad original, aplicada]
+static var _users: Dictionary = {}  # enemigo -> [manchas que lo afectan] (el frenado va por SlowStack)
 
 var radius := 58.0
 var time := 5.0
@@ -70,16 +70,10 @@ func _physics_process(delta: float) -> void:
 
 func _apply(e: Variant, factor: float) -> void:
 	if not _users.has(e):
-		_users[e] = [1, float(e.get("move_speed")), 0.0]
+		_users[e] = [1]
 	elif not _mine_counted(e):
 		_users[e][0] += 1
-	var u: Array = _users[e]
-	# si la IA recalculo la velocidad, se parte de la nueva; si es la nuestra, de la original
-	var cur := float(e.get("move_speed"))
-	if not is_equal_approx(cur, u[2]):
-		u[1] = cur
-	u[2] = u[1] * factor
-	e.set("move_speed", u[2])
+	SlowStack.set_factor(e, "masilla", factor)
 	if not e.has_meta("masilla_" + str(get_instance_id())):
 		e.set_meta("masilla_" + str(get_instance_id()), true)
 
@@ -94,8 +88,7 @@ func _release(e: Variant) -> void:
 	e.remove_meta("masilla_" + str(get_instance_id()))
 	_users[e][0] -= 1
 	if _users[e][0] <= 0:
-		if is_equal_approx(float(e.get("move_speed")), _users[e][2]):
-			e.set("move_speed", _users[e][1])
+		SlowStack.clear(e, "masilla")
 		_users.erase(e)
 
 

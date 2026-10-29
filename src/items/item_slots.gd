@@ -191,6 +191,8 @@ func _equip_curse(item: Item) -> void:
 	for m in item.custom_data.get("passive_mods", []):
 		var v := float(m.value) * boost
 		_stats.apply_stat_mod(String(m.stat), v)
+		if String(m.stat) == "max_shields_flat" and v > 0.0:
+			v *= Censura.mult("shield")  # lo que de verdad sumo (al liberarla se restaba entero: escudo negativo)
 		applied.append([String(m.stat), v])
 	for e in item.custom_data.get("use_effects", []):
 		_apply_effect(item, e, boost)
@@ -267,12 +269,20 @@ func use_first_with_tag(tag: String) -> bool:
 
 
 func _try_free_from_curse(i: int, item: Item) -> bool:
-	for k in CURSE_KEYS:
+	var kq := KeyQuests.of(get_tree())
+	var keys: Array = CURSE_KEYS.duplicate()
+	if kq != null and kq.key_id in keys:  # la llave de la mision del piso, solo si no hay otra
+		keys.erase(kq.key_id)
+		keys.append(kq.key_id)
+	for k in keys:
 		if player.collected_items.has(k):
 			player.collected_items.erase(k)
+			if kq != null and kq.key_id == k and kq.state == "carried":
+				kq.lose("spent")  # era la llave de la mision del piso: vuelve a su sitio (si no, mision trabada)
 			for a in slots[i].applied:
 				_stats.apply_stat_mod(String(a[0]), -float(a[1]))
-			_stats.current_shields = minf(_stats.current_shields, _stats.max_shields)
+			_stats.max_shields = maxf(_stats.max_shields, 0.0)
+			_stats.current_shields = clampf(_stats.current_shields, 0.0, _stats.max_shields)
 			_stats.shields_changed.emit(_stats.current_shields, _stats.max_shields)
 			slots[i] = {}
 			_toast(tr("FX_CURSE_FREED"), Color("7fe0a0"))

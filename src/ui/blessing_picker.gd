@@ -212,7 +212,7 @@ func _pick(i: int) -> void:
 	if _done:
 		return
 	_done = true
-	get_tree().paused = false
+	PauseMenu.release(get_tree(), self)
 	Narrator._ate_input_ms = Time.get_ticks_msec()  # el clic no dispara
 	picked.emit(i)
 	queue_free()

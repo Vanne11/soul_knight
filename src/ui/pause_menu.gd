@@ -134,8 +134,21 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func close() -> void:
-	get_tree().paused = false
+	PauseMenu.release(get_tree(), self)
 	queue_free()
+
+
+## Despausa solo si no queda otra pantalla que pausa: los timers de recompensa (bendicion, eleccion
+## del jefe) corren aunque este pausado y podian abrirse sobre este menu; al cerrarse una, el juego
+## seguia corriendo detras de la otra.
+static func release(tree: SceneTree, closing: Node = null) -> void:
+	for g in ["pause_menu", "blessing_picker"]:
+		for n in tree.get_nodes_in_group(g):
+			if n != closing and not n.is_queued_for_deletion():
+				return
+	if closing != Narrator and Narrator.choice_open():
+		return
+	tree.paused = false
 
 
 func _to_menu() -> void:

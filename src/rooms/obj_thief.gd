@@ -213,7 +213,7 @@ func _start_leaving() -> void:
 		if tr_ == null:
 			continue
 		var d := door.global_position.distance_to(thief.global_position)
-		if d < best_d and not final_chase and tr_.room_type in RoomDirector.COMBATISH and not tr_.cleared and tr_ != main._hormone_room and not tr_.has_meta("dyn_thief_loot") and str(RoomDirector.of(get_tree()).plan.get(tr_.grid_pos, "")) in ["", "thief", "celo", "lubricado", "apagon", "censurada", "barriles", "antorchas", "trampas"]:
+		if d < best_d and not final_chase and tr_.room_type in RoomDirector.COMBATISH and not tr_.cleared and not director._objective_blocked(tr_) and not tr_.has_meta("dyn_thief_loot") and str(RoomDirector.of(get_tree()).plan.get(tr_.grid_pos, "")) in ["", "thief", "celo", "lubricado", "apagon", "censurada", "barriles", "antorchas", "trampas"]:
 			best = door
 			best_d = d
 		if fallback == null or d < fallback.global_position.distance_to(thief.global_position):
@@ -238,7 +238,8 @@ func _leave() -> void:
 	print("[salas] thief %s: escapa (monedas %d, vecina %s)" % [room.grid_pos, stolen, target.grid_pos if target != null else "-"])
 	if _hud:
 		_hud.queue_free()
-	if target != null and not final_chase and target.room_type in RoomDirector.COMBATISH and not target.cleared:
+	# la sala de la hormona y las de la mision de llave no pueden llevar la persecucion: alli se pierde
+	if target != null and not final_chase and target.room_type in RoomDirector.COMBATISH and not target.cleared and not director._objective_blocked(target):
 		target.set_meta("dyn_thief_loot", {"coins": stolen, "own": own_purse})
 		toast(tr("RM_THIEF_ESCAPED_T"), tr("RM_THIEF_ESCAPED_DOOR") % tr("RM_DIR_" + _exit.get_direction_name().to_upper()), "ffd75a")
 		say_when_calm("rm_thief_escaped")

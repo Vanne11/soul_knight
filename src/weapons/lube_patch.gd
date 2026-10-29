@@ -66,9 +66,8 @@ func _physics_process(delta: float) -> void:
 			if d.next <= 0.0:
 				d.next = slip_every
 				d.slip = slip_time
-				d.orig = float(e.get("move_speed"))
-				d.applied = d.orig * (0.6 if e.is_in_group("boss") else 0.1)
-				e.set("move_speed", d.applied)
+				d.applied = 1.0
+				SlowStack.set_factor(e, _slow_key(), 0.6 if e.is_in_group("boss") else 0.1)
 				BossDamage.tag(weapon_id, 1.0)
 				e.take_damage(slip_damage * (0.4 if e.is_in_group("boss") else 1.0), player, Vector2.ZERO)
 				get_node("/root/GlobalEvents").show_floating_text.emit(e.global_position + Vector2(0, -40), tr("PT_LUBE_SLIP"), Color("9fe3ff"))
@@ -83,10 +82,14 @@ func _restore(e: Variant) -> void:
 	if not is_instance_valid(e) or not _en.has(e):
 		return
 	var d: Dictionary = _en[e]
-	if d.applied >= 0.0 and is_equal_approx(float(e.get("move_speed")), d.applied):
-		e.set("move_speed", d.orig)
+	if d.applied >= 0.0:
+		SlowStack.clear(e, _slow_key())
 	d.applied = -1.0
 	d.slip = 0.0
+
+
+func _slow_key() -> String:
+	return "lube_%d" % get_instance_id()
 
 
 func _exit_tree() -> void:

@@ -5,7 +5,7 @@ extends Node2D
 ## velocidad) y, con la sinergia Spa Improvisado, cura al jugador que se queda dentro.
 ## Un enemigo en varios charcos solo se frena una vez (cuenta de charcos en `_users`).
 
-static var _users: Dictionary = {}  # enemigo -> [charcos que lo frenan, velocidad original]
+static var _users: Dictionary = {}  # enemigo -> [charcos que lo frenan] (el frenado va por SlowStack)
 
 var radius := 62.0
 var time := 4.0
@@ -63,10 +63,8 @@ func _grab(e: Variant) -> void:
 	if _users.has(e):
 		_users[e][0] += 1
 		return
-	var orig := float(e.get("move_speed"))
-	var applied := orig * (0.75 if e.is_in_group("boss") else slow)
-	_users[e] = [1, orig, applied]
-	e.set("move_speed", applied)
+	_users[e] = [1]
+	SlowStack.set_factor(e, "puddle", 0.75 if e.is_in_group("boss") else slow)
 
 
 func _drop(e: Variant) -> void:
@@ -74,9 +72,7 @@ func _drop(e: Variant) -> void:
 		return
 	_users[e][0] -= 1
 	if _users[e][0] <= 0:
-		# si la IA recalculo la velocidad mientras estaba en el charco, no se pisa
-		if is_instance_valid(e) and is_equal_approx(float(e.get("move_speed")), _users[e][2]):
-			e.set("move_speed", _users[e][1])
+		SlowStack.clear(e, "puddle")
 		_users.erase(e)
 
 

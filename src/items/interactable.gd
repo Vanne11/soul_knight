@@ -60,8 +60,16 @@ func _prompt_text() -> String:
 	return prompt_text
 
 
+## Fotograma del ultimo E usado: el traspaso (_handoff) le da el cuadro al vecino en el mismo
+## fotograma y, si va despues en el arbol, ese mismo E lo usaba tambien (dos premios de un toque).
+static var _used_frame := -1
+
+
 func _process(_delta: float) -> void:
 	if _player and Narrator.prompt_owner == self and Input.is_action_just_pressed("interact"):
+		if _used_frame == Engine.get_process_frames():
+			return
+		_used_frame = Engine.get_process_frames()
 		_use(_player)
 
 
