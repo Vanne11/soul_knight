@@ -6,7 +6,7 @@ extends CanvasLayer
 ## Una vez por arranque: es la main_scene, asi que al volver al menu desde una
 ## partida no reaparece. El autoplay arranca su propia escena y no pasa por aqui.
 
-const MENU_SCENE := "res://src/scenes/main_menu.tscn"
+const MENU_SCENE := "res://src/scenes/save_slots.tscn"  # primero el espacio de guardado (SaveSlots), luego el menu
 const LOGO_TEX := preload("res://assets/sprites/ui/studio_logo.png")
 const DISSOLVE := preload("res://src/shaders/dissolve.gdshader")
 const LOGO_FADE_IN := 0.6

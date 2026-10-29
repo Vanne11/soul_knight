@@ -461,6 +461,15 @@ const BLESSINGS := {
 	"intuicion": {"name": "Intuición", "kingdom": "vulva", "desc": "+12% de probabilidad de crítico", "stat": ["crit_chance", 0.12]},
 	"regla": {"name": "Regeneración Cíclica", "kingdom": "vulva", "desc": "Curas 1 de vida al matar"},
 	"caderas": {"name": "Caderas Ligeras", "kingdom": "vulva", "desc": "+12% de velocidad", "stat": ["speed", 1.12]},
+	# "ninguno": las del Ornitorrinco ("No especifica"), ni de Penelandia ni de Vulvania. Las ve cualquier
+	# heroe (siempre en la carta del medio) y a nadie le dan alergia.
+	"electro": {"name": "Electrorrecepción", "kingdom": "ninguno", "desc": "Tus balas dan calambre: aturden un instante (a los jefes no)"},
+	"espolon": {"name": "Espolón Venenoso", "kingdom": "ninguno", "desc": "El dash envenena lo que atraviesas: 3 de daño por segundo durante 4 s"},
+	"huevo": {"name": "Puesta Inexplicable", "kingdom": "ninguno", "desc": "Al limpiar una sala pones un huevo y te cura 4 de vida. La biología no da explicaciones"},
+	"cola": {"name": "Cola de Castor", "kingdom": "ninguno", "desc": "Recibes un 10% menos de daño. La cola amortigua y nadie sabe de quién es"},
+	"pico": {"name": "Pico de Pato", "kingdom": "ninguno", "desc": "Tus balas llegan un 25% más lejos. Nadie se toma en serio un pico, hasta que le llega"},
+	"casilla": {"name": "Casilla en Blanco", "kingdom": "ninguno", "desc": "+6% de daño, cadencia y velocidad. No marcaste nada y te tocó un poco de todo",
+		"stats": [["damage", 1.06], ["fire_rate", 1.06], ["speed", 1.06]]},
 	# Solo aparece con 2+ niveles de cada reino: premio a mezclar.
 	"equilibrio": {"name": "Equilibrio Hormonal", "kingdom": "mixto", "desc": "Al hacer dash disparas un anillo de balas"},
 }
@@ -490,15 +499,27 @@ func is_foreign(kingdom: String) -> bool:
 	var home: String = character_data().kingdom
 	return home in ["pene", "vulva"] and kingdom in ["pene", "vulva"] and kingdom != home
 
-## 3 bendiciones a elegir; la mayoria del reino pedido. Equilibrio sustituye a la
-## ultima si ya la mereces.
+## 3 bendiciones a elegir. El reparto varia (Nico, 2026-10-29) para que a veces toque usar la de otro
+## reino: 3-0 (las tres del reino pedido), 2-1 (dos y una del contrario) o 1-1-1 (una del reino,
+## una del Ornitorrinco AL MEDIO y una del contrario). Equilibrio sustituye a la ultima si ya la mereces.
+const BLESSING_SPLITS := {"3-0": 0.3, "2-1": 0.4, "1-1-1": 0.3}
+
 func roll_blessings(kingdom: String) -> Array:
+	if kingdom not in ["pene", "vulva"]:
+		kingdom = "pene" if RNG.randf() < 0.5 else "vulva"
 	var other := "vulva" if kingdom == "pene" else "pene"
-	var main_pool := BLESSINGS.keys().filter(func(id): return BLESSINGS[id].kingdom == kingdom)
-	var other_pool := BLESSINGS.keys().filter(func(id): return BLESSINGS[id].kingdom == other)
-	RNG.shuffle(main_pool)
-	RNG.shuffle(other_pool)
-	var out: Array = main_pool.slice(0, 2) + other_pool.slice(0, 1)
+	var pools := {}
+	for k in [kingdom, other, "ninguno"]:
+		pools[k] = BLESSINGS.keys().filter(func(id): return BLESSINGS[id].kingdom == k)
+		RNG.shuffle(pools[k])
+	var out: Array
+	match RNG.weighted_pick(BLESSING_SPLITS):
+		"3-0":
+			out = pools[kingdom].slice(0, 3)
+		"1-1-1":
+			out = [pools[kingdom][0], pools["ninguno"][0], pools[other][0]]
+		_:
+			out = pools[kingdom].slice(0, 2) + pools[other].slice(0, 1)
 	if blessing("equilibrio") == 0 and kingdom_levels("pene") >= 2 and kingdom_levels("vulva") >= 2:
 		out[2] = "equilibrio"
 	return out
@@ -886,6 +907,11 @@ var last_huesos := 0
 var last_run_time := 0.0
 
 func _ready() -> void:
+	load_meta()
+
+
+## Progreso entre partidas del espacio de guardado activo (SaveSlots). Tambien al cambiar de espacio.
+func load_meta() -> void:
 	var data = load_meta_progression()
 	meta_currency = int(data.get("meta_currency", 0))
 	meta_upgrades = data.get("meta_upgrades", {})
@@ -1114,13 +1140,13 @@ func save_meta_progression() -> void:
 		"daily_records": daily_records,
 		"save_version": 2,
 	}
-	var file = FileAccess.open("user://meta_save.json", FileAccess.WRITE)
+	var file = FileAccess.open(SaveSlots.path("meta_save.json"), FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify(data))
 		file.close()
 
 func load_meta_progression() -> Dictionary:
-	var file = FileAccess.open("user://meta_save.json", FileAccess.READ)
+	var file = FileAccess.open(SaveSlots.path("meta_save.json"), FileAccess.READ)
 	if file:
 		var data = JSON.parse_string(file.get_as_text())
 		file.close()

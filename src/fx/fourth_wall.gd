@@ -2,7 +2,7 @@ extends Node
 
 ## Cuarta pared: los heroes te hablan a su manera y el juego "sabe de ti".
 ## SOLO usa: la hora local (jugar de madrugada), el foco de LA VENTANA DEL JUEGO
-## (NOTIFICATION_APPLICATION_FOCUS_OUT/IN) y su propio historial en user://fourth_wall.json
+## (NOTIFICATION_APPLICATION_FOCUS_OUT/IN) y su propio historial en user://slot_N/fourth_wall.json (SaveSlots)
 ## (partidas/muertes por heroe, jefe que mas te mata, nombre opcional). Nada de otras apps,
 ## archivos ni datos del sistema.
 ##
@@ -17,7 +17,6 @@ extends Node
 ##   intro.gd     -> select_shown() al mostrar la eleccion de heroe
 ## Los heroes miran a camara con Player.look_at_camera() cuando hablan.
 
-const SAVE_PATH := "user://fourth_wall.json"
 ## segundos entre dos comentarios ambientales (idle, pausa, discusion, arranque, madrugada)
 const GAP_S := 150.0
 const IDLE_S := 20.0           # sin tocar nada
@@ -529,14 +528,21 @@ func _on_settings_changed() -> void:
 
 # ------------------------------------------------------------------ guardado
 func _load() -> void:
-	if not FileAccess.file_exists(SAVE_PATH):
+	var path := SaveSlots.path("fourth_wall.json")
+	if not FileAccess.file_exists(path):
 		return
-	var d = JSON.parse_string(FileAccess.get_file_as_string(SAVE_PATH))
+	var d = JSON.parse_string(FileAccess.get_file_as_string(path))
 	if d is Dictionary:
 		data.merge(d, true)
 
 
+## Al cambiar de espacio de guardado (SaveSlots.select): cada espacio te conoce por separado.
+func reload() -> void:
+	data = {"name": "", "asked": false, "runs": {}, "deaths": {}, "boss_deaths": {}, "runs_total": 0, "last_seen": 0}
+	_load()
+
+
 func _save() -> void:
-	var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	var f := FileAccess.open(SaveSlots.path("fourth_wall.json"), FileAccess.WRITE)
 	if f:
 		f.store_string(JSON.stringify(data))

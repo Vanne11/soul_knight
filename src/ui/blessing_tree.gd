@@ -2,7 +2,7 @@ class_name BlessingTree
 extends PanelContainer
 
 ## Panel del menu de pausa: arbol de bendiciones (rama Penelandia, rama Vulvania y Equilibrio
-## Hormonal al centro unido a ambas) con lo que tienes y a que nivel, lo que falta (apagado),
+## Hormonal al centro unido a ambas; bajo Equilibrio, compacta, la del Ornitorrinco "No especifica") con lo que tienes y a que nivel, lo que falta (apagado),
 ## el progreso para desbloquear Equilibrio, y un resumen de tus estadisticas (PlayerStats).
 ## Solo lee RunManager y PlayerStats. Se usa dentro de PauseMenu (como SettingsPanel).
 
@@ -149,6 +149,38 @@ func _hub() -> Control:
 	st.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	st.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	v.add_child(st)
+	v.add_child(_mini_branch("ninguno"))
+	return v
+
+
+## Rama compacta (solo iconos, 3 por fila; nombre, efecto y nivel en el tooltip): el panel va justo de alto.
+func _mini_branch(kingdom: String) -> Control:
+	var col := _color(kingdom)
+	var v := VBoxContainer.new()
+	v.add_theme_constant_override("separation", 4)
+	var head := HudStyle.pixel_label("%s  %d" % [tr(BlessingPicker.KINGDOM_KEYS[kingdom]), BlessingPicker.rm().kingdom_levels(kingdom)], 16, col, true)
+	head.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	v.add_child(head)
+	var g := GridContainer.new()
+	g.columns = 3
+	g.add_theme_constant_override("h_separation", 10)
+	g.add_theme_constant_override("v_separation", 6)
+	g.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	for id in RunManager.BLESSINGS:
+		if RunManager.BLESSINGS[id].kingdom != kingdom:
+			continue
+		var lvl: int = BlessingPicker.rm().blessing(id)
+		var ic := TextureRect.new()
+		ic.texture = BlessingPicker.icon_tex(id)
+		ic.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		ic.custom_minimum_size = Vector2(36, 36)
+		ic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		ic.mouse_filter = Control.MOUSE_FILTER_STOP
+		ic.modulate = Color.WHITE if lvl > 0 else Color(0.3, 0.3, 0.36, 0.8)
+		ic.tooltip_text = "%s\n%s\n%s" % [Loc.blessing(id, "name"), Loc.blessing(id, "desc"),
+			(tr("BPICK_LEVEL") % lvl) if lvl > 0 else tr("BTREE_LOCKED")]
+		g.add_child(ic)
+	v.add_child(g)
 	return v
 
 

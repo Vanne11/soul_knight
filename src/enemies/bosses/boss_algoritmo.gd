@@ -12,7 +12,7 @@ extends BossAltBase
 ## - AVISA lo que aprendio ("PATRON DETECTADO: SIEMPRE ESQUIVAS A LA IZQUIERDA") para que cambies;
 ## - PREDICCION: te espera donde sueles caer (dash), por donde sueles rodearlo y en tu zona favorita;
 ## - al avisar cualquier ataque y con un dash habitual, pone una marca justo en ese lado;
-## - recuerda ENTRE partidas (user://algoritmo_memoria.json, como la memoria del narrador): te saluda
+## - recuerda ENTRE partidas (user://slot_N/algoritmo_memoria.json, como la memoria del narrador): te saluda
 ##   con lo que anoto la ultima vez y arranca ya apuntando ahi (con menos fuerza).
 ## - ESBIRROS: bots de reporte (enemy_bot_reporte.gd) que marcan tu posicion; con bots vivos sus
 ##   REPORTADOS marcan un sitio extra. Pocos en fase 1, mas en fase 3.
@@ -20,7 +20,6 @@ extends BossAltBase
 const GLASS := Color(0.7, 0.85, 1.0)
 const ALERT := Color(1.0, 0.3, 0.3)
 const BOT := preload("res://src/enemies/enemy_bot_reporte.tscn")
-const MEMORY_PATH := "user://algoritmo_memoria.json"
 const BASE_SPEED := [120.0, 140.0, 160.0]
 const HP_MULT := 0.7
 const BASE_CAPS := [0.85, 0.7, 0.6]
@@ -144,9 +143,10 @@ func _on_pattern(kind: StringName, detail: Variant) -> void:
 
 
 func _load_memory() -> void:
-	if not FileAccess.file_exists(MEMORY_PATH):
+	var path := SaveSlots.path("algoritmo_memoria.json")  # del espacio de guardado activo
+	if not FileAccess.file_exists(path):
 		return
-	var d = JSON.parse_string(FileAccess.get_file_as_string(MEMORY_PATH))
+	var d = JSON.parse_string(FileAccess.get_file_as_string(path))
 	if d is Dictionary:
 		_mem = d
 
@@ -160,7 +160,7 @@ func _save_memory() -> void:
 	var zone := notebook.favorite_zone()
 	if zone != "":
 		out["zone"] = zone
-	var f := FileAccess.open(MEMORY_PATH, FileAccess.WRITE)
+	var f := FileAccess.open(SaveSlots.path("algoritmo_memoria.json"), FileAccess.WRITE)
 	if f:
 		f.store_string(JSON.stringify(out))
 

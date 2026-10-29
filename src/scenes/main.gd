@@ -811,6 +811,10 @@ func _on_room_cleared(room: Room) -> void:
 	if room.has_meta("secret_boss"):
 		_on_secret_boss_cleared(room)
 	Utero.on_room_cleared(self, room)  # premios de cada fase del Utero
+	var egg: int = _run_manager.blessing("huevo")
+	if egg > 0 and room.room_type in FIGHT_ROOMS:  # Puesta Inexplicable (Ornitorrinco)
+		_game_controller.get_player_stats().heal(4.0 * egg)
+		_global_events.show_floating_text.emit(player.global_position + Vector2(0, -44), tr("BLESSING_HUEVO_FX"), Color("5fd6b4"))
 	Arcoiria.on_room_cleared(self, room)  # franja de la bandera de Arcoiria (y curas de los poderes)
 	if room == _hormone_room:
 		# Garantia: en cada piso hay al menos un arma antes del jefe.
@@ -1329,6 +1333,8 @@ func _take_blessing(id: String) -> void:
 	for i in levels:
 		if b.has("stat"):
 			ps.apply_stat_mod(b.stat[0], b.stat[1])
+		for st in b.get("stats", []):  # varias a la vez (Casilla en Blanco)
+			ps.apply_stat_mod(st[0], st[1])
 		if id == "testosterona":
 			ps.apply_stat_mod("max_shields_flat", 5.0)
 	if foreign:

@@ -9,8 +9,8 @@ extends CanvasLayer
 signal picked(index: int)
 
 const DIR := "res://assets/sprites/ui/blessings/"
-const KINGDOM_COLORS := {"pene": Color("6ec6ff"), "vulva": Color("ff7ac0"), "mixto": Color("ffc93c")}
-const KINGDOM_KEYS := {"pene": "KINGDOM_PENE", "vulva": "KINGDOM_VULVA", "mixto": "KINGDOM_MIXED"}
+const KINGDOM_COLORS := {"pene": Color("6ec6ff"), "vulva": Color("ff7ac0"), "mixto": Color("ffc93c"), "ninguno": Color("5fd6b4")}
+const KINGDOM_KEYS := {"pene": "KINGDOM_PENE", "vulva": "KINGDOM_VULVA", "mixto": "KINGDOM_MIXED", "ninguno": "KINGDOM_NINGUNO"}
 const CARD_SIZE := Vector2(300, 420)
 ## Ignora entradas los primeros ms: que el clic/tecla anterior no elija sin querer.
 const GRACE_MS := 250

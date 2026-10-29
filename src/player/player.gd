@@ -378,6 +378,7 @@ func _handle_timers(delta: float) -> void:
 	if _dash_timer > 0.0:
 		_dash_timer -= delta
 		_dash_cut()
+		_dash_spur()
 		if ability:
 			ability.on_dash_tick(_dash_direction)
 		if _dash_timer <= 0.0:
@@ -474,6 +475,7 @@ func _start_dash() -> void:
 	if ability:
 		ability.on_dash_start(_last_move_direction)
 	_dash_hits.clear()
+	_spur_hits.clear()
 	
 	var dir = _last_move_direction
 	if dir == Vector2.ZERO:
@@ -832,6 +834,8 @@ func _rm() -> Node:
 func _bless_bullet(b: Node) -> void:
 	b.pierce = _rm().blessing("penetracion")
 	b.knockback *= 1.0 + 1.5 * _rm().blessing("embestida")
+	b.stun += 0.12 * _rm().blessing("electro")  # Electrorrecepcion: calambre (PlayerBullet no aturde jefes)
+	b.lifetime *= 1.0 + 0.25 * _rm().blessing("pico")  # Pico de Pato: mas alcance
 
 ## Anillo de balas alrededor del jugador (Orgullo Herido, Equilibrio Hormonal).
 func _ring(n: int, dmg: float) -> void:
@@ -855,6 +859,22 @@ func _dash_cut() -> void:
 			_dash_hits.append(e)
 			BossDamage.tag("", 1.0, "cuerpo_a_cuerpo")
 			e.take_damage(get_weapon_damage() * _player_stats.damage_modifier * 1.5 * lvl * (1.8 if Synergies.has("corte_y_fuga") else 1.0), self, _dash_direction * 200.0)
+
+## Espolon Venenoso (Ornitorrinco): lo que atraviesas en un dash queda envenenado (una vez por dash).
+var _spur_hits: Array = []
+func _dash_spur() -> void:
+	var lvl: int = _rm().blessing("espolon")
+	if lvl == 0:
+		return
+	for e in get_tree().get_nodes_in_group("enemy"):
+		if e in _spur_hits or not is_instance_valid(e) or e.global_position.distance_to(global_position) >= 40.0:
+			continue
+		_spur_hits.append(e)
+		var dps: float = 3.0 * lvl * _player_stats.damage_modifier
+		for i in 4:
+			get_tree().create_timer(float(i + 1), false).timeout.connect(func():
+				if is_instance_valid(e) and float(e.get("current_health")) > 0.0:
+					ItemActions._hurt(e, dps, self, e.global_position, "veneno"))
 
 ## Empujon externo (Pujon de la Puerta Trasera, Ducha...): fija la velocidad `secs` s sin que el input la pise.
 func shove(vel: Vector2, secs := 0.2) -> void:

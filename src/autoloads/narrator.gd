@@ -29,7 +29,6 @@ signal chosen(index: int)
 const LINES_DIR := "res://assets/data/narrator/"
 ## Archivo principal: se carga primero y sus claves de traduccion son las de siempre.
 const MAIN_FILE := "lines.json"
-const MEMORY_PATH := "user://narrator.json"
 const CHARS_PER_SEC := 45.0
 ## Voz del narrador (el "bla-bla"): mas grave que la intro (1.0) y -4 dB, porque
 ## suena durante toda la frase y tapaba los efectos de la partida.
@@ -720,16 +719,23 @@ func _load_lines() -> void:
 
 # ---------------------------------------------------------------- memoria
 func _load_memory() -> void:
-	if not FileAccess.file_exists(MEMORY_PATH):
+	var path := SaveSlots.path("narrator.json")
+	if not FileAccess.file_exists(path):
 		return
-	var data = JSON.parse_string(FileAccess.get_file_as_string(MEMORY_PATH))
+	var data = JSON.parse_string(FileAccess.get_file_as_string(path))
 	if data is Dictionary:
 		_memory.merge(data, true)
 		_memory.runs = int(_memory.runs)  # JSON devuelve floats: "Run 3.0" queda fatal
 		_memory.deaths = int(_memory.deaths)
 
 
+## Al cambiar de espacio de guardado (SaveSlots.select).
+func reload_memory() -> void:
+	_memory = {"runs": 0, "deaths": 0, "deaths_by_floor": {}}
+	_load_memory()
+
+
 func _save_memory() -> void:
-	var f := FileAccess.open(MEMORY_PATH, FileAccess.WRITE)
+	var f := FileAccess.open(SaveSlots.path("narrator.json"), FileAccess.WRITE)
 	if f:
 		f.store_string(JSON.stringify(_memory))

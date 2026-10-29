@@ -76,12 +76,12 @@ Leyenda: [x] arreglado · [ ] pendiente · [-] movido a diseño.
   solo si entrega la llave; `die()` y la Hoja ya estaban (A6).
 
 ## Diseño (anotado por Nico, 2026-10-29)
-- [ ] D1 Bendiciones: no hay ninguna para el Ornitorrinco. `RunManager.BLESSINGS` solo tiene reino
-  "pene" (6), "vulva" (6) y la mixta "equilibrio" (con 2+ niveles de cada uno). Además
-  `roll_blessings()` (`src/autoloads/run_manager.gd:495`) SIEMPRE ofrece 2 del reino de la sala + 1 del
-  contrario (la tercera la cambia Equilibrio si ya la mereces): la elección se siente repetida.
-  Idea a decidir: un set propio del Ornitorrinco ("ninguno": electrorrecepción, huevo, espolón, veneno)
-  que le salga a él en vez del "contrario" (o en una sala propia), y variar el reparto (3-0, 2-1, 1-1-1).
+- [x] D1 Bendiciones del Ornitorrinco y reparto (Nico, 2026-10-29).
+  -> Set propio "ninguno" (NO ESPECIFICA, color 5fd6b4), ni de Penelandia ni de Vulvania, sin alergia:
+  Electrorrecepción (balas aturden), Espolón Venenoso (dash envenena), Puesta Inexplicable (huevo que cura
+  al limpiar), Cola de Castor (-10% daño), Pico de Pato (+25% alcance), Casilla en Blanco (+6% de todo).
+  `roll_blessings()` reparte 3-0 (30%), 2-1 (40%) o 1-1-1 (30%: reino / Ornitorrinco AL MEDIO / contrario),
+  para todos los héroes. Iconos en tools/gen_blessing_icons.py; en el árbol, rama compacta bajo Equilibrio.
 - [x] D2 Requisito de intoxicación: el generador pone `required_intoxication_tier` 1-2 al antro y 2 a la
   secreta, pero nadie lo aplica (`Room.can_enter()` sin llamador; `Door.try_open` solo lo mira en puertas
   LOCKED y la puerta nunca recibe el valor). Hoy se entra siempre. Decidir: aplicarlo (el antro pide estar
@@ -92,6 +92,7 @@ Leyenda: [x] arreglado · [ ] pendiente · [-] movido a diseño.
   que vuelve si te la tomaste y sigues sobrio. El generador prefiere el antro en una rama sin salida
   fuera del camino al jefe. Medido (2400 pisos): 70% de los antros con candado; el resto queda abierto.
   La secreta sigue abriéndose solo con el puzzle (su tier 2 no se usa).
-- [ ] D3 Botón "Borrar progreso" en Ajustes (Nico, 2026-10-29): hoy no hay forma de empezar de cero desde
-  el juego. Doble confirmación; borra meta_save, lore_progress, narrator, fourth_wall, medallas y
-  algoritmo_memoria (user://), sin tocar settings.cfg. Después de terminar los arreglos.
+- [x] D3 Espacios de guardado (Nico, 2026-10-29; reemplaza el botón "Borrar progreso").
+  -> 3 espacios (`src/core/save_slots.gd`, user://slot_N/) con JUGAR / DUPLICAR / ELIMINAR (doble
+  pulsación). Se eligen tras el aviso +16 (`src/scenes/save_slots.tscn`) y desde el menú (ESPACIO N).
+  El guardado de antes pasa solo al espacio 1. Ajustes y teclas siguen siendo de la máquina.

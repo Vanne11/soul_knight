@@ -82,6 +82,19 @@ BLESSING_EMBESTIDA_NAME,Embestida,Thrust,,Coup de Boutoir
 BLESSING_EMBESTIDA_DESC,Tus balas empujan y aturden mucho más,Your bullets push and stun much more,,Tes balles repoussent et étourdissent bien plus
 BLESSING_EQUILIBRIO_NAME,Equilibrio Hormonal,Hormonal Balance,,Équilibre Hormonal
 BLESSING_EQUILIBRIO_DESC,Al hacer dash disparas un anillo de balas,Dashing fires a ring of bullets,,"Quand tu fais un dash, tu tires un anneau de balles"
+BLESSING_ELECTRO_NAME,Electrorrecepción,Electroreception,,Électroréception
+BLESSING_ELECTRO_DESC,Tus balas dan calambre: aturden un instante (a los jefes no),Your bullets give a jolt: they stun for an instant (not bosses),,Tes balles donnent une décharge : elles étourdissent un instant (pas les boss)
+BLESSING_ESPOLON_NAME,Espolón Venenoso,Venomous Spur,,Ergot Venimeux
+BLESSING_ESPOLON_DESC,El dash envenena lo que atraviesas: 3 de daño por segundo durante 4 s,Your dash poisons whatever it passes through: 3 damage per second for 4 s,,Ton dash empoisonne tout ce qu'il traverse : 3 dégâts par seconde pendant 4 s
+BLESSING_HUEVO_NAME,Puesta Inexplicable,Inexplicable Laying,,Ponte Inexplicable
+BLESSING_HUEVO_DESC,Al limpiar una sala pones un huevo y te cura 4 de vida. La biología no da explicaciones,Clearing a room makes you lay an egg that heals 4 health. Biology offers no explanations,,Nettoyer une salle te fait pondre un œuf qui soigne 4 PV. La biologie ne donne pas d'explications
+BLESSING_COLA_NAME,Cola de Castor,Beaver Tail,,Queue de Castor
+BLESSING_COLA_DESC,Recibes un 10% menos de daño. La cola amortigua y nadie sabe de quién es,"You take 10% less damage. The tail cushions it, and nobody knows whose tail it is",,"Tu subis 10 % de dégâts en moins. La queue amortit, et personne ne sait à qui elle est"
+BLESSING_PICO_NAME,Pico de Pato,Duck Bill,,Bec de Canard
+BLESSING_PICO_DESC,"Tus balas llegan un 25% más lejos. Nadie se toma en serio un pico, hasta que le llega",Your bullets reach 25% farther. Nobody takes a bill seriously until it reaches them,,"Tes balles portent 25 % plus loin. Personne ne prend un bec au sérieux, jusqu'à ce qu'il l'atteigne"
+BLESSING_CASILLA_NAME,Casilla en Blanco,Blank Checkbox,,Case Vide
+BLESSING_CASILLA_DESC,"+6% de daño, cadencia y velocidad. No marcaste nada y te tocó un poco de todo","+6% damage, fire rate and speed. You ticked nothing and got a bit of everything",,"+6 % de dégâts, de cadence et de vitesse. Tu n'as rien coché et tu as eu un peu de tout"
+BLESSING_HUEVO_FX,¡PUSISTE UN HUEVO!,YOU LAID AN EGG!,,TU AS PONDU UN ŒUF !
 BLESSING_ESCURRIDIZA_NAME,Escurridiza,Slippery,,Insaisissable
 BLESSING_ESCURRIDIZA_DESC,El dash recarga un 30% antes y cuesta menos,Dash recharges 30% sooner and costs less,,Le dash recharge 30 % plus vite et coûte moins
 BLESSING_FILO_NAME,Dash Cortante,Cutting Dash,,Dash Tranchant

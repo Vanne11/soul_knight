@@ -1,8 +1,8 @@
-"""Genera los 13 iconos de bendicion (assets/sprites/ui/blessings/<id>.png).
+"""Genera los 19 iconos de bendicion (assets/sprites/ui/blessings/<id>.png).
 
 Uso: python3 tools/gen_blessing_icons.py   [hoja.png]  (con argumento, guarda ademas una hoja de contacto)
 Cada icono: marco biselado del color de su reino (pene 6ec6ff, vulva ff7ac0,
-mixto ffc93c) + glifo de 12x12 px de arte; 18x18 a 1x, guardado a 2x (NEAREST),
+mixto ffc93c, ninguno 5fd6b4 = Ornitorrinco "No especifica") + glifo de 12x12 px de arte; 18x18 a 1x, guardado a 2x (NEAREST),
 igual que el resto del HUD. Se dibuja con el bevel_box de gen_ui_art.py.
 """
 import sys
@@ -21,6 +21,7 @@ KINGDOMS = {
     "pene": (0x6E, 0xC6, 0xFF),
     "vulva": (0xFF, 0x7A, 0xC0),
     "mixto": (0xFF, 0xC9, 0x3C),
+    "ninguno": (0x5F, 0xD6, 0xB4),
 }
 
 
@@ -213,13 +214,100 @@ GLYPHS = {
         "....OOOO....",
         "............",
     ],
+    # --- Ornitorrinco ("ninguno"): ni de un reino ni del otro
+    "electro": [  # rayo: calambre
+        "............",
+        "......OOO...",
+        ".....OYYO...",
+        "....OYYO....",
+        "...OYYOOOO..",
+        "..OYYYYYYO..",
+        "..OOOOYYO...",
+        "....OYYO....",
+        "...OYYO.....",
+        "...OYO......",
+        "...OO.......",
+        "............",
+    ],
+    "espolon": [  # espolon curvo con gota de veneno
+        "............",
+        ".OOO........",
+        ".OLXOO......",
+        "..OLXXO.....",
+        "...OLXXO....",
+        "....OXXDO...",
+        ".....OXDO...",
+        "......ODO.O.",
+        ".......O.OXO",
+        ".........OXO",
+        "..........O.",
+        "............",
+    ],
+    "huevo": [  # huevo con grieta
+        "............",
+        "....OOOO....",
+        "...OWWWLO...",
+        "..OWWWWWLO..",
+        "..OWWOWWLO..",
+        ".OWWO.OWWLO.",
+        ".OWWWWOWWLO.",
+        ".OWWWWWWWLO.",
+        ".OLWWWWWLLO.",
+        "..OLLLLLLO..",
+        "...OOOOOO...",
+        "............",
+    ],
+    "cola": [  # cola de castor (paleta cuadriculada)
+        "............",
+        ".....OO.....",
+        ".....OO.....",
+        "....OXXO....",
+        "...OXDXDO...",
+        "..OXDXDXDO..",
+        "..ODXDXDXO..",
+        "..OXDXDXDO..",
+        "..ODXDXDXO..",
+        "...OXDXDO...",
+        "....OOOO....",
+        "............",
+    ],
+    "pico": [  # pico de pato de perfil
+        "............",
+        "............",
+        "..OOO.......",
+        ".OXXXOOOOO..",
+        ".OXWXOYYYYO.",
+        ".OXXXOYYYYYO",
+        ".OXXXOODDDDO",
+        ".OXXXOYYYYO.",
+        "..OOOOOOOO..",
+        "............",
+        "............",
+        "............",
+    ],
+    "casilla": [  # casilla de formulario en blanco
+        "............",
+        "..OOOOOOOO..",
+        "..OWWWWWWO..",
+        "..OW....WO..",
+        "..OW....WO..",
+        "..OW....WO..",
+        "..OW....WO..",
+        "..OWWWWWWO..",
+        "..OOOOOOOO..",
+        "............",
+        "..OXXXXXXO..",
+        "............",
+    ],
 }
 
 ORDER = ["calibre", "descarga", "embestida", "penetracion", "orgullo", "testosterona",
-         "ciclo", "escurridiza", "filo", "intuicion", "regla", "caderas", "equilibrio"]
+         "ciclo", "escurridiza", "filo", "intuicion", "regla", "caderas", "equilibrio",
+         "electro", "espolon", "huevo", "cola", "pico", "casilla"]
 KINGDOM_OF = {i: "pene" for i in ORDER[:6]}
 KINGDOM_OF.update({i: "vulva" for i in ORDER[6:12]})
 KINGDOM_OF["equilibrio"] = "mixto"
+KINGDOM_OF.update({i: "ninguno" for i in ORDER[13:19]})
 
 
 def icon(bid):
@@ -257,7 +345,7 @@ def icon(bid):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    sheet = Image.new("RGBA", (7 * 40 + 4, 2 * 40 + 4), (26, 15, 38, 255))
+    sheet = Image.new("RGBA", (7 * 40 + 4, 3 * 40 + 4), (26, 15, 38, 255))
     for i, bid in enumerate(ORDER):
         im = icon(bid)
         big = im.resize((18 * SCALE, 18 * SCALE), Image.NEAREST)

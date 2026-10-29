@@ -32,7 +32,7 @@ func _load_entries() -> void:
 	print("Loaded %d lore entries" % _entries.size())
 
 func _load_progress() -> void:
-	var file = FileAccess.open("user://lore_progress.json", FileAccess.READ)
+	var file = FileAccess.open(SaveSlots.path("lore_progress.json"), FileAccess.READ)
 	if file:
 		var data = JSON.parse_string(file.get_as_text())
 		file.close()
@@ -50,7 +50,7 @@ func _load_progress() -> void:
 
 func _save_progress() -> void:
 	_save_queued = false
-	var file = FileAccess.open("user://lore_progress.json", FileAccess.WRITE)
+	var file = FileAccess.open(SaveSlots.path("lore_progress.json"), FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify({"unlocked": _unlocked_ids, "counters": _counters}))
 		file.close()
@@ -67,8 +67,22 @@ func _queue_save() -> void:
 
 
 func _exit_tree() -> void:
+	flush()
+
+
+func flush() -> void:
 	if _save_queued:
 		_save_progress()
+
+
+## Al cambiar de espacio de guardado (SaveSlots.select): el codice de ese espacio, desde cero.
+func reload_progress() -> void:
+	_save_queued = false
+	for e in _entries.values():
+		e.unlocked = false
+	_unlocked_ids.clear()
+	_counters = {}
+	_load_progress()
 
 func get_entry(entry_id: String) -> Variant:
 	return _entries[entry_id] if _entries.has(entry_id) else null

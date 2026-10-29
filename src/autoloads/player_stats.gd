@@ -239,6 +239,7 @@ func take_damage(amount: float) -> float:
 		_ge.show_floating_text.emit(_player_pos(), tr("FX_GUARD"), Color("9be8ff"))
 		return 0.0
 	var actual_damage = amount * (_dr_mult if _dr_left > 0.0 else 1.0) * Censura.mult("damage_taken")  # Censura 0: dano a 1/3
+	actual_damage *= pow(0.9, get_node("/root/RunManager").blessing("cola"))  # Cola de Castor (Ornitorrinco)
 	
 	var shield_lost := 0.0
 	if current_shields > 0.0:

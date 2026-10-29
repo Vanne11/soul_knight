@@ -50,7 +50,14 @@ func _create_ui() -> void:
 	lore_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var medal_btn := _menu_button(lore_row, tr("MEDAL_MENU_BTN"), _open_medals)
 	medal_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	settings_btn = _menu_button(vbox, tr("SETTINGS_TITLE"), _open_settings)
+	# Ajustes y espacio de guardado comparten fila (la columna no crece)
+	var cfg_row := HBoxContainer.new()
+	cfg_row.add_theme_constant_override("separation", 10)
+	vbox.add_child(cfg_row)
+	settings_btn = _menu_button(cfg_row, tr("SETTINGS_TITLE"), _open_settings)
+	settings_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var slots_btn := _menu_button(cfg_row, tr("MENU_SLOTS") % SaveSlots.current(), _open_slots)
+	slots_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	quit_btn = _menu_button(vbox, tr("MENU_QUIT"), _on_quit)
 	start_btn.grab_focus.call_deferred()
 
@@ -100,6 +107,11 @@ func _open_desordenes() -> void:
 		start_btn.grab_focus.call_deferred()
 	_close_popup = close
 	panel.closed.connect(close)
+
+
+func _open_slots() -> void:
+	SaveSlotsScreen.from_menu = true
+	Transition.change_scene("res://src/scenes/save_slots.tscn")
 
 
 func _menu_button(parent: Control, text: String, cb: Callable) -> Button:

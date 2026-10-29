@@ -5,7 +5,7 @@ extends Node
 ##
 ## - Catalogo: assets/data/medallas.json (generado por tools/gen_medallas.py; textos en
 ##   locale/medallas.csv; iconos de tools/gen_medallas_art.py).
-## - Progreso: user://medallas.json (ganadas con fecha + contadores), como la memoria del narrador.
+## - Progreso: user://slot_N/medallas.json (SaveSlots) (ganadas con fecha + contadores), como la memoria del narrador.
 ## - UN SOLO PUNTO DE DESBLOQUEO: otorgar(id). Ahi se guarda, se avisa (toast) y esta el gancho
 ##   _publicar_plataforma(id) para Steam/itch (hoy solo la senal medalla_ganada y un print).
 ## - Silencio y sala de memoria: otorgar() no hace nada con ContemplationMode.active (diseno E3:
@@ -43,7 +43,13 @@ const LEVEL_COLORS := {
 }
 
 ## Ruta del progreso (los tests la cambian).
-var save_path := "user://medallas.json"
+## Por defecto, la del espacio de guardado activo (SaveSlots).
+var save_path: String:
+	get:
+		return _save_override if _save_override != "" else SaveSlots.path("medallas.json")
+	set(v):
+		_save_override = v
+var _save_override := ""
 
 var _defs: Array = []
 var _by_id: Dictionary = {}
@@ -359,9 +365,16 @@ func _save_progress() -> void:
 		f.store_string(JSON.stringify({"won": _won, "stats": _stats}))
 
 
+## Al cambiar de espacio de guardado (SaveSlots.select): las medallas de ese espacio.
+func reload_progress() -> void:
+	_won.clear()
+	_stats = {"acertijos": 0, "muertes": 0, "partidas": 0, "masillados": 0, "heroes_ganados": [], "jefes_sin_dano": []}
+	_load_progress()
+
+
 ## SOLO PARA PRUEBAS / depuracion: borra todo el progreso de medallas.
 func reset_progress() -> void:
 	_won.clear()
 	_stats = {"acertijos": 0, "muertes": 0, "partidas": 0, "masillados": 0, "heroes_ganados": [], "jefes_sin_dano": []}
 	if FileAccess.file_exists(save_path):
-		DirAccess.remove_absolute(save_path)
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(save_path))

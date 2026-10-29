@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dsgteh7wq5l0h"
+
+[deps]
+
+files=["res://locale/espacios.es.translation", "res://locale/espacios.en.translation", "res://locale/espacios.fr.translation"]
+
+source_file="res://locale/espacios.csv"
+dest_files=["res://locale/espacios.es.translation", "res://locale/espacios.en.translation", "res://locale/espacios.fr.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
