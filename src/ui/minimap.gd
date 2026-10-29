@@ -19,6 +19,11 @@ const ICONS := {Room.RoomType.SHOP: "$", Room.RoomType.BOSS: "J", Room.RoomType.
 	Room.RoomType.MINIBOSS: "M", Room.RoomType.SECRET: "?", Room.RoomType.TREASURE: "T",
 	Room.RoomType.REST: "+", Room.RoomType.LORE: "i", Room.RoomType.PUZZLE: "P"}
 
+const CORRIDOR := Color(0.7, 0.65, 0.55, 0.75)
+const DOOR_MARK := Color("f2ead6")
+const DIRS := [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]  # Door.Direction
+const STUB := 3.0  # px que el pasillo sale recto de la pared antes de quebrar
+
 var _font: Font
 var _label: Label
 var _map_hint: HBoxContainer  # "[M] mapa" con el glifo de la tecla
@@ -124,11 +129,23 @@ func _draw() -> void:
 	var rect_of := func(pos: Vector2i) -> Rect2:
 		return Rect2(origin + Vector2(pos) * k, Vector2(gen.room_sizes.get(pos, Vector2i(8, 6))) * k)
 
-	# Pasillos entre salas conocidas.
+	# Pasillos entre salas conocidas: de puerta a puerta en codo (antes iban centro a centro
+	# en diagonal, cruzaban otras salas y no se sabia por que pared salir).
+	var door_marks := []
 	for pos in known:
 		for n in gen.room_graph.get(pos, []):
-			if known.has(n) and (visited.has(pos) or visited.has(n)):
-				draw_line(rect_of.call(pos).get_center(), rect_of.call(n).get_center(), Color(0.7, 0.65, 0.55, 0.6), 2.0)
+			if not known.has(n) or not (visited.has(pos) or visited.has(n)) or (n.x < pos.x or (n.x == pos.x and n.y < pos.y)):
+				continue  # cada pasillo una vez
+			var da = _door_toward(gen, pos, n)
+			var db = _door_toward(gen, n, pos)
+			if da == null or db == null:
+				draw_line(rect_of.call(pos).get_center(), rect_of.call(n).get_center(), CORRIDOR, 2.0)
+				continue
+			var a0: Vector2 = origin + da.cell * k
+			var b0: Vector2 = origin + db.cell * k
+			draw_polyline(_corridor_path(a0, da.dir, b0, db.dir), CORRIDOR, 2.0)
+			door_marks.append(a0)
+			door_marks.append(b0)
 
 	var blink := int(Time.get_ticks_msec() / 400) % 2 == 0
 	for pos in known:
@@ -166,6 +183,10 @@ func _draw() -> void:
 				col = Color("0d0b0f")  # sobre el amarillo de "estas aqui" no se veia
 			draw_string(_font, Vector2(r.position.x, r.get_center().y + fs * 0.35), icon, HORIZONTAL_ALIGNMENT_CENTER, r.size.x, fs, col)
 
+	# hueco claro en la pared donde esta cada puerta
+	for m in door_marks:
+		draw_rect(Rect2(m - Vector2(2, 2), Vector2(4, 4)), DOOR_MARK)
+
 	if current:
 		Silencio.draw_minimap(self, rect_of.call(current.grid_pos), current)  # S4: "Te siguen"
 		var rname: String = tr("MAP_ROOM_ELITE") if current.has_meta("elite_room") else tr(ROOM_NAMES.get(current.room_type, "?"))
@@ -176,6 +197,33 @@ func _draw() -> void:
 			rname = "%s · %s" % [Loc.floor_name(rm.floor_data(), true), rname]  # nombre de la etapa
 		_label.text = rname
 		_place_map_hint()
+
+## Puerta de la sala `pos` que lleva a `to`: {cell (celdas del piso), dir}; null si no hay.
+func _door_toward(gen: DungeonGenerator, pos: Vector2i, to: Vector2i) -> Variant:
+	var room: Room = gen.rooms.get(pos)
+	if room == null:
+		return null
+	for d in room.doors.values():
+		if d.target_pos == to:
+			return {"cell": Vector2(pos) + d.position / 64.0, "dir": DIRS[d.direction]}
+	return null
+
+## Codo ortogonal de puerta a puerta: sale perpendicular a la pared, quiebra a mitad de camino y entra igual.
+func _corridor_path(a0: Vector2, da: Vector2, b0: Vector2, db: Vector2) -> PackedVector2Array:
+	var a1 := a0 + da * STUB
+	var b1 := b0 + db * STUB
+	var pts := PackedVector2Array([a0, a1])
+	if da.x != 0.0:
+		var mx := (a1.x + b1.x) / 2.0
+		pts.append(Vector2(mx, a1.y))
+		pts.append(Vector2(mx, b1.y))
+	else:
+		var my := (a1.y + b1.y) / 2.0
+		pts.append(Vector2(a1.x, my))
+		pts.append(Vector2(b1.x, my))
+	pts.append(b1)
+	pts.append(b0)
+	return pts
 
 ## Pasillo entre reinos: los dos reinos unidos por una barra con la ficha del heroe (corridor_bar.gd).
 func _draw_corridor(main: Node) -> void:
