@@ -92,3 +92,6 @@ Leyenda: [x] arreglado · [ ] pendiente · [-] movido a diseño.
   que vuelve si te la tomaste y sigues sobrio. El generador prefiere el antro en una rama sin salida
   fuera del camino al jefe. Medido (2400 pisos): 70% de los antros con candado; el resto queda abierto.
   La secreta sigue abriéndose solo con el puzzle (su tier 2 no se usa).
+- [ ] D3 Botón "Borrar progreso" en Ajustes (Nico, 2026-10-29): hoy no hay forma de empezar de cero desde
+  el juego. Doble confirmación; borra meta_save, lore_progress, narrator, fourth_wall, medallas y
+  algoritmo_memoria (user://), sin tocar settings.cfg. Después de terminar los arreglos.
