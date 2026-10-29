@@ -1,26 +1,26 @@
 keys,es,en,es_ES,fr
-CERA_DESPERATE,¡LA CERA HIERVE!,THE WAX IS BOILING!,,
-CERA_HARDEN,¡La cera se endurece! Rómpela a tiros.,The wax is hardening! Shoot it to pieces.,,
-CERA_EDGES,La cera sube por los bordes...,The wax is creeping up the walls...,,
-CERA_PAT_DASH,¡PATRÓN DETECTADO: SIEMPRE ESQUIVAS %s!,PATTERN DETECTED: YOU ALWAYS DODGE %s!,,
-CERA_PAT_DASH_Q1,Ya te puse un charquito de bienvenida.,I left you a little welcome puddle.,,
-CERA_PAT_DASH_Q2,Eres más predecible que mi horóscopo.,You are more predictable than my horoscope.,,
-CERA_PAT_ORBIT,¡PATRÓN DETECTADO: SIEMPRE ME RODEAS %s!,PATTERN DETECTED: YOU ALWAYS CIRCLE ME %s!,,
-CERA_PAT_ORBIT_Q1,Te corto el paso. Nada personal.,I am cutting you off. Nothing personal.,,
-CERA_PAT_ORBIT_Q2,Yo también sé dar vueltas.,I can walk in circles too.,,
-CERA_DIR_IZQ,A LA IZQUIERDA,TO THE LEFT,,
-CERA_DIR_DER,A LA DERECHA,TO THE RIGHT,,
-CERA_DIR_ARRIBA,HACIA ARRIBA,UPWARDS,,
-CERA_DIR_ABAJO,HACIA ABAJO,DOWNWARDS,,
-CERA_DIR_HORARIO,EN SENTIDO HORARIO,CLOCKWISE,,
-CERA_DIR_ANTIHORARIO,AL REVÉS DEL RELOJ,COUNTERCLOCKWISE,,
-CERA_STOMP,¡NO TE PEGUES TANTO!,PERSONAL SPACE!,,
-CERA_FIRMA,¡DEPILACIÓN TOTAL!,TOTAL WAXING!,,
-CERA_DECOY,¡ERA UN SEÑUELO! Quema y le regala tiempo.,A DECOY! It burns and buys her time.,,
-CERA_CUT_BONUS,¡Cura cortada! Eso dolió.,Heal cut! That one hurt.,,
-CERA_RAGE,¡CERA HIRVIENDO!,WAX AT A ROLLING BOIL!,,
-CERA_CH_TIRA_D1,Tócala DOS veces (o hazle dash): se recalienta y huye.,Touch it TWICE (or dash into it): she reheats and runs.,,
-CERA_CH_TIRA_D2,Tócala DOS veces. Ojo con el señuelo (la X roja).,Touch it TWICE. Beware the decoy (red X).,,
-CERA_CH_TIRA_D3,"Toca las DOS tiras buenas, dos veces cada una. La X roja quema.",Touch BOTH good strips twice each. The red X one burns.,,
-CERA_GOTA,Gotita de cera,Wax droplet,,
-CERA_TOUCH,¡TÓCALA!,TOUCH IT!,,
+CERA_DESPERATE,¡LA CERA HIERVE!,THE WAX IS BOILING!,,LA CIRE BOUT !
+CERA_HARDEN,¡La cera se endurece! Rómpela a tiros.,The wax is hardening! Shoot it to pieces.,,La cire durcit ! Tire dessus pour la briser.
+CERA_EDGES,La cera sube por los bordes...,The wax is creeping up the walls...,,La cire grimpe le long des murs...
+CERA_PAT_DASH,¡PATRÓN DETECTADO: SIEMPRE ESQUIVAS %s!,PATTERN DETECTED: YOU ALWAYS DODGE %s!,,SCHÉMA DÉTECTÉ : TU ESQUIVES TOUJOURS %s !
+CERA_PAT_DASH_Q1,Ya te puse un charquito de bienvenida.,I left you a little welcome puddle.,,Je t'ai laissé une petite flaque de bienvenue.
+CERA_PAT_DASH_Q2,Eres más predecible que mi horóscopo.,You are more predictable than my horoscope.,,Tu es plus prévisible que mon horoscope.
+CERA_PAT_ORBIT,¡PATRÓN DETECTADO: SIEMPRE ME RODEAS %s!,PATTERN DETECTED: YOU ALWAYS CIRCLE ME %s!,,SCHÉMA DÉTECTÉ : TU TOURNES TOUJOURS AUTOUR DE MOI %s !
+CERA_PAT_ORBIT_Q1,Te corto el paso. Nada personal.,I am cutting you off. Nothing personal.,,Je te coupe la route. Rien de personnel.
+CERA_PAT_ORBIT_Q2,Yo también sé dar vueltas.,I can walk in circles too.,,"Moi aussi, je sais tourner en rond."
+CERA_DIR_IZQ,A LA IZQUIERDA,TO THE LEFT,,VERS LA GAUCHE
+CERA_DIR_DER,A LA DERECHA,TO THE RIGHT,,VERS LA DROITE
+CERA_DIR_ARRIBA,HACIA ARRIBA,UPWARDS,,VERS LE HAUT
+CERA_DIR_ABAJO,HACIA ABAJO,DOWNWARDS,,VERS LE BAS
+CERA_DIR_HORARIO,EN SENTIDO HORARIO,CLOCKWISE,,DANS LE SENS HORAIRE
+CERA_DIR_ANTIHORARIO,AL REVÉS DEL RELOJ,COUNTERCLOCKWISE,,DANS LE SENS ANTIHORAIRE
+CERA_STOMP,¡NO TE PEGUES TANTO!,PERSONAL SPACE!,,ESPACE PERSONNEL !
+CERA_FIRMA,¡DEPILACIÓN TOTAL!,TOTAL WAXING!,,ÉPILATION TOTALE !
+CERA_DECOY,¡ERA UN SEÑUELO! Quema y le regala tiempo.,A DECOY! It burns and buys her time.,,UN LEURRE ! Il brûle et lui fait gagner du temps.
+CERA_CUT_BONUS,¡Cura cortada! Eso dolió.,Heal cut! That one hurt.,,"Soin interrompu ! Celle-là, elle a fait mal."
+CERA_RAGE,¡CERA HIRVIENDO!,WAX AT A ROLLING BOIL!,,CIRE À GROS BOUILLONS !
+CERA_CH_TIRA_D1,Tócala DOS veces (o hazle dash): se recalienta y huye.,Touch it TWICE (or dash into it): she reheats and runs.,,Touche-la DEUX FOIS (ou fonce dedans en dash) : elle se réchauffe et s'enfuit.
+CERA_CH_TIRA_D2,Tócala DOS veces. Ojo con el señuelo (la X roja).,Touch it TWICE. Beware the decoy (red X).,,Touche-la DEUX FOIS. Attention au leurre (X rouge).
+CERA_CH_TIRA_D3,"Toca las DOS tiras buenas, dos veces cada una. La X roja quema.",Touch BOTH good strips twice each. The red X one burns.,,Touche DEUX FOIS chacune des deux bonnes bandes. Celle au X rouge brûle.
+CERA_GOTA,Gotita de cera,Wax droplet,,Gouttelette de cire
+CERA_TOUCH,¡TÓCALA!,TOUCH IT!,,TOUCHE-LA !

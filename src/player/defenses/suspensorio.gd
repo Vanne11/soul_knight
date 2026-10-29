@@ -37,6 +37,7 @@ func can_attack() -> bool:
 func _physics_process(_d: float) -> void:
 	if player == null:
 		return
+	_proj = false  # try_guard marca y filter_hit consume en el mismo paso; si el golpe no llego, no queda pegado
 	guarding = guard_held()
 
 

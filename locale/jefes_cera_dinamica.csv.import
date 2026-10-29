@@ -6,10 +6,10 @@ uid="uid://lpwba6eu433k"
 
 [deps]
 
-files=["res://locale/jefes_cera_dinamica.es.translation", "res://locale/jefes_cera_dinamica.en.translation"]
+files=["res://locale/jefes_cera_dinamica.es.translation", "res://locale/jefes_cera_dinamica.en.translation", "res://locale/jefes_cera_dinamica.fr.translation"]
 
 source_file="res://locale/jefes_cera_dinamica.csv"
-dest_files=["res://locale/jefes_cera_dinamica.es.translation", "res://locale/jefes_cera_dinamica.en.translation"]
+dest_files=["res://locale/jefes_cera_dinamica.es.translation", "res://locale/jefes_cera_dinamica.en.translation", "res://locale/jefes_cera_dinamica.fr.translation"]
 
 [params]
 

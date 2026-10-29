@@ -25,8 +25,12 @@ static func enemies() -> Array:
 	var out: Array = []
 	for g in ["enemy", "boss"]:
 		for n in tree.get_nodes_in_group(g):
-			if is_instance_valid(n) and n not in out:
-				out.append(n)
+			if not is_instance_valid(n) or n in out:
+				continue
+			var hp = n.get("current_health")
+			if hp != null and hp <= 0.0:
+				continue  # en su animacion de muerte: la trampa de oso se gastaba en un cadaver
+			out.append(n)
 	return out
 
 

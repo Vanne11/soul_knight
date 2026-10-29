@@ -58,7 +58,9 @@ var _regen_left: float = 0.0
 var _regen_rate: float = 0.0
 var _dr_left: float = 0.0
 var _dr_mult: float = 1.0
-var _temp_mods: Dictionary = {}  # stat -> {"left": s, "mult": m}
+## "stat+" (potencia) o "stat-" (bajon) -> {"stat", "left": s, "mult": m}. Separados: con una sola
+## entrada por stat el bajon del Estimulante (o un liquido malo) solo alargaba el buff que hubiera.
+var _temp_mods: Dictionary = {}
 var guard_hits: int = 0
 var revive_charges: int = 0
 var revive_fraction: float = 0.4
@@ -152,10 +154,11 @@ func apply_item_effect(e: Dictionary) -> void:
 		11:
 			var stat: String = e.stat
 			var m := float(e.magnitude)
-			if _temp_mods.has(stat):
-				_temp_mods[stat].left = float(e.duration)  # repetir solo renueva el tiempo
+			var key := stat + ("+" if m >= 1.0 else "-")
+			if _temp_mods.has(key):
+				_temp_mods[key].left = float(e.duration)  # repetir solo renueva el tiempo
 			else:
-				_temp_mods[stat] = {"left": float(e.duration), "mult": m}
+				_temp_mods[key] = {"stat": stat, "left": float(e.duration), "mult": m}
 				apply_stat_mod(stat, m)
 		12:
 			_dr_mult = float(e.magnitude)
@@ -198,12 +201,12 @@ func _handle_timed_effects(delta: float) -> void:
 		_infect_immune_left -= delta
 		if _infect_immune_left <= 0.0:
 			status_changed.emit()
-	for stat in _temp_mods.keys():
-		var t: Dictionary = _temp_mods[stat]
+	for key in _temp_mods.keys():
+		var t: Dictionary = _temp_mods[key]
 		t.left -= delta
 		if t.left <= 0.0:
-			apply_stat_mod(stat, 1.0 / t.mult)
-			_temp_mods.erase(stat)
+			apply_stat_mod(t.stat, 1.0 / t.mult)
+			_temp_mods.erase(key)
 			status_changed.emit()
 
 ## Lista para el HUD: [{"key": clave de traduccion, "left": segundos o -1, "count": n}]
@@ -213,8 +216,8 @@ func active_statuses() -> Array:
 		out.append({"key": "STATUS_REGEN", "left": _regen_left})
 	if _dr_left > 0.0:
 		out.append({"key": "STATUS_DEFENSE", "left": _dr_left})
-	for stat in _temp_mods:
-		out.append({"key": "STATUS_MOD_" + String(stat).to_upper(), "left": _temp_mods[stat].left})
+	for key in _temp_mods:
+		out.append({"key": "STATUS_MOD_" + String(_temp_mods[key].stat).to_upper(), "left": _temp_mods[key].left})
 	if _dot_immune_left > 0.0:
 		out.append({"key": "STATUS_DOT_IMMUNE", "left": _dot_immune_left})
 	if _infect_immune_left > 0.0:

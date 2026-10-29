@@ -840,7 +840,15 @@ var lore_unlocked: Array[String] = []
 var meta_currency: int = 0
 var unlocked_perks: Array[String] = []
 var run_active: bool = false
-var run_start_time: float = 0.0
+var run_start_time: float = 0.0  # marca de la partida (otros sistemas la usan para saber si cambio)
+## Segundos jugados de la partida actual: sin el tiempo en pausa (menu, bendiciones), que
+## antes contaba para el record de la partida del dia y la cifra del game over.
+var run_played_time: float = 0.0
+
+
+func _process(delta: float) -> void:
+	if run_active:
+		run_played_time += delta  # el autoload se detiene con el arbol pausado
 var last_run_victory: bool = false
 
 signal room_cleared_signal
@@ -968,6 +976,7 @@ func start_new_run(seed: int = 0) -> void:
 	if character_data().hormone != "":
 		hormones[character_data().hormone] = true
 	run_start_time = Time.get_ticks_msec() / 1000.0
+	run_played_time = 0.0
 	
 	get_node("/root/GlobalEvents").player_stats_reset_requested.emit()
 	get_node("/root/GlobalEvents").run_started.emit(seed)
@@ -978,7 +987,7 @@ func end_run(victory: bool = false) -> void:
 		return  # ya terminada: no cobrar huesos dos veces
 	run_active = false
 	last_run_victory = victory
-	var run_time = Time.get_ticks_msec() / 1000.0 - run_start_time
+	var run_time = run_played_time
 	last_run_time = run_time
 	var stats = {
 		"seed": current_seed,
@@ -1070,7 +1079,7 @@ func unlock_lore(entry_id: String) -> void:
 		lore_unlocked.append(entry_id)
 
 func record_item_collected(item_id: String) -> void:
-	items_collected.append({"id": item_id, "floor": current_floor, "time": Time.get_ticks_msec() / 1000.0 - run_start_time})
+	items_collected.append({"id": item_id, "floor": current_floor, "time": run_played_time})
 
 func get_run_data() -> Dictionary:
 	return {
@@ -1080,7 +1089,7 @@ func get_run_data() -> Dictionary:
 		"enemies_killed": total_enemies_killed,
 		"damage_dealt": total_damage_dealt,
 		"damage_taken": total_damage_taken,
-		"time": Time.get_ticks_msec() / 1000.0 - run_start_time if run_active else last_run_time
+		"time": run_played_time if run_active else last_run_time
 	}
 
 func save_meta_progression() -> void:

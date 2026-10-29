@@ -11,6 +11,9 @@ const MAX_UNDO := 40.0
 
 var _last_dmg := 0.0
 var _last_t := -99.0
+## Vida justo antes del golpe: lo que se deshace es lo que de verdad se perdio (el escudo, la
+## reduccion y la Censura se comen parte; antes curaba el dano bruto aunque el escudo lo parara).
+var _hp_before := -1.0
 
 
 func setup(p: Player, it: Item) -> void:
@@ -24,14 +27,19 @@ func _now() -> float:
 
 func filter_hit(dmg: float) -> float:
 	if dmg > 0.0 and not spent:
-		_last_dmg = dmg
-		_last_t = _now()
+		_hp_before = stats.current_health
 	return dmg
 
 
 func _physics_process(_d: float) -> void:
 	if player == null or spent:
 		return
+	if _hp_before >= 0.0:  # take_damage ya corrio (va justo despues de filter_hit)
+		var lost: float = _hp_before - float(stats.current_health)
+		_hp_before = -1.0
+		if lost > 0.0:
+			_last_dmg = lost
+			_last_t = _now()
 	var recent: bool = _now() - _last_t <= WINDOW and _last_dmg > 0.0
 	gauge_visible = recent
 	gauge_value = clampf(1.0 - (_now() - _last_t) / WINDOW, 0.0, 1.0)

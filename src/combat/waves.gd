@@ -70,7 +70,7 @@ var entry_door: Door = null    # la puerta por la que entraste (emboscada)
 var kinds_used: Array = []     # registro (pruebas): tipo de cada oleada ya lanzada
 var _next := 0
 var _t_warn := -1.0
-var _t0 := 0.0
+var _age := 0.0  # segundos de juego desde que empezo la sala (sin pausas: con el reloj real la emboscada entraba al despausar)
 var _since := 0.0
 var _peak := 0
 var _pending_pos: Array = []
@@ -120,7 +120,6 @@ static func start(main: Node, room_: Room, seal: bool) -> bool:
 				wv.kind = "puertas"
 	room_.set_meta("waves", w)
 	room_.add_child(w)
-	w._t0 = Time.get_ticks_msec() / 1000.0
 	w._spawn_wave(true)
 	return true
 
@@ -219,6 +218,7 @@ func _process(delta: float) -> void:
 		_finished = true
 		return
 	_since += delta
+	_age += delta
 	if _t_warn >= 0.0:
 		_t_warn -= delta
 		if _t_warn < 0.0:
@@ -230,7 +230,7 @@ func _process(delta: float) -> void:
 	var go := false
 	if kind == "emboscada":
 		# a tu espalda: cuando ya te alejaste de la puerta (o pasaron 10 s)
-		var el := Time.get_ticks_msec() / 1000.0 - _t0
+		var el := _age
 		var player := _player()
 		go = el > 1.5 and ((player != null and entry_door != null and \
 				player.global_position.distance_to(entry_door.global_position) > AMBUSH_DIST) or el > 10.0)

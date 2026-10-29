@@ -49,7 +49,9 @@ func _reveal() -> void:
 	_busy = false
 
 func change_scene(path: String) -> void:
-	await _run(func(): get_tree().change_scene_to_file(path))
+	await _run(func():
+		get_tree().paused = false  # la escena nueva no nace pausada (Volver al menu cambia sin despausar antes)
+		get_tree().change_scene_to_file(path))
 
 func reload() -> void:
 	await _run(func(): get_tree().reload_current_scene())

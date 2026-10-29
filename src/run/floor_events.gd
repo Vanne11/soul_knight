@@ -105,6 +105,17 @@ static func roll(floor_n: int, run_seed: int) -> String:
 
 ## Gancho de main._generate_dungeon (justo tras RoomLighting.setup_floor): elige el evento,
 ## aplica lo que va por sala (penumbra) y crea el nodo que anuncia y vigila. `force` (pruebas).
+## Piso sin eventos (tramo en paz de la run de rescate): sin esto quedaba el evento del piso o la
+## partida anterior (p. ej. "censura" ocultaba el minimapa de la plaza).
+static func clear() -> void:
+	if is_instance_valid(_instance):
+		_instance.get_parent().remove_child(_instance)
+		_instance.free()
+	_instance = null
+	current = ""
+	trial_state = ""
+
+
 static func setup(main_: Node, rooms_: Dictionary, floor_n: int, run_seed: int, force := "") -> FloorEvents:
 	if is_instance_valid(_instance):
 		_instance.get_parent().remove_child(_instance)

@@ -599,9 +599,11 @@ func _input(event: InputEvent) -> void:
 func _on_run_started(_seed: int) -> void:
 	_memory.runs += 1
 	_save_memory()
+	hush()  # lo que quedo sin pasar de la partida anterior (final, victoria) no sale en esta
+	_complaining = false
+	_line_room = null
 	_seen.clear()
 	_said.clear()
-	_urgent.clear()
 	_streak = 0
 	ignored_count = 0
 	var freed: int = get_node("/root/RunManager").liberated.size()

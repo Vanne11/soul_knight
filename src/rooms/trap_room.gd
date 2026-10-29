@@ -344,6 +344,11 @@ class _Spikes extends Node2D:
 		return maxf(period - warn_time() - UP - t, 0.0)
 
 	func _process(delta: float) -> void:
+		if dyn.room.cleared:  # sala limpia = sin peligro (viento, jaulas y cera ya paraban): quedan abajo
+			if _state != "idle":
+				_state = "idle"
+				queue_redraw()
+			return
 		t = fmod(t + delta, period)
 		var w: float = warn_time()
 		var start_warn := period - w - UP
@@ -453,6 +458,11 @@ class _Vent extends Node2D:
 		return maxf(period - WARN * dyn.warn_mult - JET - t, 0.0)
 
 	func _process(delta: float) -> void:
+		if dyn.room.cleared:  # sala limpia = sin peligro (viento, jaulas y cera ya paraban): quedan abajo
+			if _state != "idle":
+				_state = "idle"
+				queue_redraw()
+			return
 		t = fmod(t + delta, period)
 		var w: float = WARN * dyn.warn_mult
 		var start_warn := period - w - JET

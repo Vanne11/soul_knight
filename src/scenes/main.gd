@@ -110,6 +110,8 @@ func _generate_dungeon() -> void:
 	var peace := RunManager.floor_is_peace(_run_manager.current_floor)
 	if not peace:
 		FloorEvents.setup(self, dungeon_generator.rooms, _run_manager.current_floor, _run_manager.current_seed)  # evento de piso + contrarreloj (src/run/floor_events.gd)
+	else:
+		FloorEvents.clear()
 	RoomDressing.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # muros 3/4, zocalo, puertas
 	if not peace and not Silencio.active():
 		RoomObstacles.build_floor(dungeon_generator.rooms, _run_manager.current_floor, seed)  # rocas, columnas, barriles, pinchos

@@ -152,5 +152,6 @@ static func release(tree: SceneTree, closing: Node = null) -> void:
 
 
 func _to_menu() -> void:
-	get_tree().paused = false
+	# sigue pausado mientras la cortinilla cubre (0.25 s): un golpe mortal ahi contaba la partida
+	# abandonada como muerte (huesos y partida jugada). Transition despausa al cambiar la escena.
 	Transition.change_scene(MENU_SCENE)

@@ -53,9 +53,10 @@ func _use(player: Node) -> void:
 	if ps.current_health <= cost() + 1.0:
 		get_node("/root/GlobalEvents").show_floating_text.emit(global_position + Vector2(0, -40), tr("PZ_ALTAR_WEAK"), Color("ff7a8a"))
 		return
+	if not quest.take_key(player, self):
+		return  # no entrego la llave: no se cobra la sangre
 	# la sangre se descuenta a pelo (sin pasar por el dano: ni escudos ni modo dios la libran)
 	ps.current_health = maxf(1.0, ps.current_health - cost())
 	ps.health_changed.emit(ps.current_health, ps.max_health)
 	Sound.play("hurt")
 	get_node("/root/GlobalEvents").show_floating_text.emit(player.global_position + Vector2(0, -40), "-%d" % int(cost()), Color("c0283a"))
-	quest.take_key(player, self)

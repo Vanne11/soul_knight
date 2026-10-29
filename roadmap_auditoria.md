@@ -1,7 +1,7 @@
 # Roadmap de la auditoría (2026-10-29)
 
 Auditoría de código en 4 zonas: autoloads/UI, jugador/ítems, enemigos y mazmorra. Se generaron 3600 pisos de prueba y el bot e2e no se corrió.
-Leyenda: [x] arreglado · [ ] pendiente.
+Leyenda: [x] arreglado · [ ] pendiente · [-] movido a diseño.
 
 ## Alta (afectan una partida normal)
 - [x] A1 Monte de Venus se pierde en ~65% de las partidas: un solo intento en un piso de la Selva y
@@ -54,14 +54,35 @@ Leyenda: [x] arreglado · [ ] pendiente.
   -> se gasta primero otra llave; si era la de la misión, vuelve a su sitio (`lose("spent")`, texto PZ_KEY_LOST_SPENT).
 
 ## Baja
-- [ ] B1 Narrador arrastra la cola de frases a la partida siguiente (`narrator.gd` `_on_run_started`).
-- [ ] B2 `FloorEvents` (p. ej. "censura") queda pegado en pisos de paz y oculta el minimapa (`main.gd:111`).
-- [ ] B3 "Volver al menú" despausa 0.25 s antes de la cortinilla (`pause_menu.gd:140`).
-- [ ] B4 Tiempo de partida y emboscadas cuentan el tiempo en pausa (`run_manager.gd`, `waves.gd`).
-- [ ] B5 Pinchos y respiraderos siguen dañando con la sala limpia (`trap_room.gd`).
-- [ ] B6 30 claves sin francés en `locale/jefes_cera_dano.csv` y `jefes_cera_dinamica.csv`.
-- [ ] B7 `required_intoxication_tier` / `Room.can_enter()` asignados pero nunca aplicados.
-- [ ] B8 Detalles: Pastilla del Día Después cura el daño bruto; Suspensorio `_proj` obsoleto;
+- [x] B1 Narrador arrastra la cola de frases a la partida siguiente (`narrator.gd` `_on_run_started`).
+  -> `_on_run_started` llama `hush()` y limpia la queja pendiente.
+- [x] B2 `FloorEvents` (p. ej. "censura") queda pegado en pisos de paz y oculta el minimapa (`main.gd:111`).
+  -> `FloorEvents.clear()` en los pisos de paz.
+- [x] B3 "Volver al menú" despausa 0.25 s antes de la cortinilla (`pause_menu.gd:140`).
+  -> sigue pausado durante la cortinilla; `Transition.change_scene` despausa al cambiar la escena.
+- [x] B4 Tiempo de partida y emboscadas cuentan el tiempo en pausa (`run_manager.gd`, `waves.gd`).
+  -> `RunManager.run_played_time` (se detiene en pausa) y la emboscada usa tiempo de juego.
+- [x] B5 Pinchos y respiraderos siguen dañando con la sala limpia (`trap_room.gd`).
+  -> pinchos y respiraderos quedan abajo con la sala limpia.
+- [x] B6 30 claves sin francés en `locale/jefes_cera_dano.csv` y `jefes_cera_dinamica.csv`.
+  -> 30 traducciones al francés agregadas (fr 0 faltantes).
+- [-] B7 `required_intoxication_tier` / `Room.can_enter()` asignados pero nunca aplicados. -> pasa a diseño (D2).
+- [x] B8 Detalles: Pastilla del Día Después cura el daño bruto; Suspensorio `_proj` obsoleto;
   trampa de oso salta con cadáveres; el bajón del Estimulante se anula con otro buff de velocidad;
   altar de sangre resta vida antes de `take_key`; `Enemy.die()` usa `animated_sprite` antes de
   comprobarlo; Hoja de Parra puede reiniciar el revivir con un `die()` directo.
+  -> todos: Pastilla cura la vida realmente perdida; Suspensorio resetea `_proj` cada fotograma;
+  `ItemActions.enemies()` salta cadáveres; buffs y bajones temporales van por separado; el altar cobra
+  solo si entrega la llave; `die()` y la Hoja ya estaban (A6).
+
+## Diseño (anotado por Nico, 2026-10-29)
+- [ ] D1 Bendiciones: no hay ninguna para el Ornitorrinco. `RunManager.BLESSINGS` solo tiene reino
+  "pene" (6), "vulva" (6) y la mixta "equilibrio" (con 2+ niveles de cada uno). Además
+  `roll_blessings()` (`src/autoloads/run_manager.gd:495`) SIEMPRE ofrece 2 del reino de la sala + 1 del
+  contrario (la tercera la cambia Equilibrio si ya la mereces): la elección se siente repetida.
+  Idea a decidir: un set propio del Ornitorrinco ("ninguno": electrorrecepción, huevo, espolón, veneno)
+  que le salga a él en vez del "contrario" (o en una sala propia), y variar el reparto (3-0, 2-1, 1-1-1).
+- [ ] D2 Requisito de intoxicación: el generador pone `required_intoxication_tier` 1-2 al antro y 2 a la
+  secreta, pero nadie lo aplica (`Room.can_enter()` sin llamador; `Door.try_open` solo lo mira en puertas
+  LOCKED y la puerta nunca recibe el valor). Hoy se entra siempre. Decidir: aplicarlo (el antro pide estar
+  "entonado") o borrar la configuración muerta. No se tocó.
