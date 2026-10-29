@@ -418,7 +418,7 @@ func _build_censura_selector(root: Control) -> void:
 	panel.custom_minimum_size = Vector2(300, 0)
 	root.add_child(panel)
 	var v := VBoxContainer.new()
-	v.add_theme_constant_override("separation", 4)
+	v.add_theme_constant_override("separation", 2)
 	panel.add_child(v)
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -436,18 +436,14 @@ func _build_censura_selector(root: Control) -> void:
 	_cens_up.text = "▶"
 	_cens_up.pressed.connect(_censura_step.bind(1))
 	row.add_child(_cens_up)
-	# reglas activas: panel aparte, a la derecha bajo "El mundo" (a la izquierda no cabe la lista)
-	var rpanel := PanelContainer.new()
-	rpanel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	rpanel.offset_left = -326
-	rpanel.offset_right = -36
-	rpanel.offset_top = 530
-	root.add_child(rpanel)
+	# reglas activas: bajo las flechas, en el mismo panel (crece hacia abajo). Antes iban en un panel
+	# fijo a la derecha (y=530) y "El mundo", al crecer con los 9 reinos, le pasaba por encima.
 	_cens_rules = GridContainer.new()  # 2 columnas: con 10 reglas una sola no cabe
 	_cens_rules.columns = 2
 	_cens_rules.add_theme_constant_override("h_separation", 10)
-	_cens_rules.add_theme_constant_override("v_separation", 3)
-	rpanel.add_child(_cens_rules)
+	_cens_rules.add_theme_constant_override("v_separation", -2)  # con las 10 reglas el panel llega justo al borde
+	_cens_rules.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	v.add_child(_cens_rules)
 	_refresh_censura()
 
 
