@@ -50,6 +50,8 @@ func _ready() -> void:
 		title_text = tr("P6_COPIA_TITLE")
 	elif victory and rm.last_ending == "verdadero":
 		title_text = tr("P6_VERDADERO_TITLE")
+	elif victory and rm.last_ending == "demo":
+		title_text = tr("DEMO_END_TITLE")
 	var title := Control.new()
 	title.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -73,6 +75,7 @@ func _ready() -> void:
 			"copia": ending = tr("P6_COPIA_END")
 			"verdadero": ending = tr("P6_VERDADERO_END")
 			"completo": ending += "\n" + tr("P6_COMPLETO_END")
+			"demo": ending = tr("DEMO_END_BODY")
 		if ending != "":
 			var sub := HudStyle.pixel_label(ending, 18, HudStyle.CREAM, true)
 			sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -131,12 +134,13 @@ func _ready() -> void:
 	buttons.alignment = BoxContainer.ALIGNMENT_CENTER
 	buttons.add_theme_constant_override("separation", 16)
 	_root.add_child(buttons)
-	var retry := _button(buttons, tr("GAMEOVER_RETRY"), _on_retry)
+	var demo_end: bool = victory and rm.last_ending == "demo"
+	var first := _button(buttons, tr("DEMO_BUY"), _on_buy) if demo_end else _button(buttons, tr("GAMEOVER_RETRY"), _on_retry)
 	_button(buttons, tr("GAMEOVER_MENU"), _on_menu)
 	_button(buttons, tr("GAMEOVER_QUIT"), _on_quit)
-	retry.grab_focus.call_deferred()
+	first.grab_focus.call_deferred()
 	_add_fact()
-	if victory:
+	if victory and not demo_end:
 		_add_desordenes(rm)
 
 
@@ -207,6 +211,10 @@ func _count_up(label: Label, target: int, suffix: String, delay: float) -> void:
 func _on_retry() -> void:
 	_game_controller.get_run_manager().start_new_run()
 	Transition.change_scene("res://src/scenes/main.tscn")
+
+## Demo: abre la pagina del juego completo en itch.io.
+func _on_buy() -> void:
+	OS.shell_open(RunManager.STORE_URL)
 
 func _on_menu() -> void:
 	Transition.change_scene("res://src/scenes/main_menu.tscn")

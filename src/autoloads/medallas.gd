@@ -236,6 +236,9 @@ func _on_run_ended(victory: bool, _floor: int, _stats_run: Dictionary) -> void:
 		_save_progress()
 		_eval_state()
 		return
+	if RunManager.demo:  # fin de la demo: no es ganar el juego (el guardado es el del juego completo)
+		_eval_state()
+		return
 	var hero: String = rm.character
 	if hero not in _stats.heroes_ganados:
 		_stats.heroes_ganados.append(hero)

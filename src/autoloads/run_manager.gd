@@ -159,6 +159,12 @@ static var route_regions: Array = []
 static var seal_regions: Array = []
 ## La ruta se arma por sellos (true) o es una lista fija puesta con set_route (false).
 static var route_dynamic := false
+## DEMO (feature "demo" de los presets "<plataforma> Demo" de export_presets.cfg): la partida termina al
+## vencer al jefe del DEMO_REGIONS-esimo reino (el inicial del heroe + el primero que elige). Comparte el
+## guardado con el juego completo: lo liberado y los huesos pasan; las medallas de victoria y el Pudor no.
+static var demo := OS.has_feature("demo")
+const DEMO_REGIONS := 2
+const STORE_URL := "https://cnb-studio.itch.io/rogue-reproductive"
 ## Eleccion de puerta del bot (--route-pick): "first", "random" (determinista) o un id de region.
 static var route_pick := "first"
 ## Run de rescate (post-juego "Desordenes"): ruta fija = tramos en paz por reinos ya liberados +
@@ -324,6 +330,12 @@ static func is_route_end(floor_n: int) -> bool:
 	if not route_dynamic:
 		return floor_n >= route_size()
 	return floor_n >= route_floors.size() and is_region_last_floor(floor_n) and next_options().is_empty()
+
+
+## Demo: terminar este piso cierra la demo (jefe final del ultimo reino que la demo deja jugar).
+static func is_demo_end(floor_n: int) -> bool:
+	return demo and route_dynamic and route_regions.size() >= DEMO_REGIONS \
+		and floor_n >= route_floors.size() and is_region_last_floor(floor_n)
 
 
 ## true si vencer al jefe de este piso DARIA un sello (mismas condiciones que award_seal, sin darlo).
@@ -1031,7 +1043,7 @@ func end_run(victory: bool = false) -> void:
 	total_runs += 1
 	derrotas_seguidas = 0 if victory else derrotas_seguidas + 1
 	best_floor = maxi(best_floor, current_floor)
-	if victory and Censura.level == censura_unlocked and censura_unlocked < Censura.MAX_LEVEL:
+	if victory and not demo and Censura.level == censura_unlocked and censura_unlocked < Censura.MAX_LEVEL:
 		censura_unlocked += 1  # ganar en tu nivel maximo abre el siguiente
 		last_censura_unlocked = censura_unlocked
 	if daily_mode:
