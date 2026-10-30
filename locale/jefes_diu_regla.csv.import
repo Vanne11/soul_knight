@@ -6,10 +6,10 @@ uid="uid://5cbvj48sw6mc"
 
 [deps]
 
-files=["res://locale/jefes_diu_regla.es.translation", "res://locale/jefes_diu_regla.en.translation", "res://locale/jefes_diu_regla.fr.translation"]
+files=["res://locale/jefes_diu_regla.es.translation", "res://locale/jefes_diu_regla.en.translation", "res://locale/jefes_diu_regla.fr.translation", "res://locale/jefes_diu_regla.pt_BR.translation"]
 
 source_file="res://locale/jefes_diu_regla.csv"
-dest_files=["res://locale/jefes_diu_regla.es.translation", "res://locale/jefes_diu_regla.en.translation", "res://locale/jefes_diu_regla.fr.translation"]
+dest_files=["res://locale/jefes_diu_regla.es.translation", "res://locale/jefes_diu_regla.en.translation", "res://locale/jefes_diu_regla.fr.translation", "res://locale/jefes_diu_regla.pt_BR.translation"]
 
 [params]
 

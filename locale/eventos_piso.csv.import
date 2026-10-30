@@ -6,10 +6,10 @@ uid="uid://ws7qljtppht6"
 
 [deps]
 
-files=["res://locale/eventos_piso.es.translation", "res://locale/eventos_piso.en.translation", "res://locale/eventos_piso.fr.translation"]
+files=["res://locale/eventos_piso.es.translation", "res://locale/eventos_piso.en.translation", "res://locale/eventos_piso.fr.translation", "res://locale/eventos_piso.pt_BR.translation"]
 
 source_file="res://locale/eventos_piso.csv"
-dest_files=["res://locale/eventos_piso.es.translation", "res://locale/eventos_piso.en.translation", "res://locale/eventos_piso.fr.translation"]
+dest_files=["res://locale/eventos_piso.es.translation", "res://locale/eventos_piso.en.translation", "res://locale/eventos_piso.fr.translation", "res://locale/eventos_piso.pt_BR.translation"]
 
 [params]
 

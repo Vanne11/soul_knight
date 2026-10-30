@@ -6,10 +6,10 @@ uid="uid://bibdwom4x7tqx"
 
 [deps]
 
-files=["res://locale/puerta_trasera.es.translation", "res://locale/puerta_trasera.en.translation", "res://locale/puerta_trasera.fr.translation"]
+files=["res://locale/puerta_trasera.es.translation", "res://locale/puerta_trasera.en.translation", "res://locale/puerta_trasera.fr.translation", "res://locale/puerta_trasera.pt_BR.translation"]
 
 source_file="res://locale/puerta_trasera.csv"
-dest_files=["res://locale/puerta_trasera.es.translation", "res://locale/puerta_trasera.en.translation", "res://locale/puerta_trasera.fr.translation"]
+dest_files=["res://locale/puerta_trasera.es.translation", "res://locale/puerta_trasera.en.translation", "res://locale/puerta_trasera.fr.translation", "res://locale/puerta_trasera.pt_BR.translation"]
 
 [params]
 

@@ -6,10 +6,10 @@ uid="uid://dxun8wnv8ykt0"
 
 [deps]
 
-files=["res://locale/narrator.es.translation", "res://locale/narrator.en.translation", "res://locale/narrator.es_ES.translation", "res://locale/narrator.fr.translation"]
+files=["res://locale/narrator.es.translation", "res://locale/narrator.en.translation", "res://locale/narrator.es_ES.translation", "res://locale/narrator.fr.translation", "res://locale/narrator.pt_BR.translation"]
 
 source_file="res://locale/narrator.csv"
-dest_files=["res://locale/narrator.es.translation", "res://locale/narrator.en.translation", "res://locale/narrator.es_ES.translation", "res://locale/narrator.fr.translation"]
+dest_files=["res://locale/narrator.es.translation", "res://locale/narrator.en.translation", "res://locale/narrator.es_ES.translation", "res://locale/narrator.fr.translation", "res://locale/narrator.pt_BR.translation"]
 
 [params]
 

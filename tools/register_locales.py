@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Regenera `locale/translations` de project.godot con todos los locale/*.csv.
 
-Convencion: cada bloque crea SU locale/<bloque>.csv (cabecera keys,es,en,es_ES,fr) y no toca
+Convencion: cada bloque crea SU locale/<bloque>.csv (cabecera keys,es,en,es_ES,fr,pt_BR) y no toca
 los de otros. Godot importa cada CSV a locale/<bloque>.<idioma>.translation (una por columna),
 PERO se salta las columnas totalmente vacias: no genera su .translation. Por eso solo se
 registran las columnas con al menos una celda con texto (en un clon limpio, antes de importar,

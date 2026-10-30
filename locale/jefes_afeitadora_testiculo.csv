@@ -1,9 +1,9 @@
-keys,es,en,es_ES,fr
-ENEMY_PELUSA_NAME,Pelusa Estática,Static Fuzz,,Peluche Statique
-ENEMY_REBOTIN_NAME,Rebotín,Bouncy Ball,,Petit Rebond
-AFEI_PELUSAS,¡Pelusas al ataque!,Fuzz incoming!,,Les peluches attaquent !
-TEST_REBOTINES,¡Bolas extra!,Extra balls!,,Billes en plus !
-BOSSDMG_AFEITADORA_WEAK,"¡Agua! ¡Cortocircuito! ¡Esto no venía en el manual!","Water! Short circuit! This wasn't in the manual!",,"De l'eau ! Court-circuit ! C'était pas dans le manuel !"
-BOSSDMG_AFEITADORA_RESIST,"Qué cosquillas... soy eléctrica, mi amor.","Tickles... I'm electric, darling.",,"Ça chatouille... je suis électrique, mon chou."
-BOSSDMG_TESTICULO_WEAK,"¡AY! ¡Eso duele en el alma y en todo lo demás!","OW! That hurts in the soul and everywhere else!",,"AÏE ! Ça fait mal à l'âme et à tout le reste !"
-BOSSDMG_TESTICULO_RESIST,"Calma, hijo, vengo con protección.","Relax, son, I came protected.",,"Tranquille, fiston, je suis protégé."
+keys,es,en,es_ES,fr,pt_BR
+ENEMY_PELUSA_NAME,Pelusa Estática,Static Fuzz,,Peluche Statique,Fiapo Estático
+ENEMY_REBOTIN_NAME,Rebotín,Bouncy Ball,,Petit Rebond,Quicão
+AFEI_PELUSAS,¡Pelusas al ataque!,Fuzz incoming!,,Les peluches attaquent !,Fiapos no ataque!
+TEST_REBOTINES,¡Bolas extra!,Extra balls!,,Billes en plus !,Bolas extras!
+BOSSDMG_AFEITADORA_WEAK,¡Agua! ¡Cortocircuito! ¡Esto no venía en el manual!,Water! Short circuit! This wasn't in the manual!,,De l'eau ! Court-circuit ! C'était pas dans le manuel !,Água! Curto-circuito! Isso não estava no manual!
+BOSSDMG_AFEITADORA_RESIST,"Qué cosquillas... soy eléctrica, mi amor.","Tickles... I'm electric, darling.",,"Ça chatouille... je suis électrique, mon chou.","Que cócegas... sou elétrica, meu bem."
+BOSSDMG_TESTICULO_WEAK,¡AY! ¡Eso duele en el alma y en todo lo demás!,OW! That hurts in the soul and everywhere else!,,AÏE ! Ça fait mal à l'âme et à tout le reste !,AI! Isso dói na alma e em todo o resto!
+BOSSDMG_TESTICULO_RESIST,"Calma, hijo, vengo con protección.","Relax, son, I came protected.",,"Tranquille, fiston, je suis protégé.","Calma, filho, eu vim protegido."

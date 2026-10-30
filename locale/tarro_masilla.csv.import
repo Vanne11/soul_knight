@@ -6,10 +6,10 @@ uid="uid://q4147wffo4ik"
 
 [deps]
 
-files=["res://locale/tarro_masilla.es.translation", "res://locale/tarro_masilla.en.translation", "res://locale/tarro_masilla.fr.translation"]
+files=["res://locale/tarro_masilla.es.translation", "res://locale/tarro_masilla.en.translation", "res://locale/tarro_masilla.fr.translation", "res://locale/tarro_masilla.pt_BR.translation"]
 
 source_file="res://locale/tarro_masilla.csv"
-dest_files=["res://locale/tarro_masilla.es.translation", "res://locale/tarro_masilla.en.translation", "res://locale/tarro_masilla.fr.translation"]
+dest_files=["res://locale/tarro_masilla.es.translation", "res://locale/tarro_masilla.en.translation", "res://locale/tarro_masilla.fr.translation", "res://locale/tarro_masilla.pt_BR.translation"]
 
 [params]
 

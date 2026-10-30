@@ -6,10 +6,10 @@ uid="uid://b7otqqsfkcsp5"
 
 [deps]
 
-files=["res://locale/puzzles.es.translation", "res://locale/puzzles.en.translation", "res://locale/puzzles.es_ES.translation", "res://locale/puzzles.fr.translation"]
+files=["res://locale/puzzles.es.translation", "res://locale/puzzles.en.translation", "res://locale/puzzles.es_ES.translation", "res://locale/puzzles.fr.translation", "res://locale/puzzles.pt_BR.translation"]
 
 source_file="res://locale/puzzles.csv"
-dest_files=["res://locale/puzzles.es.translation", "res://locale/puzzles.en.translation", "res://locale/puzzles.es_ES.translation", "res://locale/puzzles.fr.translation"]
+dest_files=["res://locale/puzzles.es.translation", "res://locale/puzzles.en.translation", "res://locale/puzzles.es_ES.translation", "res://locale/puzzles.fr.translation", "res://locale/puzzles.pt_BR.translation"]
 
 [params]
 

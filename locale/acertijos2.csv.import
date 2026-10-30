@@ -6,10 +6,10 @@ uid="uid://cxoyfdwk7atgx"
 
 [deps]
 
-files=["res://locale/acertijos2.es.translation", "res://locale/acertijos2.en.translation", "res://locale/acertijos2.es_ES.translation", "res://locale/acertijos2.fr.translation"]
+files=["res://locale/acertijos2.es.translation", "res://locale/acertijos2.en.translation", "res://locale/acertijos2.es_ES.translation", "res://locale/acertijos2.fr.translation", "res://locale/acertijos2.pt_BR.translation"]
 
 source_file="res://locale/acertijos2.csv"
-dest_files=["res://locale/acertijos2.es.translation", "res://locale/acertijos2.en.translation", "res://locale/acertijos2.es_ES.translation", "res://locale/acertijos2.fr.translation"]
+dest_files=["res://locale/acertijos2.es.translation", "res://locale/acertijos2.en.translation", "res://locale/acertijos2.es_ES.translation", "res://locale/acertijos2.fr.translation", "res://locale/acertijos2.pt_BR.translation"]
 
 [params]
 

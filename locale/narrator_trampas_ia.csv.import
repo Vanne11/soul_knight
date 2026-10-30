@@ -6,10 +6,10 @@ uid="uid://qiswhy88twyf"
 
 [deps]
 
-files=["res://locale/narrator_trampas_ia.es.translation", "res://locale/narrator_trampas_ia.en.translation", "res://locale/narrator_trampas_ia.fr.translation"]
+files=["res://locale/narrator_trampas_ia.es.translation", "res://locale/narrator_trampas_ia.en.translation", "res://locale/narrator_trampas_ia.fr.translation", "res://locale/narrator_trampas_ia.pt_BR.translation"]
 
 source_file="res://locale/narrator_trampas_ia.csv"
-dest_files=["res://locale/narrator_trampas_ia.es.translation", "res://locale/narrator_trampas_ia.en.translation", "res://locale/narrator_trampas_ia.fr.translation"]
+dest_files=["res://locale/narrator_trampas_ia.es.translation", "res://locale/narrator_trampas_ia.en.translation", "res://locale/narrator_trampas_ia.fr.translation", "res://locale/narrator_trampas_ia.pt_BR.translation"]
 
 [params]
 

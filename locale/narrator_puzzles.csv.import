@@ -6,10 +6,10 @@ uid="uid://sg5dcoccv6rf"
 
 [deps]
 
-files=["res://locale/narrator_puzzles.es.translation", "res://locale/narrator_puzzles.en.translation", "res://locale/narrator_puzzles.es_ES.translation", "res://locale/narrator_puzzles.fr.translation"]
+files=["res://locale/narrator_puzzles.es.translation", "res://locale/narrator_puzzles.en.translation", "res://locale/narrator_puzzles.es_ES.translation", "res://locale/narrator_puzzles.fr.translation", "res://locale/narrator_puzzles.pt_BR.translation"]
 
 source_file="res://locale/narrator_puzzles.csv"
-dest_files=["res://locale/narrator_puzzles.es.translation", "res://locale/narrator_puzzles.en.translation", "res://locale/narrator_puzzles.es_ES.translation", "res://locale/narrator_puzzles.fr.translation"]
+dest_files=["res://locale/narrator_puzzles.es.translation", "res://locale/narrator_puzzles.en.translation", "res://locale/narrator_puzzles.es_ES.translation", "res://locale/narrator_puzzles.fr.translation", "res://locale/narrator_puzzles.pt_BR.translation"]
 
 [params]
 

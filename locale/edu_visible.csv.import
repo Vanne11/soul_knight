@@ -6,10 +6,10 @@ uid="uid://cfwltg0i3inr7"
 
 [deps]
 
-files=["res://locale/edu_visible.es.translation", "res://locale/edu_visible.en.translation", "res://locale/edu_visible.fr.translation"]
+files=["res://locale/edu_visible.es.translation", "res://locale/edu_visible.en.translation", "res://locale/edu_visible.fr.translation", "res://locale/edu_visible.pt_BR.translation"]
 
 source_file="res://locale/edu_visible.csv"
-dest_files=["res://locale/edu_visible.es.translation", "res://locale/edu_visible.en.translation", "res://locale/edu_visible.fr.translation"]
+dest_files=["res://locale/edu_visible.es.translation", "res://locale/edu_visible.en.translation", "res://locale/edu_visible.fr.translation", "res://locale/edu_visible.pt_BR.translation"]
 
 [params]
 

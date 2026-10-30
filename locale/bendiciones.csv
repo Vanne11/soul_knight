@@ -1,20 +1,20 @@
-keys,es,en,es_ES,fr
-BPICK_LEVEL,NIVEL %d,LEVEL %d,,NIVEAU %d
-BPICK_LEVEL_UP,NIVEL %d > %d,LEVEL %d > %d,,NIVEAU %d > %d
-BPICK_ALLERGY,AJENA: efecto doble y ALERGIA,FOREIGN: double effect and ALLERGY,,ÉTRANGÈRE : effet double et ALLERGIE
-BPICK_HINT,"1-3 / flechas + ENTER, o clic","1-3 / arrows + ENTER, or click",,"1-3 / flèches + ENTRÉE, ou clic"
-BTREE_TAB,BENDICIONES,BLESSINGS,,BÉNÉDICTIONS
-BTREE_TITLE,Árbol de bendiciones,Blessing tree,,Arbre des bénédictions
-BTREE_BALANCE_PROGRESS,Equilibrio: Penelandia %d/2 · Vulvania %d/2,Balance: Peneland %d/2 · Vulvania %d/2,,Équilibre : Pénislandie %d/2 · Vulvanie %d/2
-BTREE_BALANCE_READY,Equilibrio Hormonal desbloqueado,Hormonal Balance unlocked,,Équilibre Hormonal débloqué
-BTREE_BALANCE_TAKEN,Equilibrio Hormonal conseguido,Hormonal Balance obtained,,Équilibre Hormonal obtenu
-BTREE_LOCKED,sin conseguir,not obtained,,pas obtenue
-BTREE_BACK,VOLVER,BACK,,RETOUR
-BSTAT_TITLE,Tus estadísticas,Your stats,,Tes statistiques
-BSTAT_DAMAGE,Daño,Damage,,Dégâts
-BSTAT_FIRE_RATE,Cadencia,Fire rate,,Cadence
-BSTAT_CRIT,Crítico,Crit chance,,Critique
-BSTAT_SPEED,Velocidad,Speed,,Vitesse
-BSTAT_HEALTH,Vida máx.,Max health,,Vie max.
-BSTAT_SHIELD,Escudo máx.,Max shield,,Bouclier max.
-BSTAT_STAMINA,Estamina máx.,Max stamina,,Endurance max.
+keys,es,en,es_ES,fr,pt_BR
+BPICK_LEVEL,NIVEL %d,LEVEL %d,,NIVEAU %d,NÍVEL %d
+BPICK_LEVEL_UP,NIVEL %d > %d,LEVEL %d > %d,,NIVEAU %d > %d,NÍVEL %d > %d
+BPICK_ALLERGY,AJENA: efecto doble y ALERGIA,FOREIGN: double effect and ALLERGY,,ÉTRANGÈRE : effet double et ALLERGIE,ALHEIA: efeito dobrado e ALERGIA
+BPICK_HINT,"1-3 / flechas + ENTER, o clic","1-3 / arrows + ENTER, or click",,"1-3 / flèches + ENTRÉE, ou clic","1-3 / setas + ENTER, ou clique"
+BTREE_TAB,BENDICIONES,BLESSINGS,,BÉNÉDICTIONS,BÊNÇÃOS
+BTREE_TITLE,Árbol de bendiciones,Blessing tree,,Arbre des bénédictions,Árvore de bênçãos
+BTREE_BALANCE_PROGRESS,Equilibrio: Penelandia %d/2 · Vulvania %d/2,Balance: Peneland %d/2 · Vulvania %d/2,,Équilibre : Pénislandie %d/2 · Vulvanie %d/2,Equilíbrio: Penelândia %d/2 · Vulvânia %d/2
+BTREE_BALANCE_READY,Equilibrio Hormonal desbloqueado,Hormonal Balance unlocked,,Équilibre Hormonal débloqué,Equilíbrio Hormonal desbloqueado
+BTREE_BALANCE_TAKEN,Equilibrio Hormonal conseguido,Hormonal Balance obtained,,Équilibre Hormonal obtenu,Equilíbrio Hormonal conquistado
+BTREE_LOCKED,sin conseguir,not obtained,,pas obtenue,não conquistada
+BTREE_BACK,VOLVER,BACK,,RETOUR,VOLTAR
+BSTAT_TITLE,Tus estadísticas,Your stats,,Tes statistiques,Suas estatísticas
+BSTAT_DAMAGE,Daño,Damage,,Dégâts,Dano
+BSTAT_FIRE_RATE,Cadencia,Fire rate,,Cadence,Cadência
+BSTAT_CRIT,Crítico,Crit chance,,Critique,Crítico
+BSTAT_SPEED,Velocidad,Speed,,Vitesse,Velocidade
+BSTAT_HEALTH,Vida máx.,Max health,,Vie max.,Vida máx.
+BSTAT_SHIELD,Escudo máx.,Max shield,,Bouclier max.,Escudo máx.
+BSTAT_STAMINA,Estamina máx.,Max stamina,,Endurance max.,Estamina máx.

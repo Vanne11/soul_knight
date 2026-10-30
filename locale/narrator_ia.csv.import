@@ -6,10 +6,10 @@ uid="uid://dgwbrxjf825k7"
 
 [deps]
 
-files=["res://locale/narrator_ia.es.translation", "res://locale/narrator_ia.en.translation", "res://locale/narrator_ia.es_ES.translation", "res://locale/narrator_ia.fr.translation"]
+files=["res://locale/narrator_ia.es.translation", "res://locale/narrator_ia.en.translation", "res://locale/narrator_ia.es_ES.translation", "res://locale/narrator_ia.fr.translation", "res://locale/narrator_ia.pt_BR.translation"]
 
 source_file="res://locale/narrator_ia.csv"
-dest_files=["res://locale/narrator_ia.es.translation", "res://locale/narrator_ia.en.translation", "res://locale/narrator_ia.es_ES.translation", "res://locale/narrator_ia.fr.translation"]
+dest_files=["res://locale/narrator_ia.es.translation", "res://locale/narrator_ia.en.translation", "res://locale/narrator_ia.es_ES.translation", "res://locale/narrator_ia.fr.translation", "res://locale/narrator_ia.pt_BR.translation"]
 
 [params]
 

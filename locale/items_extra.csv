@@ -1,45 +1,45 @@
-keys,es,en,es_ES,fr
-ITEM_CURSED_CAGE_NAME,Jaula de Castidad Maldita,Cursed Chastity Cage,,Cage de Chasteté Maudite
-ITEM_CURSED_CAGE_DESC,"MALDITA. +35 de escudo, absorbe 2 golpes, sin hormonas. Se quita con llave. Cero diversión.","CURSED. +35 shield, absorbs 2 hits, no hormones. Needs a key to remove. Zero fun.",,"MAUDITE. +35 de bouclier, absorbe 2 coups, zéro hormone. Se retire avec une clé. Zéro plaisir."
-ITEM_DEODORANT_MACHOTE_NAME,"Desodorante en Spray ""Machote""","""Machote"" Body Spray",,Déodorant en Spray « Mâle Alpha »
-ITEM_DEODORANT_MACHOTE_DESC,Nube de 7 s que espanta enemigos (los jefes ni la huelen). Huele a decisiones discutibles.,A 7 s cloud that scares enemies (bosses don't even smell it). Smells of questionable decisions.,,Nuage de 7 s qui fait fuir les ennemis (les boss n'en sentent même pas l'odeur). Sent les décisions discutables.
-ITEM_EMERGENCY_BRIEFS_NAME,Calzoncillos Limpios de Emergencia,Emergency Clean Underwear,,Slip Propre de Secours
-ITEM_EMERGENCY_BRIEFS_DESC,Absorben 2 golpes y limpian cualquier contagio. Tu madre tenía razón.,Absorb 2 hits and clear any infection. Your mother was right.,,Absorbe 2 coups et nettoie toute contagion. Ta mère avait raison.
-ITEM_LATEX_SUIT_NAME,Traje de Látex,Latex Suit,,Combinaison en Latex
-ITEM_LATEX_SUIT_DESC,"+20 de escudo, pero 8% más lento y rechina. Se pega a todo, hasta a tus decisiones.","+20 shield, but 8% slower and it squeaks. Sticks to everything, even your decisions.",,"+20 de bouclier, mais 8 % plus lent et ça couine. Ça colle à tout, même à tes décisions."
-ITEM_PSA_TEST_NAME,Examen de PSA,PSA Test,,Dosage de PSA
-ITEM_PSA_TEST_DESC,20 s: ves la vida de todos los enemigos y se les caen los disfraces.,20 s: you see every enemy's health and their disguises fall off.,,20 s : tu vois la vie de tous les ennemis et leurs déguisements tombent.
-ITEM_TALC_NAME,Talco para la Entrepierna,Groin Talc,,Talc pour l'Entrejambe
-ITEM_TALC_DESC,"Quita la picazón y da inmunidad al contagio 25 s. Zona seca, zona feliz.","Stops the itching and grants infection immunity for 25 s. Dry zone, happy zone.",,"Calme les démangeaisons et immunise contre la contagion 25 s. Zone sèche, zone heureuse."
-ITEM_TAMPON_NAME,Tampón,Tampon,,Tampon
-ITEM_TAMPON_DESC,Tapa la siguiente herida y corta ardor y contagio 40 s. Más útil que tus armas.,Plugs the next wound and stops burning and infection for 40 s. More useful than your weapons.,,Bouche la prochaine blessure et coupe brûlure et contagion 40 s. Plus utile que tes armes.
-ITEM_TESTICLE_KIT_NAME,Kit de Autoexamen Testicular,Testicular Self-Exam Kit,,Kit d'Autopalpation Testiculaire
-ITEM_TESTICLE_KIT_DESC,"Revela el mapa del piso, secretas incluidas. Manos tibias y cero vergüenza.","Reveals the floor map, secrets included. Warm hands and zero shame.",,"Révèle la carte de l'étage, secrètes comprises. Mains tièdes et zéro honte."
-ITEM_TOWEL_COTTON_NAME,Toalla de Tela,Cotton Pad,Compresa de Tela,Serviette en Coton
-ITEM_TOWEL_COTTON_DESC,"Absorbe 2 golpes, sin roce, y la estamina se recarga 30% más rápido 30 s.","Absorbs 2 hits, no chafing, and stamina recharges 30% faster for 30 s.",,"Absorbe 2 coups, sans frottement, et l'endurance se recharge 30 % plus vite pendant 30 s."
-ITEM_TOWEL_MESH_NAME,Toalla de Malla,Mesh Pad,Compresa de Malla,Serviette en Résille
-ITEM_TOWEL_MESH_DESC,"Absorbe 3 golpes, pero roza: 8% más lento mientras dure. Todo tiene su precio.","Absorbs 3 hits, but chafes: 8% slower while it lasts. Everything has a price.",,"Absorbe 3 coups, mais ça frotte : 8 % plus lent tant que ça dure. Tout a un prix."
-ITEM_TOWEL_NIGHT_NAME,Toalla Nocturna,Overnight Pad,Compresa Nocturna,Serviette de Nuit
-ITEM_TOWEL_NIGHT_DESC,Absorbe 3 golpes y recorta 40% el daño por 2 min. Larga como su nombre.,"Absorbs 3 hits and cuts damage by 40% for 2 min. Long, like its name.",,Absorbe 3 coups et réduit les dégâts de 40 % pendant 2 min. Longue comme son nom.
-ITEM_WHIP_NAME,Látigo de Cuero,Leather Whip,,Fouet en Cuir
-ITEM_WHIP_DESC,Abanico de tres chasquidos que atraviesan hasta 2 enemigos. Con palabra de seguridad.,A fan of three cracks that pierce up to 2 enemies. Comes with a safe word.,,Éventail de trois claquements qui traversent jusqu'à 2 ennemis. Avec mot de sécurité.
-PICKUP_SLOT_HINT,Se guarda en una ranura ([SLOTS]).,Stored in a slot ([SLOTS]).,,Se range dans un emplacement ([SLOTS]).
-PICKUP_CURSE_HINT,Maldito: ocupa una ranura hasta que lo quites con una llave.,Cursed: takes a slot until you remove it with a key.,,Maudit : occupe un emplacement jusqu'à ce que tu le retires avec une clé.
-FX_SLOT_FULL,Sin ranura libre: se usa al instante,No free slot: used right away,,Aucun emplacement libre : utilisé sur-le-champ
-FX_CAGE_NO_HORMONE,La jaula no deja pasar hormonas,The cage won't let hormones through,,La cage ne laisse pas passer les hormones
-FX_CURSE_NO_SLOT,Necesitas una ranura libre,You need a free slot,,Il te faut un emplacement libre
-FX_CURSED,¡Maldito!,Cursed!,,Maudit !
-FX_CURSE_FREED,¡Libre!,Free!,,Libre !
-FX_CURSE_NEEDS_KEY,Hace falta una llave,A key is needed,,Il faut une clé
-FX_SET_COMPLETE,¡Set completo! %s,Set complete! %s,,Panoplie complète ! %s
-FX_LATEX_SQUEAK,*ñic*,*squeak*,,*couic*
-FX_STIM_CRASH,¡Bajón!,Crash!,,Descente !
-STATUS_DOT_IMMUNE,Sin ardor,No burning,,Sans brûlure
-STATUS_INFECT_IMMUNE,Inmune al contagio,Contagion-proof,,Immunisé contre la contagion
-STATUS_CHAFE,Roce de malla,Mesh chafing,,Frottement de résille
-HUD_SET_ON,Set %s: ACTIVO,Set %s: ACTIVE,,Panoplie %s : ACTIVE
-HUD_SET_PROGRESS,Set %s: %d/%d,Set %s: %d/%d,,Panoplie %s : %d/%d
-SET_PENE_NAME,Orgullo de Penelandia,Pride of Penelandia,,Fierté de Pénislandie
-SET_PENE_DESC,"3 objetos de Penelandia: +10% de daño y +5% de crítico. Si eres de allí, más.",3 Penelandia items: +10% damage and +5% crit. More if you're from there.,,"3 objets de Pénislandie : +10 % de dégâts et +5 % de critique. Si tu viens de là-bas, encore plus."
-SET_VULVA_NAME,Ciclo de Vulvania,Cycle of Vulvania,,Cycle de Vulvanie
-SET_VULVA_DESC,"3 objetos de Vulvania: +10% de cadencia y estamina 20% más rápida. Si eres de allí, más.",3 Vulvania items: +10% fire rate and 20% faster stamina. More if you're from there.,,"3 objets de Vulvanie : +10 % de cadence et endurance 20 % plus rapide. Si tu viens de là-bas, encore plus."
+keys,es,en,es_ES,fr,pt_BR
+ITEM_CURSED_CAGE_NAME,Jaula de Castidad Maldita,Cursed Chastity Cage,,Cage de Chasteté Maudite,Gaiola de Castidade Maldita
+ITEM_CURSED_CAGE_DESC,"MALDITA. +35 de escudo, absorbe 2 golpes, sin hormonas. Se quita con llave. Cero diversión.","CURSED. +35 shield, absorbs 2 hits, no hormones. Needs a key to remove. Zero fun.",,"MAUDITE. +35 de bouclier, absorbe 2 coups, zéro hormone. Se retire avec une clé. Zéro plaisir.","MALDITA. +35 de escudo, absorve 2 golpes, sem hormônios. Sai com chave. Zero diversão."
+ITEM_DEODORANT_MACHOTE_NAME,"Desodorante en Spray ""Machote""","""Machote"" Body Spray",,Déodorant en Spray « Mâle Alpha »,"Desodorante Spray ""Machão"""
+ITEM_DEODORANT_MACHOTE_DESC,Nube de 7 s que espanta enemigos (los jefes ni la huelen). Huele a decisiones discutibles.,A 7 s cloud that scares enemies (bosses don't even smell it). Smells of questionable decisions.,,Nuage de 7 s qui fait fuir les ennemis (les boss n'en sentent même pas l'odeur). Sent les décisions discutables.,Nuvem de 7 s que espanta inimigos (chefes nem sentem o cheiro). Cheira a decisões discutíveis.
+ITEM_EMERGENCY_BRIEFS_NAME,Calzoncillos Limpios de Emergencia,Emergency Clean Underwear,,Slip Propre de Secours,Cuecas Limpas de Emergência
+ITEM_EMERGENCY_BRIEFS_DESC,Absorben 2 golpes y limpian cualquier contagio. Tu madre tenía razón.,Absorb 2 hits and clear any infection. Your mother was right.,,Absorbe 2 coups et nettoie toute contagion. Ta mère avait raison.,Absorvem 2 golpes e limpam qualquer contágio. Sua mãe tinha razão.
+ITEM_LATEX_SUIT_NAME,Traje de Látex,Latex Suit,,Combinaison en Latex,Traje de Látex
+ITEM_LATEX_SUIT_DESC,"+20 de escudo, pero 8% más lento y rechina. Se pega a todo, hasta a tus decisiones.","+20 shield, but 8% slower and it squeaks. Sticks to everything, even your decisions.",,"+20 de bouclier, mais 8 % plus lent et ça couine. Ça colle à tout, même à tes décisions.","+20 de escudo, mas 8% mais lento e range. Gruda em tudo, até nas suas decisões."
+ITEM_PSA_TEST_NAME,Examen de PSA,PSA Test,,Dosage de PSA,Exame de PSA
+ITEM_PSA_TEST_DESC,20 s: ves la vida de todos los enemigos y se les caen los disfraces.,20 s: you see every enemy's health and their disguises fall off.,,20 s : tu vois la vie de tous les ennemis et leurs déguisements tombent.,20 s: você vê a vida de todos os inimigos e os disfarces caem.
+ITEM_TALC_NAME,Talco para la Entrepierna,Groin Talc,,Talc pour l'Entrejambe,Talco para a Virilha
+ITEM_TALC_DESC,"Quita la picazón y da inmunidad al contagio 25 s. Zona seca, zona feliz.","Stops the itching and grants infection immunity for 25 s. Dry zone, happy zone.",,"Calme les démangeaisons et immunise contre la contagion 25 s. Zone sèche, zone heureuse.","Tira a coceira e dá imunidade ao contágio por 25 s. Zona seca, zona feliz."
+ITEM_TAMPON_NAME,Tampón,Tampon,,Tampon,Tampão
+ITEM_TAMPON_DESC,Tapa la siguiente herida y corta ardor y contagio 40 s. Más útil que tus armas.,Plugs the next wound and stops burning and infection for 40 s. More useful than your weapons.,,Bouche la prochaine blessure et coupe brûlure et contagion 40 s. Plus utile que tes armes.,Tampa o próximo ferimento e corta ardência e contágio por 40 s. Mais útil que suas armas.
+ITEM_TESTICLE_KIT_NAME,Kit de Autoexamen Testicular,Testicular Self-Exam Kit,,Kit d'Autopalpation Testiculaire,Kit de Autoexame Testicular
+ITEM_TESTICLE_KIT_DESC,"Revela el mapa del piso, secretas incluidas. Manos tibias y cero vergüenza.","Reveals the floor map, secrets included. Warm hands and zero shame.",,"Révèle la carte de l'étage, secrètes comprises. Mains tièdes et zéro honte.","Revela o mapa do andar, secretos inclusos. Mãos mornas e zero vergonha."
+ITEM_TOWEL_COTTON_NAME,Toalla de Tela,Cotton Pad,Compresa de Tela,Serviette en Coton,Toalha de Pano
+ITEM_TOWEL_COTTON_DESC,"Absorbe 2 golpes, sin roce, y la estamina se recarga 30% más rápido 30 s.","Absorbs 2 hits, no chafing, and stamina recharges 30% faster for 30 s.",,"Absorbe 2 coups, sans frottement, et l'endurance se recharge 30 % plus vite pendant 30 s.","Absorve 2 golpes, sem atrito, e a estamina recarrega 30% mais rápido por 30 s."
+ITEM_TOWEL_MESH_NAME,Toalla de Malla,Mesh Pad,Compresa de Malla,Serviette en Résille,Toalha de Malha
+ITEM_TOWEL_MESH_DESC,"Absorbe 3 golpes, pero roza: 8% más lento mientras dure. Todo tiene su precio.","Absorbs 3 hits, but chafes: 8% slower while it lasts. Everything has a price.",,"Absorbe 3 coups, mais ça frotte : 8 % plus lent tant que ça dure. Tout a un prix.","Absorve 3 golpes, mas irrita: 8% mais lento enquanto durar. Tudo tem seu preço."
+ITEM_TOWEL_NIGHT_NAME,Toalla Nocturna,Overnight Pad,Compresa Nocturna,Serviette de Nuit,Absorvente Noturno
+ITEM_TOWEL_NIGHT_DESC,Absorbe 3 golpes y recorta 40% el daño por 2 min. Larga como su nombre.,"Absorbs 3 hits and cuts damage by 40% for 2 min. Long, like its name.",,Absorbe 3 coups et réduit les dégâts de 40 % pendant 2 min. Longue comme son nom.,Absorve 3 golpes e corta 40% do dano por 2 min. Longo como o nome.
+ITEM_WHIP_NAME,Látigo de Cuero,Leather Whip,,Fouet en Cuir,Chicote de Couro
+ITEM_WHIP_DESC,Abanico de tres chasquidos que atraviesan hasta 2 enemigos. Con palabra de seguridad.,A fan of three cracks that pierce up to 2 enemies. Comes with a safe word.,,Éventail de trois claquements qui traversent jusqu'à 2 ennemis. Avec mot de sécurité.,Leque de três estalos que atravessam até 2 inimigos. Com palavra de segurança.
+PICKUP_SLOT_HINT,Se guarda en una ranura ([SLOTS]).,Stored in a slot ([SLOTS]).,,Se range dans un emplacement ([SLOTS]).,Guarda-se num compartimento ([SLOTS]).
+PICKUP_CURSE_HINT,Maldito: ocupa una ranura hasta que lo quites con una llave.,Cursed: takes a slot until you remove it with a key.,,Maudit : occupe un emplacement jusqu'à ce que tu le retires avec une clé.,Maldito: ocupa um compartimento até você soltar com uma chave.
+FX_SLOT_FULL,Sin ranura libre: se usa al instante,No free slot: used right away,,Aucun emplacement libre : utilisé sur-le-champ,Sem compartimento livre: usa na hora
+FX_CAGE_NO_HORMONE,La jaula no deja pasar hormonas,The cage won't let hormones through,,La cage ne laisse pas passer les hormones,A gaiola não deixa passar hormônios
+FX_CURSE_NO_SLOT,Necesitas una ranura libre,You need a free slot,,Il te faut un emplacement libre,Você precisa de um compartimento livre
+FX_CURSED,¡Maldito!,Cursed!,,Maudit !,Maldito!
+FX_CURSE_FREED,¡Libre!,Free!,,Libre !,Livre!
+FX_CURSE_NEEDS_KEY,Hace falta una llave,A key is needed,,Il faut une clé,Precisa de uma chave
+FX_SET_COMPLETE,¡Set completo! %s,Set complete! %s,,Panoplie complète ! %s,Set completo! %s
+FX_LATEX_SQUEAK,*ñic*,*squeak*,,*couic*,*nhic*
+FX_STIM_CRASH,¡Bajón!,Crash!,,Descente !,Que baque!
+STATUS_DOT_IMMUNE,Sin ardor,No burning,,Sans brûlure,Sem ardência
+STATUS_INFECT_IMMUNE,Inmune al contagio,Contagion-proof,,Immunisé contre la contagion,Imune ao contágio
+STATUS_CHAFE,Roce de malla,Mesh chafing,,Frottement de résille,Atrito da malha
+HUD_SET_ON,Set %s: ACTIVO,Set %s: ACTIVE,,Panoplie %s : ACTIVE,Set %s: ATIVO
+HUD_SET_PROGRESS,Set %s: %d/%d,Set %s: %d/%d,,Panoplie %s : %d/%d,Set %s: %d/%d
+SET_PENE_NAME,Orgullo de Penelandia,Pride of Penelandia,,Fierté de Pénislandie,Orgulho da Penelândia
+SET_PENE_DESC,"3 objetos de Penelandia: +10% de daño y +5% de crítico. Si eres de allí, más.",3 Penelandia items: +10% damage and +5% crit. More if you're from there.,,"3 objets de Pénislandie : +10 % de dégâts et +5 % de critique. Si tu viens de là-bas, encore plus.","3 itens da Penelândia: +10% de dano e +5% de crítico. Se você é de lá, mais."
+SET_VULVA_NAME,Ciclo de Vulvania,Cycle of Vulvania,,Cycle de Vulvanie,Ciclo da Vulvânia
+SET_VULVA_DESC,"3 objetos de Vulvania: +10% de cadencia y estamina 20% más rápida. Si eres de allí, más.",3 Vulvania items: +10% fire rate and 20% faster stamina. More if you're from there.,,"3 objets de Vulvanie : +10 % de cadence et endurance 20 % plus rapide. Si tu viens de là-bas, encore plus.","3 itens da Vulvânia: +10% de cadência e estamina 20% mais rápida. Se você é de lá, mais."

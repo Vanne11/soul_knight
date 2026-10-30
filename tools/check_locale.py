@@ -9,7 +9,7 @@ import csv, glob, os, re, sys
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STRICT = "--strict" in sys.argv
 REQUIRED = ["es", "en"]
-OPTIONAL = ["es_ES", "fr"]
+OPTIONAL = ["es_ES", "fr", "pt_BR"]
 keys, errors = {}, []
 missing = {l: 0 for l in OPTIONAL}
 for path in sorted(glob.glob(os.path.join(root, "locale", "*.csv"))):

@@ -6,10 +6,10 @@ uid="uid://bmfc0ik4g5qus"
 
 [deps]
 
-files=["res://locale/orgullo.es.translation", "res://locale/orgullo.en.translation", "res://locale/orgullo.fr.translation"]
+files=["res://locale/orgullo.es.translation", "res://locale/orgullo.en.translation", "res://locale/orgullo.fr.translation", "res://locale/orgullo.pt_BR.translation"]
 
 source_file="res://locale/orgullo.csv"
-dest_files=["res://locale/orgullo.es.translation", "res://locale/orgullo.en.translation", "res://locale/orgullo.fr.translation"]
+dest_files=["res://locale/orgullo.es.translation", "res://locale/orgullo.en.translation", "res://locale/orgullo.fr.translation", "res://locale/orgullo.pt_BR.translation"]
 
 [params]
 

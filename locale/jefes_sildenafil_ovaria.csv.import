@@ -6,10 +6,10 @@ uid="uid://dgqca6kl2xyws"
 
 [deps]
 
-files=["res://locale/jefes_sildenafil_ovaria.es.translation", "res://locale/jefes_sildenafil_ovaria.en.translation", "res://locale/jefes_sildenafil_ovaria.es_ES.translation", "res://locale/jefes_sildenafil_ovaria.fr.translation"]
+files=["res://locale/jefes_sildenafil_ovaria.es.translation", "res://locale/jefes_sildenafil_ovaria.en.translation", "res://locale/jefes_sildenafil_ovaria.es_ES.translation", "res://locale/jefes_sildenafil_ovaria.fr.translation", "res://locale/jefes_sildenafil_ovaria.pt_BR.translation"]
 
 source_file="res://locale/jefes_sildenafil_ovaria.csv"
-dest_files=["res://locale/jefes_sildenafil_ovaria.es.translation", "res://locale/jefes_sildenafil_ovaria.en.translation", "res://locale/jefes_sildenafil_ovaria.es_ES.translation", "res://locale/jefes_sildenafil_ovaria.fr.translation"]
+dest_files=["res://locale/jefes_sildenafil_ovaria.es.translation", "res://locale/jefes_sildenafil_ovaria.en.translation", "res://locale/jefes_sildenafil_ovaria.es_ES.translation", "res://locale/jefes_sildenafil_ovaria.fr.translation", "res://locale/jefes_sildenafil_ovaria.pt_BR.translation"]
 
 [params]
 

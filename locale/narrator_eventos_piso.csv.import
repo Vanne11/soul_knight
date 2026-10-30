@@ -6,10 +6,10 @@ uid="uid://qocb18qxmkr6"
 
 [deps]
 
-files=["res://locale/narrator_eventos_piso.es.translation", "res://locale/narrator_eventos_piso.en.translation", "res://locale/narrator_eventos_piso.fr.translation"]
+files=["res://locale/narrator_eventos_piso.es.translation", "res://locale/narrator_eventos_piso.en.translation", "res://locale/narrator_eventos_piso.fr.translation", "res://locale/narrator_eventos_piso.pt_BR.translation"]
 
 source_file="res://locale/narrator_eventos_piso.csv"
-dest_files=["res://locale/narrator_eventos_piso.es.translation", "res://locale/narrator_eventos_piso.en.translation", "res://locale/narrator_eventos_piso.fr.translation"]
+dest_files=["res://locale/narrator_eventos_piso.es.translation", "res://locale/narrator_eventos_piso.en.translation", "res://locale/narrator_eventos_piso.fr.translation", "res://locale/narrator_eventos_piso.pt_BR.translation"]
 
 [params]
 

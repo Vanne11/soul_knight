@@ -6,10 +6,10 @@ uid="uid://drw8tscco1keg"
 
 [deps]
 
-files=["res://locale/heroes.es.translation", "res://locale/heroes.en.translation", "res://locale/heroes.fr.translation"]
+files=["res://locale/heroes.es.translation", "res://locale/heroes.en.translation", "res://locale/heroes.fr.translation", "res://locale/heroes.pt_BR.translation"]
 
 source_file="res://locale/heroes.csv"
-dest_files=["res://locale/heroes.es.translation", "res://locale/heroes.en.translation", "res://locale/heroes.fr.translation"]
+dest_files=["res://locale/heroes.es.translation", "res://locale/heroes.en.translation", "res://locale/heroes.fr.translation", "res://locale/heroes.pt_BR.translation"]
 
 [params]
 

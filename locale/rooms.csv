@@ -1,144 +1,144 @@
-keys,es,en,es_ES,fr
-RM_BARRELS_D,"Revientan si les disparas, y a ti con ellos. Elige el momento.","They burst when shot, and you with them. Pick your moment.",,"Ils éclatent si tu tires, et toi avec. Choisis ton moment."
-RM_BARRELS_T,BARRILES EXPLOSIVOS,EXPLOSIVE BARRELS,,BARILS EXPLOSIFS
-RM_CH_FAILED,Reto fallido,Challenge failed,,Défi raté
-RM_CH_FAIL_FAST,Se acabó el tiempo. Yo ya me estaba aburriendo.,Time's up. I was already getting bored.,,Temps écoulé. Je commençais à m'ennuyer.
-RM_CH_FAIL_NODASH,Usaste el dash. Las piernas lo notaron.,You used the dash. Your legs noticed.,,Tu as dashé. Tes jambes l'ont senti.
-RM_CH_FAIL_NOHIT,Te tocaron. Qué sorpresa tan poco sorprendente.,You got hit. What an unsurprising surprise.,,On t'a touché. Quelle surprise si peu surprenante.
-RM_CH_FAIL_T,RETO FALLIDO,CHALLENGE FAILED,,DÉFI RATÉ
-RM_CH_FAST,RETO: ANTES DE QUE ME ABURRA,CHALLENGE: BEFORE I GET BORED,,DÉFI : AVANT QUE JE M'ENNUIE
-RM_CH_FAST_BAR,Quedan %d s,%d s left,,Plus que %d s
-RM_CH_FAST_D,Limpia la sala antes de que se acabe el tiempo. Me aburro rápido.,Clear the room before time runs out. I get bored fast.,,Nettoie la salle avant la fin du temps. Je m'ennuie vite.
-RM_CH_NODASH,RETO: SIN DASH,CHALLENGE: NO DASH,,DÉFI : SANS DASH
-RM_CH_NODASH_BAR,Sin dash. Las piernas son para caminar.,No dashing. Legs are for walking.,,Pas de dash. Les jambes servent à marcher.
-RM_CH_NODASH_D,Limpia la sala sin usar el dash. Como una persona normal.,Clear the room without dashing. Like a normal person.,,Nettoie la salle sans dasher. Comme une personne normale.
-RM_CH_NOHIT,RETO: SIN QUE TE TOQUEN,CHALLENGE: DON'T GET TOUCHED,,DÉFI : SANS ÊTRE TOUCHÉ
-RM_CH_NOHIT_BAR,Cero golpes. Tú puedes (yo no apostaría).,Zero hits. You can do it (I wouldn't bet on it).,,"Zéro coup. Tu peux le faire (moi, je ne parierais pas)."
-RM_CH_NOHIT_D,Limpia la sala sin recibir un solo golpe. Ni uno. Ni al escudo.,Clear the room without taking a single hit. Not one. Not even on the shield.,,Nettoie la salle sans prendre un seul coup. Pas un. Même pas sur le bouclier.
-RM_CH_OK,"Vaya. Premio. No lo esperaba, pero aquí está.","Well. A prize. I didn't expect it, but here it is.",,"Tiens. Une récompense. Je ne m'y attendais pas, mais la voilà."
-RM_CH_OK_T,RETO CUMPLIDO,CHALLENGE COMPLETE,,DÉFI RÉUSSI
-RM_CH_T,RETO DEL NARRADOR,NARRATOR'S CHALLENGE,,DÉFI DU NARRATEUR
-RM_CLOCK_BAR,La Censura cubre la sala en %d s,The Censorship covers the room in %d s,,La Censure couvre la salle dans %d s
-RM_CLOCK_CENSORED,CENSURADO,CENSORED,,CENSURÉ
-RM_CLOCK_D,La Censura entra pintándolo todo de gris. Mata antes de que lo cubra.,The Censorship walks in painting everything grey. Kill before it covers the room.,,La Censure entre en peignant tout en gris. Tue avant qu'elle couvre la salle.
-RM_CLOCK_FAIL,Todo gris. Sin premio hasta que limpies; lo gris hiere mientras tanto.,All grey. No room reward until you clear it; grey hurts meanwhile.,,Tout est gris. Pas de récompense avant d'avoir nettoyé ; le gris blesse en attendant.
-RM_CLOCK_FAIL_T,TE ALCANZÓ,IT CAUGHT YOU,,ELLE T'A RATTRAPÉ
-RM_CLOCK_OK,La Censura se fue con las tijeras gachas. Premio por rapidez.,The Censorship left with its scissors down. Speed bonus.,,"La Censure est repartie, ciseaux baissés. Prime de rapidité."
-RM_CLOCK_OK_T,A TIEMPO,JUST IN TIME,,DANS LES TEMPS
-RM_CLOCK_T,CONTRA EL RELOJ,AGAINST THE CLOCK,,CONTRE LA MONTRE
-RM_CUSTOMS_FIGHT,"Pelear (llegan 2 inspectores, y sus decomisos)","Fight (2 inspectors arrive, with their confiscations)",,"Se battre (2 inspecteurs arrivent, avec leurs saisies)"
-RM_CUSTOMS_INSPECTOR,Inspector de Aduanas,Customs Inspector,,Inspecteur des Douanes
-RM_CUSTOMS_PAY,Pagar la mordida (%d monedas),Pay the bribe (%d coins),Pagar el soborno (%d monedas),Payer le pot-de-vin (%d pièces)
-RM_CUSTOMS_Q,«Inspección aduanera. Declare sus bienes... o pague la mordida de %d monedas.»,"""Customs inspection. Declare your goods... or pay the bribe of %d coins.""",«Inspección aduanera. Declare sus bienes... o pague el soborno de %d monedas.»,« Contrôle douanier. Déclarez vos biens... ou payez le pot-de-vin de %d pièces. »
-RM_CUSTOMS_Q_POOR,«Inspección aduanera. ¿Ni para la mordida? Pues me cobro a golpes.»,"""Customs inspection. Not even enough for the bribe? Then I'll collect in blows.""",«Inspección aduanera. ¿Ni para el soborno? Pues cobro a golpes.»,« Contrôle douanier. Même pas de quoi graisser la patte ? Je me paie à coups de poing. »
-RM_DIR_DOWN,de abajo,below,,d'en bas
-RM_DIR_LEFT,de la izquierda,on the left,,de gauche
-RM_DIR_RIGHT,de la derecha,on the right,,de droite
-RM_DIR_UP,de arriba,above,,d'en haut
-RM_ESCORT_BAR,Camino %d%%  ·  Óvulo: %d de vida,Progress %d%%  ·  Egg: %d health,,Trajet %d%%  ·  Ovule : %d PV
-RM_ESCORT_D,Llévalo a la trompa. Camina si estás cerca y se congela ante los bichos.,Take it to the tube. It walks if you're close and freezes near critters.,,Emmène-le à la trompe. Il marche si tu es près et se fige devant les bestioles.
-RM_ESCORT_FAIL,Se rompió. Sin premio de sala. Habrá que explicárselo a su madre.,It broke. No room reward. Somebody has to tell its mother.,,Il s'est brisé. Pas de récompense. Faudra l'expliquer à sa mère.
-RM_ESCORT_FAIL_T,ÓVULO PERDIDO,EGG LOST,,OVULE PERDU
-RM_ESCORT_GOAL,TROMPA,TUBE,,TROMPE
-RM_ESCORT_OK,"Botín extra. Las trompas no dan propina, pero esta sí.","Extra loot. Tubes don't tip, but this one does.",,"Butin en plus. Les trompes ne donnent pas de pourboire, mais celle-ci si."
-RM_ESCORT_OK_T,ÓVULO ENTREGADO,EGG DELIVERED,,OVULE LIVRÉ
-RM_ESCORT_T,ESCOLTA DEL ÓVULO,ESCORT THE EGG,,ESCORTE DE L'OVULE
-RM_ESCORT_WAVE,¡REFUERZOS!,REINFORCEMENTS!,,RENFORTS !
-RM_HOLD_BAR,Quedan %d s  ·  %d invitados,%d s left  ·  %d guests,,Plus que %d s  ·  %d invités
-RM_HOLD_D,Aguanta 45 segundos. Los invitados llegan en oleadas y nadie se va antes.,Hold out 45 seconds. Guests arrive in waves and nobody leaves early.,,Tiens 45 secondes. Les invités arrivent par vagues et personne ne part avant.
-RM_HOLD_OK,Los invitados se van a casa. Alguien dejó propina.,The guests go home. Someone left a tip.,,Les invités rentrent chez eux. Quelqu'un a laissé un pourboire.
-RM_HOLD_OK_T,SE ACABÓ LA FIESTA,PARTY'S OVER,,LA FÊTE EST FINIE
-RM_HOLD_T,LA FIESTA,THE PARTY,,LA FÊTE
-RM_MARKET_BUY,[E] Comprar con %d de vida,[E] Buy with %d health,,[E] Acheter avec %d PV
-RM_MARKET_D,"Objetos raros prohibidos por Su Pudorosidad. Se pagan con vida, no monedas.","Rare items banned by Her Modesty. Paid in life, not coins.",,"Objets rares interdits par Sa Pudibonderie. Payés en vie, pas en pièces."
-RM_MARKET_NO_BLOOD,Te queda poca sangre,Not enough blood left,,Il te reste peu de sang
-RM_MARKET_T,MERCADO NEGRO,BLACK MARKET,,MARCHÉ NOIR
-RM_MOD_ADUANERA,INSPECCIÓN ADUANERA,CUSTOMS INSPECTION,,CONTRÔLE DOUANIER
-RM_MOD_ADUANERA_D,Un aduanero exige su mordida. O pelea.,A customs officer demands his bribe. Or a fight.,Un aduanero exige su soborno. O pelea.,Un douanier exige son pot-de-vin. Ou la bagarre.
-RM_MOD_APAGON,APAGÓN,BLACKOUT,,PANNE
-RM_MOD_APAGON_D,Solo ves lo que alumbra tu halo. Lo demás sí te ve a ti.,You only see what your halo lights. Everything else does see you.,,"Tu ne vois que ce qu'éclaire ton halo. Le reste, lui, te voit."
-RM_MOD_CELO,SALA EN CELO,ROOM IN HEAT,,SALLE EN CHALEUR
-RM_MOD_CELO_D,Bichos más veloces y con las hormonas revueltas. Paga plus por peligrosidad.,Faster critters with scrambled hormones. Pays hazard pay.,,"Bestioles plus rapides, hormones en vrac. Prime de risque incluse."
-RM_MOD_CENSURADA,SALA CENSURADA,CENSORED ROOM,,SALLE CENSURÉE
-RM_MOD_CENSURADA_D,"Barras negras tapan zonas y se mueven. Lo de abajo, mejor no imaginarlo.",Black bars cover areas and move. Best not to imagine what's underneath.,,"Des barres noires cachent des zones et bougent. Dessous, mieux vaut ne pas imaginer."
-RM_MOD_LUBRICADO,PISO LUBRICADO,LUBRICATED FLOOR,,SOL LUBRIFIÉ
-RM_MOD_LUBRICADO_D,Frenas resbalando y el dash llega más lejos.,You slide when you stop and the dash goes farther.,,Tu glisses en freinant et le dash va plus loin.
-RM_PACT_1,Pacto del Recato: +30% daño. El mundo se queda gris y el narrador calla.,Pact of Modesty: +30% damage. The world turns grey and the narrator goes quiet.,,Pacte de la Pudeur : +30% dégâts. Le monde devient gris et le narrateur se tait.
-RM_PACT_2,Pacto del Escote: +35% cadencia. Te cuesta el 30% de la vida que tengas.,Pact of Cleavage: +35% fire rate. Costs you 30% of your current health.,,Pacte du Décolleté : +35% cadence. Te coûte 30% de la vie que tu as.
-RM_PACT_3,Pacto de las Perlas: +20% velocidad. Cuesta media bolsa y el escudo.,Pact of the Pearls: +20% speed. Costs half your purse and your shield.,Pacto de las Perlas: +20% velocidad. Cuesta medio monedero y el escudo.,Pacte des Perles : +20% vitesse. Coûte la moitié de ta bourse et ton bouclier.
-RM_PACT_DONE_1,+30% de daño. Todo gris.,+30% damage. Everything grey.,,+30% de dégâts. Tout est gris.
-RM_PACT_DONE_2,+35% cadencia. La Hoja se llevó su parte en sangre.,+35% fire rate. The Leaf took her cut in blood.,,+35% de cadence. La Feuille a pris sa part en sang.
-RM_PACT_DONE_3,+20% velocidad. La Hoja se quedó con la mitad de tus monedas y tu escudo.,+20% speed. The Leaf kept half your coins and your shield.,,+20% de vitesse. La Feuille a gardé la moitié de tes pièces et ton bouclier.
-RM_PACT_DONE_T,PACTO SELLADO,PACT SEALED,,PACTE SCELLÉ
-RM_PACT_END,"El color y la voz del narrador vuelven. Eso último, discutible.","Colour and the narrator's voice are back. The latter, debatable.",,"La couleur et la voix du narrateur reviennent. Ce dernier point, discutable."
-RM_PACT_END_T,EL PACTO TERMINÓ,THE PACT ENDED,,LE PACTE EST FINI
-RM_PACT_NO,Largarte sin pactar,Walk away without a pact,,Partir sans pacte
-RM_PACT_NO_D,La Hoja suspira. Ya volverás. Todos vuelven.,The Leaf sighs. You'll be back. Everybody comes back.,,La Feuille soupire. Tu reviendras. Tout le monde revient.
-RM_PACT_NO_T,SIN PACTO,NO PACT,,SANS PACTE
-RM_PACT_PROMPT,[E] Hablar con la Hoja de Parra,[E] Talk to the Fig Leaf,,[E] Parler à la Feuille de Vigne
-RM_PACT_Q,"Su Pudorosidad, la Hoja de Parra, ofrece un pacto (dura ~4 minutos).","Her Modesty, the Fig Leaf, offers a pact (lasts ~4 minutes).",,"Sa Pudibonderie, la Feuille de Vigne, propose un pacte (dure ~4 minutes)."
-RM_ROUL_BET,Apostar %d monedas,Bet %d coins,,Parier %d pièces
-RM_ROUL_BET_BIG,Apostar fuerte: %d monedas,Bet big: %d coins,,Gros pari : %d pièces
-RM_ROUL_BYE,"El vendedor se va. Tres giros por cliente, es la norma.","The peddler leaves. Three spins per customer, that's the rule.",,"Le vendeur s'en va. Trois tours par client, c'est la règle."
-RM_ROUL_BYE_T,SE CERRÓ LA GABARDINA,COAT CLOSED,,IMPER REFERMÉ
-RM_ROUL_JACKPOT,Salió extra grande. Ganas %d monedas.,It came out extra large. You win %d coins.,,Il est sorti en XXL. Tu gagnes %d pièces.
-RM_ROUL_JACKPOT_T,¡PREMIO GORDO!,JACKPOT!,,GROS LOT !
-RM_ROUL_LOSE,Alguien lo pinchó con una aguja. Pierdes %d monedas.,Someone poked it with a needle. You lose %d coins.,,Quelqu'un l'a piqué avec une aiguille. Tu perds %d pièces.
-RM_ROUL_LOSE_T,¡PINCHADO!,PUNCTURED!,,PERCÉ !
-RM_ROUL_PASS,Pasar,Pass,,Passer
-RM_ROUL_PROMPT,[E] Hablar con el vendedor ambulante,[E] Talk to the peddler,,[E] Parler au vendeur ambulant
-RM_ROUL_Q,«Psst. La ruleta del preservativo: doble o nada. Tienes %d monedas.»,"""Psst. The condom roulette: double or nothing. You have %d coins.""",,« Psst. La roulette du préservatif : quitte ou double. Tu as %d pièces. »
-RM_ROUL_Q_POOR,"«Sin monedas no hay ruleta, cielo. Vuelve cuando tengas.»","""No coins, no roulette, sweetheart. Come back when you have some.""",,"« Pas de pièces, pas de roulette, mon chou. Reviens quand t'en as. »"
-RM_ROUL_WIN,El preservativo aguantó. Ganas %d monedas.,The condom held. You win %d coins.,,Le préservatif a tenu. Tu gagnes %d pièces.
-RM_ROUL_WIN_T,¡INTACTO!,INTACT!,,INTACT !
-RM_STEALTH_ALARM,Te vieron. La sala se pone gris y se llena de gente. La caja se esfumó.,They saw you. The room turns grey and fills with people. The crate vanished.,,On t'a vu. La salle devient grise et se remplit de monde. La caisse s'est évaporée.
-RM_STEALTH_ALARM_T,¡ALARMA!,ALARM!,,ALARME !
-RM_STEALTH_BAR,Sin que te vean...,Unseen...,,Sans être vu...
-RM_STEALTH_BOX,[E] Abrir la caja de decomisos,[E] Open the confiscation crate,,[E] Ouvrir la caisse des saisies
-RM_STEALTH_D,Llega a la caja de decomisos sin que te vean. Los muros tapan la luz.,Reach the confiscation box unseen. Walls block the light.,,Atteins la caisse des saisies sans être vu. Les murs bloquent la lumière.
-RM_STEALTH_GRACE,Los guardias aún no miran,The guards aren't looking yet,,Les gardes ne regardent pas encore
-RM_STEALTH_OK,Ni se enteraron. Hay cofre y las puertas se abren.,They never noticed. There's a chest and the doors open.,,Ils n'ont rien vu. Il y a un coffre et les portes s'ouvrent.
-RM_STEALTH_OK_T,DECOMISOS RECUPERADOS,CONFISCATIONS RECOVERED,,SAISIES RÉCUPÉRÉES
-RM_STEALTH_T,SIGILO,STEALTH,,INFILTRATION
-RM_TAG_ADUANERA,INSPECCIÓN ADUANERA,CUSTOMS INSPECTION,,CONTRÔLE DOUANIER
-RM_TAG_ANTORCHAS,ANTORCHAS,TORCHES,,TORCHES
-RM_TAG_APAGON,APAGÓN,BLACKOUT,,PANNE
-RM_TAG_BARRILES,BARRILES,BARRELS,,BARILS
-RM_TAG_CELO,SALA EN CELO,ROOM IN HEAT,,SALLE EN CHALEUR
-RM_TAG_CENSURADA,CENSURADA,CENSORED,,CENSURÉE
-RM_TAG_CHALLENGE,RETO DEL NARRADOR,NARRATOR'S CHALLENGE,,DÉFI DU NARRATEUR
-RM_TAG_CLOCK,CONTRA EL RELOJ,AGAINST THE CLOCK,,CONTRE LA MONTRE
-RM_TAG_ESCORT,ESCOLTA,ESCORT,,ESCORTE
-RM_TAG_HOLD,LA FIESTA (45 s),THE PARTY (45 s),,LA FÊTE (45 s)
-RM_TAG_LUBRICADO,PISO LUBRICADO,LUBRICATED FLOOR,,SOL LUBRIFIÉ
-RM_TAG_MERCADO,MERCADO NEGRO,BLACK MARKET,,MARCHÉ NOIR
-RM_TAG_PACTO,PACTO,PACT,,PACTE
-RM_TAG_RULETA,VENDEDOR,PEDDLER,,VENDEUR
-RM_TAG_STEALTH,SIGILO,STEALTH,,INFILTRATION
-RM_TAG_THIEF,LADILLA LADRONA,THIEVING CRAB,,CRABE VOLEUSE
-RM_TAG_THIEF2,¡AQUÍ ESTÁ LA LADRONA!,THE THIEF IS HERE!,,"LA VOILÀ, LA VOLEUSE !"
-RM_TAG_TRAMPAS,TRAMPAS,TRAPS,,PIÈGES
-RM_THIEF_AGAIN,"La ladrona te esperaba con tus %d monedas. Si escapa ahora, se pierden.","The thief was waiting with your %d coins. If she escapes now, they're gone.",,"La voleuse t'attendait avec tes %d pièces. Si elle s'échappe maintenant, elles sont perdues."
-RM_THIEF_AGAIN_T,OTRA VEZ ELLA,HER AGAIN,,ENCORE ELLE
-RM_THIEF_APPROACH,Se acerca con buena cara...,She's coming over all friendly...,,Elle approche d'un air aimable...
-RM_THIEF_BAR,Escapa en %d s  ·  lleva %d $,Escapes in %d s  ·  carries %d $,,Fuit dans %d s  ·  porte %d $
-RM_THIEF_CAUGHT,"Recuperas tus %d monedas, con intereses.","You get your %d coins back, with interest.",,"Tu récupères tes %d pièces, avec intérêts."
-RM_THIEF_CAUGHT_OWN,Su bolsa es tuya. Los ladrones también pagan impuestos.,Her purse is yours. Thieves pay taxes too.,Su monedero es tuyo. Los ladrones también pagan impuestos.,Sa bourse est à toi. Les voleurs paient aussi des impôts.
-RM_THIEF_CAUGHT_T,¡ATRAPADA!,CAUGHT!,,ATTRAPÉE !
-RM_THIEF_D,Una ladilla se te acerca con muy buena cara. Desconfía.,A crab lice is coming over with a very friendly face. Be suspicious.,,Un morpion s'approche d'un air très aimable. Méfie-toi.
-RM_THIEF_ESCAPED_DOOR,Salió por la puerta %s. Te espera allí.,She left through the %s door. She's waiting there.,,Elle est sortie par la porte %s. Elle t'y attend.
-RM_THIEF_ESCAPED_T,SE ESCAPÓ,SHE GOT AWAY,,ELLE S'EST ENFUIE
-RM_THIEF_LOST,La ladilla huyó con tus %d monedas. Ya no volverán.,The louse fled with your %d coins. They won't be back.,,Le morpion a fui avec tes %d pièces. Elles ne reviendront pas.
-RM_THIEF_LOST_OWN,"La ladilla se fue con su bolsa. Nadie sale ganando, salvo ella.","The louse left with her purse. Nobody wins, except her.","La ladilla se fue con su monedero. Nadie sale ganando, salvo ella.","Le morpion est parti avec sa bourse. Personne ne gagne, sauf elle."
-RM_THIEF_LOST_T,PERDIDAS,LOST,,PERDUES
-RM_THIEF_NAME,Ladilla Ladrona,Thieving Crab Louse,,Morpion Voleuse
-RM_THIEF_OWN,"No tienes monedas que robar, así que trae su bolsa. Atrápala y es tuya.","You have no coins to steal, so she brings her own purse. Catch her and it's yours.","No tienes monedas que robar, así que trae su monedero. Atrápala y es tuyo.","Tu n'as pas de pièces à voler, alors elle amène sa bourse. Attrape-la et elle est à toi."
-RM_THIEF_OWN_T,TRAE SU PROPIO BOTÍN,SHE BRINGS HER OWN LOOT,,ELLE AMÈNE SON BUTIN
-RM_THIEF_RUNS,¡Se va por la puerta!,She's heading for the door!,,Elle file vers la porte !
-RM_THIEF_STOLE,"La ladilla se llevó %d monedas. Atrápala: si escapa, se pierden con ella.","The louse took %d coins. Catch her: if she escapes, they're gone.",,"Le morpion a pris %d pièces. Attrape-la : si elle s'échappe, elles sont perdues."
-RM_THIEF_STOLE_T,¡TE ROBARON!,ROBBED!,,VOLÉ !
-RM_THIEF_T,LADILLA LADRONA,THIEVING CRAB,,CRABE VOLEUSE
-RM_TORCHES_D,Una sombra avisa dónde cae la próxima. Después todo arde. Lleva ahí los bichos.,A shadow shows where the next one falls. Then everything burns. Lure the critters there.,,Une ombre indique où tombe la prochaine. Puis tout brûle. Attire-y les bestioles.
-RM_TORCHES_T,ANTORCHAS QUE CAEN,FALLING TORCHES,,TORCHES QUI TOMBENT
-RM_TRAPS_D,"Pinchos, cera caliente y ventiladores, con aviso. Los bichos no leen: empújalos.","Spikes, hot wax and fans, with warnings. Critters can't read: push them in.",,"Pointes, cire chaude et ventilos, avec préavis. Les bestioles ne savent pas lire : pousse-les."
-RM_TRAPS_T,SALA TRAMPA,TRAP ROOM,,SALLE PIÉGÉE
+keys,es,en,es_ES,fr,pt_BR
+RM_BARRELS_D,"Revientan si les disparas, y a ti con ellos. Elige el momento.","They burst when shot, and you with them. Pick your moment.",,"Ils éclatent si tu tires, et toi avec. Choisis ton moment.","Estouram se você atirar, e você junto. Escolha o momento."
+RM_BARRELS_T,BARRILES EXPLOSIVOS,EXPLOSIVE BARRELS,,BARILS EXPLOSIFS,BARRIS EXPLOSIVOS
+RM_CH_FAILED,Reto fallido,Challenge failed,,Défi raté,Desafio fracassado
+RM_CH_FAIL_FAST,Se acabó el tiempo. Yo ya me estaba aburriendo.,Time's up. I was already getting bored.,,Temps écoulé. Je commençais à m'ennuyer.,Acabou o tempo. Eu já estava entediado.
+RM_CH_FAIL_NODASH,Usaste el dash. Las piernas lo notaron.,You used the dash. Your legs noticed.,,Tu as dashé. Tes jambes l'ont senti.,Você usou o dash. As pernas notaram.
+RM_CH_FAIL_NOHIT,Te tocaron. Qué sorpresa tan poco sorprendente.,You got hit. What an unsurprising surprise.,,On t'a touché. Quelle surprise si peu surprenante.,Te acertaram. Que surpresa pouco surpreendente.
+RM_CH_FAIL_T,RETO FALLIDO,CHALLENGE FAILED,,DÉFI RATÉ,DESAFIO FRACASSADO
+RM_CH_FAST,RETO: ANTES DE QUE ME ABURRA,CHALLENGE: BEFORE I GET BORED,,DÉFI : AVANT QUE JE M'ENNUIE,DESAFIO: ANTES QUE EU ME ENTEDIE
+RM_CH_FAST_BAR,Quedan %d s,%d s left,,Plus que %d s,Faltam %d s
+RM_CH_FAST_D,Limpia la sala antes de que se acabe el tiempo. Me aburro rápido.,Clear the room before time runs out. I get bored fast.,,Nettoie la salle avant la fin du temps. Je m'ennuie vite.,Limpe a sala antes que o tempo acabe. Eu me entedio rápido.
+RM_CH_NODASH,RETO: SIN DASH,CHALLENGE: NO DASH,,DÉFI : SANS DASH,DESAFIO: SEM DASH
+RM_CH_NODASH_BAR,Sin dash. Las piernas son para caminar.,No dashing. Legs are for walking.,,Pas de dash. Les jambes servent à marcher.,Sem dash. As pernas são pra andar.
+RM_CH_NODASH_D,Limpia la sala sin usar el dash. Como una persona normal.,Clear the room without dashing. Like a normal person.,,Nettoie la salle sans dasher. Comme une personne normale.,Limpe a sala sem usar o dash. Como uma pessoa normal.
+RM_CH_NOHIT,RETO: SIN QUE TE TOQUEN,CHALLENGE: DON'T GET TOUCHED,,DÉFI : SANS ÊTRE TOUCHÉ,DESAFIO: SEM LEVAR DANO
+RM_CH_NOHIT_BAR,Cero golpes. Tú puedes (yo no apostaría).,Zero hits. You can do it (I wouldn't bet on it).,,"Zéro coup. Tu peux le faire (moi, je ne parierais pas).",Zero golpes. Você consegue (eu não apostaria).
+RM_CH_NOHIT_D,Limpia la sala sin recibir un solo golpe. Ni uno. Ni al escudo.,Clear the room without taking a single hit. Not one. Not even on the shield.,,Nettoie la salle sans prendre un seul coup. Pas un. Même pas sur le bouclier.,Limpe a sala sem levar um único golpe. Nem um. Nem no escudo.
+RM_CH_OK,"Vaya. Premio. No lo esperaba, pero aquí está.","Well. A prize. I didn't expect it, but here it is.",,"Tiens. Une récompense. Je ne m'y attendais pas, mais la voilà.","Nossa. Prêmio. Não esperava, mas aqui está."
+RM_CH_OK_T,RETO CUMPLIDO,CHALLENGE COMPLETE,,DÉFI RÉUSSI,DESAFIO CUMPRIDO
+RM_CH_T,RETO DEL NARRADOR,NARRATOR'S CHALLENGE,,DÉFI DU NARRATEUR,DESAFIO DO NARRADOR
+RM_CLOCK_BAR,La Censura cubre la sala en %d s,The Censorship covers the room in %d s,,La Censure couvre la salle dans %d s,A Censura cobre a sala em %d s
+RM_CLOCK_CENSORED,CENSURADO,CENSORED,,CENSURÉ,CENSURADO
+RM_CLOCK_D,La Censura entra pintándolo todo de gris. Mata antes de que lo cubra.,The Censorship walks in painting everything grey. Kill before it covers the room.,,La Censure entre en peignant tout en gris. Tue avant qu'elle couvre la salle.,A Censura entra pintando tudo de cinza. Mate antes que ela cubra.
+RM_CLOCK_FAIL,Todo gris. Sin premio hasta que limpies; lo gris hiere mientras tanto.,All grey. No room reward until you clear it; grey hurts meanwhile.,,Tout est gris. Pas de récompense avant d'avoir nettoyé ; le gris blesse en attendant.,Tudo cinza. Sem prêmio até limpar; o cinza fere enquanto isso.
+RM_CLOCK_FAIL_T,TE ALCANZÓ,IT CAUGHT YOU,,ELLE T'A RATTRAPÉ,ELA TE ALCANÇOU
+RM_CLOCK_OK,La Censura se fue con las tijeras gachas. Premio por rapidez.,The Censorship left with its scissors down. Speed bonus.,,"La Censure est repartie, ciseaux baissés. Prime de rapidité.",A Censura foi embora de tesoura baixa. Prêmio por rapidez.
+RM_CLOCK_OK_T,A TIEMPO,JUST IN TIME,,DANS LES TEMPS,NO TEMPO
+RM_CLOCK_T,CONTRA EL RELOJ,AGAINST THE CLOCK,,CONTRE LA MONTRE,CONTRA O RELÓGIO
+RM_CUSTOMS_FIGHT,"Pelear (llegan 2 inspectores, y sus decomisos)","Fight (2 inspectors arrive, with their confiscations)",,"Se battre (2 inspecteurs arrivent, avec leurs saisies)","Lutar (chegam 2 fiscais, e seus confiscos)"
+RM_CUSTOMS_INSPECTOR,Inspector de Aduanas,Customs Inspector,,Inspecteur des Douanes,Fiscal da Alfândega
+RM_CUSTOMS_PAY,Pagar la mordida (%d monedas),Pay the bribe (%d coins),Pagar el soborno (%d monedas),Payer le pot-de-vin (%d pièces),Pagar a propina (%d moedas)
+RM_CUSTOMS_Q,«Inspección aduanera. Declare sus bienes... o pague la mordida de %d monedas.»,"""Customs inspection. Declare your goods... or pay the bribe of %d coins.""",«Inspección aduanera. Declare sus bienes... o pague el soborno de %d monedas.»,« Contrôle douanier. Déclarez vos biens... ou payez le pot-de-vin de %d pièces. »,«Inspeção alfandegária. Declare seus bens... ou pague a propina de %d moedas.»
+RM_CUSTOMS_Q_POOR,«Inspección aduanera. ¿Ni para la mordida? Pues me cobro a golpes.»,"""Customs inspection. Not even enough for the bribe? Then I'll collect in blows.""",«Inspección aduanera. ¿Ni para el soborno? Pues cobro a golpes.»,« Contrôle douanier. Même pas de quoi graisser la patte ? Je me paie à coups de poing. »,«Inspeção alfandegária. Nem pra propina? Então eu cobro na porrada.»
+RM_DIR_DOWN,de abajo,below,,d'en bas,de baixo
+RM_DIR_LEFT,de la izquierda,on the left,,de gauche,da esquerda
+RM_DIR_RIGHT,de la derecha,on the right,,de droite,da direita
+RM_DIR_UP,de arriba,above,,d'en haut,de cima
+RM_ESCORT_BAR,Camino %d%%  ·  Óvulo: %d de vida,Progress %d%%  ·  Egg: %d health,,Trajet %d%%  ·  Ovule : %d PV,Caminho %d%%  ·  Óvulo: %d de vida
+RM_ESCORT_D,Llévalo a la trompa. Camina si estás cerca y se congela ante los bichos.,Take it to the tube. It walks if you're close and freezes near critters.,,Emmène-le à la trompe. Il marche si tu es près et se fige devant les bestioles.,Leve-o até a trompa. Anda se você estiver perto e congela diante dos bichos.
+RM_ESCORT_FAIL,Se rompió. Sin premio de sala. Habrá que explicárselo a su madre.,It broke. No room reward. Somebody has to tell its mother.,,Il s'est brisé. Pas de récompense. Faudra l'expliquer à sa mère.,Quebrou. Sem prêmio de sala. Vai ter que explicar pra mãe dele.
+RM_ESCORT_FAIL_T,ÓVULO PERDIDO,EGG LOST,,OVULE PERDU,ÓVULO PERDIDO
+RM_ESCORT_GOAL,TROMPA,TUBE,,TROMPE,TROMPA
+RM_ESCORT_OK,"Botín extra. Las trompas no dan propina, pero esta sí.","Extra loot. Tubes don't tip, but this one does.",,"Butin en plus. Les trompes ne donnent pas de pourboire, mais celle-ci si.","Espólio extra. As trompas não dão gorjeta, mas esta dá."
+RM_ESCORT_OK_T,ÓVULO ENTREGADO,EGG DELIVERED,,OVULE LIVRÉ,ÓVULO ENTREGUE
+RM_ESCORT_T,ESCOLTA DEL ÓVULO,ESCORT THE EGG,,ESCORTE DE L'OVULE,ESCOLTA DO ÓVULO
+RM_ESCORT_WAVE,¡REFUERZOS!,REINFORCEMENTS!,,RENFORTS !,REFORÇOS!
+RM_HOLD_BAR,Quedan %d s  ·  %d invitados,%d s left  ·  %d guests,,Plus que %d s  ·  %d invités,Faltam %d s  ·  %d convidados
+RM_HOLD_D,Aguanta 45 segundos. Los invitados llegan en oleadas y nadie se va antes.,Hold out 45 seconds. Guests arrive in waves and nobody leaves early.,,Tiens 45 secondes. Les invités arrivent par vagues et personne ne part avant.,Aguente 45 segundos. Os convidados chegam em ondas e ninguém sai antes.
+RM_HOLD_OK,Los invitados se van a casa. Alguien dejó propina.,The guests go home. Someone left a tip.,,Les invités rentrent chez eux. Quelqu'un a laissé un pourboire.,Os convidados vão pra casa. Alguém deixou gorjeta.
+RM_HOLD_OK_T,SE ACABÓ LA FIESTA,PARTY'S OVER,,LA FÊTE EST FINIE,ACABOU A FESTA
+RM_HOLD_T,LA FIESTA,THE PARTY,,LA FÊTE,A FESTA
+RM_MARKET_BUY,[E] Comprar con %d de vida,[E] Buy with %d health,,[E] Acheter avec %d PV,[E] Comprar com %d de vida
+RM_MARKET_D,"Objetos raros prohibidos por Su Pudorosidad. Se pagan con vida, no monedas.","Rare items banned by Her Modesty. Paid in life, not coins.",,"Objets rares interdits par Sa Pudibonderie. Payés en vie, pas en pièces.","Itens raros proibidos por Sua Pudicícia. Pagam-se com vida, não com moedas."
+RM_MARKET_NO_BLOOD,Te queda poca sangre,Not enough blood left,,Il te reste peu de sang,Você tem pouco sangue
+RM_MARKET_T,MERCADO NEGRO,BLACK MARKET,,MARCHÉ NOIR,MERCADO NEGRO
+RM_MOD_ADUANERA,INSPECCIÓN ADUANERA,CUSTOMS INSPECTION,,CONTRÔLE DOUANIER,INSPEÇÃO ALFANDEGÁRIA
+RM_MOD_ADUANERA_D,Un aduanero exige su mordida. O pelea.,A customs officer demands his bribe. Or a fight.,Un aduanero exige su soborno. O pelea.,Un douanier exige son pot-de-vin. Ou la bagarre.,Um fiscal exige sua propina. Ou briga.
+RM_MOD_APAGON,APAGÓN,BLACKOUT,,PANNE,APAGÃO
+RM_MOD_APAGON_D,Solo ves lo que alumbra tu halo. Lo demás sí te ve a ti.,You only see what your halo lights. Everything else does see you.,,"Tu ne vois que ce qu'éclaire ton halo. Le reste, lui, te voit.","Você só vê o que seu halo ilumina. O resto te vê, sim."
+RM_MOD_CELO,SALA EN CELO,ROOM IN HEAT,,SALLE EN CHALEUR,SALA NO CIO
+RM_MOD_CELO_D,Bichos más veloces y con las hormonas revueltas. Paga plus por peligrosidad.,Faster critters with scrambled hormones. Pays hazard pay.,,"Bestioles plus rapides, hormones en vrac. Prime de risque incluse.",Bichos mais velozes e com os hormônios agitados. Paga adicional de periculosidade.
+RM_MOD_CENSURADA,SALA CENSURADA,CENSORED ROOM,,SALLE CENSURÉE,SALA CENSURADA
+RM_MOD_CENSURADA_D,"Barras negras tapan zonas y se mueven. Lo de abajo, mejor no imaginarlo.",Black bars cover areas and move. Best not to imagine what's underneath.,,"Des barres noires cachent des zones et bougent. Dessous, mieux vaut ne pas imaginer.","Tarjas pretas tapam áreas e se movem. O que há embaixo, melhor nem imaginar."
+RM_MOD_LUBRICADO,PISO LUBRICADO,LUBRICATED FLOOR,,SOL LUBRIFIÉ,CHÃO LUBRIFICADO
+RM_MOD_LUBRICADO_D,Frenas resbalando y el dash llega más lejos.,You slide when you stop and the dash goes farther.,,Tu glisses en freinant et le dash va plus loin.,Você freia escorregando e o dash vai mais longe.
+RM_PACT_1,Pacto del Recato: +30% daño. El mundo se queda gris y el narrador calla.,Pact of Modesty: +30% damage. The world turns grey and the narrator goes quiet.,,Pacte de la Pudeur : +30% dégâts. Le monde devient gris et le narrateur se tait.,Pacto do Recato: +30% de dano. O mundo fica cinza e o narrador se cala.
+RM_PACT_2,Pacto del Escote: +35% cadencia. Te cuesta el 30% de la vida que tengas.,Pact of Cleavage: +35% fire rate. Costs you 30% of your current health.,,Pacte du Décolleté : +35% cadence. Te coûte 30% de la vie que tu as.,Pacto do Decote: +35% de cadência. Custa 30% da vida que você tiver.
+RM_PACT_3,Pacto de las Perlas: +20% velocidad. Cuesta media bolsa y el escudo.,Pact of the Pearls: +20% speed. Costs half your purse and your shield.,Pacto de las Perlas: +20% velocidad. Cuesta medio monedero y el escudo.,Pacte des Perles : +20% vitesse. Coûte la moitié de ta bourse et ton bouclier.,Pacto das Pérolas: +20% de velocidade. Custa metade da bolsa e o escudo.
+RM_PACT_DONE_1,+30% de daño. Todo gris.,+30% damage. Everything grey.,,+30% de dégâts. Tout est gris.,+30% de dano. Tudo cinza.
+RM_PACT_DONE_2,+35% cadencia. La Hoja se llevó su parte en sangre.,+35% fire rate. The Leaf took her cut in blood.,,+35% de cadence. La Feuille a pris sa part en sang.,+35% de cadência. A Folha levou sua parte em sangue.
+RM_PACT_DONE_3,+20% velocidad. La Hoja se quedó con la mitad de tus monedas y tu escudo.,+20% speed. The Leaf kept half your coins and your shield.,,+20% de vitesse. La Feuille a gardé la moitié de tes pièces et ton bouclier.,+20% de velocidade. A Folha ficou com metade das suas moedas e o escudo.
+RM_PACT_DONE_T,PACTO SELLADO,PACT SEALED,,PACTE SCELLÉ,PACTO SELADO
+RM_PACT_END,"El color y la voz del narrador vuelven. Eso último, discutible.","Colour and the narrator's voice are back. The latter, debatable.",,"La couleur et la voix du narrateur reviennent. Ce dernier point, discutable.","A cor e a voz do narrador voltam. A última, discutível."
+RM_PACT_END_T,EL PACTO TERMINÓ,THE PACT ENDED,,LE PACTE EST FINI,O PACTO ACABOU
+RM_PACT_NO,Largarte sin pactar,Walk away without a pact,,Partir sans pacte,Ir embora sem pactuar
+RM_PACT_NO_D,La Hoja suspira. Ya volverás. Todos vuelven.,The Leaf sighs. You'll be back. Everybody comes back.,,La Feuille soupire. Tu reviendras. Tout le monde revient.,A Folha suspira. Você volta. Todo mundo volta.
+RM_PACT_NO_T,SIN PACTO,NO PACT,,SANS PACTE,SEM PACTO
+RM_PACT_PROMPT,[E] Hablar con la Hoja de Parra,[E] Talk to the Fig Leaf,,[E] Parler à la Feuille de Vigne,[E] Falar com a Folha de Parreira
+RM_PACT_Q,"Su Pudorosidad, la Hoja de Parra, ofrece un pacto (dura ~4 minutos).","Her Modesty, the Fig Leaf, offers a pact (lasts ~4 minutes).",,"Sa Pudibonderie, la Feuille de Vigne, propose un pacte (dure ~4 minutes).","Sua Pudicícia, a Folha de Parreira, oferece um pacto (dura ~4 minutos)."
+RM_ROUL_BET,Apostar %d monedas,Bet %d coins,,Parier %d pièces,Apostar %d moedas
+RM_ROUL_BET_BIG,Apostar fuerte: %d monedas,Bet big: %d coins,,Gros pari : %d pièces,Apostar alto: %d moedas
+RM_ROUL_BYE,"El vendedor se va. Tres giros por cliente, es la norma.","The peddler leaves. Three spins per customer, that's the rule.",,"Le vendeur s'en va. Trois tours par client, c'est la règle.","O vendedor vai embora. Três giros por cliente, é a regra."
+RM_ROUL_BYE_T,SE CERRÓ LA GABARDINA,COAT CLOSED,,IMPER REFERMÉ,FECHOU O SOBRETUDO
+RM_ROUL_JACKPOT,Salió extra grande. Ganas %d monedas.,It came out extra large. You win %d coins.,,Il est sorti en XXL. Tu gagnes %d pièces.,Saiu extragrande. Você ganha %d moedas.
+RM_ROUL_JACKPOT_T,¡PREMIO GORDO!,JACKPOT!,,GROS LOT !,PRÊMIO MÁXIMO!
+RM_ROUL_LOSE,Alguien lo pinchó con una aguja. Pierdes %d monedas.,Someone poked it with a needle. You lose %d coins.,,Quelqu'un l'a piqué avec une aiguille. Tu perds %d pièces.,Alguém furou com uma agulha. Você perde %d moedas.
+RM_ROUL_LOSE_T,¡PINCHADO!,PUNCTURED!,,PERCÉ !,FURADA!
+RM_ROUL_PASS,Pasar,Pass,,Passer,Passar
+RM_ROUL_PROMPT,[E] Hablar con el vendedor ambulante,[E] Talk to the peddler,,[E] Parler au vendeur ambulant,[E] Falar com o vendedor ambulante
+RM_ROUL_Q,«Psst. La ruleta del preservativo: doble o nada. Tienes %d monedas.»,"""Psst. The condom roulette: double or nothing. You have %d coins.""",,« Psst. La roulette du préservatif : quitte ou double. Tu as %d pièces. »,«Psst. A roleta da camisinha: dobro ou nada. Você tem %d moedas.»
+RM_ROUL_Q_POOR,"«Sin monedas no hay ruleta, cielo. Vuelve cuando tengas.»","""No coins, no roulette, sweetheart. Come back when you have some.""",,"« Pas de pièces, pas de roulette, mon chou. Reviens quand t'en as. »","«Sem moedas não tem roleta, querido. Volte quando tiver.»"
+RM_ROUL_WIN,El preservativo aguantó. Ganas %d monedas.,The condom held. You win %d coins.,,Le préservatif a tenu. Tu gagnes %d pièces.,A camisinha aguentou. Você ganha %d moedas.
+RM_ROUL_WIN_T,¡INTACTO!,INTACT!,,INTACT !,INTACTA!
+RM_STEALTH_ALARM,Te vieron. La sala se pone gris y se llena de gente. La caja se esfumó.,They saw you. The room turns grey and fills with people. The crate vanished.,,On t'a vu. La salle devient grise et se remplit de monde. La caisse s'est évaporée.,Te viram. A sala fica cinza e se enche de gente. A caixa sumiu.
+RM_STEALTH_ALARM_T,¡ALARMA!,ALARM!,,ALARME !,ALARME!
+RM_STEALTH_BAR,Sin que te vean...,Unseen...,,Sans être vu...,Sem que te vejam...
+RM_STEALTH_BOX,[E] Abrir la caja de decomisos,[E] Open the confiscation crate,,[E] Ouvrir la caisse des saisies,[E] Abrir a caixa de confiscos
+RM_STEALTH_D,Llega a la caja de decomisos sin que te vean. Los muros tapan la luz.,Reach the confiscation box unseen. Walls block the light.,,Atteins la caisse des saisies sans être vu. Les murs bloquent la lumière.,Chegue à caixa de confiscos sem que te vejam. As paredes tapam a luz.
+RM_STEALTH_GRACE,Los guardias aún no miran,The guards aren't looking yet,,Les gardes ne regardent pas encore,Os guardas ainda não olham
+RM_STEALTH_OK,Ni se enteraron. Hay cofre y las puertas se abren.,They never noticed. There's a chest and the doors open.,,Ils n'ont rien vu. Il y a un coffre et les portes s'ouvrent.,Nem perceberam. Tem baú e as portas se abrem.
+RM_STEALTH_OK_T,DECOMISOS RECUPERADOS,CONFISCATIONS RECOVERED,,SAISIES RÉCUPÉRÉES,CONFISCOS RECUPERADOS
+RM_STEALTH_T,SIGILO,STEALTH,,INFILTRATION,FURTIVIDADE
+RM_TAG_ADUANERA,INSPECCIÓN ADUANERA,CUSTOMS INSPECTION,,CONTRÔLE DOUANIER,INSPEÇÃO ALFANDEGÁRIA
+RM_TAG_ANTORCHAS,ANTORCHAS,TORCHES,,TORCHES,TOCHAS
+RM_TAG_APAGON,APAGÓN,BLACKOUT,,PANNE,APAGÃO
+RM_TAG_BARRILES,BARRILES,BARRELS,,BARILS,BARRIS
+RM_TAG_CELO,SALA EN CELO,ROOM IN HEAT,,SALLE EN CHALEUR,SALA NO CIO
+RM_TAG_CENSURADA,CENSURADA,CENSORED,,CENSURÉE,CENSURADA
+RM_TAG_CHALLENGE,RETO DEL NARRADOR,NARRATOR'S CHALLENGE,,DÉFI DU NARRATEUR,DESAFIO DO NARRADOR
+RM_TAG_CLOCK,CONTRA EL RELOJ,AGAINST THE CLOCK,,CONTRE LA MONTRE,CONTRA O RELÓGIO
+RM_TAG_ESCORT,ESCOLTA,ESCORT,,ESCORTE,ESCOLTA
+RM_TAG_HOLD,LA FIESTA (45 s),THE PARTY (45 s),,LA FÊTE (45 s),A FESTA (45 s)
+RM_TAG_LUBRICADO,PISO LUBRICADO,LUBRICATED FLOOR,,SOL LUBRIFIÉ,CHÃO LUBRIFICADO
+RM_TAG_MERCADO,MERCADO NEGRO,BLACK MARKET,,MARCHÉ NOIR,MERCADO NEGRO
+RM_TAG_PACTO,PACTO,PACT,,PACTE,PACTO
+RM_TAG_RULETA,VENDEDOR,PEDDLER,,VENDEUR,VENDEDOR
+RM_TAG_STEALTH,SIGILO,STEALTH,,INFILTRATION,FURTIVIDADE
+RM_TAG_THIEF,LADILLA LADRONA,THIEVING CRAB,,CRABE VOLEUSE,CHATO LADRÃO
+RM_TAG_THIEF2,¡AQUÍ ESTÁ LA LADRONA!,THE THIEF IS HERE!,,"LA VOILÀ, LA VOLEUSE !",AQUI ESTÁ O LADRÃO!
+RM_TAG_TRAMPAS,TRAMPAS,TRAPS,,PIÈGES,ARMADILHAS
+RM_THIEF_AGAIN,"La ladrona te esperaba con tus %d monedas. Si escapa ahora, se pierden.","The thief was waiting with your %d coins. If she escapes now, they're gone.",,"La voleuse t'attendait avec tes %d pièces. Si elle s'échappe maintenant, elles sont perdues.","O ladrão te esperava com suas %d moedas. Se escapar agora, elas se perdem."
+RM_THIEF_AGAIN_T,OTRA VEZ ELLA,HER AGAIN,,ENCORE ELLE,DE NOVO ELE
+RM_THIEF_APPROACH,Se acerca con buena cara...,She's coming over all friendly...,,Elle approche d'un air aimable...,Se aproxima com boa cara...
+RM_THIEF_BAR,Escapa en %d s  ·  lleva %d $,Escapes in %d s  ·  carries %d $,,Fuit dans %d s  ·  porte %d $,Escapa em %d s  ·  leva %d $
+RM_THIEF_CAUGHT,"Recuperas tus %d monedas, con intereses.","You get your %d coins back, with interest.",,"Tu récupères tes %d pièces, avec intérêts.","Você recupera suas %d moedas, com juros."
+RM_THIEF_CAUGHT_OWN,Su bolsa es tuya. Los ladrones también pagan impuestos.,Her purse is yours. Thieves pay taxes too.,Su monedero es tuyo. Los ladrones también pagan impuestos.,Sa bourse est à toi. Les voleurs paient aussi des impôts.,A bolsa dele é sua. Ladrões também pagam impostos.
+RM_THIEF_CAUGHT_T,¡ATRAPADA!,CAUGHT!,,ATTRAPÉE !,PEGO!
+RM_THIEF_D,Una ladilla se te acerca con muy buena cara. Desconfía.,A crab lice is coming over with a very friendly face. Be suspicious.,,Un morpion s'approche d'un air très aimable. Méfie-toi.,Um chato se aproxima com cara muito boa. Desconfie.
+RM_THIEF_ESCAPED_DOOR,Salió por la puerta %s. Te espera allí.,She left through the %s door. She's waiting there.,,Elle est sortie par la porte %s. Elle t'y attend.,Saiu pela porta %s. Te espera lá.
+RM_THIEF_ESCAPED_T,SE ESCAPÓ,SHE GOT AWAY,,ELLE S'EST ENFUIE,FUGIU
+RM_THIEF_LOST,La ladilla huyó con tus %d monedas. Ya no volverán.,The louse fled with your %d coins. They won't be back.,,Le morpion a fui avec tes %d pièces. Elles ne reviendront pas.,O chato fugiu com suas %d moedas. Elas não voltam mais.
+RM_THIEF_LOST_OWN,"La ladilla se fue con su bolsa. Nadie sale ganando, salvo ella.","The louse left with her purse. Nobody wins, except her.","La ladilla se fue con su monedero. Nadie sale ganando, salvo ella.","Le morpion est parti avec sa bourse. Personne ne gagne, sauf elle.","O chato foi embora com a própria bolsa. Ninguém sai ganhando, só ele."
+RM_THIEF_LOST_T,PERDIDAS,LOST,,PERDUES,PERDIDAS
+RM_THIEF_NAME,Ladilla Ladrona,Thieving Crab Louse,,Morpion Voleuse,Chato Ladrão
+RM_THIEF_OWN,"No tienes monedas que robar, así que trae su bolsa. Atrápala y es tuya.","You have no coins to steal, so she brings her own purse. Catch her and it's yours.","No tienes monedas que robar, así que trae su monedero. Atrápala y es tuyo.","Tu n'as pas de pièces à voler, alors elle amène sa bourse. Attrape-la et elle est à toi.","Você não tem moedas pra roubar, então ele traz a própria bolsa. Pegue-o e ela é sua."
+RM_THIEF_OWN_T,TRAE SU PROPIO BOTÍN,SHE BRINGS HER OWN LOOT,,ELLE AMÈNE SON BUTIN,TRAZ O PRÓPRIO BUTIM
+RM_THIEF_RUNS,¡Se va por la puerta!,She's heading for the door!,,Elle file vers la porte !,Está fugindo pela porta!
+RM_THIEF_STOLE,"La ladilla se llevó %d monedas. Atrápala: si escapa, se pierden con ella.","The louse took %d coins. Catch her: if she escapes, they're gone.",,"Le morpion a pris %d pièces. Attrape-la : si elle s'échappe, elles sont perdues.","O chato levou %d moedas. Pegue-o: se escapar, elas se perdem com ele."
+RM_THIEF_STOLE_T,¡TE ROBARON!,ROBBED!,,VOLÉ !,ROUBARAM VOCÊ!
+RM_THIEF_T,LADILLA LADRONA,THIEVING CRAB,,CRABE VOLEUSE,CHATO LADRÃO
+RM_TORCHES_D,Una sombra avisa dónde cae la próxima. Después todo arde. Lleva ahí los bichos.,A shadow shows where the next one falls. Then everything burns. Lure the critters there.,,Une ombre indique où tombe la prochaine. Puis tout brûle. Attire-y les bestioles.,Uma sombra avisa onde cai a próxima. Depois tudo pega fogo. Leve os bichos pra lá.
+RM_TORCHES_T,ANTORCHAS QUE CAEN,FALLING TORCHES,,TORCHES QUI TOMBENT,TOCHAS QUE CAEM
+RM_TRAPS_D,"Pinchos, cera caliente y ventiladores, con aviso. Los bichos no leen: empújalos.","Spikes, hot wax and fans, with warnings. Critters can't read: push them in.",,"Pointes, cire chaude et ventilos, avec préavis. Les bestioles ne savent pas lire : pousse-les.","Espinhos, cera quente e ventiladores, com aviso. Os bichos não leem: empurre-os."
+RM_TRAPS_T,SALA TRAMPA,TRAP ROOM,,SALLE PIÉGÉE,SALA ARMADILHA

@@ -6,10 +6,10 @@ uid="uid://bhdukvy0tiw6v"
 
 [deps]
 
-files=["res://locale/lore.es.translation", "res://locale/lore.en.translation", "res://locale/lore.es_ES.translation", "res://locale/lore.fr.translation"]
+files=["res://locale/lore.es.translation", "res://locale/lore.en.translation", "res://locale/lore.es_ES.translation", "res://locale/lore.fr.translation", "res://locale/lore.pt_BR.translation"]
 
 source_file="res://locale/lore.csv"
-dest_files=["res://locale/lore.es.translation", "res://locale/lore.en.translation", "res://locale/lore.es_ES.translation", "res://locale/lore.fr.translation"]
+dest_files=["res://locale/lore.es.translation", "res://locale/lore.en.translation", "res://locale/lore.es_ES.translation", "res://locale/lore.fr.translation", "res://locale/lore.pt_BR.translation"]
 
 [params]
 

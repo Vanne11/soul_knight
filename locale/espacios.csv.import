@@ -6,10 +6,10 @@ uid="uid://dsgteh7wq5l0h"
 
 [deps]
 
-files=["res://locale/espacios.es.translation", "res://locale/espacios.en.translation", "res://locale/espacios.fr.translation"]
+files=["res://locale/espacios.es.translation", "res://locale/espacios.en.translation", "res://locale/espacios.fr.translation", "res://locale/espacios.pt_BR.translation"]
 
 source_file="res://locale/espacios.csv"
-dest_files=["res://locale/espacios.es.translation", "res://locale/espacios.en.translation", "res://locale/espacios.fr.translation"]
+dest_files=["res://locale/espacios.es.translation", "res://locale/espacios.en.translation", "res://locale/espacios.fr.translation", "res://locale/espacios.pt_BR.translation"]
 
 [params]
 

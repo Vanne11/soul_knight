@@ -1,20 +1,20 @@
-keys,es,en,es_ES,fr
-PAUSE_TITLE,PAUSA,PAUSED,,PAUSE
-PAUSE_RESUME,CONTINUAR,RESUME,,CONTINUER
-PAUSE_SETTINGS,AJUSTES,SETTINGS,,RÉGLAGES
-PAUSE_MENU,VOLVER AL MENÚ,BACK TO MENU,,RETOUR AU MENU
-PAUSE_QUIT,SALIR DEL JUEGO,QUIT GAME,,QUITTER LE JEU
-PAUSE_NOTE,"Si vuelves al menú, esta partida se abandona y no da huesos.","If you go back to the menu, this run is abandoned and gives no bones.",,"Si tu retournes au menu, cette partie est abandonnée et ne rapporte pas d'os."
-SETTINGS_TITLE,AJUSTES,SETTINGS,,RÉGLAGES
-SETTINGS_MUSIC,Música,Music,,Musique
-SETTINGS_SFX,Efectos,Effects,,Effets
-SETTINGS_FULLSCREEN,Pantalla completa,Fullscreen,,Plein écran
-SETTINGS_FX,Efectos de pantalla,Screen effects,,Effets d'écran
-SETTINGS_FX_0,Completos,Full,,Complets
-SETTINGS_FX_1,Reducidos,Reduced,,Réduits
-SETTINGS_FX_2,Desactivados,Off,,Désactivés
-SETTINGS_SHAKE,Sacudida de pantalla,Screen shake,,Secousses d'écran
-SETTINGS_LANGUAGE,Idioma,Language,,Langue
-SETTINGS_BACK,VOLVER,BACK,,RETOUR
-SOUND_MUTED_F2,"Sonido apagado (F2 para volver a encenderlo)","Sound off (F2 to turn it back on)",,"Son coupé (F2 pour le rallumer)"
-SOUND_UNMUTED_F2,Sonido encendido,Sound on,,Son allumé
+keys,es,en,es_ES,fr,pt_BR
+PAUSE_TITLE,PAUSA,PAUSED,,PAUSE,PAUSA
+PAUSE_RESUME,CONTINUAR,RESUME,,CONTINUER,CONTINUAR
+PAUSE_SETTINGS,AJUSTES,SETTINGS,,RÉGLAGES,AJUSTES
+PAUSE_MENU,VOLVER AL MENÚ,BACK TO MENU,,RETOUR AU MENU,VOLTAR AO MENU
+PAUSE_QUIT,SALIR DEL JUEGO,QUIT GAME,,QUITTER LE JEU,SAIR DO JOGO
+PAUSE_NOTE,"Si vuelves al menú, esta partida se abandona y no da huesos.","If you go back to the menu, this run is abandoned and gives no bones.",,"Si tu retournes au menu, cette partie est abandonnée et ne rapporte pas d'os.","Se você voltar ao menu, esta partida é abandonada e não dá ossos."
+SETTINGS_TITLE,AJUSTES,SETTINGS,,RÉGLAGES,AJUSTES
+SETTINGS_MUSIC,Música,Music,,Musique,Música
+SETTINGS_SFX,Efectos,Effects,,Effets,Efeitos
+SETTINGS_FULLSCREEN,Pantalla completa,Fullscreen,,Plein écran,Tela cheia
+SETTINGS_FX,Efectos de pantalla,Screen effects,,Effets d'écran,Efeitos de tela
+SETTINGS_FX_0,Completos,Full,,Complets,Completos
+SETTINGS_FX_1,Reducidos,Reduced,,Réduits,Reduzidos
+SETTINGS_FX_2,Desactivados,Off,,Désactivés,Desativados
+SETTINGS_SHAKE,Sacudida de pantalla,Screen shake,,Secousses d'écran,Tremor de tela
+SETTINGS_LANGUAGE,Idioma,Language,,Langue,Idioma
+SETTINGS_BACK,VOLVER,BACK,,RETOUR,VOLTAR
+SOUND_MUTED_F2,Sonido apagado (F2 para volver a encenderlo),Sound off (F2 to turn it back on),,Son coupé (F2 pour le rallumer),Som desligado (F2 para ligar de novo)
+SOUND_UNMUTED_F2,Sonido encendido,Sound on,,Son allumé,Som ligado

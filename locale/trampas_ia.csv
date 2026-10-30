@@ -1,5 +1,5 @@
-keys,es,en,es_ES,fr
-TI_CAGE_D,Y ojo al techo: caen jaulas. La sombra avisa; el dash te salva.,And watch the ceiling: cages drop. The shadow warns you; dashing saves you.,,Et attention au plafond : des cages tombent. L'ombre prévient ; le dash te sauve.
-IA_HAZARD_WARY,"Eso pincha. No, gracias.","That stings. No, thanks.",,Ça pique. Non merci.
-IA_HAZARD_DIVE,¿Qué podría salir mal?,What could possibly go wrong?,,Qu'est-ce qui pourrait mal tourner ?
-IA_HAZARD_OUCH,Ay. Eso podía salir mal.,Ow. That could go wrong after all.,,Aïe. Ça pouvait mal tourner.
+keys,es,en,es_ES,fr,pt_BR
+TI_CAGE_D,Y ojo al techo: caen jaulas. La sombra avisa; el dash te salva.,And watch the ceiling: cages drop. The shadow warns you; dashing saves you.,,Et attention au plafond : des cages tombent. L'ombre prévient ; le dash te sauve.,E olho no teto: caem jaulas. A sombra avisa; o dash te salva.
+IA_HAZARD_WARY,"Eso pincha. No, gracias.","That stings. No, thanks.",,Ça pique. Non merci.,"Isso espeta. Não, obrigado."
+IA_HAZARD_DIVE,¿Qué podría salir mal?,What could possibly go wrong?,,Qu'est-ce qui pourrait mal tourner ?,O que poderia dar errado?
+IA_HAZARD_OUCH,Ay. Eso podía salir mal.,Ow. That could go wrong after all.,,Aïe. Ça pouvait mal tourner.,Ai. Isso podia dar errado mesmo.

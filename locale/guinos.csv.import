@@ -6,10 +6,10 @@ uid="uid://5w1edcew24js"
 
 [deps]
 
-files=["res://locale/guinos.es.translation", "res://locale/guinos.en.translation", "res://locale/guinos.fr.translation"]
+files=["res://locale/guinos.es.translation", "res://locale/guinos.en.translation", "res://locale/guinos.fr.translation", "res://locale/guinos.pt_BR.translation"]
 
 source_file="res://locale/guinos.csv"
-dest_files=["res://locale/guinos.es.translation", "res://locale/guinos.en.translation", "res://locale/guinos.fr.translation"]
+dest_files=["res://locale/guinos.es.translation", "res://locale/guinos.en.translation", "res://locale/guinos.fr.translation", "res://locale/guinos.pt_BR.translation"]
 
 [params]
 

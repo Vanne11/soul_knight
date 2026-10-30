@@ -1,23 +1,23 @@
-keys,es,en,es_ES,fr
-SLOTS_TITLE,ELIGE TU ESPACIO,CHOOSE YOUR SAVE,,CHOISIS TA SAUVEGARDE
-SLOTS_SUBTITLE,"Cada espacio guarda su propio progreso: huesos, códice, medallas y reinos liberados.","Each save keeps its own progress: bones, codex, medals and freed kingdoms.",,"Chaque sauvegarde garde sa propre progression : os, codex, médailles et royaumes libérés."
-SLOTS_SLOT,ESPACIO %d,SAVE %d,,SAUVEGARDE %d
-SLOTS_IN_USE,EN USO,IN USE,,EN COURS
-SLOTS_EMPTY,Vacío,Empty,,Vide
-SLOTS_EMPTY_HINT,Nadie ha pasado por aquí todavía.,Nobody has been here yet.,,Personne n'est encore passé par ici.
-SLOTS_BONES,Huesos: %d,Bones: %d,,Os : %d
-SLOTS_FREED,Reinos liberados: %d/%d,Kingdoms freed: %d/%d,,Royaumes libérés : %d/%d
-SLOTS_BEST,Mejor piso: %d,Best floor: %d,,Meilleur étage : %d
-SLOTS_RUNS,Partidas: %d,Runs: %d,,Parties : %d
-SLOTS_CODEX,Códice: %d · Medallas: %d,Codex: %d · Medals: %d,,Codex : %d · Médailles : %d
-SLOTS_DATE,Última vez: %s,Last played: %s,,Dernière fois : %s
-SLOTS_PLAY,JUGAR,PLAY,,JOUER
-SLOTS_START,EMPEZAR,START,,COMMENCER
-SLOTS_COPY,DUPLICAR EN %d,COPY TO %d,,DUPLIQUER VERS %d
-SLOTS_COPY_NONE,DUPLICAR (sin espacio libre),COPY (no free save),,DUPLIQUER (aucune place libre)
-SLOTS_DELETE,ELIMINAR,DELETE,,SUPPRIMER
-SLOTS_DELETE_SURE,¿SEGURO? PULSA OTRA VEZ,SURE? PRESS AGAIN,,SÛR ? APPUIE ENCORE
-SLOTS_DELETED,Espacio %d eliminado,Save %d deleted,,Sauvegarde %d supprimée
-SLOTS_COPIED,Espacio %d duplicado en el %d,Save %d copied to %d,,Sauvegarde %d dupliquée vers la %d
-SLOTS_BACK,VOLVER,BACK,,RETOUR
-MENU_SLOTS,ESPACIO %d,SAVE %d,,SAUVEGARDE %d
+keys,es,en,es_ES,fr,pt_BR
+SLOTS_TITLE,ELIGE TU ESPACIO,CHOOSE YOUR SAVE,,CHOISIS TA SAUVEGARDE,ESCOLHA SEU ESPAÇO
+SLOTS_SUBTITLE,"Cada espacio guarda su propio progreso: huesos, códice, medallas y reinos liberados.","Each save keeps its own progress: bones, codex, medals and freed kingdoms.",,"Chaque sauvegarde garde sa propre progression : os, codex, médailles et royaumes libérés.","Cada espaço guarda seu próprio progresso: ossos, códice, medalhas e reinos libertados."
+SLOTS_SLOT,ESPACIO %d,SAVE %d,,SAUVEGARDE %d,ESPAÇO %d
+SLOTS_IN_USE,EN USO,IN USE,,EN COURS,EM USO
+SLOTS_EMPTY,Vacío,Empty,,Vide,Vazio
+SLOTS_EMPTY_HINT,Nadie ha pasado por aquí todavía.,Nobody has been here yet.,,Personne n'est encore passé par ici.,Ninguém passou por aqui ainda.
+SLOTS_BONES,Huesos: %d,Bones: %d,,Os : %d,Ossos: %d
+SLOTS_FREED,Reinos liberados: %d/%d,Kingdoms freed: %d/%d,,Royaumes libérés : %d/%d,Reinos libertados: %d/%d
+SLOTS_BEST,Mejor piso: %d,Best floor: %d,,Meilleur étage : %d,Melhor andar: %d
+SLOTS_RUNS,Partidas: %d,Runs: %d,,Parties : %d,Partidas: %d
+SLOTS_CODEX,Códice: %d · Medallas: %d,Codex: %d · Medals: %d,,Codex : %d · Médailles : %d,Códice: %d · Medalhas: %d
+SLOTS_DATE,Última vez: %s,Last played: %s,,Dernière fois : %s,Última vez: %s
+SLOTS_PLAY,JUGAR,PLAY,,JOUER,JOGAR
+SLOTS_START,EMPEZAR,START,,COMMENCER,COMEÇAR
+SLOTS_COPY,DUPLICAR EN %d,COPY TO %d,,DUPLIQUER VERS %d,DUPLICAR NO %d
+SLOTS_COPY_NONE,DUPLICAR (sin espacio libre),COPY (no free save),,DUPLIQUER (aucune place libre),DUPLICAR (sem espaço livre)
+SLOTS_DELETE,ELIMINAR,DELETE,,SUPPRIMER,EXCLUIR
+SLOTS_DELETE_SURE,¿SEGURO? PULSA OTRA VEZ,SURE? PRESS AGAIN,,SÛR ? APPUIE ENCORE,TEM CERTEZA? CLIQUE DE NOVO
+SLOTS_DELETED,Espacio %d eliminado,Save %d deleted,,Sauvegarde %d supprimée,Espaço %d excluído
+SLOTS_COPIED,Espacio %d duplicado en el %d,Save %d copied to %d,,Sauvegarde %d dupliquée vers la %d,Espaço %d duplicado no %d
+SLOTS_BACK,VOLVER,BACK,,RETOUR,VOLTAR
+MENU_SLOTS,ESPACIO %d,SAVE %d,,SAUVEGARDE %d,ESPAÇO %d

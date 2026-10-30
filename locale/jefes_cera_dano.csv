@@ -1,6 +1,6 @@
-keys,es,en,es_ES,fr
-BOSSDMG_WEAK,¡LE DUELE!,IT HURTS!,,ÇA FAIT MAL !
-BOSSDMG_RESIST,¡RESISTE!,RESISTS!,,RÉSISTE !
-BOSSDMG_MATCH,¡MATCH!,MATCH!,,BIEN VU !
-BOSSDMG_CERA_WEAK,"¡Ay, el agua! ¡Me enfría y me endurezco, qué vergüenza!","Ugh, water! I cool down and go stiff, how embarrassing!",,"Beurk, de l'eau ! Je refroidis et je fige, quelle honte !"
-BOSSDMG_CERA_RESIST,"Mmm, qué rico... tu láser y yo somos colegas.","Mmm, lovely... that laser and I go way back.",,"Mmm, délicieux... ce laser et moi, on se connaît depuis longtemps."
+keys,es,en,es_ES,fr,pt_BR
+BOSSDMG_WEAK,¡LE DUELE!,IT HURTS!,,ÇA FAIT MAL !,DÓI NELE!
+BOSSDMG_RESIST,¡RESISTE!,RESISTS!,,RÉSISTE !,RESISTE!
+BOSSDMG_MATCH,¡MATCH!,MATCH!,,BIEN VU !,MATCH!
+BOSSDMG_CERA_WEAK,"¡Ay, el agua! ¡Me enfría y me endurezco, qué vergüenza!","Ugh, water! I cool down and go stiff, how embarrassing!",,"Beurk, de l'eau ! Je refroidis et je fige, quelle honte !","Ai, a água! Eu esfrio e endureço, que vergonha!"
+BOSSDMG_CERA_RESIST,"Mmm, qué rico... tu láser y yo somos colegas.","Mmm, lovely... that laser and I go way back.",,"Mmm, délicieux... ce laser et moi, on se connaît depuis longtemps.","Hmm, que delícia... seu laser e eu somos colegas."

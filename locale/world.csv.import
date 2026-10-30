@@ -6,10 +6,10 @@ uid="uid://07mqtliju6kd"
 
 [deps]
 
-files=["res://locale/world.es.translation", "res://locale/world.en.translation", "res://locale/world.es_ES.translation", "res://locale/world.fr.translation"]
+files=["res://locale/world.es.translation", "res://locale/world.en.translation", "res://locale/world.es_ES.translation", "res://locale/world.fr.translation", "res://locale/world.pt_BR.translation"]
 
 source_file="res://locale/world.csv"
-dest_files=["res://locale/world.es.translation", "res://locale/world.en.translation", "res://locale/world.es_ES.translation", "res://locale/world.fr.translation"]
+dest_files=["res://locale/world.es.translation", "res://locale/world.en.translation", "res://locale/world.es_ES.translation", "res://locale/world.fr.translation", "res://locale/world.pt_BR.translation"]
 
 [params]
 

@@ -6,10 +6,10 @@ uid="uid://26daj0ttkvs6"
 
 [deps]
 
-files=["res://locale/jefes_don_chequeo.es.translation", "res://locale/jefes_don_chequeo.en.translation", "res://locale/jefes_don_chequeo.fr.translation"]
+files=["res://locale/jefes_don_chequeo.es.translation", "res://locale/jefes_don_chequeo.en.translation", "res://locale/jefes_don_chequeo.fr.translation", "res://locale/jefes_don_chequeo.pt_BR.translation"]
 
 source_file="res://locale/jefes_don_chequeo.csv"
-dest_files=["res://locale/jefes_don_chequeo.es.translation", "res://locale/jefes_don_chequeo.en.translation", "res://locale/jefes_don_chequeo.fr.translation"]
+dest_files=["res://locale/jefes_don_chequeo.es.translation", "res://locale/jefes_don_chequeo.en.translation", "res://locale/jefes_don_chequeo.fr.translation", "res://locale/jefes_don_chequeo.pt_BR.translation"]
 
 [params]
 

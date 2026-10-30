@@ -6,10 +6,10 @@ uid="uid://c0sk2ho6p8lnn"
 
 [deps]
 
-files=["res://locale/narrator_sellos.es.translation", "res://locale/narrator_sellos.en.translation", "res://locale/narrator_sellos.fr.translation"]
+files=["res://locale/narrator_sellos.es.translation", "res://locale/narrator_sellos.en.translation", "res://locale/narrator_sellos.fr.translation", "res://locale/narrator_sellos.pt_BR.translation"]
 
 source_file="res://locale/narrator_sellos.csv"
-dest_files=["res://locale/narrator_sellos.es.translation", "res://locale/narrator_sellos.en.translation", "res://locale/narrator_sellos.fr.translation"]
+dest_files=["res://locale/narrator_sellos.es.translation", "res://locale/narrator_sellos.en.translation", "res://locale/narrator_sellos.fr.translation", "res://locale/narrator_sellos.pt_BR.translation"]
 
 [params]
 

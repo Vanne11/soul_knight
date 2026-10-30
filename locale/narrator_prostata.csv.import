@@ -6,10 +6,10 @@ uid="uid://c3taf8mh6hp8t"
 
 [deps]
 
-files=["res://locale/narrator_prostata.es.translation", "res://locale/narrator_prostata.en.translation", "res://locale/narrator_prostata.fr.translation"]
+files=["res://locale/narrator_prostata.es.translation", "res://locale/narrator_prostata.en.translation", "res://locale/narrator_prostata.fr.translation", "res://locale/narrator_prostata.pt_BR.translation"]
 
 source_file="res://locale/narrator_prostata.csv"
-dest_files=["res://locale/narrator_prostata.es.translation", "res://locale/narrator_prostata.en.translation", "res://locale/narrator_prostata.fr.translation"]
+dest_files=["res://locale/narrator_prostata.es.translation", "res://locale/narrator_prostata.en.translation", "res://locale/narrator_prostata.fr.translation", "res://locale/narrator_prostata.pt_BR.translation"]
 
 [params]
 

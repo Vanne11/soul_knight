@@ -6,10 +6,10 @@ uid="uid://bo5lbbfbspxtp"
 
 [deps]
 
-files=["res://locale/bendiciones.es.translation", "res://locale/bendiciones.en.translation", "res://locale/bendiciones.fr.translation"]
+files=["res://locale/bendiciones.es.translation", "res://locale/bendiciones.en.translation", "res://locale/bendiciones.fr.translation", "res://locale/bendiciones.pt_BR.translation"]
 
 source_file="res://locale/bendiciones.csv"
-dest_files=["res://locale/bendiciones.es.translation", "res://locale/bendiciones.en.translation", "res://locale/bendiciones.fr.translation"]
+dest_files=["res://locale/bendiciones.es.translation", "res://locale/bendiciones.en.translation", "res://locale/bendiciones.fr.translation", "res://locale/bendiciones.pt_BR.translation"]
 
 [params]
 

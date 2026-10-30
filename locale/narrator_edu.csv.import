@@ -6,10 +6,10 @@ uid="uid://b5fc8b6eu1vaa"
 
 [deps]
 
-files=["res://locale/narrator_edu.es.translation", "res://locale/narrator_edu.en.translation", "res://locale/narrator_edu.fr.translation"]
+files=["res://locale/narrator_edu.es.translation", "res://locale/narrator_edu.en.translation", "res://locale/narrator_edu.fr.translation", "res://locale/narrator_edu.pt_BR.translation"]
 
 source_file="res://locale/narrator_edu.csv"
-dest_files=["res://locale/narrator_edu.es.translation", "res://locale/narrator_edu.en.translation", "res://locale/narrator_edu.fr.translation"]
+dest_files=["res://locale/narrator_edu.es.translation", "res://locale/narrator_edu.en.translation", "res://locale/narrator_edu.fr.translation", "res://locale/narrator_edu.pt_BR.translation"]
 
 [params]
 

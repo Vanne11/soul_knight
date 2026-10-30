@@ -6,10 +6,10 @@ uid="uid://bby3a4yxlg1bm"
 
 [deps]
 
-files=["res://locale/monte_venus.es.translation", "res://locale/monte_venus.en.translation", "res://locale/monte_venus.fr.translation"]
+files=["res://locale/monte_venus.es.translation", "res://locale/monte_venus.en.translation", "res://locale/monte_venus.fr.translation", "res://locale/monte_venus.pt_BR.translation"]
 
 source_file="res://locale/monte_venus.csv"
-dest_files=["res://locale/monte_venus.es.translation", "res://locale/monte_venus.en.translation", "res://locale/monte_venus.fr.translation"]
+dest_files=["res://locale/monte_venus.es.translation", "res://locale/monte_venus.en.translation", "res://locale/monte_venus.fr.translation", "res://locale/monte_venus.pt_BR.translation"]
 
 [params]
 

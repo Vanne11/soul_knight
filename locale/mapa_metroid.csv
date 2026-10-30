@@ -1,26 +1,26 @@
-keys,es,en,es_ES,fr
-MM_TITULO,MAPA DEL MUNDO,WORLD MAP,,CARTE DU MONDE
-MM_NIVEL_MUNDO,Mundo,World,,Monde
-MM_NIVEL_REINO,Reino · %s,Realm · %s,,Royaume · %s
-MM_NIVEL_PISO,%s · Piso %d,%s · Floor %d,,%s · Étage %d
-MM_PISO,Piso %d,Floor %d,,Étage %d
-MM_LIBERADO,liberado,freed,,libéré
-MM_VENCIDO,Jefe vencido,Boss beaten,,Boss vaincu
-MM_POR_DISENAR,por diseñar,to be designed,,à concevoir
-MM_SIN_PISO,Sin piso que mostrar,No floor to show,,Aucun étage à afficher
-MM_LEY_TITULO,LEYENDA,LEGEND,,LÉGENDE
-MM_LEY_SELLO,Sello,Seal,,Sceau
-MM_LEY_ASCENSOR,Ascensor,Lift,,Ascenseur
-MM_LEY_RUTA,Tu ruta,Your route,,Ton parcours
-MM_AYUDA,[MOVE] mover · Rueda o +/- zoom · L leyenda · Intro ir a tu piso · [M]/[ESC] cerrar,[MOVE] move · Wheel or +/- zoom · L legend · Enter jump to your floor · [M]/[ESC] close,,[MOVE] bouger · Molette ou +/- zoom · L légende · Entrée vers ton étage · [M]/[ESC] fermer
-MM_AYUDA_PAD,Stick mover · Gatillos zoom · Y leyenda · A ir a tu piso · B cerrar,Stick move · Triggers zoom · Y legend · A jump to your floor · B close,,Stick bouger · Gâchettes zoom · Y légende · A vers ton étage · B fermer
-MM_SALTAR,Cualquier tecla para saltar la animación,Press any key to skip,,Appuie sur une touche pour passer
-MM_BOSS_PALACIO,"Su Pudorosidad, la Hoja de Parra","Her Modesty, the Fig Leaf",,"Sa Pudeur, la Feuille de Vigne"
-MM_BOSS_SILENCIO,El Pacto de Silencio,The Pact of Silence,,Le Pacte du Silence
-MM_BOSS_UTERO,Doña Regla,Lady Period,,Dame Règles
-MM_BOSS_PROSTATA,La Glándula Callada,The Silent Gland,,La Glande Silencieuse
-MM_BOSS_SELVA,Doña Cera Caliente,Lady Hot Wax,,Dame Cire Chaude
-MM_BOSS_PENELANDIA,Testículo Primordial,Primordial Testicle,,Testicule Primordial
-MM_BOSS_ARCOIRIA,La Censura que destiñe,The Censor that Fades,,La Censure qui déteint
-MM_BOSS_VULVANIA,Su Majestad Ovaria II,Her Majesty Ovaria II,,Sa Majesté Ovaria II
-MM_BOSS_PERINEO,El Aduanero Hormonal,The Hormonal Customs Officer,,Le Douanier Hormonal
+keys,es,en,es_ES,fr,pt_BR
+MM_TITULO,MAPA DEL MUNDO,WORLD MAP,,CARTE DU MONDE,MAPA DO MUNDO
+MM_NIVEL_MUNDO,Mundo,World,,Monde,Mundo
+MM_NIVEL_REINO,Reino · %s,Realm · %s,,Royaume · %s,Reino · %s
+MM_NIVEL_PISO,%s · Piso %d,%s · Floor %d,,%s · Étage %d,%s · Andar %d
+MM_PISO,Piso %d,Floor %d,,Étage %d,Andar %d
+MM_LIBERADO,liberado,freed,,libéré,liberado
+MM_VENCIDO,Jefe vencido,Boss beaten,,Boss vaincu,Chefe vencido
+MM_POR_DISENAR,por diseñar,to be designed,,à concevoir,a desenhar
+MM_SIN_PISO,Sin piso que mostrar,No floor to show,,Aucun étage à afficher,Nenhum andar para mostrar
+MM_LEY_TITULO,LEYENDA,LEGEND,,LÉGENDE,LEGENDA
+MM_LEY_SELLO,Sello,Seal,,Sceau,Selo
+MM_LEY_ASCENSOR,Ascensor,Lift,,Ascenseur,Elevador
+MM_LEY_RUTA,Tu ruta,Your route,,Ton parcours,Sua rota
+MM_AYUDA,[MOVE] mover · Rueda o +/- zoom · L leyenda · Intro ir a tu piso · [M]/[ESC] cerrar,[MOVE] move · Wheel or +/- zoom · L legend · Enter jump to your floor · [M]/[ESC] close,,[MOVE] bouger · Molette ou +/- zoom · L légende · Entrée vers ton étage · [M]/[ESC] fermer,[MOVE] mover · Roda ou +/- zoom · L legenda · Enter ir ao seu andar · [M]/[ESC] fechar
+MM_AYUDA_PAD,Stick mover · Gatillos zoom · Y leyenda · A ir a tu piso · B cerrar,Stick move · Triggers zoom · Y legend · A jump to your floor · B close,,Stick bouger · Gâchettes zoom · Y légende · A vers ton étage · B fermer,Analógico mover · Gatilhos zoom · Y legenda · A ir ao seu andar · B fechar
+MM_SALTAR,Cualquier tecla para saltar la animación,Press any key to skip,,Appuie sur une touche pour passer,Qualquer tecla para pular a animação
+MM_BOSS_PALACIO,"Su Pudorosidad, la Hoja de Parra","Her Modesty, the Fig Leaf",,"Sa Pudeur, la Feuille de Vigne","Sua Pudicícia, a Folha de Parreira"
+MM_BOSS_SILENCIO,El Pacto de Silencio,The Pact of Silence,,Le Pacte du Silence,O Pacto de Silêncio
+MM_BOSS_UTERO,Doña Regla,Lady Period,,Dame Règles,Dona Menstruação
+MM_BOSS_PROSTATA,La Glándula Callada,The Silent Gland,,La Glande Silencieuse,A Glândula Calada
+MM_BOSS_SELVA,Doña Cera Caliente,Lady Hot Wax,,Dame Cire Chaude,Dona Cera Quente
+MM_BOSS_PENELANDIA,Testículo Primordial,Primordial Testicle,,Testicule Primordial,Testículo Primordial
+MM_BOSS_ARCOIRIA,La Censura que destiñe,The Censor that Fades,,La Censure qui déteint,A Censura que Desbota
+MM_BOSS_VULVANIA,Su Majestad Ovaria II,Her Majesty Ovaria II,,Sa Majesté Ovaria II,Sua Majestade Ovária II
+MM_BOSS_PERINEO,El Aduanero Hormonal,The Hormonal Customs Officer,,Le Douanier Hormonal,O Fiscal Hormonal

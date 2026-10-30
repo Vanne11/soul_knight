@@ -1,28 +1,28 @@
-keys,es,en,es_ES,fr
-FLOOR_UTERO_NAME,EL ÚTERO,THE UTERUS,,L'UTÉRUS
-UTERO_PHASE_1,I · MENSTRUACIÓN,I · MENSTRUATION,,I · MENSTRUATION
-UTERO_PHASE_1_D,"Toallas, tampones y copas rinden más.","Pads, tampons and cups work better.","Compresas, tampones y copas rinden más.","Serviettes, tampons et coupes sont plus efficaces."
-UTERO_PHASE_2,II · FOLICULAR,II · FOLLICULAR,,II · FOLLICULAIRE
-UTERO_PHASE_2_D,Revienta los folículos: sueltan botín.,Pop the follicles: they drop loot.,,Crève les follicules : ils lâchent du butin.
-UTERO_PHASE_3,III · OVULACIÓN,III · OVULATION,,III · OVULATION
-UTERO_PHASE_3_D,Todos en celo y más rápidos. Alcanza el óvulo.,Everyone in heat and faster. Catch the egg.,,Tous en chaleur et plus rapides. Atteins l'ovule.
-UTERO_PHASE_4,IV · LÚTEA,IV · LUTEAL,,IV · LUTÉALE
-UTERO_PHASE_4_D,Enemigos irritables. El chocolate cura el doble.,Irritable enemies. Chocolate heals double.,,Ennemis irritables. Le chocolat soigne double.
-UTERO_BLESSING_TITLE,BENDICIÓN DE CICLO,CYCLE BLESSING,,BÉNÉDICTION DE CYCLE
-UTERO_SIGN,CONSULTA DE LA MATRONA V.,MIDWIFE V.'S CLINIC,,CABINET DE LA SAGE-FEMME V.
-UTERO_SIGN_SUB,Bienvenida al ciclo: sin turno y sin cobro,Welcome to the cycle: no ticket and no charge,,Bienvenue dans le cycle : sans ticket et sans frais
-UTERO_OVULO_T,¡EL ÓVULO SE SOLTÓ!,THE EGG IS LOOSE!,,L'OVULE S'EST DÉTACHÉ !
-UTERO_OVULO_D,Alcánzalo antes de que se vaya.,Catch it before it leaves.,,Rattrape-le avant qu'il parte.
-UTERO_OVULO_BAR,Óvulo: %d s,Egg: %d s,,Ovule : %d s
-UTERO_OVULO_CAUGHT,¡Atrapado!,Caught!,,Attrapé !
-UTERO_OVULO_LOST,Se fue,It's gone,,Parti
-UTERO_FOLI_POP,¡Floreció!,Bloomed!,,Éclos !
-UTERO_AY,¡Ay!,Ow!,,Aïe !
-UTERO_FIN,¡Por fin!,Finally!,,Enfin !
-UTERO_EGG_PLOP,¡PLOP!,PLOP!,,PLOP !
-UTERO_APPLAUSE,(aplausos),(applause),,(applaudissements)
-UTERO_REGLA_MIDE,Mide %.2f m,Measures %.2f m,,Mesure %.2f m
-UTERO_REGLA_PUNTUAL,¡Puntual!,On time!,,Ponctuelle !
-BOSS_REGLA_NAME,DOÑA REGLA,LADY PERIOD,,MADAME RÈGLES
-BOSS_CH_REGLAS_T,¡TRES REGLAS!,THREE RULERS!,,TROIS RÈGLES !
-BOSS_CH_REGLAS_D,Pega a la real: solo ella tiene sombra.,Hit the real one: only she casts a shadow.,,Frappe la vraie : elle seule a une ombre.
+keys,es,en,es_ES,fr,pt_BR
+FLOOR_UTERO_NAME,EL ÚTERO,THE UTERUS,,L'UTÉRUS,O ÚTERO
+UTERO_PHASE_1,I · MENSTRUACIÓN,I · MENSTRUATION,,I · MENSTRUATION,I · MENSTRUAÇÃO
+UTERO_PHASE_1_D,"Toallas, tampones y copas rinden más.","Pads, tampons and cups work better.","Compresas, tampones y copas rinden más.","Serviettes, tampons et coupes sont plus efficaces.","Absorventes, tampões e coletores rendem mais."
+UTERO_PHASE_2,II · FOLICULAR,II · FOLLICULAR,,II · FOLLICULAIRE,II · FOLICULAR
+UTERO_PHASE_2_D,Revienta los folículos: sueltan botín.,Pop the follicles: they drop loot.,,Crève les follicules : ils lâchent du butin.,Estoure os folículos: eles soltam espólio.
+UTERO_PHASE_3,III · OVULACIÓN,III · OVULATION,,III · OVULATION,III · OVULAÇÃO
+UTERO_PHASE_3_D,Todos en celo y más rápidos. Alcanza el óvulo.,Everyone in heat and faster. Catch the egg.,,Tous en chaleur et plus rapides. Atteins l'ovule.,Todos no cio e mais rápidos. Alcance o óvulo.
+UTERO_PHASE_4,IV · LÚTEA,IV · LUTEAL,,IV · LUTÉALE,IV · LÚTEA
+UTERO_PHASE_4_D,Enemigos irritables. El chocolate cura el doble.,Irritable enemies. Chocolate heals double.,,Ennemis irritables. Le chocolat soigne double.,Inimigos irritáveis. O chocolate cura o dobro.
+UTERO_BLESSING_TITLE,BENDICIÓN DE CICLO,CYCLE BLESSING,,BÉNÉDICTION DE CYCLE,BÊNÇÃO DO CICLO
+UTERO_SIGN,CONSULTA DE LA MATRONA V.,MIDWIFE V.'S CLINIC,,CABINET DE LA SAGE-FEMME V.,CONSULTÓRIO DA PARTEIRA V.
+UTERO_SIGN_SUB,Bienvenida al ciclo: sin turno y sin cobro,Welcome to the cycle: no ticket and no charge,,Bienvenue dans le cycle : sans ticket et sans frais,Bem-vinda ao ciclo: sem fila e sem cobrança
+UTERO_OVULO_T,¡EL ÓVULO SE SOLTÓ!,THE EGG IS LOOSE!,,L'OVULE S'EST DÉTACHÉ !,O ÓVULO SE SOLTOU!
+UTERO_OVULO_D,Alcánzalo antes de que se vaya.,Catch it before it leaves.,,Rattrape-le avant qu'il parte.,Alcance antes que ele vá embora.
+UTERO_OVULO_BAR,Óvulo: %d s,Egg: %d s,,Ovule : %d s,Óvulo: %d s
+UTERO_OVULO_CAUGHT,¡Atrapado!,Caught!,,Attrapé !,Pegou!
+UTERO_OVULO_LOST,Se fue,It's gone,,Parti,Foi embora
+UTERO_FOLI_POP,¡Floreció!,Bloomed!,,Éclos !,Floresceu!
+UTERO_AY,¡Ay!,Ow!,,Aïe !,Ai!
+UTERO_FIN,¡Por fin!,Finally!,,Enfin !,Finalmente!
+UTERO_EGG_PLOP,¡PLOP!,PLOP!,,PLOP !,PLOFT!
+UTERO_APPLAUSE,(aplausos),(applause),,(applaudissements),(aplausos)
+UTERO_REGLA_MIDE,Mide %.2f m,Measures %.2f m,,Mesure %.2f m,Mede %.2f m
+UTERO_REGLA_PUNTUAL,¡Puntual!,On time!,,Ponctuelle !,Pontual!
+BOSS_REGLA_NAME,DOÑA REGLA,LADY PERIOD,,MADAME RÈGLES,DONA MENSTRUAÇÃO
+BOSS_CH_REGLAS_T,¡TRES REGLAS!,THREE RULERS!,,TROIS RÈGLES !,TRÊS MENSTRUAÇÕES!
+BOSS_CH_REGLAS_D,Pega a la real: solo ella tiene sombra.,Hit the real one: only she casts a shadow.,,Frappe la vraie : elle seule a une ombre.,Acerte a verdadeira: só ela tem sombra.

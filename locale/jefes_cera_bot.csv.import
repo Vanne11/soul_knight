@@ -6,10 +6,10 @@ uid="uid://civ0waksgvst4"
 
 [deps]
 
-files=["res://locale/jefes_cera_bot.es.translation", "res://locale/jefes_cera_bot.en.translation", "res://locale/jefes_cera_bot.fr.translation"]
+files=["res://locale/jefes_cera_bot.es.translation", "res://locale/jefes_cera_bot.en.translation", "res://locale/jefes_cera_bot.fr.translation", "res://locale/jefes_cera_bot.pt_BR.translation"]
 
 source_file="res://locale/jefes_cera_bot.csv"
-dest_files=["res://locale/jefes_cera_bot.es.translation", "res://locale/jefes_cera_bot.en.translation", "res://locale/jefes_cera_bot.fr.translation"]
+dest_files=["res://locale/jefes_cera_bot.es.translation", "res://locale/jefes_cera_bot.en.translation", "res://locale/jefes_cera_bot.fr.translation", "res://locale/jefes_cera_bot.pt_BR.translation"]
 
 [params]
 

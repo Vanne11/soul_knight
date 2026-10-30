@@ -6,10 +6,10 @@ uid="uid://c66inoff7fryw"
 
 [deps]
 
-files=["res://locale/enemigos3a.es.translation", "res://locale/enemigos3a.en.translation", "res://locale/enemigos3a.fr.translation"]
+files=["res://locale/enemigos3a.es.translation", "res://locale/enemigos3a.en.translation", "res://locale/enemigos3a.fr.translation", "res://locale/enemigos3a.pt_BR.translation"]
 
 source_file="res://locale/enemigos3a.csv"
-dest_files=["res://locale/enemigos3a.es.translation", "res://locale/enemigos3a.en.translation", "res://locale/enemigos3a.fr.translation"]
+dest_files=["res://locale/enemigos3a.es.translation", "res://locale/enemigos3a.en.translation", "res://locale/enemigos3a.fr.translation", "res://locale/enemigos3a.pt_BR.translation"]
 
 [params]
 

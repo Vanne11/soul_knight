@@ -6,10 +6,10 @@ uid="uid://tbr3rxpj5c4q"
 
 [deps]
 
-files=["res://locale/templo_anubis.es.translation", "res://locale/templo_anubis.en.translation", "res://locale/templo_anubis.fr.translation"]
+files=["res://locale/templo_anubis.es.translation", "res://locale/templo_anubis.en.translation", "res://locale/templo_anubis.fr.translation", "res://locale/templo_anubis.pt_BR.translation"]
 
 source_file="res://locale/templo_anubis.csv"
-dest_files=["res://locale/templo_anubis.es.translation", "res://locale/templo_anubis.en.translation", "res://locale/templo_anubis.fr.translation"]
+dest_files=["res://locale/templo_anubis.es.translation", "res://locale/templo_anubis.en.translation", "res://locale/templo_anubis.fr.translation", "res://locale/templo_anubis.pt_BR.translation"]
 
 [params]
 
