@@ -1,9 +1,11 @@
 extends Node2D
 class_name Puzzle
 
-## Base de los acertijos de sala. NINGUNO se explica: sin carteles ni instrucciones; el
-## jugador descubre las condiciones probando. A lo mas, pistas del entorno (el formulario
-## del Perineo, la secuencia que brilla) o del narrador DESPUES de fallar (hint()).
+## Base de los acertijos de sala. Al entrar, un aviso de una linea dice que hacer (show_howto,
+## textos PZ_HOWTO_<KIND> en locale/puzzles.csv; Nico 2026-10-29: "son dificiles de entender").
+## Las pistas del narrador (pz_<kind>_1.._3) llegan tras fallar (note_fail) y tambien POR TIEMPO:
+## cada HINT_SECS[nivel] segundos con el jugador en la sala sin resolverlo sube un nivel (_tick_hint),
+## asi tampoco se atascan los acertijos donde no hay forma de "fallar" (diario, sombras, huellas).
 ##
 ## Contrato con main.gd (via PuzzleFactory): `solved` al resolverse, `replay()` al volver a
 ## entrar. Contrato con el bot (tools/autoplay): bot_step(pos) -> {"go": Vector2 global,
@@ -22,10 +24,44 @@ var fails := 0
 ## Evento del narrador (puzzles.json): pz_<kind>_1, _2, _3 segun los fallos.
 var kind := ""
 var _plan: Array = []  # [{"p": Vector2 local, "act": bool}]
+## Pista por tiempo: segundos dentro de la sala sin resolver antes de la pista 1, 2 y 3.
+const HINT_SECS := [30.0, 40.0, 50.0]
+var _hint_lvl := 0  # pista mas clara dada hasta ahora (por tiempo o por fallos)
+var _hint_t := 0.0
 
 
 func _ready() -> void:
 	build()
+	var t := Timer.new()
+	t.wait_time = 1.0
+	t.autostart = true
+	t.timeout.connect(_tick_hint)
+	add_child(t)
+
+
+## Aviso de una linea al entrar a la sala: que hay que hacer (sin resolverlo por el jugador).
+func show_howto() -> void:
+	if done or kind == "":
+		return
+	Narrator.toast(tr("PZ_HOWTO_TITLE"), tr("PZ_HOWTO_" + kind.to_upper()), "f0c04a")
+
+
+## Cada segundo con el jugador en esta sala: si pasa HINT_SECS[nivel] sin pista, da la siguiente.
+func _tick_hint() -> void:
+	if done or _hint_lvl >= 3:
+		return
+	var main := get_tree().get_first_node_in_group("main")
+	if main == null or main.current_room != room_node() or get_tree().paused:
+		return
+	_hint_t += 1.0
+	if _hint_t >= HINT_SECS[_hint_lvl]:
+		_give_hint(_hint_lvl + 1)
+
+
+func _give_hint(level: int) -> void:
+	_hint_lvl = maxi(_hint_lvl, level)
+	_hint_t = 0.0
+	hint(level)
 
 
 ## Los hijos arman su sala aqui (area/kingdom/depth/rng ya los puso la fabrica).
@@ -51,7 +87,7 @@ func note_fail(every := 2) -> void:
 	fails += 1
 	if fails % every != 0:
 		return
-	hint(mini(fails / every, 3))
+	_give_hint(maxi(mini(fails / every, 3), _hint_lvl))
 
 
 func hint(level: int, args := {}) -> void:

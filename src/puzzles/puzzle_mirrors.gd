@@ -162,7 +162,9 @@ func _on_turn(_player: Node, c: Vector2i) -> void:
 	_turns += 1
 	_update_beam()
 	if not done and _turns % 8 == 0:
-		hint(mini(_turns / 8, 3))
+		var lv := mini(_turns / 8, 3)
+		if lv > _hint_lvl:  # la misma pista no se repite si ya la dio el reloj (Puzzle._tick_hint)
+			_give_hint(lv)
 
 
 func _bot_plan(from: Vector2) -> Array:
