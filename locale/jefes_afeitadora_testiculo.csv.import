@@ -6,10 +6,10 @@ uid="uid://c6qn624drqhmi"
 
 [deps]
 
-files=["res://locale/jefes_afeitadora_testiculo.es.translation", "res://locale/jefes_afeitadora_testiculo.en.translation", "res://locale/jefes_afeitadora_testiculo.fr.translation"]
+files=["res://locale/jefes_afeitadora_testiculo.es.translation", "res://locale/jefes_afeitadora_testiculo.en.translation", "res://locale/jefes_afeitadora_testiculo.fr.translation", "res://locale/jefes_afeitadora_testiculo.pt_BR.translation"]
 
 source_file="res://locale/jefes_afeitadora_testiculo.csv"
-dest_files=["res://locale/jefes_afeitadora_testiculo.es.translation", "res://locale/jefes_afeitadora_testiculo.en.translation", "res://locale/jefes_afeitadora_testiculo.fr.translation"]
+dest_files=["res://locale/jefes_afeitadora_testiculo.es.translation", "res://locale/jefes_afeitadora_testiculo.en.translation", "res://locale/jefes_afeitadora_testiculo.fr.translation", "res://locale/jefes_afeitadora_testiculo.pt_BR.translation"]
 
 [params]
 

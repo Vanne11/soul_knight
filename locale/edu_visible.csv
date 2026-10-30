@@ -1,4 +1,4 @@
-keys,es,en,es_ES,fr
-EDU_CODEX_TAG,Educación · ,Education · ,,Éducation · 
-EDU_AYUDA_PROMPT,Cartel: ¿dónde buscar ayuda?,Sign: where to find help?,,Panneau : où trouver de l'aide ?
-EDU_AYUDA_SAY,CARTEL: [b]%s.[/b] %s,SIGN: [b]%s.[/b] %s,,PANNEAU : [b]%s.[/b] %s
+keys,es,en,es_ES,fr,pt_BR
+EDU_CODEX_TAG,Educación · ,Education · ,,Éducation · ,Educação · 
+EDU_AYUDA_PROMPT,Cartel: ¿dónde buscar ayuda?,Sign: where to find help?,,Panneau : où trouver de l'aide ?,Cartaz: onde buscar ajuda?
+EDU_AYUDA_SAY,CARTEL: [b]%s.[/b] %s,SIGN: [b]%s.[/b] %s,,PANNEAU : [b]%s.[/b] %s,CARTAZ: [b]%s.[/b] %s

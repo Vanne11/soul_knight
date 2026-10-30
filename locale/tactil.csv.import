@@ -6,10 +6,10 @@ uid="uid://ceewyjrl1673v"
 
 [deps]
 
-files=["res://locale/tactil.es.translation", "res://locale/tactil.en.translation", "res://locale/tactil.fr.translation"]
+files=["res://locale/tactil.es.translation", "res://locale/tactil.en.translation", "res://locale/tactil.fr.translation", "res://locale/tactil.pt_BR.translation"]
 
 source_file="res://locale/tactil.csv"
-dest_files=["res://locale/tactil.es.translation", "res://locale/tactil.en.translation", "res://locale/tactil.fr.translation"]
+dest_files=["res://locale/tactil.es.translation", "res://locale/tactil.en.translation", "res://locale/tactil.fr.translation", "res://locale/tactil.pt_BR.translation"]
 
 [params]
 

@@ -6,10 +6,10 @@ uid="uid://di88pyv5unxqa"
 
 [deps]
 
-files=["res://locale/sellos.es.translation", "res://locale/sellos.en.translation", "res://locale/sellos.fr.translation"]
+files=["res://locale/sellos.es.translation", "res://locale/sellos.en.translation", "res://locale/sellos.fr.translation", "res://locale/sellos.pt_BR.translation"]
 
 source_file="res://locale/sellos.csv"
-dest_files=["res://locale/sellos.es.translation", "res://locale/sellos.en.translation", "res://locale/sellos.fr.translation"]
+dest_files=["res://locale/sellos.es.translation", "res://locale/sellos.en.translation", "res://locale/sellos.fr.translation", "res://locale/sellos.pt_BR.translation"]
 
 [params]
 

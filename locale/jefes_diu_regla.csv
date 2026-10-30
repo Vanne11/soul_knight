@@ -1,20 +1,20 @@
-keys,es,en,es_ES,fr
-DIU_GRAVITY,¡GRAVEDAD!,GRAVITY!,,GRAVITÉ !
-DIU_GRAVITY_TIP,Dash para escapar,Dash to escape,,Dash pour t'échapper
-DIU_CORE_CRUSH,¡Núcleo de cobre!,Copper core!,,Noyau de cuivre !
-DIU_ORBITS,¡Órbitas!,Orbits!,,Orbites !
-DIU_SATELLITE,Satélite de cobre,Copper satellite,,Satellite de cuivre
-DIU_PHASE_2,Mi gravedad crece. Como mi ego.,My gravity grows. So does my ego.,,Ma gravité augmente. Mon ego aussi.
-DIU_PHASE_3,¡Todo gira a mi alrededor! ¡Siempre lo hizo!,Everything revolves around me! It always did!,,Tout tourne autour de moi ! Depuis toujours !
-DIU_SATELLITE_SHOOT,Satélite en ruta,Satellite incoming,,Satellite en approche
-BOSSDMG_DIU_WEAK,"¡Cortocircuito! Y yo que estaba en órbita tranquilo.",Short circuit! And I was just orbiting peacefully.,,"Court-circuit ! Et moi qui orbitais tranquille."
-BOSSDMG_DIU_RESIST,"El látex es de otro método, no me hace nada.",Latex is a different method. Does nothing to me.,,"Le latex, c'est une autre méthode. Ça ne me fait rien."
-REGLA_MEASURE,"Mido %d cm... igual que hace rato.",Measuring %d cm... same as a while ago.,,"Je mesure %d cm... comme tout à l'heure."
-REGLA_MEASURE_TIP,Cambia de distancia,Change your distance,,Change de distance
-REGLA_SANCTION,¡Quedarse a la misma distancia se paga!,Standing at the same distance costs you!,,Rester à la même distance se paie !
-REGLA_SWEEP,¡Barrido de 180°!,180° sweep!,,Balayage à 180° !
-REGLA_PHASE_2,"Segundo turno: ahora con más centímetros.",Second shift: now with more centimeters.,,"Deuxième service : avec plus de centimètres."
-REGLA_PHASE_3,"Se acabó la tolerancia: la tolerancia es de 1 mm.",Tolerance is over: tolerance is 1 mm.,,"Fini la tolérance : la tolérance est de 1 mm."
-REGLA_CENTIMETER,Centímetro,Centimeter,,Centimètre
-BOSSDMG_REGLA_WEAK,"¡Vibra, vibra! ¡Me hace tocar la mesa!",Vibrating! You're making me twang on the desk!,,"Ça vibre ! Je tremble sur le bureau !"
-BOSSDMG_REGLA_RESIST,"Los golpes secos no me doblan: soy rígida.",Blunt hits don't bend me: I'm rigid.,,"Les coups secs ne me plient pas : je suis rigide."
+keys,es,en,es_ES,fr,pt_BR
+DIU_GRAVITY,¡GRAVEDAD!,GRAVITY!,,GRAVITÉ !,GRAVIDADE!
+DIU_GRAVITY_TIP,Dash para escapar,Dash to escape,,Dash pour t'échapper,Dash para escapar
+DIU_CORE_CRUSH,¡Núcleo de cobre!,Copper core!,,Noyau de cuivre !,Núcleo de cobre!
+DIU_ORBITS,¡Órbitas!,Orbits!,,Orbites !,Órbitas!
+DIU_SATELLITE,Satélite de cobre,Copper satellite,,Satellite de cuivre,Satélite de cobre
+DIU_PHASE_2,Mi gravedad crece. Como mi ego.,My gravity grows. So does my ego.,,Ma gravité augmente. Mon ego aussi.,Minha gravidade cresce. Como o meu ego.
+DIU_PHASE_3,¡Todo gira a mi alrededor! ¡Siempre lo hizo!,Everything revolves around me! It always did!,,Tout tourne autour de moi ! Depuis toujours !,Tudo gira em torno de mim! Sempre girou!
+DIU_SATELLITE_SHOOT,Satélite en ruta,Satellite incoming,,Satellite en approche,Satélite a caminho
+BOSSDMG_DIU_WEAK,¡Cortocircuito! Y yo que estaba en órbita tranquilo.,Short circuit! And I was just orbiting peacefully.,,Court-circuit ! Et moi qui orbitais tranquille.,"Curto-circuito! E eu aqui, tranquilo em órbita."
+BOSSDMG_DIU_RESIST,"El látex es de otro método, no me hace nada.",Latex is a different method. Does nothing to me.,,"Le latex, c'est une autre méthode. Ça ne me fait rien.","O látex é de outro método, não me faz nada."
+REGLA_MEASURE,Mido %d cm... igual que hace rato.,Measuring %d cm... same as a while ago.,,Je mesure %d cm... comme tout à l'heure.,Meço %d cm... igualzinho a um tempo atrás.
+REGLA_MEASURE_TIP,Cambia de distancia,Change your distance,,Change de distance,Mude de distância
+REGLA_SANCTION,¡Quedarse a la misma distancia se paga!,Standing at the same distance costs you!,,Rester à la même distance se paie !,Ficar na mesma distância custa caro!
+REGLA_SWEEP,¡Barrido de 180°!,180° sweep!,,Balayage à 180° !,Varredura de 180°!
+REGLA_PHASE_2,Segundo turno: ahora con más centímetros.,Second shift: now with more centimeters.,,Deuxième service : avec plus de centimètres.,Segundo turno: agora com mais centímetros.
+REGLA_PHASE_3,Se acabó la tolerancia: la tolerancia es de 1 mm.,Tolerance is over: tolerance is 1 mm.,,Fini la tolérance : la tolérance est de 1 mm.,Acabou a tolerância: a tolerância é de 1 mm.
+REGLA_CENTIMETER,Centímetro,Centimeter,,Centimètre,Centímetro
+BOSSDMG_REGLA_WEAK,"¡Vibra, vibra! ¡Me hace tocar la mesa!",Vibrating! You're making me twang on the desk!,,Ça vibre ! Je tremble sur le bureau !,"Vibra, vibra! Isso me faz bater na mesa!"
+BOSSDMG_REGLA_RESIST,Los golpes secos no me doblan: soy rígida.,Blunt hits don't bend me: I'm rigid.,,Les coups secs ne me plient pas : je suis rigide.,Pancadas secas não me dobram: sou rígida.

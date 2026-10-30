@@ -1,13 +1,13 @@
-keys,es,en,es_ES,fr
-TOUCH_DASH,DASH,DASH,,DASH
-TOUCH_ABILITY,HAB.,SKILL,,CAP.
-TOUCH_GUARD,GUARD.,GUARD,,GARDE
-TOUCH_INTERACT,E,E,,E
-TOUCH_PAUSE,II,II,,II
-SETTINGS_UISIZE,Tamaño de UI,UI size,,Taille de l'interface
-SETTINGS_UISIZE_0,Normal,Normal,,Normale
-SETTINGS_UISIZE_1,Grande,Large,,Grande
-SETTINGS_TOUCH,Controles táctiles,Touch controls,,Commandes tactiles
-SETTINGS_TOUCH_0,Auto,Auto,,Auto
-SETTINGS_TOUCH_1,Sí,Yes,,Oui
-SETTINGS_TOUCH_2,No,No,,Non
+keys,es,en,es_ES,fr,pt_BR
+TOUCH_DASH,DASH,DASH,,DASH,DASH
+TOUCH_ABILITY,HAB.,SKILL,,CAP.,HAB.
+TOUCH_GUARD,GUARD.,GUARD,,GARDE,GUARD.
+TOUCH_INTERACT,E,E,,E,E
+TOUCH_PAUSE,II,II,,II,II
+SETTINGS_UISIZE,Tamaño de UI,UI size,,Taille de l'interface,Tamanho da UI
+SETTINGS_UISIZE_0,Normal,Normal,,Normale,Normal
+SETTINGS_UISIZE_1,Grande,Large,,Grande,Grande
+SETTINGS_TOUCH,Controles táctiles,Touch controls,,Commandes tactiles,Controles de toque
+SETTINGS_TOUCH_0,Auto,Auto,,Auto,Auto
+SETTINGS_TOUCH_1,Sí,Yes,,Oui,Sim
+SETTINGS_TOUCH_2,No,No,,Non,Não

@@ -1,119 +1,119 @@
-keys,es,en,es_ES,fr
-MEDAL_MENU_BTN,MEDALLAS,MEDALS,,MÉDAILLES
-MEDAL_TITLE,MEDALLAS (%d/%d),MEDALS (%d/%d),,MÉDAILLES (%d/%d)
-MEDAL_TOAST_HEAD,MEDALLA: %s,MEDAL: %s,,MÉDAILLE : %s
-MEDAL_SECRET_NAME,???,???,,???
-MEDAL_SECRET_DESC,Medalla secreta: se descubre jugando.,Secret medal: discover it by playing.,,Médaille secrète : à découvrir en jouant.
-MEDAL_HINT,Pasa el cursor sobre una medalla para ver qué hay que hacer.,Hover over a medal to see what it takes.,,Survole une médaille pour voir ce qu'il faut faire.
-MEDAL_PROGRESS,Hacia Desnudo Integral: %d/%d,Toward Full Monty: %d/%d,,Vers Nu Intégral : %d/%d
-MEDAL_COUNT_LINE,%s: %d/%d,%s: %d/%d,,%s : %d/%d
-MEDAL_LOCKED,Bloqueada,Locked,,Verrouillée
-MEDAL_FINALE_TITLE,DESNUDO INTEGRAL,FULL MONTY,,NU INTÉGRAL
-MEDAL_FINALE_SUB,¡Desnudaste el juego!,You stripped the game bare!,,Tu as mis le jeu à nu !
-MEDAL_FINALE_CONT,Pulsa para seguir,Press to continue,,Appuie pour continuer
-MEDAL_LEVEL_SONROJO,Sonrojo,Blush,,Rougeur
-MEDAL_LEVEL_DESTAPE,Destape,Exposed,,Dévoilé
-MEDAL_LEVEL_SIN_PUDOR,Sin Pudor,Shameless,,Sans Pudeur
-MEDAL_LEVEL_PLATINO,Desnudo Integral,Full Monty,,Nu Intégral
-MEDAL_JEFE_CERA_NAME,Depilación total,Full Wax,,Épilation intégrale
-MEDAL_JEFE_CERA_DESC,Vence a Doña Cera Caliente.,Defeat Madame Hot Wax.,,Bats Madame Cire Chaude.
-MEDAL_JEFE_AFEITADORA_NAME,Al ras,Close Shave,,Rasé de près
-MEDAL_JEFE_AFEITADORA_DESC,Vence a La Afeitadora Eléctrica.,Defeat The Electric Shaver.,,Bats Le Rasoir Électrique.
-MEDAL_JEFE_TESTICULO_PRIMORDIAL_NAME,"Primordial, pero no eterno","Primordial, Not Eternal",,"Primordial, pas éternel"
-MEDAL_JEFE_TESTICULO_PRIMORDIAL_DESC,Vence al Testículo Primordial.,Defeat the Primordial Testicle.,,Bats le Testicule Primordial.
-MEDAL_JEFE_DON_SILDENAFIL_NAME,Receta vencida,Expired Prescription,,Ordonnance périmée
-MEDAL_JEFE_DON_SILDENAFIL_DESC,Vence a Don Sildenafil.,Defeat Don Sildenafil.,,Bats Monsieur Sildenafil.
-MEDAL_JEFE_REINA_OVARIA_NAME,Viva la república,Long Live the Republic,,Vive la République
-MEDAL_JEFE_REINA_OVARIA_DESC,Vence a Su Majestad Ovaria II.,Defeat Her Majesty Ovaria II.,,Bats Sa Majesté Ovaria II.
-MEDAL_JEFE_DIU_COSMICO_NAME,"Cósmico, pero no infalible","Cosmic, Not Infallible",,"Cosmique, pas infaillible"
-MEDAL_JEFE_DIU_COSMICO_DESC,Vence al DIU Cósmico.,Defeat the Cosmic IUD.,,Bats le Stérilet Cosmique.
-MEDAL_JEFE_ADUANERO_NAME,Nada que declarar,Nothing to Declare,,Rien à déclarer
-MEDAL_JEFE_ADUANERO_DESC,Vence al Aduanero Hormonal.,Defeat the Hormone Customs Officer.,,Bats le Douanier Hormonal.
-MEDAL_JEFE_PROSTATA_NAME,Ventanilla cerrada,Window Closed,,Guichet fermé
-MEDAL_JEFE_PROSTATA_DESC,Vence a Doña Ventanilla.,Defeat Ms. One-Stop.,,Bats Madame Guichet.
-MEDAL_JEFE_HOJA_DE_PARRA_NAME,La hoja cae,The Leaf Falls,,La feuille tombe
-MEDAL_JEFE_HOJA_DE_PARRA_DESC,"Haz caer a Su Pudorosidad, la Hoja de Parra (o eso parece).","Make Her Modesty, the Fig Leaf, fall (or so it seems).",,"Fais tomber Sa Pudibonderie, la Feuille de Vigne (du moins, c'est ce qu'il semble)."
-MEDAL_JEFE_PARRA_ENTERA_NAME,Raíz del problema,Root of the Problem,,À la racine
-MEDAL_JEFE_PARRA_ENTERA_DESC,Vence a La Parra Entera.,Defeat The Whole Vine.,,Bats La Parra Entière.
-MEDAL_JEFE_ALGORITMO_NAME,Moderador moderado,Moderator Moderated,,Modérateur modéré
-MEDAL_JEFE_ALGORITMO_DESC,Vence al Algoritmo Moderador.,Defeat the Moderator Algorithm.,,Bats l'Algorithme Modérateur.
-MEDAL_JEFE_GLANDULA_NAME,La callada habló,The Quiet One Spoke,,La muette a parlé
-MEDAL_JEFE_GLANDULA_DESC,Vence a La Glándula Callada.,Defeat The Silent Gland.,,Bats La Glande Muette.
-MEDAL_JEFE_DON_CHEQUEO_NAME,Chequeo al chequeador,Checking the Checker,,Bilan du bilan
-MEDAL_JEFE_DON_CHEQUEO_DESC,Vence a Don Chequeo.,Defeat Mr. Check-Up.,,Bats Monsieur Bilan.
-MEDAL_JEFE_REGLA_NAME,Ciclo cerrado,Cycle Closed,,Cycle bouclé
-MEDAL_JEFE_REGLA_DESC,Vence a Doña Regla.,Defeat Lady Period.,,Bats Madame Règles.
-MEDAL_JEFE_DESTINE_NAME,Colores a salvo,Colors Saved,,Couleurs sauvées
-MEDAL_JEFE_DESTINE_DESC,Vence a La Censura que Destiñe.,Defeat The Censorship That Fades.,,Bats La Censure qui Déteint.
-MEDAL_JEFE_CERA_INTACTO_NAME,Cera sin quemaduras,Wax Without Burns,,Cire sans brûlures
-MEDAL_JEFE_CERA_INTACTO_DESC,Vence a Doña Cera Caliente sin recibir daño.,Defeat Madame Hot Wax without taking damage.,,Bats Madame Cire Chaude sans subir de dégâts.
-MEDAL_JEFE_PARRA_ENTERA_INTACTO_NAME,Podada sin un rasguño,Pruned Without a Scratch,,Taillée sans une égratignure
-MEDAL_JEFE_PARRA_ENTERA_INTACTO_DESC,Vence a La Parra Entera sin recibir daño.,Defeat The Whole Vine without taking damage.,,Bats La Parra Entière sans subir de dégâts.
-MEDAL_JEFE_DESTINE_INTACTO_NAME,Ni una mancha,Not a Smudge,,Pas une tache
-MEDAL_JEFE_DESTINE_INTACTO_DESC,Vence a La Censura que Destiñe sin recibir daño.,Defeat The Censorship That Fades without taking damage.,,Bats La Censure qui Déteint sans subir de dégâts.
-MEDAL_JEFE_CERA_PUDOR_NAME,Caliente y sin pudor,Hot and Shameless,,Chaude et sans pudeur
-MEDAL_JEFE_CERA_PUDOR_DESC,Vence a Doña Cera Caliente con Censura 5 o más.,Defeat Madame Hot Wax at Censorship 5 or higher.,,Bats Madame Cire Chaude avec Censure 5 ou plus.
-MEDAL_JEFE_PARRA_ENTERA_PUDOR_NAME,Sin hojas de parra,No Fig Leaves,,Sans feuille de vigne
-MEDAL_JEFE_PARRA_ENTERA_PUDOR_DESC,Vence a La Parra Entera con Censura 5 o más.,Defeat The Whole Vine at Censorship 5 or higher.,,Bats La Parra Entière avec Censure 5 ou plus.
-MEDAL_JEFE_DESTINE_PUDOR_NAME,Color a pesar de todo,Colorful Despite Everything,,En couleurs malgré tout
-MEDAL_JEFE_DESTINE_PUDOR_DESC,Vence a La Censura que Destiñe con Censura 5 o más.,Defeat The Censorship That Fades at Censorship 5 or higher.,,Bats La Censure qui Déteint avec Censure 5 ou plus.
-MEDAL_JEFES_INTOCABLE_NAME,Intocable,Untouchable,,Intouchable
-MEDAL_JEFES_INTOCABLE_DESC,Vence a 5 jefes distintos sin recibir daño.,Defeat 5 different bosses without taking damage.,,Bats 5 boss différents sans subir de dégâts.
-MEDAL_REINOS_3_NAME,Turista del cuerpo,Body Tourist,,Touriste du corps
-MEDAL_REINOS_3_DESC,Libera 3 reinos.,Free 3 kingdoms.,,Libère 3 royaumes.
-MEDAL_REINOS_6_NAME,Mochilero anatómico,Anatomical Backpacker,,Routard anatomique
-MEDAL_REINOS_6_DESC,Libera 6 reinos.,Free 6 kingdoms.,,Libère 6 royaumes.
-MEDAL_REINOS_8_NAME,Mapa sin tapar,Uncovered Map,,Carte dévoilée
-MEDAL_REINOS_8_DESC,Libera los 8 reinos.,Free all 8 kingdoms.,,Libère les 8 royaumes.
-MEDAL_FINAL_PRIMERO_NAME,Final feliz,Happy Ending,,Fin heureuse
-MEDAL_FINAL_PRIMERO_DESC,Termina el juego por primera vez.,Finish the game for the first time.,,Termine le jeu pour la première fois.
-MEDAL_FINAL_PITOCLES_NAME,Penacho en alto,Plume Held High,,Panache en l'air
-MEDAL_FINAL_PITOCLES_DESC,Termina el juego con Pitocles.,Finish the game with Pitocles.,,Termine le jeu avec Pitocles.
-MEDAL_FINAL_VULVALQUIRIA_NAME,Trenzas al viento,Braids in the Wind,,Tresses au vent
-MEDAL_FINAL_VULVALQUIRIA_DESC,Termina el juego con Vulvalquiria.,Finish the game with Vulvalquiria.,,Termine le jeu avec Vulvalquiria.
-MEDAL_FINAL_ORNITORRINCO_NAME,Nadie sabe qué es,Nobody Knows What It Is,,Personne ne sait ce que c'est
-MEDAL_FINAL_ORNITORRINCO_DESC,Termina el juego con Ornitorrinco.,Finish the game with Ornitorrinco.,,Termine le jeu avec Ornitorrinco.
-MEDAL_FINAL_TRIO_NAME,Elenco completo,Full Cast,,Distribution complète
-MEDAL_FINAL_TRIO_DESC,Termina el juego con los 3 héroes.,Finish the game with all 3 heroes.,,Termine le jeu avec les 3 héros.
-MEDAL_FINAL_PUDOR5_NAME,Bajo vigilancia,Under Watch,,Sous surveillance
-MEDAL_FINAL_PUDOR5_DESC,Termina el juego con Censura 5 o más.,Finish the game at Censorship 5 or higher.,,Termine le jeu avec Censure 5 ou plus.
-MEDAL_FINAL_PUDOR10_NAME,"Censura máxima, pudor cero","Max Censorship, Zero Shame",,"Censure max, pudeur zéro"
-MEDAL_FINAL_PUDOR10_DESC,Termina el juego con Censura 10.,Finish the game at Censorship 10.,,Termine le jeu avec Censure 10.
-MEDAL_CODICE_25_NAME,Curioso,Curious,,Curieux
-MEDAL_CODICE_25_DESC,Completa el 25% del códice.,Complete 25% of the codex.,,Complète 25 % du codex.
-MEDAL_CODICE_50_NAME,Rata de biblioteca,Bookworm,,Rat de bibliothèque
-MEDAL_CODICE_50_DESC,Completa el 50% del códice.,Complete 50% of the codex.,,Complète 50 % du codex.
-MEDAL_CODICE_100_NAME,Libro abierto,Open Book,,Livre ouvert
-MEDAL_CODICE_100_DESC,Completa el 100% del códice.,Complete 100% of the codex.,,Complète 100 % du codex.
-MEDAL_BANDERAS_TODAS_NAME,Orgullo en todos los colores,Pride in Every Color,,Fierté de toutes les couleurs
-MEDAL_BANDERAS_TODAS_DESC,Encuentra las 10 banderas del Mapa de las banderas.,Find all 10 flags in the Flag Map.,,Trouve les 10 drapeaux de la Carte des drapeaux.
-MEDAL_ACERTIJOS_1_NAME,Primera pista,First Clue,,Premier indice
-MEDAL_ACERTIJOS_1_DESC,Resuelve 1 acertijo.,Solve 1 puzzle.,,Résous 1 énigme.
-MEDAL_ACERTIJOS_10_NAME,Mente abierta,Open Mind,,Esprit ouvert
-MEDAL_ACERTIJOS_10_DESC,Resuelve 10 acertijos.,Solve 10 puzzles.,,Résous 10 énigmes.
-MEDAL_ACERTIJOS_30_NAME,Esfinge jubilada,Retired Sphinx,,Sphinx à la retraite
-MEDAL_ACERTIJOS_30_DESC,Resuelve 30 acertijos.,Solve 30 puzzles.,,Résous 30 énigmes.
-MEDAL_PACTO_MENOR_NAME,Letra chica,Fine Print,,Petits caractères
-MEDAL_PACTO_MENOR_DESC,Cierra un pacto con la Hoja de Parra.,Seal a pact with the Fig Leaf.,,Scelle un pacte avec la Feuille de Vigne.
-MEDAL_PACTO_MAYOR_NAME,Con maldición incluida,Curse Included,,Malédiction incluse
-MEDAL_PACTO_MAYOR_DESC,Sella un pacto mayor.,Seal a major pact.,,Scelle un pacte majeur.
-MEDAL_DIA_JUGAR_NAME,Cita de hoy,Date of the Day,,Rendez-vous du jour
-MEDAL_DIA_JUGAR_DESC,Empieza la partida del día.,Start the daily run.,,Commence la partie du jour.
-MEDAL_DIA_GANAR_NAME,Día ganado,Day Won,,Jour gagné
-MEDAL_DIA_GANAR_DESC,Gana la partida del día.,Win the daily run.,,Gagne la partie du jour.
-MEDAL_SECRETA_MONTE_NAME,Vista desde la cima,View from the Top,,Vue du sommet
-MEDAL_SECRETA_MONTE_DESC,Llega a la cima del Monte de Venus.,Reach the summit of Mount Venus.,,Atteins le sommet du Mont de Vénus.
-MEDAL_SECRETA_UTERO_NAME,Primera consulta,First Appointment,,Première consultation
-MEDAL_SECRETA_UTERO_DESC,Entra al Útero.,Enter the Womb.,,Entre dans l'Utérus.
-MEDAL_SECRETA_ANUBIS_NAME,Siempre con protección,Always Protected,,Toujours protégé·e
-MEDAL_SECRETA_ANUBIS_DESC,Abre la puerta trasera del Perineo.,Open the Perineum's back door.,,Ouvre la porte de derrière du Périnée.
-MEDAL_HUMOR_MUERTE_NAME,Rojo de vergüenza,Red with Embarrassment,,Rouge de honte
-MEDAL_HUMOR_MUERTE_DESC,Pierde tu primera partida.,Lose your first run.,,Perds ta première partie.
-MEDAL_HUMOR_MUERTES_20_NAME,Cabeza dura,Hard Head,,Tête dure
-MEDAL_HUMOR_MUERTES_20_DESC,Pierde 20 partidas.,Lose 20 runs.,,Perds 20 parties.
-MEDAL_HUMOR_PARTIDAS_10_NAME,Una más y me voy,One More and I'm Out,,Une dernière et j'arrête
-MEDAL_HUMOR_PARTIDAS_10_DESC,Empieza 10 partidas.,Start 10 runs.,,Commence 10 parties.
-MEDAL_HUMOR_MASILLA_NAME,Con cariño,With Love,,Avec tendresse
-MEDAL_HUMOR_MASILLA_DESC,Pega a 10 enemigos con masilla. Se lanza con cariño.,Stick 10 enemies with body filler. Throw with love.,,Colle 10 ennemis avec du mastic. À lancer avec tendresse.
-MEDAL_DESNUDO_INTEGRAL_NAME,Desnudo Integral,Full Monty,,Nu Intégral
-MEDAL_DESNUDO_INTEGRAL_DESC,¡Desnudaste el juego! Consigue todas las demás medallas.,You stripped the game bare! Earn every other medal.,,Tu as mis le jeu à nu ! Obtiens toutes les autres médailles.
+keys,es,en,es_ES,fr,pt_BR
+MEDAL_MENU_BTN,MEDALLAS,MEDALS,,MÉDAILLES,MEDALHAS
+MEDAL_TITLE,MEDALLAS (%d/%d),MEDALS (%d/%d),,MÉDAILLES (%d/%d),MEDALHAS (%d/%d)
+MEDAL_TOAST_HEAD,MEDALLA: %s,MEDAL: %s,,MÉDAILLE : %s,MEDALHA: %s
+MEDAL_SECRET_NAME,???,???,,???,???
+MEDAL_SECRET_DESC,Medalla secreta: se descubre jugando.,Secret medal: discover it by playing.,,Médaille secrète : à découvrir en jouant.,Medalha secreta: descobre-se jogando.
+MEDAL_HINT,Pasa el cursor sobre una medalla para ver qué hay que hacer.,Hover over a medal to see what it takes.,,Survole une médaille pour voir ce qu'il faut faire.,Passe o cursor sobre uma medalha para ver o que fazer.
+MEDAL_PROGRESS,Hacia Desnudo Integral: %d/%d,Toward Full Monty: %d/%d,,Vers Nu Intégral : %d/%d,Rumo à Nudez Total: %d/%d
+MEDAL_COUNT_LINE,%s: %d/%d,%s: %d/%d,,%s : %d/%d,%s: %d/%d
+MEDAL_LOCKED,Bloqueada,Locked,,Verrouillée,Bloqueada
+MEDAL_FINALE_TITLE,DESNUDO INTEGRAL,FULL MONTY,,NU INTÉGRAL,NUDEZ TOTAL
+MEDAL_FINALE_SUB,¡Desnudaste el juego!,You stripped the game bare!,,Tu as mis le jeu à nu !,Você desnudou o jogo!
+MEDAL_FINALE_CONT,Pulsa para seguir,Press to continue,,Appuie pour continuer,Clique para continuar
+MEDAL_LEVEL_SONROJO,Sonrojo,Blush,,Rougeur,Rubor
+MEDAL_LEVEL_DESTAPE,Destape,Exposed,,Dévoilé,Desinibido
+MEDAL_LEVEL_SIN_PUDOR,Sin Pudor,Shameless,,Sans Pudeur,Sem Pudor
+MEDAL_LEVEL_PLATINO,Desnudo Integral,Full Monty,,Nu Intégral,Nudez Total
+MEDAL_JEFE_CERA_NAME,Depilación total,Full Wax,,Épilation intégrale,Depilação total
+MEDAL_JEFE_CERA_DESC,Vence a Doña Cera Caliente.,Defeat Madame Hot Wax.,,Bats Madame Cire Chaude.,Vença Dona Cera Quente.
+MEDAL_JEFE_AFEITADORA_NAME,Al ras,Close Shave,,Rasé de près,Rente
+MEDAL_JEFE_AFEITADORA_DESC,Vence a La Afeitadora Eléctrica.,Defeat The Electric Shaver.,,Bats Le Rasoir Électrique.,Vença a Barbeadora Elétrica.
+MEDAL_JEFE_TESTICULO_PRIMORDIAL_NAME,"Primordial, pero no eterno","Primordial, Not Eternal",,"Primordial, pas éternel","Primordial, mas não eterno"
+MEDAL_JEFE_TESTICULO_PRIMORDIAL_DESC,Vence al Testículo Primordial.,Defeat the Primordial Testicle.,,Bats le Testicule Primordial.,Vença o Testículo Primordial.
+MEDAL_JEFE_DON_SILDENAFIL_NAME,Receta vencida,Expired Prescription,,Ordonnance périmée,Receita vencida
+MEDAL_JEFE_DON_SILDENAFIL_DESC,Vence a Don Sildenafil.,Defeat Don Sildenafil.,,Bats Monsieur Sildenafil.,Vença o Seu Sildenafil.
+MEDAL_JEFE_REINA_OVARIA_NAME,Viva la república,Long Live the Republic,,Vive la République,Viva a república
+MEDAL_JEFE_REINA_OVARIA_DESC,Vence a Su Majestad Ovaria II.,Defeat Her Majesty Ovaria II.,,Bats Sa Majesté Ovaria II.,Vença Sua Majestade Ovária II.
+MEDAL_JEFE_DIU_COSMICO_NAME,"Cósmico, pero no infalible","Cosmic, Not Infallible",,"Cosmique, pas infaillible","Cósmico, mas não infalível"
+MEDAL_JEFE_DIU_COSMICO_DESC,Vence al DIU Cósmico.,Defeat the Cosmic IUD.,,Bats le Stérilet Cosmique.,Vença o DIU Cósmico.
+MEDAL_JEFE_ADUANERO_NAME,Nada que declarar,Nothing to Declare,,Rien à déclarer,Nada a declarar
+MEDAL_JEFE_ADUANERO_DESC,Vence al Aduanero Hormonal.,Defeat the Hormone Customs Officer.,,Bats le Douanier Hormonal.,Vença o Fiscal Hormonal.
+MEDAL_JEFE_PROSTATA_NAME,Ventanilla cerrada,Window Closed,,Guichet fermé,Guichê fechado
+MEDAL_JEFE_PROSTATA_DESC,Vence a Doña Ventanilla.,Defeat Ms. One-Stop.,,Bats Madame Guichet.,Vença a Dona Guichê.
+MEDAL_JEFE_HOJA_DE_PARRA_NAME,La hoja cae,The Leaf Falls,,La feuille tombe,A folha cai
+MEDAL_JEFE_HOJA_DE_PARRA_DESC,"Haz caer a Su Pudorosidad, la Hoja de Parra (o eso parece).","Make Her Modesty, the Fig Leaf, fall (or so it seems).",,"Fais tomber Sa Pudibonderie, la Feuille de Vigne (du moins, c'est ce qu'il semble).","Derrube Sua Pudicícia, a Folha de Parreira (ou parece)."
+MEDAL_JEFE_PARRA_ENTERA_NAME,Raíz del problema,Root of the Problem,,À la racine,Raiz do problema
+MEDAL_JEFE_PARRA_ENTERA_DESC,Vence a La Parra Entera.,Defeat The Whole Vine.,,Bats La Parra Entière.,Vença a Parreira Inteira.
+MEDAL_JEFE_ALGORITMO_NAME,Moderador moderado,Moderator Moderated,,Modérateur modéré,Moderador moderado
+MEDAL_JEFE_ALGORITMO_DESC,Vence al Algoritmo Moderador.,Defeat the Moderator Algorithm.,,Bats l'Algorithme Modérateur.,Vença o Algoritmo Moderador.
+MEDAL_JEFE_GLANDULA_NAME,La callada habló,The Quiet One Spoke,,La muette a parlé,A calada falou
+MEDAL_JEFE_GLANDULA_DESC,Vence a La Glándula Callada.,Defeat The Silent Gland.,,Bats La Glande Muette.,Vença a Glândula Calada.
+MEDAL_JEFE_DON_CHEQUEO_NAME,Chequeo al chequeador,Checking the Checker,,Bilan du bilan,Check-up no checador
+MEDAL_JEFE_DON_CHEQUEO_DESC,Vence a Don Chequeo.,Defeat Mr. Check-Up.,,Bats Monsieur Bilan.,Vença o Seu Check-up.
+MEDAL_JEFE_REGLA_NAME,Ciclo cerrado,Cycle Closed,,Cycle bouclé,Ciclo fechado
+MEDAL_JEFE_REGLA_DESC,Vence a Doña Regla.,Defeat Lady Period.,,Bats Madame Règles.,Vença a Dona Menstruação.
+MEDAL_JEFE_DESTINE_NAME,Colores a salvo,Colors Saved,,Couleurs sauvées,Cores a salvo
+MEDAL_JEFE_DESTINE_DESC,Vence a La Censura que Destiñe.,Defeat The Censorship That Fades.,,Bats La Censure qui Déteint.,Vença a Censura que Desbota.
+MEDAL_JEFE_CERA_INTACTO_NAME,Cera sin quemaduras,Wax Without Burns,,Cire sans brûlures,Cera sem queimaduras
+MEDAL_JEFE_CERA_INTACTO_DESC,Vence a Doña Cera Caliente sin recibir daño.,Defeat Madame Hot Wax without taking damage.,,Bats Madame Cire Chaude sans subir de dégâts.,Vença Dona Cera Quente sem sofrer dano.
+MEDAL_JEFE_PARRA_ENTERA_INTACTO_NAME,Podada sin un rasguño,Pruned Without a Scratch,,Taillée sans une égratignure,Podada sem um arranhão
+MEDAL_JEFE_PARRA_ENTERA_INTACTO_DESC,Vence a La Parra Entera sin recibir daño.,Defeat The Whole Vine without taking damage.,,Bats La Parra Entière sans subir de dégâts.,Vença a Parreira Inteira sem sofrer dano.
+MEDAL_JEFE_DESTINE_INTACTO_NAME,Ni una mancha,Not a Smudge,,Pas une tache,Nem uma mancha
+MEDAL_JEFE_DESTINE_INTACTO_DESC,Vence a La Censura que Destiñe sin recibir daño.,Defeat The Censorship That Fades without taking damage.,,Bats La Censure qui Déteint sans subir de dégâts.,Vença a Censura que Desbota sem sofrer dano.
+MEDAL_JEFE_CERA_PUDOR_NAME,Caliente y sin pudor,Hot and Shameless,,Chaude et sans pudeur,Quente e sem pudor
+MEDAL_JEFE_CERA_PUDOR_DESC,Vence a Doña Cera Caliente con Censura 5 o más.,Defeat Madame Hot Wax at Censorship 5 or higher.,,Bats Madame Cire Chaude avec Censure 5 ou plus.,Vença Dona Cera Quente com Censura 5 ou mais.
+MEDAL_JEFE_PARRA_ENTERA_PUDOR_NAME,Sin hojas de parra,No Fig Leaves,,Sans feuille de vigne,Sem folhas de parreira
+MEDAL_JEFE_PARRA_ENTERA_PUDOR_DESC,Vence a La Parra Entera con Censura 5 o más.,Defeat The Whole Vine at Censorship 5 or higher.,,Bats La Parra Entière avec Censure 5 ou plus.,Vença a Parreira Inteira com Censura 5 ou mais.
+MEDAL_JEFE_DESTINE_PUDOR_NAME,Color a pesar de todo,Colorful Despite Everything,,En couleurs malgré tout,Cor apesar de tudo
+MEDAL_JEFE_DESTINE_PUDOR_DESC,Vence a La Censura que Destiñe con Censura 5 o más.,Defeat The Censorship That Fades at Censorship 5 or higher.,,Bats La Censure qui Déteint avec Censure 5 ou plus.,Vença a Censura que Desbota com Censura 5 ou mais.
+MEDAL_JEFES_INTOCABLE_NAME,Intocable,Untouchable,,Intouchable,Intocável
+MEDAL_JEFES_INTOCABLE_DESC,Vence a 5 jefes distintos sin recibir daño.,Defeat 5 different bosses without taking damage.,,Bats 5 boss différents sans subir de dégâts.,Vença 5 chefes diferentes sem sofrer dano.
+MEDAL_REINOS_3_NAME,Turista del cuerpo,Body Tourist,,Touriste du corps,Turista do corpo
+MEDAL_REINOS_3_DESC,Libera 3 reinos.,Free 3 kingdoms.,,Libère 3 royaumes.,Liberte 3 reinos.
+MEDAL_REINOS_6_NAME,Mochilero anatómico,Anatomical Backpacker,,Routard anatomique,Mochileiro anatômico
+MEDAL_REINOS_6_DESC,Libera 6 reinos.,Free 6 kingdoms.,,Libère 6 royaumes.,Liberte 6 reinos.
+MEDAL_REINOS_8_NAME,Mapa sin tapar,Uncovered Map,,Carte dévoilée,Mapa descoberto
+MEDAL_REINOS_8_DESC,Libera los 8 reinos.,Free all 8 kingdoms.,,Libère les 8 royaumes.,Liberte os 8 reinos.
+MEDAL_FINAL_PRIMERO_NAME,Final feliz,Happy Ending,,Fin heureuse,Final feliz
+MEDAL_FINAL_PRIMERO_DESC,Termina el juego por primera vez.,Finish the game for the first time.,,Termine le jeu pour la première fois.,Termine o jogo pela primeira vez.
+MEDAL_FINAL_PITOCLES_NAME,Penacho en alto,Plume Held High,,Panache en l'air,Penacho em riste
+MEDAL_FINAL_PITOCLES_DESC,Termina el juego con Pitocles.,Finish the game with Pitocles.,,Termine le jeu avec Pitocles.,Termine o jogo com Pitocles.
+MEDAL_FINAL_VULVALQUIRIA_NAME,Trenzas al viento,Braids in the Wind,,Tresses au vent,Tranças ao vento
+MEDAL_FINAL_VULVALQUIRIA_DESC,Termina el juego con Vulvalquiria.,Finish the game with Vulvalquiria.,,Termine le jeu avec Vulvalquiria.,Termine o jogo com Vulvalquíria.
+MEDAL_FINAL_ORNITORRINCO_NAME,Nadie sabe qué es,Nobody Knows What It Is,,Personne ne sait ce que c'est,Ninguém sabe o que é
+MEDAL_FINAL_ORNITORRINCO_DESC,Termina el juego con Ornitorrinco.,Finish the game with Ornitorrinco.,,Termine le jeu avec Ornitorrinco.,Termine o jogo com Ornitorrinco.
+MEDAL_FINAL_TRIO_NAME,Elenco completo,Full Cast,,Distribution complète,Elenco completo
+MEDAL_FINAL_TRIO_DESC,Termina el juego con los 3 héroes.,Finish the game with all 3 heroes.,,Termine le jeu avec les 3 héros.,Termine o jogo com os 3 heróis.
+MEDAL_FINAL_PUDOR5_NAME,Bajo vigilancia,Under Watch,,Sous surveillance,Sob vigilância
+MEDAL_FINAL_PUDOR5_DESC,Termina el juego con Censura 5 o más.,Finish the game at Censorship 5 or higher.,,Termine le jeu avec Censure 5 ou plus.,Termine o jogo com Censura 5 ou mais.
+MEDAL_FINAL_PUDOR10_NAME,"Censura máxima, pudor cero","Max Censorship, Zero Shame",,"Censure max, pudeur zéro","Censura máxima, pudor zero"
+MEDAL_FINAL_PUDOR10_DESC,Termina el juego con Censura 10.,Finish the game at Censorship 10.,,Termine le jeu avec Censure 10.,Termine o jogo com Censura 10.
+MEDAL_CODICE_25_NAME,Curioso,Curious,,Curieux,Curioso
+MEDAL_CODICE_25_DESC,Completa el 25% del códice.,Complete 25% of the codex.,,Complète 25 % du codex.,Complete 25% do Códice.
+MEDAL_CODICE_50_NAME,Rata de biblioteca,Bookworm,,Rat de bibliothèque,Rato de biblioteca
+MEDAL_CODICE_50_DESC,Completa el 50% del códice.,Complete 50% of the codex.,,Complète 50 % du codex.,Complete 50% do Códice.
+MEDAL_CODICE_100_NAME,Libro abierto,Open Book,,Livre ouvert,Livro aberto
+MEDAL_CODICE_100_DESC,Completa el 100% del códice.,Complete 100% of the codex.,,Complète 100 % du codex.,Complete 100% do Códice.
+MEDAL_BANDERAS_TODAS_NAME,Orgullo en todos los colores,Pride in Every Color,,Fierté de toutes les couleurs,Orgulho em todas as cores
+MEDAL_BANDERAS_TODAS_DESC,Encuentra las 10 banderas del Mapa de las banderas.,Find all 10 flags in the Flag Map.,,Trouve les 10 drapeaux de la Carte des drapeaux.,Encontre as 10 bandeiras do Mapa das Bandeiras.
+MEDAL_ACERTIJOS_1_NAME,Primera pista,First Clue,,Premier indice,Primeira pista
+MEDAL_ACERTIJOS_1_DESC,Resuelve 1 acertijo.,Solve 1 puzzle.,,Résous 1 énigme.,Resolva 1 enigma.
+MEDAL_ACERTIJOS_10_NAME,Mente abierta,Open Mind,,Esprit ouvert,Mente aberta
+MEDAL_ACERTIJOS_10_DESC,Resuelve 10 acertijos.,Solve 10 puzzles.,,Résous 10 énigmes.,Resolva 10 enigmas.
+MEDAL_ACERTIJOS_30_NAME,Esfinge jubilada,Retired Sphinx,,Sphinx à la retraite,Esfinge aposentada
+MEDAL_ACERTIJOS_30_DESC,Resuelve 30 acertijos.,Solve 30 puzzles.,,Résous 30 énigmes.,Resolva 30 enigmas.
+MEDAL_PACTO_MENOR_NAME,Letra chica,Fine Print,,Petits caractères,Letras miúdas
+MEDAL_PACTO_MENOR_DESC,Cierra un pacto con la Hoja de Parra.,Seal a pact with the Fig Leaf.,,Scelle un pacte avec la Feuille de Vigne.,Feche um pacto com a Folha de Parreira.
+MEDAL_PACTO_MAYOR_NAME,Con maldición incluida,Curse Included,,Malédiction incluse,Com maldição inclusa
+MEDAL_PACTO_MAYOR_DESC,Sella un pacto mayor.,Seal a major pact.,,Scelle un pacte majeur.,Sele um pacto maior.
+MEDAL_DIA_JUGAR_NAME,Cita de hoy,Date of the Day,,Rendez-vous du jour,Encontro de hoje
+MEDAL_DIA_JUGAR_DESC,Empieza la partida del día.,Start the daily run.,,Commence la partie du jour.,Comece a partida do dia.
+MEDAL_DIA_GANAR_NAME,Día ganado,Day Won,,Jour gagné,Dia ganho
+MEDAL_DIA_GANAR_DESC,Gana la partida del día.,Win the daily run.,,Gagne la partie du jour.,Ganhe a partida do dia.
+MEDAL_SECRETA_MONTE_NAME,Vista desde la cima,View from the Top,,Vue du sommet,Vista do topo
+MEDAL_SECRETA_MONTE_DESC,Llega a la cima del Monte de Venus.,Reach the summit of Mount Venus.,,Atteins le sommet du Mont de Vénus.,Chegue ao topo do Monte de Vênus.
+MEDAL_SECRETA_UTERO_NAME,Primera consulta,First Appointment,,Première consultation,Primeira consulta
+MEDAL_SECRETA_UTERO_DESC,Entra al Útero.,Enter the Womb.,,Entre dans l'Utérus.,Entre no Útero.
+MEDAL_SECRETA_ANUBIS_NAME,Siempre con protección,Always Protected,,Toujours protégé·e,Sempre com proteção
+MEDAL_SECRETA_ANUBIS_DESC,Abre la puerta trasera del Perineo.,Open the Perineum's back door.,,Ouvre la porte de derrière du Périnée.,Abra a porta dos fundos do Períneo.
+MEDAL_HUMOR_MUERTE_NAME,Rojo de vergüenza,Red with Embarrassment,,Rouge de honte,Vermelho de vergonha
+MEDAL_HUMOR_MUERTE_DESC,Pierde tu primera partida.,Lose your first run.,,Perds ta première partie.,Perca sua primeira partida.
+MEDAL_HUMOR_MUERTES_20_NAME,Cabeza dura,Hard Head,,Tête dure,Cabeça dura
+MEDAL_HUMOR_MUERTES_20_DESC,Pierde 20 partidas.,Lose 20 runs.,,Perds 20 parties.,Perca 20 partidas.
+MEDAL_HUMOR_PARTIDAS_10_NAME,Una más y me voy,One More and I'm Out,,Une dernière et j'arrête,Mais uma e eu vou
+MEDAL_HUMOR_PARTIDAS_10_DESC,Empieza 10 partidas.,Start 10 runs.,,Commence 10 parties.,Comece 10 partidas.
+MEDAL_HUMOR_MASILLA_NAME,Con cariño,With Love,,Avec tendresse,Com carinho
+MEDAL_HUMOR_MASILLA_DESC,Pega a 10 enemigos con masilla. Se lanza con cariño.,Stick 10 enemies with body filler. Throw with love.,,Colle 10 ennemis avec du mastic. À lancer avec tendresse.,Acerte 10 inimigos com massa. Joga-se com carinho.
+MEDAL_DESNUDO_INTEGRAL_NAME,Desnudo Integral,Full Monty,,Nu Intégral,Nudez Total
+MEDAL_DESNUDO_INTEGRAL_DESC,¡Desnudaste el juego! Consigue todas las demás medallas.,You stripped the game bare! Earn every other medal.,,Tu as mis le jeu à nu ! Obtiens toutes les autres médailles.,Você desnudou o jogo! Consiga todas as outras medalhas.

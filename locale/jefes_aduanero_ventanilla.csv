@@ -1,19 +1,19 @@
-keys,es,en,es_ES,fr
-ADU_PHASE_1,"Pase por ventanilla, por favor.","Please proceed to the window.",,"Passez au guichet, s'il vous plaît."
-ADU_PHASE_2,"¡Les faltaba un timbre! ¡Y otro! ¡Y otro!","You're missing a stamp! And another! And another!","¡Os faltaba un sello! ¡Y otro! ¡Y otro!","Il vous manque un tampon ! Et un autre ! Et encore un !"
-ADU_PHASE_3,"¡FRONTERA CERRADA POR INVENTARIO!","BORDER CLOSED FOR INVENTORY!",,"FRONTIÈRE FERMÉE POUR INVENTAIRE !"
-ADU_LANE_CLOSE,"¡CIERRA LA VENTANILLA %s!","WINDOW %s IS CLOSING!",,"LE GUICHET %s FERME !"
-ADU_CALL,"¡EL SIGUIENTE!","NEXT!",,"AU SUIVANT !"
-FUNC_NAME,Mini-funcionario,Mini clerk,,Mini-fonctionnaire
-FUNC_HOME,"¡Tengo un trámite, jefe!","I've got paperwork, boss!",,"J'ai un dossier, chef !"
-FUNC_HEAL,"Trámite aprobado: +vida","Paperwork approved: +health",,"Dossier validé : +vie"
-BOSSDMG_ADUANERO_WEAK,"¡Fuego! Mis formularios en triplicado... ¡en llamas!","Fire! My triplicate forms... in flames!",,"Du feu ! Mes formulaires en triple exemplaire... en flammes !"
-BOSSDMG_ADUANERO_RESIST,"El látex no se sella. Trámite rechazado.","Latex can't be stamped. Request denied.",,"Le latex ne se tamponne pas. Demande refusée."
-VENT_PHASE_1,"Tome su número y espere su turno.","Take a number and wait your turn.",,"Prenez un ticket et attendez votre tour."
-VENT_PHASE_2,"Hoy atendemos más rápido. Es una amenaza.","We serve faster today. That's a threat.",,"Aujourd'hui on sert plus vite. C'est une menace."
-VENT_PHASE_3,"¡CIERRE DE TURNOS! ¡ÚLTIMO LLAMADO!","CLOSING TIME! FINAL CALL!",,"FERMETURE ! DERNIER APPEL !"
-VENT_CALL,"¡DING DING!","DING DING!",,"DING DING !"
-TIMBRE_NAME,Timbre de turno,Turn bell,,Sonnette de tour
-TURNO_NOW,ATENDIENDO,NOW SERVING,,AU TOUR DE
-BOSSDMG_VENTANILLA_WEAK,"¡Corriente! Se cayó el sistema, vuelva mañana.","Power surge! The system is down, come back tomorrow.","¡Corriente! Se ha caído el sistema, vuelva mañana.","Surtension ! Le système est en panne, revenez demain."
-BOSSDMG_VENTANILLA_RESIST,"Confeti no es un documento válido.","Confetti is not a valid document.",,"Les confettis ne sont pas un document valide."
+keys,es,en,es_ES,fr,pt_BR
+ADU_PHASE_1,"Pase por ventanilla, por favor.",Please proceed to the window.,,"Passez au guichet, s'il vous plaît.","Passe no guichê, por favor."
+ADU_PHASE_2,¡Les faltaba un timbre! ¡Y otro! ¡Y otro!,You're missing a stamp! And another! And another!,¡Os faltaba un sello! ¡Y otro! ¡Y otro!,Il vous manque un tampon ! Et un autre ! Et encore un !,Faltava um carimbo! E outro! E outro!
+ADU_PHASE_3,¡FRONTERA CERRADA POR INVENTARIO!,BORDER CLOSED FOR INVENTORY!,,FRONTIÈRE FERMÉE POUR INVENTAIRE !,FRONTEIRA FECHADA PARA INVENTÁRIO!
+ADU_LANE_CLOSE,¡CIERRA LA VENTANILLA %s!,WINDOW %s IS CLOSING!,,LE GUICHET %s FERME !,FECHA O GUICHÊ %s!
+ADU_CALL,¡EL SIGUIENTE!,NEXT!,,AU SUIVANT !,O PRÓXIMO!
+FUNC_NAME,Mini-funcionario,Mini clerk,,Mini-fonctionnaire,Mini-funcionário
+FUNC_HOME,"¡Tengo un trámite, jefe!","I've got paperwork, boss!",,"J'ai un dossier, chef !","Tenho um trâmite, chefe!"
+FUNC_HEAL,Trámite aprobado: +vida,Paperwork approved: +health,,Dossier validé : +vie,Trâmite aprovado: +vida
+BOSSDMG_ADUANERO_WEAK,¡Fuego! Mis formularios en triplicado... ¡en llamas!,Fire! My triplicate forms... in flames!,,Du feu ! Mes formulaires en triple exemplaire... en flammes !,Fogo! Meus formulários em triplicata... em chamas!
+BOSSDMG_ADUANERO_RESIST,El látex no se sella. Trámite rechazado.,Latex can't be stamped. Request denied.,,Le latex ne se tamponne pas. Demande refusée.,O látex não se carimba. Trâmite rejeitado.
+VENT_PHASE_1,Tome su número y espere su turno.,Take a number and wait your turn.,,Prenez un ticket et attendez votre tour.,Pegue sua senha e aguarde a vez.
+VENT_PHASE_2,Hoy atendemos más rápido. Es una amenaza.,We serve faster today. That's a threat.,,Aujourd'hui on sert plus vite. C'est une menace.,Hoje atendemos mais rápido. É uma ameaça.
+VENT_PHASE_3,¡CIERRE DE TURNOS! ¡ÚLTIMO LLAMADO!,CLOSING TIME! FINAL CALL!,,FERMETURE ! DERNIER APPEL !,ENCERRAMENTO DE SENHAS! ÚLTIMA CHAMADA!
+VENT_CALL,¡DING DING!,DING DING!,,DING DING !,DING DING!
+TIMBRE_NAME,Timbre de turno,Turn bell,,Sonnette de tour,Campainha de senha
+TURNO_NOW,ATENDIENDO,NOW SERVING,,AU TOUR DE,ATENDENDO
+BOSSDMG_VENTANILLA_WEAK,"¡Corriente! Se cayó el sistema, vuelva mañana.","Power surge! The system is down, come back tomorrow.","¡Corriente! Se ha caído el sistema, vuelva mañana.","Surtension ! Le système est en panne, revenez demain.","Energia! O sistema caiu, volte amanhã."
+BOSSDMG_VENTANILLA_RESIST,Confeti no es un documento válido.,Confetti is not a valid document.,,Les confettis ne sont pas un document valide.,Confete não é documento válido.

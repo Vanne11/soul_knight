@@ -6,10 +6,10 @@ uid="uid://chpw6anyufvan"
 
 [deps]
 
-files=["res://locale/jefes_parra.es.translation", "res://locale/jefes_parra.en.translation", "res://locale/jefes_parra.fr.translation"]
+files=["res://locale/jefes_parra.es.translation", "res://locale/jefes_parra.en.translation", "res://locale/jefes_parra.fr.translation", "res://locale/jefes_parra.pt_BR.translation"]
 
 source_file="res://locale/jefes_parra.csv"
-dest_files=["res://locale/jefes_parra.es.translation", "res://locale/jefes_parra.en.translation", "res://locale/jefes_parra.fr.translation"]
+dest_files=["res://locale/jefes_parra.es.translation", "res://locale/jefes_parra.en.translation", "res://locale/jefes_parra.fr.translation", "res://locale/jefes_parra.pt_BR.translation"]
 
 [params]
 

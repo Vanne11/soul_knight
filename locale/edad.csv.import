@@ -6,10 +6,10 @@ uid="uid://dvav0nqjo01bb"
 
 [deps]
 
-files=["res://locale/edad.es.translation", "res://locale/edad.en.translation", "res://locale/edad.es_ES.translation", "res://locale/edad.fr.translation"]
+files=["res://locale/edad.es.translation", "res://locale/edad.en.translation", "res://locale/edad.es_ES.translation", "res://locale/edad.fr.translation", "res://locale/edad.pt_BR.translation"]
 
 source_file="res://locale/edad.csv"
-dest_files=["res://locale/edad.es.translation", "res://locale/edad.en.translation", "res://locale/edad.es_ES.translation", "res://locale/edad.fr.translation"]
+dest_files=["res://locale/edad.es.translation", "res://locale/edad.en.translation", "res://locale/edad.es_ES.translation", "res://locale/edad.fr.translation", "res://locale/edad.pt_BR.translation"]
 
 [params]
 

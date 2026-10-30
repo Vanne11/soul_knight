@@ -29,7 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LOCALE = ROOT / "locale"
-LANGS = ["es", "en", "es_ES", "fr"]  # es = Latinoamerica (base); es_ES y fr pueden ir vacios
+LANGS = ["es", "en", "es_ES", "fr", "pt_BR"]  # es = Latinoamerica (base); es_ES y fr pueden ir vacios
 
 _STR = re.compile(r'^(\w+)\s*=\s*("(?:[^"\\]|\\.)*")\s*$')
 

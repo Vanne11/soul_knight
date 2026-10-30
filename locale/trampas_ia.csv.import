@@ -6,10 +6,10 @@ uid="uid://dwbt2kqmksxg5"
 
 [deps]
 
-files=["res://locale/trampas_ia.es.translation", "res://locale/trampas_ia.en.translation", "res://locale/trampas_ia.fr.translation"]
+files=["res://locale/trampas_ia.es.translation", "res://locale/trampas_ia.en.translation", "res://locale/trampas_ia.fr.translation", "res://locale/trampas_ia.pt_BR.translation"]
 
 source_file="res://locale/trampas_ia.csv"
-dest_files=["res://locale/trampas_ia.es.translation", "res://locale/trampas_ia.en.translation", "res://locale/trampas_ia.fr.translation"]
+dest_files=["res://locale/trampas_ia.es.translation", "res://locale/trampas_ia.en.translation", "res://locale/trampas_ia.fr.translation", "res://locale/trampas_ia.pt_BR.translation"]
 
 [params]
 

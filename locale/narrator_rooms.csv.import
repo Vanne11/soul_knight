@@ -6,10 +6,10 @@ uid="uid://c6no4i5e2yuuc"
 
 [deps]
 
-files=["res://locale/narrator_rooms.es.translation", "res://locale/narrator_rooms.en.translation", "res://locale/narrator_rooms.es_ES.translation", "res://locale/narrator_rooms.fr.translation"]
+files=["res://locale/narrator_rooms.es.translation", "res://locale/narrator_rooms.en.translation", "res://locale/narrator_rooms.es_ES.translation", "res://locale/narrator_rooms.fr.translation", "res://locale/narrator_rooms.pt_BR.translation"]
 
 source_file="res://locale/narrator_rooms.csv"
-dest_files=["res://locale/narrator_rooms.es.translation", "res://locale/narrator_rooms.en.translation", "res://locale/narrator_rooms.es_ES.translation", "res://locale/narrator_rooms.fr.translation"]
+dest_files=["res://locale/narrator_rooms.es.translation", "res://locale/narrator_rooms.en.translation", "res://locale/narrator_rooms.es_ES.translation", "res://locale/narrator_rooms.fr.translation", "res://locale/narrator_rooms.pt_BR.translation"]
 
 [params]
 

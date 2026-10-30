@@ -6,10 +6,10 @@ uid="uid://32e2ptlmrlau"
 
 [deps]
 
-files=["res://locale/jefes_aduanero_ventanilla.es.translation", "res://locale/jefes_aduanero_ventanilla.en.translation", "res://locale/jefes_aduanero_ventanilla.es_ES.translation", "res://locale/jefes_aduanero_ventanilla.fr.translation"]
+files=["res://locale/jefes_aduanero_ventanilla.es.translation", "res://locale/jefes_aduanero_ventanilla.en.translation", "res://locale/jefes_aduanero_ventanilla.es_ES.translation", "res://locale/jefes_aduanero_ventanilla.fr.translation", "res://locale/jefes_aduanero_ventanilla.pt_BR.translation"]
 
 source_file="res://locale/jefes_aduanero_ventanilla.csv"
-dest_files=["res://locale/jefes_aduanero_ventanilla.es.translation", "res://locale/jefes_aduanero_ventanilla.en.translation", "res://locale/jefes_aduanero_ventanilla.es_ES.translation", "res://locale/jefes_aduanero_ventanilla.fr.translation"]
+dest_files=["res://locale/jefes_aduanero_ventanilla.es.translation", "res://locale/jefes_aduanero_ventanilla.en.translation", "res://locale/jefes_aduanero_ventanilla.es_ES.translation", "res://locale/jefes_aduanero_ventanilla.fr.translation", "res://locale/jefes_aduanero_ventanilla.pt_BR.translation"]
 
 [params]
 

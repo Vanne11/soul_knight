@@ -1,3 +1,3 @@
-keys,es,en,es_ES,fr
-UTERO_PROMPT_TALK,Hablar con la Matrona V.,Talk to Midwife V.,,Parler à la Sage-femme V.
-UTERO_DOCTORA_SAYS,"Pasa, el ciclo es de todos.","Come in, the cycle belongs to everyone.",,"Entre, le cycle appartient à tout le monde."
+keys,es,en,es_ES,fr,pt_BR
+UTERO_PROMPT_TALK,Hablar con la Matrona V.,Talk to Midwife V.,,Parler à la Sage-femme V.,Falar com a Parteira V.
+UTERO_DOCTORA_SAYS,"Pasa, el ciclo es de todos.","Come in, the cycle belongs to everyone.",,"Entre, le cycle appartient à tout le monde.","Entre, o ciclo é de todo mundo."

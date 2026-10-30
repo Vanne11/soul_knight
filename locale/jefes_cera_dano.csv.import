@@ -6,10 +6,10 @@ uid="uid://drju8ay8abn2s"
 
 [deps]
 
-files=["res://locale/jefes_cera_dano.es.translation", "res://locale/jefes_cera_dano.en.translation", "res://locale/jefes_cera_dano.fr.translation"]
+files=["res://locale/jefes_cera_dano.es.translation", "res://locale/jefes_cera_dano.en.translation", "res://locale/jefes_cera_dano.fr.translation", "res://locale/jefes_cera_dano.pt_BR.translation"]
 
 source_file="res://locale/jefes_cera_dano.csv"
-dest_files=["res://locale/jefes_cera_dano.es.translation", "res://locale/jefes_cera_dano.en.translation", "res://locale/jefes_cera_dano.fr.translation"]
+dest_files=["res://locale/jefes_cera_dano.es.translation", "res://locale/jefes_cera_dano.en.translation", "res://locale/jefes_cera_dano.fr.translation", "res://locale/jefes_cera_dano.pt_BR.translation"]
 
 [params]
 

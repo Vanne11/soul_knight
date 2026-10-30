@@ -6,10 +6,10 @@ uid="uid://ccvdhd0u6jahd"
 
 [deps]
 
-files=["res://locale/afijos.es.translation", "res://locale/afijos.en.translation", "res://locale/afijos.fr.translation"]
+files=["res://locale/afijos.es.translation", "res://locale/afijos.en.translation", "res://locale/afijos.fr.translation", "res://locale/afijos.pt_BR.translation"]
 
 source_file="res://locale/afijos.csv"
-dest_files=["res://locale/afijos.es.translation", "res://locale/afijos.en.translation", "res://locale/afijos.fr.translation"]
+dest_files=["res://locale/afijos.es.translation", "res://locale/afijos.en.translation", "res://locale/afijos.fr.translation", "res://locale/afijos.pt_BR.translation"]
 
 [params]
 

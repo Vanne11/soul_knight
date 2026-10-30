@@ -12,9 +12,9 @@ const PATH := "user://settings.cfg"
 const BUS_MUSIC := "Music"
 const BUS_SFX := "SFX"
 ## [codigo, nombre en su propio idioma]. "es" = espanol latinoamericano neutro (texto base de
-## los CSV y respaldo de es_ES); "es_ES" = Espana; "fr" y "es_ES" caen a en/es si falta una
+## los CSV y respaldo de es_ES); "es_ES" = Espana; "fr", "pt_BR" y "es_ES" caen a en/es si falta una
 ## clave (ver locale/fallback en project.godot y tools/register_locales.py).
-const LOCALES := [["es", "Español (Latinoamérica)"], ["es_ES", "Español (España)"], ["en", "English"], ["fr", "Français"]]
+const LOCALES := [["es", "Español (Latinoamérica)"], ["es_ES", "Español (España)"], ["en", "English"], ["fr", "Français"], ["pt_BR", "Português (Brasil)"]]
 
 var music_volume := 100  # 0-100
 var sfx_volume := 100
@@ -259,6 +259,8 @@ static func locale_from_os(os_locale: String) -> String:
 		return "es"
 	if l == "fr" or l.begins_with("fr_"):
 		return "fr"
+	if l == "pt" or l.begins_with("pt_"):
+		return "pt_BR"
 	return "en"
 
 
@@ -270,6 +272,8 @@ static func locale_from_steam(lang: String) -> String:
 			return "es"
 		"french":
 			return "fr"
+		"brazilian", "portuguese":
+			return "pt_BR"
 	return "en"
 
 

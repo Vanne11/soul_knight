@@ -6,10 +6,10 @@ uid="uid://jrtbnnypx2ey"
 
 [deps]
 
-files=["res://locale/narrator_censura.es.translation", "res://locale/narrator_censura.en.translation", "res://locale/narrator_censura.fr.translation"]
+files=["res://locale/narrator_censura.es.translation", "res://locale/narrator_censura.en.translation", "res://locale/narrator_censura.fr.translation", "res://locale/narrator_censura.pt_BR.translation"]
 
 source_file="res://locale/narrator_censura.csv"
-dest_files=["res://locale/narrator_censura.es.translation", "res://locale/narrator_censura.en.translation", "res://locale/narrator_censura.fr.translation"]
+dest_files=["res://locale/narrator_censura.es.translation", "res://locale/narrator_censura.en.translation", "res://locale/narrator_censura.fr.translation", "res://locale/narrator_censura.pt_BR.translation"]
 
 [params]
 

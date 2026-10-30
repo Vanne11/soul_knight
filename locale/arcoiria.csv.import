@@ -6,10 +6,10 @@ uid="uid://dnesy4fn06qqn"
 
 [deps]
 
-files=["res://locale/arcoiria.es.translation", "res://locale/arcoiria.en.translation", "res://locale/arcoiria.fr.translation"]
+files=["res://locale/arcoiria.es.translation", "res://locale/arcoiria.en.translation", "res://locale/arcoiria.fr.translation", "res://locale/arcoiria.pt_BR.translation"]
 
 source_file="res://locale/arcoiria.csv"
-dest_files=["res://locale/arcoiria.es.translation", "res://locale/arcoiria.en.translation", "res://locale/arcoiria.fr.translation"]
+dest_files=["res://locale/arcoiria.es.translation", "res://locale/arcoiria.en.translation", "res://locale/arcoiria.fr.translation", "res://locale/arcoiria.pt_BR.translation"]
 
 [params]
 

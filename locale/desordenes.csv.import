@@ -6,10 +6,10 @@ uid="uid://3104ttq84a6u"
 
 [deps]
 
-files=["res://locale/desordenes.es.translation", "res://locale/desordenes.en.translation", "res://locale/desordenes.fr.translation"]
+files=["res://locale/desordenes.es.translation", "res://locale/desordenes.en.translation", "res://locale/desordenes.fr.translation", "res://locale/desordenes.pt_BR.translation"]
 
 source_file="res://locale/desordenes.csv"
-dest_files=["res://locale/desordenes.es.translation", "res://locale/desordenes.en.translation", "res://locale/desordenes.fr.translation"]
+dest_files=["res://locale/desordenes.es.translation", "res://locale/desordenes.en.translation", "res://locale/desordenes.fr.translation", "res://locale/desordenes.pt_BR.translation"]
 
 [params]
 

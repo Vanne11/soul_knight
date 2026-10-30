@@ -6,10 +6,10 @@ uid="uid://cpx86uemqi0dp"
 
 [deps]
 
-files=["res://locale/controles.es.translation", "res://locale/controles.en.translation", "res://locale/controles.fr.translation"]
+files=["res://locale/controles.es.translation", "res://locale/controles.en.translation", "res://locale/controles.fr.translation", "res://locale/controles.pt_BR.translation"]
 
 source_file="res://locale/controles.csv"
-dest_files=["res://locale/controles.es.translation", "res://locale/controles.en.translation", "res://locale/controles.fr.translation"]
+dest_files=["res://locale/controles.es.translation", "res://locale/controles.en.translation", "res://locale/controles.fr.translation", "res://locale/controles.pt_BR.translation"]
 
 [params]
 

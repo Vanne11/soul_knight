@@ -6,10 +6,10 @@ uid="uid://dybm8ba4qu30d"
 
 [deps]
 
-files=["res://locale/teclas.es.translation", "res://locale/teclas.en.translation", "res://locale/teclas.es_ES.translation", "res://locale/teclas.fr.translation"]
+files=["res://locale/teclas.es.translation", "res://locale/teclas.en.translation", "res://locale/teclas.es_ES.translation", "res://locale/teclas.fr.translation", "res://locale/teclas.pt_BR.translation"]
 
 source_file="res://locale/teclas.csv"
-dest_files=["res://locale/teclas.es.translation", "res://locale/teclas.en.translation", "res://locale/teclas.es_ES.translation", "res://locale/teclas.fr.translation"]
+dest_files=["res://locale/teclas.es.translation", "res://locale/teclas.en.translation", "res://locale/teclas.es_ES.translation", "res://locale/teclas.fr.translation", "res://locale/teclas.pt_BR.translation"]
 
 [params]
 

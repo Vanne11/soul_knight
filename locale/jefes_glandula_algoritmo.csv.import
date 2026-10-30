@@ -6,10 +6,10 @@ uid="uid://bmifdchpj7aqc"
 
 [deps]
 
-files=["res://locale/jefes_glandula_algoritmo.es.translation", "res://locale/jefes_glandula_algoritmo.en.translation", "res://locale/jefes_glandula_algoritmo.fr.translation"]
+files=["res://locale/jefes_glandula_algoritmo.es.translation", "res://locale/jefes_glandula_algoritmo.en.translation", "res://locale/jefes_glandula_algoritmo.fr.translation", "res://locale/jefes_glandula_algoritmo.pt_BR.translation"]
 
 source_file="res://locale/jefes_glandula_algoritmo.csv"
-dest_files=["res://locale/jefes_glandula_algoritmo.es.translation", "res://locale/jefes_glandula_algoritmo.en.translation", "res://locale/jefes_glandula_algoritmo.fr.translation"]
+dest_files=["res://locale/jefes_glandula_algoritmo.es.translation", "res://locale/jefes_glandula_algoritmo.en.translation", "res://locale/jefes_glandula_algoritmo.fr.translation", "res://locale/jefes_glandula_algoritmo.pt_BR.translation"]
 
 [params]
 

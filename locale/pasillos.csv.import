@@ -6,10 +6,10 @@ uid="uid://dpdnntjud8tg3"
 
 [deps]
 
-files=["res://locale/pasillos.es.translation", "res://locale/pasillos.en.translation", "res://locale/pasillos.fr.translation"]
+files=["res://locale/pasillos.es.translation", "res://locale/pasillos.en.translation", "res://locale/pasillos.fr.translation", "res://locale/pasillos.pt_BR.translation"]
 
 source_file="res://locale/pasillos.csv"
-dest_files=["res://locale/pasillos.es.translation", "res://locale/pasillos.en.translation", "res://locale/pasillos.fr.translation"]
+dest_files=["res://locale/pasillos.es.translation", "res://locale/pasillos.en.translation", "res://locale/pasillos.fr.translation", "res://locale/pasillos.pt_BR.translation"]
 
 [params]
 

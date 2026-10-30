@@ -6,10 +6,10 @@ uid="uid://bl1ii54nb1gn3"
 
 [deps]
 
-files=["res://locale/narrator_utero.es.translation", "res://locale/narrator_utero.en.translation", "res://locale/narrator_utero.fr.translation"]
+files=["res://locale/narrator_utero.es.translation", "res://locale/narrator_utero.en.translation", "res://locale/narrator_utero.fr.translation", "res://locale/narrator_utero.pt_BR.translation"]
 
 source_file="res://locale/narrator_utero.csv"
-dest_files=["res://locale/narrator_utero.es.translation", "res://locale/narrator_utero.en.translation", "res://locale/narrator_utero.fr.translation"]
+dest_files=["res://locale/narrator_utero.es.translation", "res://locale/narrator_utero.en.translation", "res://locale/narrator_utero.fr.translation", "res://locale/narrator_utero.pt_BR.translation"]
 
 [params]
 

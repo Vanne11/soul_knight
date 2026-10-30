@@ -6,10 +6,10 @@ uid="uid://cqc6iy6gdhun6"
 
 [deps]
 
-files=["res://locale/armas_sinergias.es.translation", "res://locale/armas_sinergias.en.translation", "res://locale/armas_sinergias.fr.translation"]
+files=["res://locale/armas_sinergias.es.translation", "res://locale/armas_sinergias.en.translation", "res://locale/armas_sinergias.fr.translation", "res://locale/armas_sinergias.pt_BR.translation"]
 
 source_file="res://locale/armas_sinergias.csv"
-dest_files=["res://locale/armas_sinergias.es.translation", "res://locale/armas_sinergias.en.translation", "res://locale/armas_sinergias.fr.translation"]
+dest_files=["res://locale/armas_sinergias.es.translation", "res://locale/armas_sinergias.en.translation", "res://locale/armas_sinergias.fr.translation", "res://locale/armas_sinergias.pt_BR.translation"]
 
 [params]
 

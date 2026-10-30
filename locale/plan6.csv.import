@@ -6,10 +6,10 @@ uid="uid://b7kyt38fxeejr"
 
 [deps]
 
-files=["res://locale/plan6.es.translation", "res://locale/plan6.en.translation", "res://locale/plan6.fr.translation"]
+files=["res://locale/plan6.es.translation", "res://locale/plan6.en.translation", "res://locale/plan6.fr.translation", "res://locale/plan6.pt_BR.translation"]
 
 source_file="res://locale/plan6.csv"
-dest_files=["res://locale/plan6.es.translation", "res://locale/plan6.en.translation", "res://locale/plan6.fr.translation"]
+dest_files=["res://locale/plan6.es.translation", "res://locale/plan6.en.translation", "res://locale/plan6.fr.translation", "res://locale/plan6.pt_BR.translation"]
 
 [params]
 

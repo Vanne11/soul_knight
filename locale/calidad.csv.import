@@ -6,10 +6,10 @@ uid="uid://bd7ikucmoc08p"
 
 [deps]
 
-files=["res://locale/calidad.es.translation", "res://locale/calidad.en.translation", "res://locale/calidad.fr.translation"]
+files=["res://locale/calidad.es.translation", "res://locale/calidad.en.translation", "res://locale/calidad.fr.translation", "res://locale/calidad.pt_BR.translation"]
 
 source_file="res://locale/calidad.csv"
-dest_files=["res://locale/calidad.es.translation", "res://locale/calidad.en.translation", "res://locale/calidad.fr.translation"]
+dest_files=["res://locale/calidad.es.translation", "res://locale/calidad.en.translation", "res://locale/calidad.fr.translation", "res://locale/calidad.pt_BR.translation"]
 
 [params]
 

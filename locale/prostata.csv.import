@@ -6,10 +6,10 @@ uid="uid://dox1o6nidw40c"
 
 [deps]
 
-files=["res://locale/prostata.es.translation", "res://locale/prostata.en.translation", "res://locale/prostata.fr.translation"]
+files=["res://locale/prostata.es.translation", "res://locale/prostata.en.translation", "res://locale/prostata.fr.translation", "res://locale/prostata.pt_BR.translation"]
 
 source_file="res://locale/prostata.csv"
-dest_files=["res://locale/prostata.es.translation", "res://locale/prostata.en.translation", "res://locale/prostata.fr.translation"]
+dest_files=["res://locale/prostata.es.translation", "res://locale/prostata.en.translation", "res://locale/prostata.fr.translation", "res://locale/prostata.pt_BR.translation"]
 
 [params]
 

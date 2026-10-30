@@ -239,10 +239,16 @@ def main():
     out = ROOT / "assets/data/medallas.json"
     out.write_text(json.dumps({"_nota": "Generado por tools/gen_medallas.py; condiciones en src/autoloads/medallas.gd",
                                "medallas": data}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    with (ROOT / "locale/medallas.csv").open("w", newline="", encoding="utf-8") as fh:
+    # pt_BR no vive aqui: se conserva del CSV que ya existe (claves nuevas quedan vacias -> respaldo en)
+    csv_path = ROOT / "locale/medallas.csv"
+    pt = {}
+    if csv_path.exists():
+        with csv_path.open(encoding="utf-8") as fh:
+            pt = {r["keys"]: r.get("pt_BR", "") or "" for r in csv.DictReader(fh)}
+    with csv_path.open("w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh, lineterminator="\n")
-        w.writerow(["keys", "es", "en", "es_ES", "fr"])
-        w.writerows(rows)
+        w.writerow(["keys", "es", "en", "es_ES", "fr", "pt_BR"])
+        w.writerows(r + [pt.get(r[0], "")] for r in rows)
     print(len(data), "medallas,", len(rows), "textos")
 
 

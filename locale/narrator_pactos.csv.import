@@ -6,10 +6,10 @@ uid="uid://gjmofx6gtl0m"
 
 [deps]
 
-files=["res://locale/narrator_pactos.es.translation", "res://locale/narrator_pactos.en.translation", "res://locale/narrator_pactos.es_ES.translation", "res://locale/narrator_pactos.fr.translation"]
+files=["res://locale/narrator_pactos.es.translation", "res://locale/narrator_pactos.en.translation", "res://locale/narrator_pactos.es_ES.translation", "res://locale/narrator_pactos.fr.translation", "res://locale/narrator_pactos.pt_BR.translation"]
 
 source_file="res://locale/narrator_pactos.csv"
-dest_files=["res://locale/narrator_pactos.es.translation", "res://locale/narrator_pactos.en.translation", "res://locale/narrator_pactos.es_ES.translation", "res://locale/narrator_pactos.fr.translation"]
+dest_files=["res://locale/narrator_pactos.es.translation", "res://locale/narrator_pactos.en.translation", "res://locale/narrator_pactos.es_ES.translation", "res://locale/narrator_pactos.fr.translation", "res://locale/narrator_pactos.pt_BR.translation"]
 
 [params]
 

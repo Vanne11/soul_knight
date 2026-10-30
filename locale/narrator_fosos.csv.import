@@ -6,10 +6,10 @@ uid="uid://c7fu3ik0wcupa"
 
 [deps]
 
-files=["res://locale/narrator_fosos.es.translation", "res://locale/narrator_fosos.en.translation", "res://locale/narrator_fosos.es_ES.translation", "res://locale/narrator_fosos.fr.translation"]
+files=["res://locale/narrator_fosos.es.translation", "res://locale/narrator_fosos.en.translation", "res://locale/narrator_fosos.es_ES.translation", "res://locale/narrator_fosos.fr.translation", "res://locale/narrator_fosos.pt_BR.translation"]
 
 source_file="res://locale/narrator_fosos.csv"
-dest_files=["res://locale/narrator_fosos.es.translation", "res://locale/narrator_fosos.en.translation", "res://locale/narrator_fosos.es_ES.translation", "res://locale/narrator_fosos.fr.translation"]
+dest_files=["res://locale/narrator_fosos.es.translation", "res://locale/narrator_fosos.en.translation", "res://locale/narrator_fosos.es_ES.translation", "res://locale/narrator_fosos.fr.translation", "res://locale/narrator_fosos.pt_BR.translation"]
 
 [params]
 

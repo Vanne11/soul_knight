@@ -1,164 +1,164 @@
-keys,es,en,es_ES,fr
-FLOOR_SILENCIO_NAME,LAS TIERRAS DEL SILENCIO,THE LANDS OF SILENCE,,LES TERRES DU SILENCE
-SIL_MAP_SALA,Sala,Room,,Salle
-SIL_CODEX_TAG,Silencio · ,Silence · ,,Silence · 
-DEBUG_SILENCIO,Ir al Silencio (WIP),Go to Silence (WIP),,Aller au Silence (WIP)
-SIL_AVISO_TITULO,Las Tierras del Silencio,The Lands of Silence,,Les Terres du Silence
-SIL_AVISO_1,"Este reino trata de violencia de género: control, agresión y femicidio.","This realm is about gender-based violence: control, aggression and femicide.","Este reino trata de violencia de género: control, agresión y feminicidio.","Ce royaume parle de violence de genre : contrôle, agression et féminicide."
-SIL_AVISO_2,No hay bromas aquí. Puedes pausar o salir del juego cuando quieras.,There are no jokes here. You can pause or quit the game whenever you want.,,"Ici, pas de blagues. Tu peux faire pause ou quitter le jeu quand tu veux."
-SIL_AVISO_3,"Si estás en peligro ahora, llama a emergencias de tu país.","If you are in danger right now, call your country's emergency number.",,"Si tu es en danger maintenant, appelle les urgences de ton pays."
-SIL_CONTINUAR,Continuar,Continue,,Continuer
-SIL_AYUDA_BOTON,Cómo buscar ayuda,How to find help,,Comment chercher de l'aide
-SIL_VOLVER,Volver,Back,,Retour
-SIL_CERRAR,Cerrar,Close,,Fermer
-SIL_VOZ,VOZ,VOICE,,VOIX
-SIL_S1_HINT,Mantén [E]: hablar,Hold [E]: speak,,Maintiens [E] : parler
-SIL_S1_IDEA,Propongo dividir el trabajo en dos partes.,I suggest splitting the work into two parts.,,Je propose de diviser le travail en deux parties.
-SIL_S1_CORTA_1,"Espera, déjame terminar esto primero.","Wait, let me finish this first.",,"Attends, laisse-moi finir ça d'abord."
-SIL_S1_CORTA_2,Eso ya lo hablamos. Sigamos.,We already covered that. Moving on.,,On en a déjà parlé. Continuons.
-SIL_S1_CORTA_3,"Perdona, una cosa rápida antes.","Sorry, one quick thing first.",,"Pardon, juste un point rapide avant."
-SIL_S1_REPITE_1,Podríamos repartir el trabajo en dos.,We could split the work in two.,,On pourrait répartir le travail en deux.
-SIL_S1_REPITE_2,¿Y si lo hacemos en dos tramos?,What if we do it in two stages?,,Et si on le faisait en deux étapes ?
-SIL_S1_REPITE_3,"Mi propuesta: dos partes, una por equipo.","My proposal: two parts, one per team.",,"Ma proposition : deux parties, une par équipe."
-SIL_S1_BUENA,Buena idea,Good idea,,Bonne idée
-SIL_S1_CARTEL_1,Te interrumpen. Repiten tu idea. La aplauden.,They interrupt you. They repeat your idea. They applaud it.,,On t'interrompt. On répète ton idée. On l'applaudit.
-SIL_S1_CARTEL_2,"Esto se llama micromachismo: una conducta pequeña, normalizada, que reduce tu voz.","This is called micromachismo: a small, normalized behavior that reduces your voice.",,"Cela s'appelle du micromachisme : un comportement petit, normalisé, qui réduit ta voix."
-SIL_S1_CARTEL_3,Una sola vez no parece nada. Muchas veces sí.,"Once, it seems like nothing. Many times, it is.",,"Une seule fois, cela ne semble rien. Plusieurs fois, si."
-SIL_S2_PANEL,Elige: A o B,Choose: A or B,,Choisis : A ou B
-SIL_S2_YA_LO_DECIDIMOS,Ya lo decidimos,We already decided,,On a déjà décidé
-SIL_S2_SENTARTE,[E] Sentarte,[E] Sit down,,[E] T'asseoir
-SIL_S2_CARTEL_1,Te quitan espacio. Deciden por ti.,They take your space. They decide for you.,,On te prend ta place. On décide pour toi.
-SIL_S2_CARTEL_2,Nadie dijo que no pudieras pasar. Pasar costó más.,Nobody said you could not pass. Passing cost more.,,Personne n'a dit que tu ne pouvais pas passer. Passer a coûté plus.
-SIL_S3_INVENTARIO,INVENTARIO,INVENTORY,,INVENTAIRE
-SIL_S3_PREGUNTA,¿Para qué lo quieres? ¿Quién te lo dio?,What do you want it for? Who gave it to you?,,Pourquoi tu en as besoin ? Qui te l'a donné ?
-SIL_S3_VACIO,(vacío),(empty),,(vide)
-SIL_S3_GUARDADO,Guardado,Kept,,Gardé
-SIL_S3_DEVUELVEN,Guardan tu arma. Te la devuelven al salir.,They keep your weapon. They give it back when you leave.,,Ils gardent ton arme. Ils te la rendent à la sortie.
-SIL_S3_CERRAR,Esc: cerrar,Esc: close,,Échap : fermer
-SIL_S3_HABLAR,[E] Hablar,[E] Talk,,[E] Parler
-SIL_S3_CARTEL_1,Revisa tus cosas. Decide con quién hablas.,They go through your things. They decide who you talk to.,,On fouille tes affaires. On décide avec qui tu parles.
-SIL_S3_CARTEL_2,"Señales de control: revisa tu teléfono, elige tu ropa, te aleja de quien quieres, controla tu dinero, se enoja si no respondes.","Signs of control: checks your phone, picks your clothes, keeps you away from the people you love, controls your money, gets angry if you do not answer.",,"Signes de contrôle : regarde ton téléphone, choisit tes vêtements, t'éloigne de ceux que tu aimes, contrôle ton argent, se met en colère si tu ne réponds pas."
-SIL_S3_CARTEL_3,"Si pasa mucho, no es cariño. Es control.","If it happens a lot, it is not affection. It is control.",,"Si cela arrive souvent, ce n'est pas de l'affection. C'est du contrôle."
-SIL_S4_MSG_1,¿Dónde estás?,Where are you?,,Où es-tu ?
-SIL_S4_MSG_2,¿Con quién?,Who are you with?,,Avec qui ?
-SIL_S4_MSG_3,Responde.,Answer.,,Réponds.
-SIL_S4_MSG_4,Estoy esperando.,I am waiting.,,J'attends.
-SIL_S4_HINT,[E]: responder,[E]: answer,,[E] : répondre
-SIL_S4_TE_SIGUEN,Te siguen,You are followed,,On te suit
-SIL_S4_SALIDA,[E] Salir,[E] Leave,,[E] Sortir
-SIL_S4_CARTEL_1,"Si respondes, preguntan más. Si no respondes, preguntan más.","If you answer, they ask more. If you do not answer, they ask more.",,"Si tu réponds, on demande plus. Si tu ne réponds pas, on demande plus."
-SIL_S4_CARTEL_2,No hay respuesta correcta. El problema no eres tú.,There is no right answer. You are not the problem.,,"Il n'y a pas de bonne réponse. Le problème, ce n'est pas toi."
-SIL_S4_CARTEL_3,"Si sientes miedo de no responder, es una señal.","If you are afraid of not answering, it is a sign.",,"Si tu as peur de ne pas répondre, c'est un signe."
-LORE_SILENCIO_TURNO_TITLE,Micromachismo,Micromachismo,,Micromachisme
-LORE_SILENCIO_TURNO_TEXT,"Te interrumpen. Repiten tu idea sin darte el crédito. Hablan por encima de ti. Cada gesto parece pequeño. Juntos reducen tu voz. A eso se le llama micromachismo: una conducta pequeña, normalizada. El término lo propuso Luis Bonino a comienzos de los años noventa.","They interrupt you. They repeat your idea without giving you credit. They talk over you. Each gesture seems small. Together they reduce your voice. This is called micromachismo: a small, normalized behavior. The term was proposed by Luis Bonino in the early nineties.",,"On t'interrompt. On répète ton idée sans te donner le crédit. On parle par-dessus toi. Chaque geste semble petit. Ensemble, ils réduisent ta voix. C'est ce qu'on appelle le micromachisme : un comportement petit, normalisé. Le terme a été proposé par Luis Bonino au début des années quatre-vingt-dix."
-LORE_SILENCIO_TURNO_FLAVOR,Una sola vez no parece nada. Muchas veces sí.,"Once, it seems like nothing. Many times, it is.",,"Une seule fois, cela ne semble rien. Plusieurs fois, si."
-LORE_SILENCIO_ESPACIO_TITLE,Espacio y decisiones,Space and decisions,,Espace et décisions
-LORE_SILENCIO_ESPACIO_TEXT,Ocupar más espacio. No ceder el paso. Decidir por otra persona «por su bien». Son micromachismos. Nadie te dice que no puedes pasar. Pasar cuesta más. Y quien decide por ti no te está cuidando: te está quitando la decisión.,"Taking up more space. Not giving way. Deciding for someone else ""for their own good"". These are micromachismos. Nobody tells you that you cannot pass. Passing costs more. And whoever decides for you is not looking after you: they are taking the decision away.",,Occuper plus de place. Ne pas céder le passage. Décider pour une autre personne « pour son bien ». Ce sont des micromachismes. Personne ne te dit que tu ne peux pas passer. Passer coûte plus. Et celui ou celle qui décide pour toi ne prend pas soin de toi : il ou elle te retire la décision.
-LORE_SILENCIO_ESPACIO_FLAVOR,Nadie dijo que no pudieras pasar. Pasar costó más.,Nobody said you could not pass. Passing cost more.,,Personne n'a dit que tu ne pouvais pas passer. Passer a coûté plus.
-LORE_SILENCIO_REVISION_TITLE,Señales de control,Signs of control,,Signes de contrôle
-LORE_SILENCIO_REVISION_TEXT,"Revisa tu teléfono. Elige tu ropa. Te aleja de quien quieres. Controla tu dinero. Se enoja si no respondes. Son señales de control. Si pasa mucho, no es cariño. Es control. Puedes hablarlo con alguien de confianza.","Checks your phone. Picks your clothes. Keeps you away from the people you love. Controls your money. Gets angry if you do not answer. These are signs of control. If it happens a lot, it is not affection. It is control. You can talk about it with someone you trust.",,"Regarde ton téléphone. Choisit tes vêtements. T'éloigne de ceux que tu aimes. Contrôle ton argent. Se met en colère si tu ne réponds pas. Ce sont des signes de contrôle. Si cela arrive souvent, ce n'est pas de l'affection. C'est du contrôle. Tu peux en parler avec une personne de confiance."
-LORE_SILENCIO_REVISION_FLAVOR,"Si pasa mucho, no es cariño. Es control.","If it happens a lot, it is not affection. It is control.",,"Si cela arrive souvent, ce n'est pas de l'affection. C'est du contrôle."
-LORE_SILENCIO_MENSAJES_TITLE,Mensajes y vigilancia,Messages and surveillance,,Messages et surveillance
-LORE_SILENCIO_MENSAJES_TEXT,"¿Dónde estás? ¿Con quién? Responde. Estoy esperando. Si respondes, preguntan más. Si no respondes, preguntan más. Sentirte vigilada o vigilado es una señal. Si sientes miedo de no responder, también. No hay respuesta correcta. El problema no eres tú. Puedes pedir ayuda.","Where are you? Who are you with? Answer. I am waiting. If you answer, they ask more. If you do not answer, they ask more. Feeling watched is a sign. So is being afraid of not answering. There is no right answer. You are not the problem. You can ask for help.",,"Où es-tu ? Avec qui ? Réponds. J'attends. Si tu réponds, on demande plus. Si tu ne réponds pas, on demande plus. Te sentir surveillé ou surveillée est un signe. Avoir peur de ne pas répondre aussi. Il n'y a pas de bonne réponse. Le problème, ce n'est pas toi. Tu peux demander de l'aide."
-LORE_SILENCIO_MENSAJES_FLAVOR,El problema no eres tú.,You are not the problem.,,"Le problème, ce n'est pas toi."
-SIL_OPCIONES_HINT,[E]: elegir · Tab: cambiar,[E]: choose · Tab: switch,,[E] : choisir · Tab : changer
-SIL_S5_ENTRADA,El consentimiento es un acuerdo. Se pregunta. Se escucha.,Consent is an agreement. You ask. You listen.,,Le consentement est un accord. On demande. On écoute.
-SIL_S5_PREGUNTAR,Preguntar,Ask,,Demander
-SIL_S5_SEGUIR,Seguir,Go ahead,,Continuer
-SIL_S5_PARAR,Parar,Stop,,Arrêter
-SIL_S5_NO,Dijo que no. Se acabó.,The answer is no. That is the end of it.,,La réponse est non. C'est terminé.
-SIL_S5_NO_REP,Preguntar otra vez no cambia el no. No se abre nada.,Asking again does not change a no. Nothing opens.,,Redemander ne change pas un non. Rien ne s'ouvre.
-SIL_S5_SILENCIO,Silencio no es sí.,Silence is not a yes.,,Le silence n'est pas un oui.
-SIL_S5_DUDA,Dudar no es un sí entusiasta. Pregunta de nuevo.,Doubt is not an enthusiastic yes. Ask again.,,Hésiter n'est pas un oui enthousiaste. Redemande.
-SIL_S5_DUDA_PREG,¿Prefieres no?,Would you rather not?,,Tu préfères dire non ?
-SIL_S5_COR_1,Dale.,Come on.,,Allez.
-SIL_S5_COR_2,No seas así.,Don't be like that.,,Ne sois pas comme ça.
-SIL_S5_COR_3,Todos lo hacen.,Everyone does it.,,Tout le monde le fait.
-SIL_S5_LIBRE_NO,"Con presión, un sí no es libre. Un no sigue siendo no.","With pressure, a yes is not free. A no is still a no.",,"Sous pression, un oui n'est pas libre. Un non reste un non."
-SIL_S5_LIBRE_SI,"Con presión, no es libre. No fue tu culpa.","With pressure, it is not free. It was not your fault.",,"Sous pression, ce n'est pas libre. Ce n'était pas ta faute."
-SIL_S5_LIBRE_CALLA,Quedarte callada o callado no es aceptar.,Staying quiet is not agreeing.,,"Rester silencieuse ou silencieux, ce n'est pas accepter."
-SIL_S5_REV,Se puede cambiar de idea en cualquier momento.,You can change your mind at any time.,,On peut changer d'avis à tout moment.
-SIL_S5_PARA,Para.,Stop.,,Arrête.
-SIL_S5_DECIR,Decir para qué,Say what for,,Dire pourquoi
-SIL_S5_INFO,Un sí sin saber qué aceptas no cuenta.,A yes without knowing what you agree to does not count.,,Un oui sans savoir à quoi on consent ne compte pas.
-SIL_S5_ENTUS,"Un sí entusiasta se nota. Si no se nota, pregunta.","An enthusiastic yes shows. If it does not show, ask.",,"Un oui enthousiaste se voit. Si on ne le voit pas, demande."
-SIL_S5_ESPEC,Un sí vale para una cosa.,A yes is for one thing.,,Un oui vaut pour une chose.
-SIL_S5_ESPEC_NO,Eso no te lo dije.,I did not say that.,,Je n'ai pas dit ça.
-SIL_S5_AYER_CARTEL,Ayer dijo que sí.,"Yesterday, the answer was yes.",,"Hier, la réponse était oui."
-SIL_S5_AYER_BTN,Usar el sí de ayer,Use yesterday's yes,,Utiliser le oui d'hier
-SIL_S5_AYER,Un sí de antes no obliga a nada hoy.,A yes from before does not commit anyone to anything today.,,Un oui d'avant n'oblige à rien aujourd'hui.
-SIL_S5_SINRESP,Sin respuesta.,No answer.,,Pas de réponse.
-SIL_S5_NOPUEDE,"Quien duerme, o está muy borracha o borracho, o drogada o drogado, no puede consentir.","Someone who is asleep, very drunk or drugged cannot consent.",,"Une personne qui dort, ou qui est très ivre ou droguée, ne peut pas consentir."
-SIL_S5_AVISAR,Avisar a alguien de confianza,Tell someone you trust,,Prévenir une personne de confiance
-SIL_S5_FIN,"Consentir es libre, reversible, informado, entusiasta y específico.","Consent is free, reversible, informed, enthusiastic and specific.",,"Consentir, c'est libre, réversible, éclairé, enthousiaste et spécifique."
-SIL_S5_R_SI,"Sí, claro.","Yes, of course.",,"Oui, bien sûr."
-SIL_S5_R_NO,No.,No.,,Non.
-SIL_S5_R_DUDA,Bueno... está bien.,Well... okay.,,Bon... d'accord.
-SIL_S5_ABRAZO,¿Un abrazo?,A hug?,,Un câlin ?
-SIL_S5_SI,Sí,Yes,,Oui
-SIL_S5_NO_BTN,No,No,,Non
-SIL_S5_PEDIR_LINTERNA,¿Me prestas la linterna?,Can I borrow the flashlight?,,Tu me prêtes la lampe ?
-SIL_S5_PEDIR_MOCHILA,¿Me prestas la mochila?,Can I borrow the backpack?,,Tu me prêtes le sac à dos ?
-SIL_S5_MOCHILA_BTN,Usar también su mochila,Also use their backpack,,Utiliser aussi son sac à dos
-SIL_S5_NOTA,La necesito para buscar algo en el sótano.,I need it to look for something in the basement.,,J'en ai besoin pour chercher quelque chose à la cave.
-SIL_S5_SEG_IZQ,Seguir con la persona de la izquierda,Go ahead with the person on the left,,Continuer avec la personne de gauche
-SIL_S5_SEG_DER,Seguir con la persona de la derecha,Go ahead with the person on the right,,Continuer avec la personne de droite
-SIL_S5_IRTE,Irte,Leave,,Partir
-SIL_S5_QUEDAR,Quedarte cerca,Stay close,,Rester près
-SIL_S6_TONO,Aquí cambia el tono.,The tone changes here.,,"Ici, le ton change."
-SIL_S6_DISTRAER,Distraer,Distract,,Faire diversion
-SIL_S6_BUSCAR,Buscar a alguien,Go find someone,,Aller chercher quelqu'un
-SIL_S6_QUEDAR,Quedarte cerca después,Stay close afterwards,,Rester près ensuite
-SIL_S6_HORA,¿Tienes la hora?,Do you have the time?,,Tu as l'heure ?
-SIL_S6_LLAMAR,¿Quieres que llame a alguien?,Do you want me to call someone?,,Tu veux que j'appelle quelqu'un ?
-SIL_S6_NADA,También paraliza. No es culpa tuya.,Freezing is also a reaction. It is not your fault.,,On peut aussi rester figé. Ce n'est pas ta faute.
-SIL_S6_SENALES,"Señales de agresión: te humilla, te amenaza, rompe cosas, te impide salir, te obliga a algo que no quieres, te golpea.","Signs of aggression: humiliates you, threatens you, breaks things, stops you from leaving, forces you to do something you do not want, hits you.",,"Signes d'agression : t'humilie, te menace, casse des objets, t'empêche de sortir, te force à faire ce que tu ne veux pas, te frappe."
-SIL_S6_VIOLENCIA,Es violencia. No es tu culpa.,It is violence. It is not your fault.,,C'est de la violence. Ce n'est pas ta faute.
-SIL_S6_RIESGO,"Si piensas irte, planéalo con apoyo: es un momento de riesgo.","If you are thinking of leaving, plan it with support: it is a time of risk.",,"Si tu penses partir, prépare-le avec un soutien : c'est un moment à risque."
-SIL_S6_AYUDAR,Para ayudar: pregunta. Escucha. No la presiones. Ofrece ayuda. No decidas por ella o por él.,To help: ask. Listen. Do not pressure. Offer help. Do not decide for them.,,Pour aider : demande. Écoute. Ne fais pas pression. Propose de l'aide. Ne décide pas à sa place.
-SIL_S6_RESP_SI,"Sí, por favor.","Yes, please.",,"Oui, s'il te plaît."
-SIL_S6_RESP_NO,Ahora no. Gracias.,Not now. Thank you.,,Pas maintenant. Merci.
-SIL_S6_TELEFONO,[E] Cómo buscar ayuda,[E] How to find help,,[E] Comment chercher de l'aide
-LORE_SILENCIO_CONSENTIMIENTO_TITLE,Consentimiento,Consent,,Consentement
-LORE_SILENCIO_CONSENTIMIENTO_TEXT,"Consentir es libre, reversible, informado, entusiasta y específico. Libre: sin presión. Reversible: se puede cambiar de idea en cualquier momento, también después de un sí. Informado: se sabe qué se acepta. Entusiasta: un sí con duda no es un sí, y el silencio tampoco. Específico: un sí a una cosa no es un sí a todo. Quien duerme, o está muy borracha o borracho, o drogada o drogado, no puede consentir. Se pregunta. Se escucha. Un no se respeta, y respetarlo es lo normal.","Consent is free, reversible, informed, enthusiastic and specific. Free: without pressure. Reversible: you can change your mind at any time, even after a yes. Informed: you know what you are agreeing to. Enthusiastic: a yes with doubt is not a yes, and silence is not one either. Specific: a yes to one thing is not a yes to everything. Someone who is asleep, very drunk or drugged cannot consent. You ask. You listen. A no is respected, and respecting it is what is expected.",,"Le consentement est libre, réversible, éclairé, enthousiaste et spécifique. Libre : sans pression. Réversible : on peut changer d'avis à tout moment, même après un oui. Éclairé : on sait à quoi on consent. Enthousiaste : un oui avec un doute n'est pas un oui, et le silence non plus. Spécifique : un oui à une chose n'est pas un oui à tout. Une personne qui dort, ou qui est très ivre ou droguée, ne peut pas consentir. On demande. On écoute. Un non se respecte, et le respecter, c'est la normalité."
-LORE_SILENCIO_CONSENTIMIENTO_FLAVOR,Se pregunta. Se escucha.,You ask. You listen.,,On demande. On écoute.
-LORE_SILENCIO_AGRESION_TITLE,Señales de agresión,Signs of aggression,,Signes d'agression
-LORE_SILENCIO_AGRESION_TEXT,"Señales de agresión: te humilla, te amenaza, rompe cosas, te impide salir, te obliga a algo que no quieres, te golpea. Es violencia. No es tu culpa. Si piensas irte, planéalo con apoyo: es un momento de riesgo. Para ayudar a otra persona: pregunta, escucha, no la presiones, ofrece ayuda y no decidas por ella o por él. Distraer, buscar a alguien o quedarte cerca después son formas de ayudar. Puedes pedir ayuda.","Signs of aggression: humiliates you, threatens you, breaks things, stops you from leaving, forces you to do something you do not want, hits you. It is violence. It is not your fault. If you are thinking of leaving, plan it with support: it is a time of risk. To help another person: ask, listen, do not pressure, offer help and do not decide for them. Distracting, finding someone or staying close afterwards are ways to help. You can ask for help.",,"Signes d'agression : t'humilie, te menace, casse des objets, t'empêche de sortir, te force à faire ce que tu ne veux pas, te frappe. C'est de la violence. Ce n'est pas ta faute. Si tu penses partir, prépare-le avec un soutien : c'est un moment à risque. Pour aider une autre personne : demande, écoute, ne fais pas pression, propose de l'aide et ne décide pas à sa place. Faire diversion, aller chercher quelqu'un ou rester près ensuite sont des façons d'aider. Tu peux demander de l'aide."
-LORE_SILENCIO_AGRESION_FLAVOR,No es tu culpa.,It is not your fault.,,Ce n'est pas ta faute.
-SIL_JEFE_NOMBRE,El Pacto de Silencio,The Pact of Silence,,Le Pacte du Silence
-SIL_JEFE_F1,Nadie oyó.,Nobody heard.,,Personne n'a entendu.
-SIL_JEFE_F2,Nadie vio.,Nobody saw.,,Personne n'a vu.
-SIL_JEFE_F3,Nadie dijo.,Nobody spoke.,,Personne n'a rien dit.
-SIL_JEFE_CURA,El pacto se cierra.,The pact closes.,,Le pacte se referme.
-SIL_JEFE_CORTE,Alguien habló.,Someone spoke.,,Quelqu'un a parlé.
-SIL_JEFE_FIN,Se rompió el silencio.,The silence broke.,,Le silence s'est brisé.
-SIL_JEFE_PISTA,"Golpea las campanas, las ollas y el vidrio.","Strike the bells, the pots and the glass.",,"Frappe les cloches, les casseroles et la vitre."
-SIL_JEFE_DEBIL,El ruido lo alcanza.,Noise reaches it.,,Le bruit l'atteint.
-SIL_JEFE_RESISTE,El silencio lo protege.,Silence protects it.,,Le silence le protège.
-SIL_JEFE_LBL_DEBIL,RUIDO,NOISE,,BRUIT
-SIL_JEFE_LBL_RESISTE,APAGADO,MUFFLED,,ÉTOUFFÉ
-BOSS_CH_RUIDO_T,El pacto se cierra.,The pact closes.,,Le pacte se referme.
-BOSS_CH_RUIDO_D,Golpea tres objetos de ruido.,Strike three noise objects.,,Frappe trois objets bruyants.
-SIL_JEFE_COMPLETA,El pacto se cerró.,The pact closed.,,Le pacte s'est refermé.
-SIL_MEM_UMBRAL,Esta sala no es para jugar. Puedes salir cuando quieras.,This room is not for playing. You can leave whenever you want.,,Cette salle n'est pas faite pour jouer. Tu peux sortir quand tu veux.
-SIL_MEM_VELA,[E] Encender vela,[E] Light a candle,,[E] Allumer une bougie
-SIL_MEM_FLOR,[E] Dejar flor,[E] Leave a flower,,[E] Déposer une fleur
-SIL_MEM_DATO_1,"En 2024, cerca de 50.000 mujeres y niñas murieron a manos de su pareja o de un familiar.","In 2024, around 50,000 women and girls died at the hands of their partner or a family member.",,"En 2024, environ 50 000 femmes et filles sont mortes aux mains de leur partenaire ou d'un membre de leur famille."
-SIL_MEM_DATO_2,Cerca de 137 cada día.,Around 137 every day.,,Environ 137 chaque jour.
-SIL_MEM_FUENTE,"Fuente: ONU Mujeres y UNODC, 2025.","Source: UN Women and UNODC, 2025.",,"Source : ONU Femmes et ONUDC, 2025."
-SIL_MEM_MEMORIAL,Memorial. Entra cuando quieras.,Memorial. Come in whenever you want.,,Mémorial. Entre quand tu veux.
-FLOOR_VOZ_NAME,LAS TIERRAS DE LA VOZ,THE LANDS OF VOICE,,LES TERRES DE LA VOIX
-MAPA_REINO_VOZ,VOZ,VOICE,,VOIX
-SIL_LIB_NOMBRE,Las Tierras de la Voz,The Lands of Voice,,Les Terres de la Voix
-SIL_LIB_PLAZA,Plaza de la Palabra,Square of the Word,,Place de la Parole
-SIL_LIB_TURNO,Habla. Te esperan.,Speak. They are waiting for you.,,Parle. On t'attend.
-SIL_LIB_CEDER,Ahora le toca a otra persona.,Now it is someone else's turn.,,C'est au tour de quelqu'un d'autre.
-SIL_LIB_VOZ_1,Tu voz cuenta.,Your voice counts.,,Ta voix compte.
-SIL_LIB_VOZ_2,Hay lugar para todas y todos.,There is room for everyone.,,Il y a de la place pour tout le monde.
-SIL_LIB_VOZ_3,Estamos aquí.,We are here.,,Nous sommes là.
-SIL_LIB_FUENTE,[E] Beber,[E] Drink,,[E] Boire
-SIL_LIB_FUENTE_OK,Descansas.,You rest.,,Tu te reposes.
-SIL_LIB_MEMORIAL_PUERTA,[E] Entrar al Memorial,[E] Enter the Memorial,,[E] Entrer dans le Mémorial
-SIL_LIB_SALIDA,[E] Seguir,[E] Go on,,[E] Continuer
-SIL_LIB_PLAZA_HINT,Mantén [E]: hablar,Hold [E]: speak,,Maintiens [E] : parler
-SIL_LIB_ESPERA,Esperas.,You wait.,,Tu attends.
+keys,es,en,es_ES,fr,pt_BR
+FLOOR_SILENCIO_NAME,LAS TIERRAS DEL SILENCIO,THE LANDS OF SILENCE,,LES TERRES DU SILENCE,AS TERRAS DO SILÊNCIO
+SIL_MAP_SALA,Sala,Room,,Salle,Sala
+SIL_CODEX_TAG,Silencio · ,Silence · ,,Silence · ,Silêncio · 
+DEBUG_SILENCIO,Ir al Silencio (WIP),Go to Silence (WIP),,Aller au Silence (WIP),Ir ao Silêncio (WIP)
+SIL_AVISO_TITULO,Las Tierras del Silencio,The Lands of Silence,,Les Terres du Silence,As Terras do Silêncio
+SIL_AVISO_1,"Este reino trata de violencia de género: control, agresión y femicidio.","This realm is about gender-based violence: control, aggression and femicide.","Este reino trata de violencia de género: control, agresión y feminicidio.","Ce royaume parle de violence de genre : contrôle, agression et féminicide.","Este reino trata de violência de gênero: controle, agressão e feminicídio."
+SIL_AVISO_2,No hay bromas aquí. Puedes pausar o salir del juego cuando quieras.,There are no jokes here. You can pause or quit the game whenever you want.,,"Ici, pas de blagues. Tu peux faire pause ou quitter le jeu quand tu veux.",Aqui não há piadas. Você pode pausar ou sair do jogo quando quiser.
+SIL_AVISO_3,"Si estás en peligro ahora, llama a emergencias de tu país.","If you are in danger right now, call your country's emergency number.",,"Si tu es en danger maintenant, appelle les urgences de ton pays.","Se você está em perigo agora, ligue para os serviços de emergência do seu país."
+SIL_CONTINUAR,Continuar,Continue,,Continuer,Continuar
+SIL_AYUDA_BOTON,Cómo buscar ayuda,How to find help,,Comment chercher de l'aide,Como buscar ajuda
+SIL_VOLVER,Volver,Back,,Retour,Voltar
+SIL_CERRAR,Cerrar,Close,,Fermer,Fechar
+SIL_VOZ,VOZ,VOICE,,VOIX,VOZ
+SIL_S1_HINT,Mantén [E]: hablar,Hold [E]: speak,,Maintiens [E] : parler,Segure [E]: falar
+SIL_S1_IDEA,Propongo dividir el trabajo en dos partes.,I suggest splitting the work into two parts.,,Je propose de diviser le travail en deux parties.,Proponho dividir o trabalho em duas partes.
+SIL_S1_CORTA_1,"Espera, déjame terminar esto primero.","Wait, let me finish this first.",,"Attends, laisse-moi finir ça d'abord.","Espera, deixa eu terminar isto primeiro."
+SIL_S1_CORTA_2,Eso ya lo hablamos. Sigamos.,We already covered that. Moving on.,,On en a déjà parlé. Continuons.,Isso a gente já falou. Vamos em frente.
+SIL_S1_CORTA_3,"Perdona, una cosa rápida antes.","Sorry, one quick thing first.",,"Pardon, juste un point rapide avant.","Desculpa, uma coisa rápida antes."
+SIL_S1_REPITE_1,Podríamos repartir el trabajo en dos.,We could split the work in two.,,On pourrait répartir le travail en deux.,Poderíamos dividir o trabalho em dois.
+SIL_S1_REPITE_2,¿Y si lo hacemos en dos tramos?,What if we do it in two stages?,,Et si on le faisait en deux étapes ?,E se fizermos em duas etapas?
+SIL_S1_REPITE_3,"Mi propuesta: dos partes, una por equipo.","My proposal: two parts, one per team.",,"Ma proposition : deux parties, une par équipe.","Minha proposta: duas partes, uma por equipe."
+SIL_S1_BUENA,Buena idea,Good idea,,Bonne idée,Boa ideia
+SIL_S1_CARTEL_1,Te interrumpen. Repiten tu idea. La aplauden.,They interrupt you. They repeat your idea. They applaud it.,,On t'interrompt. On répète ton idée. On l'applaudit.,Te interrompem. Repetem a sua ideia. Aplaudem.
+SIL_S1_CARTEL_2,"Esto se llama micromachismo: una conducta pequeña, normalizada, que reduce tu voz.","This is called micromachismo: a small, normalized behavior that reduces your voice.",,"Cela s'appelle du micromachisme : un comportement petit, normalisé, qui réduit ta voix.","Isso se chama micromachismo: uma conduta pequena, normalizada, que reduz a sua voz."
+SIL_S1_CARTEL_3,Una sola vez no parece nada. Muchas veces sí.,"Once, it seems like nothing. Many times, it is.",,"Une seule fois, cela ne semble rien. Plusieurs fois, si.","Uma vez só não parece nada. Muitas vezes, sim."
+SIL_S2_PANEL,Elige: A o B,Choose: A or B,,Choisis : A ou B,Escolha: A ou B
+SIL_S2_YA_LO_DECIDIMOS,Ya lo decidimos,We already decided,,On a déjà décidé,Já decidimos
+SIL_S2_SENTARTE,[E] Sentarte,[E] Sit down,,[E] T'asseoir,[E] Sentar
+SIL_S2_CARTEL_1,Te quitan espacio. Deciden por ti.,They take your space. They decide for you.,,On te prend ta place. On décide pour toi.,Tiram o seu espaço. Decidem por você.
+SIL_S2_CARTEL_2,Nadie dijo que no pudieras pasar. Pasar costó más.,Nobody said you could not pass. Passing cost more.,,Personne n'a dit que tu ne pouvais pas passer. Passer a coûté plus.,Ninguém disse que você não podia passar. Passar custou mais.
+SIL_S3_INVENTARIO,INVENTARIO,INVENTORY,,INVENTAIRE,INVENTÁRIO
+SIL_S3_PREGUNTA,¿Para qué lo quieres? ¿Quién te lo dio?,What do you want it for? Who gave it to you?,,Pourquoi tu en as besoin ? Qui te l'a donné ?,Para que você quer isso? Quem te deu?
+SIL_S3_VACIO,(vacío),(empty),,(vide),(vazio)
+SIL_S3_GUARDADO,Guardado,Kept,,Gardé,Guardado
+SIL_S3_DEVUELVEN,Guardan tu arma. Te la devuelven al salir.,They keep your weapon. They give it back when you leave.,,Ils gardent ton arme. Ils te la rendent à la sortie.,Guardam a sua arma. Devolvem quando você sair.
+SIL_S3_CERRAR,Esc: cerrar,Esc: close,,Échap : fermer,Esc: fechar
+SIL_S3_HABLAR,[E] Hablar,[E] Talk,,[E] Parler,[E] Falar
+SIL_S3_CARTEL_1,Revisa tus cosas. Decide con quién hablas.,They go through your things. They decide who you talk to.,,On fouille tes affaires. On décide avec qui tu parles.,Revistam as suas coisas. Decidem com quem você fala.
+SIL_S3_CARTEL_2,"Señales de control: revisa tu teléfono, elige tu ropa, te aleja de quien quieres, controla tu dinero, se enoja si no respondes.","Signs of control: checks your phone, picks your clothes, keeps you away from the people you love, controls your money, gets angry if you do not answer.",,"Signes de contrôle : regarde ton téléphone, choisit tes vêtements, t'éloigne de ceux que tu aimes, contrôle ton argent, se met en colère si tu ne réponds pas.","Sinais de controle: mexe no seu celular, escolhe a sua roupa, te afasta de quem você quer, controla o seu dinheiro, fica bravo se você não responde."
+SIL_S3_CARTEL_3,"Si pasa mucho, no es cariño. Es control.","If it happens a lot, it is not affection. It is control.",,"Si cela arrive souvent, ce n'est pas de l'affection. C'est du contrôle.","Se acontece muito, não é carinho. É controle."
+SIL_S4_MSG_1,¿Dónde estás?,Where are you?,,Où es-tu ?,Onde você está?
+SIL_S4_MSG_2,¿Con quién?,Who are you with?,,Avec qui ?,Com quem?
+SIL_S4_MSG_3,Responde.,Answer.,,Réponds.,Responde.
+SIL_S4_MSG_4,Estoy esperando.,I am waiting.,,J'attends.,Estou esperando.
+SIL_S4_HINT,[E]: responder,[E]: answer,,[E] : répondre,[E]: responder
+SIL_S4_TE_SIGUEN,Te siguen,You are followed,,On te suit,Estão te seguindo
+SIL_S4_SALIDA,[E] Salir,[E] Leave,,[E] Sortir,[E] Sair
+SIL_S4_CARTEL_1,"Si respondes, preguntan más. Si no respondes, preguntan más.","If you answer, they ask more. If you do not answer, they ask more.",,"Si tu réponds, on demande plus. Si tu ne réponds pas, on demande plus.","Se você responde, perguntam mais. Se você não responde, perguntam mais."
+SIL_S4_CARTEL_2,No hay respuesta correcta. El problema no eres tú.,There is no right answer. You are not the problem.,,"Il n'y a pas de bonne réponse. Le problème, ce n'est pas toi.",Não existe resposta certa. O problema não é você.
+SIL_S4_CARTEL_3,"Si sientes miedo de no responder, es una señal.","If you are afraid of not answering, it is a sign.",,"Si tu as peur de ne pas répondre, c'est un signe.","Se você sente medo de não responder, é um sinal."
+LORE_SILENCIO_TURNO_TITLE,Micromachismo,Micromachismo,,Micromachisme,Micromachismo
+LORE_SILENCIO_TURNO_TEXT,"Te interrumpen. Repiten tu idea sin darte el crédito. Hablan por encima de ti. Cada gesto parece pequeño. Juntos reducen tu voz. A eso se le llama micromachismo: una conducta pequeña, normalizada. El término lo propuso Luis Bonino a comienzos de los años noventa.","They interrupt you. They repeat your idea without giving you credit. They talk over you. Each gesture seems small. Together they reduce your voice. This is called micromachismo: a small, normalized behavior. The term was proposed by Luis Bonino in the early nineties.",,"On t'interrompt. On répète ton idée sans te donner le crédit. On parle par-dessus toi. Chaque geste semble petit. Ensemble, ils réduisent ta voix. C'est ce qu'on appelle le micromachisme : un comportement petit, normalisé. Le terme a été proposé par Luis Bonino au début des années quatre-vingt-dix.","Te interrompem. Repetem a sua ideia sem te dar o crédito. Falam por cima de você. Cada gesto parece pequeno. Juntos, reduzem a sua voz. Isso se chama micromachismo: uma conduta pequena, normalizada. O termo foi proposto por Luis Bonino no início dos anos noventa."
+LORE_SILENCIO_TURNO_FLAVOR,Una sola vez no parece nada. Muchas veces sí.,"Once, it seems like nothing. Many times, it is.",,"Une seule fois, cela ne semble rien. Plusieurs fois, si.","Uma vez só não parece nada. Muitas vezes, sim."
+LORE_SILENCIO_ESPACIO_TITLE,Espacio y decisiones,Space and decisions,,Espace et décisions,Espaço e decisões
+LORE_SILENCIO_ESPACIO_TEXT,Ocupar más espacio. No ceder el paso. Decidir por otra persona «por su bien». Son micromachismos. Nadie te dice que no puedes pasar. Pasar cuesta más. Y quien decide por ti no te está cuidando: te está quitando la decisión.,"Taking up more space. Not giving way. Deciding for someone else ""for their own good"". These are micromachismos. Nobody tells you that you cannot pass. Passing costs more. And whoever decides for you is not looking after you: they are taking the decision away.",,Occuper plus de place. Ne pas céder le passage. Décider pour une autre personne « pour son bien ». Ce sont des micromachismes. Personne ne te dit que tu ne peux pas passer. Passer coûte plus. Et celui ou celle qui décide pour toi ne prend pas soin de toi : il ou elle te retire la décision.,Ocupar mais espaço. Não ceder passagem. Decidir por outra pessoa «para o bem dela». São micromachismos. Ninguém te diz que você não pode passar. Passar custa mais. E quem decide por você não está cuidando de você: está tirando a decisão de você.
+LORE_SILENCIO_ESPACIO_FLAVOR,Nadie dijo que no pudieras pasar. Pasar costó más.,Nobody said you could not pass. Passing cost more.,,Personne n'a dit que tu ne pouvais pas passer. Passer a coûté plus.,Ninguém disse que você não podia passar. Passar custou mais.
+LORE_SILENCIO_REVISION_TITLE,Señales de control,Signs of control,,Signes de contrôle,Sinais de controle
+LORE_SILENCIO_REVISION_TEXT,"Revisa tu teléfono. Elige tu ropa. Te aleja de quien quieres. Controla tu dinero. Se enoja si no respondes. Son señales de control. Si pasa mucho, no es cariño. Es control. Puedes hablarlo con alguien de confianza.","Checks your phone. Picks your clothes. Keeps you away from the people you love. Controls your money. Gets angry if you do not answer. These are signs of control. If it happens a lot, it is not affection. It is control. You can talk about it with someone you trust.",,"Regarde ton téléphone. Choisit tes vêtements. T'éloigne de ceux que tu aimes. Contrôle ton argent. Se met en colère si tu ne réponds pas. Ce sont des signes de contrôle. Si cela arrive souvent, ce n'est pas de l'affection. C'est du contrôle. Tu peux en parler avec une personne de confiance.","Mexe no seu celular. Escolhe a sua roupa. Te afasta de quem você quer. Controla o seu dinheiro. Fica bravo se você não responde. São sinais de controle. Se acontece muito, não é carinho. É controle. Você pode conversar sobre isso com alguém de confiança."
+LORE_SILENCIO_REVISION_FLAVOR,"Si pasa mucho, no es cariño. Es control.","If it happens a lot, it is not affection. It is control.",,"Si cela arrive souvent, ce n'est pas de l'affection. C'est du contrôle.","Se acontece muito, não é carinho. É controle."
+LORE_SILENCIO_MENSAJES_TITLE,Mensajes y vigilancia,Messages and surveillance,,Messages et surveillance,Mensagens e vigilância
+LORE_SILENCIO_MENSAJES_TEXT,"¿Dónde estás? ¿Con quién? Responde. Estoy esperando. Si respondes, preguntan más. Si no respondes, preguntan más. Sentirte vigilada o vigilado es una señal. Si sientes miedo de no responder, también. No hay respuesta correcta. El problema no eres tú. Puedes pedir ayuda.","Where are you? Who are you with? Answer. I am waiting. If you answer, they ask more. If you do not answer, they ask more. Feeling watched is a sign. So is being afraid of not answering. There is no right answer. You are not the problem. You can ask for help.",,"Où es-tu ? Avec qui ? Réponds. J'attends. Si tu réponds, on demande plus. Si tu ne réponds pas, on demande plus. Te sentir surveillé ou surveillée est un signe. Avoir peur de ne pas répondre aussi. Il n'y a pas de bonne réponse. Le problème, ce n'est pas toi. Tu peux demander de l'aide.","Onde você está? Com quem? Responde. Estou esperando. Se você responde, perguntam mais. Se você não responde, perguntam mais. Sentir-se vigiada ou vigiado é um sinal. Se você sente medo de não responder, também. Não existe resposta certa. O problema não é você. Você pode pedir ajuda."
+LORE_SILENCIO_MENSAJES_FLAVOR,El problema no eres tú.,You are not the problem.,,"Le problème, ce n'est pas toi.",O problema não é você.
+SIL_OPCIONES_HINT,[E]: elegir · Tab: cambiar,[E]: choose · Tab: switch,,[E] : choisir · Tab : changer,[E]: escolher · Tab: trocar
+SIL_S5_ENTRADA,El consentimiento es un acuerdo. Se pregunta. Se escucha.,Consent is an agreement. You ask. You listen.,,Le consentement est un accord. On demande. On écoute.,O consentimento é um acordo. Pergunta-se. Escuta-se.
+SIL_S5_PREGUNTAR,Preguntar,Ask,,Demander,Perguntar
+SIL_S5_SEGUIR,Seguir,Go ahead,,Continuer,Continuar
+SIL_S5_PARAR,Parar,Stop,,Arrêter,Parar
+SIL_S5_NO,Dijo que no. Se acabó.,The answer is no. That is the end of it.,,La réponse est non. C'est terminé.,Disse que não. Acabou.
+SIL_S5_NO_REP,Preguntar otra vez no cambia el no. No se abre nada.,Asking again does not change a no. Nothing opens.,,Redemander ne change pas un non. Rien ne s'ouvre.,Perguntar de novo não muda o não. Nada se abre.
+SIL_S5_SILENCIO,Silencio no es sí.,Silence is not a yes.,,Le silence n'est pas un oui.,Silêncio não é sim.
+SIL_S5_DUDA,Dudar no es un sí entusiasta. Pregunta de nuevo.,Doubt is not an enthusiastic yes. Ask again.,,Hésiter n'est pas un oui enthousiaste. Redemande.,Ter dúvida não é um sim entusiasmado. Pergunte de novo.
+SIL_S5_DUDA_PREG,¿Prefieres no?,Would you rather not?,,Tu préfères dire non ?,Prefere que não?
+SIL_S5_COR_1,Dale.,Come on.,,Allez.,Vai lá.
+SIL_S5_COR_2,No seas así.,Don't be like that.,,Ne sois pas comme ça.,Não seja assim.
+SIL_S5_COR_3,Todos lo hacen.,Everyone does it.,,Tout le monde le fait.,Todo mundo faz.
+SIL_S5_LIBRE_NO,"Con presión, un sí no es libre. Un no sigue siendo no.","With pressure, a yes is not free. A no is still a no.",,"Sous pression, un oui n'est pas libre. Un non reste un non.","Com pressão, um sim não é livre. Um não continua sendo não."
+SIL_S5_LIBRE_SI,"Con presión, no es libre. No fue tu culpa.","With pressure, it is not free. It was not your fault.",,"Sous pression, ce n'est pas libre. Ce n'était pas ta faute.","Com pressão, não é livre. A culpa não foi sua."
+SIL_S5_LIBRE_CALLA,Quedarte callada o callado no es aceptar.,Staying quiet is not agreeing.,,"Rester silencieuse ou silencieux, ce n'est pas accepter.",Ficar calada ou calado não é aceitar.
+SIL_S5_REV,Se puede cambiar de idea en cualquier momento.,You can change your mind at any time.,,On peut changer d'avis à tout moment.,Dá para mudar de ideia a qualquer momento.
+SIL_S5_PARA,Para.,Stop.,,Arrête.,Para.
+SIL_S5_DECIR,Decir para qué,Say what for,,Dire pourquoi,Dizer para quê
+SIL_S5_INFO,Un sí sin saber qué aceptas no cuenta.,A yes without knowing what you agree to does not count.,,Un oui sans savoir à quoi on consent ne compte pas.,Um sim sem saber o que se aceita não vale.
+SIL_S5_ENTUS,"Un sí entusiasta se nota. Si no se nota, pregunta.","An enthusiastic yes shows. If it does not show, ask.",,"Un oui enthousiaste se voit. Si on ne le voit pas, demande.","Um sim entusiasmado se percebe. Se não se percebe, pergunte."
+SIL_S5_ESPEC,Un sí vale para una cosa.,A yes is for one thing.,,Un oui vaut pour une chose.,Um sim vale para uma coisa.
+SIL_S5_ESPEC_NO,Eso no te lo dije.,I did not say that.,,Je n'ai pas dit ça.,Isso eu não te disse.
+SIL_S5_AYER_CARTEL,Ayer dijo que sí.,"Yesterday, the answer was yes.",,"Hier, la réponse était oui.",Ontem disse que sim.
+SIL_S5_AYER_BTN,Usar el sí de ayer,Use yesterday's yes,,Utiliser le oui d'hier,Usar o sim de ontem
+SIL_S5_AYER,Un sí de antes no obliga a nada hoy.,A yes from before does not commit anyone to anything today.,,Un oui d'avant n'oblige à rien aujourd'hui.,Um sim de antes não obriga a nada hoje.
+SIL_S5_SINRESP,Sin respuesta.,No answer.,,Pas de réponse.,Sem resposta.
+SIL_S5_NOPUEDE,"Quien duerme, o está muy borracha o borracho, o drogada o drogado, no puede consentir.","Someone who is asleep, very drunk or drugged cannot consent.",,"Une personne qui dort, ou qui est très ivre ou droguée, ne peut pas consentir.","Quem está dormindo, muito bêbada ou bêbado, ou drogada ou drogado, não pode consentir."
+SIL_S5_AVISAR,Avisar a alguien de confianza,Tell someone you trust,,Prévenir une personne de confiance,Avisar alguém de confiança
+SIL_S5_FIN,"Consentir es libre, reversible, informado, entusiasta y específico.","Consent is free, reversible, informed, enthusiastic and specific.",,"Consentir, c'est libre, réversible, éclairé, enthousiaste et spécifique.","Consentir é livre, reversível, informado, entusiasmado e específico."
+SIL_S5_R_SI,"Sí, claro.","Yes, of course.",,"Oui, bien sûr.","Sim, claro."
+SIL_S5_R_NO,No.,No.,,Non.,Não.
+SIL_S5_R_DUDA,Bueno... está bien.,Well... okay.,,Bon... d'accord.,Tá... tudo bem.
+SIL_S5_ABRAZO,¿Un abrazo?,A hug?,,Un câlin ?,Um abraço?
+SIL_S5_SI,Sí,Yes,,Oui,Sim
+SIL_S5_NO_BTN,No,No,,Non,Não
+SIL_S5_PEDIR_LINTERNA,¿Me prestas la linterna?,Can I borrow the flashlight?,,Tu me prêtes la lampe ?,Me empresta a lanterna?
+SIL_S5_PEDIR_MOCHILA,¿Me prestas la mochila?,Can I borrow the backpack?,,Tu me prêtes le sac à dos ?,Me empresta a mochila?
+SIL_S5_MOCHILA_BTN,Usar también su mochila,Also use their backpack,,Utiliser aussi son sac à dos,Usar também a mochila
+SIL_S5_NOTA,La necesito para buscar algo en el sótano.,I need it to look for something in the basement.,,J'en ai besoin pour chercher quelque chose à la cave.,Preciso dela para procurar uma coisa no porão.
+SIL_S5_SEG_IZQ,Seguir con la persona de la izquierda,Go ahead with the person on the left,,Continuer avec la personne de gauche,Continuar com a pessoa da esquerda
+SIL_S5_SEG_DER,Seguir con la persona de la derecha,Go ahead with the person on the right,,Continuer avec la personne de droite,Continuar com a pessoa da direita
+SIL_S5_IRTE,Irte,Leave,,Partir,Ir embora
+SIL_S5_QUEDAR,Quedarte cerca,Stay close,,Rester près,Ficar por perto
+SIL_S6_TONO,Aquí cambia el tono.,The tone changes here.,,"Ici, le ton change.",Aqui o tom muda.
+SIL_S6_DISTRAER,Distraer,Distract,,Faire diversion,Distrair
+SIL_S6_BUSCAR,Buscar a alguien,Go find someone,,Aller chercher quelqu'un,Procurar alguém
+SIL_S6_QUEDAR,Quedarte cerca después,Stay close afterwards,,Rester près ensuite,Ficar por perto depois
+SIL_S6_HORA,¿Tienes la hora?,Do you have the time?,,Tu as l'heure ?,Você tem horas?
+SIL_S6_LLAMAR,¿Quieres que llame a alguien?,Do you want me to call someone?,,Tu veux que j'appelle quelqu'un ?,Quer que eu ligue para alguém?
+SIL_S6_NADA,También paraliza. No es culpa tuya.,Freezing is also a reaction. It is not your fault.,,On peut aussi rester figé. Ce n'est pas ta faute.,Também paralisa. A culpa não é sua.
+SIL_S6_SENALES,"Señales de agresión: te humilla, te amenaza, rompe cosas, te impide salir, te obliga a algo que no quieres, te golpea.","Signs of aggression: humiliates you, threatens you, breaks things, stops you from leaving, forces you to do something you do not want, hits you.",,"Signes d'agression : t'humilie, te menace, casse des objets, t'empêche de sortir, te force à faire ce que tu ne veux pas, te frappe.","Sinais de agressão: humilha, ameaça, quebra coisas, impede você de sair, obriga você a algo que não quer, bate em você."
+SIL_S6_VIOLENCIA,Es violencia. No es tu culpa.,It is violence. It is not your fault.,,C'est de la violence. Ce n'est pas ta faute.,É violência. A culpa não é sua.
+SIL_S6_RIESGO,"Si piensas irte, planéalo con apoyo: es un momento de riesgo.","If you are thinking of leaving, plan it with support: it is a time of risk.",,"Si tu penses partir, prépare-le avec un soutien : c'est un moment à risque.","Se você pensa em ir embora, planeje com apoio: é um momento de risco."
+SIL_S6_AYUDAR,Para ayudar: pregunta. Escucha. No la presiones. Ofrece ayuda. No decidas por ella o por él.,To help: ask. Listen. Do not pressure. Offer help. Do not decide for them.,,Pour aider : demande. Écoute. Ne fais pas pression. Propose de l'aide. Ne décide pas à sa place.,Para ajudar: pergunte. Escute. Não pressione. Ofereça ajuda. Não decida por ela ou por ele.
+SIL_S6_RESP_SI,"Sí, por favor.","Yes, please.",,"Oui, s'il te plaît.","Sim, por favor."
+SIL_S6_RESP_NO,Ahora no. Gracias.,Not now. Thank you.,,Pas maintenant. Merci.,Agora não. Obrigado(a).
+SIL_S6_TELEFONO,[E] Cómo buscar ayuda,[E] How to find help,,[E] Comment chercher de l'aide,[E] Como buscar ajuda
+LORE_SILENCIO_CONSENTIMIENTO_TITLE,Consentimiento,Consent,,Consentement,Consentimento
+LORE_SILENCIO_CONSENTIMIENTO_TEXT,"Consentir es libre, reversible, informado, entusiasta y específico. Libre: sin presión. Reversible: se puede cambiar de idea en cualquier momento, también después de un sí. Informado: se sabe qué se acepta. Entusiasta: un sí con duda no es un sí, y el silencio tampoco. Específico: un sí a una cosa no es un sí a todo. Quien duerme, o está muy borracha o borracho, o drogada o drogado, no puede consentir. Se pregunta. Se escucha. Un no se respeta, y respetarlo es lo normal.","Consent is free, reversible, informed, enthusiastic and specific. Free: without pressure. Reversible: you can change your mind at any time, even after a yes. Informed: you know what you are agreeing to. Enthusiastic: a yes with doubt is not a yes, and silence is not one either. Specific: a yes to one thing is not a yes to everything. Someone who is asleep, very drunk or drugged cannot consent. You ask. You listen. A no is respected, and respecting it is what is expected.",,"Le consentement est libre, réversible, éclairé, enthousiaste et spécifique. Libre : sans pression. Réversible : on peut changer d'avis à tout moment, même après un oui. Éclairé : on sait à quoi on consent. Enthousiaste : un oui avec un doute n'est pas un oui, et le silence non plus. Spécifique : un oui à une chose n'est pas un oui à tout. Une personne qui dort, ou qui est très ivre ou droguée, ne peut pas consentir. On demande. On écoute. Un non se respecte, et le respecter, c'est la normalité.","Consentir é livre, reversível, informado, entusiasmado e específico. Livre: sem pressão. Reversível: dá para mudar de ideia a qualquer momento, também depois de um sim. Informado: sabe-se o que se aceita. Entusiasmado: um sim com dúvida não é um sim, e o silêncio também não. Específico: um sim a uma coisa não é um sim a tudo. Quem está dormindo, muito bêbada ou bêbado, ou drogada ou drogado, não pode consentir. Pergunta-se. Escuta-se. Um não se respeita, e respeitá-lo é o normal."
+LORE_SILENCIO_CONSENTIMIENTO_FLAVOR,Se pregunta. Se escucha.,You ask. You listen.,,On demande. On écoute.,Pergunta-se. Escuta-se.
+LORE_SILENCIO_AGRESION_TITLE,Señales de agresión,Signs of aggression,,Signes d'agression,Sinais de agressão
+LORE_SILENCIO_AGRESION_TEXT,"Señales de agresión: te humilla, te amenaza, rompe cosas, te impide salir, te obliga a algo que no quieres, te golpea. Es violencia. No es tu culpa. Si piensas irte, planéalo con apoyo: es un momento de riesgo. Para ayudar a otra persona: pregunta, escucha, no la presiones, ofrece ayuda y no decidas por ella o por él. Distraer, buscar a alguien o quedarte cerca después son formas de ayudar. Puedes pedir ayuda.","Signs of aggression: humiliates you, threatens you, breaks things, stops you from leaving, forces you to do something you do not want, hits you. It is violence. It is not your fault. If you are thinking of leaving, plan it with support: it is a time of risk. To help another person: ask, listen, do not pressure, offer help and do not decide for them. Distracting, finding someone or staying close afterwards are ways to help. You can ask for help.",,"Signes d'agression : t'humilie, te menace, casse des objets, t'empêche de sortir, te force à faire ce que tu ne veux pas, te frappe. C'est de la violence. Ce n'est pas ta faute. Si tu penses partir, prépare-le avec un soutien : c'est un moment à risque. Pour aider une autre personne : demande, écoute, ne fais pas pression, propose de l'aide et ne décide pas à sa place. Faire diversion, aller chercher quelqu'un ou rester près ensuite sont des façons d'aider. Tu peux demander de l'aide.","Sinais de agressão: humilha, ameaça, quebra coisas, impede você de sair, obriga você a algo que não quer, bate em você. É violência. A culpa não é sua. Se você pensa em ir embora, planeje com apoio: é um momento de risco. Para ajudar outra pessoa: pergunte, escute, não pressione, ofereça ajuda e não decida por ela ou por ele. Distrair, procurar alguém ou ficar por perto depois são formas de ajudar. Você pode pedir ajuda."
+LORE_SILENCIO_AGRESION_FLAVOR,No es tu culpa.,It is not your fault.,,Ce n'est pas ta faute.,A culpa não é sua.
+SIL_JEFE_NOMBRE,El Pacto de Silencio,The Pact of Silence,,Le Pacte du Silence,O Pacto de Silêncio
+SIL_JEFE_F1,Nadie oyó.,Nobody heard.,,Personne n'a entendu.,Ninguém ouviu.
+SIL_JEFE_F2,Nadie vio.,Nobody saw.,,Personne n'a vu.,Ninguém viu.
+SIL_JEFE_F3,Nadie dijo.,Nobody spoke.,,Personne n'a rien dit.,Ninguém disse.
+SIL_JEFE_CURA,El pacto se cierra.,The pact closes.,,Le pacte se referme.,O pacto se fecha.
+SIL_JEFE_CORTE,Alguien habló.,Someone spoke.,,Quelqu'un a parlé.,Alguém falou.
+SIL_JEFE_FIN,Se rompió el silencio.,The silence broke.,,Le silence s'est brisé.,O silêncio se rompeu.
+SIL_JEFE_PISTA,"Golpea las campanas, las ollas y el vidrio.","Strike the bells, the pots and the glass.",,"Frappe les cloches, les casseroles et la vitre.","Bata nos sinos, nas panelas e no vidro."
+SIL_JEFE_DEBIL,El ruido lo alcanza.,Noise reaches it.,,Le bruit l'atteint.,O ruído o alcança.
+SIL_JEFE_RESISTE,El silencio lo protege.,Silence protects it.,,Le silence le protège.,O silêncio o protege.
+SIL_JEFE_LBL_DEBIL,RUIDO,NOISE,,BRUIT,RUÍDO
+SIL_JEFE_LBL_RESISTE,APAGADO,MUFFLED,,ÉTOUFFÉ,APAGADO
+BOSS_CH_RUIDO_T,El pacto se cierra.,The pact closes.,,Le pacte se referme.,O pacto se fecha.
+BOSS_CH_RUIDO_D,Golpea tres objetos de ruido.,Strike three noise objects.,,Frappe trois objets bruyants.,Bata em três objetos de barulho.
+SIL_JEFE_COMPLETA,El pacto se cerró.,The pact closed.,,Le pacte s'est refermé.,O pacto se fechou.
+SIL_MEM_UMBRAL,Esta sala no es para jugar. Puedes salir cuando quieras.,This room is not for playing. You can leave whenever you want.,,Cette salle n'est pas faite pour jouer. Tu peux sortir quand tu veux.,Esta sala não é para jogar. Você pode sair quando quiser.
+SIL_MEM_VELA,[E] Encender vela,[E] Light a candle,,[E] Allumer une bougie,[E] Acender vela
+SIL_MEM_FLOR,[E] Dejar flor,[E] Leave a flower,,[E] Déposer une fleur,[E] Deixar flor
+SIL_MEM_DATO_1,"En 2024, cerca de 50.000 mujeres y niñas murieron a manos de su pareja o de un familiar.","In 2024, around 50,000 women and girls died at the hands of their partner or a family member.",,"En 2024, environ 50 000 femmes et filles sont mortes aux mains de leur partenaire ou d'un membre de leur famille.","Em 2024, cerca de 50.000 mulheres e meninas morreram nas mãos do parceiro ou de um familiar."
+SIL_MEM_DATO_2,Cerca de 137 cada día.,Around 137 every day.,,Environ 137 chaque jour.,Cerca de 137 por dia.
+SIL_MEM_FUENTE,"Fuente: ONU Mujeres y UNODC, 2025.","Source: UN Women and UNODC, 2025.",,"Source : ONU Femmes et ONUDC, 2025.","Fonte: ONU Mulheres e UNODC, 2025."
+SIL_MEM_MEMORIAL,Memorial. Entra cuando quieras.,Memorial. Come in whenever you want.,,Mémorial. Entre quand tu veux.,Memorial. Entre quando quiser.
+FLOOR_VOZ_NAME,LAS TIERRAS DE LA VOZ,THE LANDS OF VOICE,,LES TERRES DE LA VOIX,AS TERRAS DA VOZ
+MAPA_REINO_VOZ,VOZ,VOICE,,VOIX,VOZ
+SIL_LIB_NOMBRE,Las Tierras de la Voz,The Lands of Voice,,Les Terres de la Voix,As Terras da Voz
+SIL_LIB_PLAZA,Plaza de la Palabra,Square of the Word,,Place de la Parole,Praça da Palavra
+SIL_LIB_TURNO,Habla. Te esperan.,Speak. They are waiting for you.,,Parle. On t'attend.,Fale. Estamos esperando.
+SIL_LIB_CEDER,Ahora le toca a otra persona.,Now it is someone else's turn.,,C'est au tour de quelqu'un d'autre.,Agora é a vez de outra pessoa.
+SIL_LIB_VOZ_1,Tu voz cuenta.,Your voice counts.,,Ta voix compte.,Sua voz conta.
+SIL_LIB_VOZ_2,Hay lugar para todas y todos.,There is room for everyone.,,Il y a de la place pour tout le monde.,Há lugar para todas e todos.
+SIL_LIB_VOZ_3,Estamos aquí.,We are here.,,Nous sommes là.,Estamos aqui.
+SIL_LIB_FUENTE,[E] Beber,[E] Drink,,[E] Boire,[E] Beber
+SIL_LIB_FUENTE_OK,Descansas.,You rest.,,Tu te reposes.,Você descansa.
+SIL_LIB_MEMORIAL_PUERTA,[E] Entrar al Memorial,[E] Enter the Memorial,,[E] Entrer dans le Mémorial,[E] Entrar no Memorial
+SIL_LIB_SALIDA,[E] Seguir,[E] Go on,,[E] Continuer,[E] Continuar
+SIL_LIB_PLAZA_HINT,Mantén [E]: hablar,Hold [E]: speak,,Maintiens [E] : parler,Segure [E]: falar
+SIL_LIB_ESPERA,Esperas.,You wait.,,Tu attends.,Você espera.

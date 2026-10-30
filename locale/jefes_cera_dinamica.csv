@@ -1,26 +1,26 @@
-keys,es,en,es_ES,fr
-CERA_DESPERATE,¡LA CERA HIERVE!,THE WAX IS BOILING!,,LA CIRE BOUT !
-CERA_HARDEN,¡La cera se endurece! Rómpela a tiros.,The wax is hardening! Shoot it to pieces.,,La cire durcit ! Tire dessus pour la briser.
-CERA_EDGES,La cera sube por los bordes...,The wax is creeping up the walls...,,La cire grimpe le long des murs...
-CERA_PAT_DASH,¡PATRÓN DETECTADO: SIEMPRE ESQUIVAS %s!,PATTERN DETECTED: YOU ALWAYS DODGE %s!,,SCHÉMA DÉTECTÉ : TU ESQUIVES TOUJOURS %s !
-CERA_PAT_DASH_Q1,Ya te puse un charquito de bienvenida.,I left you a little welcome puddle.,,Je t'ai laissé une petite flaque de bienvenue.
-CERA_PAT_DASH_Q2,Eres más predecible que mi horóscopo.,You are more predictable than my horoscope.,,Tu es plus prévisible que mon horoscope.
-CERA_PAT_ORBIT,¡PATRÓN DETECTADO: SIEMPRE ME RODEAS %s!,PATTERN DETECTED: YOU ALWAYS CIRCLE ME %s!,,SCHÉMA DÉTECTÉ : TU TOURNES TOUJOURS AUTOUR DE MOI %s !
-CERA_PAT_ORBIT_Q1,Te corto el paso. Nada personal.,I am cutting you off. Nothing personal.,,Je te coupe la route. Rien de personnel.
-CERA_PAT_ORBIT_Q2,Yo también sé dar vueltas.,I can walk in circles too.,,"Moi aussi, je sais tourner en rond."
-CERA_DIR_IZQ,A LA IZQUIERDA,TO THE LEFT,,VERS LA GAUCHE
-CERA_DIR_DER,A LA DERECHA,TO THE RIGHT,,VERS LA DROITE
-CERA_DIR_ARRIBA,HACIA ARRIBA,UPWARDS,,VERS LE HAUT
-CERA_DIR_ABAJO,HACIA ABAJO,DOWNWARDS,,VERS LE BAS
-CERA_DIR_HORARIO,EN SENTIDO HORARIO,CLOCKWISE,,DANS LE SENS HORAIRE
-CERA_DIR_ANTIHORARIO,AL REVÉS DEL RELOJ,COUNTERCLOCKWISE,,DANS LE SENS ANTIHORAIRE
-CERA_STOMP,¡NO TE PEGUES TANTO!,PERSONAL SPACE!,,ESPACE PERSONNEL !
-CERA_FIRMA,¡DEPILACIÓN TOTAL!,TOTAL WAXING!,,ÉPILATION TOTALE !
-CERA_DECOY,¡ERA UN SEÑUELO! Quema y le regala tiempo.,A DECOY! It burns and buys her time.,,UN LEURRE ! Il brûle et lui fait gagner du temps.
-CERA_CUT_BONUS,¡Cura cortada! Eso dolió.,Heal cut! That one hurt.,,"Soin interrompu ! Celle-là, elle a fait mal."
-CERA_RAGE,¡CERA HIRVIENDO!,WAX AT A ROLLING BOIL!,,CIRE À GROS BOUILLONS !
-CERA_CH_TIRA_D1,Tócala DOS veces (o hazle dash): se recalienta y huye.,Touch it TWICE (or dash into it): she reheats and runs.,,Touche-la DEUX FOIS (ou fonce dedans en dash) : elle se réchauffe et s'enfuit.
-CERA_CH_TIRA_D2,Tócala DOS veces. Ojo con el señuelo (la X roja).,Touch it TWICE. Beware the decoy (red X).,,Touche-la DEUX FOIS. Attention au leurre (X rouge).
-CERA_CH_TIRA_D3,"Toca las DOS tiras buenas, dos veces cada una. La X roja quema.",Touch BOTH good strips twice each. The red X one burns.,,Touche DEUX FOIS chacune des deux bonnes bandes. Celle au X rouge brûle.
-CERA_GOTA,Gotita de cera,Wax droplet,,Gouttelette de cire
-CERA_TOUCH,¡TÓCALA!,TOUCH IT!,,TOUCHE-LA !
+keys,es,en,es_ES,fr,pt_BR
+CERA_DESPERATE,¡LA CERA HIERVE!,THE WAX IS BOILING!,,LA CIRE BOUT !,A CERA FERVE!
+CERA_HARDEN,¡La cera se endurece! Rómpela a tiros.,The wax is hardening! Shoot it to pieces.,,La cire durcit ! Tire dessus pour la briser.,A cera endurece! Quebre a tiros.
+CERA_EDGES,La cera sube por los bordes...,The wax is creeping up the walls...,,La cire grimpe le long des murs...,A cera sobe pelas bordas...
+CERA_PAT_DASH,¡PATRÓN DETECTADO: SIEMPRE ESQUIVAS %s!,PATTERN DETECTED: YOU ALWAYS DODGE %s!,,SCHÉMA DÉTECTÉ : TU ESQUIVES TOUJOURS %s !,PADRÃO DETECTADO: VOCÊ SEMPRE DESVIA %s!
+CERA_PAT_DASH_Q1,Ya te puse un charquito de bienvenida.,I left you a little welcome puddle.,,Je t'ai laissé une petite flaque de bienvenue.,Já deixei uma pocinha de boas-vindas pra você.
+CERA_PAT_DASH_Q2,Eres más predecible que mi horóscopo.,You are more predictable than my horoscope.,,Tu es plus prévisible que mon horoscope.,Você é mais previsível que o meu horóscopo.
+CERA_PAT_ORBIT,¡PATRÓN DETECTADO: SIEMPRE ME RODEAS %s!,PATTERN DETECTED: YOU ALWAYS CIRCLE ME %s!,,SCHÉMA DÉTECTÉ : TU TOURNES TOUJOURS AUTOUR DE MOI %s !,PADRÃO DETECTADO: VOCÊ SEMPRE ME CONTORNA %s!
+CERA_PAT_ORBIT_Q1,Te corto el paso. Nada personal.,I am cutting you off. Nothing personal.,,Je te coupe la route. Rien de personnel.,Eu corto o seu caminho. Nada pessoal.
+CERA_PAT_ORBIT_Q2,Yo también sé dar vueltas.,I can walk in circles too.,,"Moi aussi, je sais tourner en rond.",Eu também sei dar voltas.
+CERA_DIR_IZQ,A LA IZQUIERDA,TO THE LEFT,,VERS LA GAUCHE,PARA A ESQUERDA
+CERA_DIR_DER,A LA DERECHA,TO THE RIGHT,,VERS LA DROITE,PARA A DIREITA
+CERA_DIR_ARRIBA,HACIA ARRIBA,UPWARDS,,VERS LE HAUT,PARA CIMA
+CERA_DIR_ABAJO,HACIA ABAJO,DOWNWARDS,,VERS LE BAS,PARA BAIXO
+CERA_DIR_HORARIO,EN SENTIDO HORARIO,CLOCKWISE,,DANS LE SENS HORAIRE,NO SENTIDO HORÁRIO
+CERA_DIR_ANTIHORARIO,AL REVÉS DEL RELOJ,COUNTERCLOCKWISE,,DANS LE SENS ANTIHORAIRE,NO SENTIDO ANTI-HORÁRIO
+CERA_STOMP,¡NO TE PEGUES TANTO!,PERSONAL SPACE!,,ESPACE PERSONNEL !,NÃO CHEGUE TÃO PERTO!
+CERA_FIRMA,¡DEPILACIÓN TOTAL!,TOTAL WAXING!,,ÉPILATION TOTALE !,DEPILAÇÃO TOTAL!
+CERA_DECOY,¡ERA UN SEÑUELO! Quema y le regala tiempo.,A DECOY! It burns and buys her time.,,UN LEURRE ! Il brûle et lui fait gagner du temps.,ERA UMA ISCA! Queima e dá tempo a ela.
+CERA_CUT_BONUS,¡Cura cortada! Eso dolió.,Heal cut! That one hurt.,,"Soin interrompu ! Celle-là, elle a fait mal.",Cura cortada! Isso doeu.
+CERA_RAGE,¡CERA HIRVIENDO!,WAX AT A ROLLING BOIL!,,CIRE À GROS BOUILLONS !,CERA FERVENDO!
+CERA_CH_TIRA_D1,Tócala DOS veces (o hazle dash): se recalienta y huye.,Touch it TWICE (or dash into it): she reheats and runs.,,Touche-la DEUX FOIS (ou fonce dedans en dash) : elle se réchauffe et s'enfuit.,Toque nela DUAS vezes (ou dê um dash): ela reaquece e foge.
+CERA_CH_TIRA_D2,Tócala DOS veces. Ojo con el señuelo (la X roja).,Touch it TWICE. Beware the decoy (red X).,,Touche-la DEUX FOIS. Attention au leurre (X rouge).,Toque nela DUAS vezes. Cuidado com a isca (o X vermelho).
+CERA_CH_TIRA_D3,"Toca las DOS tiras buenas, dos veces cada una. La X roja quema.",Touch BOTH good strips twice each. The red X one burns.,,Touche DEUX FOIS chacune des deux bonnes bandes. Celle au X rouge brûle.,"Toque nas DUAS tiras boas, duas vezes cada. O X vermelho queima."
+CERA_GOTA,Gotita de cera,Wax droplet,,Gouttelette de cire,Gotinha de cera
+CERA_TOUCH,¡TÓCALA!,TOUCH IT!,,TOUCHE-LA !,TOQUE NELA!

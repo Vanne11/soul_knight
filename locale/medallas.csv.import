@@ -6,10 +6,10 @@ uid="uid://0nbcikjdsh2"
 
 [deps]
 
-files=["res://locale/medallas.es.translation", "res://locale/medallas.en.translation", "res://locale/medallas.fr.translation"]
+files=["res://locale/medallas.es.translation", "res://locale/medallas.en.translation", "res://locale/medallas.fr.translation", "res://locale/medallas.pt_BR.translation"]
 
 source_file="res://locale/medallas.csv"
-dest_files=["res://locale/medallas.es.translation", "res://locale/medallas.en.translation", "res://locale/medallas.fr.translation"]
+dest_files=["res://locale/medallas.es.translation", "res://locale/medallas.en.translation", "res://locale/medallas.fr.translation", "res://locale/medallas.pt_BR.translation"]
 
 [params]
 

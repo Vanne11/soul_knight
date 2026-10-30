@@ -24,7 +24,7 @@ FMT = re.compile(r"%s")
 
 
 REQUIRED = ("es", "en")
-OPTIONAL = ("es_ES", "fr")
+OPTIONAL = ("es_ES", "fr", "pt_BR")
 
 
 def main() -> int:
