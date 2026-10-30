@@ -10,5 +10,5 @@ title = "Bandera Arcoíris"
 text = "Gilbert Baker la cosió en 1978 y se izó por primera vez el 25 de junio en San Francisco. Tenía 8 franjas, cada una con su sentido: rosa fuerte, sexualidad; rojo, vida; naranja, sanación; amarillo, luz del sol; verde, naturaleza; turquesa, magia y arte; índigo, serenidad; violeta, espíritu. El rosa se cayó porque no había tela de ese color y el turquesa se fue en 1979 para poder partirla en postes de luz con franjas parejas. Quedaron 6."
 category = 7
 sprite = ExtResource("2")
-unlock_condition = {"target_id": "reino_orgullo_entrada", "type": 10}
+unlock_condition = {"target_id": "bandera_hallada_arcoiris", "type": 10}
 flavor_text = "Dos colores se perdieron por culpa de la tela y de los postes."

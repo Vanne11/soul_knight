@@ -325,12 +325,26 @@ func _open_medals() -> void:
 	MedalScreen.build(box)
 
 
+## Mapa de las banderas: las 10 banderas del Orgullo, encontradas y por encontrar (src/ui/flag_album.gd).
+func _open_flag_map() -> void:
+	var box := _window(tr("FLAG_MAP_TITLE") % [Banderas.found().size(), Banderas.IDS.size()])
+	FlagAlbum.build(box)
+
+
 ## Codice: lo que has descubierto (inscripciones, objetos, enemigos...). Lo demas, "???".
 ## Cada entrada lleva su imagen: el objeto, el bicho, el heroe o la ilustracion
 ## del lugar. Las bloqueadas salen en silueta negra, para picar la curiosidad.
 func _open_codex() -> void:
 	var lore = _game_controller.get_lore_database()
 	var box := _window(tr("CODEX_TITLE") % lore.get_completion_percentage())
+	# seccion "Mapa de las banderas" (src/ui/flag_album.gd): reemplaza esta ventana por la suya
+	var flags_btn := Button.new()
+	flags_btn.text = tr("FLAG_MAP_BTN") % [Banderas.found().size(), Banderas.IDS.size()]
+	HudStyle.juice_button(flags_btn)
+	flags_btn.pressed.connect(func():
+		_close_popup.call()
+		_open_flag_map())
+	box.add_child(flags_btn)
 	var split := HSplitContainer.new()
 	split.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(split)

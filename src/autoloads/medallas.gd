@@ -19,6 +19,7 @@ extends Node
 ##   victoria        {heroe?, pudor_min?, dia?}   partida ganada (con ese heroe / Censura minima / partida del dia)
 ##   victoria_heroes {n}                          ganada con n heroes distintos
 ##   codice          {pct}                        % del codice
+##   banderas        {}                           las 10 banderas del Mapa de las banderas (src/arcoiria/banderas.gd)
 ##   contador        {nombre, n}                  acertijos / muertes / partidas / masillados
 ##   todas           {}                           Desnudo Integral
 ##
@@ -54,7 +55,7 @@ var _save_override := ""
 var _defs: Array = []
 var _by_id: Dictionary = {}
 var _won: Dictionary = {}  # id -> fecha "AAAA-MM-DD"
-var _stats := {"acertijos": 0, "muertes": 0, "partidas": 0, "masillados": 0, "heroes_ganados": [], "jefes_sin_dano": []}
+var _stats := {"acertijos": 0, "muertes": 0, "partidas": 0, "masillados": 0, "heroes_ganados": [], "jefes_sin_dano": [], "banderas": {}}
 var _in_boss := false
 var _boss_hit := false
 var _layer: CanvasLayer
@@ -185,6 +186,17 @@ func otorgar(id: String) -> bool:
 ## (p. ej. Steam.setAchievement(id); Steam.storeStats()). Los ids del JSON sirven de nombre de logro.
 func _publicar_plataforma(id: String) -> void:
 	print("Medalla ganada: %s" % id)
+
+
+## Mapa de las banderas: donde se encontro cada bandera (id de lore -> id de reino). Ver src/arcoiria/banderas.gd.
+func anotar_bandera(id: String, region: String) -> void:
+	_stats.banderas[id] = region
+	_save_progress()
+	_eval_state()  # la medalla de las 10 (con el codice ya abierto de antes no llega lore_unlocked)
+
+
+func bandera_donde(id: String) -> String:
+	return str(_stats.banderas.get(id, ""))
 
 
 ## Un enemigo pegado con masilla (Tarro de Masilla); cuenta para "Con cariño".
@@ -329,6 +341,9 @@ func _eval_state() -> void:
 			"victoria_heroes":
 				if _stats.heroes_ganados.size() >= int(c.n):
 					otorgar(d.id)
+			"banderas":
+				if Banderas.found().size() >= Banderas.IDS.size():
+					otorgar(d.id)
 
 
 # ---------------------------------------------------------------- datos y guardado
@@ -360,6 +375,8 @@ func _load_progress() -> void:
 		for k in ["heroes_ganados", "jefes_sin_dano"]:
 			var arr = st.get(k, [])
 			_stats[k] = arr if arr is Array else []
+		var fl = st.get("banderas", {})
+		_stats.banderas = fl if fl is Dictionary else {}
 
 
 func _save_progress() -> void:
@@ -371,13 +388,13 @@ func _save_progress() -> void:
 ## Al cambiar de espacio de guardado (SaveSlots.select): las medallas de ese espacio.
 func reload_progress() -> void:
 	_won.clear()
-	_stats = {"acertijos": 0, "muertes": 0, "partidas": 0, "masillados": 0, "heroes_ganados": [], "jefes_sin_dano": []}
+	_stats = {"acertijos": 0, "muertes": 0, "partidas": 0, "masillados": 0, "heroes_ganados": [], "jefes_sin_dano": [], "banderas": {}}
 	_load_progress()
 
 
 ## SOLO PARA PRUEBAS / depuracion: borra todo el progreso de medallas.
 func reset_progress() -> void:
 	_won.clear()
-	_stats = {"acertijos": 0, "muertes": 0, "partidas": 0, "masillados": 0, "heroes_ganados": [], "jefes_sin_dano": []}
+	_stats = {"acertijos": 0, "muertes": 0, "partidas": 0, "masillados": 0, "heroes_ganados": [], "jefes_sin_dano": [], "banderas": {}}
 	if FileAccess.file_exists(save_path):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(save_path))

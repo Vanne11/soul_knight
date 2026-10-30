@@ -13,7 +13,7 @@ extends RefCounted
 ## la sinergia "Bandera completa" (Synergies.TABLE). El avance dura toda la partida (los dos pisos).
 ##
 ## EVENTOS DE CODICE (LoreDatabase.custom_event): reino_orgullo_entrada (al pisar el reino; abre
-## las 21 entradas de banderas, hitos y conceptos) y orgullo_vencido_<id> al vencer a cada
+## las 11 entradas de hitos y conceptos; las 10 banderas se ENCUENTRAN: src/arcoiria/banderas.gd) y orgullo_vencido_<id> al vencer a cada
 ## enemigo-prejuicio: es_una_fase, el_armario, quien_es_el_hombre, la_etiqueta.
 
 const REGION := "arcoiria"

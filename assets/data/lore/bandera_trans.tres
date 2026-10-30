@@ -10,5 +10,5 @@ title = "Bandera Trans"
 text = "La diseñó Monica Helms en 1999, mujer trans y veterana de la Marina, y se mostró en un desfile de Phoenix en 2000. Celeste arriba y abajo, rosa al lado y blanco al centro. Para Helms, celeste y rosa son los colores tradicionales de bebé niño y bebé niña, y el blanco es para quienes están en transición, tienen un género neutro o indefinido, o son intersex. En 2014 donó la original al museo Smithsonian."
 category = 7
 sprite = ExtResource("2")
-unlock_condition = {"target_id": "reino_orgullo_entrada", "type": 10}
+unlock_condition = {"target_id": "bandera_hallada_trans", "type": 10}
 flavor_text = "Hay una bandera original, y está en un museo."

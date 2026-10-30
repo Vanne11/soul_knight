@@ -10,5 +10,5 @@ title = "Bandera Progress Pride"
 text = "Daniel Quasar la rediseñó en 2018 sumando a la bandera arcoíris una cuña con blanco, rosa y celeste (personas trans) y marrón y negro (personas racializadas y la lucha antirracista; el negro también recuerda el VIH/sida). La cuña apunta hacia adelante: todavía queda camino."
 category = 7
 sprite = ExtResource("2")
-unlock_condition = {"target_id": "reino_orgullo_entrada", "type": 10}
+unlock_condition = {"target_id": "bandera_hallada_progress", "type": 10}
 flavor_text = "La cuña dice que el progreso aún no termina."
