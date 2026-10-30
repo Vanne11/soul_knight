@@ -863,6 +863,14 @@ func _complete_floor() -> void:
 		_run_manager.seal_gained.emit(RunManager.seals())
 		Narrator.say("seal_gained")
 		Narrator.toast(tr("SEAL_TOAST_TITLE"), tr("SEAL_TOAST_BODY") % [RunManager.seals(), RunManager.seals_needed()], "ffd75a")
+	if RunManager.is_demo_end(floor_n):  # demo: aqui se acaba (game_over muestra el fin de la demo)
+		_run_manager.liberate(floor_n)
+		_run_manager.last_ending = "demo"
+		Narrator.say("victory")
+		Narrator.say_raw(tr("DEMO_END_NARR"))
+		_run_manager.end_run(true)
+		get_tree().create_timer(5.0).timeout.connect(func(): Transition.change_scene("res://src/scenes/game_over.tscn"))
+		return
 	if RunManager.is_route_end(floor_n):
 		var was_liberated := _run_manager.is_liberated(floor_n)
 		_run_manager.liberate(floor_n)

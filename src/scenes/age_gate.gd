@@ -1,6 +1,7 @@
 extends CanvasLayer
 ## Arranque del juego: logo de C&B Studio (con jingle) que se disuelve hacia la
-## pantalla de clasificacion 16+, y de ahi al menu principal.
+## pantalla de clasificacion 16+, y de ahi al menu principal. La primera vez que se abre
+## (Settings.locale_chosen falso) entre el logo y el 16+ se elige el idioma.
 ## Una tecla o toque durante el logo salta al 16+; durante el 16+ va al menu.
 ## El 16+ se cierra con tecla, clic, toque o boton de mando, o solo a los ~5 s.
 ## Una vez por arranque: es la main_scene, asi que al volver al menu desde una
@@ -18,7 +19,7 @@ const AUTO_CLOSE := 5.0
 const BG := Color("0d0b0f")
 const STUDIO_GREEN := Color("bfe8a0")
 
-enum Phase { LOGO, DISSOLVING, RATING, CLOSING }
+enum Phase { LOGO, DISSOLVING, LANGUAGE, RATING, CLOSING }
 
 var _root: Control
 var _logo_layer: Control
@@ -85,6 +86,8 @@ func _start_dissolve() -> void:
 	if _phase != Phase.LOGO:
 		return
 	_phase = Phase.DISSOLVING
+	if not Settings.locale_chosen:
+		_root.hide()  # el 16+ aun no esta en el idioma del jugador: que no asome tras el logo
 	if _seq:
 		_seq.kill()
 	_seq = create_tween()
@@ -92,8 +95,11 @@ func _start_dissolve() -> void:
 	_seq.tween_callback(_rating_shown)
 
 func _rating_shown() -> void:
-	_phase = Phase.RATING
 	_logo_layer.hide()
+	if not Settings.locale_chosen:
+		_show_language()
+		return
+	_phase = Phase.RATING
 	# Cierre automatico; si ya se cerro a mano, _close ignora la llamada.
 	get_tree().create_timer(AUTO_CLOSE).timeout.connect(_close)
 
@@ -139,7 +145,49 @@ func _create_ui() -> void:
 	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_root.add_child(hint)
 
+## Eleccion de idioma (solo la primera vez): un boton por idioma, con el foco en el del sistema.
+## Al elegir, el 16+ se rehace ya traducido.
+func _show_language() -> void:
+	_phase = Phase.LANGUAGE
+	_root.hide()
+	var layer := Control.new()
+	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.theme = HudStyle.menu_theme()
+	add_child(layer)
+	var bg := ColorRect.new()
+	bg.color = BG
+	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.add_child(bg)
+	var center := CenterContainer.new()
+	center.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.add_child(center)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 14)
+	center.add_child(box)
+	# el titulo va en todos los idiomas: todavia no sabemos cual lee el jugador
+	var title := HudStyle.pixel_label("IDIOMA · LANGUAGE · LANGUE · IDIOMA", 24, HudStyle.GOLD, true)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	box.add_child(title)
+	var focus: Button = null
+	for l in Settings.LOCALES:
+		var b := Button.new()
+		b.text = l[1]
+		b.custom_minimum_size = Vector2(420, 48)
+		HudStyle.juice_button(b)
+		b.pressed.connect(func():
+			Settings.set_locale(l[0])
+			layer.queue_free()
+			_root.queue_free()
+			_create_ui()
+			_rating_shown())
+		box.add_child(b)
+		if focus == null or l[0] == Settings.locale:
+			focus = b
+	focus.grab_focus.call_deferred()
+
 func _input(event: InputEvent) -> void:
+	if _phase == Phase.LANGUAGE:
+		return  # los botones de idioma reciben la tecla, el clic o el mando
 	var pressed := false
 	if event is InputEventKey:
 		pressed = event.pressed and not event.echo

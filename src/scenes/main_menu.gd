@@ -152,6 +152,12 @@ func _build_logo(root: Control) -> void:
 	holder.add_child(ribbon)
 	ribbon.size = ribbon.get_combined_minimum_size()
 	ribbon.position = Vector2(-roundf(ribbon.size.x / 2.0), 90)
+	if RunManager.demo:  # build de demo (ver RunManager.demo): sello dorado bajo la cinta
+		var tag := HudStyle.pixel_label(tr("MENU_DEMO_TAG"), 16, HudStyle.GOLD, true)
+		tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		tag.position = Vector2(-640, 90 + ribbon.size.y + 6)
+		tag.size = Vector2(1280, 24)
+		holder.add_child(tag)
 	_logo = holder
 	_logo_y = holder.position.y
 

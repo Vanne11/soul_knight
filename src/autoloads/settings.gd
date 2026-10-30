@@ -20,6 +20,9 @@ var music_volume := 100  # 0-100
 var sfx_volume := 100
 var fullscreen := false
 var locale := "es"
+## El jugador ya eligio idioma (la primera vez que se abre el juego lo pregunta age_gate.gd). Un
+## settings.cfg de antes, con idioma guardado, cuenta como elegido.
+var locale_chosen := false
 ## Efectos de pantalla (mareo, ondulacion, pulso): 0 completo, 1 reducido, 2 desactivado.
 var screen_fx := 0
 ## Sacudida de camara y pausa breve al impactar.
@@ -96,6 +99,7 @@ func load_settings() -> void:
 	ui_size = clampi(int(cfg.get_value("touch", "ui_size", ui_size)), 0, 1)
 	quality_mode = clampi(int(cfg.get_value("video", "quality", default_mode())), 0, Quality.AUTO) as Quality
 	var l := str(cfg.get_value("game", "locale", locale))  # sin ajuste guardado: el del sistema/Steam
+	locale_chosen = bool(cfg.get_value("game", "locale_chosen", cfg.has_section_key("game", "locale")))
 	locale = l if LOCALES.any(func(x): return x[0] == l) else system_locale()
 
 
@@ -112,6 +116,7 @@ func save_settings() -> void:
 	cfg.set_value("touch", "ui_size", ui_size)
 	cfg.set_value("video", "quality", quality_mode)
 	cfg.set_value("game", "locale", locale)
+	cfg.set_value("game", "locale_chosen", locale_chosen)
 	cfg.save(PATH)
 
 
@@ -270,6 +275,7 @@ static func locale_from_steam(lang: String) -> String:
 
 func set_locale(code: String) -> void:
 	locale = code
+	locale_chosen = true
 	TranslationServer.set_locale(code)
 	save_settings()
 	changed.emit()
