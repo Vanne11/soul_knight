@@ -121,6 +121,7 @@ func _generate_dungeon() -> void:
 	if not peace:
 		Utero.setup_floor(self)  # El Utero (src/utero): fases del ciclo
 		Arcoiria.setup_floor(self)  # Arcoiria (src/arcoiria): bandera del HUD, poderes de colores, codice del reino
+		Banderas.setup_floor(self)  # Mapa de las banderas: a veces una bandera perdida en el piso (src/arcoiria/banderas.gd)
 	Silencio.setup_floor(self)  # Las Tierras del Silencio (src/silencio): aviso, circulo del HUD; fuera del reino, lo limpia
 	
 	# Start player in start room

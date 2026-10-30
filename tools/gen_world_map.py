@@ -397,7 +397,7 @@ def build_json():
         # --- extra del mapa del juego: colores de sala, jefe, pisos con sus salas de plantilla, sello, monte, inicio
         e=regs[-1]
         e["sala"]=(c[1].lstrip("#") if c[1].startswith("#") else "ffffff"); e["ico"]=c[2].lstrip("#")
-        e["boss_variant"]=BOSSV.get(rid,""); e["boss_pend"]=bool(r["pend"]); e["boss_seal"]=bool(r["seal"])
+        e["boss_variant"]=BOSSV.get(rid,""); e["boss_pend"]=False  # el juego ya tiene los tres jefes "pend" (Pacto, Censura que destine, Coprolito): sin "por disenar" en el mapa; e["boss_seal"]=bool(r["seal"])
         bn=r["bossname"]; e["boss_name"]=" ".join(bn) if isinstance(bn,list) else (bn or ""); e["boss_name_key"]="MM_BOSS_"+rid.upper()
         if r["hill"] is not None: e["hill"]={"x":gx(r["hill"]),"y":gy(r["y"]+80+CH-3*42-18),"w":gl(3*38),"h":gl(3*42)}
         e["piso_list"]=[{"n":q["n"],"x":gx(q["x"]),"y":gy(q["y"]),"t":q["t"],"calm":q["calm"],"guard":q["guard"]} for q in PISOS if q["rid"]==rid]

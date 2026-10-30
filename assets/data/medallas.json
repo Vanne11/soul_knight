@@ -427,6 +427,17 @@
       "icono": "codice"
     },
     {
+      "id": "banderas_todas",
+      "nombre_key": "MEDAL_BANDERAS_TODAS_NAME",
+      "desc_key": "MEDAL_BANDERAS_TODAS_DESC",
+      "nivel": "sin_pudor",
+      "condicion": {
+        "tipo": "banderas"
+      },
+      "oculta": false,
+      "icono": "codice"
+    },
+    {
       "id": "acertijos_1",
       "nombre_key": "MEDAL_ACERTIJOS_1_NAME",
       "desc_key": "MEDAL_ACERTIJOS_1_DESC",

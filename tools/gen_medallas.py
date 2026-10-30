@@ -133,6 +133,12 @@ for pct, niv, nom in [(25, "sonrojo", ("Curioso", "Curious", "Curieux")),
     C.append(M("codice_%d" % pct, "codice", niv, {"tipo": "codice", "pct": pct}, nom,
                ("Completa el %d%% del códice." % pct, "Complete %d%% of the codex." % pct, "Complète %d %% du codex." % pct)))
 
+# Mapa de las banderas (src/arcoiria/banderas.gd): las 10 banderas del Orgullo, escondidas por los reinos
+C.append(M("banderas_todas", "codice", "sin_pudor", {"tipo": "banderas"},
+           ("Orgullo en todos los colores", "Pride in Every Color", "Fierté de toutes les couleurs"),
+           ("Encuentra las 10 banderas del Mapa de las banderas.", "Find all 10 flags in the Flag Map.",
+            "Trouve les 10 drapeaux de la Carte des drapeaux.")))
+
 # Acertijos
 for n, niv, nom in [(1, "sonrojo", ("Primera pista", "First Clue", "Premier indice")),
                     (10, "destape", ("Mente abierta", "Open Mind", "Esprit ouvert")),

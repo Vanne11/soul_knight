@@ -10,5 +10,5 @@ title = "Bandera Bi"
 text = "Michael Page la presentó el 5 de diciembre de 1998 en la fiesta de aniversario del BiCafe. Rosa, atracción hacia el mismo género; azul, hacia el otro; morado, la mezcla de ambos: se funde con los dos, como las personas bi entre la comunidad gay y la hetero. Hoy el morado se lee también como atracción sin importar el género. Es la bandera que le dice a la gente que no hay que elegir bando."
 category = 7
 sprite = ExtResource("2")
-unlock_condition = {"target_id": "reino_orgullo_entrada", "type": 10}
+unlock_condition = {"target_id": "bandera_hallada_bi", "type": 10}
 flavor_text = "El morado es lo que pasa cuando no eliges bando."
