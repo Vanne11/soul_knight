@@ -76,7 +76,9 @@ func _on_step(plate: PuzzlePlate) -> void:
 			p.flash(Color(1.8, 1.6, 1.8), 1.0)
 		solve()
 	elif _toggles % 10 == 0:
-		hint(mini(_toggles / 10, 3))
+		var lv := mini(_toggles / 10, 3)
+		if lv > _hint_lvl:  # la misma pista no se repite si ya la dio el reloj (Puzzle._tick_hint)
+			_give_hint(lv)
 
 
 ## Subconjunto minimo de pisadas (fuerza bruta sobre 2^9) que deja todo abierto.

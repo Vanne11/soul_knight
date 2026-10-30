@@ -731,16 +731,19 @@ func _doors_to_secret_rooms() -> Array:
 
 func _build_puzzle(room: Room) -> void:
 	if room.has_meta("puzzle"):
-		room.get_meta("puzzle").replay()  # al volver a entrar (la memoria repite la secuencia)
+		var old: Puzzle = room.get_meta("puzzle")
+		old.replay()  # al volver a entrar (la memoria repite la secuencia)
+		old.show_howto()
 		return
-	# Los acertijos no se explican: se silencia la frase generica con instrucciones y el
-	# narrador solo comenta de pasada (puzzles.json); las pistas llegan tras fallar.
+	# La frase generica del narrador se silencia: la instruccion la da Puzzle.show_howto (aviso de
+	# una linea) y las pistas llegan tras fallar o por tiempo (Puzzle._tick_hint).
 	Narrator._seen["puzzle_start"] = true
 	Narrator.say_first("pz_start")
 	var pz: Puzzle = PUZZLE_PLATES.create(room, _run_manager.current_seed * 31 + _run_manager.current_floor)
 	pz.solved.connect(_on_puzzle_solved.bind(room))
 	room.set_meta("puzzle", pz)
 	room.props_node.add_child.call_deferred(pz)  # se entra desde un callback de fisica
+	pz.show_howto.call_deferred()  # despues de build(): ahi cada acertijo pone su kind
 
 func _on_puzzle_solved(room: Room) -> void:
 	Narrator.say("puzzle_solved")
